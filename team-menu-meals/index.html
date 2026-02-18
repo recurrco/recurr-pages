@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meals — Team Menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   TEAM MENU — MEALS PAGE ("/meals")
+   "The Daily Ritual"
+   ═══════════════════════════════════════════════════════════ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --purple: #7C5CFC; --purple-dark: #5B3FD9; --purple-deep: #4A2FC7;
+  --purple-light: #F3F0FF; --purple-mid: #EDE9FE; --purple-subtle: #FAF9FF;
+  --white: #FFFFFF; --offwhite: #FAFAF8;
+  --gray-50: #F7F7F5; --gray-100: #EFEFED; --gray-200: #E0E0DC;
+  --gray-300: #C8C8C4; --gray-400: #A0A09C; --gray-500: #787874;
+  --gray-600: #58584E; --gray-700: #3C3C34; --gray-800: #262620;
+  --gray-900: #1A1A16; --black: #0F0F0C;
+  --dark-bg: #0F0F1A; --dark-surface: #1A1A2E; --dark-border: #2A2A3E;
+  --dark-text: #E8E8EE; --dark-muted: #8888AA;
+  --green: #22C55E; --green-light: #F0FDF4;
+  --orange: #F97316; --orange-light: #FFF7ED;
+  --red: #EF4444; --blue: #3B82F6;
+  --wc-honey: #F4C430; --wc-berry: #C084FC; --wc-mint: #6EE7B7;
+  --wc-coral: #FCA5A5; --wc-cream: #FDE68A; --wc-sky: #93C5FD;
+  --radius-xl: 24px; --radius-lg: 20px; --radius-md: 16px;
+  --radius-sm: 12px; --radius-xs: 8px; --radius-pill: 100px;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+  --shadow-xl: 0 24px 56px rgba(0,0,0,0.12);
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--offwhite); color: var(--gray-900); -webkit-font-smoothing: antialiased; line-height: 1.6; overflow-x: hidden; }
+
+/* ═══ NAV ═══ */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,248,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.04); }
+.nav-inner { max-width: 1080px; margin: 0 auto; padding: 0 40px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+.nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--gray-900); }
+.nav-logo { width: 32px; height: 32px; background: var(--purple); border-radius: 9px; display: flex; align-items: center; justify-content: center; color: white; font-size: 5px; font-weight: 900; text-transform: uppercase; line-height: 1.1; text-align: center; }
+.nav-brand-name { font-size: 15px; font-weight: 700; }
+.nav-links { display: flex; gap: 0; align-items: center; height: 64px; }
+.nav-link { padding: 0 18px; font-size: 14px; font-weight: 500; color: var(--gray-500); text-decoration: none; display: flex; align-items: center; height: 100%; border-bottom: 2px solid transparent; transition: all 0.15s; }
+.nav-link:hover { color: var(--gray-800); }
+.nav-link.active { color: var(--gray-900); font-weight: 600; border-bottom-color: var(--purple); }
+.nav-cta { padding: 10px 22px; background: var(--black); color: var(--white); border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+.nav-cta:hover { background: var(--gray-800); }
+
+/* ═══ LAYOUT ═══ */
+.container { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
+.container-narrow { max-width: 720px; margin: 0 auto; padding: 0 40px; }
+section { padding: 100px 0; position: relative; }
+.section-light { background: var(--offwhite); }
+.section-white { background: var(--white); }
+.section-dark { background: var(--dark-bg); color: var(--dark-text); }
+.section-purple { background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple-mid) 100%); }
+
+/* ═══ TYPE ═══ */
+.label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--purple); }
+.display-xl { font-family: var(--font-display); font-size: 64px; font-weight: 700; line-height: 1.05; letter-spacing: -2px; font-optical-sizing: auto; }
+.display-lg { font-family: var(--font-display); font-size: 48px; font-weight: 600; line-height: 1.1; letter-spacing: -1.5px; }
+.display-md { font-family: var(--font-display); font-size: 36px; font-weight: 600; line-height: 1.15; letter-spacing: -0.8px; }
+.heading { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; line-height: 1.3; }
+.subheading { font-size: 15px; font-weight: 700; letter-spacing: -0.1px; }
+.body-lg { font-size: 18px; line-height: 1.7; color: var(--gray-600); }
+.body { font-size: 15px; line-height: 1.7; color: var(--gray-600); }
+.body-sm { font-size: 13px; line-height: 1.6; color: var(--gray-500); }
+
+/* ═══ UTILS ═══ */
+.mt-xs { margin-top: 8px; } .mt-sm { margin-top: 16px; } .mt-md { margin-top: 24px; }
+.mt-lg { margin-top: 40px; } .mt-xl { margin-top: 64px; }
+.mb-xs { margin-bottom: 8px; } .mb-sm { margin-bottom: 16px; } .mb-md { margin-bottom: 24px; }
+.mb-lg { margin-bottom: 40px; } .mb-xl { margin-bottom: 64px; }
+.text-center { text-align: center; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; }
+.pill-outline { border: 1.5px solid var(--gray-200); color: var(--gray-600); background: var(--white); }
+.pill-purple { background: var(--purple-light); color: var(--purple); }
+.pill-green { background: var(--green-light); color: var(--green); }
+.pill-ghost { background: rgba(255,255,255,0.08); color: var(--dark-muted); border: 1px solid rgba(255,255,255,0.1); }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; }
+.card { background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: 28px; }
+.card-flat { box-shadow: none; border: 1px solid var(--gray-100); }
+.card-dark { background: var(--dark-surface); box-shadow: 0 4px 24px rgba(0,0,0,0.2); border: 1px solid var(--dark-border); }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: var(--radius-pill); font-size: 14px; font-weight: 600; border: none; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+.btn-primary { background: var(--black); color: var(--white); }
+.btn-primary:hover { background: var(--gray-800); }
+.btn-purple { background: var(--purple); color: var(--white); }
+.btn-purple:hover { background: var(--purple-dark); }
+.btn-outline { background: transparent; border: 1.5px solid var(--gray-200); color: var(--gray-700); }
+.section-dark .label { color: var(--purple); opacity: 0.9; }
+.section-dark .body-lg { color: var(--dark-muted); }
+.section-dark .body { color: var(--dark-muted); }
+
+/* ═══ HERO ═══ */
+.hero { min-height: 85vh; display: flex; align-items: center; padding: 120px 0 80px; position: relative; overflow: hidden; }
+.hero-content { position: relative; z-index: 5; max-width: 560px; }
+.hero h1 em { font-style: italic; color: var(--purple); font-variation-settings: 'SOFT' 100, 'WONK' 1; }
+.hero-sub { font-size: 19px; color: var(--gray-500); line-height: 1.6; max-width: 480px; margin-bottom: 32px; }
+.hero-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+
+/* Watercolor scene */
+.wc-scene { position: absolute; top: 20px; right: -40px; width: 520px; height: 520px; pointer-events: none; }
+.wc-blob { position: absolute; border-radius: 50%; filter: blur(30px); opacity: 0.3; mix-blend-mode: multiply; }
+.wc-blob-1 { width: 200px; height: 180px; background: var(--wc-honey); top: 80px; right: 80px; border-radius: 60% 40% 50% 45%; }
+.wc-blob-2 { width: 170px; height: 160px; background: var(--wc-berry); top: 20px; right: 200px; border-radius: 45% 55% 40% 60%; }
+.wc-blob-3 { width: 150px; height: 140px; background: var(--wc-coral); top: 200px; right: 30px; border-radius: 55% 45% 50% 40%; }
+.wc-blob-4 { width: 130px; height: 120px; background: var(--wc-mint); top: 280px; right: 220px; border-radius: 40% 60% 45% 55%; }
+.wc-item { position: absolute; z-index: 2; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); transition: transform 0.4s ease; }
+.wc-item:hover { transform: scale(1.15) rotate(-3deg); }
+.wc-item-1 { top: 60px; right: 180px; font-size: 64px; transform: rotate(-8deg); }
+.wc-item-2 { top: 160px; right: 60px; font-size: 56px; transform: rotate(10deg); }
+.wc-item-3 { top: 250px; right: 260px; font-size: 48px; transform: rotate(-5deg); }
+.wc-item-4 { top: 40px; right: 310px; font-size: 44px; transform: rotate(12deg); }
+.wc-item-5 { top: 320px; right: 100px; font-size: 42px; transform: rotate(-12deg); }
+
+/* ═══ CYCLE TIMELINE ═══ */
+.timeline { position: relative; padding-left: 40px; }
+.timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: var(--gray-200); }
+.timeline-step { position: relative; padding-bottom: 48px; }
+.timeline-step:last-child { padding-bottom: 0; }
+.timeline-dot { position: absolute; left: -40px; top: 4px; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; background: var(--white); border: 2px solid var(--gray-200); z-index: 2; }
+.timeline-step.active .timeline-dot { background: var(--purple); border-color: var(--purple); box-shadow: 0 0 0 6px rgba(124,92,252,0.15); }
+.timeline-time { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--purple); margin-bottom: 4px; }
+.timeline-title { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 4px; }
+.timeline-desc { font-size: 14px; color: var(--gray-500); line-height: 1.6; max-width: 480px; }
+
+/* ═══ PHONE MOCKUP ═══ */
+.phone-frame { width: 280px; flex-shrink: 0; background: #000; border-radius: 36px; padding: 10px; box-shadow: 0 32px 64px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.06); }
+.phone-screen { background: var(--offwhite); border-radius: 28px; overflow: hidden; min-height: 520px; }
+.phone-notch { width: 72px; height: 20px; background: #000; border-radius: 0 0 14px 14px; margin: -2px auto 0; position: relative; z-index: 2; }
+.phone-status { display: flex; justify-content: space-between; align-items: center; padding: 6px 18px 2px; font-size: 11px; font-weight: 600; color: var(--gray-800); }
+.app-header { padding: 10px 18px 6px; display: flex; align-items: center; justify-content: space-between; }
+.app-header h3 { font-size: 14px; font-weight: 700; }
+.app-header span { font-size: 10px; color: var(--purple); font-weight: 600; }
+.app-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--purple-light); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: var(--purple); }
+.app-wallet { margin: 4px 14px 10px; padding: 9px 14px; background: var(--purple); border-radius: var(--radius-sm); color: white; display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 600; }
+.app-wallet-amount { font-size: 15px; font-weight: 800; }
+.app-day-label { padding: 3px 14px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-400); }
+.app-meal-card { margin: 5px 14px 10px; background: var(--white); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); overflow: hidden; }
+.app-meal-content { padding: 14px; }
+.app-meal-item { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: var(--gray-800); margin-bottom: 4px; }
+.app-meal-item span:first-child { font-size: 16px; }
+.app-macros { display: flex; gap: 6px; margin-top: 8px; }
+.app-macro { font-size: 9px; font-weight: 700; color: var(--gray-400); background: var(--gray-50); padding: 2px 7px; border-radius: var(--radius-pill); }
+.app-reactions { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; border-top: 1px solid var(--gray-100); }
+.app-reactions-emojis { display: flex; gap: 10px; font-size: 18px; }
+.app-reactions-emojis span { opacity: 0.3; }
+.app-reactions-emojis span:first-child { opacity: 1; transform: scale(1.1); }
+.app-skip { font-size: 11px; font-weight: 600; color: var(--gray-400); }
+.app-meal-done { margin: 5px 14px 10px; background: var(--white); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
+.app-meal-done h5 { font-size: 12px; font-weight: 600; color: var(--gray-700); }
+.app-meal-done span.sub { font-size: 10px; color: var(--gray-400); }
+.app-nav { display: flex; justify-content: space-around; align-items: center; padding: 8px 0 4px; border-top: 1px solid var(--gray-100); background: var(--white); }
+.app-nav-item { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.app-nav-item span:first-child { font-size: 16px; }
+.app-nav-item span:last-child { font-size: 8px; font-weight: 600; color: var(--gray-400); }
+.app-nav-item.active span:last-child { color: var(--purple); }
+
+/* ═══ BROWSER MOCKUP ═══ */
+.browser-frame { background: var(--white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-xl); border: 1px solid var(--gray-100); }
+.browser-bar { background: var(--gray-50); padding: 10px 14px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--gray-100); }
+.browser-dots { display: flex; gap: 5px; }
+.browser-dot { width: 9px; height: 9px; border-radius: 50%; }
+.browser-dot-red { background: #FF5F57; } .browser-dot-yellow { background: #FFBD2E; } .browser-dot-green { background: #28C840; }
+.browser-url { flex: 1; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xs); padding: 5px 12px; font-size: 11px; color: var(--gray-500); }
+.browser-body { padding: 0; }
+.admin-nav { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 48px; border-bottom: 1px solid var(--gray-100); max-width: 800px; margin: 0 auto; }
+.admin-nav-brand { display: flex; align-items: center; gap: 7px; }
+.admin-nav-logo { width: 24px; height: 24px; background: var(--purple); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 4px; font-weight: 900; text-transform: uppercase; line-height: 1.1; text-align: center; }
+.admin-nav-tabs { display: flex; height: 48px; }
+.admin-nav-tab { padding: 0 14px; font-size: 12px; font-weight: 500; color: var(--gray-400); display: flex; align-items: center; border-bottom: 2px solid transparent; }
+.admin-nav-tab.active { color: var(--gray-900); font-weight: 600; border-bottom-color: var(--purple); }
+.admin-nav-right { display: flex; align-items: center; gap: 8px; }
+.admin-gear { width: 26px; height: 26px; border-radius: 6px; background: var(--gray-50); border: 1px solid var(--gray-100); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--gray-400); }
+.admin-av { width: 26px; height: 26px; border-radius: 50%; background: var(--purple-light); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: var(--purple); }
+.admin-main { max-width: 800px; margin: 0 auto; padding: 20px 24px 28px; }
+.admin-subtabs { display: flex; border-bottom: 1px solid var(--gray-100); margin-bottom: 16px; }
+.admin-subtab { padding: 8px 14px; font-size: 12px; font-weight: 500; color: var(--gray-400); border-bottom: 2px solid transparent; }
+.admin-subtab.active { color: var(--gray-900); font-weight: 600; border-bottom-color: var(--purple); }
+.admin-slot { background: var(--white); border: 1px solid var(--gray-100); border-radius: var(--radius-md); margin-bottom: 10px; overflow: hidden; }
+.admin-slot-header { padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--gray-100); background: var(--gray-50); }
+.admin-slot-title { font-size: 12px; font-weight: 700; }
+.admin-slot-meta { font-size: 10px; color: var(--gray-400); }
+.admin-slot-row { display: flex; align-items: center; gap: 8px; padding: 7px 14px; border-bottom: 1px solid var(--gray-100); font-size: 11px; }
+.admin-slot-row:last-child { border-bottom: none; }
+.admin-slot-name { width: 60px; font-weight: 600; color: var(--purple); font-size: 11px; }
+.admin-slot-meal { flex: 1; color: var(--gray-600); font-size: 11px; }
+.admin-pill { font-size: 9px; font-weight: 600; padding: 2px 8px; border-radius: var(--radius-pill); }
+.admin-pill-green { background: var(--green-light); color: var(--green); }
+.admin-pill-orange { background: var(--orange-light); color: var(--orange); }
+
+/* ═══ FEATURE CARDS ═══ */
+.feature-card { background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: 32px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; }
+.feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.feature-icon { font-size: 40px; margin-bottom: 16px; display: block; }
+.feature-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.feature-card p { font-size: 13px; color: var(--gray-500); line-height: 1.6; }
+
+/* ═══ PRICING ═══ */
+.pricing-card { border-radius: var(--radius-xl); padding: 40px; text-align: center; transition: transform 0.2s; }
+.pricing-card:hover { transform: translateY(-4px); }
+.pricing-card.recommended { border: 2px solid var(--purple); }
+.pricing-amount { font-size: 56px; font-weight: 800; letter-spacing: -2px; line-height: 1; }
+.pricing-period { font-size: 14px; color: var(--gray-500); margin-top: 4px; }
+.pricing-features { list-style: none; text-align: left; margin-top: 24px; }
+.pricing-features li { padding: 8px 0; font-size: 14px; color: var(--gray-600); border-bottom: 1px solid var(--gray-100); display: flex; align-items: center; gap: 8px; }
+.pricing-features li:last-child { border-bottom: none; }
+.pricing-check { color: var(--green); font-weight: 700; }
+
+/* ═══ NUTRITION ═══ */
+.macro-card { text-align: center; padding: 24px; }
+.macro-value { font-size: 36px; font-weight: 800; letter-spacing: -1px; }
+.macro-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-400); margin-top: 4px; }
+.diet-tag { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; background: var(--white); border: 1.5px solid var(--gray-200); }
+.diet-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* ═══ WhatsApp ═══ */
+.wa-frame { width: 320px; background: #ECE5DD; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-xl); flex-shrink: 0; }
+.wa-header { background: #075E54; padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
+.wa-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--purple); display: flex; align-items: center; justify-content: center; color: white; font-size: 5px; font-weight: 900; text-transform: uppercase; line-height: 1.1; text-align: center; }
+.wa-name { color: white; font-size: 13px; font-weight: 600; }
+.wa-status { color: rgba(255,255,255,0.6); font-size: 10px; }
+.wa-body { padding: 14px; min-height: 240px; }
+.wa-bubble { background: var(--white); border-radius: 0 var(--radius-sm) var(--radius-sm) var(--radius-sm); padding: 10px 12px; max-width: 85%; box-shadow: 0 1px 2px rgba(0,0,0,0.08); font-size: 13px; line-height: 1.5; color: #111; }
+.wa-time { text-align: right; font-size: 10px; color: #999; margin-top: 3px; }
+
+/* ═══ CTA BLOCK ═══ */
+.cta-block { background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%); border-radius: var(--radius-xl); padding: 64px; text-align: center; color: white; }
+.cta-block h2 { font-family: var(--font-display); font-size: 40px; font-weight: 600; letter-spacing: -1px; margin-bottom: 12px; }
+.cta-block p { font-size: 16px; opacity: 0.8; margin-bottom: 32px; }
+.btn-white { background: var(--white); color: var(--black); }
+.btn-white:hover { background: var(--gray-50); }
+
+/* ═══ FOOTER ═══ */
+.footer { padding: 48px 40px; background: var(--dark-bg); text-align: center; }
+.footer-brand { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.footer-sub { font-size: 12px; color: var(--dark-muted); }
+.footer-divider { width: 40px; height: 2px; background: var(--dark-border); margin: 16px auto; }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 900px) {
+  .display-xl { font-size: 44px; }
+  .display-lg { font-size: 36px; }
+  .display-md { font-size: 28px; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .hero { min-height: auto; padding: 100px 0 60px; }
+  .wc-scene { display: none; }
+  .container { padding: 0 24px; }
+  section { padding: 64px 0; }
+  .phone-frame { width: 100%; max-width: 280px; margin: 0 auto; }
+  .mockup-layout { flex-direction: column !important; }
+  .cta-block { padding: 40px 24px; }
+  .cta-block h2 { font-size: 32px; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#">
+      <div class="nav-logo">TEAM<br>MENU</div>
+      <span class="nav-brand-name">Team Menu</span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link active" href="#">Meals</a>
+      <a class="nav-link" href="#">Pantry</a>
+      <a class="nav-link" href="#">Food</a>
+      <a class="nav-link" href="#">Love</a>
+      <a class="nav-link" href="#">Why</a>
+    </div>
+    <a class="nav-cta" href="#">Request Invite</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════════════════════
+     SECTION 1: HERO
+     ════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="wc-scene">
+    <div class="wc-blob wc-blob-1"></div>
+    <div class="wc-blob wc-blob-2"></div>
+    <div class="wc-blob wc-blob-3"></div>
+    <div class="wc-blob wc-blob-4"></div>
+    <div class="wc-item wc-item-1">&#x1F963;</div>
+    <div class="wc-item wc-item-2">&#x2615;</div>
+    <div class="wc-item wc-item-3">&#x1F34A;</div>
+    <div class="wc-item wc-item-4">&#x1F950;</div>
+    <div class="wc-item wc-item-5">&#x1F9C3;</div>
+  </div>
+
+  <div class="container">
+    <div class="hero-content">
+      <p class="label mb-sm">The Daily Ritual</p>
+      <h1 class="display-xl mb-md">The best part of <em>your workday.</em></h1>
+      <p class="hero-sub">Every morning, a meal arrives at your desk. Auto-decided, always delicious, already paid for. Your team just eats.</p>
+      <div class="hero-badges">
+        <span class="pill pill-outline">&#x1F552; 3 PM &mdash; menu preview</span>
+        <span class="pill pill-outline">&#x1F6D1; 6 PM &mdash; locked in</span>
+        <span class="pill pill-outline">&#x2600; 8:30 AM &mdash; delivered</span>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="#">See what's on the menu &rarr;</a>
+        <a class="btn btn-outline" href="#">How it works</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     SECTION 2: THE CYCLE (dark)
+     ════════════════════════════════════════════════════════ -->
+<section class="section-dark">
+  <div class="container">
+    <p class="label mb-sm">How It Works</p>
+    <h2 class="display-lg mb-md" style="color:var(--white)">One cycle. Every day. Zero effort.</h2>
+    <p class="body-lg mb-xl">The entire experience runs on autopilot. You barely touch anything. But when you do, it's a tiny moment of joy.</p>
+
+    <div style="display:flex;gap:64px;align-items:flex-start" class="mockup-layout">
+      <!-- Timeline -->
+      <div style="flex:1">
+        <div class="timeline">
+          <div class="timeline-step">
+            <div class="timeline-dot" style="background:var(--purple);border-color:var(--purple);color:white;font-size:12px">&#x1F4F1;</div>
+            <div class="timeline-time">3:00 PM &mdash; Yesterday</div>
+            <div class="timeline-title" style="color:var(--white)">Menu preview lands on WhatsApp</div>
+            <div class="timeline-desc" style="color:var(--dark-muted)">"Hey Priya! Tomorrow's lineup: Masala Overnight Oats + Cold Brew." One tap to see it. One tap to skip.</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-dot" style="font-size:12px">&#x270F;</div>
+            <div class="timeline-time">3&ndash;6 PM &mdash; Edit window</div>
+            <div class="timeline-title" style="color:var(--white)">Swap, skip, or just leave it</div>
+            <div class="timeline-desc" style="color:var(--dark-muted)">The default is always great. Most people never change a thing. But if you want to skip Friday or swap the oats &mdash; one tap.</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-dot" style="font-size:12px">&#x1F512;</div>
+            <div class="timeline-time">6:00 PM &mdash; Deadline</div>
+            <div class="timeline-title" style="color:var(--white)">Order is locked</div>
+            <div class="timeline-desc" style="color:var(--dark-muted)">"Locked in. Tomorrow's sorted." Our kitchen starts prepping tonight so your food is fresh at dawn.</div>
+          </div>
+          <div class="timeline-step active">
+            <div class="timeline-dot" style="background:var(--purple);border-color:var(--purple);color:white;font-size:12px">&#x2600;</div>
+            <div class="timeline-time">8:30 AM &mdash; Tomorrow</div>
+            <div class="timeline-title" style="color:var(--white)">Breakfast arrives at your desk</div>
+            <div class="timeline-desc" style="color:var(--dark-muted)">Warm, fresh, labelled with your name. One delivery for the whole team. No Swiggy refresh, no group chat, no decision fatigue.</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-dot" style="font-size:12px">&#x1F60D;</div>
+            <div class="timeline-time">10:00 AM &mdash; After your meal</div>
+            <div class="timeline-title" style="color:var(--white)">Rate it with one emoji</div>
+            <div class="timeline-desc" style="color:var(--dark-muted)">&#x1F60D; &#x1F60A; &#x1F610; &#x1F61E; &mdash; that's it. We use this to make your menu better every week.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WhatsApp mockup -->
+      <div class="wa-frame">
+        <div class="wa-header">
+          <div class="wa-avatar">TM</div>
+          <div>
+            <div class="wa-name">Team Menu &#x1F7E3;</div>
+            <div class="wa-status">online</div>
+          </div>
+        </div>
+        <div class="wa-body">
+          <div class="wa-bubble">
+            Hey Priya! &#x1F373;<br><br>
+            Tomorrow's lineup:<br>
+            &#x1F963; Masala Overnight Oats<br>
+            &#x2615; Cold Brew Coffee<br><br>
+            Skip anything?<br>
+            &#x1F449; <span style="color:#0277BD;text-decoration:underline">tap here</span><br><br>
+            &#x23F0; Deadline: 6 PM today
+            <div class="wa-time">3:02 PM &#x2713;&#x2713;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     SECTION 3: EMPLOYEE EXPERIENCE (light)
+     ════════════════════════════════════════════════════════ -->
+<section class="section-light">
+  <div class="container">
+    <p class="label mb-sm">Employee Experience</p>
+    <h2 class="display-lg mb-md">It just shows up. And it's great.</h2>
+    <p class="body-lg mb-xl" style="max-width:600px">Your team doesn't need to download an app, enter a credit card, or make a single decision. They get a WhatsApp message. They eat. That's it.</p>
+
+    <div style="display:flex;gap:64px;align-items:flex-start" class="mockup-layout">
+      <!-- Phone mockup -->
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="phone-notch"></div>
+          <div class="phone-status">
+            <span>9:41</span>
+            <span style="font-size:10px">&#x1F50B;</span>
+          </div>
+          <div class="app-header">
+            <div><h3>Recurr Studio</h3><span>team.menu</span></div>
+            <div class="app-avatar">PS</div>
+          </div>
+          <div class="app-wallet">
+            <span>Wallet</span>
+            <span class="app-wallet-amount">&#8377;2,450</span>
+          </div>
+          <div class="app-day-label">TOMORROW, FEB 17</div>
+          <div class="app-meal-card">
+            <div class="app-meal-content">
+              <div class="app-meal-item"><span>&#x1F963;</span> Masala Overnight Oats</div>
+              <div class="app-meal-item"><span>&#x2615;</span> Cold Brew Coffee</div>
+              <div class="app-macros">
+                <span class="app-macro">450 CAL</span>
+                <span class="app-macro">28g PRO</span>
+                <span class="app-macro">12g FAT</span>
+              </div>
+            </div>
+            <div class="app-reactions">
+              <div class="app-reactions-emojis"><span>&#x1F60D;</span><span>&#x1F60A;</span><span>&#x1F610;</span><span>&#x1F61E;</span></div>
+              <span class="app-skip">Skip &rarr;</span>
+            </div>
+          </div>
+          <div class="app-day-label">TODAY</div>
+          <div class="app-meal-done">
+            <span style="font-size:16px">&#x2705;</span>
+            <div style="flex:1"><h5>Berry Smoothie Bowl + Chai</h5><span class="sub" style="font-size:10px;color:var(--gray-400)">Delivered at 8:20 AM</span></div>
+            <span style="font-size:18px">&#x1F60D;</span>
+          </div>
+          <div class="app-day-label">YESTERDAY</div>
+          <div class="app-meal-done" style="opacity:0.5">
+            <span style="font-size:16px">&#x2705;</span>
+            <div style="flex:1"><h5>Poha Bowl + Mango Smoothie</h5><span class="sub" style="font-size:10px;color:var(--gray-400)">Rated &#x1F60A;</span></div>
+          </div>
+          <div style="flex:1"></div>
+          <div class="app-nav">
+            <div class="app-nav-item active"><span>&#x1F3E0;</span><span>Home</span></div>
+            <div class="app-nav-item"><span>&#x1F37D;</span><span>Meals</span></div>
+            <div class="app-nav-item"><span>&#x1F4E6;</span><span>Pantry</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature descriptions -->
+      <div style="flex:1">
+        <div style="margin-bottom:36px">
+          <div style="font-size:28px;margin-bottom:8px">&#x1F4AC;</div>
+          <h3 class="heading mb-xs">WhatsApp-first. App when you want.</h3>
+          <p class="body">The daily relationship lives on WhatsApp. The app is there for browsing menus, checking your wallet, and setting preferences. Not for daily use.</p>
+        </div>
+        <div style="margin-bottom:36px">
+          <div style="font-size:28px;margin-bottom:8px">&#x1F60D;</div>
+          <h3 class="heading mb-xs">Rate with one tap.</h3>
+          <p class="body">Four emojis. That's your entire feedback system. Fun, instant, and it genuinely makes your next meal better.</p>
+        </div>
+        <div style="margin-bottom:36px">
+          <div style="font-size:28px;margin-bottom:8px">&#x1F4B0;</div>
+          <h3 class="heading mb-xs">Zero payment interaction.</h3>
+          <p class="body">Your employer funds a wallet. You spend it on meals. No UPI, no splitting, no "who's paying." It just works.</p>
+        </div>
+        <div>
+          <div style="font-size:28px;margin-bottom:8px">&#x1F3AF;</div>
+          <h3 class="heading mb-xs">Diet-aware by default.</h3>
+          <p class="body">Set your preferences once &mdash; veg, egg, vegan, non-veg. The system auto-decides your menu based on what you actually like.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     SECTION 4: ADMIN EXPERIENCE (white)
+     ════════════════════════════════════════════════════════ -->
+<section class="section-white">
+  <div class="container">
+    <p class="label mb-sm">Admin Experience</p>
+    <h2 class="display-lg mb-md">One dashboard. Zero decisions.</h2>
+    <p class="body-lg mb-lg" style="max-width:600px">Set up your team once. Fund the wallet. Everything else runs on autopilot. The dashboard shows you what's happening &mdash; not what you need to do.</p>
+
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dots"><div class="browser-dot browser-dot-red"></div><div class="browser-dot browser-dot-yellow"></div><div class="browser-dot browser-dot-green"></div></div>
+        <div class="browser-url">&#x1F512; team.menu/dashboard</div>
+      </div>
+      <div class="browser-body">
+        <div class="admin-nav">
+          <div class="admin-nav-brand"><div class="admin-nav-logo">TM</div></div>
+          <div class="admin-nav-tabs">
+            <div class="admin-nav-tab">Home</div>
+            <div class="admin-nav-tab active">Meals</div>
+            <div class="admin-nav-tab">Pantry</div>
+          </div>
+          <div class="admin-nav-right"><div class="admin-gear">&#x2699;</div><div class="admin-av">PM</div></div>
+        </div>
+        <div class="admin-main">
+          <div class="admin-subtabs">
+            <div class="admin-subtab">Configuration</div>
+            <div class="admin-subtab active">Orders</div>
+            <div class="admin-subtab">Feedback</div>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:14px">
+            <div style="padding:5px 12px;background:var(--gray-900);color:white;border-radius:6px;font-size:11px;font-weight:600">Tomorrow</div>
+            <div style="padding:5px 12px;background:var(--gray-100);color:var(--gray-600);border-radius:6px;font-size:11px;font-weight:500">Today</div>
+            <div style="padding:5px 12px;background:var(--gray-100);color:var(--gray-600);border-radius:6px;font-size:11px;font-weight:500">Yesterday</div>
+          </div>
+          <div class="admin-slot">
+            <div class="admin-slot-header"><div class="admin-slot-title">Slot 1 &middot; 12 Noon</div><div class="admin-slot-meta">5 members</div></div>
+            <div class="admin-slot-row"><span class="admin-slot-name">Ankit</span><span class="admin-slot-meal">Masala Oats, Coconut Water</span><span class="admin-pill admin-pill-green">Confirmed</span></div>
+            <div class="admin-slot-row"><span class="admin-slot-name">Riya</span><span class="admin-slot-meal">PB Banana Oats, Cold Brew</span><span class="admin-pill admin-pill-green">Confirmed</span></div>
+            <div class="admin-slot-row"><span class="admin-slot-name">Varun</span><span class="admin-slot-meal">Scrambled Eggs, OJ</span><span class="admin-pill admin-pill-green">Confirmed</span></div>
+            <div class="admin-slot-row"><span class="admin-slot-name">Sneha</span><span class="admin-slot-meal">&mdash;</span><span class="admin-pill admin-pill-orange">Pending</span></div>
+          </div>
+          <div class="admin-slot">
+            <div class="admin-slot-header"><div class="admin-slot-title">Slot 2 &middot; 2:30 PM</div><div class="admin-slot-meta">3 members</div></div>
+            <div class="admin-slot-row"><span class="admin-slot-name">Neha</span><span class="admin-slot-meal">Blueberry Oats, Green Tea</span><span class="admin-pill admin-pill-green">Confirmed</span></div>
+            <div class="admin-slot-row"><span class="admin-slot-name">Priya</span><span class="admin-slot-meal">Tropical Fruit Bowl, Cold Brew</span><span class="admin-pill admin-pill-green">Confirmed</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     SECTION 5: AUTO-EVERYTHING (dark)
+     ════════════════════════════════════════════════════════ -->
+<section class="section-dark">
+  <div class="container text-center">
+    <p class="label mb-sm">The Invisible System</p>
+    <h2 class="display-lg mb-md" style="color:var(--white)">Auto-everything.</h2>
+    <p class="body-lg mb-xl" style="max-width:560px;margin-left:auto;margin-right:auto">The best system is one you forget exists. Team Menu runs on sensible defaults &mdash; most teams never change a thing.</p>
+
+    <div class="grid-3" style="gap:20px">
+      <div class="card-dark" style="border-radius:var(--radius-lg);padding:28px;text-align:center">
+        <div style="font-size:36px;margin-bottom:12px">&#x1F501;</div>
+        <h4 style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px">Auto-subscription</h4>
+        <p style="font-size:13px;color:var(--dark-muted);line-height:1.6">Always on. Employees opt <em>out</em>, not in. The default is eating &mdash; because who skips breakfast they didn't have to order?</p>
+      </div>
+      <div class="card-dark" style="border-radius:var(--radius-lg);padding:28px;text-align:center">
+        <div style="font-size:36px;margin-bottom:12px">&#x1F9E0;</div>
+        <h4 style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px">Auto-menu</h4>
+        <p style="font-size:13px;color:var(--dark-muted);line-height:1.6">Our system picks tomorrow's menu based on your team's diet preferences, past ratings, and seasonal rotation. It gets smarter every week.</p>
+      </div>
+      <div class="card-dark" style="border-radius:var(--radius-lg);padding:28px;text-align:center">
+        <div style="font-size:36px;margin-bottom:12px">&#x1F9FE;</div>
+        <h4 style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px">Auto-invoice</h4>
+        <p style="font-size:13px;color:var(--dark-muted);line-height:1.6">One mega invoice per week, broken down by day and employee. Download CSV or PDF. No per-meal receipts, no expense reports.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     SECTION 6: NUTRITION (light)
+     ════════════════════════════════════════════════════════ -->
+<section class="section-light">
+  <div class="container">
+    <div style="display:flex;gap:64px;align-items:center" class="mockup-layout">
+      <div style="flex:1">
+        <p class="label mb-sm">Nutrition</p>
+        <h2 class="display-md mb-md">Every meal is designed, not just cooked.</h2>
+        <p class="body-lg mb-lg">Our menus are planned around balanced macros, seasonal ingredients, and variety. We rotate dishes so your team never gets bored &mdash; and every plate hits the right nutrition targets.</p>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px">
+          <div class="diet-tag"><div class="diet-dot" style="background:var(--green)"></div>Vegetarian</div>
+          <div class="diet-tag"><div class="diet-dot" style="background:var(--orange)"></div>Eggetarian</div>
+          <div class="diet-tag"><div class="diet-dot" style="background:var(--purple)"></div>Vegan</div>
+          <div class="diet-tag"><div class="diet-dot" style="background:var(--red)"></div>Non-Veg</div>
+        </div>
+
+        <p class="body-sm">Each employee sets their preference once. The system auto-decides their meals accordingly. <a href="#" style="color:var(--purple);font-weight:600">See what goes into our food &rarr;</a></p>
+      </div>
+
+      <div style="flex-shrink:0">
+        <div class="grid-2" style="gap:12px;width:320px">
+          <div class="card card-flat macro-card">
+            <div class="macro-value" style="color:var(--purple)">420</div>
+            <div class="macro-label">Avg. calories</div>
+          </div>
+          <div class="card card-flat macro-card">
+            <div class="macro-value" style="color:var(--green)">26g</div>
+            <div class="macro-label">Avg. protein</div>
+          </div>
+          <div class="card card-flat macro-card">
+            <div class="macro-value" style="color:var(--orange)">14g</div>
+            <div class="macro-label">Avg. fat</div>
+          </div>
+          <div class="card card-flat macro-card">
+            <div class="macro-value" style="color:var(--blue)">48g</div>
+            <div class="macro-label">Avg. carbs</div>
+          </div>
+        </div>
+        <p class="body-sm text-center mt-sm" style="max-width:320px">Per meal average across our rotating menu</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     SECTION 7: PRICING (white)
+     ════════════════════════════════════════════════════════ -->
+<section class="section-white">
+  <div class="container text-center">
+    <p class="label mb-sm">Pricing</p>
+    <h2 class="display-lg mb-md">Simple. Per employee. Per day.</h2>
+    <p class="body-lg mb-xl" style="max-width:560px;margin-left:auto;margin-right:auto">No hidden fees. No minimums. No contracts. Just pick a plan and fund your wallet.</p>
+
+    <div class="grid-2" style="max-width:640px;margin:0 auto;gap:20px">
+      <div class="pricing-card card" style="border:1.5px solid var(--gray-200)">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-400);margin-bottom:16px">Meal only</div>
+        <div class="pricing-amount">&#8377;199</div>
+        <div class="pricing-period">per employee / day</div>
+        <ul class="pricing-features">
+          <li><span class="pricing-check">&#x2713;</span> Breakfast + snack</li>
+          <li><span class="pricing-check">&#x2713;</span> Auto-decided daily menu</li>
+          <li><span class="pricing-check">&#x2713;</span> Diet preference matching</li>
+          <li><span class="pricing-check">&#x2713;</span> WhatsApp notifications</li>
+          <li><span class="pricing-check">&#x2713;</span> Admin dashboard</li>
+          <li><span class="pricing-check">&#x2713;</span> Weekly mega invoice</li>
+        </ul>
+        <div class="mt-md"><a class="btn btn-outline" href="#">Get started</a></div>
+      </div>
+
+      <div class="pricing-card card recommended" style="position:relative">
+        <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%)"><span class="pill pill-purple" style="font-size:11px">Recommended</span></div>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--purple);margin-bottom:16px">Meal + Beverage</div>
+        <div class="pricing-amount" style="color:var(--purple)">&#8377;229</div>
+        <div class="pricing-period">per employee / day</div>
+        <ul class="pricing-features">
+          <li><span class="pricing-check">&#x2713;</span> Everything in Meal only</li>
+          <li><span class="pricing-check">&#x2713;</span> Daily beverage (cold brew, juice, chai, smoothie)</li>
+          <li><span class="pricing-check">&#x2713;</span> Beverage preference rotation</li>
+          <li><span class="pricing-check">&#x2713;</span> Seasonal specials included</li>
+        </ul>
+        <div class="mt-md"><a class="btn btn-purple" href="#">Get started</a></div>
+      </div>
+    </div>
+
+    <p class="body-sm mt-lg" style="max-width:480px;margin-left:auto;margin-right:auto">Pantry is separate &mdash; a weekly team budget you set and we stock. <a href="#" style="color:var(--purple);font-weight:600">See Pantry &rarr;</a></p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     SECTION 8: CTA
+     ════════════════════════════════════════════════════════ -->
+<section class="section-light">
+  <div class="container">
+    <div class="cta-block">
+      <h2>Want this for your team?</h2>
+      <p>We onboard a few teams each week. Request an invite and we'll reach out within 24 hours.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a class="btn btn-white" href="#">Request Invite &rarr;</a>
+        <a class="btn" href="#" style="background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.2)">See the menu first</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-brand">Team Menu</div>
+  <div class="footer-sub">Part of the X Menu family &middot; Powered by Outpost Kitchens</div>
+  <div class="footer-divider"></div>
+  <div class="footer-sub" style="margin-top:8px"><a href="#" style="color:var(--dark-muted);text-decoration:none;font-size:12px">Meals</a> &nbsp;&middot;&nbsp; <a href="#" style="color:var(--dark-muted);text-decoration:none;font-size:12px">Pantry</a> &nbsp;&middot;&nbsp; <a href="#" style="color:var(--dark-muted);text-decoration:none;font-size:12px">Food</a> &nbsp;&middot;&nbsp; <a href="#" style="color:var(--dark-muted);text-decoration:none;font-size:12px">Love</a> &nbsp;&middot;&nbsp; <a href="#" style="color:var(--dark-muted);text-decoration:none;font-size:12px">Why</a></div>
+  <div style="font-size:10px;color:rgba(255,255,255,0.2);margin-top:16px">Outpost Kitchen Pvt Ltd &middot; Bangalore &middot; 2026</div>
+</footer>
+
+</body>
+</html>

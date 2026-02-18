@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pantry — Team Menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   TEAM MENU — PANTRY PAGE ("/pantry")
+   "Build Your Office Pantry"
+   ═══════════════════════════════════════════════════════════ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --purple: #7C5CFC; --purple-dark: #5B3FD9; --purple-deep: #4A2FC7;
+  --purple-light: #F3F0FF; --purple-mid: #EDE9FE; --purple-subtle: #FAF9FF;
+  --white: #FFFFFF; --offwhite: #FAFAF8;
+  --gray-50: #F7F7F5; --gray-100: #EFEFED; --gray-200: #E0E0DC;
+  --gray-300: #C8C8C4; --gray-400: #A0A09C; --gray-500: #787874;
+  --gray-600: #58584E; --gray-700: #3C3C34; --gray-800: #262620;
+  --gray-900: #1A1A16; --black: #0F0F0C;
+  --dark-bg: #0F0F1A; --dark-surface: #1A1A2E; --dark-border: #2A2A3E;
+  --dark-text: #E8E8EE; --dark-muted: #8888AA;
+  --green: #22C55E; --green-light: #F0FDF4;
+  --orange: #F97316; --orange-light: #FFF7ED;
+  --red: #EF4444; --blue: #3B82F6;
+  --amber: #F59E0B; --amber-light: #FFFBEB;
+  --mint: #10B981; --mint-light: #ECFDF5;
+  --wc-honey: #F4C430; --wc-berry: #C084FC; --wc-mint: #6EE7B7;
+  --wc-coral: #FCA5A5; --wc-cream: #FDE68A; --wc-sky: #93C5FD;
+  --radius-xl: 24px; --radius-lg: 20px; --radius-md: 16px;
+  --radius-sm: 12px; --radius-xs: 8px; --radius-pill: 100px;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+  --shadow-xl: 0 24px 56px rgba(0,0,0,0.12);
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--offwhite); color: var(--gray-900); -webkit-font-smoothing: antialiased; line-height: 1.6; overflow-x: hidden; }
+
+/* ═══ NAV ═══ */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,248,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.04); }
+.nav-inner { max-width: 1080px; margin: 0 auto; padding: 0 40px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+.nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--gray-900); }
+.nav-logo { width: 32px; height: 32px; background: var(--purple); border-radius: 9px; display: flex; align-items: center; justify-content: center; color: white; font-size: 5px; font-weight: 900; text-transform: uppercase; line-height: 1.1; text-align: center; }
+.nav-brand-name { font-size: 15px; font-weight: 700; }
+.nav-links { display: flex; gap: 0; align-items: center; height: 64px; }
+.nav-link { padding: 0 18px; font-size: 14px; font-weight: 500; color: var(--gray-500); text-decoration: none; display: flex; align-items: center; height: 100%; border-bottom: 2px solid transparent; transition: all 0.15s; }
+.nav-link:hover { color: var(--gray-800); }
+.nav-link.active { color: var(--gray-900); font-weight: 600; border-bottom-color: var(--purple); }
+.nav-cta { padding: 10px 22px; background: var(--black); color: var(--white); border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+.nav-cta:hover { background: var(--gray-800); }
+
+/* ═══ LAYOUT ═══ */
+.container { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
+section { padding: 100px 0; position: relative; }
+.section-light { background: var(--offwhite); }
+.section-white { background: var(--white); }
+.section-dark { background: var(--dark-bg); color: var(--dark-text); }
+.section-purple { background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple-mid) 100%); }
+
+/* ═══ TYPE ═══ */
+.label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--purple); }
+.display-xl { font-family: var(--font-display); font-size: 64px; font-weight: 700; line-height: 1.05; letter-spacing: -2px; font-optical-sizing: auto; }
+.display-lg { font-family: var(--font-display); font-size: 48px; font-weight: 600; line-height: 1.1; letter-spacing: -1.5px; }
+.display-md { font-family: var(--font-display); font-size: 36px; font-weight: 600; line-height: 1.15; letter-spacing: -0.8px; }
+.heading { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; line-height: 1.3; }
+.subheading { font-size: 15px; font-weight: 700; letter-spacing: -0.1px; }
+.body-lg { font-size: 18px; line-height: 1.7; color: var(--gray-600); }
+.body { font-size: 15px; line-height: 1.7; color: var(--gray-600); }
+.body-sm { font-size: 13px; line-height: 1.6; color: var(--gray-500); }
+
+/* ═══ UTILS ═══ */
+.mt-xs { margin-top: 8px; } .mt-sm { margin-top: 16px; } .mt-md { margin-top: 24px; }
+.mt-lg { margin-top: 40px; } .mt-xl { margin-top: 64px; }
+.mb-xs { margin-bottom: 8px; } .mb-sm { margin-bottom: 16px; } .mb-md { margin-bottom: 24px; }
+.mb-lg { margin-bottom: 40px; } .mb-xl { margin-bottom: 64px; }
+.text-center { text-align: center; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; }
+.pill-outline { border: 1.5px solid var(--gray-200); color: var(--gray-600); background: var(--white); }
+.pill-purple { background: var(--purple-light); color: var(--purple); }
+.pill-green { background: var(--green-light); color: var(--green); }
+.pill-ghost { background: rgba(255,255,255,0.08); color: var(--dark-muted); border: 1px solid rgba(255,255,255,0.1); }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+.card { background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: 28px; }
+.card-flat { box-shadow: none; border: 1px solid var(--gray-100); }
+.card-dark { background: var(--dark-surface); box-shadow: 0 4px 24px rgba(0,0,0,0.2); border: 1px solid var(--dark-border); }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: var(--radius-pill); font-size: 14px; font-weight: 600; border: none; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+.btn-primary { background: var(--black); color: var(--white); }
+.btn-primary:hover { background: var(--gray-800); }
+.btn-purple { background: var(--purple); color: var(--white); }
+.btn-purple:hover { background: var(--purple-dark); }
+.btn-outline { background: transparent; border: 1.5px solid var(--gray-200); color: var(--gray-700); }
+.section-dark .label { color: var(--purple); opacity: 0.9; }
+.section-dark .body-lg { color: var(--dark-muted); }
+.section-dark .body { color: var(--dark-muted); }
+
+/* ═══ HERO ═══ */
+.hero { min-height: 85vh; display: flex; align-items: center; padding: 120px 0 80px; position: relative; overflow: hidden; }
+.hero-content { position: relative; z-index: 5; max-width: 560px; }
+.hero h1 em { font-style: italic; color: var(--purple); font-variation-settings: 'SOFT' 100, 'WONK' 1; }
+.hero-sub { font-size: 19px; color: var(--gray-500); line-height: 1.6; max-width: 480px; margin-bottom: 32px; }
+
+/* Watercolor scene — pantry items */
+.wc-scene { position: absolute; top: 20px; right: -40px; width: 520px; height: 520px; pointer-events: none; }
+.wc-blob { position: absolute; border-radius: 50%; filter: blur(30px); opacity: 0.3; mix-blend-mode: multiply; }
+.wc-blob-1 { width: 200px; height: 180px; background: var(--wc-honey); top: 80px; right: 80px; border-radius: 60% 40% 50% 45%; }
+.wc-blob-2 { width: 170px; height: 160px; background: var(--wc-mint); top: 20px; right: 200px; border-radius: 45% 55% 40% 60%; }
+.wc-blob-3 { width: 150px; height: 140px; background: var(--wc-cream); top: 200px; right: 30px; border-radius: 55% 45% 50% 40%; }
+.wc-blob-4 { width: 130px; height: 120px; background: var(--wc-berry); top: 280px; right: 220px; border-radius: 40% 60% 45% 55%; }
+.wc-item { position: absolute; z-index: 2; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); transition: transform 0.4s ease; }
+.wc-item:hover { transform: scale(1.15) rotate(-3deg); }
+.wc-item-1 { top: 60px; right: 180px; font-size: 60px; transform: rotate(-8deg); }
+.wc-item-2 { top: 160px; right: 60px; font-size: 54px; transform: rotate(10deg); }
+.wc-item-3 { top: 250px; right: 260px; font-size: 48px; transform: rotate(-5deg); }
+.wc-item-4 { top: 40px; right: 310px; font-size: 44px; transform: rotate(12deg); }
+.wc-item-5 { top: 320px; right: 100px; font-size: 42px; transform: rotate(-12deg); }
+.wc-item-6 { top: 190px; right: 180px; font-size: 38px; transform: rotate(6deg); }
+
+/* ═══ BUDGET VISUAL ═══ */
+.budget-flow { display: flex; align-items: center; justify-content: center; gap: 0; }
+.budget-step { text-align: center; padding: 32px 24px; flex: 1; }
+.budget-step-icon { font-size: 40px; margin-bottom: 12px; display: block; }
+.budget-step h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.budget-step p { font-size: 13px; color: var(--gray-500); line-height: 1.5; }
+.budget-arrow { font-size: 24px; color: var(--gray-300); flex-shrink: 0; margin-top: -20px; }
+
+/* ═══ WIDGET CARDS ═══ */
+.widget-card {
+  background: var(--white); border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md); padding: 36px;
+  display: flex; gap: 32px; align-items: flex-start;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--gray-100);
+}
+.widget-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.widget-visual {
+  width: 200px; height: 200px; flex-shrink: 0;
+  border-radius: var(--radius-lg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 72px;
+  position: relative; overflow: hidden;
+}
+.widget-content { flex: 1; }
+.widget-moment { font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--purple); margin-bottom: 4px; font-style: italic; }
+.widget-name { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+.widget-desc { font-size: 15px; color: var(--gray-600); line-height: 1.7; margin-bottom: 16px; }
+.widget-meta { display: flex; gap: 16px; }
+.widget-meta-item { font-size: 12px; }
+.widget-meta-label { font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; font-size: 10px; }
+.widget-meta-value { font-weight: 700; color: var(--gray-800); margin-top: 2px; }
+.widget-includes { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-100); }
+.widget-includes p { font-size: 12px; color: var(--gray-500); }
+.widget-includes strong { color: var(--gray-700); }
+
+/* ═══ FREE FEATURES ═══ */
+.free-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  border: 1.5px dashed var(--gray-200); padding: 28px;
+  text-align: center; transition: transform 0.2s;
+}
+.free-card:hover { transform: translateY(-3px); }
+.free-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+.free-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.free-card p { font-size: 13px; color: var(--gray-500); line-height: 1.6; }
+.free-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; color: var(--green); margin-top: 12px;
+}
+
+/* ═══ FAQ MASONRY ═══ */
+.faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.faq-card {
+  background: var(--dark-surface); border: 1px solid var(--dark-border);
+  border-radius: var(--radius-lg); padding: 24px;
+}
+.faq-card h4 { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+.faq-card p { font-size: 13px; color: var(--dark-muted); line-height: 1.7; }
+.faq-card.wide { grid-column: span 2; }
+
+/* ═══ CTA BLOCK ═══ */
+.cta-block { background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%); border-radius: var(--radius-xl); padding: 64px; text-align: center; color: white; }
+.cta-block h2 { font-family: var(--font-display); font-size: 40px; font-weight: 600; letter-spacing: -1px; margin-bottom: 12px; }
+.cta-block p { font-size: 16px; opacity: 0.8; margin-bottom: 32px; }
+.btn-white { background: var(--white); color: var(--black); }
+.btn-white:hover { background: var(--gray-50); }
+
+/* ═══ FOOTER ═══ */
+.footer { padding: 48px 40px; background: var(--dark-bg); text-align: center; }
+.footer-brand { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.footer-sub { font-size: 12px; color: var(--dark-muted); }
+.footer-divider { width: 40px; height: 2px; background: var(--dark-border); margin: 16px auto; }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 900px) {
+  .display-xl { font-size: 44px; }
+  .display-lg { font-size: 36px; }
+  .display-md { font-size: 28px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .hero { min-height: auto; padding: 100px 0 60px; }
+  .wc-scene { display: none; }
+  .container { padding: 0 24px; }
+  section { padding: 64px 0; }
+  .widget-card { flex-direction: column; }
+  .widget-visual { width: 100%; height: 140px; }
+  .budget-flow { flex-direction: column; }
+  .budget-arrow { transform: rotate(90deg); margin: 0; }
+  .faq-grid { grid-template-columns: 1fr; }
+  .faq-card.wide { grid-column: span 1; }
+  .cta-block { padding: 40px 24px; }
+  .cta-block h2 { font-size: 32px; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#">
+      <div class="nav-logo">TEAM<br>MENU</div>
+      <span class="nav-brand-name">Team Menu</span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="team-menu-meals.html">Meals</a>
+      <a class="nav-link active" href="#">Pantry</a>
+      <a class="nav-link" href="#">Food</a>
+      <a class="nav-link" href="#">Love</a>
+      <a class="nav-link" href="#">Why</a>
+    </div>
+    <a class="nav-cta" href="#">Request Invite</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════════════════════
+     FOLD 1: HERO
+     ════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="wc-scene">
+    <div class="wc-blob wc-blob-1"></div>
+    <div class="wc-blob wc-blob-2"></div>
+    <div class="wc-blob wc-blob-3"></div>
+    <div class="wc-blob wc-blob-4"></div>
+    <div class="wc-item wc-item-1">&#x1F36A;</div><!-- cookie/snack -->
+    <div class="wc-item wc-item-2">&#x2615;</div><!-- coffee -->
+    <div class="wc-item wc-item-3">&#x1F34E;</div><!-- apple/fruit -->
+    <div class="wc-item wc-item-4">&#x1F9C3;</div><!-- juice -->
+    <div class="wc-item wc-item-5">&#x1F95C;</div><!-- peanuts/nuts -->
+    <div class="wc-item wc-item-6">&#x1F965;</div><!-- coconut water -->
+  </div>
+
+  <div class="container">
+    <div class="hero-content">
+      <p class="label mb-sm">Build Your Office Pantry</p>
+      <h1 class="display-xl mb-md">Your office pantry, <em>assembled.</em></h1>
+      <p class="hero-sub">Set a budget. Pick what you want. We handle the rest. Snacks, coffee, fruit, water, crockery, events &mdash; all from one place.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="#">Build yours &rarr;</a>
+        <a class="btn btn-outline" href="#">See what's included</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     FOLD 2: SIX STATIONS, ONE BUDGET
+     ════════════════════════════════════════════════════════ -->
+<section class="section-white">
+  <div class="container text-center">
+    <p class="label mb-sm">How It Works</p>
+    <h2 class="display-lg mb-md">Six stations. One budget.</h2>
+    <p class="body-lg mb-xl" style="max-width:600px;margin-left:auto;margin-right:auto">Employer sets a weekly pantry budget. Pick which stations you want active. Outpost allocates, sources, delivers, and restocks. You never coordinate with a vendor again.</p>
+
+    <div class="budget-flow">
+      <div class="budget-step">
+        <span class="budget-step-icon">&#x1F4B0;</span>
+        <h4>Set budget</h4>
+        <p>Weekly or monthly.<br>You decide the number.</p>
+      </div>
+      <span class="budget-arrow">&rarr;</span>
+      <div class="budget-step">
+        <span class="budget-step-icon">&#x1F3DB;</span>
+        <h4>Pick stations</h4>
+        <p>Choose which widgets<br>to activate.</p>
+      </div>
+      <span class="budget-arrow">&rarr;</span>
+      <div class="budget-step">
+        <span class="budget-step-icon">&#x1F4E6;</span>
+        <h4>We allocate</h4>
+        <p>Outpost plans sourcing<br>and restock schedule.</p>
+      </div>
+      <span class="budget-arrow">&rarr;</span>
+      <div class="budget-step">
+        <span class="budget-step-icon">&#x1F504;</span>
+        <h4>Auto-restock</h4>
+        <p>Everything maintained.<br>You walk away.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     FOLD 3: THE WIDGETS (centerpiece)
+     ════════════════════════════════════════════════════════ -->
+<section class="section-light">
+  <div class="container">
+    <p class="label mb-sm">The Stations</p>
+    <h2 class="display-lg mb-md">Every corner of your pantry, covered.</h2>
+    <p class="body-lg mb-xl" style="max-width:600px">Each station is a distinct module. Mix and match. Start with one, add more anytime. Every station comes with sourcing, delivery, and restocking handled by Outpost.</p>
+
+    <div style="display:flex;flex-direction:column;gap:24px">
+
+      <!-- Snack Shelf -->
+      <div class="widget-card">
+        <div class="widget-visual" style="background:linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)">&#x1F36A;</div>
+        <div class="widget-content">
+          <div class="widget-moment">"The 3pm rescue."</div>
+          <div class="widget-name">Snack Shelf</div>
+          <div class="widget-desc">Curated snacks your team actually likes. Set preferences (healthy, indulgent, mixed), pick a refill frequency (daily, weekly, monthly), and we keep the shelf stocked. No more sad vending machine runs.</div>
+          <div class="widget-meta">
+            <div class="widget-meta-item">
+              <div class="widget-meta-label">Setup</div>
+              <div class="widget-meta-value" style="color:var(--green)">No upfront cost</div>
+            </div>
+            <div class="widget-meta-item">
+              <div class="widget-meta-label">Restocking</div>
+              <div class="widget-meta-value">Your schedule</div>
+            </div>
+            <div class="widget-meta-item">
+              <div class="widget-meta-label">Brands</div>
+              <div class="widget-meta-value">Curated from 30+</div>
+            </div>
+          </div>
+          <div class="widget-includes">
+            <p><strong>Outpost handles:</strong> sourcing, curation, delivery, shelf refresh, preference tracking</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barista -->
+      <div class="widget-card">
+        <div class="widget-visual" style="background:linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%)">&#x2615;</div>
+        <div class="widget-content">
+          <div class="widget-moment">"The morning ritual."</div>
+          <div class="widget-name">Barista</div>
+          <div class="widget-desc">A real coffee setup in your office. Not instant, not a pod machine &mdash; proper beans, a proper machine, proper coffee. Your team starts the day right. We handle beans, milk, maintenance, the works.</div>
+          <div class="widget-meta">
+            <div class="widget-meta-item">
+              <div class="widget-meta-label">Setup</div>
+              <div class="widget-meta-value">&#8377;12,000</div>
+            </div>
+            <div class="widget-meta-item">
+              <div class="widget-meta-label">Includes</div>
+              <div class="widget-meta-value">Machine + Beans + Maintenance</div>
+            </div>
+          </div>
+          <div class="widget-includes">
+            <p><strong>Outpost handles:</strong> machine setup, bean sourcing, milk supply, maintenance schedule, repair/replace</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fridge -->
+      <div class="widget-card">
+        <div class="widget-visual" style="background:linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%)">&#x1F9C3;</div>
+        <div class="widget-content">
+          <div class="widget-moment">"The healthy corner."</div>
+          <div class="widget-name">Fridge</div>
+          <div class="widget-desc">A stocked fridge with juice, fresh fruit, coconut water, and protein drinks. Always cold, always available. We deliver and rotate stock so nothing sits too long.</div>
+          <div class="widget-meta">
+            <div class="widget-meta-item">
+              <div class="widget-meta-label">Setup</div>
+              <div class="widget-meta-value">&#8377;8,000</div>
+            </div>
+            <div class="widget-meta-item">
+              <div class="widget-meta-label">Includes</div>
+              <div class="widget-meta-value">Custom fridge + Stock</div>
+            </div>
+            <div class="widget-meta-item">
+              <div class="widget-meta-label">Rotation</div>
+              <div class="widget-meta-value">2&ndash;3x per week</div>
+            </div>
+          </div>
+          <div class="widget-includes">
+            <p><strong>Outpost handles:</strong> fridge setup, stocking, freshness rotation, seasonal variety, waste management</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Water Cooler -->
+      <div class="widget-card">
+        <div class="widget-visual" style="background:linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)">&#x1F4A7;</div>
+        <div class="widget-content">
+          <div class="widget-moment">"Just water, done right."</div>
+          <div class="widget-name">Water Cooler</div>
+          <div class="widget-desc">Clean, purified water. One-time setup, ongoing maintenance included. No refilling cans, no calling the delivery guy, no empty cooler on Monday morning. It just works.</div>
+          <div class="widget-meta">
+            <div class="widget-meta-item">
+              <div class="widget-meta-label">Setup</div>
+              <div class="widget-meta-value">&#8377;4,500</div>
+            </div>
+            <div class="widget-meta-item">
+              <div class="widget-meta-label">Maintenance</div>
+              <div class="widget-meta-value">Included &mdash; forever</div>
+            </div>
+          </div>
+          <div class="widget-includes">
+            <p><strong>Outpost handles:</strong> purifier setup, filter replacement, maintenance schedule, repair/replace</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kitchen -->
+      <div class="widget-card">
+        <div class="widget-visual" style="background:linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)">&#x1F37D;</div>
+        <div class="widget-content">
+          <div class="widget-moment">"No more plastic."</div>
+          <div class="widget-name">Kitchen</div>
+          <div class="widget-desc">Custom sustainable crockery and cutlery for your office. Branded with your company name if you want. Replace the disposable cups and paper plates with something you're proud of.</div>
+          <div class="widget-meta">
+            <div class="widget-meta-item">
+              <div class="widget-meta-label">Setup</div>
+              <div class="widget-meta-value">&#8377;6,000</div>
+            </div>
+            <div class="widget-meta-item">
+              <div class="widget-meta-label">Includes</div>
+              <div class="widget-meta-value">Crockery + Cutlery + Branding</div>
+            </div>
+          </div>
+          <div class="widget-includes">
+            <p><strong>Outpost handles:</strong> design, sourcing, branding, delivery, replacement for breakage</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Events -->
+      <div class="widget-card">
+        <div class="widget-visual" style="background:linear-gradient(135deg, #FDF2F8 0%, #FCE7F3 100%)">&#x1F389;</div>
+        <div class="widget-content">
+          <div class="widget-moment">"The big day, sorted."</div>
+          <div class="widget-name">Events</div>
+          <div class="widget-desc">Townhalls, team lunches, customer visits, board meetings. Tell us what you need with 48 hours notice. We plan the menu, handle the logistics, and show up on time.</div>
+          <div class="widget-meta">
+            <div class="widget-meta-item">
+              <div class="widget-meta-label">Pricing</div>
+              <div class="widget-meta-value">Per-event</div>
+            </div>
+            <div class="widget-meta-item">
+              <div class="widget-meta-label">Lead time</div>
+              <div class="widget-meta-value">48 hours</div>
+            </div>
+            <div class="widget-meta-item">
+              <div class="widget-meta-label">Min. headcount</div>
+              <div class="widget-meta-value">10 people</div>
+            </div>
+          </div>
+          <div class="widget-includes">
+            <p><strong>Outpost handles:</strong> menu planning, dietary accommodations, delivery, setup, cleanup</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     FOLD 4: THREE THINGS THAT COME FREE
+     ════════════════════════════════════════════════════════ -->
+<section class="section-white">
+  <div class="container text-center">
+    <p class="label mb-sm">Included With Pantry</p>
+    <h2 class="display-lg mb-md">Three things that come free.</h2>
+    <p class="body-lg mb-xl" style="max-width:560px;margin-left:auto;margin-right:auto">These aren't pantry items. They're culture tools. No fulfillment cost, no operational overhead. They auto-enable the moment you activate Pantry.</p>
+
+    <div class="grid-3" style="gap:20px">
+      <div class="free-card">
+        <span class="free-icon">&#x1F382;</span>
+        <h4>Celebrations</h4>
+        <p>Birthdays and work anniversaries, auto-generated from your team data. Never miss another one. The system remembers so you don't have to.</p>
+        <div class="free-badge">&#x2713; Free forever</div>
+      </div>
+      <div class="free-card">
+        <span class="free-icon">&#x1F31F;</span>
+        <h4>Team Wishlist</h4>
+        <p>Employees upvote and downvote items they want in the pantry. You see what people actually care about. Real signal, not guesswork.</p>
+        <div class="free-badge">&#x2713; Free forever</div>
+      </div>
+      <div class="free-card">
+        <span class="free-icon">&#x1F4AC;</span>
+        <h4>From the Team</h4>
+        <p>Team contributions and shoutouts. Someone brought cookies from their trip? Announce it. Birthday potluck? Coordinate it. Approve and share via Slack or WhatsApp.</p>
+        <div class="free-badge">&#x2713; Free forever</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     FOLD 5: SET IT UP. WALK AWAY.
+     ════════════════════════════════════════════════════════ -->
+<section class="section-dark">
+  <div class="container text-center">
+    <p class="label mb-sm">For the Admin</p>
+    <h2 class="display-lg mb-md" style="color:var(--white)">Set it up. Walk away.</h2>
+    <p class="body-lg mb-xl" style="max-width:560px;margin-left:auto;margin-right:auto">Everything the employer does fits in three actions. After that, Outpost runs the pantry like clockwork.</p>
+
+    <div class="grid-3" style="gap:20px;max-width:720px;margin:0 auto">
+      <div class="card-dark" style="border-radius:var(--radius-lg);padding:28px;text-align:center">
+        <div style="font-size:36px;margin-bottom:12px">&#x1F3AF;</div>
+        <h4 style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px">Pick widgets</h4>
+        <p style="font-size:13px;color:var(--dark-muted);line-height:1.6">Choose which stations you want. Start with one. Add more anytime. Drop what doesn't work.</p>
+      </div>
+      <div class="card-dark" style="border-radius:var(--radius-lg);padding:28px;text-align:center">
+        <div style="font-size:36px;margin-bottom:12px">&#x1F4B3;</div>
+        <h4 style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px">Set budget</h4>
+        <p style="font-size:13px;color:var(--dark-muted);line-height:1.6">Weekly or monthly. Outpost allocates across your active stations. Change it anytime.</p>
+      </div>
+      <div class="card-dark" style="border-radius:var(--radius-lg);padding:28px;text-align:center">
+        <div style="font-size:36px;margin-bottom:12px">&#x2705;</div>
+        <h4 style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px">Done</h4>
+        <p style="font-size:13px;color:var(--dark-muted);line-height:1.6">No vendor calls. No restocking reminders. No coordination. You'll receive gratitude from employees and almost nothing else.</p>
+      </div>
+    </div>
+
+    <p style="font-size:14px;color:var(--dark-muted);margin-top:40px;max-width:480px;margin-left:auto;margin-right:auto">Your dashboard shows real-time pantry usage, budget remaining, and upcoming restocks. But honestly &mdash; you'll barely need to check it.</p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     FOLD 6: ALL YOUR QUESTIONS, ANSWERED
+     ════════════════════════════════════════════════════════ -->
+<section class="section-dark" style="padding-top:0">
+  <div class="container">
+    <h2 class="display-lg mb-lg" style="color:var(--white)">All your questions, answered.</h2>
+
+    <div class="faq-grid">
+      <div class="faq-card">
+        <h4>Can we start with just one station?</h4>
+        <p>Absolutely. Most teams start with Snack Shelf or Barista and add more later. There's no minimum. Pick what makes sense for your team today.</p>
+      </div>
+      <div class="faq-card">
+        <h4>What if we want to change stations mid-month?</h4>
+        <p>Add or remove anytime. Budget rebalances automatically. No penalties, no lock-in. Your pantry should evolve with your team.</p>
+      </div>
+      <div class="faq-card">
+        <h4>What brands do you source from?</h4>
+        <p>We curate from 30+ brands across snacks, coffee, beverages, and fruit. Think modern, clean-label brands your team already likes &mdash; not gas station leftovers.</p>
+      </div>
+      <div class="faq-card">
+        <h4>What about allergies and dietary restrictions?</h4>
+        <p>We track team dietary preferences and stock accordingly. Vegan, nut-free, gluten-free &mdash; just flag it and we'll make sure the shelf reflects it.</p>
+      </div>
+      <div class="faq-card">
+        <h4>What's the minimum budget?</h4>
+        <p>Depends on which stations you activate. Snack Shelf starts from &#8377;2,000/week for a team of 10. We'll recommend a budget based on your team size and choices.</p>
+      </div>
+      <div class="faq-card">
+        <h4>How does billing work?</h4>
+        <p>One invoice per month covering all pantry stations. Broken down by station, by week. Clean, organized, ready for your finance team. No chasing multiple vendors.</p>
+      </div>
+      <div class="faq-card wide">
+        <h4>Pantry is separate from Meals?</h4>
+        <p>Yes. Meals is per-employee daily pricing (&#8377;199 or &#8377;229/day). Pantry is a team budget. You can have one without the other, or both. Most teams do both &mdash; but there's no bundling pressure. <a href="team-menu-meals.html" style="color:var(--purple);text-decoration:underline">See Meals &rarr;</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     FOLD 7: EMOTIONAL CLOSE
+     ════════════════════════════════════════════════════════ -->
+<section class="section-light">
+  <div class="container-narrow text-center" style="max-width:720px;margin:0 auto;padding:0 40px">
+    <h2 class="display-lg mb-md" style="max-width:580px;margin-left:auto;margin-right:auto">The small things make the office <em style="font-family:var(--font-display);color:var(--purple);font-style:italic">yours.</em></h2>
+    <p class="body-lg mb-lg" style="max-width:520px;margin-left:auto;margin-right:auto">A good cup of coffee at 9am. Fresh fruit on Monday. A surprise snack you didn't expect. A birthday cake that showed up without anyone asking. These aren't perks. They're the texture of a workplace people actually want to be in.</p>
+    <p class="body" style="max-width:440px;margin-left:auto;margin-right:auto">Your team won't remember the Slack messages. They'll remember how the office felt.</p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     FOLD 8: CTA
+     ════════════════════════════════════════════════════════ -->
+<section class="section-light" style="padding-top:0">
+  <div class="container">
+    <div class="cta-block">
+      <h2>Build your pantry.</h2>
+      <p>Tell us about your team and we'll recommend a setup. No commitment until you're ready.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a class="btn btn-white" href="#">Request Invite &rarr;</a>
+        <a class="btn" href="team-menu-meals.html" style="background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.2)">See Meals instead</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-brand">Team Menu</div>
+  <div class="footer-sub">Part of the X Menu family &middot; Powered by Outpost Kitchens</div>
+  <div class="footer-divider"></div>
+  <div class="footer-sub" style="margin-top:8px"><a href="team-menu-meals.html" style="color:var(--dark-muted);text-decoration:none;font-size:12px">Meals</a> &nbsp;&middot;&nbsp; <a href="#" style="color:var(--dark-muted);text-decoration:none;font-size:12px">Pantry</a> &nbsp;&middot;&nbsp; <a href="#" style="color:var(--dark-muted);text-decoration:none;font-size:12px">Food</a> &nbsp;&middot;&nbsp; <a href="#" style="color:var(--dark-muted);text-decoration:none;font-size:12px">Love</a> &nbsp;&middot;&nbsp; <a href="#" style="color:var(--dark-muted);text-decoration:none;font-size:12px">Why</a></div>
+  <div style="font-size:10px;color:rgba(255,255,255,0.2);margin-top:16px">Outpost Kitchen Pvt Ltd &middot; Bangalore &middot; 2026</div>
+</footer>
+
+</body>
+</html>

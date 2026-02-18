@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Menu — Employee</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --purple: #7C5CFC;
+    --purple-light: #F3F0FF;
+    --purple-mid: #EDE9FE;
+    --purple-dark: #5B3FD9;
+    --gray-50: #FAFAFA;
+    --gray-100: #F5F5F5;
+    --gray-200: #E5E5E5;
+    --gray-300: #D4D4D4;
+    --gray-400: #A3A3A3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --gray-700: #404040;
+    --gray-800: #262626;
+    --gray-900: #171717;
+    --white: #FFFFFF;
+    --green: #22C55E;
+    --green-light: #F0FDF4;
+    --orange: #F97316;
+    --orange-light: #FFF7ED;
+    --blue: #3B82F6;
+    --blue-light: #EFF6FF;
+    --pink: #EC4899;
+    --pink-light: #FDF2F8;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --radius-xs: 8px;
+    --radius-pill: 100px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+    background: var(--gray-100);
+    color: var(--gray-900);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── Shell ─── */
+  .shell {
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: var(--white);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── Pages ─── */
+  .page { display: none; flex: 1; overflow-y: auto; padding-bottom: 80px; }
+  .page.active { display: block; }
+
+  /* ─── Bottom Nav ─── */
+  .nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 16px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+    background: var(--white);
+    border-top: 1px solid var(--gray-100);
+    z-index: 100;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--gray-400);
+    text-decoration: none;
+    cursor: pointer;
+    padding: 4px 12px;
+    border-radius: var(--radius-xs);
+    transition: color 0.15s;
+  }
+
+  .nav-item:hover { color: var(--gray-600); }
+  .nav-item.active { color: var(--purple); }
+
+  .nav-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     HOME PAGE
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+  .company-logo {
+    width: 56px;
+    height: 56px;
+    background: var(--purple);
+    border-radius: 14px;
+    margin: 28px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  /* ─── Timeline ─── */
+  .timeline {
+    padding: 24px 24px 0;
+  }
+
+  .day-block {
+    margin-bottom: 28px;
+  }
+
+  .day-label {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+  }
+
+  .day-sub {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-bottom: 14px;
+  }
+
+  .day-sub strong {
+    color: var(--orange);
+    font-weight: 600;
+  }
+
+  /* ─── Action Buttons Row ─── */
+  .action-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 0;
+  }
+
+  .action-btn {
+    flex: 1;
+    padding: 14px 0;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+
+  .action-btn.primary {
+    background: var(--gray-900);
+    color: var(--white);
+  }
+
+  .action-btn.primary:hover {
+    background: var(--gray-700);
+  }
+
+  .action-btn.secondary {
+    background: var(--gray-100);
+    color: var(--gray-600);
+  }
+
+  .action-btn.secondary:hover {
+    background: var(--gray-200);
+  }
+
+  /* ─── Collapsed Meal Card ─── */
+  .meal-card {
+    background: var(--gray-50);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .meal-card:hover {
+    background: var(--gray-100);
+  }
+
+  .meal-card-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-600);
+  }
+
+  .meal-card-arrow {
+    color: var(--gray-300);
+    font-size: 16px;
+  }
+
+  /* ─── Pantry Item Card (on Home) ─── */
+  .pantry-home-card {
+    background: var(--purple-light);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .pantry-home-card:hover {
+    background: var(--purple-mid);
+  }
+
+  .pantry-home-card .meal-card-label {
+    color: var(--purple-dark);
+    font-weight: 600;
+  }
+
+  .pantry-home-card .meal-card-arrow {
+    color: var(--purple);
+  }
+
+  /* ─── Pantry Tag (what was taken from pantry) ─── */
+  .pantry-tag {
+    background: var(--purple-light);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--purple-dark);
+    font-weight: 500;
+  }
+
+  .pantry-tag-icon {
+    font-size: 16px;
+  }
+
+  /* ─── See Previous ─── */
+  .see-previous {
+    font-size: 13px;
+    color: var(--gray-400);
+    cursor: pointer;
+    padding: 4px 0;
+  }
+
+  .see-previous:hover {
+    color: var(--gray-600);
+  }
+
+  /* ─── Team Menu Badge ─── */
+  .tm-badge {
+    width: 48px;
+    height: 48px;
+    background: var(--purple);
+    border-radius: 12px;
+    margin: 40px auto 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 8px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     MEALS PAGE
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+  .page-header {
+    padding: 28px 24px 0;
+  }
+
+  .page-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .page-desc {
+    font-size: 13px;
+    color: var(--gray-400);
+    margin-top: 4px;
+  }
+
+  .settings-section {
+    padding: 24px 24px 0;
+  }
+
+  .settings-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--gray-400);
+    margin-bottom: 12px;
+  }
+
+  .setting-card {
+    background: var(--gray-50);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .setting-card:hover {
+    background: var(--gray-100);
+  }
+
+  .setting-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .setting-title {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .setting-value {
+    font-size: 12px;
+    color: var(--gray-400);
+  }
+
+  .setting-arrow {
+    color: var(--gray-300);
+    font-size: 16px;
+  }
+
+  /* ─── Expanded meal edit (modal-like) ─── */
+  .meal-edit-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 200;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .meal-edit-overlay.open {
+    display: flex;
+  }
+
+  .meal-edit-sheet {
+    background: var(--white);
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 430px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 20px 24px 32px;
+  }
+
+  .sheet-handle {
+    width: 36px;
+    height: 4px;
+    background: var(--gray-200);
+    border-radius: 2px;
+    margin: 0 auto 20px;
+  }
+
+  .sheet-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .sheet-sub {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-bottom: 20px;
+  }
+
+  .menu-item {
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    border-radius: var(--radius);
+    padding: 14px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .item-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: var(--gray-100);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+
+  .item-info { flex: 1; min-width: 0; }
+
+  .item-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .item-meta {
+    font-size: 11px;
+    color: var(--gray-400);
+  }
+
+  .toggle {
+    width: 42px;
+    height: 25px;
+    border-radius: 13px;
+    background: var(--gray-200);
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+
+  .toggle.on { background: var(--purple); }
+
+  .toggle::after {
+    content: '';
+    position: absolute;
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    background: var(--white);
+    top: 3px;
+    left: 3px;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  .toggle.on::after {
+    transform: translateX(17px);
+  }
+
+  .sheet-confirm {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--gray-900);
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: background 0.15s;
+  }
+
+  .sheet-confirm:hover {
+    background: var(--gray-700);
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     PANTRY PAGE
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+  /* Culture Calendar Banner */
+  .culture-banner {
+    margin: 20px 24px 0;
+    padding: 18px;
+    background: var(--pink-light);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .culture-banner:hover {
+    background: #FCE7F3;
+  }
+
+  .culture-emoji {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .culture-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 2px;
+  }
+
+  .culture-sub {
+    font-size: 12px;
+    color: var(--gray-500);
+  }
+
+  /* Pantry Items Grid */
+  .pantry-section {
+    padding: 24px 24px 0;
+  }
+
+  .pantry-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .pantry-section-title {
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .pantry-filter {
+    font-size: 12px;
+    color: var(--purple);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .pantry-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .pantry-item:last-child {
+    border-bottom: none;
+  }
+
+  .pantry-item-img {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .pantry-item-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .pantry-item-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 1px;
+  }
+
+  .pantry-item-status {
+    font-size: 11px;
+    color: var(--gray-400);
+  }
+
+  .pantry-item-status.stocked {
+    color: var(--green);
+  }
+
+  .pantry-item-status.out {
+    color: var(--orange);
+  }
+
+  .vote-btns {
+    display: flex;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .vote-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: all 0.15s;
+  }
+
+  .vote-btn:hover {
+    background: var(--gray-50);
+  }
+
+  .vote-btn.voted-up {
+    background: var(--green-light);
+    border-color: var(--green);
+  }
+
+  .vote-btn.voted-down {
+    background: var(--orange-light);
+    border-color: var(--orange);
+  }
+
+  .vote-count {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--gray-500);
+    min-width: 16px;
+    text-align: center;
+  }
+
+  /* Pantry Actions */
+  .pantry-actions {
+    display: flex;
+    gap: 8px;
+    margin: 20px 24px 0;
+  }
+
+  .pantry-action-btn {
+    flex: 1;
+    padding: 12px;
+    border: 1.5px dashed var(--gray-200);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-500);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+  }
+
+  .pantry-action-btn:hover {
+    border-color: var(--purple);
+    color: var(--purple);
+    background: var(--purple-light);
+  }
+
+  /* Wishlist */
+  .wishlist-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--gray-100);
+    border-radius: var(--radius-pill);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-600);
+    margin: 0 4px 6px 0;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .wishlist-tag:hover {
+    background: var(--purple-light);
+    color: var(--purple);
+  }
+
+  .wishlist-tag.fav {
+    background: var(--purple-light);
+    color: var(--purple);
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     YOU PAGE
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+  .profile-header {
+    text-align: center;
+    padding: 32px 24px 0;
+  }
+
+  .avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--purple-light);
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--purple);
+    font-weight: 700;
+  }
+
+  .profile-name {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .profile-company {
+    font-size: 13px;
+    color: var(--gray-400);
+    margin-top: 2px;
+  }
+
+  .profile-badges {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .badge {
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .badge.birthday {
+    background: var(--pink-light);
+    color: var(--pink);
+  }
+
+  .badge.anniversary {
+    background: var(--blue-light);
+    color: var(--blue);
+  }
+
+  .info-section {
+    padding: 24px 24px 0;
+  }
+
+  .info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .info-row:last-child {
+    border-bottom: none;
+  }
+
+  .info-label {
+    font-size: 13px;
+    color: var(--gray-500);
+  }
+
+  .info-value {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .pref-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .pref-tag {
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--gray-100);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gray-600);
+  }
+
+  /* Chat Section */
+  .chat-section {
+    padding: 24px 24px 0;
+  }
+
+  .chat-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--gray-50);
+    border-radius: var(--radius-sm);
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .chat-card:hover {
+    background: var(--gray-100);
+  }
+
+  .chat-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .chat-icon.admin { background: var(--blue-light); }
+  .chat-icon.team { background: var(--green-light); }
+  .chat-icon.support { background: var(--purple-light); }
+
+  .chat-info { flex: 1; }
+
+  .chat-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 1px;
+  }
+
+  .chat-preview {
+    font-size: 11px;
+    color: var(--gray-400);
+  }
+
+  .chat-badge {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--purple);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ─── Wallet on Home ─── */
+  .wallet-bar {
+    margin: 16px 24px 0;
+    padding: 12px 16px;
+    background: var(--purple-light);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .wallet-label {
+    font-size: 12px;
+    color: var(--gray-500);
+  }
+
+  .wallet-amount {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--purple);
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ═══════════════════════════════
+       PAGE 1: HOME
+  ═══════════════════════════════ -->
+  <div class="page active" id="page-home">
+
+    <!-- Company Logo -->
+    <div class="company-logo">LOGO</div>
+
+    <!-- Wallet -->
+    <div class="wallet-bar">
+      <span class="wallet-label">Company wallet</span>
+      <span class="wallet-amount">&#8377;2,400</span>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline">
+
+      <!-- TOMORROW -->
+      <div class="day-block">
+        <div class="day-label">Tomorrow</div>
+        <div class="day-sub">Auto-confirm in <strong>6h 41m</strong></div>
+        <div class="action-row">
+          <button class="action-btn primary" onclick="openMealEdit()">Edit meal</button>
+          <button class="action-btn secondary">Skip</button>
+        </div>
+      </div>
+
+      <!-- TODAY -->
+      <div class="day-block">
+        <div class="day-label">Today</div>
+        <div class="day-sub">Arriving between 8:30 – 9:00 AM</div>
+        <div class="meal-card" onclick="openMealEdit()">
+          <span class="meal-card-label">Your meal</span>
+          <span class="meal-card-arrow">&rsaquo;</span>
+        </div>
+        <div class="pantry-home-card" onclick="switchTab('pantry')">
+          <span class="meal-card-label">Add a pantry item</span>
+          <span class="meal-card-arrow">&rsaquo;</span>
+        </div>
+      </div>
+
+      <!-- YESTERDAY -->
+      <div class="day-block">
+        <div class="day-label">Yesterday</div>
+        <div class="day-sub">Delivered at 8:42 AM</div>
+        <div class="meal-card">
+          <span class="meal-card-label">Your meal</span>
+          <span class="meal-card-arrow">&rsaquo;</span>
+        </div>
+        <div class="pantry-tag">
+          <span class="pantry-tag-icon">&#9733;</span>
+          From pantry: Granola
+        </div>
+      </div>
+
+      <!-- See Previous -->
+      <div class="see-previous">See previous &darr;</div>
+
+    </div>
+
+    <!-- TM Badge -->
+    <div class="tm-badge">TEAM<br>MENU</div>
+
+  </div>
+
+  <!-- ═══════════════════════════════
+       PAGE 2: MEALS
+  ═══════════════════════════════ -->
+  <div class="page" id="page-meals">
+
+    <div class="page-header">
+      <div class="page-title">Meals</div>
+      <div class="page-desc">Delivery preferences and schedule</div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-label">Delivery</div>
+      <div class="setting-card">
+        <div class="setting-left">
+          <span class="setting-title">Default delivery slot</span>
+          <span class="setting-value">8:30 – 9:00 AM</span>
+        </div>
+        <span class="setting-arrow">&rsaquo;</span>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-label">Schedule</div>
+      <div class="setting-card">
+        <div class="setting-left">
+          <span class="setting-title">Setup holidays</span>
+          <span class="setting-value">No holidays set</span>
+        </div>
+        <span class="setting-arrow">&rsaquo;</span>
+      </div>
+      <div style="font-size: 11px; color: var(--gray-400); margin-top: 6px; padding-left: 2px;">
+        Holidays = no delivery. Some are set by your admin, you can add your own.
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-label">Integrations</div>
+      <div class="setting-card">
+        <div class="setting-left">
+          <span class="setting-title">Link Slack</span>
+          <span class="setting-value">Not connected</span>
+        </div>
+        <span class="setting-arrow">&rsaquo;</span>
+      </div>
+      <div class="setting-card">
+        <div class="setting-left">
+          <span class="setting-title">Link Teams</span>
+          <span class="setting-value">Not connected</span>
+        </div>
+        <span class="setting-arrow">&rsaquo;</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════
+       PAGE 3: PANTRY
+  ═══════════════════════════════ -->
+  <div class="page" id="page-pantry">
+
+    <div class="page-header">
+      <div class="page-title">Pantry</div>
+      <div class="page-desc">Your team's shared shelf</div>
+    </div>
+
+    <!-- Culture Calendar -->
+    <div class="culture-banner">
+      <div class="culture-emoji">&#127874;</div>
+      <div class="culture-title">Priya's birthday is tomorrow!</div>
+      <div class="culture-sub">Cake has been added to the pantry order</div>
+    </div>
+
+    <!-- Pantry Actions -->
+    <div class="pantry-actions">
+      <button class="pantry-action-btn" onclick="">&#43; Add to wishlist</button>
+      <button class="pantry-action-btn" onclick="">&#x1F3E0; Brought from home</button>
+    </div>
+
+    <!-- Your Wishlist / Favourites -->
+    <div class="pantry-section">
+      <div class="pantry-section-header">
+        <span class="pantry-section-title">Your favourites</span>
+        <span class="pantry-filter">Edit</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap;">
+        <span class="wishlist-tag fav">&#9829; Granola</span>
+        <span class="wishlist-tag fav">&#9829; Cold brew</span>
+        <span class="wishlist-tag">Coconut water</span>
+        <span class="wishlist-tag">Protein bar</span>
+        <span class="wishlist-tag">Banana chips</span>
+      </div>
+    </div>
+
+    <!-- Stocked Items -->
+    <div class="pantry-section">
+      <div class="pantry-section-header">
+        <span class="pantry-section-title">In the pantry</span>
+        <span class="pantry-filter">Vote</span>
+      </div>
+
+      <div class="pantry-item">
+        <div class="pantry-item-img">&#9749;</div>
+        <div class="pantry-item-info">
+          <div class="pantry-item-name">Cold Brew Coffee</div>
+          <div class="pantry-item-status stocked">Stocked</div>
+        </div>
+        <div class="vote-btns">
+          <button class="vote-btn voted-up">&#9650;</button>
+          <span class="vote-count">8</span>
+        </div>
+      </div>
+
+      <div class="pantry-item">
+        <div class="pantry-item-img">&#127846;</div>
+        <div class="pantry-item-info">
+          <div class="pantry-item-name">Granola Mix</div>
+          <div class="pantry-item-status stocked">Stocked</div>
+        </div>
+        <div class="vote-btns">
+          <button class="vote-btn voted-up">&#9650;</button>
+          <span class="vote-count">6</span>
+        </div>
+      </div>
+
+      <div class="pantry-item">
+        <div class="pantry-item-img">&#129381;</div>
+        <div class="pantry-item-info">
+          <div class="pantry-item-name">Protein Bar (Peanut)</div>
+          <div class="pantry-item-status out">Stocked out</div>
+        </div>
+        <div class="vote-btns">
+          <button class="vote-btn">&#9650;</button>
+          <span class="vote-count">4</span>
+        </div>
+      </div>
+
+      <div class="pantry-item">
+        <div class="pantry-item-img">&#127813;</div>
+        <div class="pantry-item-info">
+          <div class="pantry-item-name">Coconut Water</div>
+          <div class="pantry-item-status stocked">Stocked</div>
+        </div>
+        <div class="vote-btns">
+          <button class="vote-btn">&#9650;</button>
+          <span class="vote-count">3</span>
+        </div>
+      </div>
+
+      <div class="pantry-item">
+        <div class="pantry-item-img">&#127863;</div>
+        <div class="pantry-item-info">
+          <div class="pantry-item-name">Orange Juice</div>
+          <div class="pantry-item-status stocked">Stocked</div>
+        </div>
+        <div class="vote-btns">
+          <button class="vote-btn voted-down">&#9660;</button>
+          <span class="vote-count">1</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════
+       PAGE 4: YOU
+  ═══════════════════════════════ -->
+  <div class="page" id="page-you">
+
+    <div class="profile-header">
+      <div class="avatar">A</div>
+      <div class="profile-name">Ankit Biyani</div>
+      <div class="profile-company">Recurr Studio</div>
+      <div class="profile-badges">
+        <span class="badge birthday">&#127874; Birthday: 14 Mar</span>
+        <span class="badge anniversary">&#127891; Joined: 2 years ago</span>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <div class="settings-label">Preferences</div>
+      <div class="info-row">
+        <span class="info-label">Diet</span>
+        <div class="pref-tags">
+          <span class="pref-tag">Vegetarian</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Health goal</span>
+        <div class="pref-tags">
+          <span class="pref-tag">High protein</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Allergies</span>
+        <div class="pref-tags">
+          <span class="pref-tag">None</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-section">
+      <div class="settings-label">Chat</div>
+      <div class="chat-card">
+        <div class="chat-icon admin">&#128172;</div>
+        <div class="chat-info">
+          <div class="chat-name">Admin + You</div>
+          <div class="chat-preview">Your admin can reach you here</div>
+        </div>
+      </div>
+      <div class="chat-card">
+        <div class="chat-icon team">&#128101;</div>
+        <div class="chat-info">
+          <div class="chat-name">Team chat</div>
+          <div class="chat-preview">Everyone on your team</div>
+        </div>
+        <div class="chat-badge">2</div>
+      </div>
+      <div class="chat-card">
+        <div class="chat-icon support">&#128736;</div>
+        <div class="chat-info">
+          <div class="chat-name">Support</div>
+          <div class="chat-preview">Talk to Team Menu</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wallet details -->
+    <div class="info-section">
+      <div class="settings-label">Wallet</div>
+      <div class="info-row">
+        <span class="info-label">Balance</span>
+        <span class="info-value" style="color: var(--purple);">&#8377;2,400</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">This month</span>
+        <span class="info-value">&#8377;1,860 spent</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════
+       MEAL EDIT BOTTOM SHEET
+  ═══════════════════════════════ -->
+  <div class="meal-edit-overlay" id="mealEditOverlay" onclick="closeMealEdit(event)">
+    <div class="meal-edit-sheet" onclick="event.stopPropagation()">
+      <div class="sheet-handle"></div>
+      <div class="sheet-title">Tomorrow's menu</div>
+      <div class="sheet-sub">Sat, 15 Feb &middot; Toggle items on or off</div>
+
+      <div class="menu-item">
+        <div class="item-img">&#129744;</div>
+        <div class="item-info">
+          <div class="item-name">Blueberry Overnight Oats</div>
+          <div class="item-meta">320 kcal &middot; Veg</div>
+        </div>
+        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-img">&#129372;</div>
+        <div class="item-info">
+          <div class="item-name">Peanut Butter Banana Oats</div>
+          <div class="item-meta">380 kcal &middot; High protein</div>
+        </div>
+        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-img">&#129373;</div>
+        <div class="item-info">
+          <div class="item-name">Tropical Fruit Bowl</div>
+          <div class="item-meta">210 kcal &middot; Vegan</div>
+        </div>
+        <div class="toggle" onclick="this.classList.toggle('on')"></div>
+      </div>
+
+      <button class="sheet-confirm" onclick="closeMealEdit(event, true)">Save changes</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════
+       BOTTOM NAV
+  ═══════════════════════════════ -->
+  <div class="nav">
+    <a class="nav-item active" onclick="switchTab('home')" id="nav-home">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+      <span>Home</span>
+    </a>
+    <a class="nav-item" onclick="switchTab('meals')" id="nav-meals">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></span>
+      <span>Meals</span>
+    </a>
+    <a class="nav-item" onclick="switchTab('pantry')" id="nav-pantry">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>
+      <span>Pantry</span>
+    </a>
+    <a class="nav-item" onclick="switchTab('you')" id="nav-you">
+      <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+      <span>You</span>
+    </a>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(tab) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('page-' + tab).classList.add('active');
+    document.getElementById('nav-' + tab).classList.add('active');
+  }
+
+  function openMealEdit() {
+    document.getElementById('mealEditOverlay').classList.add('open');
+  }
+
+  function closeMealEdit(e, force) {
+    if (force || e.target === document.getElementById('mealEditOverlay')) {
+      document.getElementById('mealEditOverlay').classList.remove('open');
+    }
+  }
+</script>
+
+</body>
+</html>

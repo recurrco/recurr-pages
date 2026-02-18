@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outpost Direct — Member View</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #f5f5f0; }
+    .phone { max-width: 420px; min-height: 100vh; margin: 0 auto; background: #fff; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.08); }
+    .tab-btn { transition: all 0.15s; }
+    .tab-btn.active { color: #D97706; border-bottom: 2px solid #D97706; font-weight: 600; }
+    .item-card { transition: all 0.15s; cursor: pointer; }
+    .item-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+    .item-card.selected { border-color: #D97706; background: #FFFBEB; }
+    .switcher-btn { transition: all 0.15s; }
+    .switcher-btn:hover { background: rgba(0,0,0,0.05); }
+    .switcher-btn.active { background: #1F2937; color: #fff; }
+    .view { display: none; }
+    .view.active { display: block; }
+    .bottom-tab { transition: all 0.1s; }
+    .bottom-tab.active { color: #D97706; }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== USER TYPE SWITCHER (floating) ==================== -->
+  <div class="fixed top-4 right-4 z-50">
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-1.5 flex gap-1">
+      <button class="switcher-btn active text-xs px-3 py-1.5 rounded-xl font-medium" data-user="gym" onclick="switchUser('gym')">Gym User</button>
+      <button class="switcher-btn text-xs px-3 py-1.5 rounded-xl font-medium" data-user="office" onclick="switchUser('office')">Office User</button>
+      <button class="switcher-btn text-xs px-3 py-1.5 rounded-xl font-medium" data-user="apartment" onclick="switchUser('apartment')">Apartment User</button>
+    </div>
+  </div>
+
+  <!-- ==================== PHONE CONTAINER ==================== -->
+  <div class="phone">
+
+    <!-- ==================== TOP BAR ==================== -->
+    <div class="px-5 pt-5 pb-3 border-b border-gray-100">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="text-lg font-bold">Outpost <span class="text-amber-500">Direct</span></div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="location-badge" class="text-[10px] bg-emerald-500/10 text-emerald-600 px-2 py-0.5 rounded-full font-medium">GYM</span>
+        </div>
+      </div>
+      <div class="mt-1">
+        <div id="location-name" class="text-sm text-gray-500">Cult Fitness HSR</div>
+      </div>
+    </div>
+
+    <!-- ==================== BOTTOM TAB BAR ==================== -->
+    <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[420px] bg-white border-t border-gray-100 flex z-40">
+      <button class="bottom-tab active flex-1 py-3 text-center text-xs font-medium text-gray-400" data-tab="home" onclick="switchTab('home')">
+        <div class="text-lg mb-0.5">&#9632;</div>Home
+      </button>
+      <button class="bottom-tab flex-1 py-3 text-center text-xs font-medium text-gray-400" data-tab="menu" onclick="switchTab('menu')">
+        <div class="text-lg mb-0.5">&#9733;</div>Menu
+      </button>
+      <button class="bottom-tab flex-1 py-3 text-center text-xs font-medium text-gray-400" data-tab="orders" onclick="switchTab('orders')">
+        <div class="text-lg mb-0.5">&#9776;</div>Orders
+      </button>
+      <button class="bottom-tab flex-1 py-3 text-center text-xs font-medium text-gray-400" data-tab="settings" onclick="switchTab('settings')">
+        <div class="text-lg mb-0.5">&#9881;</div>Settings
+      </button>
+    </div>
+
+    <!-- ==================== TAB: HOME ==================== -->
+    <div id="tab-home" class="view active pb-24">
+
+      <!-- Welcome + Context -->
+      <div class="px-5 pt-5">
+        <div id="welcome-msg" class="text-xl font-bold">Hey Rohan!</div>
+        <div id="welcome-sub" class="text-sm text-gray-500 mt-0.5">Your post-workout breakfast at Cult Fitness</div>
+      </div>
+
+      <!-- Tomorrow's Order Card -->
+      <div class="px-5 mt-5">
+        <div id="order-card" class="bg-amber-50 rounded-2xl p-5 border border-amber-100">
+          <div class="flex items-center justify-between mb-3">
+            <div class="text-xs text-amber-600 font-semibold uppercase tracking-wider">Tomorrow &middot; Feb 14</div>
+            <div id="deadline-badge" class="text-[10px] bg-amber-200/60 text-amber-700 px-2 py-0.5 rounded-full font-medium">Deadline: 6 PM today</div>
+          </div>
+
+          <!-- Current order or CTA -->
+          <div id="order-state-active" class="">
+            <div class="text-sm font-semibold mb-2">Your order is set:</div>
+            <div class="bg-white rounded-xl p-3 border border-amber-100">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div id="order-items" class="text-sm font-medium">Overnight Oats (Mango) + Protein Shake</div>
+                  <div id="order-time" class="text-xs text-gray-400 mt-0.5">6:30 AM batch &middot; Auto-ordered</div>
+                </div>
+                <div id="order-amount" class="text-sm font-bold">&#8377;349</div>
+              </div>
+            </div>
+            <div class="flex gap-2 mt-3">
+              <button class="flex-1 text-xs py-2 bg-white border border-amber-200 rounded-xl font-medium text-amber-700" onclick="switchTab('menu')">Change Order</button>
+              <button class="flex-1 text-xs py-2 bg-white border border-amber-200 rounded-xl font-medium text-red-500">Skip Tomorrow</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Proof / Community -->
+      <div class="px-5 mt-4">
+        <div id="social-proof" class="bg-gray-50 rounded-xl p-4 flex items-center gap-3">
+          <div class="flex -space-x-2">
+            <div class="w-7 h-7 bg-blue-200 rounded-full border-2 border-white text-[10px] flex items-center justify-center font-medium text-blue-700">S</div>
+            <div class="w-7 h-7 bg-green-200 rounded-full border-2 border-white text-[10px] flex items-center justify-center font-medium text-green-700">A</div>
+            <div class="w-7 h-7 bg-purple-200 rounded-full border-2 border-white text-[10px] flex items-center justify-center font-medium text-purple-700">M</div>
+            <div class="w-7 h-7 bg-gray-200 rounded-full border-2 border-white text-[10px] flex items-center justify-center font-medium text-gray-600">+5</div>
+          </div>
+          <div id="social-text" class="text-xs text-gray-500">8 people from Cult Fitness are ordering tomorrow</div>
+        </div>
+      </div>
+
+      <!-- Payment Info -->
+      <div class="px-5 mt-4">
+        <div id="payment-info" class="bg-white border border-gray-100 rounded-xl p-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-xs text-gray-400">Payment method</div>
+              <div id="payment-method" class="text-sm font-medium mt-0.5">Self-pay (Razorpay)</div>
+            </div>
+            <div id="payment-action">
+              <button class="text-xs text-amber-600 font-medium">Set up wallet</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="px-5 mt-4">
+        <div class="grid grid-cols-3 gap-3">
+          <div class="bg-white border border-gray-100 rounded-xl p-3 text-center">
+            <div id="stat-orders" class="text-lg font-bold">18</div>
+            <div class="text-[10px] text-gray-400">Orders this month</div>
+          </div>
+          <div class="bg-white border border-gray-100 rounded-xl p-3 text-center">
+            <div id="stat-spent" class="text-lg font-bold">&#8377;4,200</div>
+            <div class="text-[10px] text-gray-400">Spent this month</div>
+          </div>
+          <div class="bg-white border border-gray-100 rounded-xl p-3 text-center">
+            <div id="stat-fav" class="text-lg font-bold">Mango</div>
+            <div class="text-[10px] text-gray-400">Most ordered</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delivery Info -->
+      <div class="px-5 mt-4">
+        <div class="bg-white border border-gray-100 rounded-xl p-4">
+          <div class="text-xs text-gray-400 mb-2">Delivery details</div>
+          <div class="flex items-center justify-between">
+            <div>
+              <div id="delivery-slot" class="text-sm font-medium">6:30 AM batch</div>
+              <div id="delivery-point" class="text-xs text-gray-400 mt-0.5">Pickup: Front desk counter</div>
+            </div>
+            <div id="delivery-notif" class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">WhatsApp alert on arrival</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ==================== TAB: MENU ==================== -->
+    <div id="tab-menu" class="view pb-24">
+      <div class="px-5 pt-5 mb-4">
+        <div class="text-lg font-bold">Tomorrow's Menu</div>
+        <div id="menu-subtitle" class="text-sm text-gray-500">Curated for gym members &middot; High protein focus</div>
+      </div>
+
+      <!-- Menu Items -->
+      <div id="menu-items" class="px-5 space-y-3">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Add-ons -->
+      <div class="px-5 mt-6">
+        <div class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-3">Add-ons</div>
+        <div id="addon-items" class="space-y-2">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Order Summary / CTA -->
+      <div class="px-5 mt-6">
+        <div class="bg-gray-900 text-white rounded-2xl p-4 flex items-center justify-between">
+          <div>
+            <div class="text-xs text-gray-400">Your order</div>
+            <div class="text-sm font-medium mt-0.5">Overnight Oats (Mango) + Protein Shake</div>
+          </div>
+          <div class="text-right">
+            <div class="text-lg font-bold">&#8377;349</div>
+            <div id="menu-pay-label" class="text-[10px] text-gray-400">self-pay</div>
+          </div>
+        </div>
+        <button class="w-full mt-3 py-3 bg-amber-500 text-white rounded-xl font-semibold text-sm">Confirm Order</button>
+      </div>
+    </div>
+
+
+    <!-- ==================== TAB: ORDERS ==================== -->
+    <div id="tab-orders" class="view pb-24">
+      <div class="px-5 pt-5 mb-4">
+        <div class="text-lg font-bold">Your Orders</div>
+        <div class="text-sm text-gray-500">Order history at this location</div>
+      </div>
+
+      <!-- Upcoming -->
+      <div class="px-5 mb-4">
+        <div class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-3">Upcoming</div>
+        <div class="bg-amber-50 border border-amber-100 rounded-xl p-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-sm font-medium">Tomorrow &middot; Feb 14</div>
+              <div class="text-xs text-gray-500 mt-0.5">Overnight Oats (Mango) + Protein Shake</div>
+            </div>
+            <div class="text-right">
+              <div class="text-sm font-bold">&#8377;349</div>
+              <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">auto</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Past Orders -->
+      <div class="px-5">
+        <div class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-3">Past orders</div>
+        <div class="space-y-2">
+          <div class="bg-white border border-gray-100 rounded-xl p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium">Today &middot; Feb 13</div>
+                <div class="text-xs text-gray-400 mt-0.5">Protein Oats Bowl (PB) + Egg Whites</div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-medium">&#8377;298</div>
+                <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">delivered</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white border border-gray-100 rounded-xl p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium">Feb 12</div>
+                <div class="text-xs text-gray-400 mt-0.5">Overnight Oats (Blueberry)</div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-medium">&#8377;199</div>
+                <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">delivered</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white border border-gray-100 rounded-xl p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium">Feb 11</div>
+                <div class="text-xs text-gray-400 mt-0.5">Fruit Bowl (Large) + Protein Shake</div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-medium">&#8377;298</div>
+                <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">delivered</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white border border-gray-100 rounded-xl p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium">Feb 10</div>
+                <div class="text-xs text-gray-400 mt-0.5">Overnight Oats (Mango) + Protein Shake</div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-medium">&#8377;349</div>
+                <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">delivered</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white border border-gray-100 rounded-xl p-4 opacity-60">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium">Feb 9</div>
+                <div class="text-xs text-gray-400 mt-0.5">&mdash;</div>
+              </div>
+              <div class="text-right">
+                <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">skipped</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white border border-gray-100 rounded-xl p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium">Feb 8</div>
+                <div class="text-xs text-gray-400 mt-0.5">Protein Oats Bowl (Chocolate)</div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-medium">&#8377;249</div>
+                <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">delivered</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ==================== TAB: SETTINGS ==================== -->
+    <div id="tab-settings" class="view pb-24">
+      <div class="px-5 pt-5 mb-5">
+        <div class="text-lg font-bold">Preferences</div>
+        <div class="text-sm text-gray-500">Configure your breakfast experience</div>
+      </div>
+
+      <!-- Auto-Order Config -->
+      <div class="px-5 mb-4">
+        <div class="bg-white border border-gray-100 rounded-xl p-5">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <div class="text-sm font-semibold">Auto-Order</div>
+              <div class="text-xs text-gray-400 mt-0.5">We choose your breakfast daily. You just pick it up.</div>
+            </div>
+            <div class="w-11 h-6 bg-emerald-400 rounded-full relative cursor-pointer">
+              <div class="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5 shadow-sm"></div>
+            </div>
+          </div>
+
+          <div class="border-t border-gray-100 pt-4 space-y-3">
+            <div>
+              <div class="text-xs text-gray-400 mb-1.5">Frequency</div>
+              <div class="flex gap-2">
+                <button class="text-[11px] px-3 py-1.5 bg-gray-900 text-white rounded-lg">Every day</button>
+                <button class="text-[11px] px-3 py-1.5 border border-gray-200 rounded-lg text-gray-500">Weekdays only</button>
+                <button class="text-[11px] px-3 py-1.5 border border-gray-200 rounded-lg text-gray-500">Custom days</button>
+              </div>
+            </div>
+            <div>
+              <div class="text-xs text-gray-400 mb-1.5">Daily notification</div>
+              <div class="flex gap-2">
+                <button class="text-[11px] px-3 py-1.5 border border-gray-200 rounded-lg text-gray-500">Ask me to confirm</button>
+                <button class="text-[11px] px-3 py-1.5 bg-gray-900 text-white rounded-lg">Don't ask, just send</button>
+              </div>
+            </div>
+            <div>
+              <div class="text-xs text-gray-400 mb-1.5">Menu preference</div>
+              <div class="flex gap-2">
+                <button class="text-[11px] px-3 py-1.5 bg-gray-900 text-white rounded-lg">Surprise me (rotate)</button>
+                <button class="text-[11px] px-3 py-1.5 border border-gray-200 rounded-lg text-gray-500">Always my favourite</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dietary Preferences -->
+      <div class="px-5 mb-4">
+        <div class="bg-white border border-gray-100 rounded-xl p-5">
+          <div class="text-sm font-semibold mb-3">Dietary Preferences</div>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="text-sm">I eat eggs</div>
+              <div class="w-11 h-6 bg-emerald-400 rounded-full relative cursor-pointer">
+                <div class="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5 shadow-sm"></div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="text-sm">Nut allergy</div>
+              <div class="w-11 h-6 bg-gray-200 rounded-full relative cursor-pointer">
+                <div class="w-5 h-5 bg-white rounded-full absolute left-0.5 top-0.5 shadow-sm"></div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="text-sm">Dairy-free</div>
+              <div class="w-11 h-6 bg-gray-200 rounded-full relative cursor-pointer">
+                <div class="w-5 h-5 bg-white rounded-full absolute left-0.5 top-0.5 shadow-sm"></div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="text-sm">Gluten-free</div>
+              <div class="w-11 h-6 bg-gray-200 rounded-full relative cursor-pointer">
+                <div class="w-5 h-5 bg-white rounded-full absolute left-0.5 top-0.5 shadow-sm"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Preferences -->
+      <div class="px-5 mb-4">
+        <div id="settings-payment" class="bg-white border border-gray-100 rounded-xl p-5">
+          <div class="text-sm font-semibold mb-3">Payment</div>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3 p-3 border border-gray-200 rounded-xl cursor-pointer hover:border-gray-300">
+              <div class="w-4 h-4 border-2 border-gray-300 rounded-full"></div>
+              <div>
+                <div class="text-sm font-medium">Pay per order</div>
+                <div class="text-xs text-gray-400">Razorpay at time of order</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 p-3 border-2 border-amber-400 rounded-xl bg-amber-50/30 cursor-pointer">
+              <div class="w-4 h-4 bg-amber-400 rounded-full border-2 border-amber-400"></div>
+              <div>
+                <div class="text-sm font-medium">Wallet (auto-pay)</div>
+                <div class="text-xs text-gray-400">Load balance, auto-debit daily. Balance: &#8377;1,200</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile -->
+      <div class="px-5 mb-4">
+        <div class="bg-white border border-gray-100 rounded-xl p-5">
+          <div class="text-sm font-semibold mb-3">Profile</div>
+          <div class="space-y-3">
+            <div>
+              <div class="text-xs text-gray-400">Name</div>
+              <div id="profile-name" class="text-sm mt-0.5">Rohan Mehta</div>
+            </div>
+            <div>
+              <div class="text-xs text-gray-400">Phone (WhatsApp)</div>
+              <div class="text-sm mt-0.5">+91 98xxx xxxxx</div>
+            </div>
+            <div>
+              <div class="text-xs text-gray-400">Location</div>
+              <div id="profile-location" class="text-sm mt-0.5">Cult Fitness HSR Layout</div>
+            </div>
+            <div>
+              <div class="text-xs text-gray-400">Member since</div>
+              <div class="text-sm mt-0.5">Jan 20, 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ==================== DATA + LOGIC ==================== -->
+  <script>
+    // ---- User type configurations ----
+    const users = {
+      gym: {
+        name: 'Rohan Mehta',
+        location: 'Cult Fitness HSR',
+        locationType: 'GYM',
+        badgeColor: 'bg-emerald-500/10 text-emerald-600',
+        welcome: 'Hey Rohan!',
+        welcomeSub: 'Your post-workout breakfast at Cult Fitness',
+        orderItems: 'Overnight Oats (Mango) + Protein Shake',
+        orderTime: '6:30 AM batch \u00b7 Auto-ordered',
+        orderAmount: '\u20b9349',
+        deadline: 'Deadline: 6 PM today',
+        socialText: '8 people from Cult Fitness are ordering tomorrow',
+        paymentMethod: 'Self-pay (Razorpay)',
+        paymentAction: '<button class="text-xs text-amber-600 font-medium">Set up wallet \u2192</button>',
+        deliverySlot: '6:30 AM batch',
+        deliveryPoint: 'Pickup: Front desk counter',
+        statOrders: '18', statSpent: '\u20b94,200', statFav: 'Mango',
+        menuSubtitle: 'Curated for gym members \u00b7 High protein focus',
+        menuPayLabel: 'self-pay',
+        menuItems: [
+          { name: 'Protein Oats Bowl \u2014 Peanut Butter', brand: 'Ministry of Oats', cal: '480 cal', protein: '28g protein', price: '\u20b9249', icon: '\ud83e\udd5c', tag: 'Best for muscle recovery' },
+          { name: 'Overnight Oats \u2014 Mango', brand: 'Ministry of Oats', cal: '350 cal', protein: '18g protein', price: '\u20b9199', icon: '\ud83e\udd6d', tag: 'Most popular at gyms', selected: true },
+          { name: 'Protein Oats Bowl \u2014 Chocolate', brand: 'Ministry of Oats', cal: '460 cal', protein: '26g protein', price: '\u20b9249', icon: '\ud83c\udf6b', tag: '' },
+          { name: 'Overnight Oats \u2014 Blueberry', brand: 'Ministry of Oats', cal: '320 cal', protein: '16g protein', price: '\u20b9199', icon: '\ud83e\udded', tag: '' },
+          { name: 'Fruit Bowl \u2014 Large', brand: 'The Whole Fruit', cal: '340 cal', protein: '6g protein', price: '\u20b9199', icon: '\ud83c\udf53', tag: 'Post-cardio favourite' },
+        ],
+        addons: [
+          { name: 'Protein Shake', detail: '25g protein', price: '+ \u20b999' },
+          { name: 'Boiled Egg Whites x2', detail: '14g protein', price: '+ \u20b949' },
+          { name: 'Whey Protein Scoop', detail: '15g protein', price: '+ \u20b969' },
+          { name: 'Avocado Toast', detail: '8g protein', price: '+ \u20b9149' },
+        ],
+        settingsPaymentHtml: `
+          <div class="text-sm font-semibold mb-3">Payment</div>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3 p-3 border border-gray-200 rounded-xl cursor-pointer">
+              <div class="w-4 h-4 border-2 border-gray-300 rounded-full"></div>
+              <div><div class="text-sm font-medium">Pay per order</div><div class="text-xs text-gray-400">Razorpay at time of order</div></div>
+            </div>
+            <div class="flex items-center gap-3 p-3 border-2 border-amber-400 rounded-xl bg-amber-50/30 cursor-pointer">
+              <div class="w-4 h-4 bg-amber-400 rounded-full border-2 border-amber-400"></div>
+              <div><div class="text-sm font-medium">Wallet (auto-pay)</div><div class="text-xs text-gray-400">Load balance, auto-debit daily. Balance: \u20b91,200</div></div>
+            </div>
+          </div>`,
+      },
+      office: {
+        name: 'Rahul Kapoor',
+        location: 'TechCorp Koramangala',
+        locationType: 'OFFICE',
+        badgeColor: 'bg-blue-500/10 text-blue-600',
+        welcome: 'Good afternoon, Rahul!',
+        welcomeSub: 'Your breakfast at TechCorp is ready to order',
+        orderItems: 'Overnight Oats (Blueberry) + Fruit Bowl (Regular)',
+        orderTime: '8:30 AM batch \u00b7 Auto-ordered',
+        orderAmount: '\u20b9348',
+        deadline: 'Deadline: 6 PM today',
+        socialText: '14 of your colleagues are ordering tomorrow',
+        paymentMethod: 'Company wallet (TechCorp)',
+        paymentAction: '<div class="text-right"><div class="text-xs text-gray-400">Balance</div><div class="text-sm font-bold text-emerald-600">\u20b912,400</div></div>',
+        deliverySlot: '8:30 AM batch',
+        deliveryPoint: 'Pickup: Kitchen pantry, 3rd floor',
+        statOrders: '22', statSpent: '\u20b90', statFav: 'Blueberry',
+        menuSubtitle: 'Curated for workplaces \u00b7 Balanced nutrition',
+        menuPayLabel: 'company pays',
+        menuItems: [
+          { name: 'Overnight Oats \u2014 Blueberry', brand: 'Ministry of Oats', cal: '320 cal', protein: '16g protein', price: '\u20b9199', icon: '\ud83e\udded', tag: 'Office favourite', selected: true },
+          { name: 'Overnight Oats \u2014 Mango', brand: 'Ministry of Oats', cal: '350 cal', protein: '18g protein', price: '\u20b9199', icon: '\ud83e\udd6d', tag: '' },
+          { name: 'Overnight Oats \u2014 Strawberry', brand: 'Ministry of Oats', cal: '310 cal', protein: '15g protein', price: '\u20b9199', icon: '\ud83c\udf53', tag: '' },
+          { name: 'Fruit Bowl \u2014 Regular', brand: 'The Whole Fruit', cal: '220 cal', protein: '4g protein', price: '\u20b9149', icon: '\ud83c\udf47', tag: 'Light + refreshing' },
+          { name: 'Fruit Bowl \u2014 Large', brand: 'The Whole Fruit', cal: '340 cal', protein: '6g protein', price: '\u20b9199', icon: '\ud83c\udf49', tag: '' },
+          { name: 'Porridge Bowl \u2014 Classic', brand: 'Ministry of Oats', cal: '380 cal', protein: '14g protein', price: '\u20b9179', icon: '\ud83c\udf5a', tag: 'Warm option' },
+        ],
+        addons: [
+          { name: 'Avocado Toast', detail: '8g protein', price: '+ \u20b9149' },
+          { name: 'Boiled Egg Whites x2', detail: '14g protein', price: '+ \u20b949' },
+          { name: 'Fresh Juice', detail: 'Seasonal', price: '+ \u20b999' },
+          { name: 'Granola Bar', detail: '180 cal', price: '+ \u20b979' },
+        ],
+        settingsPaymentHtml: `
+          <div class="text-sm font-semibold mb-3">Payment</div>
+          <div class="bg-blue-50 border border-blue-100 rounded-xl p-4">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 text-sm font-bold">T</div>
+              <div>
+                <div class="text-sm font-medium">Sponsored by TechCorp</div>
+                <div class="text-xs text-blue-500">Your company covers all breakfast orders</div>
+              </div>
+            </div>
+            <div class="mt-3 flex items-center justify-between">
+              <div class="text-xs text-gray-500">Company wallet balance</div>
+              <div class="text-sm font-bold text-blue-700">\u20b912,400</div>
+            </div>
+            <div class="mt-1 flex items-center justify-between">
+              <div class="text-xs text-gray-500">Your spend this month</div>
+              <div class="text-sm text-gray-600">\u20b94,200 (22 orders)</div>
+            </div>
+          </div>`,
+      },
+      apartment: {
+        name: 'Ananya Sharma',
+        location: 'Prestige Lakeside, Tower B',
+        locationType: 'APARTMENT',
+        badgeColor: 'bg-purple-500/10 text-purple-600',
+        welcome: 'Good afternoon, Ananya!',
+        welcomeSub: 'Breakfast orders for Prestige Lakeside are open',
+        orderItems: 'Overnight Oats (Strawberry) + Fresh Juice',
+        orderTime: '7:00 AM batch \u00b7 Manual order',
+        orderAmount: '\u20b9298',
+        deadline: 'Deadline: 6 PM today',
+        socialText: '5 of your neighbours are ordering for tomorrow',
+        paymentMethod: 'Wallet (auto-pay)',
+        paymentAction: '<div class="text-right"><div class="text-xs text-gray-400">Balance</div><div class="text-sm font-bold text-amber-600">\u20b9800</div></div>',
+        deliverySlot: '7:00 AM batch',
+        deliveryPoint: 'Pickup: Tower B lobby, security desk',
+        statOrders: '11', statSpent: '\u20b92,600', statFav: 'Strawberry',
+        menuSubtitle: 'Curated for families \u00b7 Everyone\'s breakfast',
+        menuPayLabel: 'wallet',
+        menuItems: [
+          { name: 'Overnight Oats \u2014 Strawberry', brand: 'Ministry of Oats', cal: '310 cal', protein: '15g protein', price: '\u20b9199', icon: '\ud83c\udf53', tag: 'Apartment bestseller', selected: true },
+          { name: 'Overnight Oats \u2014 Mango', brand: 'Ministry of Oats', cal: '350 cal', protein: '18g protein', price: '\u20b9199', icon: '\ud83e\udd6d', tag: '' },
+          { name: 'Overnight Oats \u2014 Blueberry', brand: 'Ministry of Oats', cal: '320 cal', protein: '16g protein', price: '\u20b9199', icon: '\ud83e\udded', tag: '' },
+          { name: 'Fruit Bowl \u2014 Regular', brand: 'The Whole Fruit', cal: '220 cal', protein: '4g protein', price: '\u20b9149', icon: '\ud83c\udf47', tag: 'Kid-friendly' },
+          { name: 'Fruit Bowl \u2014 Large', brand: 'The Whole Fruit', cal: '340 cal', protein: '6g protein', price: '\u20b9199', icon: '\ud83c\udf49', tag: '' },
+          { name: 'Porridge Bowl \u2014 Classic', brand: 'Ministry of Oats', cal: '380 cal', protein: '14g protein', price: '\u20b9179', icon: '\ud83c\udf5a', tag: 'Warm + comforting' },
+        ],
+        addons: [
+          { name: 'Fresh Juice', detail: 'Seasonal', price: '+ \u20b999' },
+          { name: 'Avocado Toast', detail: '8g protein', price: '+ \u20b9149' },
+          { name: 'Boiled Egg Whites x2', detail: '14g protein', price: '+ \u20b949' },
+          { name: 'Granola Bar', detail: '180 cal', price: '+ \u20b979' },
+        ],
+        settingsPaymentHtml: `
+          <div class="text-sm font-semibold mb-3">Payment</div>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3 p-3 border border-gray-200 rounded-xl cursor-pointer">
+              <div class="w-4 h-4 border-2 border-gray-300 rounded-full"></div>
+              <div><div class="text-sm font-medium">Pay per order</div><div class="text-xs text-gray-400">Razorpay at time of order</div></div>
+            </div>
+            <div class="flex items-center gap-3 p-3 border-2 border-amber-400 rounded-xl bg-amber-50/30 cursor-pointer">
+              <div class="w-4 h-4 bg-amber-400 rounded-full border-2 border-amber-400"></div>
+              <div><div class="text-sm font-medium">Wallet (auto-pay)</div><div class="text-xs text-gray-400">Load balance, auto-debit daily. Balance: \u20b9800</div></div>
+            </div>
+          </div>
+          <div class="mt-4 p-3 bg-purple-50 border border-purple-100 rounded-xl">
+            <div class="text-xs text-purple-600 font-medium">Community admin: Deepa R. (Tower B)</div>
+            <div class="text-xs text-gray-400 mt-0.5">Contact admin to add new neighbours</div>
+          </div>`,
+      }
+    };
+
+    // ---- Render functions ----
+    function switchUser(type) {
+      const u = users[type];
+      // Switcher buttons
+      document.querySelectorAll('.switcher-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.switcher-btn[data-user="${type}"]`).classList.add('active');
+      // Top bar
+      document.getElementById('location-badge').textContent = u.locationType;
+      document.getElementById('location-badge').className = `text-[10px] ${u.badgeColor} px-2 py-0.5 rounded-full font-medium`;
+      document.getElementById('location-name').textContent = u.location;
+      // Home tab
+      document.getElementById('welcome-msg').textContent = u.welcome;
+      document.getElementById('welcome-sub').textContent = u.welcomeSub;
+      document.getElementById('order-items').textContent = u.orderItems;
+      document.getElementById('order-time').textContent = u.orderTime;
+      document.getElementById('order-amount').textContent = u.orderAmount;
+      document.getElementById('deadline-badge').textContent = u.deadline;
+      document.getElementById('social-text').textContent = u.socialText;
+      document.getElementById('payment-method').textContent = u.paymentMethod;
+      document.getElementById('payment-action').innerHTML = u.paymentAction;
+      document.getElementById('delivery-slot').textContent = u.deliverySlot;
+      document.getElementById('delivery-point').textContent = u.deliveryPoint;
+      document.getElementById('stat-orders').textContent = u.statOrders;
+      document.getElementById('stat-spent').textContent = u.statSpent;
+      document.getElementById('stat-fav').textContent = u.statFav;
+      document.getElementById('profile-name').textContent = u.name;
+      document.getElementById('profile-location').textContent = u.location;
+      // Menu
+      document.getElementById('menu-subtitle').textContent = u.menuSubtitle;
+      document.getElementById('menu-pay-label').textContent = u.menuPayLabel;
+      renderMenu(u);
+      // Settings payment
+      document.getElementById('settings-payment').innerHTML = u.settingsPaymentHtml;
+    }
+
+    function renderMenu(u) {
+      const container = document.getElementById('menu-items');
+      container.innerHTML = u.menuItems.map(item => `
+        <div class="item-card bg-white border ${item.selected ? 'border-amber-300 bg-amber-50/30' : 'border-gray-100'} rounded-xl p-4 flex gap-4">
+          <div class="w-14 h-14 ${item.selected ? 'bg-amber-100' : 'bg-gray-50'} rounded-xl flex items-center justify-center text-2xl flex-shrink-0">${item.icon}</div>
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <div class="text-sm font-medium">${item.name}</div>
+              <div class="text-sm font-bold">${item.price}</div>
+            </div>
+            <div class="text-xs text-gray-400 mt-0.5">${item.brand} \u00b7 ${item.cal} \u00b7 ${item.protein}</div>
+            ${item.tag ? `<div class="text-[10px] text-amber-600 mt-1">${item.tag}</div>` : ''}
+            ${item.selected ? '<div class="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded-full inline-block mt-2">In your order</div>' : ''}
+          </div>
+        </div>
+      `).join('');
+
+      const addonContainer = document.getElementById('addon-items');
+      addonContainer.innerHTML = u.addons.map(a => `
+        <div class="flex items-center justify-between bg-white border border-gray-100 rounded-xl p-3 cursor-pointer hover:border-gray-200">
+          <div>
+            <div class="text-sm font-medium">${a.name}</div>
+            <div class="text-xs text-gray-400">${a.detail}</div>
+          </div>
+          <div class="text-sm font-medium text-amber-600">${a.price}</div>
+        </div>
+      `).join('');
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      document.querySelectorAll('.bottom-tab').forEach(b => {
+        b.classList.remove('active');
+        if (b.dataset.tab === tab) b.classList.add('active');
+      });
+    }
+
+    // Init
+    switchUser('gym');
+  </script>
+
+</body>
+</html>

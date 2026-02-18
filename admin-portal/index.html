@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outpost Direct — Admin Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .nav-item { cursor: pointer; transition: all 0.15s; }
+    .nav-item:hover { background: rgba(255,255,255,0.1); }
+    .nav-item.active { background: rgba(255,255,255,0.15); border-left: 3px solid #F59E0B; }
+    .view { display: none; }
+    .view.active { display: block; }
+    .stat-card { transition: all 0.15s; }
+    .stat-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <div class="flex min-h-screen">
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="w-64 bg-gray-900 text-white flex flex-col flex-shrink-0">
+      <!-- Logo -->
+      <div class="p-5 border-b border-gray-700">
+        <div class="text-lg font-bold tracking-tight">Outpost <span class="text-amber-400">Direct</span></div>
+        <div class="text-xs text-gray-400 mt-0.5">Admin Portal</div>
+      </div>
+
+      <!-- Location Info -->
+      <div class="p-4 border-b border-gray-700">
+        <div class="text-sm font-medium">Cult Fitness HSR</div>
+        <div class="flex items-center gap-2 mt-1">
+          <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-medium">GYM</span>
+          <span class="text-xs text-gray-400">HSR Layout, Bangalore</span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 py-4">
+        <div class="px-3 mb-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Main</div>
+        <div class="nav-item active px-5 py-2.5 text-sm flex items-center gap-3" data-view="dashboard">
+          <span class="w-5 text-center text-gray-400">&#9632;</span> Dashboard
+        </div>
+        <div class="nav-item px-5 py-2.5 text-sm flex items-center gap-3" data-view="orders">
+          <span class="w-5 text-center text-gray-400">&#9776;</span> Orders
+        </div>
+        <div class="nav-item px-5 py-2.5 text-sm flex items-center gap-3" data-view="members">
+          <span class="w-5 text-center text-gray-400">&#9673;</span> Members
+        </div>
+        <div class="nav-item px-5 py-2.5 text-sm flex items-center gap-3" data-view="menu">
+          <span class="w-5 text-center text-gray-400">&#9733;</span> Menu
+        </div>
+
+        <div class="px-3 mt-6 mb-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Finance</div>
+        <div class="nav-item px-5 py-2.5 text-sm flex items-center gap-3" data-view="wallet">
+          <span class="w-5 text-center text-gray-400">&#9679;</span> Wallet
+        </div>
+
+        <div class="px-3 mt-6 mb-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Config</div>
+        <div class="nav-item px-5 py-2.5 text-sm flex items-center gap-3" data-view="settings">
+          <span class="w-5 text-center text-gray-400">&#9881;</span> Settings
+        </div>
+      </nav>
+
+      <!-- Admin Info -->
+      <div class="p-4 border-t border-gray-700">
+        <div class="text-sm font-medium">Priya Sharma</div>
+        <div class="text-xs text-gray-400">Front Desk Manager</div>
+      </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="flex-1 overflow-auto">
+
+      <!-- ==================== VIEW: DASHBOARD ==================== -->
+      <div id="view-dashboard" class="view active p-8">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-2xl font-bold">Dashboard</h1>
+            <p class="text-gray-500 text-sm mt-1">Thursday, Feb 13, 2026</p>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 rounded-lg px-4 py-2">
+            <div class="text-xs text-amber-600 font-medium">Tomorrow's Deadline</div>
+            <div class="text-lg font-bold text-amber-700">6:00 PM today <span class="text-sm font-normal text-amber-500">(2h 34m left)</span></div>
+          </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="grid grid-cols-4 gap-4 mb-8">
+          <div class="stat-card bg-white rounded-xl p-5 border border-gray-100">
+            <div class="text-sm text-gray-500">Tomorrow's Orders</div>
+            <div class="text-3xl font-bold mt-1">8</div>
+            <div class="text-xs text-emerald-600 mt-1">Min. 3 met</div>
+          </div>
+          <div class="stat-card bg-white rounded-xl p-5 border border-gray-100">
+            <div class="text-sm text-gray-500">Active Members</div>
+            <div class="text-3xl font-bold mt-1">23</div>
+            <div class="text-xs text-gray-400 mt-1">4 on auto-order</div>
+          </div>
+          <div class="stat-card bg-white rounded-xl p-5 border border-gray-100">
+            <div class="text-sm text-gray-500">This Week</div>
+            <div class="text-3xl font-bold mt-1">42</div>
+            <div class="text-xs text-gray-400 mt-1">orders delivered</div>
+          </div>
+          <div class="stat-card bg-white rounded-xl p-5 border border-gray-100">
+            <div class="text-sm text-gray-500">Revenue (Week)</div>
+            <div class="text-3xl font-bold mt-1">&#8377;12,600</div>
+            <div class="text-xs text-emerald-600 mt-1">+18% vs last week</div>
+          </div>
+        </div>
+
+        <!-- Two Column Layout -->
+        <div class="grid grid-cols-2 gap-6">
+
+          <!-- Tomorrow's Order Preview -->
+          <div class="bg-white rounded-xl border border-gray-100 p-5">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-semibold">Tomorrow's Orders</h3>
+              <span class="text-xs text-gray-400">Feb 14 &middot; 6:00 AM - 10:00 AM slot</span>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between py-2 border-b border-gray-50">
+                <div>
+                  <div class="text-sm font-medium">Rohan M.</div>
+                  <div class="text-xs text-gray-400">Overnight Oats + Protein Shake</div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="text-sm font-medium">&#8377;349</span>
+                  <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">auto</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between py-2 border-b border-gray-50">
+                <div>
+                  <div class="text-sm font-medium">Sneha K.</div>
+                  <div class="text-xs text-gray-400">Fruit Bowl + Egg Whites</div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="text-sm font-medium">&#8377;299</span>
+                  <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">manual</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between py-2 border-b border-gray-50">
+                <div>
+                  <div class="text-sm font-medium">Arjun P.</div>
+                  <div class="text-xs text-gray-400">Protein Oats Bowl</div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="text-sm font-medium">&#8377;249</span>
+                  <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">auto</span>
+                </div>
+              </div>
+              <div class="text-center py-2">
+                <span class="text-xs text-gray-400">+ 5 more orders</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity Feed -->
+          <div class="bg-white rounded-xl border border-gray-100 p-5">
+            <h3 class="font-semibold mb-4">Recent Activity</h3>
+            <div class="space-y-4">
+              <div class="flex gap-3">
+                <div class="w-2 h-2 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                <div>
+                  <div class="text-sm">Sneha K. placed an order for tomorrow</div>
+                  <div class="text-xs text-gray-400">12 min ago</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="w-2 h-2 bg-blue-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                <div>
+                  <div class="text-sm">Auto-order triggered for Rohan M., Arjun P., Meera S., Kiran D.</div>
+                  <div class="text-xs text-gray-400">12:00 PM (menu broadcast)</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="w-2 h-2 bg-amber-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                <div>
+                  <div class="text-sm">Delivery completed &mdash; 6 orders picked up</div>
+                  <div class="text-xs text-gray-400">Today, 7:15 AM</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="w-2 h-2 bg-purple-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                <div>
+                  <div class="text-sm">New member joined: Vikram R.</div>
+                  <div class="text-xs text-gray-400">Yesterday, 4:30 PM</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <div class="w-2 h-2 bg-gray-300 rounded-full mt-1.5 flex-shrink-0"></div>
+                <div>
+                  <div class="text-sm">Minimum threshold met (3+ orders) for tomorrow</div>
+                  <div class="text-xs text-gray-400">Yesterday, 2:10 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weekly Chart Placeholder -->
+        <div class="mt-6 bg-white rounded-xl border border-gray-100 p-5">
+          <h3 class="font-semibold mb-4">Orders This Week</h3>
+          <div class="flex items-end gap-3 h-32">
+            <div class="flex-1 flex flex-col items-center gap-1">
+              <div class="w-full bg-amber-400 rounded-t" style="height: 60%"></div>
+              <span class="text-xs text-gray-400">Mon</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center gap-1">
+              <div class="w-full bg-amber-400 rounded-t" style="height: 80%"></div>
+              <span class="text-xs text-gray-400">Tue</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center gap-1">
+              <div class="w-full bg-amber-400 rounded-t" style="height: 55%"></div>
+              <span class="text-xs text-gray-400">Wed</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center gap-1">
+              <div class="w-full bg-amber-500 rounded-t" style="height: 90%"></div>
+              <span class="text-xs text-gray-400">Thu</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center gap-1">
+              <div class="w-full bg-gray-200 rounded-t" style="height: 20%"></div>
+              <span class="text-xs text-gray-400">Fri</span>
+            </div>
+            <div class="flex-1 flex flex-col items-center gap-1">
+              <div class="w-full bg-gray-200 rounded-t" style="height: 10%"></div>
+              <span class="text-xs text-gray-400">Sat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ==================== VIEW: ORDERS ==================== -->
+      <div id="view-orders" class="view p-8">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-2xl font-bold">Orders</h1>
+            <p class="text-gray-500 text-sm mt-1">Manage daily order lists</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button class="text-sm px-3 py-1.5 border border-gray-200 rounded-lg bg-white text-gray-500">Today (Feb 13)</button>
+            <button class="text-sm px-3 py-1.5 border border-amber-300 rounded-lg bg-amber-50 text-amber-700 font-medium">Tomorrow (Feb 14)</button>
+            <button class="text-sm px-3 py-1.5 border border-gray-200 rounded-lg bg-white text-gray-500">Feb 15</button>
+          </div>
+        </div>
+
+        <!-- Order Slot Info -->
+        <div class="bg-white rounded-xl border border-gray-100 p-5 mb-6">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-6">
+              <div>
+                <div class="text-xs text-gray-400">Delivery Slot</div>
+                <div class="text-sm font-semibold">6:00 AM &ndash; 10:00 AM</div>
+              </div>
+              <div class="w-px h-8 bg-gray-200"></div>
+              <div>
+                <div class="text-xs text-gray-400">Order Deadline</div>
+                <div class="text-sm font-semibold text-amber-600">6:00 PM today</div>
+              </div>
+              <div class="w-px h-8 bg-gray-200"></div>
+              <div>
+                <div class="text-xs text-gray-400">Minimum Orders</div>
+                <div class="text-sm font-semibold text-emerald-600">3 required &middot; 8 placed</div>
+              </div>
+              <div class="w-px h-8 bg-gray-200"></div>
+              <div>
+                <div class="text-xs text-gray-400">Total Amount</div>
+                <div class="text-sm font-semibold">&#8377;2,394</div>
+              </div>
+            </div>
+            <span class="bg-emerald-50 text-emerald-700 text-xs font-medium px-3 py-1 rounded-full">Confirmed</span>
+          </div>
+        </div>
+
+        <!-- Order Table -->
+        <div class="bg-white rounded-xl border border-gray-100 overflow-hidden">
+          <table class="w-full">
+            <thead class="bg-gray-50 border-b border-gray-100">
+              <tr>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-3">#</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-3">Member</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-3">Items</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-3">Amount</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-3">Type</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-3">Payment</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-3">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm text-gray-400">1</td>
+                <td class="px-5 py-3">
+                  <div class="text-sm font-medium">Rohan Mehta</div>
+                  <div class="text-xs text-gray-400">6:30 AM batch</div>
+                </td>
+                <td class="px-5 py-3 text-sm">Overnight Oats (Mango) + Protein Shake</td>
+                <td class="px-5 py-3 text-sm font-medium">&#8377;349</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">auto-order</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">self-pay</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">confirmed</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm text-gray-400">2</td>
+                <td class="px-5 py-3">
+                  <div class="text-sm font-medium">Sneha Kulkarni</div>
+                  <div class="text-xs text-gray-400">7:00 AM batch</div>
+                </td>
+                <td class="px-5 py-3 text-sm">Fruit Bowl (Large) + Boiled Egg Whites x2</td>
+                <td class="px-5 py-3 text-sm font-medium">&#8377;299</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">manual</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">self-pay</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">confirmed</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm text-gray-400">3</td>
+                <td class="px-5 py-3">
+                  <div class="text-sm font-medium">Arjun Prasad</div>
+                  <div class="text-xs text-gray-400">6:30 AM batch</div>
+                </td>
+                <td class="px-5 py-3 text-sm">Protein Oats Bowl (Peanut Butter)</td>
+                <td class="px-5 py-3 text-sm font-medium">&#8377;249</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">auto-order</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">self-pay</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">confirmed</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm text-gray-400">4</td>
+                <td class="px-5 py-3">
+                  <div class="text-sm font-medium">Meera Srinivasan</div>
+                  <div class="text-xs text-gray-400">8:00 AM batch</div>
+                </td>
+                <td class="px-5 py-3 text-sm">Overnight Oats (Blueberry) + Avocado Toast</td>
+                <td class="px-5 py-3 text-sm font-medium">&#8377;398</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">auto-order</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-0.5 rounded-full">wallet</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">confirmed</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm text-gray-400">5</td>
+                <td class="px-5 py-3">
+                  <div class="text-sm font-medium">Kiran Desai</div>
+                  <div class="text-xs text-gray-400">7:00 AM batch</div>
+                </td>
+                <td class="px-5 py-3 text-sm">Protein Oats Bowl (Chocolate)</td>
+                <td class="px-5 py-3 text-sm font-medium">&#8377;249</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">auto-order</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">self-pay</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">confirmed</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm text-gray-400">6</td>
+                <td class="px-5 py-3">
+                  <div class="text-sm font-medium">Vikram Reddy</div>
+                  <div class="text-xs text-gray-400">8:00 AM batch</div>
+                </td>
+                <td class="px-5 py-3 text-sm">Fruit Bowl (Regular) + Protein Shake</td>
+                <td class="px-5 py-3 text-sm font-medium">&#8377;299</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">manual</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">self-pay</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">confirmed</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm text-gray-400">7</td>
+                <td class="px-5 py-3">
+                  <div class="text-sm font-medium">Priya Nair</div>
+                  <div class="text-xs text-gray-400">7:00 AM batch</div>
+                </td>
+                <td class="px-5 py-3 text-sm">Overnight Oats (Strawberry)</td>
+                <td class="px-5 py-3 text-sm font-medium">&#8377;199</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">manual</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-0.5 rounded-full">wallet</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">confirmed</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm text-gray-400">8</td>
+                <td class="px-5 py-3">
+                  <div class="text-sm font-medium">Aditya Joshi</div>
+                  <div class="text-xs text-gray-400">6:30 AM batch</div>
+                </td>
+                <td class="px-5 py-3 text-sm text-gray-400 italic">Pending &mdash; auto-order will trigger at deadline if no action</td>
+                <td class="px-5 py-3 text-sm font-medium text-gray-400">~&#8377;349</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full">auto-pending</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">self-pay</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full">pending</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Summary Bar -->
+          <div class="bg-gray-50 px-5 py-4 flex items-center justify-between border-t border-gray-100">
+            <div class="flex items-center gap-6 text-sm">
+              <span><strong>8</strong> orders</span>
+              <span class="text-gray-300">|</span>
+              <span><strong>4</strong> auto-order</span>
+              <span class="text-gray-300">|</span>
+              <span><strong>3</strong> manual</span>
+              <span class="text-gray-300">|</span>
+              <span><strong>1</strong> pending</span>
+            </div>
+            <div class="text-sm font-semibold">Total: &#8377;2,394</div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ==================== VIEW: MEMBERS ==================== -->
+      <div id="view-members" class="view p-8">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-2xl font-bold">Members</h1>
+            <p class="text-gray-500 text-sm mt-1">23 active members at this location</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button class="text-sm px-4 py-2 bg-gray-900 text-white rounded-lg font-medium">+ Invite Member</button>
+            <button class="text-sm px-4 py-2 border border-gray-200 bg-white rounded-lg">Share Invite Link</button>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="flex items-center gap-2 mb-6">
+          <button class="text-sm px-3 py-1.5 bg-gray-900 text-white rounded-lg">All (23)</button>
+          <button class="text-sm px-3 py-1.5 border border-gray-200 bg-white rounded-lg text-gray-600">Auto-Order (4)</button>
+          <button class="text-sm px-3 py-1.5 border border-gray-200 bg-white rounded-lg text-gray-600">Manual (17)</button>
+          <button class="text-sm px-3 py-1.5 border border-gray-200 bg-white rounded-lg text-gray-600">Invited (2)</button>
+        </div>
+
+        <!-- Members Table -->
+        <div class="bg-white rounded-xl border border-gray-100 overflow-hidden">
+          <table class="w-full">
+            <thead class="bg-gray-50 border-b border-gray-100">
+              <tr>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-3">Member</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-3">Phone</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-3">Order Mode</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-3">Preferences</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-3">Payment</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-3">Orders (30d)</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-3">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3">
+                  <div class="text-sm font-medium">Rohan Mehta</div>
+                  <div class="text-xs text-gray-400">Joined Jan 20</div>
+                </td>
+                <td class="px-5 py-3 text-sm text-gray-500">+91 98xxx xxxxx</td>
+                <td class="px-5 py-3">
+                  <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full font-medium">Auto-Order ON</span>
+                  <div class="text-[10px] text-gray-400 mt-1">Don't ask, just send daily</div>
+                </td>
+                <td class="px-5 py-3 text-xs text-gray-500">Eats eggs &middot; No nuts</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">self-pay</span></td>
+                <td class="px-5 py-3 text-sm font-medium">18</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">active</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3">
+                  <div class="text-sm font-medium">Sneha Kulkarni</div>
+                  <div class="text-xs text-gray-400">Joined Jan 25</div>
+                </td>
+                <td class="px-5 py-3 text-sm text-gray-500">+91 99xxx xxxxx</td>
+                <td class="px-5 py-3">
+                  <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Manual</span>
+                  <div class="text-[10px] text-gray-400 mt-1">Ask me daily via WhatsApp</div>
+                </td>
+                <td class="px-5 py-3 text-xs text-gray-500">Vegetarian &middot; No gluten</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">self-pay</span></td>
+                <td class="px-5 py-3 text-sm font-medium">12</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">active</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3">
+                  <div class="text-sm font-medium">Arjun Prasad</div>
+                  <div class="text-xs text-gray-400">Joined Feb 1</div>
+                </td>
+                <td class="px-5 py-3 text-sm text-gray-500">+91 97xxx xxxxx</td>
+                <td class="px-5 py-3">
+                  <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full font-medium">Auto-Order ON</span>
+                  <div class="text-[10px] text-gray-400 mt-1">Send Mon/Wed/Fri only</div>
+                </td>
+                <td class="px-5 py-3 text-xs text-gray-500">Eats eggs &middot; High protein</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">self-pay</span></td>
+                <td class="px-5 py-3 text-sm font-medium">8</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">active</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3">
+                  <div class="text-sm font-medium">Meera Srinivasan</div>
+                  <div class="text-xs text-gray-400">Joined Feb 5</div>
+                </td>
+                <td class="px-5 py-3 text-sm text-gray-500">+91 88xxx xxxxx</td>
+                <td class="px-5 py-3">
+                  <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full font-medium">Auto-Order ON</span>
+                  <div class="text-[10px] text-gray-400 mt-1">Don't ask, just send daily</div>
+                </td>
+                <td class="px-5 py-3 text-xs text-gray-500">Vegetarian &middot; Loves fruit</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-0.5 rounded-full">wallet (&#8377;1,200)</span></td>
+                <td class="px-5 py-3 text-sm font-medium">6</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">active</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3">
+                  <div class="text-sm font-medium">Kiran Desai</div>
+                  <div class="text-xs text-gray-400">Joined Feb 3</div>
+                </td>
+                <td class="px-5 py-3 text-sm text-gray-500">+91 90xxx xxxxx</td>
+                <td class="px-5 py-3">
+                  <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full font-medium">Auto-Order ON</span>
+                  <div class="text-[10px] text-gray-400 mt-1">Don't ask, just send daily</div>
+                </td>
+                <td class="px-5 py-3 text-xs text-gray-500">Eats eggs &middot; No dairy</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">self-pay</span></td>
+                <td class="px-5 py-3 text-sm font-medium">9</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">active</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50 bg-amber-50/30">
+                <td class="px-5 py-3">
+                  <div class="text-sm font-medium text-gray-400">Neha Gupta</div>
+                  <div class="text-xs text-gray-400">Invited Feb 12</div>
+                </td>
+                <td class="px-5 py-3 text-sm text-gray-400">+91 85xxx xxxxx</td>
+                <td class="px-5 py-3 text-xs text-gray-400 italic">Pending signup</td>
+                <td class="px-5 py-3 text-xs text-gray-400">&mdash;</td>
+                <td class="px-5 py-3 text-xs text-gray-400">&mdash;</td>
+                <td class="px-5 py-3 text-sm text-gray-400">&mdash;</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full">invited</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <!-- ==================== VIEW: MENU ==================== -->
+      <div id="view-menu" class="view p-8">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-2xl font-bold">Menu</h1>
+            <p class="text-gray-500 text-sm mt-1">Curated for Gym / Fitness locations</p>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-2">
+            <div class="text-xs text-emerald-600">Menu type</div>
+            <div class="text-sm font-semibold text-emerald-700">Gym &amp; Fitness &mdash; High Protein Focus</div>
+          </div>
+        </div>
+
+        <p class="text-sm text-gray-500 mb-6">Items available to your members. Outpost curates the menu based on your location type. Items marked <span class="text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded">auto-eligible</span> can be part of auto-order rotation.</p>
+
+        <!-- Menu Categories -->
+        <div class="mb-4">
+          <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Ministry of Oats</h3>
+          <div class="grid grid-cols-3 gap-4">
+
+            <div class="bg-white rounded-xl border border-gray-100 p-4">
+              <div class="h-24 bg-amber-50 rounded-lg mb-3 flex items-center justify-center text-3xl">&#127756;</div>
+              <div class="text-sm font-medium">Overnight Oats &mdash; Mango</div>
+              <div class="text-xs text-gray-400 mt-1">350 cal &middot; 18g protein &middot; 42g carbs</div>
+              <div class="flex items-center justify-between mt-3">
+                <span class="text-sm font-semibold">&#8377;199</span>
+                <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">auto-eligible</span>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-100 p-4">
+              <div class="h-24 bg-amber-50 rounded-lg mb-3 flex items-center justify-center text-3xl">&#127825;</div>
+              <div class="text-sm font-medium">Overnight Oats &mdash; Blueberry</div>
+              <div class="text-xs text-gray-400 mt-1">320 cal &middot; 16g protein &middot; 38g carbs</div>
+              <div class="flex items-center justify-between mt-3">
+                <span class="text-sm font-semibold">&#8377;199</span>
+                <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">auto-eligible</span>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-100 p-4">
+              <div class="h-24 bg-amber-50 rounded-lg mb-3 flex items-center justify-center text-3xl">&#129371;</div>
+              <div class="text-sm font-medium">Protein Oats Bowl &mdash; Peanut Butter</div>
+              <div class="text-xs text-gray-400 mt-1">480 cal &middot; 28g protein &middot; 45g carbs</div>
+              <div class="flex items-center justify-between mt-3">
+                <span class="text-sm font-semibold">&#8377;249</span>
+                <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">auto-eligible</span>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-100 p-4">
+              <div class="h-24 bg-amber-50 rounded-lg mb-3 flex items-center justify-center text-3xl">&#127851;</div>
+              <div class="text-sm font-medium">Protein Oats Bowl &mdash; Chocolate</div>
+              <div class="text-xs text-gray-400 mt-1">460 cal &middot; 26g protein &middot; 44g carbs</div>
+              <div class="flex items-center justify-between mt-3">
+                <span class="text-sm font-semibold">&#8377;249</span>
+                <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">auto-eligible</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="mt-8 mb-4">
+          <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">The Whole Fruit</h3>
+          <div class="grid grid-cols-3 gap-4">
+
+            <div class="bg-white rounded-xl border border-gray-100 p-4">
+              <div class="h-24 bg-green-50 rounded-lg mb-3 flex items-center justify-center text-3xl">&#127815;</div>
+              <div class="text-sm font-medium">Fruit Bowl &mdash; Regular</div>
+              <div class="text-xs text-gray-400 mt-1">220 cal &middot; 4g protein &middot; 52g carbs</div>
+              <div class="flex items-center justify-between mt-3">
+                <span class="text-sm font-semibold">&#8377;149</span>
+                <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">auto-eligible</span>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-100 p-4">
+              <div class="h-24 bg-green-50 rounded-lg mb-3 flex items-center justify-center text-3xl">&#127819;</div>
+              <div class="text-sm font-medium">Fruit Bowl &mdash; Large</div>
+              <div class="text-xs text-gray-400 mt-1">340 cal &middot; 6g protein &middot; 78g carbs</div>
+              <div class="flex items-center justify-between mt-3">
+                <span class="text-sm font-semibold">&#8377;199</span>
+                <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">auto-eligible</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="mt-8 mb-4">
+          <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Add-Ons</h3>
+          <div class="grid grid-cols-4 gap-4">
+
+            <div class="bg-white rounded-xl border border-gray-100 p-4">
+              <div class="text-sm font-medium">Protein Shake</div>
+              <div class="text-xs text-gray-400">150 cal &middot; 25g protein</div>
+              <div class="text-sm font-semibold mt-2">+ &#8377;99</div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-100 p-4">
+              <div class="text-sm font-medium">Boiled Egg Whites x2</div>
+              <div class="text-xs text-gray-400">70 cal &middot; 14g protein</div>
+              <div class="text-sm font-semibold mt-2">+ &#8377;49</div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-100 p-4">
+              <div class="text-sm font-medium">Avocado Toast</div>
+              <div class="text-xs text-gray-400">280 cal &middot; 8g protein</div>
+              <div class="text-sm font-semibold mt-2">+ &#8377;149</div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-100 p-4">
+              <div class="text-sm font-medium">Whey Protein Scoop</div>
+              <div class="text-xs text-gray-400">78 cal &middot; 15g protein</div>
+              <div class="text-sm font-semibold mt-2">+ &#8377;69</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ==================== VIEW: WALLET ==================== -->
+      <div id="view-wallet" class="view p-8">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-2xl font-bold">Wallet &amp; Payments</h1>
+            <p class="text-gray-500 text-sm mt-1">Manage how members pay at this location</p>
+          </div>
+        </div>
+
+        <!-- Payment Mode Toggle -->
+        <div class="bg-white rounded-xl border border-gray-100 p-6 mb-6">
+          <h3 class="font-semibold mb-4">Payment Mode</h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="border-2 border-gray-200 rounded-xl p-5 cursor-pointer hover:border-gray-300">
+              <div class="flex items-center gap-3 mb-2">
+                <div class="w-4 h-4 border-2 border-gray-300 rounded-full"></div>
+                <div class="font-medium">Collective</div>
+              </div>
+              <p class="text-sm text-gray-500 ml-7">Members pay individually for each order. They can optionally load their own wallet for auto-pay.</p>
+            </div>
+            <div class="border-2 border-amber-400 rounded-xl p-5 cursor-pointer bg-amber-50/30">
+              <div class="flex items-center gap-3 mb-2">
+                <div class="w-4 h-4 bg-amber-400 rounded-full border-2 border-amber-400"></div>
+                <div class="font-medium">Hybrid <span class="text-xs text-amber-600">(current)</span></div>
+              </div>
+              <p class="text-sm text-gray-500 ml-7">You (admin) sponsor a location wallet. Members can choose to use the wallet or pay themselves.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location Wallet -->
+        <div class="bg-white rounded-xl border border-gray-100 p-6 mb-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="font-semibold">Location Wallet</h3>
+            <button class="text-sm px-4 py-2 bg-amber-500 text-white rounded-lg font-medium">+ Load Wallet</button>
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="bg-amber-50 rounded-xl p-5">
+              <div class="text-sm text-amber-600">Balance</div>
+              <div class="text-2xl font-bold mt-1">&#8377;4,500</div>
+              <div class="text-xs text-amber-500 mt-1">~15 orders remaining</div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-5">
+              <div class="text-sm text-gray-500">Spent This Month</div>
+              <div class="text-2xl font-bold mt-1">&#8377;3,200</div>
+              <div class="text-xs text-gray-400 mt-1">11 wallet-funded orders</div>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-5">
+              <div class="text-sm text-gray-500">Total Loaded</div>
+              <div class="text-2xl font-bold mt-1">&#8377;10,000</div>
+              <div class="text-xs text-gray-400 mt-1">Last loaded: Feb 5</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Member Payment Status -->
+        <div class="bg-white rounded-xl border border-gray-100 p-6">
+          <h3 class="font-semibold mb-4">Member Payment Preferences</h3>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between py-2 border-b border-gray-50">
+              <div class="text-sm">Rohan Mehta</div>
+              <div class="flex items-center gap-3">
+                <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">self-pay (Razorpay)</span>
+                <span class="text-xs text-gray-400">Pays per order</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between py-2 border-b border-gray-50">
+              <div class="text-sm">Meera Srinivasan</div>
+              <div class="flex items-center gap-3">
+                <span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-0.5 rounded-full">personal wallet (&#8377;1,200)</span>
+                <span class="text-xs text-gray-400">Auto-debited daily</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between py-2 border-b border-gray-50">
+              <div class="text-sm">Priya Nair</div>
+              <div class="flex items-center gap-3">
+                <span class="text-[10px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full">location wallet</span>
+                <span class="text-xs text-gray-400">Funded by admin</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between py-2 border-b border-gray-50">
+              <div class="text-sm">Sneha Kulkarni</div>
+              <div class="flex items-center gap-3">
+                <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">self-pay (Razorpay)</span>
+                <span class="text-xs text-gray-400">Pays per order</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ==================== VIEW: SETTINGS ==================== -->
+      <div id="view-settings" class="view p-8">
+        <div class="mb-8">
+          <h1 class="text-2xl font-bold">Settings</h1>
+          <p class="text-gray-500 text-sm mt-1">Configure your location</p>
+        </div>
+
+        <!-- Location Details -->
+        <div class="bg-white rounded-xl border border-gray-100 p-6 mb-6">
+          <h3 class="font-semibold mb-4">Location Details</h3>
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <label class="text-xs text-gray-500 block mb-1">Location Name</label>
+              <div class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50">Cult Fitness HSR</div>
+            </div>
+            <div>
+              <label class="text-xs text-gray-500 block mb-1">Location Type</label>
+              <div class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50">Gym / Fitness Studio</div>
+            </div>
+            <div class="col-span-2">
+              <label class="text-xs text-gray-500 block mb-1">Address</label>
+              <div class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50">14th Cross, HSR Layout Sector 4, Bangalore 560102</div>
+            </div>
+            <div>
+              <label class="text-xs text-gray-500 block mb-1">Admin Contact</label>
+              <div class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50">Priya Sharma &middot; +91 98xxx xxxxx</div>
+            </div>
+            <div>
+              <label class="text-xs text-gray-500 block mb-1">Outpost Location ID</label>
+              <div class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50 font-mono">LOC-GYM-HSR-001</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delivery Config -->
+        <div class="bg-white rounded-xl border border-gray-100 p-6 mb-6">
+          <h3 class="font-semibold mb-4">Delivery Configuration</h3>
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <label class="text-xs text-gray-500 block mb-1">Primary Delivery Slot</label>
+              <div class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50">6:00 AM &ndash; 10:00 AM</div>
+            </div>
+            <div>
+              <label class="text-xs text-gray-500 block mb-1">Order Deadline</label>
+              <div class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50">6:00 PM (day before)</div>
+            </div>
+            <div>
+              <label class="text-xs text-gray-500 block mb-1">Minimum Orders</label>
+              <div class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50">3 orders per slot</div>
+            </div>
+            <div>
+              <label class="text-xs text-gray-500 block mb-1">Drop Point</label>
+              <div class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50">Front desk reception counter</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Rules -->
+        <div class="bg-white rounded-xl border border-gray-100 p-6 mb-6">
+          <h3 class="font-semibold mb-4">Ordering Rules</h3>
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium">Allow auto-order for members</div>
+                <div class="text-xs text-gray-400">Members can opt-in to receive food daily without ordering</div>
+              </div>
+              <div class="w-10 h-5 bg-emerald-400 rounded-full relative cursor-pointer">
+                <div class="w-4 h-4 bg-white rounded-full absolute right-0.5 top-0.5 shadow-sm"></div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium">Auto-cancel if below minimum</div>
+                <div class="text-xs text-gray-400">If fewer than 3 orders by deadline, cancel the slot and notify members</div>
+              </div>
+              <div class="w-10 h-5 bg-emerald-400 rounded-full relative cursor-pointer">
+                <div class="w-4 h-4 bg-white rounded-full absolute right-0.5 top-0.5 shadow-sm"></div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium">Allow same-day rush orders</div>
+                <div class="text-xs text-gray-400">Accept orders up to 3 hours before slot (max 5 rush orders per slot)</div>
+              </div>
+              <div class="w-10 h-5 bg-gray-300 rounded-full relative cursor-pointer">
+                <div class="w-4 h-4 bg-white rounded-full absolute left-0.5 top-0.5 shadow-sm"></div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium">Weekend delivery</div>
+                <div class="text-xs text-gray-400">Enable ordering for Saturday and Sunday slots</div>
+              </div>
+              <div class="w-10 h-5 bg-emerald-400 rounded-full relative cursor-pointer">
+                <div class="w-4 h-4 bg-white rounded-full absolute right-0.5 top-0.5 shadow-sm"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notification Preferences -->
+        <div class="bg-white rounded-xl border border-gray-100 p-6">
+          <h3 class="font-semibold mb-4">Notifications</h3>
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium">Daily order summary (WhatsApp)</div>
+                <div class="text-xs text-gray-400">Get a summary of all orders after deadline</div>
+              </div>
+              <div class="w-10 h-5 bg-emerald-400 rounded-full relative cursor-pointer">
+                <div class="w-4 h-4 bg-white rounded-full absolute right-0.5 top-0.5 shadow-sm"></div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium">Minimum threshold alert</div>
+                <div class="text-xs text-gray-400">Get notified if orders are below minimum 2 hours before deadline</div>
+              </div>
+              <div class="w-10 h-5 bg-emerald-400 rounded-full relative cursor-pointer">
+                <div class="w-4 h-4 bg-white rounded-full absolute right-0.5 top-0.5 shadow-sm"></div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium">Delivery confirmation</div>
+                <div class="text-xs text-gray-400">Notify when delivery arrives at your location</div>
+              </div>
+              <div class="w-10 h-5 bg-emerald-400 rounded-full relative cursor-pointer">
+                <div class="w-4 h-4 bg-white rounded-full absolute right-0.5 top-0.5 shadow-sm"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Tab Navigation Script -->
+  <script>
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        // Update nav
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+        // Update view
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        const viewId = 'view-' + item.dataset.view;
+        document.getElementById(viewId).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

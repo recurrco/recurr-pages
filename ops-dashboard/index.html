@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outpost Direct — Ops Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .nav-item { cursor: pointer; transition: all 0.15s; }
+    .nav-item:hover { background: rgba(255,255,255,0.1); }
+    .nav-item.active { background: rgba(255,255,255,0.15); border-left: 3px solid #F59E0B; }
+    .view { display: none; }
+    .view.active { display: block; }
+    .loc-row { transition: all 0.1s; }
+    .loc-row:hover { background: #FAFAF5; }
+    .prep-item { transition: all 0.1s; }
+    .prep-item:hover { background: #FFFBEB; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <div class="flex min-h-screen">
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="w-64 bg-gray-900 text-white flex flex-col flex-shrink-0">
+      <div class="p-5 border-b border-gray-700">
+        <div class="text-lg font-bold tracking-tight">Outpost <span class="text-amber-400">Direct</span></div>
+        <div class="text-xs text-gray-400 mt-0.5">Kitchen Operations</div>
+      </div>
+
+      <nav class="flex-1 py-4">
+        <div class="px-3 mb-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Operations</div>
+        <div class="nav-item active px-5 py-2.5 text-sm flex items-center gap-3" data-view="command">
+          <span class="w-5 text-center text-gray-400">&#9632;</span> Command Center
+        </div>
+        <div class="nav-item px-5 py-2.5 text-sm flex items-center gap-3" data-view="prep">
+          <span class="w-5 text-center text-gray-400">&#9733;</span> Kitchen Prep
+        </div>
+        <div class="nav-item px-5 py-2.5 text-sm flex items-center gap-3" data-view="delivery">
+          <span class="w-5 text-center text-gray-400">&#9656;</span> Delivery Routes
+        </div>
+
+        <div class="px-3 mt-6 mb-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Network</div>
+        <div class="nav-item px-5 py-2.5 text-sm flex items-center gap-3" data-view="locations">
+          <span class="w-5 text-center text-gray-400">&#9673;</span> Locations
+        </div>
+        <div class="nav-item px-5 py-2.5 text-sm flex items-center gap-3" data-view="menus">
+          <span class="w-5 text-center text-gray-400">&#9776;</span> Menu Manager
+        </div>
+
+        <div class="px-3 mt-6 mb-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Business</div>
+        <div class="nav-item px-5 py-2.5 text-sm flex items-center gap-3" data-view="analytics">
+          <span class="w-5 text-center text-gray-400">&#9679;</span> Analytics
+        </div>
+      </nav>
+
+      <div class="p-4 border-t border-gray-700">
+        <div class="text-sm font-medium">Pratik Mishra</div>
+        <div class="text-xs text-gray-400">Founder</div>
+      </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="flex-1 overflow-auto">
+
+      <!-- ==================== VIEW: COMMAND CENTER ==================== -->
+      <div id="view-command" class="view active p-8">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-2xl font-bold">Command Center</h1>
+            <p class="text-gray-500 text-sm mt-1">Tomorrow &middot; Feb 14, 2026 &middot; All locations</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="bg-amber-50 border border-amber-200 rounded-lg px-4 py-2 text-center">
+              <div class="text-xs text-amber-600 font-medium">Order Deadline</div>
+              <div class="text-lg font-bold text-amber-700">6:00 PM <span class="text-sm font-normal text-amber-500">(2h 34m)</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top-level Stats -->
+        <div class="grid grid-cols-5 gap-4 mb-8">
+          <div class="bg-white rounded-xl p-4 border border-gray-100">
+            <div class="text-xs text-gray-400">Total Orders</div>
+            <div class="text-3xl font-bold mt-1">47</div>
+            <div class="text-xs text-emerald-600 mt-1">across 8 locations</div>
+          </div>
+          <div class="bg-white rounded-xl p-4 border border-gray-100">
+            <div class="text-xs text-gray-400">Revenue (Tomorrow)</div>
+            <div class="text-3xl font-bold mt-1">&#8377;13,200</div>
+            <div class="text-xs text-emerald-600 mt-1">+22% vs last Fri</div>
+          </div>
+          <div class="bg-white rounded-xl p-4 border border-gray-100">
+            <div class="text-xs text-gray-400">Active Locations</div>
+            <div class="text-3xl font-bold mt-1">8</div>
+            <div class="text-xs text-gray-400 mt-1">3 gym &middot; 3 office &middot; 2 apt</div>
+          </div>
+          <div class="bg-white rounded-xl p-4 border border-gray-100">
+            <div class="text-xs text-gray-400">Total Members</div>
+            <div class="text-3xl font-bold mt-1">156</div>
+            <div class="text-xs text-gray-400 mt-1">31 on auto-order</div>
+          </div>
+          <div class="bg-white rounded-xl p-4 border border-gray-100">
+            <div class="text-xs text-gray-400">Items to Prep</div>
+            <div class="text-3xl font-bold mt-1">52</div>
+            <div class="text-xs text-gray-400 mt-1">MOO: 38 &middot; TWF: 14</div>
+          </div>
+        </div>
+
+        <!-- Location Status Grid -->
+        <div class="bg-white rounded-xl border border-gray-100 overflow-hidden mb-6">
+          <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+            <h3 class="font-semibold">Location Status &mdash; Tomorrow</h3>
+            <div class="flex gap-2">
+              <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">6 confirmed</span>
+              <span class="text-[10px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full">1 at threshold</span>
+              <span class="text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded-full">1 below min</span>
+            </div>
+          </div>
+          <table class="w-full">
+            <thead class="bg-gray-50 border-b border-gray-100">
+              <tr>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Location</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Type</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Slot</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Orders</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Auto</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Revenue</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Payment</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="loc-row border-b border-gray-50">
+                <td class="px-5 py-3"><div class="text-sm font-medium">Cult Fitness HSR</div><div class="text-xs text-gray-400">Priya S. (admin)</div></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">Gym</span></td>
+                <td class="px-5 py-3 text-sm">6:00&ndash;10:00 AM</td>
+                <td class="px-5 py-3 text-sm font-medium">8 / 23</td>
+                <td class="px-5 py-3 text-sm text-blue-600">4</td>
+                <td class="px-5 py-3 text-sm">&#8377;2,394</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">collective</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">confirmed</span></td>
+              </tr>
+              <tr class="loc-row border-b border-gray-50">
+                <td class="px-5 py-3"><div class="text-sm font-medium">TechCorp Koramangala</div><div class="text-xs text-gray-400">Rahul K. (admin)</div></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">Office</span></td>
+                <td class="px-5 py-3 text-sm">8:00&ndash;10:00 AM</td>
+                <td class="px-5 py-3 text-sm font-medium">14 / 35</td>
+                <td class="px-5 py-3 text-sm text-blue-600">8</td>
+                <td class="px-5 py-3 text-sm">&#8377;3,486</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">sponsored</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">confirmed</span></td>
+              </tr>
+              <tr class="loc-row border-b border-gray-50">
+                <td class="px-5 py-3"><div class="text-sm font-medium">Gold's Gym Indiranagar</div><div class="text-xs text-gray-400">Anil R. (admin)</div></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">Gym</span></td>
+                <td class="px-5 py-3 text-sm">6:00&ndash;9:00 AM</td>
+                <td class="px-5 py-3 text-sm font-medium">6 / 18</td>
+                <td class="px-5 py-3 text-sm text-blue-600">3</td>
+                <td class="px-5 py-3 text-sm">&#8377;1,644</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">collective</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">confirmed</span></td>
+              </tr>
+              <tr class="loc-row border-b border-gray-50">
+                <td class="px-5 py-3"><div class="text-sm font-medium">Flipkart Bellandur</div><div class="text-xs text-gray-400">Nisha P. (admin)</div></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">Office</span></td>
+                <td class="px-5 py-3 text-sm">8:30&ndash;10:30 AM</td>
+                <td class="px-5 py-3 text-sm font-medium">9 / 28</td>
+                <td class="px-5 py-3 text-sm text-blue-600">5</td>
+                <td class="px-5 py-3 text-sm">&#8377;2,241</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">sponsored</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">confirmed</span></td>
+              </tr>
+              <tr class="loc-row border-b border-gray-50">
+                <td class="px-5 py-3"><div class="text-sm font-medium">Prestige Lakeside, Tower B</div><div class="text-xs text-gray-400">Deepa R. (admin)</div></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-0.5 rounded-full">Apartment</span></td>
+                <td class="px-5 py-3 text-sm">7:00&ndash;8:00 AM</td>
+                <td class="px-5 py-3 text-sm font-medium">5 / 12</td>
+                <td class="px-5 py-3 text-sm text-blue-600">2</td>
+                <td class="px-5 py-3 text-sm">&#8377;1,195</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">collective</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">confirmed</span></td>
+              </tr>
+              <tr class="loc-row border-b border-gray-50">
+                <td class="px-5 py-3"><div class="text-sm font-medium">Sarjapur Yogshala</div><div class="text-xs text-gray-400">Kavita M. (admin)</div></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">Gym</span></td>
+                <td class="px-5 py-3 text-sm">7:00&ndash;9:00 AM</td>
+                <td class="px-5 py-3 text-sm font-medium">3 / 8</td>
+                <td class="px-5 py-3 text-sm text-blue-600">1</td>
+                <td class="px-5 py-3 text-sm">&#8377;747</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">collective</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full">at threshold</span></td>
+              </tr>
+              <tr class="loc-row border-b border-gray-50">
+                <td class="px-5 py-3"><div class="text-sm font-medium">StartupHub JP Nagar</div><div class="text-xs text-gray-400">Vikram S. (admin)</div></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">Office</span></td>
+                <td class="px-5 py-3 text-sm">9:00&ndash;11:00 AM</td>
+                <td class="px-5 py-3 text-sm font-medium">4 / 15</td>
+                <td class="px-5 py-3 text-sm text-blue-600">2</td>
+                <td class="px-5 py-3 text-sm">&#8377;996</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">sponsored</span></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">confirmed</span></td>
+              </tr>
+              <tr class="loc-row bg-red-50/30">
+                <td class="px-5 py-3"><div class="text-sm font-medium text-red-700">Brigade Gateway, Block A</div><div class="text-xs text-red-400">Suresh N. (admin)</div></td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-0.5 rounded-full">Apartment</span></td>
+                <td class="px-5 py-3 text-sm">7:00&ndash;8:00 AM</td>
+                <td class="px-5 py-3 text-sm font-medium text-red-600">2 / 6</td>
+                <td class="px-5 py-3 text-sm text-blue-600">1</td>
+                <td class="px-5 py-3 text-sm text-red-600">&#8377;497</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">collective</span></td>
+                <td class="px-5 py-3">
+                  <span class="text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded-full">below min</span>
+                  <div class="text-[10px] text-red-400 mt-1">Needs 1 more order by 6 PM</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Alerts -->
+        <div class="bg-red-50 border border-red-100 rounded-xl p-4 flex items-center gap-4">
+          <div class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center text-red-500 text-lg flex-shrink-0">!</div>
+          <div class="flex-1">
+            <div class="text-sm font-medium text-red-700">Brigade Gateway Block A is below minimum (2/3 orders)</div>
+            <div class="text-xs text-red-500 mt-0.5">Admin Suresh N. has been notified. If no additional order by 6 PM, slot auto-cancels and members are refunded.</div>
+          </div>
+          <button class="text-xs px-3 py-1.5 bg-red-100 text-red-700 rounded-lg font-medium flex-shrink-0">Nudge Admin</button>
+        </div>
+      </div>
+
+
+      <!-- ==================== VIEW: KITCHEN PREP ==================== -->
+      <div id="view-prep" class="view p-8">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-2xl font-bold">Kitchen Prep List</h1>
+            <p class="text-gray-500 text-sm mt-1">Tomorrow &middot; Feb 14 &middot; 47 orders across 8 locations</p>
+          </div>
+          <div class="flex gap-2">
+            <button class="text-sm px-4 py-2 bg-gray-900 text-white rounded-lg font-medium">Print Prep Sheet</button>
+            <button class="text-sm px-4 py-2 border border-gray-200 bg-white rounded-lg">Send to Kitchen WhatsApp</button>
+          </div>
+        </div>
+
+        <!-- Prep Summary Cards -->
+        <div class="grid grid-cols-3 gap-4 mb-6">
+          <div class="bg-amber-50 border border-amber-100 rounded-xl p-4">
+            <div class="text-xs text-amber-600 font-semibold uppercase">Ministry of Oats</div>
+            <div class="text-2xl font-bold mt-1">38 items</div>
+            <div class="text-xs text-amber-500 mt-1">Overnight Oats: 22 &middot; Protein Bowls: 12 &middot; Porridge: 4</div>
+          </div>
+          <div class="bg-green-50 border border-green-100 rounded-xl p-4">
+            <div class="text-xs text-green-600 font-semibold uppercase">The Whole Fruit</div>
+            <div class="text-2xl font-bold mt-1">14 items</div>
+            <div class="text-xs text-green-500 mt-1">Fruit Bowl Regular: 8 &middot; Fruit Bowl Large: 6</div>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-xl p-4">
+            <div class="text-xs text-gray-500 font-semibold uppercase">Add-Ons</div>
+            <div class="text-2xl font-bold mt-1">23 items</div>
+            <div class="text-xs text-gray-400 mt-1">Protein Shake: 9 &middot; Eggs: 7 &middot; Avocado: 4 &middot; Other: 3</div>
+          </div>
+        </div>
+
+        <!-- Detailed Prep Table -->
+        <div class="bg-white rounded-xl border border-gray-100 overflow-hidden mb-6">
+          <div class="px-5 py-3 bg-amber-50 border-b border-amber-100">
+            <span class="text-xs font-semibold text-amber-700 uppercase tracking-wider">Ministry of Oats</span>
+          </div>
+          <table class="w-full">
+            <thead class="bg-gray-50 border-b border-gray-100">
+              <tr>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Item</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Total Qty</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Breakdown by Location</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Prep Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="prep-item border-b border-gray-50">
+                <td class="px-5 py-3"><div class="text-sm font-medium">Overnight Oats &mdash; Mango</div></td>
+                <td class="px-5 py-3"><span class="text-lg font-bold">9</span></td>
+                <td class="px-5 py-3 text-xs text-gray-500">
+                  Cult Fitness (3) &middot; TechCorp (2) &middot; Prestige Lakeside (2) &middot; Gold's Gym (1) &middot; Sarjapur (1)
+                </td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">pending</span></td>
+              </tr>
+              <tr class="prep-item border-b border-gray-50">
+                <td class="px-5 py-3"><div class="text-sm font-medium">Overnight Oats &mdash; Blueberry</div></td>
+                <td class="px-5 py-3"><span class="text-lg font-bold">8</span></td>
+                <td class="px-5 py-3 text-xs text-gray-500">
+                  TechCorp (3) &middot; Flipkart (2) &middot; Prestige Lakeside (1) &middot; StartupHub (1) &middot; Cult Fitness (1)
+                </td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">pending</span></td>
+              </tr>
+              <tr class="prep-item border-b border-gray-50">
+                <td class="px-5 py-3"><div class="text-sm font-medium">Overnight Oats &mdash; Strawberry</div></td>
+                <td class="px-5 py-3"><span class="text-lg font-bold">5</span></td>
+                <td class="px-5 py-3 text-xs text-gray-500">
+                  Prestige Lakeside (2) &middot; TechCorp (1) &middot; Flipkart (1) &middot; Gold's Gym (1)
+                </td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">pending</span></td>
+              </tr>
+              <tr class="prep-item border-b border-gray-50">
+                <td class="px-5 py-3"><div class="text-sm font-medium">Protein Oats &mdash; Peanut Butter</div></td>
+                <td class="px-5 py-3"><span class="text-lg font-bold">7</span></td>
+                <td class="px-5 py-3 text-xs text-gray-500">
+                  Cult Fitness (3) &middot; Gold's Gym (2) &middot; Sarjapur (1) &middot; StartupHub (1)
+                </td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">pending</span></td>
+              </tr>
+              <tr class="prep-item border-b border-gray-50">
+                <td class="px-5 py-3"><div class="text-sm font-medium">Protein Oats &mdash; Chocolate</div></td>
+                <td class="px-5 py-3"><span class="text-lg font-bold">5</span></td>
+                <td class="px-5 py-3 text-xs text-gray-500">
+                  Cult Fitness (2) &middot; Gold's Gym (1) &middot; Flipkart (1) &middot; TechCorp (1)
+                </td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">pending</span></td>
+              </tr>
+              <tr class="prep-item">
+                <td class="px-5 py-3"><div class="text-sm font-medium">Porridge Bowl &mdash; Classic</div></td>
+                <td class="px-5 py-3"><span class="text-lg font-bold">4</span></td>
+                <td class="px-5 py-3 text-xs text-gray-500">
+                  TechCorp (2) &middot; Flipkart (1) &middot; StartupHub (1)
+                </td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">pending</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- TWF -->
+        <div class="bg-white rounded-xl border border-gray-100 overflow-hidden mb-6">
+          <div class="px-5 py-3 bg-green-50 border-b border-green-100">
+            <span class="text-xs font-semibold text-green-700 uppercase tracking-wider">The Whole Fruit</span>
+          </div>
+          <table class="w-full">
+            <thead class="bg-gray-50 border-b border-gray-100">
+              <tr>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Item</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Total Qty</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Breakdown by Location</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Prep Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="prep-item border-b border-gray-50">
+                <td class="px-5 py-3"><div class="text-sm font-medium">Fruit Bowl &mdash; Regular</div></td>
+                <td class="px-5 py-3"><span class="text-lg font-bold">8</span></td>
+                <td class="px-5 py-3 text-xs text-gray-500">
+                  TechCorp (3) &middot; Flipkart (2) &middot; Prestige Lakeside (1) &middot; Gold's Gym (1) &middot; StartupHub (1)
+                </td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">pending</span></td>
+              </tr>
+              <tr class="prep-item">
+                <td class="px-5 py-3"><div class="text-sm font-medium">Fruit Bowl &mdash; Large</div></td>
+                <td class="px-5 py-3"><span class="text-lg font-bold">6</span></td>
+                <td class="px-5 py-3 text-xs text-gray-500">
+                  Cult Fitness (2) &middot; TechCorp (1) &middot; Gold's Gym (1) &middot; Flipkart (1) &middot; Prestige Lakeside (1)
+                </td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">pending</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Packing List by Location -->
+        <div class="bg-white rounded-xl border border-gray-100 p-5">
+          <h3 class="font-semibold mb-4">Packing List by Location</h3>
+          <p class="text-xs text-gray-400 mb-4">After kitchen preps total quantities, pack into location-wise bags for delivery.</p>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="border border-gray-100 rounded-xl p-4">
+              <div class="flex items-center justify-between mb-2">
+                <div class="text-sm font-medium">Cult Fitness HSR</div>
+                <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">8 items</span>
+              </div>
+              <div class="text-xs text-gray-400">OO Mango x3, PO PB x3, OO Blueberry x1, Fruit Large x1 + addons</div>
+              <div class="text-xs text-gray-400 mt-1">Delivery: 6:00 AM &middot; Bag #1</div>
+            </div>
+            <div class="border border-gray-100 rounded-xl p-4">
+              <div class="flex items-center justify-between mb-2">
+                <div class="text-sm font-medium">Gold's Gym Indiranagar</div>
+                <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">6 items</span>
+              </div>
+              <div class="text-xs text-gray-400">PO PB x2, OO Mango x1, OO Strawberry x1, Fruit Reg x1, Fruit Lg x1 + addons</div>
+              <div class="text-xs text-gray-400 mt-1">Delivery: 6:00 AM &middot; Bag #2</div>
+            </div>
+            <div class="border border-gray-100 rounded-xl p-4">
+              <div class="flex items-center justify-between mb-2">
+                <div class="text-sm font-medium">Prestige Lakeside B</div>
+                <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">5 items</span>
+              </div>
+              <div class="text-xs text-gray-400">OO Mango x2, OO Strawberry x2, Fruit Reg x1 + addons</div>
+              <div class="text-xs text-gray-400 mt-1">Delivery: 7:00 AM &middot; Bag #3</div>
+            </div>
+            <div class="border border-gray-100 rounded-xl p-4">
+              <div class="flex items-center justify-between mb-2">
+                <div class="text-sm font-medium">TechCorp Koramangala</div>
+                <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">14 items</span>
+              </div>
+              <div class="text-xs text-gray-400">OO Blueberry x3, Fruit Reg x3, OO Mango x2, Porridge x2, ... + addons</div>
+              <div class="text-xs text-gray-400 mt-1">Delivery: 8:00 AM &middot; Bag #4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ==================== VIEW: DELIVERY ROUTES ==================== -->
+      <div id="view-delivery" class="view p-8">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-2xl font-bold">Delivery Routes</h1>
+            <p class="text-gray-500 text-sm mt-1">Tomorrow &middot; Feb 14 &middot; 3 routes, 8 locations</p>
+          </div>
+          <button class="text-sm px-4 py-2 bg-gray-900 text-white rounded-lg font-medium">Assign Drivers</button>
+        </div>
+
+        <!-- Route Cards -->
+        <div class="space-y-4">
+
+          <!-- Route 1: Early Morning -->
+          <div class="bg-white rounded-xl border border-gray-100 p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center text-amber-700 font-bold text-sm">R1</div>
+                <div>
+                  <div class="text-sm font-semibold">Route 1 &mdash; Early Morning</div>
+                  <div class="text-xs text-gray-400">Depart kitchen: 5:15 AM &middot; Est. 45 min</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-bold">14 items</div>
+                <div class="text-xs text-gray-400">3 stops</div>
+              </div>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div class="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-[10px] font-bold">1</div>
+                <div class="flex-1">
+                  <div class="text-sm font-medium">Cult Fitness HSR <span class="text-xs text-gray-400 font-normal">&middot; 8 items</span></div>
+                  <div class="text-xs text-gray-400">ETA 5:45 AM &middot; Drop: Front desk</div>
+                </div>
+                <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">Gym</span>
+              </div>
+              <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div class="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-[10px] font-bold">2</div>
+                <div class="flex-1">
+                  <div class="text-sm font-medium">Gold's Gym Indiranagar <span class="text-xs text-gray-400 font-normal">&middot; 6 items</span></div>
+                  <div class="text-xs text-gray-400">ETA 6:05 AM &middot; Drop: Reception counter</div>
+                </div>
+                <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">Gym</span>
+              </div>
+              <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div class="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-[10px] font-bold">3</div>
+                <div class="flex-1">
+                  <div class="text-sm font-medium">Sarjapur Yogshala <span class="text-xs text-gray-400 font-normal">&middot; 3 items</span></div>
+                  <div class="text-xs text-gray-400">ETA 6:25 AM &middot; Drop: Studio entrance</div>
+                </div>
+                <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">Gym</span>
+              </div>
+            </div>
+            <div class="mt-3 text-xs text-gray-400">Driver: <span class="font-medium text-gray-600">Unassigned</span> &middot; Vehicle: Bike + insulated bag</div>
+          </div>
+
+          <!-- Route 2: Residential -->
+          <div class="bg-white rounded-xl border border-gray-100 p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center text-purple-700 font-bold text-sm">R2</div>
+                <div>
+                  <div class="text-sm font-semibold">Route 2 &mdash; Residential</div>
+                  <div class="text-xs text-gray-400">Depart kitchen: 6:20 AM &middot; Est. 30 min</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-bold">5 items</div>
+                <div class="text-xs text-gray-400">1 stop</div>
+              </div>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div class="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-[10px] font-bold">1</div>
+                <div class="flex-1">
+                  <div class="text-sm font-medium">Prestige Lakeside, Tower B <span class="text-xs text-gray-400 font-normal">&middot; 5 items</span></div>
+                  <div class="text-xs text-gray-400">ETA 6:45 AM &middot; Drop: Tower B lobby, security desk</div>
+                </div>
+                <span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-0.5 rounded-full">Apartment</span>
+              </div>
+            </div>
+            <div class="mt-3 text-xs text-gray-400">Driver: <span class="font-medium text-gray-600">Unassigned</span> &middot; Vehicle: Bike + insulated bag</div>
+          </div>
+
+          <!-- Route 3: Office -->
+          <div class="bg-white rounded-xl border border-gray-100 p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center text-blue-700 font-bold text-sm">R3</div>
+                <div>
+                  <div class="text-sm font-semibold">Route 3 &mdash; Offices</div>
+                  <div class="text-xs text-gray-400">Depart kitchen: 7:15 AM &middot; Est. 55 min</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-bold">27 items</div>
+                <div class="text-xs text-gray-400">3 stops</div>
+              </div>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div class="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-[10px] font-bold">1</div>
+                <div class="flex-1">
+                  <div class="text-sm font-medium">TechCorp Koramangala <span class="text-xs text-gray-400 font-normal">&middot; 14 items</span></div>
+                  <div class="text-xs text-gray-400">ETA 7:50 AM &middot; Drop: Kitchen pantry, 3rd floor</div>
+                </div>
+                <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">Office</span>
+              </div>
+              <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div class="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-[10px] font-bold">2</div>
+                <div class="flex-1">
+                  <div class="text-sm font-medium">Flipkart Bellandur <span class="text-xs text-gray-400 font-normal">&middot; 9 items</span></div>
+                  <div class="text-xs text-gray-400">ETA 8:10 AM &middot; Drop: Cafeteria, Building 1</div>
+                </div>
+                <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">Office</span>
+              </div>
+              <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div class="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-[10px] font-bold">3</div>
+                <div class="flex-1">
+                  <div class="text-sm font-medium">StartupHub JP Nagar <span class="text-xs text-gray-400 font-normal">&middot; 4 items</span></div>
+                  <div class="text-xs text-gray-400">ETA 8:35 AM &middot; Drop: Common area fridge</div>
+                </div>
+                <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">Office</span>
+              </div>
+            </div>
+            <div class="mt-3 text-xs text-gray-400">Driver: <span class="font-medium text-gray-600">Unassigned</span> &middot; Vehicle: Bike + insulated bag (may need 2 trips)</div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ==================== VIEW: LOCATIONS ==================== -->
+      <div id="view-locations" class="view p-8">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-2xl font-bold">Locations</h1>
+            <p class="text-gray-500 text-sm mt-1">8 active &middot; 2 onboarding</p>
+          </div>
+          <button class="text-sm px-4 py-2 bg-gray-900 text-white rounded-lg font-medium">+ Add Location</button>
+        </div>
+
+        <!-- Filters -->
+        <div class="flex gap-2 mb-6">
+          <button class="text-sm px-3 py-1.5 bg-gray-900 text-white rounded-lg">All (10)</button>
+          <button class="text-sm px-3 py-1.5 border border-gray-200 bg-white rounded-lg text-gray-600">Gym (3)</button>
+          <button class="text-sm px-3 py-1.5 border border-gray-200 bg-white rounded-lg text-gray-600">Office (3)</button>
+          <button class="text-sm px-3 py-1.5 border border-gray-200 bg-white rounded-lg text-gray-600">Apartment (2)</button>
+          <button class="text-sm px-3 py-1.5 border border-amber-200 bg-amber-50 rounded-lg text-amber-700">Onboarding (2)</button>
+        </div>
+
+        <!-- Location Cards -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white rounded-xl border border-gray-100 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">Gym</span>
+              <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">active</span>
+            </div>
+            <div class="text-sm font-semibold">Cult Fitness HSR</div>
+            <div class="text-xs text-gray-400 mt-0.5">HSR Layout Sector 4 &middot; Admin: Priya S.</div>
+            <div class="grid grid-cols-3 gap-2 mt-3">
+              <div class="text-center"><div class="text-sm font-bold">23</div><div class="text-[10px] text-gray-400">members</div></div>
+              <div class="text-center"><div class="text-sm font-bold">8.2</div><div class="text-[10px] text-gray-400">avg/day</div></div>
+              <div class="text-center"><div class="text-sm font-bold">&#8377;52K</div><div class="text-[10px] text-gray-400">monthly</div></div>
+            </div>
+            <div class="mt-3 text-xs text-gray-400">Since Jan 15, 2026 &middot; 30 days active</div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-gray-100 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">Office</span>
+              <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">active</span>
+            </div>
+            <div class="text-sm font-semibold">TechCorp Koramangala</div>
+            <div class="text-xs text-gray-400 mt-0.5">Koramangala 5th Block &middot; Admin: Rahul K.</div>
+            <div class="grid grid-cols-3 gap-2 mt-3">
+              <div class="text-center"><div class="text-sm font-bold">35</div><div class="text-[10px] text-gray-400">members</div></div>
+              <div class="text-center"><div class="text-sm font-bold">14.1</div><div class="text-[10px] text-gray-400">avg/day</div></div>
+              <div class="text-center"><div class="text-sm font-bold">&#8377;89K</div><div class="text-[10px] text-gray-400">monthly</div></div>
+            </div>
+            <div class="mt-3 text-xs text-gray-400">Since Jan 20, 2026 &middot; 25 days active</div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-gray-100 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">Gym</span>
+              <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">active</span>
+            </div>
+            <div class="text-sm font-semibold">Gold's Gym Indiranagar</div>
+            <div class="text-xs text-gray-400 mt-0.5">100ft Road, Indiranagar &middot; Admin: Anil R.</div>
+            <div class="grid grid-cols-3 gap-2 mt-3">
+              <div class="text-center"><div class="text-sm font-bold">18</div><div class="text-[10px] text-gray-400">members</div></div>
+              <div class="text-center"><div class="text-sm font-bold">5.8</div><div class="text-[10px] text-gray-400">avg/day</div></div>
+              <div class="text-center"><div class="text-sm font-bold">&#8377;38K</div><div class="text-[10px] text-gray-400">monthly</div></div>
+            </div>
+            <div class="mt-3 text-xs text-gray-400">Since Feb 1, 2026 &middot; 13 days active</div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-gray-100 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-0.5 rounded-full">Apartment</span>
+              <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">active</span>
+            </div>
+            <div class="text-sm font-semibold">Prestige Lakeside, Tower B</div>
+            <div class="text-xs text-gray-400 mt-0.5">Varthur Road &middot; Admin: Deepa R.</div>
+            <div class="grid grid-cols-3 gap-2 mt-3">
+              <div class="text-center"><div class="text-sm font-bold">12</div><div class="text-[10px] text-gray-400">members</div></div>
+              <div class="text-center"><div class="text-sm font-bold">4.5</div><div class="text-[10px] text-gray-400">avg/day</div></div>
+              <div class="text-center"><div class="text-sm font-bold">&#8377;28K</div><div class="text-[10px] text-gray-400">monthly</div></div>
+            </div>
+            <div class="mt-3 text-xs text-gray-400">Since Feb 3, 2026 &middot; 11 days active</div>
+          </div>
+
+          <!-- Onboarding locations -->
+          <div class="bg-white rounded-xl border-2 border-dashed border-amber-200 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">Gym</span>
+              <span class="text-[10px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full">onboarding</span>
+            </div>
+            <div class="text-sm font-semibold">F45 Training Whitefield</div>
+            <div class="text-xs text-gray-400 mt-0.5">Whitefield Main Road &middot; Contact: Ravi D.</div>
+            <div class="mt-3 space-y-1">
+              <div class="flex items-center gap-2 text-xs">
+                <span class="text-emerald-500">&#10003;</span><span class="text-gray-500">Location registered</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs">
+                <span class="text-emerald-500">&#10003;</span><span class="text-gray-500">Admin account created</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs">
+                <span class="text-amber-500">&#9679;</span><span class="text-amber-600 font-medium">Menu selection in progress</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs">
+                <span class="text-gray-300">&#9675;</span><span class="text-gray-400">First delivery pending</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border-2 border-dashed border-amber-200 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">Office</span>
+              <span class="text-[10px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full">onboarding</span>
+            </div>
+            <div class="text-sm font-semibold">Razorpay YBR Tower</div>
+            <div class="text-xs text-gray-400 mt-0.5">Yemlur, Old Airport Road &middot; Contact: Megha T.</div>
+            <div class="mt-3 space-y-1">
+              <div class="flex items-center gap-2 text-xs">
+                <span class="text-emerald-500">&#10003;</span><span class="text-gray-500">Location registered</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs">
+                <span class="text-amber-500">&#9679;</span><span class="text-amber-600 font-medium">Admin account pending</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs">
+                <span class="text-gray-300">&#9675;</span><span class="text-gray-400">Menu selection</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs">
+                <span class="text-gray-300">&#9675;</span><span class="text-gray-400">First delivery</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ==================== VIEW: MENU MANAGER ==================== -->
+      <div id="view-menus" class="view p-8">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-2xl font-bold">Menu Manager</h1>
+            <p class="text-gray-500 text-sm mt-1">Master catalog and location-type menus</p>
+          </div>
+          <button class="text-sm px-4 py-2 bg-gray-900 text-white rounded-lg font-medium">+ Add Item</button>
+        </div>
+
+        <!-- Menu Type Tabs -->
+        <div class="flex gap-2 mb-6">
+          <button class="text-sm px-4 py-2 bg-gray-900 text-white rounded-lg font-medium">Master Catalog (14)</button>
+          <button class="text-sm px-4 py-2 border border-emerald-200 bg-emerald-50 rounded-lg text-emerald-700">Gym Menu (8)</button>
+          <button class="text-sm px-4 py-2 border border-blue-200 bg-blue-50 rounded-lg text-blue-700">Office Menu (10)</button>
+          <button class="text-sm px-4 py-2 border border-purple-200 bg-purple-50 rounded-lg text-purple-700">Apartment Menu (10)</button>
+        </div>
+
+        <!-- Master Catalog Table -->
+        <div class="bg-white rounded-xl border border-gray-100 overflow-hidden">
+          <table class="w-full">
+            <thead class="bg-gray-50 border-b border-gray-100">
+              <tr>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Item</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Brand</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Price</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Nutrition</th>
+                <th class="text-center text-xs font-medium text-gray-500 px-3 py-2.5">Gym</th>
+                <th class="text-center text-xs font-medium text-gray-500 px-3 py-2.5">Office</th>
+                <th class="text-center text-xs font-medium text-gray-500 px-3 py-2.5">Apt</th>
+                <th class="text-left text-xs font-medium text-gray-500 px-5 py-2.5">Auto-Eligible</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm font-medium">Overnight Oats &mdash; Mango</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full">MOO</span></td>
+                <td class="px-5 py-3 text-sm">&#8377;199</td>
+                <td class="px-5 py-3 text-xs text-gray-400">350 cal &middot; 18g P</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">yes</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm font-medium">Overnight Oats &mdash; Blueberry</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full">MOO</span></td>
+                <td class="px-5 py-3 text-sm">&#8377;199</td>
+                <td class="px-5 py-3 text-xs text-gray-400">320 cal &middot; 16g P</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">yes</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm font-medium">Overnight Oats &mdash; Strawberry</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full">MOO</span></td>
+                <td class="px-5 py-3 text-sm">&#8377;199</td>
+                <td class="px-5 py-3 text-xs text-gray-400">310 cal &middot; 15g P</td>
+                <td class="px-3 py-3 text-center text-gray-300">&mdash;</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">yes</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm font-medium">Protein Oats &mdash; Peanut Butter</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full">MOO</span></td>
+                <td class="px-5 py-3 text-sm">&#8377;249</td>
+                <td class="px-5 py-3 text-xs text-gray-400">480 cal &middot; 28g P</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-3 py-3 text-center text-gray-300">&mdash;</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">yes</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm font-medium">Protein Oats &mdash; Chocolate</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full">MOO</span></td>
+                <td class="px-5 py-3 text-sm">&#8377;249</td>
+                <td class="px-5 py-3 text-xs text-gray-400">460 cal &middot; 26g P</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-3 py-3 text-center text-gray-300">&mdash;</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">yes</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm font-medium">Porridge Bowl &mdash; Classic</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full">MOO</span></td>
+                <td class="px-5 py-3 text-sm">&#8377;179</td>
+                <td class="px-5 py-3 text-xs text-gray-400">380 cal &middot; 14g P</td>
+                <td class="px-3 py-3 text-center text-gray-300">&mdash;</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">yes</span></td>
+              </tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm font-medium">Fruit Bowl &mdash; Regular</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-green-50 text-green-600 px-2 py-0.5 rounded-full">TWF</span></td>
+                <td class="px-5 py-3 text-sm">&#8377;149</td>
+                <td class="px-5 py-3 text-xs text-gray-400">220 cal &middot; 4g P</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">yes</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-5 py-3 text-sm font-medium">Fruit Bowl &mdash; Large</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-green-50 text-green-600 px-2 py-0.5 rounded-full">TWF</span></td>
+                <td class="px-5 py-3 text-sm">&#8377;199</td>
+                <td class="px-5 py-3 text-xs text-gray-400">340 cal &middot; 6g P</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-3 py-3 text-center text-emerald-500">&#10003;</td>
+                <td class="px-5 py-3"><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">yes</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="text-xs text-gray-400 mt-4">&#10003; = included in that location-type menu. Toggle items per menu type. Gym menus emphasise protein. Office menus include warm options. Apartment menus are family-friendly.</p>
+      </div>
+
+
+      <!-- ==================== VIEW: ANALYTICS ==================== -->
+      <div id="view-analytics" class="view p-8">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-2xl font-bold">Analytics</h1>
+            <p class="text-gray-500 text-sm mt-1">Outpost Direct performance</p>
+          </div>
+          <div class="flex gap-2">
+            <button class="text-sm px-3 py-1.5 border border-gray-200 bg-white rounded-lg text-gray-500">Last 7d</button>
+            <button class="text-sm px-3 py-1.5 bg-gray-900 text-white rounded-lg font-medium">Last 30d</button>
+            <button class="text-sm px-3 py-1.5 border border-gray-200 bg-white rounded-lg text-gray-500">All Time</button>
+          </div>
+        </div>
+
+        <!-- Channel Comparison -->
+        <div class="bg-white rounded-xl border border-gray-100 p-6 mb-6">
+          <h3 class="font-semibold mb-4">Channel Comparison (Last 30 Days)</h3>
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <div class="text-sm font-medium text-gray-500">Aggregators (Swiggy + Zomato)</div>
+                <div class="text-sm font-bold">&#8377;11.2L</div>
+              </div>
+              <div class="w-full bg-gray-100 rounded-full h-4 mb-1">
+                <div class="bg-red-400 rounded-full h-4" style="width: 78%"></div>
+              </div>
+              <div class="flex justify-between text-xs text-gray-400">
+                <span>3,820 orders</span>
+                <span>78% of revenue</span>
+                <span>~28% commission</span>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <div class="text-sm font-medium text-amber-600">Outpost Direct</div>
+                <div class="text-sm font-bold">&#8377;3.2L</div>
+              </div>
+              <div class="w-full bg-gray-100 rounded-full h-4 mb-1">
+                <div class="bg-amber-400 rounded-full h-4" style="width: 22%"></div>
+              </div>
+              <div class="flex justify-between text-xs text-gray-400">
+                <span>1,180 orders</span>
+                <span>22% of revenue</span>
+                <span>0% commission</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 p-3 bg-emerald-50 border border-emerald-100 rounded-xl">
+            <div class="text-xs text-emerald-700">Direct channel saves ~<strong>&#8377;90,000/month</strong> in aggregator commissions. At current growth, Direct will hit 40% by April.</div>
+          </div>
+        </div>
+
+        <!-- Performance by Location Type -->
+        <div class="grid grid-cols-3 gap-4 mb-6">
+          <div class="bg-white rounded-xl border border-gray-100 p-5">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full">Gym</span>
+              <span class="text-sm font-semibold">3 locations</span>
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm"><span class="text-gray-500">Orders</span><span class="font-medium">520</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-500">Revenue</span><span class="font-medium">&#8377;1.38L</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-500">AOV</span><span class="font-medium">&#8377;265</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-500">Avg orders/loc/day</span><span class="font-medium">6.2</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-500">Auto-order %</span><span class="font-medium text-blue-600">38%</span></div>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-100 p-5">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">Office</span>
+              <span class="text-sm font-semibold">3 locations</span>
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm"><span class="text-gray-500">Orders</span><span class="font-medium">490</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-500">Revenue</span><span class="font-medium">&#8377;1.32L</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-500">AOV</span><span class="font-medium">&#8377;269</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-500">Avg orders/loc/day</span><span class="font-medium">9.4</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-500">Auto-order %</span><span class="font-medium text-blue-600">52%</span></div>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-100 p-5">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-0.5 rounded-full">Apartment</span>
+              <span class="text-sm font-semibold">2 locations</span>
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm"><span class="text-gray-500">Orders</span><span class="font-medium">170</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-500">Revenue</span><span class="font-medium">&#8377;0.46L</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-500">AOV</span><span class="font-medium">&#8377;271</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-500">Avg orders/loc/day</span><span class="font-medium">4.1</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-500">Auto-order %</span><span class="font-medium text-blue-600">22%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="bg-white rounded-xl border border-gray-100 p-6">
+          <h3 class="font-semibold mb-4">Network Health</h3>
+          <div class="grid grid-cols-4 gap-6">
+            <div>
+              <div class="text-xs text-gray-400">Member Conversion</div>
+              <div class="text-2xl font-bold mt-1">31%</div>
+              <div class="text-xs text-gray-400 mt-1">of members order weekly</div>
+            </div>
+            <div>
+              <div class="text-xs text-gray-400">Location Retention</div>
+              <div class="text-2xl font-bold mt-1">100%</div>
+              <div class="text-xs text-emerald-500 mt-1">0 locations churned</div>
+            </div>
+            <div>
+              <div class="text-xs text-gray-400">Below-Min Rate</div>
+              <div class="text-2xl font-bold mt-1">4.2%</div>
+              <div class="text-xs text-gray-400 mt-1">of slots cancelled</div>
+            </div>
+            <div>
+              <div class="text-xs text-gray-400">Commission Saved</div>
+              <div class="text-2xl font-bold mt-1">&#8377;90K</div>
+              <div class="text-xs text-emerald-500 mt-1">vs if on aggregators</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById('view-' + item.dataset.view).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

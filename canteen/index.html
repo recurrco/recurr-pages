@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>canteen — the F&B stack for your office</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   CANTEEN — Landing Page
+   "The F&B stack for your office."
+   ═══════════════════════════════════════════════════════════ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --purple: #7C5CFC; --purple-dark: #5B3FD9;
+  --purple-light: #F3F0FF; --purple-mid: #EDE9FE;
+  --white: #FFFFFF; --offwhite: #FAFAF8;
+  --cream: #F5F3EE;
+  --gray-50: #F7F7F5; --gray-100: #EFEFED; --gray-200: #E0E0DC;
+  --gray-300: #C8C8C4; --gray-400: #A0A09C; --gray-500: #787874;
+  --gray-600: #58584E; --gray-700: #3C3C34; --gray-800: #262620;
+  --gray-900: #1A1A16; --black: #0F0F0C;
+  --dark-bg: #0C0C14; --dark-surface: #161622; --dark-border: #252535;
+  --dark-text: #E8E8EE; --dark-muted: #7878A0;
+  --green: #22C55E; --green-light: #F0FDF4;
+  --orange: #F97316; --amber: #F59E0B;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --radius-xl: 24px; --radius-lg: 20px; --radius-md: 16px;
+  --radius-sm: 12px; --radius-xs: 8px; --radius-pill: 100px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body); background: var(--offwhite);
+  color: var(--gray-900); -webkit-font-smoothing: antialiased;
+  line-height: 1.6; overflow-x: hidden;
+}
+
+/* ═══ NAV ═══ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(250,250,248,0.85);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.nav-inner {
+  max-width: 1080px; margin: 0 auto; padding: 0 40px; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand {
+  font-family: var(--font-display); font-size: 22px; font-weight: 800;
+  color: var(--black); text-decoration: none; letter-spacing: -0.5px;
+}
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-link {
+  font-size: 14px; font-weight: 500; color: var(--gray-500);
+  text-decoration: none; transition: color 0.15s;
+}
+.nav-link:hover { color: var(--gray-800); }
+.nav-cta {
+  padding: 10px 22px; background: var(--black); color: var(--white);
+  border-radius: var(--radius-pill); font-size: 13px; font-weight: 600;
+  text-decoration: none; transition: all 0.2s;
+}
+.nav-cta:hover { background: var(--gray-800); }
+
+/* ═══ LAYOUT ═══ */
+.container { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
+.container-tight { max-width: 800px; margin: 0 auto; padding: 0 40px; }
+section { padding: 120px 0; position: relative; }
+
+/* ═══ BUTTONS ═══ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 16px 32px; border-radius: var(--radius-pill);
+  font-size: 15px; font-weight: 600; border: none; cursor: pointer;
+  text-decoration: none; transition: all 0.2s;
+}
+.btn-primary { background: var(--black); color: var(--white); }
+.btn-primary:hover { background: var(--gray-800); transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: var(--gray-600); padding: 16px 8px; }
+.btn-ghost:hover { color: var(--black); }
+.btn-white { background: var(--white); color: var(--black); }
+.btn-white:hover { background: var(--gray-50); }
+
+/* ═══════════════════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════════════════ */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: 120px 0 80px; position: relative;
+}
+.hero-inner {
+  display: flex; align-items: center; gap: 80px;
+}
+.hero-left { flex: 1; }
+.hero-right { flex: 1; position: relative; }
+
+.hero-wordmark {
+  font-family: var(--font-display); font-size: 80px; font-weight: 900;
+  letter-spacing: -3px; line-height: 0.9; margin-bottom: 24px;
+  color: var(--black);
+}
+.hero-tagline {
+  font-size: 20px; color: var(--gray-500); line-height: 1.6;
+  max-width: 420px; margin-bottom: 36px;
+}
+.hero-cta { display: flex; gap: 8px; align-items: center; margin-bottom: 40px; }
+.hero-proof {
+  font-size: 12px; color: var(--gray-400); display: flex;
+  align-items: center; gap: 12px;
+}
+.hero-proof-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gray-300); }
+
+/* Hero product grid */
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  transform: rotate(2deg);
+}
+.hero-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-100); padding: 20px;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease;
+}
+.hero-card:hover { transform: translateY(-4px); }
+.hero-card-icon { font-size: 32px; margin-bottom: 8px; display: block; }
+.hero-card-name {
+  font-family: var(--font-display); font-size: 16px; font-weight: 700;
+  margin-bottom: 2px;
+}
+.hero-card-desc { font-size: 11px; color: var(--gray-400); line-height: 1.4; }
+.hero-card-free {
+  display: inline-block; font-size: 9px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--green); margin-top: 6px;
+}
+.hero-card.tall { grid-row: span 2; display: flex; flex-direction: column; justify-content: center; }
+
+/* ═══════════════════════════════════════════════════════════
+   POSITIONING
+   ═══════════════════════════════════════════════════════════ */
+.positioning {
+  background: var(--dark-bg); color: var(--dark-text);
+  padding: 100px 0; text-align: center;
+}
+.positioning h2 {
+  font-family: var(--font-display); font-size: 44px; font-weight: 600;
+  line-height: 1.15; letter-spacing: -1.5px; max-width: 640px;
+  margin: 0 auto 20px; color: var(--white);
+}
+.positioning p {
+  font-size: 17px; color: var(--dark-muted); max-width: 480px;
+  margin: 0 auto; line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODULES — Stacked full-width sections
+   ═══════════════════════════════════════════════════════════ */
+
+/* Module layout */
+.module {
+  padding: 100px 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+.module:last-of-type { border-bottom: none; }
+.module-inner {
+  display: flex; align-items: center; gap: 80px;
+}
+.module-inner.reverse { flex-direction: row-reverse; }
+.module-text { flex: 1; }
+.module-visual { flex: 1; }
+
+.module-label {
+  font-family: var(--font-display); font-size: 13px; font-weight: 600;
+  color: var(--purple); font-style: italic; margin-bottom: 8px;
+}
+.module-name {
+  font-family: var(--font-display); font-size: 40px; font-weight: 700;
+  letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px;
+}
+.module-desc {
+  font-size: 16px; color: var(--gray-600); line-height: 1.7;
+  max-width: 420px; margin-bottom: 24px;
+}
+.module-details {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.module-detail {
+  display: flex; align-items: baseline; gap: 8px;
+  font-size: 14px;
+}
+.module-detail-label {
+  font-weight: 700; color: var(--gray-800); min-width: 120px;
+}
+.module-detail-value { color: var(--gray-500); }
+
+/* Module product mockup */
+.module-mockup {
+  background: var(--white); border-radius: var(--radius-xl);
+  border: 1px solid var(--gray-100); box-shadow: var(--shadow-lg);
+  overflow: hidden; position: relative;
+}
+.mockup-header {
+  padding: 16px 20px; border-bottom: 1px solid var(--gray-100);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.mockup-title {
+  font-size: 13px; font-weight: 700; display: flex;
+  align-items: center; gap: 8px;
+}
+.mockup-title span { font-size: 18px; }
+.mockup-badge {
+  font-size: 10px; font-weight: 600; padding: 3px 10px;
+  border-radius: var(--radius-pill);
+}
+.mockup-body { padding: 20px; }
+
+/* Celebrations mockup */
+.cal-row {
+  display: flex; align-items: center; gap: 12px; padding: 12px 0;
+  border-bottom: 1px solid var(--gray-50);
+}
+.cal-row:last-child { border-bottom: none; }
+.cal-date {
+  width: 44px; height: 44px; border-radius: var(--radius-sm);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; font-size: 16px; font-weight: 800;
+  line-height: 1; flex-shrink: 0;
+}
+.cal-date small { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.cal-info { flex: 1; }
+.cal-info h5 { font-size: 13px; font-weight: 600; }
+.cal-info p { font-size: 11px; color: var(--gray-400); }
+.cal-action {
+  font-size: 11px; font-weight: 600; color: var(--purple);
+  padding: 4px 12px; border-radius: var(--radius-pill);
+  background: var(--purple-light); white-space: nowrap;
+}
+
+/* Pantry mockup — shelf items */
+.shelf-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.shelf-item {
+  background: var(--gray-50); border-radius: var(--radius-md);
+  padding: 16px 12px; text-align: center;
+  border: 1px solid var(--gray-100);
+}
+.shelf-item-icon { font-size: 28px; margin-bottom: 6px; display: block; }
+.shelf-item-name { font-size: 10px; font-weight: 600; color: var(--gray-700); }
+.shelf-item-status { font-size: 9px; color: var(--green); font-weight: 600; margin-top: 2px; }
+
+/* Barista mockup */
+.brew-options { display: flex; gap: 10px; margin-bottom: 16px; }
+.brew-option {
+  flex: 1; padding: 14px; border-radius: var(--radius-md);
+  text-align: center; border: 1.5px solid var(--gray-200);
+  cursor: default; transition: all 0.15s;
+}
+.brew-option.selected { border-color: var(--purple); background: var(--purple-light); }
+.brew-option-icon { font-size: 24px; margin-bottom: 4px; display: block; }
+.brew-option-name { font-size: 11px; font-weight: 700; }
+.brew-option-price { font-size: 10px; color: var(--gray-400); }
+.brew-sub { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--gray-50); border-radius: var(--radius-sm); }
+.brew-sub-text { font-size: 12px; font-weight: 600; }
+.brew-sub-freq { font-size: 11px; color: var(--purple); font-weight: 600; }
+
+/* Fridge mockup */
+.fridge-frame {
+  background: linear-gradient(180deg, #E8F5E9 0%, #C8E6C9 100%);
+  border-radius: var(--radius-lg); padding: 16px;
+  border: 2px solid #A5D6A7;
+}
+.fridge-shelf {
+  display: flex; gap: 8px; padding: 8px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.fridge-shelf:last-child { border-bottom: none; }
+.fridge-item {
+  flex: 1; background: rgba(255,255,255,0.8); border-radius: var(--radius-xs);
+  padding: 10px 8px; text-align: center; font-size: 10px; font-weight: 600;
+  color: var(--gray-700);
+}
+.fridge-item-icon { font-size: 22px; display: block; margin-bottom: 2px; }
+
+/* Tiffins mockup */
+.tiffin-timeline { display: flex; flex-direction: column; gap: 8px; }
+.tiffin-day {
+  display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+  background: var(--gray-50); border-radius: var(--radius-sm);
+  border: 1px solid var(--gray-100);
+}
+.tiffin-day.today { background: var(--purple-light); border-color: var(--purple); }
+.tiffin-day-name { width: 36px; font-size: 11px; font-weight: 700; color: var(--gray-400); }
+.tiffin-day.today .tiffin-day-name { color: var(--purple); }
+.tiffin-meal { flex: 1; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--gray-700); }
+.tiffin-meal span { font-size: 16px; }
+.tiffin-status { font-size: 10px; font-weight: 600; }
+
+/* ═══════════════════════════════════════════════════════════
+   CONFIGURATOR — Apple checkout vibe
+   ═══════════════════════════════════════════════════════════ */
+.configurator { background: var(--dark-bg); color: var(--dark-text); padding: 100px 0; }
+.config-headline {
+  font-family: var(--font-display); font-size: 44px; font-weight: 600;
+  letter-spacing: -1.5px; text-align: center; margin-bottom: 12px;
+  color: var(--white);
+}
+.config-sub {
+  font-size: 17px; color: var(--dark-muted); text-align: center;
+  max-width: 480px; margin: 0 auto 56px; line-height: 1.7;
+}
+.config-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.config-card {
+  background: var(--dark-surface); border: 1px solid var(--dark-border);
+  border-radius: var(--radius-lg); padding: 24px 20px;
+  text-align: center; position: relative;
+  transition: all 0.2s;
+}
+.config-card:hover { border-color: rgba(124,92,252,0.4); transform: translateY(-2px); }
+.config-card.active { border-color: var(--purple); background: rgba(124,92,252,0.08); }
+.config-card-check {
+  position: absolute; top: 12px; right: 12px;
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2px solid var(--dark-border); display: flex;
+  align-items: center; justify-content: center;
+  font-size: 10px; color: transparent;
+}
+.config-card.active .config-card-check {
+  background: var(--purple); border-color: var(--purple);
+  color: white;
+}
+.config-card-icon { font-size: 32px; margin-bottom: 10px; display: block; }
+.config-card-name {
+  font-family: var(--font-display); font-size: 15px; font-weight: 700;
+  color: var(--white); margin-bottom: 4px;
+}
+.config-card-cost { font-size: 11px; color: var(--dark-muted); }
+.config-card-free { font-size: 11px; color: var(--green); font-weight: 600; }
+
+.config-summary {
+  margin-top: 40px; text-align: center;
+  padding: 24px; background: var(--dark-surface);
+  border: 1px solid var(--dark-border); border-radius: var(--radius-lg);
+  max-width: 560px; margin-left: auto; margin-right: auto;
+}
+.config-summary-text { font-size: 14px; color: var(--dark-muted); margin-bottom: 16px; }
+.config-summary-text strong { color: var(--white); }
+
+/* ═══════════════════════════════════════════════════════════
+   HOW IT WORKS
+   ═══════════════════════════════════════════════════════════ */
+.how-steps {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  max-width: 800px; margin: 0 auto;
+}
+.how-step { text-align: center; padding: 0 20px; position: relative; }
+.how-step::after {
+  content: ''; position: absolute; top: 24px; right: -10px;
+  width: 20px; height: 2px; background: var(--gray-200);
+}
+.how-step:last-child::after { display: none; }
+.how-step-num {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--purple-light); color: var(--purple);
+  font-family: var(--font-display); font-size: 20px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 12px;
+}
+.how-step h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.how-step p { font-size: 12px; color: var(--gray-500); line-height: 1.5; }
+
+/* ═══════════════════════════════════════════════════════════
+   CLOSING
+   ═══════════════════════════════════════════════════════════ */
+.closing { text-align: center; }
+.closing-headline {
+  font-family: var(--font-display); font-size: 52px; font-weight: 700;
+  letter-spacing: -2px; line-height: 1.1; max-width: 600px;
+  margin: 0 auto 20px;
+}
+.closing-headline em {
+  font-style: italic; color: var(--purple);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+}
+.closing-sub {
+  font-size: 18px; color: var(--gray-500); max-width: 440px;
+  margin: 0 auto 40px; line-height: 1.7;
+}
+
+/* ═══ FOOTER ═══ */
+.footer {
+  padding: 56px 40px; background: var(--dark-bg); text-align: center;
+}
+.footer-brand {
+  font-family: var(--font-display); font-size: 18px; font-weight: 800;
+  color: var(--white); margin-bottom: 8px;
+}
+.footer-sub { font-size: 12px; color: var(--dark-muted); }
+.footer-divider { width: 40px; height: 2px; background: var(--dark-border); margin: 16px auto; }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 900px) {
+  .hero-inner { flex-direction: column; gap: 48px; }
+  .hero-wordmark { font-size: 56px; }
+  .hero { min-height: auto; padding: 100px 0 60px; }
+  .module-inner, .module-inner.reverse { flex-direction: column; gap: 40px; }
+  .config-grid { grid-template-columns: repeat(2, 1fr); }
+  .how-steps { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .how-step::after { display: none; }
+  .container { padding: 0 24px; }
+  section { padding: 80px 0; }
+  .positioning h2, .config-headline { font-size: 36px; }
+  .module-name { font-size: 32px; }
+  .closing-headline { font-size: 40px; }
+  .nav-links { display: none; }
+  .hero-grid { transform: none; }
+}
+@media (max-width: 600px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .config-grid { grid-template-columns: 1fr; }
+  .how-steps { grid-template-columns: 1fr; }
+  .shelf-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#">canteen</a>
+    <div class="nav-links">
+      <a class="nav-link" href="#celebrations">celebrations</a>
+      <a class="nav-link" href="#pantry">pantry</a>
+      <a class="nav-link" href="#barista">barista</a>
+      <a class="nav-link" href="#fridge">fruit fridge</a>
+      <a class="nav-link" href="#tiffins">tiffins</a>
+    </div>
+    <a class="nav-cta" href="#">Request Invite</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════════════════════
+     HERO
+     ════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-wordmark">canteen</div>
+        <p class="hero-tagline">The complete F&B stack for your office. Culture, pantry, coffee, fruit, snacks, and meals &mdash; assembled and managed.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#">Request Invite &rarr;</a>
+          <a class="btn btn-ghost" href="#celebrations">See what's inside</a>
+        </div>
+        <div class="hero-proof">
+          <span>Powered by Outpost Kitchens</span>
+          <span class="hero-proof-dot"></span>
+          <span>Bangalore</span>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-grid">
+          <div class="hero-card">
+            <span class="hero-card-icon">&#x1F389;</span>
+            <div class="hero-card-name">celebrations</div>
+            <div class="hero-card-desc">Birthdays, townhalls, team events</div>
+            <div class="hero-card-free">Free forever</div>
+          </div>
+          <div class="hero-card">
+            <span class="hero-card-icon">&#x1F3DB;</span>
+            <div class="hero-card-name">pantry</div>
+            <div class="hero-card-desc">Shelf, crockery, condiments</div>
+          </div>
+          <div class="hero-card">
+            <span class="hero-card-icon">&#x2615;</span>
+            <div class="hero-card-name">barista</div>
+            <div class="hero-card-desc">Machines, beans, maintenance</div>
+          </div>
+          <div class="hero-card">
+            <span class="hero-card-icon">&#x1F34E;</span>
+            <div class="hero-card-name">fruit fridge</div>
+            <div class="hero-card-desc">Cut fruits, juices, smoothies</div>
+          </div>
+          <div class="hero-card">
+            <span class="hero-card-icon">&#x1F36A;</span>
+            <div class="hero-card-name">snacks</div>
+            <div class="hero-card-desc">Curated shelf, always stocked</div>
+          </div>
+          <div class="hero-card">
+            <span class="hero-card-icon">&#x1F371;</span>
+            <div class="hero-card-name">tiffins</div>
+            <div class="hero-card-desc">Daily meals, auto-decided</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     POSITIONING
+     ════════════════════════════════════════════════════════ -->
+<section class="positioning">
+  <div class="container">
+    <h2>Your office had nothing like this. Now it does.</h2>
+    <p>Sign up for free. Pick what you need. We set it up, stock it, and maintain it. You get back to work.</p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     MODULE 1: CELEBRATIONS (Free)
+     ════════════════════════════════════════════════════════ -->
+<section class="module" id="celebrations" style="background:var(--offwhite)">
+  <div class="container">
+    <div class="module-inner">
+      <div class="module-text">
+        <div class="module-label">Free forever</div>
+        <div class="module-name">celebrations</div>
+        <div class="module-desc">Your extended team for celebrating employee milestones and hosting team events. Birthdays, work anniversaries, townhalls, customer visits &mdash; tell us the budget, we handle everything else.</div>
+        <div class="module-details">
+          <div class="module-detail">
+            <span class="module-detail-label">Cost</span>
+            <span class="module-detail-value">Free software. Per-event catering priced separately.</span>
+          </div>
+          <div class="module-detail">
+            <span class="module-detail-label">Lead time</span>
+            <span class="module-detail-value">48 hours for catered events</span>
+          </div>
+          <div class="module-detail">
+            <span class="module-detail-label">What you do</span>
+            <span class="module-detail-value">Add your team. We remember the rest.</span>
+          </div>
+        </div>
+      </div>
+      <div class="module-visual">
+        <div class="module-mockup">
+          <div class="mockup-header">
+            <div class="mockup-title"><span>&#x1F389;</span> Team Calendar</div>
+            <div class="mockup-badge" style="background:var(--green-light);color:var(--green)">This week</div>
+          </div>
+          <div class="mockup-body">
+            <div class="cal-row">
+              <div class="cal-date" style="background:var(--purple-light);color:var(--purple)"><span>18</span><small>Feb</small></div>
+              <div class="cal-info"><h5>Priya's Birthday &#x1F382;</h5><p>Turning 28 &middot; Likes chocolate cake</p></div>
+              <div class="cal-action">Plan it</div>
+            </div>
+            <div class="cal-row">
+              <div class="cal-date" style="background:var(--orange-light);color:var(--orange)"><span>20</span><small>Feb</small></div>
+              <div class="cal-info"><h5>Monthly Townhall</h5><p>15 people &middot; Lunch + coffee</p></div>
+              <div class="cal-action">Plan it</div>
+            </div>
+            <div class="cal-row">
+              <div class="cal-date" style="background:var(--green-light);color:var(--green)"><span>22</span><small>Feb</small></div>
+              <div class="cal-info"><h5>Varun &middot; 2 Year Anniversary &#x1F38A;</h5><p>Work anniversary</p></div>
+              <div class="cal-action">Plan it</div>
+            </div>
+            <div class="cal-row">
+              <div class="cal-date" style="background:var(--gray-50);color:var(--gray-500)"><span>25</span><small>Feb</small></div>
+              <div class="cal-info"><h5>Client Visit &mdash; Acme Corp</h5><p>8 people &middot; Premium setup</p></div>
+              <div class="cal-action">Plan it</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     MODULE 2: PANTRY
+     ════════════════════════════════════════════════════════ -->
+<section class="module" id="pantry" style="background:var(--white)">
+  <div class="container">
+    <div class="module-inner reverse">
+      <div class="module-text">
+        <div class="module-label">Fully managed</div>
+        <div class="module-name">pantry</div>
+        <div class="module-desc">Do you even have a pantry? If not, we'll set one up. Shelf, crockery, cutlery, condiments, sugar, tea bags &mdash; the basics that every office kitchen needs. We visit monthly, audit, and restock.</div>
+        <div class="module-details">
+          <div class="module-detail">
+            <span class="module-detail-label">Setup</span>
+            <span class="module-detail-value">One-time budget for shelf, crockery &amp; cutlery</span>
+          </div>
+          <div class="module-detail">
+            <span class="module-detail-label">Consumables</span>
+            <span class="module-detail-value">Monthly budget &middot; Weekly restocking</span>
+          </div>
+          <div class="module-detail">
+            <span class="module-detail-label">Audit</span>
+            <span class="module-detail-value">Monthly in-person visit</span>
+          </div>
+        </div>
+      </div>
+      <div class="module-visual">
+        <div class="module-mockup">
+          <div class="mockup-header">
+            <div class="mockup-title"><span>&#x1F3DB;</span> Pantry Inventory</div>
+            <div class="mockup-badge" style="background:var(--purple-light);color:var(--purple)">All stocked</div>
+          </div>
+          <div class="mockup-body">
+            <div class="shelf-grid">
+              <div class="shelf-item"><span class="shelf-item-icon">&#x1F375;</span><div class="shelf-item-name">Tea bags</div><div class="shelf-item-status">&#x2713; Stocked</div></div>
+              <div class="shelf-item"><span class="shelf-item-icon">&#x1F9C2;</span><div class="shelf-item-name">Sugar</div><div class="shelf-item-status">&#x2713; Stocked</div></div>
+              <div class="shelf-item"><span class="shelf-item-icon">&#x1F95B;</span><div class="shelf-item-name">Milk</div><div class="shelf-item-status">&#x2713; Stocked</div></div>
+              <div class="shelf-item"><span class="shelf-item-icon">&#x1F37D;</span><div class="shelf-item-name">Crockery</div><div class="shelf-item-status">&#x2713; 20 sets</div></div>
+              <div class="shelf-item"><span class="shelf-item-icon">&#x1F9C2;</span><div class="shelf-item-name">Salt &amp; Pepper</div><div class="shelf-item-status">&#x2713; Stocked</div></div>
+              <div class="shelf-item"><span class="shelf-item-icon">&#x1F9F4;</span><div class="shelf-item-name">Dish soap</div><div class="shelf-item-status">&#x2713; Stocked</div></div>
+              <div class="shelf-item"><span class="shelf-item-icon">&#x1F9FB;</span><div class="shelf-item-name">Tissues</div><div class="shelf-item-status">&#x2713; Stocked</div></div>
+              <div class="shelf-item"><span class="shelf-item-icon">&#x1F9F9;</span><div class="shelf-item-name">Cleaning</div><div class="shelf-item-status">&#x2713; Stocked</div></div>
+            </div>
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--gray-100);font-size:11px;color:var(--gray-400);display:flex;justify-content:space-between">
+              <span>Next restock: Wed, Feb 19</span>
+              <span>Next audit: Mar 1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     MODULE 3: BARISTA
+     ════════════════════════════════════════════════════════ -->
+<section class="module" id="barista" style="background:var(--offwhite)">
+  <div class="container">
+    <div class="module-inner">
+      <div class="module-text">
+        <div class="module-label">Setup + Subscription</div>
+        <div class="module-name">barista</div>
+        <div class="module-desc">A real coffee and tea station. Pick the machine that fits your budget &mdash; from an AeroPress to a full espresso setup. We install it, supply the beans and leaf, and handle maintenance forever.</div>
+        <div class="module-details">
+          <div class="module-detail">
+            <span class="module-detail-label">Machines</span>
+            <span class="module-detail-value">Setup budget + monthly audit + maintenance</span>
+          </div>
+          <div class="module-detail">
+            <span class="module-detail-label">Bean &amp; Leaf</span>
+            <span class="module-detail-value">Monthly budget + weekly restocking</span>
+          </div>
+          <div class="module-detail">
+            <span class="module-detail-label">Run out?</span>
+            <span class="module-detail-value">Ping us on the platform. Next-day restock.</span>
+          </div>
+        </div>
+      </div>
+      <div class="module-visual">
+        <div class="module-mockup">
+          <div class="mockup-header">
+            <div class="mockup-title"><span>&#x2615;</span> Barista Setup</div>
+            <div class="mockup-badge" style="background:var(--green-light);color:var(--green)">Active</div>
+          </div>
+          <div class="mockup-body">
+            <div style="font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Your machine</div>
+            <div class="brew-options">
+              <div class="brew-option">
+                <span class="brew-option-icon">&#x1FAD6;</span>
+                <div class="brew-option-name">Pour Over</div>
+                <div class="brew-option-price">&#8377;2K setup</div>
+              </div>
+              <div class="brew-option">
+                <span class="brew-option-icon">&#x2615;</span>
+                <div class="brew-option-name">AeroPress</div>
+                <div class="brew-option-price">&#8377;4K setup</div>
+              </div>
+              <div class="brew-option selected">
+                <span class="brew-option-icon">&#x1F3ED;</span>
+                <div class="brew-option-name">Espresso</div>
+                <div class="brew-option-price">&#8377;12K setup</div>
+              </div>
+            </div>
+            <div class="brew-sub">
+              <div><div class="brew-sub-text">Single-origin beans</div><div style="font-size:10px;color:var(--gray-400)">250g &middot; Medium roast</div></div>
+              <div class="brew-sub-freq">Every week &#x1F504;</div>
+            </div>
+            <div class="brew-sub" style="margin-top:8px">
+              <div><div class="brew-sub-text">Assam tea leaves</div><div style="font-size:10px;color:var(--gray-400)">100g &middot; CTC blend</div></div>
+              <div class="brew-sub-freq">Every 2 weeks &#x1F504;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     MODULE 4: FRUIT FRIDGE
+     ════════════════════════════════════════════════════════ -->
+<section class="module" id="fridge" style="background:var(--white)">
+  <div class="container">
+    <div class="module-inner reverse">
+      <div class="module-text">
+        <div class="module-label">Setup + Daily Restock</div>
+        <div class="module-name">fruit fridge</div>
+        <div class="module-desc">A 5-shelf VISI cooler stocked with cut fruits, smoothie bowls, yogurt puddings, and juice containers. Open the fridge, something good is always waiting. We optimize stock based on consumption to minimize waste.</div>
+        <div class="module-details">
+          <div class="module-detail">
+            <span class="module-detail-label">Machine</span>
+            <span class="module-detail-value">Setup budget + monthly audit + maintenance</span>
+          </div>
+          <div class="module-detail">
+            <span class="module-detail-label">Stock</span>
+            <span class="module-detail-value">Monthly budget + daily restocking</span>
+          </div>
+          <div class="module-detail">
+            <span class="module-detail-label">Waste</span>
+            <span class="module-detail-value">We track and optimize. Gets better every week.</span>
+          </div>
+        </div>
+      </div>
+      <div class="module-visual">
+        <div class="module-mockup" style="background:var(--offwhite)">
+          <div class="mockup-header">
+            <div class="mockup-title"><span>&#x1F34E;</span> Fruit Fridge</div>
+            <div class="mockup-badge" style="background:var(--green-light);color:var(--green)">Stocked today</div>
+          </div>
+          <div class="mockup-body">
+            <div class="fridge-frame">
+              <div class="fridge-shelf">
+                <div class="fridge-item"><span class="fridge-item-icon">&#x1F353;</span>Strawberry Cup</div>
+                <div class="fridge-item"><span class="fridge-item-icon">&#x1F34D;</span>Pineapple Cup</div>
+                <div class="fridge-item"><span class="fridge-item-icon">&#x1F349;</span>Watermelon Cup</div>
+              </div>
+              <div class="fridge-shelf">
+                <div class="fridge-item"><span class="fridge-item-icon">&#x1F963;</span>Smoothie Bowl</div>
+                <div class="fridge-item"><span class="fridge-item-icon">&#x1F36E;</span>Yogurt Pudding</div>
+                <div class="fridge-item"><span class="fridge-item-icon">&#x1F95D;</span>Mixed Fruit</div>
+              </div>
+              <div class="fridge-shelf">
+                <div class="fridge-item"><span class="fridge-item-icon">&#x1F9C3;</span>Orange Juice</div>
+                <div class="fridge-item"><span class="fridge-item-icon">&#x1F965;</span>Coconut Water</div>
+                <div class="fridge-item"><span class="fridge-item-icon">&#x1F34B;</span>Lemon Mint</div>
+              </div>
+            </div>
+            <div style="margin-top:10px;font-size:10px;color:var(--gray-400);text-align:center">5-shelf VISI cooler &middot; Restocked 6 AM daily</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     MODULE 5: SNACKS (inline between fridge and tiffins)
+     ════════════════════════════════════════════════════════ -->
+<section class="module" id="snacks" style="background:var(--offwhite)">
+  <div class="container">
+    <div class="module-inner">
+      <div class="module-text">
+        <div class="module-label">Zero commitment</div>
+        <div class="module-name">snack shelf</div>
+        <div class="module-desc">Tell us your budget and your team's preferences. We figure out the brands, curate the selection, and keep the shelf stocked. No food waste, no stale inventory. Just snacks people actually reach for.</div>
+        <div class="module-details">
+          <div class="module-detail">
+            <span class="module-detail-label">Budget</span>
+            <span class="module-detail-value">You set the weekly number</span>
+          </div>
+          <div class="module-detail">
+            <span class="module-detail-label">Preferences</span>
+            <span class="module-detail-value">Team votes on what they want</span>
+          </div>
+          <div class="module-detail">
+            <span class="module-detail-label">Restocking</span>
+            <span class="module-detail-value">Weekly &middot; Curated from 30+ brands</span>
+          </div>
+        </div>
+      </div>
+      <div class="module-visual">
+        <div class="module-mockup">
+          <div class="mockup-header">
+            <div class="mockup-title"><span>&#x1F36A;</span> Snack Shelf</div>
+            <div class="mockup-badge" style="background:var(--purple-light);color:var(--purple)">&#8377;3K/week</div>
+          </div>
+          <div class="mockup-body">
+            <div class="shelf-grid">
+              <div class="shelf-item"><span class="shelf-item-icon">&#x1F36B;</span><div class="shelf-item-name">Dark Choco</div><div class="shelf-item-status">&#x2764; 12 votes</div></div>
+              <div class="shelf-item"><span class="shelf-item-icon">&#x1F95C;</span><div class="shelf-item-name">Trail Mix</div><div class="shelf-item-status">&#x2764; 9 votes</div></div>
+              <div class="shelf-item"><span class="shelf-item-icon">&#x1F36A;</span><div class="shelf-item-name">Oat Cookies</div><div class="shelf-item-status">&#x2764; 8 votes</div></div>
+              <div class="shelf-item"><span class="shelf-item-icon">&#x1F330;</span><div class="shelf-item-name">Almonds</div><div class="shelf-item-status">&#x2764; 7 votes</div></div>
+            </div>
+            <div style="margin-top:12px;padding:10px 14px;background:var(--purple-light);border-radius:var(--radius-sm);font-size:11px;color:var(--purple);font-weight:600;text-align:center">
+              &#x1F31F; Your team voted &middot; Next restock: Thursday
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     MODULE 6: TIFFINS
+     ════════════════════════════════════════════════════════ -->
+<section class="module" id="tiffins" style="background:var(--white)">
+  <div class="container">
+    <div class="module-inner reverse">
+      <div class="module-text">
+        <div class="module-label">The upgrade</div>
+        <div class="module-name">tiffins</div>
+        <div class="module-desc">Daily meals, delivered to your team's desks. Auto-decided menu, auto-subscription, auto-invoice. Your team eats well every day without anyone managing it. This is the module you turn on when you're ready.</div>
+        <div class="module-details">
+          <div class="module-detail">
+            <span class="module-detail-label">Pricing</span>
+            <span class="module-detail-value">From &#8377;199 per employee per day</span>
+          </div>
+          <div class="module-detail">
+            <span class="module-detail-label">Planning</span>
+            <span class="module-detail-value">Meal planning + daily delivery</span>
+          </div>
+          <div class="module-detail">
+            <span class="module-detail-label">Invoice</span>
+            <span class="module-detail-value">One mega invoice per company per week</span>
+          </div>
+        </div>
+      </div>
+      <div class="module-visual">
+        <div class="module-mockup">
+          <div class="mockup-header">
+            <div class="mockup-title"><span>&#x1F371;</span> This Week's Tiffins</div>
+            <div class="mockup-badge" style="background:var(--green-light);color:var(--green)">12/14 eating</div>
+          </div>
+          <div class="mockup-body">
+            <div class="tiffin-timeline">
+              <div class="tiffin-day" style="opacity:0.5">
+                <div class="tiffin-day-name">MON</div>
+                <div class="tiffin-meal"><span>&#x1F963;</span> Masala Oats + Cold Brew</div>
+                <div class="tiffin-status" style="color:var(--green)">&#x2713; Done</div>
+              </div>
+              <div class="tiffin-day today">
+                <div class="tiffin-day-name">TUE</div>
+                <div class="tiffin-meal"><span>&#x1F95E;</span> Egg Wrap + Chai Latte</div>
+                <div class="tiffin-status" style="color:var(--purple)">Delivering</div>
+              </div>
+              <div class="tiffin-day">
+                <div class="tiffin-day-name">WED</div>
+                <div class="tiffin-meal"><span>&#x1F34C;</span> Banana Pancakes + OJ</div>
+                <div class="tiffin-status" style="color:var(--gray-400)">Menu set</div>
+              </div>
+              <div class="tiffin-day">
+                <div class="tiffin-day-name">THU</div>
+                <div class="tiffin-meal"><span>&#x1F966;</span> Quinoa Bowl + Smoothie</div>
+                <div class="tiffin-status" style="color:var(--gray-400)">Menu set</div>
+              </div>
+              <div class="tiffin-day">
+                <div class="tiffin-day-name">FRI</div>
+                <div class="tiffin-meal"><span>&#x1F969;</span> Poha + Mango Lassi</div>
+                <div class="tiffin-status" style="color:var(--gray-400)">Deciding</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     CONFIGURATOR — "Build your canteen"
+     ════════════════════════════════════════════════════════ -->
+<section class="configurator">
+  <div class="container">
+    <div class="config-headline">Build your canteen.</div>
+    <div class="config-sub">Pick what you need. Start with one, add more anytime. No lock-in, no minimums.</div>
+
+    <div class="config-grid">
+      <div class="config-card active">
+        <div class="config-card-check">&#x2713;</div>
+        <span class="config-card-icon">&#x1F389;</span>
+        <div class="config-card-name">celebrations</div>
+        <div class="config-card-free">Free</div>
+      </div>
+      <div class="config-card active">
+        <div class="config-card-check">&#x2713;</div>
+        <span class="config-card-icon">&#x1F3DB;</span>
+        <div class="config-card-name">pantry</div>
+        <div class="config-card-cost">Setup + monthly</div>
+      </div>
+      <div class="config-card active">
+        <div class="config-card-check">&#x2713;</div>
+        <span class="config-card-icon">&#x2615;</span>
+        <div class="config-card-name">barista</div>
+        <div class="config-card-cost">Setup + weekly</div>
+      </div>
+      <div class="config-card">
+        <div class="config-card-check">&#x2713;</div>
+        <span class="config-card-icon">&#x1F34E;</span>
+        <div class="config-card-name">fruit fridge</div>
+        <div class="config-card-cost">Setup + daily</div>
+      </div>
+      <div class="config-card">
+        <div class="config-card-check">&#x2713;</div>
+        <span class="config-card-icon">&#x1F371;</span>
+        <div class="config-card-name">tiffins</div>
+        <div class="config-card-cost">&#8377;199/employee/day</div>
+      </div>
+    </div>
+
+    <div class="config-summary">
+      <div class="config-summary-text">Your canteen: <strong>celebrations + pantry + barista</strong></div>
+      <a class="btn btn-white" href="#">Request Invite &rarr;</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     HOW IT WORKS
+     ════════════════════════════════════════════════════════ -->
+<section style="background:var(--offwhite);padding:80px 0">
+  <div class="container">
+    <h2 style="font-family:var(--font-display);font-size:36px;font-weight:600;letter-spacing:-1px;text-align:center;margin-bottom:48px">Four steps. That's it.</h2>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-step-num">1</div>
+        <h4>Sign up</h4>
+        <p>Free. Takes 2 minutes. Add your team.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">2</div>
+        <h4>Pick modules</h4>
+        <p>Choose what your office needs. Start small.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">3</div>
+        <h4>Set budgets</h4>
+        <p>Weekly or monthly. Change anytime.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">4</div>
+        <h4>We handle it</h4>
+        <p>Setup, stocking, maintenance, repeat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     CLOSING
+     ════════════════════════════════════════════════════════ -->
+<section class="closing" style="background:var(--white);padding:120px 0">
+  <div class="container">
+    <div class="closing-headline">Your office culture is built in the <em>canteen.</em></div>
+    <div class="closing-sub">The best teams don't just work together. They eat together, celebrate together, and take care of each other. We make that easy.</div>
+    <div style="display:flex;gap:12px;justify-content:center">
+      <a class="btn btn-primary" href="#">Request Invite &rarr;</a>
+    </div>
+    <div style="margin-top:24px;font-size:12px;color:var(--gray-400)">Powered by Outpost Kitchens &middot; Bangalore</div>
+  </div>
+</section>
+
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-brand">canteen</div>
+  <div class="footer-sub">The F&B stack for your office</div>
+  <div class="footer-divider"></div>
+  <div class="footer-sub" style="margin-top:8px">
+    <a href="#celebrations" style="color:var(--dark-muted);text-decoration:none;font-size:12px">celebrations</a> &nbsp;&middot;&nbsp;
+    <a href="#pantry" style="color:var(--dark-muted);text-decoration:none;font-size:12px">pantry</a> &nbsp;&middot;&nbsp;
+    <a href="#barista" style="color:var(--dark-muted);text-decoration:none;font-size:12px">barista</a> &nbsp;&middot;&nbsp;
+    <a href="#fridge" style="color:var(--dark-muted);text-decoration:none;font-size:12px">fruit fridge</a> &nbsp;&middot;&nbsp;
+    <a href="#snacks" style="color:var(--dark-muted);text-decoration:none;font-size:12px">snacks</a> &nbsp;&middot;&nbsp;
+    <a href="#tiffins" style="color:var(--dark-muted);text-decoration:none;font-size:12px">tiffins</a>
+  </div>
+  <div style="font-size:10px;color:rgba(255,255,255,0.2);margin-top:16px">Outpost Kitchen Pvt Ltd &middot; Bangalore &middot; 2026</div>
+</footer>
+
+</body>
+</html>
