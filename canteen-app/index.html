@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>canteen — Employee App Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   CANTEEN APP — Post-Signup Employee Experience
+   Mobile-first interactive prototype
+   ═══════════════════════════════════════════════════════════ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --purple: #7C5CFC; --purple-dark: #5B3FD9;
+  --purple-light: #F3F0FF; --purple-mid: #EDE9FE;
+  --purple-glow: rgba(124,92,252,0.12);
+  --white: #FFFFFF; --offwhite: #FAFAF8;
+  --cream: #F5F3EE;
+  --gray-50: #F7F7F5; --gray-100: #EFEFED; --gray-200: #E0E0DC;
+  --gray-300: #C8C8C4; --gray-400: #A0A09C; --gray-500: #787874;
+  --gray-600: #58584E; --gray-700: #3C3C34; --gray-800: #262620;
+  --gray-900: #1A1A16; --black: #0F0F0C;
+  --green: #22C55E; --green-light: #F0FDF4; --green-dark: #16A34A;
+  --orange: #F97316; --orange-light: #FFF7ED;
+  --amber: #F59E0B; --red: #EF4444;
+  --blue: #3B82F6; --blue-light: #EFF6FF;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --radius-xl: 24px; --radius-lg: 20px; --radius-md: 16px;
+  --radius-sm: 12px; --radius-xs: 8px; --radius-pill: 100px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+  --shadow-xl: 0 20px 60px rgba(0,0,0,0.12);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body); background: #E8E6E1;
+  color: var(--gray-900); -webkit-font-smoothing: antialiased;
+  line-height: 1.5; min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 24px;
+}
+
+/* ═══ PAGE HEADER ═══ */
+.page-header {
+  text-align: center; margin-bottom: 24px; max-width: 600px;
+}
+.page-header h1 {
+  font-family: var(--font-display); font-size: 28px; font-weight: 800;
+  letter-spacing: -1px; color: var(--black); margin-bottom: 4px;
+}
+.page-header p { font-size: 14px; color: var(--gray-500); }
+
+/* ═══ PHONE FRAME ═══ */
+.phone-frame {
+  width: 375px; height: 812px; background: var(--white);
+  border-radius: 44px; overflow: hidden; position: relative;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.06);
+}
+
+/* ═══ STATUS BAR ═══ */
+.status-bar {
+  height: 54px; padding: 14px 28px 0; display: flex;
+  align-items: center; justify-content: space-between;
+  font-size: 14px; font-weight: 600; position: relative; z-index: 10;
+}
+.status-bar-time { font-weight: 700; }
+.status-bar-icons { display: flex; gap: 6px; font-size: 12px; }
+
+/* ═══ SCREEN CONTAINER ═══ */
+.screen {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  display: none; flex-direction: column;
+  transition: opacity 0.3s ease;
+}
+.screen.active { display: flex; }
+
+/* ═══ SCREEN SCROLLABLE BODY ═══ */
+.screen-body {
+  flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+}
+.screen-body::-webkit-scrollbar { display: none; }
+
+/* ═══ COMMON ELEMENTS ═══ */
+.btn-full {
+  display: block; width: 100%; padding: 16px;
+  border-radius: var(--radius-sm); font-size: 15px;
+  font-weight: 700; border: none; cursor: pointer;
+  text-align: center; transition: all 0.2s;
+}
+.btn-primary { background: var(--black); color: var(--white); }
+.btn-primary:hover { background: var(--gray-800); }
+.btn-purple { background: var(--purple); color: var(--white); }
+.btn-purple:hover { background: var(--purple-dark); }
+.btn-outline {
+  background: transparent; color: var(--gray-700);
+  border: 1.5px solid var(--gray-200);
+}
+.btn-outline:hover { border-color: var(--gray-400); }
+.btn-ghost-sm {
+  background: none; border: none; color: var(--purple);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  padding: 8px 0;
+}
+
+.input-field {
+  width: 100%; padding: 14px 16px; border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm); font-size: 15px; font-family: var(--font-body);
+  background: var(--white); outline: none; transition: border-color 0.2s;
+}
+.input-field:focus { border-color: var(--purple); }
+.input-field::placeholder { color: var(--gray-300); }
+.input-label {
+  font-size: 12px; font-weight: 700; color: var(--gray-500);
+  text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;
+  display: block;
+}
+
+.pill-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: var(--radius-pill);
+  font-size: 11px; font-weight: 600;
+}
+
+/* ═══ SCREEN NAV (back button + progress) ═══ */
+.screen-nav {
+  padding: 0 24px 8px; display: flex; align-items: center;
+  justify-content: space-between;
+}
+.back-btn {
+  background: none; border: none; font-size: 22px; cursor: pointer;
+  color: var(--gray-600); padding: 4px;
+}
+.progress-dots { display: flex; gap: 6px; }
+.progress-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gray-200); transition: all 0.3s;
+}
+.progress-dot.active { background: var(--purple); width: 24px; border-radius: 4px; }
+.progress-dot.done { background: var(--green); }
+
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 1: WELCOME / SIGN UP
+   ═══════════════════════════════════════════════════════════ */
+.welcome-screen .screen-body {
+  display: flex; flex-direction: column;
+  padding: 24px; justify-content: center;
+}
+.welcome-logo {
+  font-family: var(--font-display); font-size: 48px; font-weight: 900;
+  letter-spacing: -2px; text-align: center; margin-bottom: 8px;
+}
+.welcome-tagline {
+  text-align: center; font-size: 16px; color: var(--gray-500);
+  margin-bottom: 48px; line-height: 1.6;
+}
+.welcome-form { display: flex; flex-direction: column; gap: 12px; }
+.welcome-footer {
+  text-align: center; font-size: 11px; color: var(--gray-400);
+  margin-top: 24px; line-height: 1.6;
+}
+.welcome-powered {
+  text-align: center; margin-top: auto; padding-top: 24px;
+  font-size: 11px; color: var(--gray-400);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 2: TEAM DISCOVERY
+   ═══════════════════════════════════════════════════════════ */
+.discovery-screen .screen-body { padding: 0 24px 24px; }
+
+.discovery-header {
+  padding: 16px 0 24px; text-align: center;
+}
+.discovery-header h2 {
+  font-family: var(--font-display); font-size: 26px; font-weight: 700;
+  letter-spacing: -0.5px; margin-bottom: 6px;
+}
+.discovery-header p { font-size: 14px; color: var(--gray-500); }
+
+.discovery-domain {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 16px; background: var(--purple-light);
+  border-radius: var(--radius-sm); margin-bottom: 20px;
+}
+.discovery-domain-icon { font-size: 20px; }
+.discovery-domain-text h4 { font-size: 13px; font-weight: 700; color: var(--purple); }
+.discovery-domain-text p { font-size: 11px; color: var(--gray-500); }
+
+.discovery-team-card {
+  padding: 16px; border: 1.5px solid var(--gray-100);
+  border-radius: var(--radius-md); margin-bottom: 10px;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 14px;
+}
+.discovery-team-card:hover { border-color: var(--purple); background: var(--purple-light); }
+.discovery-team-avatar {
+  width: 44px; height: 44px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 800; color: var(--white);
+}
+.discovery-team-info { flex: 1; }
+.discovery-team-info h4 { font-size: 14px; font-weight: 700; }
+.discovery-team-info p { font-size: 12px; color: var(--gray-400); }
+.discovery-team-action {
+  font-size: 12px; font-weight: 700; color: var(--purple);
+}
+
+.discovery-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 20px 0; color: var(--gray-300); font-size: 12px; font-weight: 600;
+}
+.discovery-divider::before, .discovery-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--gray-200);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 3: CREATE TEAM
+   ═══════════════════════════════════════════════════════════ */
+.create-screen .screen-body { padding: 0 24px 24px; }
+
+.create-header {
+  padding: 16px 0 24px;
+}
+.create-header h2 {
+  font-family: var(--font-display); font-size: 26px; font-weight: 700;
+  letter-spacing: -0.5px; margin-bottom: 6px;
+}
+.create-header p { font-size: 14px; color: var(--gray-500); }
+
+.create-form { display: flex; flex-direction: column; gap: 20px; }
+
+.team-name-preview {
+  padding: 16px; background: var(--gray-50);
+  border-radius: var(--radius-sm); border: 1px solid var(--gray-100);
+  margin-top: 4px;
+}
+.team-name-preview-label { font-size: 10px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.team-name-preview-text {
+  font-family: var(--font-display); font-size: 20px; font-weight: 800;
+  color: var(--purple);
+}
+.team-name-preview-domain { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 4: INVITE MEMBERS
+   ═══════════════════════════════════════════════════════════ */
+.invite-screen .screen-body { padding: 0 24px 24px; }
+
+.invite-header { padding: 16px 0 8px; }
+.invite-header h2 {
+  font-family: var(--font-display); font-size: 26px; font-weight: 700;
+  letter-spacing: -0.5px; margin-bottom: 6px;
+}
+.invite-header p { font-size: 14px; color: var(--gray-500); line-height: 1.6; }
+
+.invite-progress {
+  margin: 20px 0; padding: 16px; background: var(--purple-light);
+  border-radius: var(--radius-sm);
+}
+.invite-progress-bar-bg {
+  height: 6px; background: var(--purple-mid); border-radius: 3px;
+  margin-bottom: 8px; overflow: hidden;
+}
+.invite-progress-bar-fill {
+  height: 100%; background: var(--purple); border-radius: 3px;
+  transition: width 0.5s ease;
+}
+.invite-progress-text {
+  font-size: 12px; font-weight: 600; color: var(--purple);
+  display: flex; justify-content: space-between;
+}
+
+.invite-link-box {
+  padding: 14px 16px; background: var(--gray-50);
+  border: 1.5px dashed var(--gray-200); border-radius: var(--radius-sm);
+  display: flex; align-items: center; gap: 10px; margin: 16px 0;
+}
+.invite-link-url {
+  flex: 1; font-size: 13px; color: var(--gray-600);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-family: monospace;
+}
+.invite-link-copy {
+  font-size: 12px; font-weight: 700; color: var(--purple);
+  background: var(--purple-light); padding: 6px 14px;
+  border-radius: var(--radius-pill); border: none; cursor: pointer;
+  white-space: nowrap;
+}
+
+.invite-or { margin: 16px 0; }
+
+.invite-email-row {
+  display: flex; gap: 8px; margin-bottom: 8px;
+}
+.invite-email-row .input-field { flex: 1; padding: 12px 14px; font-size: 14px; }
+.invite-email-send {
+  padding: 12px 16px; background: var(--purple);
+  color: var(--white); border: none; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap;
+}
+
+.invite-member-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 0; border-bottom: 1px solid var(--gray-100);
+}
+.invite-member-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: var(--white);
+}
+.invite-member-info { flex: 1; }
+.invite-member-info h5 { font-size: 13px; font-weight: 700; }
+.invite-member-info p { font-size: 11px; color: var(--gray-400); }
+.invite-member-status {
+  font-size: 10px; font-weight: 600; padding: 3px 8px;
+  border-radius: var(--radius-pill);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 5: SET LOCATION
+   ═══════════════════════════════════════════════════════════ */
+.location-screen .screen-body { padding: 0 24px 24px; }
+
+.location-header { padding: 16px 0 24px; }
+.location-header h2 {
+  font-family: var(--font-display); font-size: 26px; font-weight: 700;
+  letter-spacing: -0.5px; margin-bottom: 6px;
+}
+.location-header p { font-size: 14px; color: var(--gray-500); }
+
+.location-map {
+  height: 160px; background: linear-gradient(135deg, #E8E4DD, #D8D4CD);
+  border-radius: var(--radius-md); margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.location-map-pin {
+  font-size: 36px; position: relative; z-index: 2;
+  animation: bounce 2s infinite;
+}
+.location-map-grid {
+  position: absolute; inset: 0; opacity: 0.1;
+  background: repeating-linear-gradient(0deg, var(--gray-400) 0px, transparent 1px, transparent 20px),
+              repeating-linear-gradient(90deg, var(--gray-400) 0px, transparent 1px, transparent 20px);
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.location-form { display: flex; flex-direction: column; gap: 14px; }
+
+.location-suggestion {
+  padding: 14px 16px; border: 1.5px solid var(--gray-100);
+  border-radius: var(--radius-sm); cursor: pointer;
+  display: flex; align-items: center; gap: 12px;
+  transition: all 0.2s;
+}
+.location-suggestion:hover { border-color: var(--purple); background: var(--purple-light); }
+.location-suggestion.selected { border-color: var(--purple); background: var(--purple-light); }
+.location-suggestion-icon { font-size: 20px; }
+.location-suggestion-text h5 { font-size: 13px; font-weight: 700; }
+.location-suggestion-text p { font-size: 11px; color: var(--gray-400); }
+.location-suggestion-check {
+  margin-left: auto; width: 22px; height: 22px; border-radius: 50%;
+  border: 2px solid var(--gray-200); display: flex; align-items: center;
+  justify-content: center; font-size: 12px; color: transparent;
+}
+.location-suggestion.selected .location-suggestion-check {
+  background: var(--purple); border-color: var(--purple); color: var(--white);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 6: PICK SLOT
+   ═══════════════════════════════════════════════════════════ */
+.slot-screen .screen-body { padding: 0 24px 24px; }
+
+.slot-header { padding: 16px 0 24px; }
+.slot-header h2 {
+  font-family: var(--font-display); font-size: 26px; font-weight: 700;
+  letter-spacing: -0.5px; margin-bottom: 6px;
+}
+.slot-header p { font-size: 14px; color: var(--gray-500); line-height: 1.6; }
+
+.slot-option {
+  padding: 18px 16px; border: 1.5px solid var(--gray-100);
+  border-radius: var(--radius-md); margin-bottom: 10px;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 16px;
+}
+.slot-option:hover { border-color: var(--purple); }
+.slot-option.selected { border-color: var(--purple); background: var(--purple-light); }
+.slot-option-time {
+  font-family: var(--font-display); font-size: 28px; font-weight: 800;
+  color: var(--gray-800); min-width: 64px;
+}
+.slot-option.selected .slot-option-time { color: var(--purple); }
+.slot-option-info { flex: 1; }
+.slot-option-info h4 { font-size: 14px; font-weight: 700; }
+.slot-option-info p { font-size: 12px; color: var(--gray-400); }
+.slot-option-check {
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 2px solid var(--gray-200); display: flex; align-items: center;
+  justify-content: center; font-size: 14px; color: transparent;
+}
+.slot-option.selected .slot-option-check {
+  background: var(--purple); border-color: var(--purple); color: var(--white);
+}
+
+.slot-note {
+  padding: 14px 16px; background: var(--blue-light);
+  border-radius: var(--radius-sm); margin: 16px 0;
+  font-size: 12px; color: var(--blue); line-height: 1.6;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.slot-note-icon { font-size: 16px; flex-shrink: 0; }
+
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 7: TEAM ACTIVATED
+   ═══════════════════════════════════════════════════════════ */
+.activated-screen .screen-body {
+  display: flex; flex-direction: column;
+  padding: 24px; align-items: center; justify-content: center;
+  text-align: center;
+}
+.activated-confetti { font-size: 64px; margin-bottom: 20px; }
+.activated-headline {
+  font-family: var(--font-display); font-size: 32px; font-weight: 800;
+  letter-spacing: -1px; margin-bottom: 8px;
+}
+.activated-sub {
+  font-size: 15px; color: var(--gray-500); max-width: 280px;
+  margin-bottom: 32px; line-height: 1.6;
+}
+
+.activated-summary {
+  width: 100%; background: var(--gray-50); border-radius: var(--radius-md);
+  padding: 20px; margin-bottom: 32px; text-align: left;
+}
+.activated-summary-row {
+  display: flex; justify-content: space-between; padding: 8px 0;
+  font-size: 13px; border-bottom: 1px solid var(--gray-100);
+}
+.activated-summary-row:last-child { border-bottom: none; }
+.activated-summary-label { color: var(--gray-500); }
+.activated-summary-value { font-weight: 700; }
+
+.activated-btns { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+
+
+/* ═══════════════════════════════════════════════════════════
+   MAIN APP — Tab navigation
+   ═══════════════════════════════════════════════════════════ */
+.app-tabs {
+  display: flex; padding: 8px 16px 28px; background: var(--white);
+  border-top: 1px solid var(--gray-100);
+}
+.app-tab {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 2px; padding: 6px 0; cursor: pointer; border: none;
+  background: none; transition: all 0.2s;
+}
+.app-tab-icon { font-size: 22px; opacity: 0.4; transition: opacity 0.2s; }
+.app-tab-label {
+  font-size: 10px; font-weight: 600; color: var(--gray-400);
+  transition: color 0.2s;
+}
+.app-tab.active .app-tab-icon { opacity: 1; }
+.app-tab.active .app-tab-label { color: var(--purple); font-weight: 700; }
+
+/* ═══ APP HEADER ═══ */
+.app-header {
+  padding: 0 20px 12px; display: flex;
+  align-items: center; justify-content: space-between;
+}
+.app-header-left { display: flex; align-items: center; gap: 10px; }
+.app-header-logo {
+  font-family: var(--font-display); font-size: 20px; font-weight: 900;
+  letter-spacing: -0.5px; color: var(--purple);
+}
+.app-header-team {
+  font-size: 11px; font-weight: 600; color: var(--gray-500);
+  padding: 3px 10px; background: var(--gray-50);
+  border-radius: var(--radius-pill);
+}
+.app-header-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--purple-light); display: flex;
+  align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; color: var(--purple);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 8: HOME DASHBOARD
+   ═══════════════════════════════════════════════════════════ */
+.home-screen .screen-body { padding: 0 0 0; }
+
+.home-greeting {
+  padding: 0 20px 16px;
+}
+.home-greeting h2 {
+  font-family: var(--font-display); font-size: 24px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.home-greeting p { font-size: 13px; color: var(--gray-400); }
+
+/* Delivery card */
+.home-delivery-card {
+  margin: 0 20px 16px; padding: 18px;
+  background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+  border-radius: var(--radius-lg); color: var(--white);
+}
+.home-delivery-eyebrow {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; opacity: 0.7; margin-bottom: 6px;
+}
+.home-delivery-slot {
+  font-family: var(--font-display); font-size: 28px; font-weight: 800;
+  margin-bottom: 4px;
+}
+.home-delivery-detail { font-size: 12px; opacity: 0.8; margin-bottom: 14px; }
+.home-delivery-cta {
+  display: inline-flex; padding: 10px 20px;
+  background: rgba(255,255,255,0.2); border-radius: var(--radius-pill);
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.25);
+  backdrop-filter: blur(10px);
+}
+
+/* Quick actions */
+.home-actions {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 8px; padding: 0 20px; margin-bottom: 20px;
+}
+.home-action {
+  text-align: center; padding: 12px 4px; cursor: pointer;
+  border-radius: var(--radius-sm); transition: background 0.2s;
+}
+.home-action:hover { background: var(--gray-50); }
+.home-action-icon {
+  width: 44px; height: 44px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin: 0 auto 6px;
+}
+.home-action-label { font-size: 11px; font-weight: 600; color: var(--gray-600); }
+
+/* Activity feed */
+.home-section-header {
+  padding: 0 20px; margin-bottom: 10px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.home-section-title { font-size: 15px; font-weight: 700; }
+.home-section-link { font-size: 12px; font-weight: 600; color: var(--purple); cursor: pointer; }
+
+.home-feed { padding: 0 20px; }
+.home-feed-item {
+  display: flex; gap: 12px; padding: 12px 0;
+  border-bottom: 1px solid var(--gray-50);
+}
+.home-feed-item:last-child { border-bottom: none; }
+.home-feed-icon {
+  width: 36px; height: 36px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.home-feed-content { flex: 1; }
+.home-feed-content h5 { font-size: 13px; font-weight: 600; }
+.home-feed-content p { font-size: 11px; color: var(--gray-400); }
+.home-feed-time { font-size: 10px; color: var(--gray-300); white-space: nowrap; padding-top: 2px; }
+
+/* Streak card */
+.home-streak {
+  margin: 16px 20px; padding: 16px;
+  background: var(--green-light); border-radius: var(--radius-md);
+  display: flex; align-items: center; gap: 12px;
+}
+.home-streak-icon { font-size: 28px; }
+.home-streak-info { flex: 1; }
+.home-streak-info h5 { font-size: 13px; font-weight: 700; color: var(--green-dark); }
+.home-streak-info p { font-size: 11px; color: var(--green); }
+
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 9: KITCHEN
+   ═══════════════════════════════════════════════════════════ */
+.kitchen-screen .screen-body { padding: 0; }
+
+.kitchen-tabs {
+  display: flex; padding: 0 20px; gap: 0; margin-bottom: 16px;
+  border-bottom: 2px solid var(--gray-100);
+}
+.kitchen-tab {
+  padding: 10px 16px; font-size: 14px; font-weight: 700;
+  color: var(--gray-400); cursor: pointer;
+  border-bottom: 2px solid transparent; margin-bottom: -2px;
+  transition: all 0.2s; background: none; border-top: 0; border-left: 0; border-right: 0;
+}
+.kitchen-tab.active { color: var(--purple); border-bottom-color: var(--purple); }
+
+/* Kitchen sub-screens */
+.kitchen-sub { display: none; }
+.kitchen-sub.active { display: block; }
+
+/* Tiffins view */
+.tiffins-greeting {
+  padding: 0 20px 4px;
+}
+.tiffins-greeting h3 {
+  font-family: var(--font-display); font-size: 20px; font-weight: 700;
+  letter-spacing: -0.5px; margin-bottom: 4px;
+}
+.tiffins-greeting p { font-size: 13px; color: var(--gray-400); }
+
+.tiffins-menu { padding: 12px 20px; display: flex; flex-direction: column; gap: 10px; }
+
+.tiffin-card {
+  padding: 14px; background: var(--white); border-radius: var(--radius-md);
+  border: 1.5px solid var(--gray-100); display: flex; gap: 12px;
+  cursor: pointer; transition: all 0.2s;
+}
+.tiffin-card:hover { border-color: var(--gray-200); }
+.tiffin-card.top-pick { border-color: var(--purple); background: linear-gradient(135deg, var(--purple-light) 0%, var(--white) 100%); }
+.tiffin-card-emoji { font-size: 32px; flex-shrink: 0; padding-top: 2px; }
+.tiffin-card-info { flex: 1; }
+.tiffin-card-info h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.tiffin-card-info .tiffin-meta { font-size: 11px; color: var(--gray-400); margin-bottom: 6px; }
+.tiffin-card-bottom { display: flex; align-items: center; justify-content: space-between; }
+.tiffin-card-price { display: flex; align-items: baseline; gap: 6px; }
+.tiffin-card-price .old { font-size: 12px; color: var(--gray-300); text-decoration: line-through; }
+.tiffin-card-price .new { font-size: 16px; font-weight: 800; color: var(--green); }
+.tiffin-card-add {
+  padding: 6px 14px; border-radius: var(--radius-pill);
+  background: var(--black); color: var(--white); font-size: 12px;
+  font-weight: 700; border: none; cursor: pointer;
+}
+.tiffin-card-badge {
+  font-size: 9px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; padding: 2px 8px; border-radius: var(--radius-pill);
+  background: var(--purple); color: var(--white); margin-bottom: 6px;
+  display: inline-block;
+}
+
+/* Store view */
+.store-brand-tabs {
+  display: flex; gap: 8px; padding: 0 20px; margin-bottom: 16px;
+  overflow-x: auto;
+}
+.store-brand-pill {
+  padding: 8px 16px; border-radius: var(--radius-pill);
+  font-size: 13px; font-weight: 600; white-space: nowrap;
+  cursor: pointer; transition: all 0.2s;
+  border: 1.5px solid var(--gray-200); background: var(--white);
+  color: var(--gray-600);
+}
+.store-brand-pill.active {
+  border-color: var(--purple); background: var(--purple-light);
+  color: var(--purple);
+}
+
+.store-menu { padding: 0 20px; }
+.store-menu-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid var(--gray-50);
+}
+.store-menu-item:last-child { border-bottom: none; }
+.store-menu-emoji { font-size: 28px; flex-shrink: 0; }
+.store-menu-info { flex: 1; }
+.store-menu-info h4 { font-size: 14px; font-weight: 600; }
+.store-menu-info p { font-size: 11px; color: var(--gray-400); }
+.store-menu-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.store-menu-price { font-size: 14px; font-weight: 800; color: var(--green); }
+.store-menu-original { font-size: 11px; color: var(--gray-300); text-decoration: line-through; }
+.store-menu-add {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1.5px solid var(--purple); color: var(--purple);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700; cursor: pointer;
+  background: none;
+}
+
+/* Cart bar */
+.cart-bar {
+  margin: 12px 20px; padding: 14px 18px;
+  background: var(--black); border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: space-between;
+  color: var(--white); cursor: pointer;
+}
+.cart-bar-left { display: flex; align-items: center; gap: 8px; }
+.cart-bar-count {
+  width: 22px; height: 22px; background: var(--purple);
+  border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 11px; font-weight: 700;
+}
+.cart-bar-text { font-size: 13px; font-weight: 600; }
+.cart-bar-total { font-size: 15px; font-weight: 800; }
+
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 10: CELEBRATE
+   ═══════════════════════════════════════════════════════════ */
+.celebrate-screen .screen-body { padding: 0; }
+
+.celebrate-header-section { padding: 0 20px 16px; }
+.celebrate-header-section h2 {
+  font-family: var(--font-display); font-size: 22px; font-weight: 700;
+  letter-spacing: -0.5px; margin-bottom: 4px;
+}
+.celebrate-header-section p { font-size: 13px; color: var(--gray-400); }
+
+.celebrate-upcoming { padding: 0 20px; margin-bottom: 20px; }
+.celebrate-card {
+  padding: 16px; border-radius: var(--radius-md);
+  border: 1.5px solid var(--gray-100); margin-bottom: 10px;
+  display: flex; gap: 14px; align-items: center;
+}
+.celebrate-card-date {
+  width: 50px; height: 56px; border-radius: var(--radius-sm);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; flex-shrink: 0;
+}
+.celebrate-card-date-day { font-size: 20px; font-weight: 800; line-height: 1; }
+.celebrate-card-date-month { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.celebrate-card-info { flex: 1; }
+.celebrate-card-info h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.celebrate-card-info p { font-size: 12px; color: var(--gray-400); }
+.celebrate-card-action {
+  padding: 6px 14px; border-radius: var(--radius-pill);
+  font-size: 11px; font-weight: 700; border: none; cursor: pointer;
+}
+
+.celebrate-poll {
+  margin: 0 20px; padding: 16px; background: var(--gray-50);
+  border-radius: var(--radius-md); border: 1px solid var(--gray-100);
+}
+.celebrate-poll-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.celebrate-poll-question { font-size: 14px; color: var(--gray-700); margin-bottom: 12px; }
+.celebrate-poll-options { display: flex; flex-direction: column; gap: 6px; }
+.celebrate-poll-option {
+  padding: 10px 14px; background: var(--white); border-radius: var(--radius-sm);
+  border: 1.5px solid var(--gray-100); font-size: 13px; cursor: pointer;
+  display: flex; align-items: center; gap: 8px; transition: all 0.2s;
+}
+.celebrate-poll-option:hover { border-color: var(--purple); }
+.celebrate-poll-emoji { font-size: 16px; }
+.celebrate-poll-votes {
+  margin-left: auto; font-size: 11px; color: var(--gray-400); font-weight: 600;
+}
+
+.celebrate-leaderboard {
+  margin: 16px 20px; padding: 16px; background: var(--amber);
+  background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+  border-radius: var(--radius-md);
+}
+.celebrate-leaderboard-title {
+  font-size: 13px; font-weight: 700; color: var(--gray-800);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
+.celebrate-leaderboard-row {
+  display: flex; align-items: center; gap: 10px; padding: 6px 0;
+}
+.celebrate-leaderboard-rank { font-size: 14px; font-weight: 800; min-width: 20px; color: var(--gray-700); }
+.celebrate-leaderboard-name { flex: 1; font-size: 13px; font-weight: 600; }
+.celebrate-leaderboard-score { font-size: 12px; font-weight: 700; color: var(--gray-600); }
+
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 11: PROFILE / SETTINGS
+   ═══════════════════════════════════════════════════════════ */
+.profile-screen .screen-body { padding: 0; }
+
+.profile-card {
+  margin: 0 20px; padding: 20px; text-align: center;
+  background: var(--gray-50); border-radius: var(--radius-lg);
+  margin-bottom: 20px;
+}
+.profile-avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--purple); display: flex; align-items: center;
+  justify-content: center; font-size: 24px; font-weight: 800;
+  color: var(--white); margin: 0 auto 10px;
+}
+.profile-name { font-size: 18px; font-weight: 700; }
+.profile-email { font-size: 13px; color: var(--gray-400); }
+.profile-team-badge {
+  display: inline-flex; margin-top: 8px; padding: 4px 12px;
+  background: var(--purple-light); border-radius: var(--radius-pill);
+  font-size: 11px; font-weight: 600; color: var(--purple);
+}
+
+.profile-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px; margin: 0 20px 20px;
+}
+.profile-stat {
+  text-align: center; padding: 14px 8px;
+  background: var(--white); border-radius: var(--radius-sm);
+  border: 1px solid var(--gray-100);
+}
+.profile-stat-value { font-size: 22px; font-weight: 800; color: var(--black); }
+.profile-stat-label { font-size: 10px; font-weight: 600; color: var(--gray-400); margin-top: 2px; }
+
+.profile-menu { padding: 0 20px; }
+.profile-menu-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 0; border-bottom: 1px solid var(--gray-50);
+  cursor: pointer;
+}
+.profile-menu-item:last-child { border-bottom: none; }
+.profile-menu-icon { font-size: 20px; }
+.profile-menu-label { flex: 1; font-size: 14px; font-weight: 500; }
+.profile-menu-arrow { font-size: 14px; color: var(--gray-300); }
+
+
+/* ═══ SCREEN SELECTOR (bottom) ═══ */
+.screen-selector {
+  margin-top: 24px; display: flex; flex-wrap: wrap; gap: 6px;
+  justify-content: center; max-width: 500px;
+}
+.screen-selector-btn {
+  padding: 6px 14px; border-radius: var(--radius-pill);
+  font-size: 12px; font-weight: 600; border: 1.5px solid var(--gray-200);
+  background: var(--white); color: var(--gray-600); cursor: pointer;
+  transition: all 0.2s;
+}
+.screen-selector-btn:hover { border-color: var(--purple); color: var(--purple); }
+.screen-selector-btn.active {
+  background: var(--purple); color: var(--white); border-color: var(--purple);
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 420px) {
+  body { padding: 0; }
+  .phone-frame { width: 100%; height: 100vh; border-radius: 0; box-shadow: none; }
+  .page-header, .screen-selector { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>canteen</h1>
+  <p>Post-signup employee experience &mdash; interactive prototype</p>
+</div>
+
+<div class="phone-frame">
+
+  <!-- ════════════════════════════════════════════════════════
+       SCREEN 1: WELCOME / SIGN UP
+       ════════════════════════════════════════════════════════ -->
+  <div class="screen welcome-screen active" data-screen="welcome">
+    <div class="status-bar">
+      <span class="status-bar-time">9:41</span>
+      <span class="status-bar-icons">&#9679; &#9679; &#9679;</span>
+    </div>
+    <div class="screen-body">
+      <div class="welcome-logo">canteen</div>
+      <div class="welcome-tagline">Order food together at work. Just three people to start. 34% off, always.</div>
+
+      <div class="welcome-form">
+        <div>
+          <label class="input-label">Work email</label>
+          <input class="input-field" type="email" placeholder="priya@acmedesign.co" value="priya@acmedesign.co">
+        </div>
+        <button class="btn-full btn-primary" onclick="goTo('discovery')">Continue &rarr;</button>
+        <button class="btn-full btn-outline" style="font-size:13px">Sign in with Google</button>
+      </div>
+
+      <div class="welcome-footer">
+        By signing up you agree to our Terms of Service.<br>
+        We'll verify your work email to find your team.
+      </div>
+
+      <div class="welcome-powered">Powered by Outpost Kitchens &middot; Bangalore</div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       SCREEN 2: TEAM DISCOVERY
+       ════════════════════════════════════════════════════════ -->
+  <div class="screen discovery-screen" data-screen="discovery">
+    <div class="status-bar">
+      <span class="status-bar-time">9:41</span>
+      <span class="status-bar-icons">&#9679; &#9679; &#9679;</span>
+    </div>
+    <div class="screen-nav">
+      <button class="back-btn" onclick="goTo('welcome')">&larr;</button>
+      <div class="progress-dots">
+        <div class="progress-dot active"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+      </div>
+    </div>
+    <div class="screen-body">
+      <div class="discovery-header">
+        <h2>We found your people</h2>
+        <p>There are teams from your company already on Canteen.</p>
+      </div>
+
+      <div class="discovery-domain">
+        <div class="discovery-domain-icon">&#x1F3E2;</div>
+        <div class="discovery-domain-text">
+          <h4>acmedesign.co</h4>
+          <p>2 teams already on Canteen</p>
+        </div>
+      </div>
+
+      <div class="discovery-team-card" onclick="goTo('create')">
+        <div class="discovery-team-avatar" style="background:var(--purple)">A</div>
+        <div class="discovery-team-info">
+          <h4>Acme Design &middot; BLR</h4>
+          <p>8 members &middot; 12:30 PM slot &middot; Koramangala</p>
+        </div>
+        <div class="discovery-team-action">Join &rarr;</div>
+      </div>
+
+      <div class="discovery-team-card" onclick="goTo('create')">
+        <div class="discovery-team-avatar" style="background:var(--orange)">A</div>
+        <div class="discovery-team-info">
+          <h4>Acme Design &middot; HSR</h4>
+          <p>4 members &middot; 1:00 PM slot &middot; HSR Layout</p>
+        </div>
+        <div class="discovery-team-action">Join &rarr;</div>
+      </div>
+
+      <div class="discovery-divider">or</div>
+
+      <button class="btn-full btn-outline" onclick="goTo('create')">
+        &#x2795;&ensp;Create a new team
+      </button>
+
+      <div style="margin-top:16px; font-size:11px; color:var(--gray-400); text-align:center; line-height:1.6;">
+        Teams are auto-discovered by email domain.<br>Join requests need approval from the team creator.
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       SCREEN 3: CREATE TEAM
+       ════════════════════════════════════════════════════════ -->
+  <div class="screen create-screen" data-screen="create">
+    <div class="status-bar">
+      <span class="status-bar-time">9:41</span>
+      <span class="status-bar-icons">&#9679; &#9679; &#9679;</span>
+    </div>
+    <div class="screen-nav">
+      <button class="back-btn" onclick="goTo('discovery')">&larr;</button>
+      <div class="progress-dots">
+        <div class="progress-dot done"></div>
+        <div class="progress-dot active"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+      </div>
+    </div>
+    <div class="screen-body">
+      <div class="create-header">
+        <h2>Name your team</h2>
+        <p>This is how your team appears on Canteen. You can change it later.</p>
+      </div>
+
+      <div class="create-form">
+        <div>
+          <label class="input-label">Team name</label>
+          <input class="input-field" type="text" placeholder="e.g. Acme Design" value="Acme Design">
+        </div>
+
+        <div>
+          <label class="input-label">Team size (approximate)</label>
+          <div style="display:flex;gap:8px">
+            <div style="flex:1;padding:12px;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);text-align:center;cursor:pointer;font-size:14px;font-weight:600" onclick="this.style.borderColor='var(--purple)';this.style.background='var(--purple-light)'">3-10</div>
+            <div style="flex:1;padding:12px;border:1.5px solid var(--purple);border-radius:var(--radius-sm);text-align:center;cursor:pointer;font-size:14px;font-weight:600;background:var(--purple-light);color:var(--purple)">11-25</div>
+            <div style="flex:1;padding:12px;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);text-align:center;cursor:pointer;font-size:14px;font-weight:600">26-50</div>
+            <div style="flex:1;padding:12px;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);text-align:center;cursor:pointer;font-size:14px;font-weight:600">50+</div>
+          </div>
+        </div>
+
+        <div class="team-name-preview">
+          <div class="team-name-preview-label">Your team on Canteen</div>
+          <div class="team-name-preview-text">Acme Design</div>
+          <div class="team-name-preview-domain">acmedesign.co &middot; 11-25 people</div>
+        </div>
+
+        <button class="btn-full btn-primary" onclick="goTo('invite')">Continue &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       SCREEN 4: INVITE MEMBERS
+       ════════════════════════════════════════════════════════ -->
+  <div class="screen invite-screen" data-screen="invite">
+    <div class="status-bar">
+      <span class="status-bar-time">9:41</span>
+      <span class="status-bar-icons">&#9679; &#9679; &#9679;</span>
+    </div>
+    <div class="screen-nav">
+      <button class="back-btn" onclick="goTo('create')">&larr;</button>
+      <div class="progress-dots">
+        <div class="progress-dot done"></div>
+        <div class="progress-dot done"></div>
+        <div class="progress-dot active"></div>
+        <div class="progress-dot"></div>
+      </div>
+    </div>
+    <div class="screen-body">
+      <div class="invite-header">
+        <h2>Invite your people</h2>
+        <p>You need at least 2 more members to activate your team. Share the link or send email invites.</p>
+      </div>
+
+      <div class="invite-progress">
+        <div class="invite-progress-bar-bg">
+          <div class="invite-progress-bar-fill" style="width:33%"></div>
+        </div>
+        <div class="invite-progress-text">
+          <span>1 of 3 members</span>
+          <span>2 more to activate</span>
+        </div>
+      </div>
+
+      <div class="invite-link-box">
+        <div class="invite-link-url">canteen.app/join/acme-x7k2</div>
+        <button class="invite-link-copy">Copy</button>
+      </div>
+
+      <div class="invite-or">
+        <div class="discovery-divider">or invite by email</div>
+      </div>
+
+      <div class="invite-email-row">
+        <input class="input-field" type="email" placeholder="colleague@acmedesign.co">
+        <button class="invite-email-send">Invite</button>
+      </div>
+
+      <div style="margin-top:16px">
+        <div style="font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Team members</div>
+
+        <div class="invite-member-row">
+          <div class="invite-member-avatar" style="background:var(--purple)">P</div>
+          <div class="invite-member-info">
+            <h5>Priya Sharma (you)</h5>
+            <p>priya@acmedesign.co</p>
+          </div>
+          <div class="invite-member-status" style="background:var(--green-light);color:var(--green)">Creator</div>
+        </div>
+
+        <div class="invite-member-row">
+          <div class="invite-member-avatar" style="background:var(--orange)">S</div>
+          <div class="invite-member-info">
+            <h5>Sahil Kapoor</h5>
+            <p>sahil@acmedesign.co</p>
+          </div>
+          <div class="invite-member-status" style="background:var(--amber);color:var(--gray-700);background:#FEF3C7">Invited</div>
+        </div>
+
+        <div class="invite-member-row">
+          <div class="invite-member-avatar" style="background:var(--gray-200)">
+            <span style="font-size:16px;color:var(--gray-400)">+</span>
+          </div>
+          <div class="invite-member-info">
+            <h5 style="color:var(--gray-400)">Invite 1 more person</h5>
+            <p>to activate your team</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:auto;padding-top:20px">
+        <button class="btn-full btn-primary" onclick="goTo('location')">Continue &rarr;</button>
+        <button class="btn-ghost-sm" style="width:100%;text-align:center;margin-top:4px">Skip for now</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       SCREEN 5: SET LOCATION
+       ════════════════════════════════════════════════════════ -->
+  <div class="screen location-screen" data-screen="location">
+    <div class="status-bar">
+      <span class="status-bar-time">9:41</span>
+      <span class="status-bar-icons">&#9679; &#9679; &#9679;</span>
+    </div>
+    <div class="screen-nav">
+      <button class="back-btn" onclick="goTo('invite')">&larr;</button>
+      <div class="progress-dots">
+        <div class="progress-dot done"></div>
+        <div class="progress-dot done"></div>
+        <div class="progress-dot done"></div>
+        <div class="progress-dot active"></div>
+      </div>
+    </div>
+    <div class="screen-body">
+      <div class="location-header">
+        <h2>Where do you work?</h2>
+        <p>This is where your food gets delivered. One location per team.</p>
+      </div>
+
+      <div class="location-map">
+        <div class="location-map-grid"></div>
+        <div class="location-map-pin">&#x1F4CD;</div>
+      </div>
+
+      <div class="location-form">
+        <input class="input-field" type="text" placeholder="Search your office address..." value="WeWork Prestige Atlanta">
+
+        <div class="location-suggestion selected">
+          <div class="location-suggestion-icon">&#x1F3E2;</div>
+          <div class="location-suggestion-text">
+            <h5>WeWork Prestige Atlanta</h5>
+            <p>80 Feet Rd, Koramangala, Bangalore 560034</p>
+          </div>
+          <div class="location-suggestion-check">&#10003;</div>
+        </div>
+
+        <div class="location-suggestion">
+          <div class="location-suggestion-icon">&#x1F3E2;</div>
+          <div class="location-suggestion-text">
+            <h5>WeWork Prestige Central</h5>
+            <p>Cunningham Rd, Vasanth Nagar, Bangalore 560052</p>
+          </div>
+          <div class="location-suggestion-check">&#10003;</div>
+        </div>
+
+        <div>
+          <label class="input-label">Floor / unit (optional)</label>
+          <input class="input-field" type="text" placeholder="e.g. 3rd Floor, Unit 312" value="3rd Floor, Unit 312">
+        </div>
+
+        <button class="btn-full btn-primary" onclick="goTo('slot')">Continue &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       SCREEN 6: PICK SLOT
+       ════════════════════════════════════════════════════════ -->
+  <div class="screen slot-screen" data-screen="slot">
+    <div class="status-bar">
+      <span class="status-bar-time">9:41</span>
+      <span class="status-bar-icons">&#9679; &#9679; &#9679;</span>
+    </div>
+    <div class="screen-nav">
+      <button class="back-btn" onclick="goTo('location')">&larr;</button>
+      <div class="progress-dots">
+        <div class="progress-dot done"></div>
+        <div class="progress-dot done"></div>
+        <div class="progress-dot done"></div>
+        <div class="progress-dot done"></div>
+      </div>
+    </div>
+    <div class="screen-body">
+      <div class="slot-header">
+        <h2>Pick your slot</h2>
+        <p>When should food arrive? Your team votes, and we pick the most popular slot.</p>
+      </div>
+
+      <div class="slot-option selected" onclick="selectSlot(this)">
+        <div class="slot-option-time">12:30</div>
+        <div class="slot-option-info">
+          <h4>Lunch</h4>
+          <p>Perfect for midday meals</p>
+        </div>
+        <div class="slot-option-check">&#10003;</div>
+      </div>
+
+      <div class="slot-option" onclick="selectSlot(this)">
+        <div class="slot-option-time">1:00</div>
+        <div class="slot-option-info">
+          <h4>Late lunch</h4>
+          <p>For teams that eat a little later</p>
+        </div>
+        <div class="slot-option-check">&#10003;</div>
+      </div>
+
+      <div class="slot-option" onclick="selectSlot(this)">
+        <div class="slot-option-time">2:30</div>
+        <div class="slot-option-info">
+          <h4>Post-lunch</h4>
+          <p>Afternoon pick-me-up</p>
+        </div>
+        <div class="slot-option-check">&#10003;</div>
+      </div>
+
+      <div class="slot-option" onclick="selectSlot(this)">
+        <div class="slot-option-time">4:00</div>
+        <div class="slot-option-info">
+          <h4>Snack time</h4>
+          <p>Evening snack run</p>
+        </div>
+        <div class="slot-option-check">&#10003;</div>
+      </div>
+
+      <div class="slot-note">
+        <div class="slot-note-icon">&#x1F4A1;</div>
+        <div>Your team gets <strong>1 slot per 10 members</strong>. As your team grows, you unlock more slots. Each slot is a daily ritual.</div>
+      </div>
+
+      <button class="btn-full btn-purple" onclick="goTo('activated')">Activate my team &rarr;</button>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       SCREEN 7: TEAM ACTIVATED
+       ════════════════════════════════════════════════════════ -->
+  <div class="screen activated-screen" data-screen="activated">
+    <div class="status-bar">
+      <span class="status-bar-time">9:41</span>
+      <span class="status-bar-icons">&#9679; &#9679; &#9679;</span>
+    </div>
+    <div class="screen-body">
+      <div class="activated-confetti">&#x1F389;</div>
+      <div class="activated-headline">You're in!</div>
+      <div class="activated-sub">Your canteen is ready. Start ordering from the kitchen, or set up your team's celebrations.</div>
+
+      <div class="activated-summary">
+        <div class="activated-summary-row">
+          <span class="activated-summary-label">Team</span>
+          <span class="activated-summary-value">Acme Design</span>
+        </div>
+        <div class="activated-summary-row">
+          <span class="activated-summary-label">Location</span>
+          <span class="activated-summary-value">WeWork Koramangala</span>
+        </div>
+        <div class="activated-summary-row">
+          <span class="activated-summary-label">Slot</span>
+          <span class="activated-summary-value">12:30 PM</span>
+        </div>
+        <div class="activated-summary-row">
+          <span class="activated-summary-label">Members</span>
+          <span class="activated-summary-value">3 (2 pending)</span>
+        </div>
+        <div class="activated-summary-row">
+          <span class="activated-summary-label">Discount</span>
+          <span class="activated-summary-value" style="color:var(--green)">34% off, always</span>
+        </div>
+      </div>
+
+      <div class="activated-btns">
+        <button class="btn-full btn-purple" onclick="goTo('home')">Go to your canteen &rarr;</button>
+        <button class="btn-full btn-outline" onclick="goTo('kitchen')">Order food now</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       SCREEN 8: HOME DASHBOARD
+       ════════════════════════════════════════════════════════ -->
+  <div class="screen home-screen" data-screen="home">
+    <div class="status-bar">
+      <span class="status-bar-time">9:41</span>
+      <span class="status-bar-icons">&#9679; &#9679; &#9679;</span>
+    </div>
+    <div class="app-header">
+      <div class="app-header-left">
+        <div class="app-header-logo">canteen</div>
+        <div class="app-header-team">Acme Design</div>
+      </div>
+      <div class="app-header-avatar">P</div>
+    </div>
+
+    <div class="screen-body">
+      <div class="home-greeting">
+        <h2>Hey, Priya &#x1F44B;</h2>
+        <p>Thursday, Feb 20 &middot; Your 12:30 slot is open</p>
+      </div>
+
+      <!-- Delivery card -->
+      <div class="home-delivery-card" onclick="goTo('kitchen')">
+        <div class="home-delivery-eyebrow">Next delivery</div>
+        <div class="home-delivery-slot">12:30 PM today</div>
+        <div class="home-delivery-detail">WeWork Koramangala &middot; 3rd Floor &middot; Order by 11:00 AM</div>
+        <div class="home-delivery-cta">Order now &rarr;</div>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="home-actions">
+        <div class="home-action" onclick="goTo('kitchen')">
+          <div class="home-action-icon" style="background:var(--purple-light)">&#x1F371;</div>
+          <div class="home-action-label">Tiffins</div>
+        </div>
+        <div class="home-action" onclick="goTo('kitchen')">
+          <div class="home-action-icon" style="background:var(--green-light)">&#x1F6D2;</div>
+          <div class="home-action-label">Store</div>
+        </div>
+        <div class="home-action" onclick="goTo('celebrate')">
+          <div class="home-action-icon" style="background:var(--orange-light)">&#x1F382;</div>
+          <div class="home-action-label">Celebrate</div>
+        </div>
+        <div class="home-action" onclick="goTo('profile')">
+          <div class="home-action-icon" style="background:var(--blue-light)">&#x1F465;</div>
+          <div class="home-action-label">Team</div>
+        </div>
+      </div>
+
+      <!-- Streak -->
+      <div class="home-streak">
+        <div class="home-streak-icon">&#x1F525;</div>
+        <div class="home-streak-info">
+          <h5>3-day streak! 7 more for &#8377;50 off.</h5>
+          <p>Order today to keep your streak alive.</p>
+        </div>
+      </div>
+
+      <!-- Activity feed -->
+      <div class="home-section-header">
+        <div class="home-section-title">What's happening</div>
+        <div class="home-section-link">See all</div>
+      </div>
+
+      <div class="home-feed">
+        <div class="home-feed-item">
+          <div class="home-feed-icon" style="background:var(--purple-light)">&#x1F382;</div>
+          <div class="home-feed-content">
+            <h5>Sahil's birthday is tomorrow!</h5>
+            <p>Chocolate truffle cake has been ordered</p>
+          </div>
+          <div class="home-feed-time">Just now</div>
+        </div>
+        <div class="home-feed-item">
+          <div class="home-feed-icon" style="background:var(--green-light)">&#x1F963;</div>
+          <div class="home-feed-content">
+            <h5>New on the menu</h5>
+            <p>Quinoa Power Bowl added to Tiffins</p>
+          </div>
+          <div class="home-feed-time">2h ago</div>
+        </div>
+        <div class="home-feed-item">
+          <div class="home-feed-icon" style="background:var(--orange-light)">&#x1F4CA;</div>
+          <div class="home-feed-content">
+            <h5>Poll: Friday lunch preference?</h5>
+            <p>6 of 8 team members have voted</p>
+          </div>
+          <div class="home-feed-time">5h ago</div>
+        </div>
+        <div class="home-feed-item">
+          <div class="home-feed-icon" style="background:var(--blue-light)">&#x1F465;</div>
+          <div class="home-feed-content">
+            <h5>Ananya joined the team</h5>
+            <p>8 members now &middot; Close to unlocking slot 2!</p>
+          </div>
+          <div class="home-feed-time">1d ago</div>
+        </div>
+      </div>
+
+      <div style="height:16px"></div>
+    </div>
+
+    <div class="app-tabs">
+      <button class="app-tab active" onclick="goTo('home')">
+        <div class="app-tab-icon">&#x1F3E0;</div>
+        <div class="app-tab-label">Home</div>
+      </button>
+      <button class="app-tab" onclick="goTo('kitchen')">
+        <div class="app-tab-icon">&#x1F373;</div>
+        <div class="app-tab-label">Kitchen</div>
+      </button>
+      <button class="app-tab" onclick="goTo('celebrate')">
+        <div class="app-tab-icon">&#x1F389;</div>
+        <div class="app-tab-label">Celebrate</div>
+      </button>
+      <button class="app-tab" onclick="goTo('profile')">
+        <div class="app-tab-icon">&#x1F464;</div>
+        <div class="app-tab-label">You</div>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       SCREEN 9: KITCHEN
+       ════════════════════════════════════════════════════════ -->
+  <div class="screen kitchen-screen" data-screen="kitchen">
+    <div class="status-bar">
+      <span class="status-bar-time">9:41</span>
+      <span class="status-bar-icons">&#9679; &#9679; &#9679;</span>
+    </div>
+    <div class="app-header">
+      <div class="app-header-left">
+        <div class="app-header-logo">canteen</div>
+        <div class="app-header-team">12:30 PM slot</div>
+      </div>
+      <div class="app-header-avatar">P</div>
+    </div>
+
+    <div class="screen-body">
+      <!-- Kitchen tabs -->
+      <div class="kitchen-tabs">
+        <button class="kitchen-tab active" onclick="switchKitchen('tiffins')">Tiffins</button>
+        <button class="kitchen-tab" onclick="switchKitchen('store')">Store</button>
+      </div>
+
+      <!-- TIFFINS SUB-SCREEN -->
+      <div class="kitchen-sub active" id="kitchen-tiffins">
+        <div class="tiffins-greeting">
+          <h3>Today's picks for you</h3>
+          <p>Based on your taste profile &middot; Feb 20</p>
+        </div>
+
+        <div class="tiffins-menu">
+          <div class="tiffin-card top-pick">
+            <div class="tiffin-card-emoji">&#x1F963;</div>
+            <div class="tiffin-card-info">
+              <div class="tiffin-card-badge">Top pick</div>
+              <h4>Masala Oats Bowl</h4>
+              <div class="tiffin-meta">480 cal &middot; High protein &middot; You loved this 4 times</div>
+              <div class="tiffin-card-bottom">
+                <div class="tiffin-card-price">
+                  <span class="old">&#8377;299</span>
+                  <span class="new">&#8377;199</span>
+                </div>
+                <button class="tiffin-card-add">Add</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tiffin-card">
+            <div class="tiffin-card-emoji">&#x1F95E;</div>
+            <div class="tiffin-card-info">
+              <h4>Egg &amp; Cheese Wrap</h4>
+              <div class="tiffin-meta">520 cal &middot; High protein &middot; Popular today</div>
+              <div class="tiffin-card-bottom">
+                <div class="tiffin-card-price">
+                  <span class="old">&#8377;349</span>
+                  <span class="new">&#8377;229</span>
+                </div>
+                <button class="tiffin-card-add">Add</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tiffin-card">
+            <div class="tiffin-card-emoji">&#x1F966;</div>
+            <div class="tiffin-card-info">
+              <h4>Quinoa Power Bowl</h4>
+              <div class="tiffin-meta">410 cal &middot; Vegan &middot; New on menu</div>
+              <div class="tiffin-card-bottom">
+                <div class="tiffin-card-price">
+                  <span class="old">&#8377;329</span>
+                  <span class="new">&#8377;219</span>
+                </div>
+                <button class="tiffin-card-add">Add</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tiffin-card">
+            <div class="tiffin-card-emoji">&#x1F35B;</div>
+            <div class="tiffin-card-info">
+              <h4>Dal Rice Comfort Bowl</h4>
+              <div class="tiffin-meta">380 cal &middot; Comfort food &middot; Light</div>
+              <div class="tiffin-card-bottom">
+                <div class="tiffin-card-price">
+                  <span class="old">&#8377;249</span>
+                  <span class="new">&#8377;165</span>
+                </div>
+                <button class="tiffin-card-add">Add</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align:center;padding:8px;font-size:11px;color:var(--gray-400)">
+            Menu refreshes daily &middot; Curated for your preferences
+          </div>
+        </div>
+      </div>
+
+      <!-- STORE SUB-SCREEN -->
+      <div class="kitchen-sub" id="kitchen-store">
+        <div class="store-brand-tabs">
+          <div class="store-brand-pill active">&#x1F371; Tiffins</div>
+          <div class="store-brand-pill">&#x1F963; MOO</div>
+          <div class="store-brand-pill">&#x1F4AA; Protein Police</div>
+        </div>
+
+        <div class="store-menu">
+          <div class="store-menu-item">
+            <div class="store-menu-emoji">&#x1F35B;</div>
+            <div class="store-menu-info">
+              <h4>Dal Rice Combo</h4>
+              <p>380 cal &middot; Comfort bowl</p>
+            </div>
+            <div class="store-menu-right">
+              <div class="store-menu-original">&#8377;249</div>
+              <div class="store-menu-price">&#8377;165</div>
+              <button class="store-menu-add">+</button>
+            </div>
+          </div>
+          <div class="store-menu-item">
+            <div class="store-menu-emoji">&#x1F969;</div>
+            <div class="store-menu-info">
+              <h4>Chicken Biryani</h4>
+              <p>620 cal &middot; Full meal</p>
+            </div>
+            <div class="store-menu-right">
+              <div class="store-menu-original">&#8377;349</div>
+              <div class="store-menu-price">&#8377;229</div>
+              <button class="store-menu-add">+</button>
+            </div>
+          </div>
+          <div class="store-menu-item">
+            <div class="store-menu-emoji">&#x1F959;</div>
+            <div class="store-menu-info">
+              <h4>Paneer Tikka Wrap</h4>
+              <p>480 cal &middot; Vegetarian</p>
+            </div>
+            <div class="store-menu-right">
+              <div class="store-menu-original">&#8377;279</div>
+              <div class="store-menu-price">&#8377;185</div>
+              <button class="store-menu-add">+</button>
+            </div>
+          </div>
+          <div class="store-menu-item">
+            <div class="store-menu-emoji">&#x1F957;</div>
+            <div class="store-menu-info">
+              <h4>Curd Rice Bowl</h4>
+              <p>320 cal &middot; Light &amp; cool</p>
+            </div>
+            <div class="store-menu-right">
+              <div class="store-menu-original">&#8377;199</div>
+              <div class="store-menu-price">&#8377;129</div>
+              <button class="store-menu-add">+</button>
+            </div>
+          </div>
+          <div class="store-menu-item">
+            <div class="store-menu-emoji">&#x1F372;</div>
+            <div class="store-menu-info">
+              <h4>Rajma Chawal</h4>
+              <p>440 cal &middot; Home-style</p>
+            </div>
+            <div class="store-menu-right">
+              <div class="store-menu-original">&#8377;229</div>
+              <div class="store-menu-price">&#8377;149</div>
+              <button class="store-menu-add">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cart bar -->
+      <div class="cart-bar">
+        <div class="cart-bar-left">
+          <div class="cart-bar-count">2</div>
+          <div class="cart-bar-text">View cart</div>
+        </div>
+        <div class="cart-bar-total">&#8377;428 &rarr;</div>
+      </div>
+    </div>
+
+    <div class="app-tabs">
+      <button class="app-tab" onclick="goTo('home')">
+        <div class="app-tab-icon">&#x1F3E0;</div>
+        <div class="app-tab-label">Home</div>
+      </button>
+      <button class="app-tab active" onclick="goTo('kitchen')">
+        <div class="app-tab-icon">&#x1F373;</div>
+        <div class="app-tab-label">Kitchen</div>
+      </button>
+      <button class="app-tab" onclick="goTo('celebrate')">
+        <div class="app-tab-icon">&#x1F389;</div>
+        <div class="app-tab-label">Celebrate</div>
+      </button>
+      <button class="app-tab" onclick="goTo('profile')">
+        <div class="app-tab-icon">&#x1F464;</div>
+        <div class="app-tab-label">You</div>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       SCREEN 10: CELEBRATE
+       ════════════════════════════════════════════════════════ -->
+  <div class="screen celebrate-screen" data-screen="celebrate">
+    <div class="status-bar">
+      <span class="status-bar-time">9:41</span>
+      <span class="status-bar-icons">&#9679; &#9679; &#9679;</span>
+    </div>
+    <div class="app-header">
+      <div class="app-header-left">
+        <div class="app-header-logo">canteen</div>
+        <div class="app-header-team">Acme Design</div>
+      </div>
+      <div class="app-header-avatar">P</div>
+    </div>
+
+    <div class="screen-body">
+      <div class="celebrate-header-section">
+        <h2>Celebrate &#x1F389;</h2>
+        <p>Birthdays, milestones, and team moments</p>
+      </div>
+
+      <!-- Upcoming -->
+      <div style="padding:0 20px;margin-bottom:8px;font-size:12px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.5px">Coming up</div>
+
+      <div class="celebrate-upcoming">
+        <div class="celebrate-card">
+          <div class="celebrate-card-date" style="background:var(--purple-light);color:var(--purple)">
+            <div class="celebrate-card-date-day">21</div>
+            <div class="celebrate-card-date-month">Feb</div>
+          </div>
+          <div class="celebrate-card-info">
+            <h4>&#x1F382; Sahil's Birthday</h4>
+            <p>Turning 26 &middot; Cake ordered</p>
+          </div>
+          <button class="celebrate-card-action" style="background:var(--green-light);color:var(--green)">All set</button>
+        </div>
+
+        <div class="celebrate-card">
+          <div class="celebrate-card-date" style="background:var(--orange-light);color:var(--orange)">
+            <div class="celebrate-card-date-day">25</div>
+            <div class="celebrate-card-date-month">Feb</div>
+          </div>
+          <div class="celebrate-card-info">
+            <h4>&#x1F3C6; Product Launch</h4>
+            <p>Team lunch &middot; 8 people</p>
+          </div>
+          <button class="celebrate-card-action" style="background:var(--purple-light);color:var(--purple)">Plan it</button>
+        </div>
+
+        <div class="celebrate-card">
+          <div class="celebrate-card-date" style="background:var(--green-light);color:var(--green)">
+            <div class="celebrate-card-date-day">3</div>
+            <div class="celebrate-card-date-month">Mar</div>
+          </div>
+          <div class="celebrate-card-info">
+            <h4>&#x1F38A; Ananya &middot; 1 Year</h4>
+            <p>Work anniversary &middot; Pending</p>
+          </div>
+          <button class="celebrate-card-action" style="background:var(--purple-light);color:var(--purple)">Plan it</button>
+        </div>
+      </div>
+
+      <!-- Poll -->
+      <div style="padding:0 20px;margin-bottom:8px;font-size:12px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.5px">Active poll</div>
+      <div class="celebrate-poll" style="margin:0 20px 16px">
+        <div class="celebrate-poll-title">&#x1F4CA; Quick Poll</div>
+        <div class="celebrate-poll-question">What should we order for Sahil's birthday lunch?</div>
+        <div class="celebrate-poll-options">
+          <div class="celebrate-poll-option" style="border-color:var(--purple);background:var(--purple-light)">
+            <span class="celebrate-poll-emoji">&#x1F355;</span> Pizza party
+            <span class="celebrate-poll-votes" style="color:var(--purple)">4 votes</span>
+          </div>
+          <div class="celebrate-poll-option">
+            <span class="celebrate-poll-emoji">&#x1F35B;</span> Biryani spread
+            <span class="celebrate-poll-votes">2 votes</span>
+          </div>
+          <div class="celebrate-poll-option">
+            <span class="celebrate-poll-emoji">&#x1F963;</span> Healthy bowls
+            <span class="celebrate-poll-votes">1 vote</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leaderboard -->
+      <div class="celebrate-leaderboard">
+        <div class="celebrate-leaderboard-title">&#x1F451; Team leaderboard</div>
+        <div class="celebrate-leaderboard-row">
+          <div class="celebrate-leaderboard-rank">1.</div>
+          <div class="celebrate-leaderboard-name">Priya (you!) &#x1F525;</div>
+          <div class="celebrate-leaderboard-score">12 orders</div>
+        </div>
+        <div class="celebrate-leaderboard-row">
+          <div class="celebrate-leaderboard-rank">2.</div>
+          <div class="celebrate-leaderboard-name">Arjun</div>
+          <div class="celebrate-leaderboard-score">10 orders</div>
+        </div>
+        <div class="celebrate-leaderboard-row">
+          <div class="celebrate-leaderboard-rank">3.</div>
+          <div class="celebrate-leaderboard-name">Meera</div>
+          <div class="celebrate-leaderboard-score">8 orders</div>
+        </div>
+      </div>
+
+      <div style="height:16px"></div>
+    </div>
+
+    <div class="app-tabs">
+      <button class="app-tab" onclick="goTo('home')">
+        <div class="app-tab-icon">&#x1F3E0;</div>
+        <div class="app-tab-label">Home</div>
+      </button>
+      <button class="app-tab" onclick="goTo('kitchen')">
+        <div class="app-tab-icon">&#x1F373;</div>
+        <div class="app-tab-label">Kitchen</div>
+      </button>
+      <button class="app-tab active" onclick="goTo('celebrate')">
+        <div class="app-tab-icon">&#x1F389;</div>
+        <div class="app-tab-label">Celebrate</div>
+      </button>
+      <button class="app-tab" onclick="goTo('profile')">
+        <div class="app-tab-icon">&#x1F464;</div>
+        <div class="app-tab-label">You</div>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       SCREEN 11: PROFILE / YOU
+       ════════════════════════════════════════════════════════ -->
+  <div class="screen profile-screen" data-screen="profile">
+    <div class="status-bar">
+      <span class="status-bar-time">9:41</span>
+      <span class="status-bar-icons">&#9679; &#9679; &#9679;</span>
+    </div>
+    <div class="app-header">
+      <div class="app-header-left">
+        <div class="app-header-logo">canteen</div>
+      </div>
+      <div style="font-size:14px;font-weight:600;color:var(--gray-500)">Settings</div>
+    </div>
+
+    <div class="screen-body">
+      <div class="profile-card">
+        <div class="profile-avatar">P</div>
+        <div class="profile-name">Priya Sharma</div>
+        <div class="profile-email">priya@acmedesign.co</div>
+        <div class="profile-team-badge">Acme Design &middot; Creator</div>
+      </div>
+
+      <div class="profile-stats">
+        <div class="profile-stat">
+          <div class="profile-stat-value">12</div>
+          <div class="profile-stat-label">Orders</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value" style="color:var(--green)">&#8377;1.2K</div>
+          <div class="profile-stat-label">Saved</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value" style="color:var(--orange)">3 &#x1F525;</div>
+          <div class="profile-stat-label">Streak</div>
+        </div>
+      </div>
+
+      <div class="profile-menu">
+        <div class="profile-menu-item">
+          <div class="profile-menu-icon">&#x1F371;</div>
+          <div class="profile-menu-label">Food preferences</div>
+          <div class="profile-menu-arrow">&rsaquo;</div>
+        </div>
+        <div class="profile-menu-item">
+          <div class="profile-menu-icon">&#x1F4CB;</div>
+          <div class="profile-menu-label">Order history</div>
+          <div class="profile-menu-arrow">&rsaquo;</div>
+        </div>
+        <div class="profile-menu-item">
+          <div class="profile-menu-icon">&#x1F465;</div>
+          <div class="profile-menu-label">Team members</div>
+          <div class="profile-menu-arrow">&rsaquo;</div>
+        </div>
+        <div class="profile-menu-item">
+          <div class="profile-menu-icon">&#x1F4CD;</div>
+          <div class="profile-menu-label">Delivery location</div>
+          <div class="profile-menu-arrow">&rsaquo;</div>
+        </div>
+        <div class="profile-menu-item">
+          <div class="profile-menu-icon">&#x23F0;</div>
+          <div class="profile-menu-label">Slot preferences</div>
+          <div class="profile-menu-arrow">&rsaquo;</div>
+        </div>
+        <div class="profile-menu-item">
+          <div class="profile-menu-icon">&#x1F514;</div>
+          <div class="profile-menu-label">Notifications</div>
+          <div class="profile-menu-arrow">&rsaquo;</div>
+        </div>
+        <div class="profile-menu-item">
+          <div class="profile-menu-icon">&#x1F3E2;</div>
+          <div class="profile-menu-label">Invite your employer</div>
+          <div class="profile-menu-arrow" style="color:var(--purple)">&rsaquo;</div>
+        </div>
+      </div>
+
+      <div style="padding:20px;text-align:center">
+        <div style="font-size:11px;color:var(--gray-300)">Powered by Outpost Kitchens &middot; v1.0</div>
+      </div>
+    </div>
+
+    <div class="app-tabs">
+      <button class="app-tab" onclick="goTo('home')">
+        <div class="app-tab-icon">&#x1F3E0;</div>
+        <div class="app-tab-label">Home</div>
+      </button>
+      <button class="app-tab" onclick="goTo('kitchen')">
+        <div class="app-tab-icon">&#x1F373;</div>
+        <div class="app-tab-label">Kitchen</div>
+      </button>
+      <button class="app-tab" onclick="goTo('celebrate')">
+        <div class="app-tab-icon">&#x1F389;</div>
+        <div class="app-tab-label">Celebrate</div>
+      </button>
+      <button class="app-tab active" onclick="goTo('profile')">
+        <div class="app-tab-icon">&#x1F464;</div>
+        <div class="app-tab-label">You</div>
+      </button>
+    </div>
+  </div>
+
+</div><!-- /phone-frame -->
+
+
+<!-- Screen selector buttons -->
+<div class="screen-selector">
+  <button class="screen-selector-btn active" onclick="goTo('welcome')">1. Sign Up</button>
+  <button class="screen-selector-btn" onclick="goTo('discovery')">2. Discovery</button>
+  <button class="screen-selector-btn" onclick="goTo('create')">3. Create</button>
+  <button class="screen-selector-btn" onclick="goTo('invite')">4. Invite</button>
+  <button class="screen-selector-btn" onclick="goTo('location')">5. Location</button>
+  <button class="screen-selector-btn" onclick="goTo('slot')">6. Slot</button>
+  <button class="screen-selector-btn" onclick="goTo('activated')">7. Activated</button>
+  <button class="screen-selector-btn" onclick="goTo('home')">8. Home</button>
+  <button class="screen-selector-btn" onclick="goTo('kitchen')">9. Kitchen</button>
+  <button class="screen-selector-btn" onclick="goTo('celebrate')">10. Celebrate</button>
+  <button class="screen-selector-btn" onclick="goTo('profile')">11. Profile</button>
+</div>
+
+
+<script>
+// Screen navigation
+function goTo(screenName) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const target = document.querySelector(`[data-screen="${screenName}"]`);
+  if (target) {
+    target.classList.add('active');
+    // Scroll to top of screen body
+    const body = target.querySelector('.screen-body');
+    if (body) body.scrollTop = 0;
+  }
+  // Update selector buttons
+  document.querySelectorAll('.screen-selector-btn').forEach(b => b.classList.remove('active'));
+  const selectors = document.querySelectorAll('.screen-selector-btn');
+  const screens = ['welcome','discovery','create','invite','location','slot','activated','home','kitchen','celebrate','profile'];
+  const idx = screens.indexOf(screenName);
+  if (idx >= 0 && selectors[idx]) selectors[idx].classList.add('active');
+}
+
+// Slot selection
+function selectSlot(el) {
+  document.querySelectorAll('.slot-option').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// Kitchen tab switching
+function switchKitchen(tab) {
+  document.querySelectorAll('.kitchen-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.kitchen-sub').forEach(s => s.classList.remove('active'));
+  if (tab === 'tiffins') {
+    document.querySelectorAll('.kitchen-tab')[0].classList.add('active');
+    document.getElementById('kitchen-tiffins').classList.add('active');
+  } else {
+    document.querySelectorAll('.kitchen-tab')[1].classList.add('active');
+    document.getElementById('kitchen-store').classList.add('active');
+  }
+}
+</script>
+
+</body>
+</html>
