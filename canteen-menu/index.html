@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>canteen — menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --purple: #7C5CFC; --purple-dark: #5B3FD9;
+  --purple-light: #F3F0FF; --purple-mid: #EDE9FE;
+  --white: #FFFFFF; --offwhite: #FAFAF8;
+  --gray-50: #F7F7F5; --gray-100: #EFEFED; --gray-200: #E0E0DC;
+  --gray-300: #C8C8C4; --gray-400: #A0A09C; --gray-500: #787874;
+  --gray-600: #58584E; --gray-700: #3C3C34; --gray-800: #262620;
+  --gray-900: #1A1A16; --black: #0F0F0C;
+  --green: #22C55E; --green-light: #F0FDF4;
+  --orange: #F97316; --orange-light: #FFF7ED;
+  --amber: #F59E0B; --red: #EF4444;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --r-xl: 24px; --r-lg: 20px; --r-md: 16px; --r-sm: 12px; --r-xs: 8px; --r-pill: 100px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body); background: var(--offwhite);
+  color: var(--gray-900); -webkit-font-smoothing: antialiased;
+  line-height: 1.6; overflow-x: hidden;
+}
+
+/* ═══ NAV ═══ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.nav-inner {
+  max-width: 720px; margin: 0 auto; padding: 0 24px; height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand {
+  font-family: var(--font-display); font-size: 20px; font-weight: 900;
+  color: var(--black); text-decoration: none; letter-spacing: -0.5px;
+}
+.nav-right { display: flex; gap: 6px; align-items: center; }
+.nav-back {
+  font-size: 13px; font-weight: 500; color: var(--gray-500);
+  text-decoration: none; padding: 6px 12px; border-radius: var(--r-pill);
+  transition: all 0.15s; display: flex; align-items: center; gap: 4px;
+}
+.nav-back:hover { color: var(--gray-800); background: var(--gray-50); }
+.nav-cta {
+  padding: 8px 18px; background: var(--black); color: var(--white);
+  border-radius: var(--r-pill); font-size: 13px; font-weight: 600;
+  text-decoration: none; transition: all 0.2s;
+}
+.nav-cta:hover { background: var(--gray-800); }
+
+/* ═══ LAYOUT ═══ */
+.container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+/* ═══ PAGE HEADER ═══ */
+.page-header {
+  padding: 80px 0 24px; text-align: center;
+}
+.page-header h1 {
+  font-family: var(--font-display); font-size: 36px; font-weight: 800;
+  letter-spacing: -1.5px; margin-bottom: 8px;
+}
+.page-header p { font-size: 16px; color: var(--gray-500); }
+
+/* ═══ MAIN TOGGLE ═══ */
+.main-toggle-wrap {
+  position: sticky; top: 56px; z-index: 50;
+  background: rgba(250,250,248,0.92);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  padding: 12px 0; display: flex; justify-content: center;
+  border-bottom: 1px solid var(--gray-100);
+}
+.main-toggle {
+  display: flex; background: var(--white); border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-pill); padding: 3px; box-shadow: var(--shadow-sm);
+}
+.main-toggle-btn {
+  padding: 8px 28px; border-radius: var(--r-pill); font-size: 14px;
+  font-weight: 600; border: none; cursor: pointer; background: transparent;
+  color: var(--gray-500); transition: all 0.3s;
+}
+.main-toggle-btn.active { background: var(--black); color: var(--white); box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+
+/* ═══ VIEWS ═══ */
+.view { display: none; padding: 24px 0 80px; }
+.view.active { display: block; }
+
+
+/* ═══════════════════════════════════════════════════════════
+   STORE VIEW
+   ═══════════════════════════════════════════════════════════ */
+
+/* Brand filter */
+.brand-filters {
+  display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.brand-filter {
+  padding: 8px 18px; border-radius: var(--r-pill); font-size: 13px;
+  font-weight: 600; border: 1.5px solid var(--gray-200); background: var(--white);
+  color: var(--gray-600); cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 5px;
+}
+.brand-filter.active { border-color: var(--purple); background: var(--purple-light); color: var(--purple); }
+.brand-filter:hover:not(.active) { border-color: var(--gray-300); }
+
+/* Discount banner */
+.discount-banner {
+  padding: 14px 20px; background: var(--green-light);
+  border-radius: var(--r-md); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 10px;
+}
+.discount-banner-icon { font-size: 20px; }
+.discount-banner-text { font-size: 13px; font-weight: 600; color: var(--green); }
+.discount-banner-text span { font-weight: 400; color: var(--gray-500); }
+
+/* Menu grid */
+.menu-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.menu-card {
+  background: var(--white); border-radius: var(--r-lg);
+  border: 1px solid var(--gray-100); overflow: hidden;
+  transition: all 0.2s; cursor: pointer;
+}
+.menu-card:hover { border-color: var(--gray-200); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+.menu-card-visual {
+  height: 100px; display: flex; align-items: center;
+  justify-content: center; position: relative;
+}
+.menu-card-emoji { font-size: 44px; }
+.menu-card-brand-tag {
+  position: absolute; top: 8px; left: 8px; font-size: 9px;
+  font-weight: 700; padding: 2px 8px; border-radius: var(--r-pill);
+  text-transform: uppercase; letter-spacing: 0.3px;
+}
+
+.menu-card-body { padding: 14px 16px; }
+.menu-card-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.menu-card-meta { font-size: 11px; color: var(--gray-400); margin-bottom: 10px; }
+.menu-card-pricing { display: flex; align-items: baseline; gap: 8px; }
+.menu-card-old { font-size: 13px; color: var(--gray-300); text-decoration: line-through; }
+.menu-card-new { font-size: 17px; font-weight: 800; color: var(--green); }
+.menu-card-save {
+  font-size: 10px; font-weight: 700; padding: 2px 6px;
+  border-radius: var(--r-pill); background: var(--green-light);
+  color: var(--green); margin-left: auto;
+}
+
+/* Brand section headers */
+.brand-section-header {
+  display: flex; align-items: center; gap: 10px;
+  margin: 32px 0 16px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.brand-section-header:first-child { margin-top: 0; }
+.brand-section-header h3 {
+  font-family: var(--font-display); font-size: 20px; font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.brand-section-header .brand-desc {
+  font-size: 12px; color: var(--gray-400); margin-left: auto;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   TIFFINS VIEW
+   ═══════════════════════════════════════════════════════════ */
+.tiffin-intro {
+  text-align: center; margin-bottom: 32px;
+  padding: 24px; background: var(--purple-light);
+  border-radius: var(--r-lg);
+}
+.tiffin-intro h3 {
+  font-family: var(--font-display); font-size: 22px; font-weight: 700;
+  letter-spacing: -0.5px; margin-bottom: 4px;
+}
+.tiffin-intro p { font-size: 14px; color: var(--gray-500); }
+
+/* Preferences setup */
+.prefs-section { margin-bottom: 32px; }
+.prefs-label {
+  font-size: 12px; font-weight: 700; color: var(--gray-400);
+  text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;
+}
+.prefs-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.pref-chip {
+  padding: 8px 16px; border-radius: var(--r-pill); font-size: 13px;
+  font-weight: 600; border: 1.5px solid var(--gray-200); background: var(--white);
+  color: var(--gray-600); cursor: pointer; transition: all 0.2s;
+}
+.pref-chip.selected { border-color: var(--purple); background: var(--purple-light); color: var(--purple); }
+.pref-chip.selected-green { border-color: var(--green); background: var(--green-light); color: var(--green); }
+.pref-chip.selected-orange { border-color: var(--orange); background: var(--orange-light); color: var(--orange); }
+
+/* Tiffin result */
+.tiffin-result {
+  background: var(--white); border-radius: var(--r-xl);
+  border: 1px solid var(--gray-100); box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.tiffin-result-header {
+  padding: 16px 20px; background: var(--purple);
+  color: var(--white);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.tiffin-result-header h4 { font-size: 15px; font-weight: 700; }
+.tiffin-result-header .slot {
+  font-size: 11px; font-weight: 600; padding: 3px 10px;
+  background: rgba(255,255,255,0.2); border-radius: var(--r-pill);
+}
+.tiffin-result-body { padding: 20px; }
+
+.tiffin-profile-tags {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px;
+}
+.tiffin-profile-tag {
+  padding: 4px 10px; border-radius: var(--r-pill);
+  font-size: 11px; font-weight: 600;
+}
+
+.tiffin-pick-card {
+  padding: 16px; border-radius: var(--r-md);
+  border: 2px solid var(--purple); background: linear-gradient(135deg, var(--purple-light), var(--white));
+  margin-bottom: 10px;
+  display: flex; gap: 14px;
+}
+.tiffin-pick-card-emoji { font-size: 32px; padding-top: 2px; }
+.tiffin-pick-card-info { flex: 1; }
+.tiffin-pick-badge {
+  display: inline-block; font-size: 9px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.4px; padding: 2px 8px;
+  border-radius: var(--r-pill); background: var(--purple);
+  color: var(--white); margin-bottom: 4px;
+}
+.tiffin-pick-card-info h4 { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+.tiffin-pick-card-info p { font-size: 12px; color: var(--gray-500); margin-bottom: 8px; }
+
+.tiffin-match-reasons {
+  display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px;
+}
+.tiffin-match-reason {
+  font-size: 10px; font-weight: 600; padding: 2px 8px;
+  border-radius: var(--r-pill); background: var(--green-light);
+  color: var(--green);
+}
+.tiffin-pick-pricing { display: flex; align-items: baseline; gap: 8px; }
+.tiffin-pick-old { font-size: 14px; color: var(--gray-300); text-decoration: line-through; }
+.tiffin-pick-new { font-size: 20px; font-weight: 800; color: var(--green); }
+
+.tiffin-alt-card {
+  padding: 12px 14px; border-radius: var(--r-md);
+  border: 1px solid var(--gray-100); background: var(--gray-50);
+  margin-bottom: 8px; display: flex; gap: 12px; align-items: center;
+}
+.tiffin-alt-emoji { font-size: 24px; }
+.tiffin-alt-info { flex: 1; }
+.tiffin-alt-info h5 { font-size: 13px; font-weight: 600; }
+.tiffin-alt-info p { font-size: 11px; color: var(--gray-400); }
+.tiffin-alt-price { font-size: 14px; font-weight: 800; color: var(--green); }
+
+.tiffin-action-row {
+  display: flex; gap: 8px; margin-top: 16px;
+}
+.tiffin-action-btn {
+  flex: 1; padding: 14px; border-radius: var(--r-sm); font-size: 15px;
+  font-weight: 700; border: none; cursor: pointer; text-align: center;
+}
+.tiffin-action-yes { background: var(--black); color: var(--white); }
+.tiffin-action-skip { background: var(--gray-50); color: var(--gray-500); border: 1px solid var(--gray-200); }
+.tiffin-footnote {
+  margin-top: 12px; text-align: center; font-size: 12px; color: var(--gray-400);
+}
+
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 600px) {
+  .menu-grid { grid-template-columns: 1fr; }
+  .page-header h1 { font-size: 28px; }
+  .nav-back span { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../canteen-home/">canteen</a>
+    <div class="nav-right">
+      <a class="nav-back" href="../canteen-home/">&larr; <span>Back</span></a>
+      <a class="nav-cta" href="#">Set up your team &rarr;</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ═══ HEADER ═══ -->
+<div class="container">
+  <div class="page-header">
+    <h1>The menu.</h1>
+    <p>Everything we serve. Everything 25% off.</p>
+  </div>
+</div>
+
+<!-- ═══ TOGGLE ═══ -->
+<div class="main-toggle-wrap">
+  <div class="main-toggle">
+    <button class="main-toggle-btn active" onclick="switchView('store')">&#x1F6D2; Store</button>
+    <button class="main-toggle-btn" onclick="switchView('tiffins')">&#x1F371; Tiffins</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     STORE VIEW
+     ═══════════════════════════════════════════════════════════ -->
+<div class="view active" id="view-store">
+  <div class="container">
+
+    <div class="discount-banner">
+      <div class="discount-banner-icon">&#x1F389;</div>
+      <div class="discount-banner-text">25% off every item, every day. <span>No coupons. No minimums.</span></div>
+    </div>
+
+    <div class="brand-filters">
+      <button class="brand-filter active" onclick="filterBrand('all', this)">All</button>
+      <button class="brand-filter" onclick="filterBrand('tiffins', this)">&#x1F371; Tiffins</button>
+      <button class="brand-filter" onclick="filterBrand('moo', this)">&#x1F963; MOO</button>
+      <button class="brand-filter" onclick="filterBrand('pp', this)">&#x1F4AA; Protein Police</button>
+    </div>
+
+    <!-- TIFFINS BRAND -->
+    <div class="brand-group" data-brand="tiffins">
+      <div class="brand-section-header">
+        <h3>&#x1F371; Tiffins</h3>
+        <span class="brand-desc">Home-style meals &middot; Desk-friendly</span>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-card">
+          <div class="menu-card-visual" style="background:linear-gradient(135deg,#FFF7ED,#FED7AA)">
+            <div class="menu-card-emoji">&#x1F35B;</div>
+            <div class="menu-card-brand-tag" style="background:rgba(0,0,0,0.06);color:var(--gray-600)">Tiffins</div>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-name">Dal Rice Bowl</div>
+            <div class="menu-card-meta">380 cal &middot; Veg &middot; Light &amp; comforting</div>
+            <div class="menu-card-pricing">
+              <span class="menu-card-old">&#8377;249</span>
+              <span class="menu-card-new">&#8377;187</span>
+              <span class="menu-card-save">-25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-card-visual" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)">
+            <div class="menu-card-emoji">&#x1F95E;</div>
+            <div class="menu-card-brand-tag" style="background:rgba(0,0,0,0.06);color:var(--gray-600)">Tiffins</div>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-name">Egg &amp; Cheese Wrap</div>
+            <div class="menu-card-meta">520 cal &middot; High protein &middot; Popular</div>
+            <div class="menu-card-pricing">
+              <span class="menu-card-old">&#8377;349</span>
+              <span class="menu-card-new">&#8377;262</span>
+              <span class="menu-card-save">-25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-card-visual" style="background:linear-gradient(135deg,#ECFDF5,#A7F3D0)">
+            <div class="menu-card-emoji">&#x1F959;</div>
+            <div class="menu-card-brand-tag" style="background:rgba(0,0,0,0.06);color:var(--gray-600)">Tiffins</div>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-name">Paneer Tikka Wrap</div>
+            <div class="menu-card-meta">480 cal &middot; Veg &middot; Filling</div>
+            <div class="menu-card-pricing">
+              <span class="menu-card-old">&#8377;279</span>
+              <span class="menu-card-new">&#8377;209</span>
+              <span class="menu-card-save">-25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-card-visual" style="background:linear-gradient(135deg,#F3F0FF,#DDD6FE)">
+            <div class="menu-card-emoji">&#x1F372;</div>
+            <div class="menu-card-brand-tag" style="background:rgba(0,0,0,0.06);color:var(--gray-600)">Tiffins</div>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-name">Rajma Chawal</div>
+            <div class="menu-card-meta">440 cal &middot; Veg &middot; Home-style</div>
+            <div class="menu-card-pricing">
+              <span class="menu-card-old">&#8377;229</span>
+              <span class="menu-card-new">&#8377;172</span>
+              <span class="menu-card-save">-25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-card-visual" style="background:linear-gradient(135deg,#FFF7ED,#FFEDD5)">
+            <div class="menu-card-emoji">&#x1F969;</div>
+            <div class="menu-card-brand-tag" style="background:rgba(0,0,0,0.06);color:var(--gray-600)">Tiffins</div>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-name">Chicken Biryani</div>
+            <div class="menu-card-meta">620 cal &middot; Non-veg &middot; Full meal</div>
+            <div class="menu-card-pricing">
+              <span class="menu-card-old">&#8377;349</span>
+              <span class="menu-card-new">&#8377;262</span>
+              <span class="menu-card-save">-25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-card-visual" style="background:linear-gradient(135deg,#F0FDF4,#BBF7D0)">
+            <div class="menu-card-emoji">&#x1F957;</div>
+            <div class="menu-card-brand-tag" style="background:rgba(0,0,0,0.06);color:var(--gray-600)">Tiffins</div>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-name">Curd Rice Bowl</div>
+            <div class="menu-card-meta">320 cal &middot; Veg &middot; Light &amp; cool</div>
+            <div class="menu-card-pricing">
+              <span class="menu-card-old">&#8377;199</span>
+              <span class="menu-card-new">&#8377;149</span>
+              <span class="menu-card-save">-25%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOO BRAND -->
+    <div class="brand-group" data-brand="moo">
+      <div class="brand-section-header">
+        <h3>&#x1F963; Ministry of Oats</h3>
+        <span class="brand-desc">Overnight oats &middot; Smoothie bowls</span>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-card">
+          <div class="menu-card-visual" style="background:linear-gradient(135deg,#EFF6FF,#BFDBFE)">
+            <div class="menu-card-emoji">&#x1F963;</div>
+            <div class="menu-card-brand-tag" style="background:rgba(124,92,252,0.1);color:var(--purple)">MOO</div>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-name">Classic Overnight Oats</div>
+            <div class="menu-card-meta">320 cal &middot; Veg &middot; Bestseller</div>
+            <div class="menu-card-pricing">
+              <span class="menu-card-old">&#8377;229</span>
+              <span class="menu-card-new">&#8377;172</span>
+              <span class="menu-card-save">-25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-card-visual" style="background:linear-gradient(135deg,#FDF2F8,#FBCFE8)">
+            <div class="menu-card-emoji">&#x1F353;</div>
+            <div class="menu-card-brand-tag" style="background:rgba(124,92,252,0.1);color:var(--purple)">MOO</div>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-name">Berry Blast Oats</div>
+            <div class="menu-card-meta">280 cal &middot; Vegan &middot; Antioxidant-rich</div>
+            <div class="menu-card-pricing">
+              <span class="menu-card-old">&#8377;259</span>
+              <span class="menu-card-new">&#8377;194</span>
+              <span class="menu-card-save">-25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-card-visual" style="background:linear-gradient(135deg,#ECFDF5,#D1FAE5)">
+            <div class="menu-card-emoji">&#x1F34C;</div>
+            <div class="menu-card-brand-tag" style="background:rgba(124,92,252,0.1);color:var(--purple)">MOO</div>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-name">Peanut Butter Banana Oats</div>
+            <div class="menu-card-meta">380 cal &middot; High protein &middot; Filling</div>
+            <div class="menu-card-pricing">
+              <span class="menu-card-old">&#8377;279</span>
+              <span class="menu-card-new">&#8377;209</span>
+              <span class="menu-card-save">-25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-card-visual" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)">
+            <div class="menu-card-emoji">&#x1F34B;</div>
+            <div class="menu-card-brand-tag" style="background:rgba(124,92,252,0.1);color:var(--purple)">MOO</div>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-name">Masala Oats Bowl</div>
+            <div class="menu-card-meta">480 cal &middot; Savoury &middot; Indian-spiced</div>
+            <div class="menu-card-pricing">
+              <span class="menu-card-old">&#8377;299</span>
+              <span class="menu-card-new">&#8377;224</span>
+              <span class="menu-card-save">-25%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROTEIN POLICE BRAND -->
+    <div class="brand-group" data-brand="pp">
+      <div class="brand-section-header">
+        <h3>&#x1F4AA; Protein Police</h3>
+        <span class="brand-desc">High-protein meals &middot; Clean eating</span>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-card">
+          <div class="menu-card-visual" style="background:linear-gradient(135deg,#FEF2F2,#FECACA)">
+            <div class="menu-card-emoji">&#x1F4AA;</div>
+            <div class="menu-card-brand-tag" style="background:rgba(239,68,68,0.1);color:var(--red)">PP</div>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-name">Protein Power Bowl</div>
+            <div class="menu-card-meta">560 cal &middot; 42g protein &middot; Bestseller</div>
+            <div class="menu-card-pricing">
+              <span class="menu-card-old">&#8377;349</span>
+              <span class="menu-card-new">&#8377;262</span>
+              <span class="menu-card-save">-25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-card-visual" style="background:linear-gradient(135deg,#F0FDF4,#BBF7D0)">
+            <div class="menu-card-emoji">&#x1F966;</div>
+            <div class="menu-card-brand-tag" style="background:rgba(239,68,68,0.1);color:var(--red)">PP</div>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-name">Quinoa Power Bowl</div>
+            <div class="menu-card-meta">410 cal &middot; 28g protein &middot; Vegan</div>
+            <div class="menu-card-pricing">
+              <span class="menu-card-old">&#8377;329</span>
+              <span class="menu-card-new">&#8377;247</span>
+              <span class="menu-card-save">-25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-card-visual" style="background:linear-gradient(135deg,#FFF7ED,#FED7AA)">
+            <div class="menu-card-emoji">&#x1F373;</div>
+            <div class="menu-card-brand-tag" style="background:rgba(239,68,68,0.1);color:var(--red)">PP</div>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-name">Egg White Scramble</div>
+            <div class="menu-card-meta">340 cal &middot; 36g protein &middot; Keto-friendly</div>
+            <div class="menu-card-pricing">
+              <span class="menu-card-old">&#8377;299</span>
+              <span class="menu-card-new">&#8377;224</span>
+              <span class="menu-card-save">-25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-card-visual" style="background:linear-gradient(135deg,#EFF6FF,#BFDBFE)">
+            <div class="menu-card-emoji">&#x1F95B;</div>
+            <div class="menu-card-brand-tag" style="background:rgba(239,68,68,0.1);color:var(--red)">PP</div>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-name">Greek Yogurt Bowl</div>
+            <div class="menu-card-meta">290 cal &middot; 22g protein &middot; Probiotic</div>
+            <div class="menu-card-pricing">
+              <span class="menu-card-old">&#8377;249</span>
+              <span class="menu-card-new">&#8377;187</span>
+              <span class="menu-card-save">-25%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     TIFFINS VIEW
+     ═══════════════════════════════════════════════════════════ -->
+<div class="view" id="view-tiffins">
+  <div class="container">
+
+    <div class="tiffin-intro">
+      <h3>You set your preferences. We handle the rest.</h3>
+      <p>Tell us what you care about. We'll curate a personalised meal for you every day.</p>
+    </div>
+
+    <!-- Preferences -->
+    <div class="prefs-section">
+      <div class="prefs-label">What's your goal?</div>
+      <div class="prefs-group">
+        <div class="pref-chip selected-green">&#x1F3CB; High protein</div>
+        <div class="pref-chip">&#x1F3AF; Weight loss</div>
+        <div class="pref-chip">&#x2764; Heart-healthy</div>
+        <div class="pref-chip">&#x1F4AA; Muscle gain</div>
+        <div class="pref-chip">&#x26A1; Energy boost</div>
+      </div>
+
+      <div class="prefs-label">Any allergies?</div>
+      <div class="prefs-group">
+        <div class="pref-chip selected-orange">&#x1F95C; No nuts</div>
+        <div class="pref-chip">&#x1F95B; No dairy</div>
+        <div class="pref-chip">&#x1F33E; No gluten</div>
+        <div class="pref-chip">&#x1F95A; No eggs</div>
+        <div class="pref-chip">None</div>
+      </div>
+
+      <div class="prefs-label">Cuisine preference</div>
+      <div class="prefs-group">
+        <div class="pref-chip selected">&#x1F1EE;&#x1F1F3; South Indian</div>
+        <div class="pref-chip">&#x1F35B; North Indian</div>
+        <div class="pref-chip">&#x1F35C; Asian</div>
+        <div class="pref-chip">&#x1F952; Continental</div>
+        <div class="pref-chip">Surprise me</div>
+      </div>
+
+      <div class="prefs-label">Dietary</div>
+      <div class="prefs-group">
+        <div class="pref-chip">&#x1F331; Vegan</div>
+        <div class="pref-chip selected">&#x1F966; Vegetarian</div>
+        <div class="pref-chip">&#x1F969; Non-veg OK</div>
+        <div class="pref-chip">&#x1F95A; Eggetarian</div>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div class="tiffin-result">
+      <div class="tiffin-result-header">
+        <h4>&#x2728; Here's what we'd pick for you today</h4>
+        <div class="slot">12:30 PM</div>
+      </div>
+      <div class="tiffin-result-body">
+
+        <div class="tiffin-profile-tags">
+          <span class="tiffin-profile-tag" style="background:var(--green-light);color:var(--green)">&#x1F3CB; High protein</span>
+          <span class="tiffin-profile-tag" style="background:var(--orange-light);color:var(--orange)">&#x1F95C; No nuts</span>
+          <span class="tiffin-profile-tag" style="background:var(--purple-light);color:var(--purple)">&#x1F1EE;&#x1F1F3; South Indian</span>
+          <span class="tiffin-profile-tag" style="background:var(--gray-50);color:var(--gray-600)">&#x1F966; Vegetarian</span>
+        </div>
+
+        <!-- Today's pick -->
+        <div class="tiffin-pick-card">
+          <div class="tiffin-pick-card-emoji">&#x1F963;</div>
+          <div class="tiffin-pick-card-info">
+            <div class="tiffin-pick-badge">Today's pick</div>
+            <h4>Ragi Dosa + Coconut Chutney</h4>
+            <p>380 cal &middot; 24g protein &middot; South Indian &middot; Nut-free</p>
+
+            <div class="tiffin-match-reasons">
+              <span class="tiffin-match-reason">&#x2713; High protein</span>
+              <span class="tiffin-match-reason">&#x2713; Nut-free</span>
+              <span class="tiffin-match-reason">&#x2713; South Indian</span>
+              <span class="tiffin-match-reason">&#x2713; Vegetarian</span>
+            </div>
+
+            <div class="tiffin-pick-pricing">
+              <span class="tiffin-pick-old">&#8377;259</span>
+              <span class="tiffin-pick-new">&#8377;194</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alternatives -->
+        <div style="font-size:10px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.5px;margin:12px 0 8px">Or swap to</div>
+
+        <div class="tiffin-alt-card">
+          <div class="tiffin-alt-emoji">&#x1F35B;</div>
+          <div class="tiffin-alt-info">
+            <h5>Sambar Rice Bowl</h5>
+            <p>420 cal &middot; 20g protein &middot; South Indian</p>
+          </div>
+          <div class="tiffin-alt-price">&#8377;172</div>
+        </div>
+
+        <div class="tiffin-alt-card">
+          <div class="tiffin-alt-emoji">&#x1F966;</div>
+          <div class="tiffin-alt-info">
+            <h5>Pesarattu + Upma</h5>
+            <p>350 cal &middot; 22g protein &middot; South Indian</p>
+          </div>
+          <div class="tiffin-alt-price">&#8377;187</div>
+        </div>
+
+        <div class="tiffin-action-row">
+          <button class="tiffin-action-btn tiffin-action-yes">I'll have it &rarr;</button>
+          <button class="tiffin-action-btn tiffin-action-skip">Skip today</button>
+        </div>
+
+        <div class="tiffin-footnote">Not hungry? Skip. No charge. Your preferences stay saved. We'll pick again tomorrow.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══ CTA ═══ -->
+<div style="padding:48px 24px;text-align:center;background:var(--white);border-top:1px solid var(--gray-100)">
+  <div style="font-family:var(--font-display);font-size:28px;font-weight:700;letter-spacing:-1px;margin-bottom:8px">Like what you see?</div>
+  <div style="font-size:15px;color:var(--gray-500);margin-bottom:20px">Set up your team and start ordering. 25% off, always.</div>
+  <a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--black);color:var(--white);border-radius:var(--r-pill);font-size:15px;font-weight:600;text-decoration:none">Set up your team &rarr;</a>
+  <div style="margin-top:16px;font-size:11px;color:var(--gray-400)">Powered by Outpost Kitchens &middot; Bangalore</div>
+</div>
+
+
+<script>
+// View switching
+function switchView(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.main-toggle-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  document.querySelectorAll('.main-toggle-btn')[view === 'store' ? 0 : 1].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Brand filtering
+function filterBrand(brand, el) {
+  document.querySelectorAll('.brand-filter').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.brand-group').forEach(g => {
+    if (brand === 'all') {
+      g.style.display = 'block';
+    } else {
+      g.style.display = g.dataset.brand === brand ? 'block' : 'none';
+    }
+  });
+}
+</script>
+
+</body>
+</html>
