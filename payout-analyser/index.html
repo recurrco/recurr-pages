@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payout Analyser - Outpost Kitchen</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafafa;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --border-light: #f3f4f6;
+      --text: #111827;
+      --text-secondary: #6b7280;
+      --text-muted: #9ca3af;
+      --primary: #111827;
+      --primary-hover: #1f2937;
+      --accent: #6366f1;
+      --accent-light: #eef2ff;
+      --green: #059669;
+      --green-bg: #ecfdf5;
+      --red: #dc2626;
+      --red-bg: #fef2f2;
+      --orange: #ea580c;
+      --orange-bg: #fff7ed;
+      --blue: #2563eb;
+      --blue-bg: #eff6ff;
+      --purple: #7c3aed;
+      --purple-bg: #f5f3ff;
+      --yellow: #ca8a04;
+      --yellow-bg: #fefce8;
+      --sidebar-w: 240px;
+      --radius: 8px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ---- LAYOUT ---- */
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--primary);
+      color: #fff;
+      padding: 24px 16px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-logo {
+      font-size: 16px;
+      font-weight: 700;
+      padding: 0 8px;
+      margin-bottom: 4px;
+      letter-spacing: -0.02em;
+    }
+
+    .sidebar-subtitle {
+      font-size: 12px;
+      color: #9ca3af;
+      padding: 0 8px;
+      margin-bottom: 32px;
+    }
+
+    .sidebar-nav { list-style: none; flex: 1; }
+
+    .sidebar-nav li a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 6px;
+      transition: all 0.15s;
+      margin-bottom: 2px;
+    }
+
+    .sidebar-nav li a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+    .sidebar-nav li a.active { background: rgba(255,255,255,0.12); color: #fff; }
+
+    .sidebar-nav li a svg {
+      width: 18px;
+      height: 18px;
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+
+    .sidebar-nav li a.active svg { opacity: 1; }
+
+    .sidebar-section {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      padding: 24px 12px 8px;
+      font-weight: 600;
+    }
+
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* ---- TOP BAR ---- */
+    .topbar {
+      height: 56px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .topbar-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .topbar-breadcrumb span { color: var(--text-muted); }
+    .topbar-breadcrumb strong { color: var(--text); font-weight: 600; }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ---- CONTENT ---- */
+    .content {
+      padding: 32px;
+      max-width: 1200px;
+    }
+
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .page-header p {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* ---- SCREEN TABS (for mockup navigation) ---- */
+    .screen-tabs {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      border-radius: 12px;
+      padding: 4px;
+      display: flex;
+      gap: 2px;
+      z-index: 100;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    }
+
+    .screen-tab {
+      padding: 10px 20px;
+      color: #9ca3af;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 8px;
+      border: none;
+      background: none;
+      transition: all 0.15s;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .screen-tab:hover { color: #d1d5db; }
+    .screen-tab.active { background: rgba(255,255,255,0.15); color: #fff; }
+
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* ---- CARDS ---- */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .card-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-header h2 {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .card-header p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .card-body { padding: 24px; }
+    .card-body-flush { padding: 0; }
+
+    /* ---- UPLOAD ZONE ---- */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 48px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--bg);
+    }
+
+    .upload-zone:hover {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .upload-zone svg {
+      width: 40px;
+      height: 40px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .upload-zone:hover svg { color: var(--accent); }
+
+    .upload-zone h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .upload-zone p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .upload-zone .formats {
+      margin-top: 16px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .upload-zone .format-tag {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #f3f4f6;
+      color: var(--text-secondary);
+    }
+
+    /* ---- PLATFORM SELECTOR ---- */
+    .platform-selector {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .platform-option {
+      flex: 1;
+      padding: 16px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s;
+      background: var(--card);
+    }
+
+    .platform-option:hover { border-color: #d1d5db; }
+
+    .platform-option.selected {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .platform-option .platform-icon {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .platform-option .platform-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .platform-option .platform-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ---- STAT CARDS ---- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .stat-card .stat-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+
+    .stat-card .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-card .stat-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .stat-positive { color: var(--green); }
+    .stat-negative { color: var(--red); }
+
+    /* ---- TABLE ---- */
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 12px 16px;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      white-space: nowrap;
+      position: sticky;
+      top: 0;
+    }
+
+    tbody td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-light);
+      white-space: nowrap;
+    }
+
+    tbody tr:hover { background: #f9fafb; }
+    tbody tr { cursor: pointer; }
+
+    .text-right { text-align: right; }
+    .text-center { text-align: center; }
+    .font-mono { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; }
+
+    /* ---- BADGES ---- */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .badge-green { background: var(--green-bg); color: var(--green); }
+    .badge-red { background: var(--red-bg); color: var(--red); }
+    .badge-orange { background: var(--orange-bg); color: var(--orange); }
+    .badge-blue { background: var(--blue-bg); color: var(--blue); }
+    .badge-purple { background: var(--purple-bg); color: var(--purple); }
+    .badge-yellow { background: var(--yellow-bg); color: var(--yellow); }
+    .badge-gray { background: #f3f4f6; color: var(--text-secondary); }
+
+    /* ---- BUTTONS ---- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      border: 1px solid transparent;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .btn svg { width: 16px; height: 16px; }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .btn-primary:hover { background: var(--primary-hover); }
+
+    .btn-outline {
+      background: var(--card);
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .btn-outline:hover { background: var(--bg); }
+
+    .btn-ghost {
+      background: none;
+      color: var(--text-secondary);
+      border: none;
+      padding: 6px 10px;
+    }
+    .btn-ghost:hover { color: var(--text); background: var(--bg); }
+
+    .btn-sm { padding: 5px 12px; font-size: 12px; }
+
+    /* ---- DETAIL HEADER ---- */
+    .detail-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+
+    .detail-meta {
+      display: flex;
+      gap: 24px;
+      margin-top: 12px;
+    }
+
+    .detail-meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-meta-item .meta-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+    }
+
+    .detail-meta-item .meta-value {
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* ---- TAB BAR ---- */
+    .tab-bar {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .tab-item {
+      padding: 12px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.15s;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      font-family: inherit;
+    }
+
+    .tab-item:hover { color: var(--text); }
+    .tab-item.active { color: var(--text); border-bottom-color: var(--primary); }
+
+    /* ---- BREAKDOWN BAR ---- */
+    .breakdown-bar {
+      display: flex;
+      height: 40px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .breakdown-segment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: #fff;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .breakdown-segment:hover { opacity: 0.9; }
+
+    .breakdown-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    .legend-value {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ---- FILTERS ---- */
+    .filters-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+
+    .filter-select {
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      background: var(--card);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .search-input {
+      padding: 7px 12px 7px 32px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      background: var(--card);
+      color: var(--text);
+      width: 240px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 8px center;
+    }
+
+    .filters-bar .spacer { flex: 1; }
+
+    /* ---- SUMMARY DASHBOARD ---- */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .summary-grid .card { min-height: 280px; }
+
+    .chart-placeholder {
+      height: 200px;
+      background: linear-gradient(135deg, var(--bg) 0%, #f3f4f6 100%);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* ---- WATERFALL ---- */
+    .waterfall {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .waterfall-row {
+      display: flex;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .waterfall-label {
+      width: 200px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .waterfall-bar-area {
+      flex: 1;
+      height: 24px;
+      position: relative;
+    }
+
+    .waterfall-bar {
+      height: 100%;
+      border-radius: 4px;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .waterfall-value {
+      width: 120px;
+      text-align: right;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      flex-shrink: 0;
+    }
+
+    .waterfall-row.total {
+      border-top: 2px solid var(--border);
+      border-bottom: none;
+      padding-top: 14px;
+      margin-top: 4px;
+    }
+
+    .waterfall-row.total .waterfall-label { font-weight: 700; color: var(--text); }
+
+    /* ---- EMPTY STATE ---- */
+    .empty-state {
+      text-align: center;
+      padding: 64px 24px;
+      color: var(--text-muted);
+    }
+
+    .empty-state svg { width: 48px; height: 48px; margin-bottom: 16px; }
+    .empty-state h3 { font-size: 16px; color: var(--text-secondary); margin-bottom: 4px; }
+
+    /* ---- PROGRESS INDICATOR ---- */
+    .upload-progress {
+      display: none;
+      padding: 24px;
+    }
+
+    .upload-progress.active { display: block; }
+
+    .progress-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .progress-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .step-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-done { background: var(--green-bg); color: var(--green); }
+    .step-active { background: var(--blue-bg); color: var(--blue); }
+    .step-pending { background: #f3f4f6; color: var(--text-muted); }
+
+    .step-label { font-size: 13px; }
+    .step-label.done { color: var(--text-secondary); }
+    .step-label.active { color: var(--text); font-weight: 500; }
+    .step-label.pending { color: var(--text-muted); }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 1024px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .summary-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .platform-selector { flex-wrap: wrap; }
+      .platform-option { flex: 1 1 calc(50% - 6px); }
+    }
+
+    /* ---- MOCKUP LABEL ---- */
+    .mockup-badge {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 100px;
+      z-index: 200;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mockup-badge">Mockup</div>
+
+<!-- ===== SCREEN NAVIGATION ===== -->
+<nav class="screen-tabs">
+  <button class="screen-tab active" onclick="showScreen('upload')">Upload</button>
+  <button class="screen-tab" onclick="showScreen('detail')">Report Detail</button>
+  <button class="screen-tab" onclick="showScreen('dashboard')">Dashboard</button>
+</nav>
+
+<div class="layout">
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">Outpost Kitchen</div>
+    <div class="sidebar-subtitle">Operations Platform</div>
+    <ul class="sidebar-nav">
+      <li><a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a></li>
+      <li><a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+        OMS Connection
+      </a></li>
+      <li class="sidebar-section">Analytics</li>
+      <li><a href="#" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="12" y1="14" x2="12" y2="19"/><line x1="7" y1="14" x2="7" y2="19"/><line x1="17" y1="14" x2="17" y2="19"/></svg>
+        Payout Reports
+      </a></li>
+      <li><a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Metabase
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;margin-left:auto;opacity:0.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a></li>
+      <li class="sidebar-section">Admin</li>
+      <li><a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Users
+      </a></li>
+    </ul>
+  </aside>
+
+  <div class="main">
+    <!-- ==================== -->
+    <!-- SCREEN 1: UPLOAD     -->
+    <!-- ==================== -->
+    <div id="screen-upload" class="screen active">
+      <div class="topbar">
+        <div class="topbar-breadcrumb">
+          <span>Analytics</span>
+          <span>/</span>
+          <strong>Payout Reports</strong>
+        </div>
+        <div class="topbar-actions">
+          <div class="avatar">RK</div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="page-header">
+          <h1>Payout Reports</h1>
+          <p>Upload and analyse payout settlement reports from aggregator platforms</p>
+        </div>
+
+        <!-- Upload Card -->
+        <div class="card" style="margin-bottom: 32px;">
+          <div class="card-header">
+            <div>
+              <h2>Upload Report</h2>
+              <p>Select platform and upload the XLSX file from the partner dashboard</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="platform-selector">
+              <div class="platform-option selected">
+                <div class="platform-icon">🟠</div>
+                <div class="platform-name">Swiggy</div>
+                <div class="platform-desc">Weekly</div>
+              </div>
+              <div class="platform-option">
+                <div class="platform-icon">🔴</div>
+                <div class="platform-name">Zomato</div>
+                <div class="platform-desc">Weekly</div>
+              </div>
+              <div class="platform-option">
+                <div class="platform-icon">🟣</div>
+                <div class="platform-name">Magicpin</div>
+                <div class="platform-desc">Monthly</div>
+              </div>
+              <div class="platform-option">
+                <div class="platform-icon">🔵</div>
+                <div class="platform-name">Ownly</div>
+                <div class="platform-desc">Varies</div>
+              </div>
+            </div>
+
+            <div class="upload-zone" id="uploadZone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              <h3>Drop your payout file here</h3>
+              <p>or click to browse</p>
+              <div class="formats">
+                <span class="format-tag">.xlsx</span>
+                <span class="format-tag">.xls</span>
+              </div>
+            </div>
+
+            <!-- Upload Progress (shown after file selected) -->
+            <div class="upload-progress" id="uploadProgress">
+              <div class="progress-steps">
+                <div class="progress-step">
+                  <div class="step-icon step-done">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <span class="step-label done">File uploaded: Swiggy_MOO_BTM_Feb8-14.xlsx</span>
+                </div>
+                <div class="progress-step">
+                  <div class="step-icon step-done">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <span class="step-label done">Platform detected: Swiggy (7 sheets)</span>
+                </div>
+                <div class="progress-step">
+                  <div class="step-icon step-done">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <span class="step-label done">Parsed 340 orders, 3 deductions</span>
+                </div>
+                <div class="progress-step">
+                  <div class="step-icon step-active">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/></svg>
+                  </div>
+                  <span class="step-label active">Saving to database...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reports Table -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2>Uploaded Reports</h2>
+              <p>Click any report to view order-level detail</p>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <select class="filter-select">
+                <option>All Platforms</option>
+                <option>Swiggy</option>
+                <option>Zomato</option>
+                <option>Magicpin</option>
+                <option>Ownly</option>
+              </select>
+              <select class="filter-select">
+                <option>All Outlets</option>
+                <option>BTM Layout</option>
+                <option>Koramangala</option>
+                <option>HSR Layout</option>
+                <option>Indiranagar</option>
+                <option>JP Nagar</option>
+                <option>Doddanekundi</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-body-flush">
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Platform</th>
+                    <th>Brand / Outlet</th>
+                    <th>Period</th>
+                    <th class="text-right">Orders</th>
+                    <th class="text-right">Gross Revenue</th>
+                    <th class="text-right">Commission</th>
+                    <th class="text-right">Ads</th>
+                    <th class="text-right">Net Payout</th>
+                    <th>Uploaded</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr onclick="showScreen('detail')">
+                    <td><span class="badge badge-orange">Swiggy</span></td>
+                    <td><strong>Ministry of Oats</strong><br><span style="font-size:12px;color:var(--text-muted)">BTM Layout</span></td>
+                    <td>Feb 8 - 14, 2026</td>
+                    <td class="text-right font-mono">340</td>
+                    <td class="text-right font-mono">1,11,863</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-22,922</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-9,673</td>
+                    <td class="text-right font-mono" style="font-weight:600">58,145</td>
+                    <td><span style="font-size:12px;color:var(--text-muted)">Today, 4:12 PM</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-red">Zomato</span></td>
+                    <td><strong>Ministry of Oats</strong><br><span style="font-size:12px;color:var(--text-muted)">BTM Layout</span></td>
+                    <td>Feb 9 - 15, 2026</td>
+                    <td class="text-right font-mono">191</td>
+                    <td class="text-right font-mono">64,467</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-14,460</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-8,885</td>
+                    <td class="text-right font-mono" style="font-weight:600">32,800</td>
+                    <td><span style="font-size:12px;color:var(--text-muted)">Today, 4:08 PM</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-purple">Magicpin</span></td>
+                    <td><strong>Ministry of Oats</strong><br><span style="font-size:12px;color:var(--text-muted)">Koramangala</span></td>
+                    <td>Jan 21 - Feb 19, 2026</td>
+                    <td class="text-right font-mono">41</td>
+                    <td class="text-right font-mono">10,445</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-1,291</td>
+                    <td class="text-right font-mono" style="color:var(--text-muted)">0</td>
+                    <td class="text-right font-mono" style="font-weight:600">4,861</td>
+                    <td><span style="font-size:12px;color:var(--text-muted)">Today, 3:55 PM</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-orange">Swiggy</span></td>
+                    <td><strong>The Whole Fruit</strong><br><span style="font-size:12px;color:var(--text-muted)">HSR Layout</span></td>
+                    <td>Feb 8 - 14, 2026</td>
+                    <td class="text-right font-mono">89</td>
+                    <td class="text-right font-mono">28,340</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-6,235</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-2,140</td>
+                    <td class="text-right font-mono" style="font-weight:600">15,421</td>
+                    <td><span style="font-size:12px;color:var(--text-muted)">Yesterday</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-red">Zomato</span></td>
+                    <td><strong>Protein Police</strong><br><span style="font-size:12px;color:var(--text-muted)">Indiranagar</span></td>
+                    <td>Feb 9 - 15, 2026</td>
+                    <td class="text-right font-mono">56</td>
+                    <td class="text-right font-mono">19,872</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-4,769</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-1,250</td>
+                    <td class="text-right font-mono" style="font-weight:600">11,340</td>
+                    <td><span style="font-size:12px;color:var(--text-muted)">Yesterday</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== -->
+    <!-- SCREEN 2: REPORT DETAIL -->
+    <!-- ======================== -->
+    <div id="screen-detail" class="screen">
+      <div class="topbar">
+        <div class="topbar-breadcrumb">
+          <span>Analytics</span>
+          <span>/</span>
+          <span style="cursor:pointer" onclick="showScreen('upload')">Payout Reports</span>
+          <span>/</span>
+          <strong>Swiggy - MOO BTM - Feb 8-14</strong>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-outline btn-sm">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export
+          </button>
+          <div class="avatar">RK</div>
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- Back link -->
+        <div style="margin-bottom: 16px;">
+          <button class="btn btn-ghost" onclick="showScreen('upload')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Back to Reports
+          </button>
+        </div>
+
+        <!-- Report Header -->
+        <div class="detail-header">
+          <div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+              <h1 style="font-size:24px;font-weight:700;letter-spacing:-0.02em">Ministry of Oats - BTM Layout</h1>
+              <span class="badge badge-orange">Swiggy</span>
+            </div>
+            <p style="color:var(--text-secondary);font-size:14px;">Payout period: Feb 8 - Feb 14, 2026 &nbsp;&bull;&nbsp; Settled: Feb 17, 2026</p>
+            <div class="detail-meta">
+              <div class="detail-meta-item">
+                <span class="meta-label">Restaurant ID</span>
+                <span class="meta-value">826408</span>
+              </div>
+              <div class="detail-meta-item">
+                <span class="meta-label">GSTIN</span>
+                <span class="meta-value">29AAECO2617A1ZT</span>
+              </div>
+              <div class="detail-meta-item">
+                <span class="meta-label">Bank UTR</span>
+                <span class="meta-value font-mono">AXISCN1256625394</span>
+              </div>
+              <div class="detail-meta-item">
+                <span class="meta-label">File</span>
+                <span class="meta-value">Swiggy.xlsx</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Gross Revenue</div>
+            <div class="stat-value">1,11,863</div>
+            <div class="stat-sub">Item total before discounts</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Net Payout</div>
+            <div class="stat-value stat-positive">58,145</div>
+            <div class="stat-sub">52.0% of gross revenue</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Platform Take</div>
+            <div class="stat-value stat-negative">-46,046</div>
+            <div class="stat-sub">Commission + Ads + Taxes</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Orders</div>
+            <div class="stat-value">340</div>
+            <div class="stat-sub">339 delivered, 1 cancelled</div>
+          </div>
+        </div>
+
+        <!-- Revenue Waterfall -->
+        <div class="card" style="margin-bottom:24px;">
+          <div class="card-header">
+            <h2>Payout Waterfall</h2>
+          </div>
+          <div class="card-body">
+            <div class="breakdown-bar">
+              <div class="breakdown-segment" style="width:100%;background:var(--green);font-size:12px;">Gross: 1,11,863</div>
+            </div>
+            <div class="breakdown-bar" style="margin-top:8px;">
+              <div class="breakdown-segment" style="width:52%;background:var(--green);">Net Payout</div>
+              <div class="breakdown-segment" style="width:20.5%;background:#ef4444;">Commission</div>
+              <div class="breakdown-segment" style="width:8.6%;background:#f97316;">Ads</div>
+              <div class="breakdown-segment" style="width:14%;background:#6366f1;">Discounts</div>
+              <div class="breakdown-segment" style="width:4.5%;background:#8b5cf6;">Taxes</div>
+              <div class="breakdown-segment" style="width:0.4%;background:#94a3b8;"></div>
+            </div>
+            <div class="breakdown-legend" style="margin-top:16px;">
+              <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Net Payout <span class="legend-value">58,145</span></div>
+              <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>Commission <span class="legend-value">22,922</span></div>
+              <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div>Ads <span class="legend-value">9,673</span></div>
+              <div class="legend-item"><div class="legend-dot" style="background:#6366f1"></div>Discounts <span class="legend-value">15,704</span></div>
+              <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>GST/Taxes <span class="legend-value">5,061</span></div>
+              <div class="legend-item"><div class="legend-dot" style="background:#94a3b8"></div>Complaints <span class="legend-value">235</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tab-bar">
+          <button class="tab-item active">Orders (340)</button>
+          <button class="tab-item">Deductions (3)</button>
+          <button class="tab-item">Discounts (4)</button>
+          <button class="tab-item" style="color:var(--text-muted)">Reconciliation</button>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="card">
+          <div class="card-header">
+            <div style="display:flex;gap:12px;align-items:center;">
+              <input class="search-input" placeholder="Search order ID..." />
+              <select class="filter-select">
+                <option>All Statuses</option>
+                <option>Delivered</option>
+                <option>Cancelled</option>
+              </select>
+            </div>
+            <span style="font-size:12px;color:var(--text-muted);">Showing 10 of 340</span>
+          </div>
+          <div class="card-body-flush">
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th class="text-right">Item Total</th>
+                    <th class="text-right">Discount</th>
+                    <th class="text-right">Commission</th>
+                    <th class="text-right">GST/Taxes</th>
+                    <th class="text-right">Net Payout</th>
+                    <th>Coupon</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="font-mono">229483248074263</td>
+                    <td>Feb 8, 06:50</td>
+                    <td><span class="badge badge-green">Delivered</span></td>
+                    <td class="text-right font-mono">379</td>
+                    <td class="text-right font-mono">0</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-87.55</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-19.33</td>
+                    <td class="text-right font-mono" style="font-weight:600">265.93</td>
+                    <td><span style="font-size:12px;color:var(--text-muted)">-</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-mono">229483312485921</td>
+                    <td>Feb 8, 07:12</td>
+                    <td><span class="badge badge-green">Delivered</span></td>
+                    <td class="text-right font-mono">702</td>
+                    <td class="text-right font-mono" style="color:var(--orange)">-105.29</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-137.85</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-35.42</td>
+                    <td class="text-right font-mono" style="font-weight:600">377.37</td>
+                    <td><span class="badge badge-yellow" style="font-size:10px">PARTY</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-mono">229483389571024</td>
+                    <td>Feb 8, 07:35</td>
+                    <td><span class="badge badge-green">Delivered</span></td>
+                    <td class="text-right font-mono">284</td>
+                    <td class="text-right font-mono" style="color:var(--orange)">-40.00</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-56.88</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-14.52</td>
+                    <td class="text-right font-mono" style="font-weight:600">165.24</td>
+                    <td><span class="badge badge-blue" style="font-size:10px">SWIGGYIT</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-mono">229483401298745</td>
+                    <td>Feb 8, 08:01</td>
+                    <td><span class="badge badge-green">Delivered</span></td>
+                    <td class="text-right font-mono">458</td>
+                    <td class="text-right font-mono" style="color:var(--orange)">-50.00</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-89.76</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-22.31</td>
+                    <td class="text-right font-mono" style="font-weight:600">278.45</td>
+                    <td><span class="badge badge-green" style="font-size:10px">TRYNEW</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-mono">229483455871239</td>
+                    <td>Feb 8, 08:22</td>
+                    <td><span class="badge badge-green">Delivered</span></td>
+                    <td class="text-right font-mono">319</td>
+                    <td class="text-right font-mono">0</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-70.18</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-17.58</td>
+                    <td class="text-right font-mono" style="font-weight:600">224.80</td>
+                    <td><span style="font-size:12px;color:var(--text-muted)">-</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-mono">229483512784521</td>
+                    <td>Feb 8, 09:15</td>
+                    <td><span class="badge badge-green">Delivered</span></td>
+                    <td class="text-right font-mono">547</td>
+                    <td class="text-right font-mono" style="color:var(--orange)">-50.00</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-109.35</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-27.89</td>
+                    <td class="text-right font-mono" style="font-weight:600">341.12</td>
+                    <td><span class="badge badge-purple" style="font-size:10px">MISSEDYOU</span></td>
+                  </tr>
+                  <tr>
+                    <td class="font-mono">229484100928475</td>
+                    <td>Feb 9, 11:40</td>
+                    <td><span class="badge badge-red">Cancelled</span></td>
+                    <td class="text-right font-mono">0</td>
+                    <td class="text-right font-mono">0</td>
+                    <td class="text-right font-mono">0</td>
+                    <td class="text-right font-mono">0</td>
+                    <td class="text-right font-mono" style="color:var(--text-muted)">0</td>
+                    <td><span style="font-size:12px;color:var(--text-muted)">-</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== -->
+    <!-- SCREEN 3: DASHBOARD     -->
+    <!-- ======================== -->
+    <div id="screen-dashboard" class="screen">
+      <div class="topbar">
+        <div class="topbar-breadcrumb">
+          <span>Analytics</span>
+          <span>/</span>
+          <strong>Payout Dashboard</strong>
+        </div>
+        <div class="topbar-actions">
+          <select class="filter-select" style="border:none;font-weight:500;">
+            <option>Feb 2026</option>
+            <option>Jan 2026</option>
+            <option>Dec 2025</option>
+          </select>
+          <div class="avatar">RK</div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="page-header">
+          <h1>Payout Dashboard</h1>
+          <p>Aggregated view across all platforms, brands, and outlets</p>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-bar">
+          <select class="filter-select">
+            <option>All Platforms</option>
+            <option>Swiggy</option>
+            <option>Zomato</option>
+            <option>Magicpin</option>
+          </select>
+          <select class="filter-select">
+            <option>All Brands</option>
+            <option>Ministry of Oats</option>
+            <option>The Whole Fruit</option>
+            <option>Protein Police</option>
+          </select>
+          <select class="filter-select">
+            <option>All Outlets</option>
+            <option>BTM Layout</option>
+            <option>Koramangala</option>
+            <option>HSR Layout</option>
+            <option>Indiranagar</option>
+            <option>JP Nagar</option>
+            <option>Doddanekundi</option>
+          </select>
+          <span class="spacer"></span>
+          <button class="btn btn-outline btn-sm">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export CSV
+          </button>
+        </div>
+
+        <!-- Top Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Gross Revenue</div>
+            <div class="stat-value">4,82,340</div>
+            <div class="stat-sub">Across 12 reports</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Net Payout</div>
+            <div class="stat-value stat-positive">2,48,916</div>
+            <div class="stat-sub">51.6% of gross</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Platform Take</div>
+            <div class="stat-value stat-negative">-2,33,424</div>
+            <div class="stat-sub">48.4% of gross</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Orders</div>
+            <div class="stat-value">1,547</div>
+            <div class="stat-sub">AOV: 312</div>
+          </div>
+        </div>
+
+        <!-- Two Column -->
+        <div class="summary-grid">
+          <!-- Revenue Waterfall -->
+          <div class="card">
+            <div class="card-header">
+              <h2>Revenue Waterfall</h2>
+            </div>
+            <div class="card-body">
+              <div class="waterfall">
+                <div class="waterfall-row">
+                  <div class="waterfall-label">Gross Revenue</div>
+                  <div class="waterfall-bar-area"><div class="waterfall-bar" style="width:100%;background:var(--green);border-radius:4px;"></div></div>
+                  <div class="waterfall-value">4,82,340</div>
+                </div>
+                <div class="waterfall-row">
+                  <div class="waterfall-label">Restaurant Discounts</div>
+                  <div class="waterfall-bar-area"><div class="waterfall-bar" style="width:18%;background:#f97316;"></div></div>
+                  <div class="waterfall-value" style="color:var(--red)">-86,821</div>
+                </div>
+                <div class="waterfall-row">
+                  <div class="waterfall-label">Commission</div>
+                  <div class="waterfall-bar-area"><div class="waterfall-bar" style="width:22%;background:#ef4444;"></div></div>
+                  <div class="waterfall-value" style="color:var(--red)">-1,06,115</div>
+                </div>
+                <div class="waterfall-row">
+                  <div class="waterfall-label">Ads Spend</div>
+                  <div class="waterfall-bar-area"><div class="waterfall-bar" style="width:9%;background:#f97316;"></div></div>
+                  <div class="waterfall-value" style="color:var(--red)">-43,240</div>
+                </div>
+                <div class="waterfall-row">
+                  <div class="waterfall-label">GST & Taxes</div>
+                  <div class="waterfall-bar-area"><div class="waterfall-bar" style="width:6%;background:#6366f1;"></div></div>
+                  <div class="waterfall-value" style="color:var(--red)">-28,940</div>
+                </div>
+                <div class="waterfall-row">
+                  <div class="waterfall-label">Other (Complaints, etc.)</div>
+                  <div class="waterfall-bar-area"><div class="waterfall-bar" style="width:2%;background:#94a3b8;"></div></div>
+                  <div class="waterfall-value" style="color:var(--red)">-5,129</div>
+                </div>
+                <div class="waterfall-row total">
+                  <div class="waterfall-label">Net Payout</div>
+                  <div class="waterfall-bar-area"><div class="waterfall-bar" style="width:51.6%;background:var(--green);"></div></div>
+                  <div class="waterfall-value" style="color:var(--green);font-size:15px;">2,48,916</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Platform Split -->
+          <div class="card">
+            <div class="card-header">
+              <h2>Platform Split</h2>
+            </div>
+            <div class="card-body">
+              <div style="margin-bottom:24px;">
+                <div class="breakdown-bar" style="height:32px;">
+                  <div class="breakdown-segment" style="width:62%;background:#f97316;">Swiggy 62%</div>
+                  <div class="breakdown-segment" style="width:31%;background:#ef4444;">Zomato 31%</div>
+                  <div class="breakdown-segment" style="width:7%;background:#7c3aed;">MP 7%</div>
+                </div>
+              </div>
+
+              <table style="font-size:13px;">
+                <thead>
+                  <tr>
+                    <th style="background:transparent">Platform</th>
+                    <th class="text-right" style="background:transparent">Orders</th>
+                    <th class="text-right" style="background:transparent">Gross</th>
+                    <th class="text-right" style="background:transparent">Take %</th>
+                    <th class="text-right" style="background:transparent">Net Payout</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="cursor:default">
+                    <td><span class="badge badge-orange">Swiggy</span></td>
+                    <td class="text-right font-mono">958</td>
+                    <td class="text-right font-mono">2,99,050</td>
+                    <td class="text-right font-mono">48.6%</td>
+                    <td class="text-right font-mono" style="font-weight:600">1,53,752</td>
+                  </tr>
+                  <tr style="cursor:default">
+                    <td><span class="badge badge-red">Zomato</span></td>
+                    <td class="text-right font-mono">480</td>
+                    <td class="text-right font-mono">1,49,412</td>
+                    <td class="text-right font-mono">49.1%</td>
+                    <td class="text-right font-mono" style="font-weight:600">76,051</td>
+                  </tr>
+                  <tr style="cursor:default">
+                    <td><span class="badge badge-purple">Magicpin</span></td>
+                    <td class="text-right font-mono">109</td>
+                    <td class="text-right font-mono">33,878</td>
+                    <td class="text-right font-mono">43.7%</td>
+                    <td class="text-right font-mono" style="font-weight:600">19,113</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Outlet Performance -->
+        <div class="card" style="margin-bottom:24px;">
+          <div class="card-header">
+            <h2>Outlet Performance</h2>
+            <p style="font-size:12px;color:var(--text-muted)">Net payout and platform take rate by outlet</p>
+          </div>
+          <div class="card-body-flush">
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Outlet</th>
+                    <th>Brand</th>
+                    <th class="text-right">Reports</th>
+                    <th class="text-right">Orders</th>
+                    <th class="text-right">Gross Revenue</th>
+                    <th class="text-right">Commission</th>
+                    <th class="text-right">Ads</th>
+                    <th class="text-right">Other Deductions</th>
+                    <th class="text-right">Net Payout</th>
+                    <th class="text-right">Take %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="cursor:default">
+                    <td><strong>BTM Layout</strong></td>
+                    <td>Ministry of Oats</td>
+                    <td class="text-right font-mono">4</td>
+                    <td class="text-right font-mono">531</td>
+                    <td class="text-right font-mono">1,76,330</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-37,382</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-18,558</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-10,296</td>
+                    <td class="text-right font-mono" style="font-weight:600">90,945</td>
+                    <td class="text-right"><span class="badge badge-orange" style="font-size:11px">48.4%</span></td>
+                  </tr>
+                  <tr style="cursor:default">
+                    <td><strong>HSR Layout</strong></td>
+                    <td>The Whole Fruit</td>
+                    <td class="text-right font-mono">2</td>
+                    <td class="text-right font-mono">189</td>
+                    <td class="text-right font-mono">56,680</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-12,470</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-4,280</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-3,088</td>
+                    <td class="text-right font-mono" style="font-weight:600">30,842</td>
+                    <td class="text-right"><span class="badge badge-green" style="font-size:11px">45.6%</span></td>
+                  </tr>
+                  <tr style="cursor:default">
+                    <td><strong>Indiranagar</strong></td>
+                    <td>Protein Police</td>
+                    <td class="text-right font-mono">2</td>
+                    <td class="text-right font-mono">112</td>
+                    <td class="text-right font-mono">39,744</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-9,538</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-2,500</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-1,826</td>
+                    <td class="text-right font-mono" style="font-weight:600">22,680</td>
+                    <td class="text-right"><span class="badge badge-orange" style="font-size:11px">42.9%</span></td>
+                  </tr>
+                  <tr style="cursor:default">
+                    <td><strong>Koramangala</strong></td>
+                    <td>Ministry of Oats</td>
+                    <td class="text-right font-mono">2</td>
+                    <td class="text-right font-mono">321</td>
+                    <td class="text-right font-mono">98,540</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-22,579</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-8,920</td>
+                    <td class="text-right font-mono" style="color:var(--red)">-6,340</td>
+                    <td class="text-right font-mono" style="font-weight:600">50,412</td>
+                    <td class="text-right"><span class="badge badge-red" style="font-size:11px">48.8%</span></td>
+                  </tr>
+                  <tr style="cursor:default;background:#f9fafb;">
+                    <td colspan="3"><strong>Total</strong></td>
+                    <td class="text-right font-mono" style="font-weight:700">1,153</td>
+                    <td class="text-right font-mono" style="font-weight:700">3,71,294</td>
+                    <td class="text-right font-mono" style="font-weight:700;color:var(--red)">-81,969</td>
+                    <td class="text-right font-mono" style="font-weight:700;color:var(--red)">-34,258</td>
+                    <td class="text-right font-mono" style="font-weight:700;color:var(--red)">-21,550</td>
+                    <td class="text-right font-mono" style="font-weight:700">1,94,879</td>
+                    <td class="text-right"><span class="badge badge-orange" style="font-size:11px">47.5%</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reconciliation Preview -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2>Rista Reconciliation</h2>
+              <p>Matching payout orders against POS data</p>
+            </div>
+            <span class="badge badge-yellow">Beta</span>
+          </div>
+          <div class="card-body">
+            <div class="stats-grid" style="margin-bottom:16px;">
+              <div class="stat-card" style="border-left:3px solid var(--green)">
+                <div class="stat-label">Matched</div>
+                <div class="stat-value stat-positive">1,489</div>
+                <div class="stat-sub">96.3% of payout orders</div>
+              </div>
+              <div class="stat-card" style="border-left:3px solid var(--orange)">
+                <div class="stat-label">In Payout, Not in Rista</div>
+                <div class="stat-value" style="color:var(--orange)">38</div>
+                <div class="stat-sub">Missing from POS</div>
+              </div>
+              <div class="stat-card" style="border-left:3px solid var(--blue)">
+                <div class="stat-label">In Rista, Not in Payout</div>
+                <div class="stat-value" style="color:var(--blue)">20</div>
+                <div class="stat-sub">Not yet settled</div>
+              </div>
+              <div class="stat-card" style="border-left:3px solid var(--red)">
+                <div class="stat-label">Revenue Gap</div>
+                <div class="stat-value stat-negative">-12,450</div>
+                <div class="stat-sub">Rista shows more than payout</div>
+              </div>
+            </div>
+            <p style="font-size:12px;color:var(--text-muted);">Reconciliation matches payout order dates against Rista fact_orders for the same outlet and date range. Gaps may indicate voided orders, platform holdbacks, or sync timing differences.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+  function showScreen(name) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.screen-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('screen-' + name).classList.add('active');
+    document.querySelectorAll('.screen-tab').forEach(t => {
+      if (t.textContent.toLowerCase().includes(name === 'upload' ? 'upload' : name === 'detail' ? 'detail' : 'dashboard')) {
+        t.classList.add('active');
+      }
+    });
+    window.scrollTo(0, 0);
+  }
+
+  // Platform selector
+  document.querySelectorAll('.platform-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.platform-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+    });
+  });
+
+  // Upload zone click simulation
+  document.getElementById('uploadZone')?.addEventListener('click', () => {
+    const zone = document.getElementById('uploadZone');
+    const progress = document.getElementById('uploadProgress');
+    zone.style.display = 'none';
+    progress.classList.add('active');
+  });
+
+  // Tab switching
+  document.querySelectorAll('.tab-item').forEach(tab => {
+    tab.addEventListener('click', () => {
+      tab.parentElement.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
