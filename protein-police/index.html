@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protein Police — Your Protein Fix, Without the Junk</title>
+    <meta name="description" content="We don't sell protein. We save you from high-protein junk. Every item — from 5g to 40g — is designed so the protein never comes at a hidden cost.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --brand-primary: #00E676;
+            --brand-secondary: #111111;
+            --brand-accent: #FF5252;
+            --brand-black: #0A0A0A;
+            --brand-white: #FFFFFF;
+            --brand-gray: #1A1A1A;
+            --brand-muted: #666666;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--brand-white);
+            background: var(--brand-black);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── FOLD 1: Hero ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px 24px;
+            background: var(--brand-black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 80%, rgba(0,230,118,0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-logo {
+            width: 160px;
+            margin-bottom: 48px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.8rem, 8vw, 5.5rem);
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            display: block;
+            color: var(--brand-primary);
+        }
+
+        .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: #777;
+            max-width: 480px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 40px;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--brand-primary);
+            color: var(--brand-black);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 14px 32px;
+            border-radius: 100px;
+            text-decoration: none;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,230,118,0.25);
+        }
+
+        .hero-cta svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ── FOLD 2: Menu ── */
+        .menu {
+            padding: 100px 24px;
+            background: var(--brand-gray);
+        }
+
+        .menu-inner {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--brand-primary);
+            margin-bottom: 12px;
+        }
+
+        .section-heading {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 56px;
+        }
+
+        .menu-tiers {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .menu-tier {
+            background: var(--brand-black);
+            border: 1px solid #2a2a2a;
+            border-radius: 14px;
+            padding: 28px 20px;
+            text-align: center;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            cursor: default;
+        }
+
+        .menu-tier:hover {
+            transform: translateY(-4px);
+            border-color: var(--brand-primary);
+        }
+
+        .tier-protein {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--brand-primary);
+            margin-bottom: 4px;
+            line-height: 1;
+        }
+
+        .tier-unit {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        .tier-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .tier-desc {
+            font-size: 0.8rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .menu-promise {
+            margin-top: 40px;
+            padding: 24px 28px;
+            background: var(--brand-black);
+            border: 1px solid #2a2a2a;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .menu-promise-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .menu-promise p {
+            font-size: 0.9rem;
+            color: #999;
+            line-height: 1.6;
+        }
+
+        .menu-promise strong {
+            color: var(--brand-primary);
+        }
+
+        /* ── FOLD 3: Problem ── */
+        .problem {
+            padding: 100px 24px;
+            background: var(--brand-black);
+        }
+
+        .problem-inner {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .problem .section-heading {
+            margin-bottom: 40px;
+        }
+
+        .problem-text {
+            font-size: clamp(1.05rem, 2vw, 1.2rem);
+            line-height: 1.8;
+            color: #888;
+            margin-bottom: 24px;
+        }
+
+        .problem-text strong {
+            color: var(--brand-accent);
+            font-weight: 600;
+        }
+
+        .problem-callout {
+            margin: 48px 0;
+            padding: 28px;
+            background: var(--brand-gray);
+            border-left: 3px solid var(--brand-accent);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .problem-callout p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: #ccc;
+            line-height: 1.7;
+        }
+
+        .problem-callout .red {
+            color: var(--brand-accent);
+        }
+
+        .problem-callout .green {
+            color: var(--brand-primary);
+        }
+
+        .problem-divider {
+            width: 48px;
+            height: 3px;
+            background: var(--brand-primary);
+            margin: 48px 0;
+            border-radius: 2px;
+        }
+
+        /* ── FOLD 4: Answer ── */
+        .answer {
+            padding: 100px 24px;
+            background: var(--brand-gray);
+        }
+
+        .answer-inner {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .answer-blocks {
+            display: grid;
+            gap: 20px;
+        }
+
+        .answer-block {
+            background: var(--brand-black);
+            border: 1px solid #2a2a2a;
+            border-radius: 14px;
+            padding: 28px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            transition: border-color 0.2s;
+        }
+
+        .answer-block:hover {
+            border-color: #333;
+        }
+
+        .answer-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .answer-block h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .answer-block p {
+            font-size: 0.9rem;
+            color: #777;
+            line-height: 1.6;
+        }
+
+        /* ── Footer (Outpost Kitchen — shared) ── */
+        .footer {
+            background: #080808;
+            color: #888;
+            padding: 64px 24px;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        .footer-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .footer-brand { flex: 1; min-width: 240px; }
+        .footer-brand img { height: 40px; margin-bottom: 16px; border-radius: 4px; }
+        .footer-tagline { font-size: 0.9rem; font-weight: 500; color: #ccc; margin-bottom: 8px; }
+        .footer-company { font-size: 0.8rem; color: #666; }
+
+        .footer-stats { display: flex; gap: 40px; flex-wrap: wrap; }
+        .footer-stat { text-align: center; }
+        .footer-stat-number { font-family: 'JetBrains Mono', monospace; font-size: 1.8rem; font-weight: 700; color: #fff; line-height: 1; }
+        .footer-stat-label { font-size: 0.65rem; color: #555; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
+
+        .footer-links {
+            width: 100%;
+            border-top: 1px solid #1a1a1a;
+            padding-top: 24px;
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-brands { display: flex; gap: 20px; font-size: 0.8rem; }
+        .footer-brands a { color: #555; text-decoration: none; transition: color 0.15s; }
+        .footer-brands a:hover { color: #fff; }
+        .footer-legal { font-size: 0.75rem; color: #333; }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .hero { min-height: auto; padding: 100px 24px 80px; }
+            .hero-logo { width: 120px; margin-bottom: 36px; }
+            .menu, .problem, .answer { padding: 72px 24px; }
+            .menu-tiers { grid-template-columns: repeat(2, 1fr); }
+            .menu-promise { flex-direction: column; text-align: center; }
+            .answer-block { flex-direction: column; gap: 12px; }
+            .footer-inner { flex-direction: column; }
+            .footer-stats { gap: 24px; }
+        }
+
+        @media (max-width: 480px) {
+            .menu-tiers { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ════ FOLD 1: Hero ════ -->
+    <section class="hero">
+        <img src="../outpost-kitchen/assets/pp-logo.png" alt="Protein Police" class="hero-logo">
+        <h1>Your Protein Fix,<span>Without the Junk.</span></h1>
+        <p class="hero-sub">We don't sell protein. We save you from high-protein junk. Every item on our menu is designed so the protein never comes at a hidden cost.</p>
+        <a href="https://www.swiggy.com" class="hero-cta">
+            Order Now
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+    </section>
+
+    <!-- ════ FOLD 2: Menu ── -->
+    <section class="menu">
+        <div class="menu-inner">
+            <div class="section-label">// The Menu</div>
+            <h2 class="section-heading">Pick your protein. Every tier is clean.</h2>
+
+            <div class="menu-tiers">
+                <div class="menu-tier">
+                    <div class="tier-protein">5-10g</div>
+                    <div class="tier-unit">protein</div>
+                    <div class="tier-label">Light</div>
+                    <div class="tier-desc">Snacks, sides, and beverages. Clean fuel for a small boost.</div>
+                </div>
+
+                <div class="menu-tier">
+                    <div class="tier-protein">15-20g</div>
+                    <div class="tier-unit">protein</div>
+                    <div class="tier-label">Regular</div>
+                    <div class="tier-desc">Balanced meals and plates. Your everyday clean protein.</div>
+                </div>
+
+                <div class="menu-tier">
+                    <div class="tier-protein">25-30g</div>
+                    <div class="tier-unit">protein</div>
+                    <div class="tier-label">Strong</div>
+                    <div class="tier-desc">Post-workout and high-protein meals. Serious fuel, zero junk.</div>
+                </div>
+
+                <div class="menu-tier">
+                    <div class="tier-protein">35-40g</div>
+                    <div class="tier-unit">protein</div>
+                    <div class="tier-label">Max</div>
+                    <div class="tier-desc">Heavy protein loads for the fitness-focused. All macros checked.</div>
+                </div>
+            </div>
+
+            <div class="menu-promise">
+                <div class="menu-promise-icon">&#9989;</div>
+                <p>The protein number varies by what you need. <strong>The quality standard never drops.</strong> Controlled fats. Smart carbs. Good fibre. No grease. No junk. Every tier.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════ FOLD 3: Problem ════ -->
+    <section class="problem">
+        <div class="problem-inner">
+            <div class="section-label">// Why We Exist</div>
+            <h2 class="section-heading">High protein is not what you're after.</h2>
+
+            <p class="problem-text">
+                Scroll through Swiggy or Zomato right now. You'll see a hundred items marked "high protein." And yes, they are high in protein. But along with that protein comes everything you <strong>didn't ask for.</strong>
+            </p>
+
+            <div class="problem-callout">
+                <p>
+                    <span class="red">&#9679;</span> The oil. The grease. The overcooked carbs.<br>
+                    <span class="red">&#9679;</span> A 1,200-cal burger with 40g protein is <span class="red">not a win.</span><br>
+                    <span class="green">&#9679;</span> 40g protein with 12g fat and 380 cal — <span class="green">that's a win.</span>
+                </p>
+            </div>
+
+            <div class="problem-divider"></div>
+
+            <p class="problem-text">
+                We don't push high protein to you. We protect you from the <strong>hidden cost</strong> of protein food — the grease, the bad carbs, the inflated calories that come along for the ride.
+            </p>
+            <p class="problem-text">
+                When we say protein, we also carefully look at all the other macros we're serving you. <strong>Our promise: we will save you from high-protein junk.</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- ════ FOLD 4: Answer ════ -->
+    <section class="answer">
+        <div class="answer-inner">
+            <div class="section-label">// What Makes Us Different</div>
+            <h2 class="section-heading">We don't just count protein. We count everything.</h2>
+
+            <div class="answer-blocks">
+                <div class="answer-block">
+                    <div class="answer-icon" style="background: rgba(0,230,118,0.1);">
+                        <span>&#128270;</span>
+                    </div>
+                    <div>
+                        <h3>Full Macro Transparency</h3>
+                        <p>Every item shows all macros upfront. Protein, fat, carbs, fibre, calories. No hiding. No fine print. The data is a feature, not a footnote.</p>
+                    </div>
+                </div>
+
+                <div class="answer-block">
+                    <div class="answer-icon" style="background: rgba(255,82,82,0.1);">
+                        <span>&#128683;</span>
+                    </div>
+                    <div>
+                        <h3>No Hidden Costs</h3>
+                        <p>The protein you order doesn't come with surprise grease, junk carbs, or inflated calories. What you see is what you get. Every time.</p>
+                    </div>
+                </div>
+
+                <div class="answer-block">
+                    <div class="answer-icon" style="background: rgba(0,230,118,0.1);">
+                        <span>&#127860;</span>
+                    </div>
+                    <div>
+                        <h3>Engineered, Not Labelled</h3>
+                        <p>We don't take regular food and slap a "high protein" badge on it. Every dish is designed from the ground up for balanced macros across the board.</p>
+                    </div>
+                </div>
+
+                <div class="answer-block">
+                    <div class="answer-icon" style="background: rgba(255,82,82,0.08);">
+                        <span>&#128200;</span>
+                    </div>
+                    <div>
+                        <h3>Every Tier, Same Standard</h3>
+                        <p>Whether you need 5g or 40g, the quality promise is identical. Controlled fats. Smart carbs. Good fibre. The protein level is your choice. The cleanliness is our guarantee.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════ Footer (Outpost Kitchen — shared) ════ -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <img src="../outpost-kitchen/assets/outpost-kitchen-logo.jpg" alt="Outpost Kitchen">
+                <div class="footer-tagline">Food brands for the New India.</div>
+                <div class="footer-company">Outpost Kitchen Private Limited &middot; Bangalore</div>
+            </div>
+
+            <div class="footer-stats">
+                <div class="footer-stat">
+                    <div class="footer-stat-number">88,000+</div>
+                    <div class="footer-stat-label">Orders Served</div>
+                </div>
+                <div class="footer-stat">
+                    <div class="footer-stat-number">6</div>
+                    <div class="footer-stat-label">Outlets</div>
+                </div>
+                <div class="footer-stat">
+                    <div class="footer-stat-number">3</div>
+                    <div class="footer-stat-label">Brands</div>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-brands">
+                    <a href="../ministry-of-oats/">Ministry of Oats</a>
+                    <a href="../the-whole-fruit/">The Whole Fruit</a>
+                    <a href="../protein-police/">Protein Police</a>
+                    <a href="../outpost-kitchen/">Outpost Kitchen</a>
+                </div>
+                <div class="footer-legal">&copy; 2024-2026 Outpost Kitchen Pvt Ltd</div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

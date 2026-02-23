@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministry of Oats — Cereals for Grown-ups</title>
+    <meta name="description" content="India's first overnight oats brand. High fibre, high protein, no shortcuts. Because growing up doesn't mean boring breakfasts.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --brand-primary: #FFD500;
+            --brand-secondary: #4361EE;
+            --brand-accent: #FF3D47;
+            --brand-black: #1A1A1A;
+            --brand-white: #FFFFFF;
+            --brand-gray: #F5F5F5;
+            --brand-muted: #888888;
+
+            --cat-overnight: #FFD500;
+            --cat-chia: #F5A3D0;
+            --cat-bowls: #00B8D4;
+            --cat-smoothies: #FF3D47;
+            --cat-desserts: #5AC8C4;
+            --cat-barista: #FFAA8A;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--brand-black);
+            background: var(--brand-white);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── FOLD 1: Hero ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px 24px;
+            background: var(--brand-secondary);
+            color: var(--brand-white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 80px 80px;
+            pointer-events: none;
+        }
+
+        .hero-logo {
+            width: 180px;
+            margin-bottom: 48px;
+            position: relative;
+            z-index: 1;
+            filter: brightness(0) invert(1);
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: 400;
+            line-height: 0.95;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            display: block;
+            color: var(--brand-primary);
+        }
+
+        .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: rgba(255,255,255,0.7);
+            max-width: 480px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 40px;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--brand-primary);
+            color: var(--brand-black);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 14px 32px;
+            border-radius: 100px;
+            text-decoration: none;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255,213,0,0.3);
+        }
+
+        .hero-cta svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ── FOLD 2: Menu ── */
+        .menu {
+            padding: 100px 24px;
+            background: var(--brand-white);
+        }
+
+        .menu-inner {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--brand-muted);
+            margin-bottom: 12px;
+        }
+
+        .section-heading {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 400;
+            line-height: 1.05;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            margin-bottom: 56px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .menu-card {
+            background: var(--brand-gray);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        }
+
+        .menu-card-color {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .menu-card h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 8px;
+        }
+
+        .menu-card p {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .menu-card-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 4px 10px;
+            border-radius: 100px;
+            margin-top: 14px;
+            color: var(--brand-white);
+        }
+
+        /* ── FOLD 3: Problem ── */
+        .problem {
+            padding: 100px 24px;
+            background: var(--brand-black);
+            color: var(--brand-white);
+        }
+
+        .problem-inner {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .problem .section-label {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .problem .section-heading {
+            color: var(--brand-white);
+            margin-bottom: 40px;
+        }
+
+        .problem-text {
+            font-size: clamp(1.05rem, 2vw, 1.2rem);
+            line-height: 1.8;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 24px;
+        }
+
+        .problem-text strong {
+            color: var(--brand-primary);
+            font-weight: 600;
+        }
+
+        .problem-divider {
+            width: 48px;
+            height: 3px;
+            background: var(--brand-primary);
+            margin: 48px 0;
+            border-radius: 2px;
+        }
+
+        /* ── FOLD 4: Answer ── */
+        .answer {
+            padding: 100px 24px;
+            background: var(--brand-gray);
+        }
+
+        .answer-inner {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .answer-blocks {
+            display: grid;
+            gap: 24px;
+        }
+
+        .answer-block {
+            background: var(--brand-white);
+            border-radius: 14px;
+            padding: 28px 28px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .answer-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .answer-block h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 4px;
+        }
+
+        .answer-block p {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* ── Footer (Outpost Kitchen — shared) ── */
+        .footer {
+            background: #111;
+            color: #888;
+            padding: 64px 24px;
+        }
+
+        .footer-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .footer-brand {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .footer-brand img {
+            height: 40px;
+            margin-bottom: 16px;
+            border-radius: 4px;
+        }
+
+        .footer-tagline {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #ccc;
+            margin-bottom: 8px;
+        }
+
+        .footer-company {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .footer-stats {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-stat {
+            text-align: center;
+        }
+
+        .footer-stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .footer-stat-label {
+            font-size: 0.65rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 4px;
+        }
+
+        .footer-links {
+            width: 100%;
+            border-top: 1px solid #222;
+            padding-top: 24px;
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-brands {
+            display: flex;
+            gap: 20px;
+            font-size: 0.8rem;
+        }
+
+        .footer-brands a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .footer-brands a:hover {
+            color: #fff;
+        }
+
+        .footer-legal {
+            font-size: 0.75rem;
+            color: #444;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .hero {
+                min-height: auto;
+                padding: 100px 24px 80px;
+            }
+
+            .hero-logo { width: 140px; margin-bottom: 36px; }
+
+            .menu, .problem, .answer { padding: 72px 24px; }
+
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .answer-block {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .footer-inner { flex-direction: column; }
+            .footer-stats { gap: 24px; }
+        }
+
+        @media (max-width: 480px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ════ FOLD 1: Hero ════ -->
+    <section class="hero">
+        <img src="../outpost-kitchen/assets/moo-logo.png" alt="Ministry of Oats" class="hero-logo">
+        <h1>Cereals<span>for Grown-ups.</span></h1>
+        <p class="hero-sub">India's first overnight oats brand. High fibre, high protein, no shortcuts. Because growing up doesn't mean boring breakfasts.</p>
+        <a href="https://www.swiggy.com" class="hero-cta">
+            Order Now
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+    </section>
+
+    <!-- ════ FOLD 2: Menu ════ -->
+    <section class="menu">
+        <div class="menu-inner">
+            <div class="section-label">The Menu</div>
+            <h2 class="section-heading">A menu made with oats.</h2>
+
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <div class="menu-card-color" style="background: var(--cat-overnight);">
+                        <span>&#9728;</span>
+                    </div>
+                    <h3>Overnight Oats</h3>
+                    <p>Prep-free, grab-and-go. The breakfast you actually look forward to. Our hottest category.</p>
+                    <span class="menu-card-tag" style="background: var(--cat-overnight); color: var(--brand-black);">Bestseller</span>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-card-color" style="background: var(--cat-chia);">
+                        <span>&#10024;</span>
+                    </div>
+                    <h3>Chia Pudding</h3>
+                    <p>Smooth, creamy, packed with fibre. The slow-release energy your morning needs.</p>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-card-color" style="background: var(--cat-bowls);">
+                        <span>&#127860;</span>
+                    </div>
+                    <h3>Smoothie Bowls</h3>
+                    <p>Colourful, nutrient-dense, and almost too beautiful to eat. Almost.</p>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-card-color" style="background: var(--cat-smoothies);">
+                        <span>&#129380;</span>
+                    </div>
+                    <h3>Smoothies</h3>
+                    <p>Thick, real-fruit smoothies. Quick nutrition for the days you're running out the door.</p>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-card-color" style="background: var(--cat-desserts);">
+                        <span>&#127848;</span>
+                    </div>
+                    <h3>Desserts</h3>
+                    <p>Healthy indulgence. Because treating yourself shouldn't come with guilt.</p>
+                </div>
+
+                <div class="menu-card">
+                    <div class="menu-card-color" style="background: var(--cat-barista);">
+                        <span>&#9749;</span>
+                    </div>
+                    <h3>Barista</h3>
+                    <p>Crafted coffee and specialty beverages. The perfect sidekick to your oats.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════ FOLD 3: Problem ════ -->
+    <section class="problem">
+        <div class="problem-inner">
+            <div class="section-label">Why We Exist</div>
+            <h2 class="section-heading">Cereals disappeared from Indian adulthood.</h2>
+
+            <p class="problem-text">
+                When we all grew up in India — every Gen Z, every millennial — we had cereals as kids. Chocos, cornflakes, whatever our parents bought. Then somewhere during teenage and beyond, it just <strong>disappeared.</strong>
+            </p>
+            <p class="problem-text">
+                We were told to "eat proper food." Breakfast became parathas, idlis, or nothing at all. Growing up meant giving up the fun stuff.
+            </p>
+
+            <div class="problem-divider"></div>
+
+            <p class="problem-text">
+                We're bringing cereals back. Not cornflakes. Not the sugary stuff. Real, functional, delicious cereals — overnight oats, porridge bowls, chia puddings — that are <strong>high in fibre, high in protein,</strong> and actually taste incredible.
+            </p>
+            <p class="problem-text">
+                Because growing up doesn't mean growing boring. <strong>Eating cereals is a way of rebelling against adulthood — letting the kid in you live a little more.</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- ════ FOLD 4: Answer ════ -->
+    <section class="answer">
+        <div class="answer-inner">
+            <div class="section-label">What Makes Us Different</div>
+            <h2 class="section-heading">Not health food. Not junk food. Just really good cereals.</h2>
+
+            <div class="answer-blocks">
+                <div class="answer-block">
+                    <div class="answer-icon" style="background: rgba(255,213,0,0.15);">
+                        <span>&#127793;</span>
+                    </div>
+                    <div>
+                        <h3>Built Around Oats</h3>
+                        <p>Our entire menu is made with oats. Not a side dish. Not an afterthought. Oats are the foundation of everything we make.</p>
+                    </div>
+                </div>
+
+                <div class="answer-block">
+                    <div class="answer-icon" style="background: rgba(67,97,238,0.1);">
+                        <span>&#128170;</span>
+                    </div>
+                    <div>
+                        <h3>High Fibre, High Protein</h3>
+                        <p>No shortcuts, no preservatives. Clean ingredients that are naturally high in fibre and protein because that's what oats do.</p>
+                    </div>
+                </div>
+
+                <div class="answer-block">
+                    <div class="answer-icon" style="background: rgba(255,61,71,0.1);">
+                        <span>&#128230;</span>
+                    </div>
+                    <div>
+                        <h3>Takeaway-First</h3>
+                        <p>Built for delivery. Built for the desk, the gym bag, the commute. Every product is designed to travel well and eat easy.</p>
+                    </div>
+                </div>
+
+                <div class="answer-block">
+                    <div class="answer-icon" style="background: rgba(90,200,196,0.1);">
+                        <span>&#127912;</span>
+                    </div>
+                    <div>
+                        <h3>Design That Stands Out</h3>
+                        <p>In a sea of generic cloud kitchen brands, we're the one you remember. Bold colours, playful characters, food that looks as good as it tastes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════ Footer (Outpost Kitchen — shared across all brands) ════ -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <img src="../outpost-kitchen/assets/outpost-kitchen-logo.jpg" alt="Outpost Kitchen">
+                <div class="footer-tagline">Food brands for the New India.</div>
+                <div class="footer-company">Outpost Kitchen Private Limited &middot; Bangalore</div>
+            </div>
+
+            <div class="footer-stats">
+                <div class="footer-stat">
+                    <div class="footer-stat-number">88,000+</div>
+                    <div class="footer-stat-label">Orders Served</div>
+                </div>
+                <div class="footer-stat">
+                    <div class="footer-stat-number">6</div>
+                    <div class="footer-stat-label">Outlets</div>
+                </div>
+                <div class="footer-stat">
+                    <div class="footer-stat-number">3</div>
+                    <div class="footer-stat-label">Brands</div>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-brands">
+                    <a href="../ministry-of-oats/">Ministry of Oats</a>
+                    <a href="../the-whole-fruit/">The Whole Fruit</a>
+                    <a href="../protein-police/">Protein Police</a>
+                    <a href="../outpost-kitchen/">Outpost Kitchen</a>
+                </div>
+                <div class="footer-legal">&copy; 2024-2026 Outpost Kitchen Pvt Ltd</div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
