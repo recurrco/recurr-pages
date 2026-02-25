@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>canteen — for gyms & fitness studios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --purple: #7C5CFC; --purple-dark: #5B3FD9;
+  --purple-light: #F3F0FF; --purple-mid: #EDE9FE;
+  --white: #FFFFFF; --offwhite: #FAFAF8;
+  --gray-50: #F7F7F5; --gray-100: #EFEFED; --gray-200: #E0E0DC;
+  --gray-300: #C8C8C4; --gray-400: #A0A09C; --gray-500: #787874;
+  --gray-600: #58584E; --gray-700: #3C3C34; --gray-800: #262620;
+  --gray-900: #1A1A16; --black: #0F0F0C;
+  --green: #22C55E; --green-light: #F0FDF4;
+  --orange: #F97316; --orange-light: #FFF7ED;
+  --amber: #F59E0B; --red: #EF4444;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --r-xl: 24px; --r-lg: 20px; --r-md: 16px; --r-sm: 12px; --r-xs: 8px; --r-pill: 100px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body); background: var(--white);
+  color: var(--gray-900); -webkit-font-smoothing: antialiased;
+  line-height: 1.6; overflow-x: hidden;
+}
+
+.container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+/* NAV */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.nav-inner {
+  max-width: 720px; margin: 0 auto; padding: 0 24px; height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand {
+  font-family: var(--font-display); font-size: 20px; font-weight: 900;
+  color: var(--black); text-decoration: none; letter-spacing: -0.5px;
+}
+.nav-right { display: flex; gap: 6px; align-items: center; }
+.nav-link {
+  font-size: 13px; font-weight: 500; color: var(--gray-500);
+  text-decoration: none; padding: 6px 12px; border-radius: var(--r-pill);
+  transition: all 0.15s;
+}
+.nav-link:hover { color: var(--gray-800); background: var(--gray-50); }
+.nav-link.active { color: var(--purple); font-weight: 600; }
+.nav-cta {
+  padding: 8px 18px; background: var(--purple); color: var(--white);
+  border-radius: var(--r-pill); font-size: 13px; font-weight: 600;
+  text-decoration: none; transition: all 0.2s;
+}
+.nav-cta:hover { background: var(--purple-dark); }
+
+/* HERO */
+.hero {
+  padding: 120px 24px 64px; text-align: center;
+  background: linear-gradient(180deg, var(--white) 0%, var(--purple-light) 100%);
+}
+.hero-inner { max-width: 560px; margin: 0 auto; }
+.hero-eyebrow {
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--purple); margin-bottom: 12px;
+}
+.hero h1 {
+  font-family: var(--font-display); font-size: 46px; font-weight: 800;
+  letter-spacing: -2px; line-height: 1.08; margin-bottom: 16px;
+}
+.hero h1 em { font-style: italic; color: var(--purple); }
+.hero-sub {
+  font-size: 17px; color: var(--gray-500); line-height: 1.7;
+  max-width: 480px; margin: 0 auto 28px;
+}
+.hero-cta { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: var(--r-pill);
+  font-size: 15px; font-weight: 600; border: none; cursor: pointer;
+  text-decoration: none; transition: all 0.2s;
+}
+.btn-purple { background: var(--purple); color: var(--white); }
+.btn-purple:hover { background: var(--purple-dark); transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: var(--gray-600); }
+.btn-ghost:hover { color: var(--black); }
+.hero-proof {
+  font-size: 12px; color: var(--gray-400);
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; flex-wrap: wrap;
+}
+.hero-proof-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gray-300); }
+
+
+/* PROBLEM */
+.problem { padding: 80px 0; background: var(--offwhite); border-top: 1px solid var(--gray-100); }
+.section-header { text-align: center; margin-bottom: 40px; }
+.section-header h2 {
+  font-family: var(--font-display); font-size: 36px; font-weight: 700;
+  letter-spacing: -1.5px; margin-bottom: 8px;
+}
+.section-header p { font-size: 16px; color: var(--gray-500); max-width: 480px; margin: 0 auto; }
+
+.problem-flow {
+  max-width: 480px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 0;
+}
+.problem-step {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+.problem-step:last-child { border-bottom: none; }
+.problem-step-num {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--gray-100); color: var(--gray-500);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 15px; font-weight: 800;
+  flex-shrink: 0;
+}
+.problem-step-num.highlight { background: var(--purple); color: var(--white); }
+.problem-step h4 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.problem-step p { font-size: 13px; color: var(--gray-500); line-height: 1.5; }
+
+
+/* SOLUTION */
+.solution { padding: 80px 0; background: var(--white); }
+.solution-cards {
+  display: flex; flex-direction: column; gap: 16px;
+  max-width: 520px; margin: 0 auto;
+}
+.solution-card {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 24px; background: var(--white);
+  border-radius: var(--r-lg); border: 1px solid var(--gray-100);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s, box-shadow 0.3s;
+  opacity: 0; transform: translateY(16px);
+}
+.solution-card.in-view { opacity: 1; transform: translateY(0); }
+.solution-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.solution-card-icon { font-size: 32px; flex-shrink: 0; }
+.solution-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+.solution-card p { font-size: 13px; color: var(--gray-500); line-height: 1.5; }
+
+.solution-card-accent {
+  background: var(--purple); color: var(--white);
+  border: none;
+}
+.solution-card-accent p { color: rgba(255,255,255,0.8); }
+
+
+/* HOW IT WORKS */
+.how-it-works { padding: 80px 0; background: var(--offwhite); border-top: 1px solid var(--gray-100); }
+.steps {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  max-width: 560px; margin: 0 auto;
+}
+.step { text-align: center; }
+.step-num {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--purple); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 16px; font-weight: 800;
+  margin: 0 auto 10px;
+}
+.step h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.step p { font-size: 12px; color: var(--gray-500); line-height: 1.5; }
+
+
+/* MEMBER PREVIEW */
+.member-preview { padding: 80px 0; background: var(--white); border-top: 1px solid var(--gray-100); }
+
+.member-mock {
+  max-width: 380px; margin: 0 auto;
+  background: var(--white); border-radius: var(--r-xl);
+  border: 1px solid var(--gray-100); box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.member-mock-header {
+  padding: 14px 16px; background: var(--purple);
+  display: flex; align-items: center; gap: 10px; color: var(--white);
+}
+.member-mock-logo {
+  width: 32px; height: 32px; border-radius: var(--r-sm);
+  background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800;
+}
+.member-mock-brand-name { font-family: var(--font-display); font-size: 14px; font-weight: 800; }
+.member-mock-brand-sub { font-size: 10px; opacity: 0.7; }
+.member-mock-powered { font-size: 9px; opacity: 0.5; margin-left: auto; }
+
+.member-mock-session {
+  padding: 12px 16px; background: var(--purple-light);
+  border-bottom: 1px solid var(--gray-100);
+}
+.member-mock-session-label { font-size: 10px; font-weight: 700; color: var(--purple); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.member-mock-session-q { font-size: 14px; font-weight: 700; color: var(--gray-800); margin-bottom: 8px; }
+.session-slots { display: flex; gap: 6px; }
+.session-slot {
+  flex: 1; padding: 8px; border-radius: var(--r-sm);
+  border: 1.5px solid var(--gray-200); background: var(--white);
+  text-align: center; cursor: pointer; transition: all 0.15s;
+}
+.session-slot.active { border-color: var(--purple); background: var(--white); }
+.session-slot-time { font-size: 13px; font-weight: 700; }
+.session-slot.active .session-slot-time { color: var(--purple); }
+.session-slot-label { font-size: 9px; color: var(--gray-400); }
+
+.member-mock-reco {
+  padding: 10px 16px; background: var(--green-light);
+  border-bottom: 1px solid var(--gray-100);
+  font-size: 11px; font-weight: 600; color: var(--green);
+  display: flex; align-items: center; gap: 6px;
+}
+
+.member-mock-body { padding: 8px 16px 16px; }
+.member-mock-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 0; border-bottom: 1px solid var(--gray-50);
+}
+.member-mock-item:last-child { border-bottom: none; }
+.member-mock-emoji { font-size: 24px; }
+.member-mock-info { flex: 1; }
+.member-mock-info h5 { font-size: 12px; font-weight: 600; }
+.member-mock-info p { font-size: 10px; color: var(--gray-400); }
+.member-mock-tag {
+  font-size: 9px; font-weight: 600; padding: 2px 6px;
+  border-radius: var(--r-pill); background: var(--green-light); color: var(--green);
+  display: inline-block; margin-top: 2px;
+}
+.member-mock-price { text-align: right; }
+.member-mock-price .old { font-size: 10px; color: var(--gray-300); text-decoration: line-through; display: block; }
+.member-mock-price .new { font-size: 13px; font-weight: 800; color: var(--green); }
+.member-mock-add {
+  width: 26px; height: 26px; border-radius: 6px;
+  border: 1.5px solid var(--purple); color: var(--purple);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; background: var(--purple-light); cursor: pointer; flex-shrink: 0;
+}
+
+
+/* PAYOUT */
+.payout { padding: 80px 0; background: var(--offwhite); border-top: 1px solid var(--gray-100); }
+
+.payout-mock {
+  max-width: 480px; margin: 0 auto;
+  background: var(--white); border-radius: var(--r-xl);
+  border: 1px solid var(--gray-100); box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.payout-mock-header {
+  padding: 12px 16px; background: var(--gray-900);
+  display: flex; align-items: center; justify-content: space-between;
+  color: var(--white);
+}
+.payout-mock-brand { font-family: var(--font-display); font-size: 13px; font-weight: 800; }
+.payout-mock-period { font-size: 10px; opacity: 0.5; }
+
+.payout-mock-body { padding: 16px; }
+.payout-mock-label {
+  font-size: 9px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; color: var(--gray-400); margin-bottom: 8px;
+}
+
+.payout-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+.payout-stat {
+  padding: 12px 10px; background: var(--gray-50); border-radius: var(--r-sm); text-align: center;
+}
+.payout-stat-num { font-size: 22px; font-weight: 800; color: var(--purple); }
+.payout-stat-label { font-size: 9px; color: var(--gray-400); font-weight: 600; margin-top: 2px; }
+
+.payout-orders { margin-bottom: 16px; }
+.payout-order-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 10px; border-bottom: 1px solid var(--gray-50);
+  font-size: 12px;
+}
+.payout-order-row:last-child { border-bottom: none; }
+.payout-order-id { font-weight: 600; color: var(--gray-600); }
+.payout-order-member { color: var(--gray-400); flex: 1; margin-left: 12px; }
+.payout-order-amount { font-weight: 700; }
+
+.payout-total {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 12px; background: var(--green-light); border-radius: var(--r-sm);
+}
+.payout-total-label { font-size: 13px; font-weight: 700; color: var(--gray-700); }
+.payout-total-amount { font-size: 20px; font-weight: 800; color: var(--green); }
+.payout-total-sub { font-size: 10px; color: var(--gray-400); margin-top: 2px; }
+
+.payout-note {
+  margin-top: 12px; font-size: 11px; color: var(--gray-400); text-align: center;
+  line-height: 1.5;
+}
+
+
+/* REVENUE MODEL */
+.revenue { padding: 80px 0; background: var(--white); border-top: 1px solid var(--gray-100); }
+.revenue-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+  max-width: 520px; margin: 0 auto;
+}
+.revenue-card {
+  padding: 24px 20px; background: var(--white);
+  border-radius: var(--r-lg); border: 1px solid var(--gray-100);
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.revenue-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.revenue-card-num {
+  font-family: var(--font-display); font-size: 36px; font-weight: 800;
+  color: var(--purple); letter-spacing: -1px; margin-bottom: 4px;
+}
+.revenue-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.revenue-card p { font-size: 12px; color: var(--gray-500); line-height: 1.5; }
+
+.revenue-card-full {
+  grid-column: 1 / -1;
+  padding: 24px; background: var(--purple);
+  border-radius: var(--r-lg); color: var(--white);
+  text-align: center; border: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.revenue-card-full:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.revenue-card-full h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.revenue-card-full p { font-size: 13px; opacity: 0.8; line-height: 1.5; }
+
+
+/* CLOSING */
+.closing {
+  padding: 80px 24px; background: var(--purple); text-align: center;
+  color: var(--white);
+}
+.closing h2 {
+  font-family: var(--font-display); font-size: 40px; font-weight: 700;
+  letter-spacing: -1.5px; line-height: 1.1; max-width: 480px;
+  margin: 0 auto 12px;
+}
+.closing > p {
+  font-size: 16px; opacity: 0.8; max-width: 400px;
+  margin: 0 auto 28px; line-height: 1.7;
+}
+.btn-white { background: var(--white); color: var(--purple); }
+.btn-white:hover { background: var(--gray-50); transform: translateY(-1px); }
+.closing-proof { margin-top: 20px; font-size: 12px; opacity: 0.4; }
+
+/* Footer */
+.footer {
+  padding: 40px 24px; background: var(--gray-900); text-align: center;
+}
+.footer-brand { font-family: var(--font-display); font-size: 16px; font-weight: 900; color: var(--white); margin-bottom: 4px; }
+.footer-sub { font-size: 11px; color: rgba(255,255,255,0.3); margin-bottom: 16px; }
+.footer-links { display: flex; justify-content: center; gap: 16px; }
+.footer-links a { color: rgba(255,255,255,0.35); text-decoration: none; font-size: 12px; transition: color 0.15s; }
+.footer-links a:hover { color: var(--white); }
+.footer-copy { margin-top: 16px; font-size: 10px; color: rgba(255,255,255,0.12); }
+
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 34px; letter-spacing: -1.5px; }
+  .hero { padding: 100px 24px 48px; }
+  .steps { grid-template-columns: 1fr; gap: 20px; }
+  .revenue-grid { grid-template-columns: 1fr; }
+  .section-header h2, .closing h2 { font-size: 30px; }
+  .nav-link { display: none; }
+  .solution-card { flex-direction: column; gap: 12px; }
+  .payout-stats { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="/canteen-home/">canteen</a>
+    <div class="nav-right">
+      <a class="nav-link" href="/canteen-home/">Home</a>
+      <a class="nav-link" href="/canteen-menu/">Menu</a>
+      <a class="nav-link active" href="/canteen-gym/">For Gyms</a>
+      <a class="nav-cta" href="#">Partner with us &rarr;</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">For gyms & fitness studios</div>
+    <h1>Your members need nutrition. <em>Not a kitchen.</em></h1>
+    <p class="hero-sub">Your members finish their session and need the right food. Canteen handles the nutrition &mdash; you earn from every order. Zero ops, zero hassle.</p>
+    <div class="hero-cta">
+      <a class="btn btn-purple" href="#">Partner with us &rarr;</a>
+      <a class="btn btn-ghost" href="/canteen-gym-members/">See the member experience</a>
+    </div>
+    <div class="hero-proof">
+      <span>Powered by Outpost Kitchens</span>
+      <span class="hero-proof-dot"></span>
+      <span>88,000+ orders served</span>
+      <span class="hero-proof-dot"></span>
+      <span>Bangalore</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- THE PROBLEM -->
+<section class="problem">
+  <div class="container">
+    <div class="section-header">
+      <h2>The nutrition gap.</h2>
+      <p>Every gym has this problem. None of them solve it.</p>
+    </div>
+
+    <div class="problem-flow">
+      <div class="problem-step">
+        <div class="problem-step-num">1</div>
+        <div>
+          <h4>Members finish their session</h4>
+          <p>They've just worked out for 60&ndash;90 minutes. Whether it's pre-workout fuel or post-workout recovery &mdash; they need nutrition now.</p>
+        </div>
+      </div>
+      <div class="problem-step">
+        <div class="problem-step-num">2</div>
+        <div>
+          <h4>There's nothing at your facility</h4>
+          <p>Most gyms and studios don't have an F&B outlet. No juice bar, no protein counter, no healthy food option within the premises.</p>
+        </div>
+      </div>
+      <div class="problem-step">
+        <div class="problem-step-num">3</div>
+        <div>
+          <h4>Building one isn't your job</h4>
+          <p>Running a kitchen requires procurement, staff, compliance, inventory. That's not your core competency &mdash; fitness is.</p>
+        </div>
+      </div>
+      <div class="problem-step">
+        <div class="problem-step-num highlight">4</div>
+        <div>
+          <h4>So members end up on Swiggy</h4>
+          <p>They order random food. They eat junk. The workout goes to waste. And you &mdash; the institution they trust &mdash; have no role in this moment.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- THE SOLUTION -->
+<section class="solution">
+  <div class="container">
+    <div class="section-header">
+      <h2>What if nutrition was a feature of your gym?</h2>
+      <p>Canteen plugs into your institution. Your members get nutrition. You earn revenue. We handle everything.</p>
+    </div>
+
+    <div class="solution-cards">
+      <div class="solution-card" style="transition-delay:0s">
+        <div class="solution-card-icon">&#x1F517;</div>
+        <div>
+          <h4>One branded link. That's it.</h4>
+          <p>We create a personalised ordering link for your gym. Your logo. Your brand. Your members click it and see a menu that feels like it's built by you.</p>
+        </div>
+      </div>
+      <div class="solution-card" style="transition-delay:0.08s">
+        <div class="solution-card-icon">&#x1F3CB;&#xFE0F;</div>
+        <div>
+          <h4>Designed around sessions</h4>
+          <p>We ask members one question: "When does your session end?" Then we show them the right nutrition for that window &mdash; pre-workout, post-workout, recovery.</p>
+        </div>
+      </div>
+      <div class="solution-card" style="transition-delay:0.16s">
+        <div class="solution-card-icon">&#x1F4B0;</div>
+        <div>
+          <h4>You earn on every order</h4>
+          <p>A transparent commission on every order placed through your link. This is a new revenue stream &mdash; not a cost center. We pay you, not the other way around.</p>
+        </div>
+      </div>
+      <div class="solution-card" style="transition-delay:0.24s">
+        <div class="solution-card-icon">&#x1F4E6;</div>
+        <div>
+          <h4>Zero operations on your end</h4>
+          <p>No kitchen to manage. No staff to hire. No inventory to track. No food safety compliance. We do the cooking, packaging, and delivery. You just share the link.</p>
+        </div>
+      </div>
+      <div class="solution-card solution-card-accent" style="transition-delay:0.32s">
+        <div class="solution-card-icon">&#x2728;</div>
+        <div>
+          <h4>It feels like your own offering</h4>
+          <p>When members open the link, they see your gym's logo and branding. It feels like a premium feature of your institution &mdash; not an external food app. "Powered by Outpost Kitchens" sits quietly in the footer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works">
+  <div class="container">
+    <div class="section-header">
+      <h2>How you get started.</h2>
+      <p>Three steps. One conversation. Zero kitchen operations.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Talk to us</h4>
+        <p>Tell us about your facility, member count, and session schedule. We design a plan.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Get your branded link</h4>
+        <p>We set up a personalised ordering page with your logo and branding. Ready in 48 hours.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Share with members</h4>
+        <p>Pin it in your WhatsApp group. Put a QR at reception. Members order, you earn.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- MEMBER PREVIEW -->
+<section class="member-preview">
+  <div class="container">
+    <div class="section-header">
+      <h2>What your members see.</h2>
+      <p>A branded, session-aware ordering experience. Feels like it's yours.</p>
+    </div>
+
+    <div class="member-mock">
+      <!-- Header with gym branding -->
+      <div class="member-mock-header">
+        <div class="member-mock-logo">CF</div>
+        <div>
+          <div class="member-mock-brand-name">CrossFit Koramangala</div>
+          <div class="member-mock-brand-sub">Nutrition for members</div>
+        </div>
+        <div class="member-mock-powered">Powered by<br>Outpost Kitchens</div>
+      </div>
+
+      <!-- Session question -->
+      <div class="member-mock-session">
+        <div class="member-mock-session-label">Your session</div>
+        <div class="member-mock-session-q">When does your session end?</div>
+        <div class="session-slots">
+          <div class="session-slot">
+            <div class="session-slot-time">6:00 AM</div>
+            <div class="session-slot-label">Early bird</div>
+          </div>
+          <div class="session-slot active">
+            <div class="session-slot-time">7:30 AM</div>
+            <div class="session-slot-label">Morning</div>
+          </div>
+          <div class="session-slot">
+            <div class="session-slot-time">6:00 PM</div>
+            <div class="session-slot-label">Evening</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recommendation -->
+      <div class="member-mock-reco">
+        &#x1F4AA; Post-workout picks for your 7:30 AM session
+      </div>
+
+      <!-- Menu items -->
+      <div class="member-mock-body">
+        <div class="member-mock-item">
+          <div class="member-mock-emoji">&#x1F963;</div>
+          <div class="member-mock-info">
+            <h5>Overnight Oats &mdash; Peanut Butter</h5>
+            <p>320 cal &middot; 18g protein &middot; MOO</p>
+            <span class="member-mock-tag">Post-workout</span>
+          </div>
+          <div class="member-mock-price"><span class="old">&#8377;229</span><span class="new">&#8377;172</span></div>
+          <button class="member-mock-add">+</button>
+        </div>
+        <div class="member-mock-item">
+          <div class="member-mock-emoji">&#x1F4AA;</div>
+          <div class="member-mock-info">
+            <h5>Whey Protein Shake</h5>
+            <p>280 cal &middot; 32g protein &middot; Protein Police</p>
+            <span class="member-mock-tag">Recovery</span>
+          </div>
+          <div class="member-mock-price"><span class="old">&#8377;199</span><span class="new">&#8377;149</span></div>
+          <button class="member-mock-add">+</button>
+        </div>
+        <div class="member-mock-item">
+          <div class="member-mock-emoji">&#x1F34C;</div>
+          <div class="member-mock-info">
+            <h5>Banana Oat Smoothie</h5>
+            <p>260 cal &middot; 14g protein &middot; TWF</p>
+            <span class="member-mock-tag">Quick fuel</span>
+          </div>
+          <div class="member-mock-price"><span class="old">&#8377;179</span><span class="new">&#8377;134</span></div>
+          <button class="member-mock-add">+</button>
+        </div>
+        <div class="member-mock-item">
+          <div class="member-mock-emoji">&#x1F966;</div>
+          <div class="member-mock-info">
+            <h5>Quinoa Power Bowl</h5>
+            <p>480 cal &middot; 28g protein &middot; Protein Police</p>
+            <span class="member-mock-tag">High protein</span>
+          </div>
+          <div class="member-mock-price"><span class="old">&#8377;329</span><span class="new">&#8377;247</span></div>
+          <button class="member-mock-add">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PAYOUT TRANSPARENCY -->
+<section class="payout">
+  <div class="container">
+    <div class="section-header">
+      <h2>The most transparent payout you've ever seen.</h2>
+      <p>Every order tracked. Every rupee accounted for. Weekly reports, no surprises.</p>
+    </div>
+
+    <div class="payout-mock">
+      <div class="payout-mock-header">
+        <div class="payout-mock-brand">canteen &middot; partner payout</div>
+        <div class="payout-mock-period">Week of Feb 17 &ndash; Feb 23, 2026</div>
+      </div>
+      <div class="payout-mock-body">
+
+        <div class="payout-mock-label">This week</div>
+        <div class="payout-stats">
+          <div class="payout-stat">
+            <div class="payout-stat-num">47</div>
+            <div class="payout-stat-label">Orders placed</div>
+          </div>
+          <div class="payout-stat">
+            <div class="payout-stat-num">23</div>
+            <div class="payout-stat-label">Unique members</div>
+          </div>
+          <div class="payout-stat">
+            <div class="payout-stat-num">&#8377;284</div>
+            <div class="payout-stat-label">Avg order value</div>
+          </div>
+        </div>
+
+        <div class="payout-mock-label">Recent orders</div>
+        <div class="payout-orders">
+          <div class="payout-order-row">
+            <span class="payout-order-id">#1047</span>
+            <span class="payout-order-member">Arjun S.</span>
+            <span class="payout-order-amount">&#8377;321</span>
+          </div>
+          <div class="payout-order-row">
+            <span class="payout-order-id">#1046</span>
+            <span class="payout-order-member">Meera K.</span>
+            <span class="payout-order-amount">&#8377;172</span>
+          </div>
+          <div class="payout-order-row">
+            <span class="payout-order-id">#1045</span>
+            <span class="payout-order-member">Rahul P.</span>
+            <span class="payout-order-amount">&#8377;396</span>
+          </div>
+          <div class="payout-order-row">
+            <span class="payout-order-id">#1044</span>
+            <span class="payout-order-member">Sneha M.</span>
+            <span class="payout-order-amount">&#8377;247</span>
+          </div>
+        </div>
+
+        <div class="payout-mock-label">Your payout</div>
+        <div class="payout-total">
+          <div>
+            <div class="payout-total-label">Net payout this week</div>
+            <div class="payout-total-sub">47 orders &times; your commission rate</div>
+          </div>
+          <div class="payout-total-amount">&#8377;2,140</div>
+        </div>
+
+        <div class="payout-note">
+          Payouts released at &#8377;10,000 milestones &middot; Weekly or monthly &mdash; whichever hits first.<br>
+          Every order. Every deduction. Every rupee &mdash; fully visible to you.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- REVENUE MODEL -->
+<section class="revenue">
+  <div class="container">
+    <div class="section-header">
+      <h2>A new revenue stream. Not a cost.</h2>
+      <p>You don't pay us. We pay you.</p>
+    </div>
+
+    <div class="revenue-grid">
+      <div class="revenue-card">
+        <div class="revenue-card-num">&#8377;0</div>
+        <h4>Setup cost</h4>
+        <p>No fees. No deposits. No contracts. We set everything up for free.</p>
+      </div>
+      <div class="revenue-card">
+        <div class="revenue-card-num">&#8377;0</div>
+        <h4>Operational cost</h4>
+        <p>No kitchen, no staff, no inventory. Zero ops burden on your team.</p>
+      </div>
+      <div class="revenue-card">
+        <div class="revenue-card-num">X%</div>
+        <h4>Commission per order</h4>
+        <p>Customised commission on every member order. The rate is set together.</p>
+      </div>
+      <div class="revenue-card">
+        <div class="revenue-card-num">&#8377;10K</div>
+        <h4>Payout milestone</h4>
+        <p>Payouts released at &#8377;10K thresholds. Weekly or monthly settlement.</p>
+      </div>
+      <div class="revenue-card-full">
+        <h4>More members ordering = more revenue for you</h4>
+        <p>The more your members use Canteen, the more you earn. Your only job: share the link. We handle kitchen, delivery, quality, and support.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CLOSING -->
+<section class="closing">
+  <h2>Give your members what they've been looking for.</h2>
+  <p>Post-workout nutrition, delivered to your facility. You earn on every order. Zero ops. Let's talk.</p>
+  <a class="btn btn-white" href="#">Partner with us &rarr;</a>
+  <div class="closing-proof">Powered by Outpost Kitchens &middot; Bangalore</div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">canteen</div>
+  <div class="footer-sub">Re-designing F&B for India.</div>
+  <div class="footer-links">
+    <a href="/canteen-home/">For members</a>
+    <a href="/canteen-gym-members/">Member experience</a>
+    <a href="/canteen-menu/">Menu</a>
+    <a href="/canteen-enterprise/">For employers</a>
+  </div>
+  <div class="footer-copy">Outpost Kitchen Pvt Ltd &middot; Bangalore &middot; 2026</div>
+</footer>
+
+
+<script>
+/* Scroll-reveal for solution cards */
+const cards = document.querySelectorAll('.solution-card');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('in-view');
+  });
+}, { threshold: 0.1 });
+cards.forEach(card => observer.observe(card));
+</script>
+
+</body>
+</html>
