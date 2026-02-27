@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myca AG — S3 Company Intelligence & Category Research</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: #fafafa;
+            color: #1a1a1a;
+            line-height: 1.6;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            padding: 60px 50px;
+            margin-bottom: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 400;
+            color: #000000;
+            margin-bottom: 40px;
+            letter-spacing: -0.5px;
+            line-height: 1.3;
+            border-bottom: 2px solid #333333;
+            padding-bottom: 20px;
+        }
+
+        /* Accordion Styles */
+        .accordion {
+            margin-top: 50px;
+        }
+
+        .accordion-item {
+            margin-bottom: 20px;
+            border: 1px solid #d0d0d0;
+            background-color: #f9f9f9;
+        }
+
+        .accordion-header {
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f5f5f5;
+            border-bottom: 1px solid #d0d0d0;
+            transition: background-color 0.2s;
+        }
+
+        .accordion-header:hover {
+            background-color: #eeeeee;
+        }
+
+        .accordion-header h2 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #333333;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        .accordion-icon {
+            font-size: 18px;
+            color: #666666;
+            transition: transform 0.3s;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: #ffffff;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 2000px;
+        }
+
+        .accordion-content-inner {
+            padding: 25px;
+        }
+
+        .accordion-content ol, .accordion-content ul {
+            list-style-position: outside;
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .accordion-content li {
+            font-size: 15px;
+            color: #444444;
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .accordion-content li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Section Styles */
+        .section {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            padding: 60px 50px;
+            margin-bottom: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 400;
+            color: #000000;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #333333;
+            padding-bottom: 15px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333333;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .section-note {
+            font-size: 14px;
+            color: #555555;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 3px solid #999999;
+        }
+
+        /* Persona Cards */
+        .persona-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .persona-card {
+            border: 1px solid #d0d0d0;
+            padding: 25px;
+            background-color: #fafafa;
+        }
+
+        .persona-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #cccccc;
+            padding-bottom: 10px;
+        }
+
+        .persona-card .label {
+            font-size: 12px;
+            color: #666666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .persona-card .content {
+            font-size: 14px;
+            color: #444444;
+            line-height: 1.6;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .content-card {
+            border: 1px solid #d0d0d0;
+            padding: 20px;
+            background-color: #fafafa;
+        }
+
+        .content-card h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .content-card p, .content-card ul {
+            font-size: 14px;
+            color: #555555;
+            line-height: 1.6;
+        }
+
+        .content-card ul {
+            padding-left: 16px;
+            margin-top: 8px;
+        }
+
+        .content-card li {
+            margin-bottom: 6px;
+        }
+
+        /* Data Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .data-table th {
+            background-color: #f0f0f0;
+            border: 1px solid #d0d0d0;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-size: 12px;
+            color: #333333;
+        }
+
+        .data-table td {
+            border: 1px solid #d0d0d0;
+            padding: 12px 15px;
+            vertical-align: top;
+            color: #444444;
+            line-height: 1.5;
+        }
+
+        .data-table tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        /* Tag */
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-radius: 2px;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+
+        .tag-green { background: #e6f4ea; color: #1e7e34; }
+        .tag-blue { background: #e8f0fe; color: #1a56db; }
+        .tag-orange { background: #fef3e2; color: #b45309; }
+        .tag-red { background: #fde8e8; color: #c81e1e; }
+        .tag-gray { background: #f0f0f0; color: #555555; }
+        .tag-purple { background: #f3e8ff; color: #7c3aed; }
+
+        /* Metric Row */
+        .metric-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-box {
+            border: 1px solid #d0d0d0;
+            padding: 20px;
+            text-align: center;
+            background-color: #fafafa;
+        }
+
+        .metric-box .number {
+            font-size: 28px;
+            font-weight: 400;
+            color: #000000;
+            letter-spacing: -1px;
+        }
+
+        .metric-box .label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666666;
+            margin-top: 5px;
+        }
+
+        /* Quote Block */
+        .quote-block {
+            border-left: 4px solid #333333;
+            padding: 20px 25px;
+            margin: 30px 0;
+            background-color: #f9f9f9;
+            font-style: italic;
+            font-size: 16px;
+            color: #333333;
+            line-height: 1.7;
+        }
+
+        .quote-block .attribution {
+            font-style: normal;
+            font-size: 13px;
+            color: #666666;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        /* Signal Box */
+        .signal-box {
+            border: 2px solid #e0e0e0;
+            padding: 25px;
+            margin: 30px 0;
+            background-color: #fffff0;
+        }
+
+        .signal-box h4 {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .signal-box p, .signal-box ul {
+            font-size: 14px;
+            color: #555555;
+            line-height: 1.7;
+        }
+
+        .signal-box ul { padding-left: 16px; }
+        .signal-box li { margin-bottom: 6px; }
+
+        p {
+            font-size: 15px;
+            color: #444444;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        strong {
+            color: #1a1a1a;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            font-size: 12px;
+            color: #999999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ═══════════════ HERO ═══════════════ -->
+        <div class="hero">
+            <h1>Myca AG — S3 Company Intelligence & Category Research</h1>
+
+            <p>
+                <span class="tag tag-green">AgTech</span>
+                <span class="tag tag-blue">AI/ML</span>
+                <span class="tag tag-purple">Agentic AI</span>
+                <span class="tag tag-orange">Enterprise B2B</span>
+                <span class="tag tag-gray">Early Stage (2025)</span>
+            </p>
+
+            <p>
+                <strong>Myca</strong> is an AI-native operating system for agribusiness. It deploys a network of domain-specific AI agents that help agribusinesses scale field operations — crop sales, procurement, agronomy — without proportionally scaling headcount. Based in Bangalore with a Singapore office. Founded 2025, team of ~8.
+            </p>
+            <p>
+                <strong>Domain:</strong> <a href="https://www.myca.ag/" target="_blank">myca.ag</a> &nbsp;|&nbsp;
+                <strong>Category:</strong> Agricultural Intelligence / AI Field Force Automation &nbsp;|&nbsp;
+                <strong>Stage:</strong> Pre-seed / Seed (no disclosed funding)
+            </p>
+
+            <div class="metric-row" style="margin-top: 30px;">
+                <div class="metric-box">
+                    <div class="number">6x</div>
+                    <div class="label">Advisor-to-Farmer Ratio Improvement (1:10 → 1:60)</div>
+                </div>
+                <div class="metric-box">
+                    <div class="number">99.8%</div>
+                    <div class="label">Credit Recovery Rate (Watchman product)</div>
+                </div>
+                <div class="metric-box">
+                    <div class="number">~8</div>
+                    <div class="label">Team Size (LinkedIn, Feb 2026)</div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item active">
+                    <div class="accordion-header">
+                        <h2>Core Thesis — Why Myca Exists</h2>
+                        <span class="accordion-icon">&#9660;</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ol>
+                                <li><strong>Agriculture's real OS is human.</strong> Most agri enterprises look digitized (ERP, CRM, apps), but their technology is borrowed from FMCG/CPG and lacks agriculture-specific intelligence. The actual operating system is still supervisors, coordinators, and dozens of WhatsApp groups.</li>
+                                <li><strong>Myca calls this "human middleware."</strong> Field teams, regional coordinators, and support staff act as the connective tissue between corporate strategy and farmer-level execution. This is expensive, error-prone, and doesn't scale.</li>
+                                <li><strong>Agentic AI can augment — not replace — this layer.</strong> Myca deploys domain-specific AI agents that Plan, Nudge, Validate, and Audit field operations. The agents make human middleware intentional rather than ad hoc.</li>
+                                <li><strong>The target is the agribusiness, not the farmer.</strong> Co-founder Seamus Tardif is explicit: "Monetizing farmers in the global south is next to impossible to do." Myca sells to seed companies, input suppliers, crop procurement firms — the companies that already serve farmers.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h2>What Makes Myca Different</h2>
+                        <span class="accordion-icon">&#9660;</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ol>
+                                <li><strong>Agriculture-native, not adapted.</strong> Built from the ground up for crop cycles, weather variables, and farmer relationship dynamics — not an FMCG tool with an agriculture skin.</li>
+                                <li><strong>Agentic, not analytical.</strong> AI agents that autonomously plan and act (distribute field teams, score credit transactions, validate ground truth) — not just dashboards and reports.</li>
+                                <li><strong>"Systems of judgment" alongside systems of record.</strong> Doesn't replace your ERP — adds a decision-making layer on top that turns data into field-level action.</li>
+                                <li><strong>Per-transaction credit scoring.</strong> Industry standard is seasonal/annual credit reviews. Myca's Watchman product scores every transaction individually, using field-collected ground truth data.</li>
+                                <li><strong>Founder pedigree.</strong> Seamus Tardif co-founded Jiva (a significant smallholder farmer platform) and came from BCG Digital Ventures — deep domain + enterprise building experience.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h2>Key Risk Factors</h2>
+                        <span class="accordion-icon">&#9660;</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ol>
+                                <li><strong>Very early stage.</strong> Founded 2025, ~8 people, no disclosed funding. Metrics (99.8% credit recovery, 6x ratio) need validation at scale.</li>
+                                <li><strong>Competing against well-funded players.</strong> Cropin ($20M+ raised, serves PepsiCo/Walmart/Syngenta). DeHaat ($100M+ raised). Big players (Bayer, Microsoft FarmBeats) in adjacent territory.</li>
+                                <li><strong>No public customers or case studies.</strong> No named logos, no G2/TrustRadius reviews. Typical for 2025 startup but makes evaluation hard.</li>
+                                <li><strong>Extremely weak web/SEO presence.</strong> JS-rendered SPA, no blog, no indexable content. The .ag TLD is Antigua and Barbuda, which has lower domain authority signals.</li>
+                                <li><strong>BharatVistaar (public infrastructure).</strong> India's national Digital Public Infrastructure for Agriculture could be a tailwind (more digital adoption) or a headwind (government-funded competitor layer).</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ═══════════════ PRODUCT DEEP DIVE ═══════════════ -->
+        <div class="section">
+            <h1 class="section-title" style="border-bottom: 3px solid #000000;">Product Architecture</h1>
+
+            <p>Myca positions itself as building <strong>"systems of judgment and action"</strong> that sit alongside existing systems of record (ERPs, CRMs). The product is a multi-agent AI orchestration layer, not a monolithic platform.</p>
+
+            <h2 class="section-subtitle">Product Modules</h2>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h4>AI Field Team Management</h4>
+                    <p>The core product. Covers input field sales, market intelligence, crop surveys, and field activities.</p>
+                    <ul>
+                        <li><strong>Plan:</strong> Distributes field workforce using historical sales data, crop calendars, local climate, corporate goals</li>
+                        <li><strong>Nudge:</strong> Makes field team activities intentional vs. ad hoc</li>
+                        <li><strong>Validate:</strong> Verifies ground truth from field agents</li>
+                        <li><strong>Audit:</strong> Creates auditable trails of execution</li>
+                    </ul>
+                    <p style="margin-top: 12px; margin-bottom: 0;"><span class="tag tag-green">Core Product</span></p>
+                </div>
+
+                <div class="content-card">
+                    <h4>Watchman — AI Credit Scoring</h4>
+                    <p>ML-powered credit distribution and management for agribusiness.</p>
+                    <ul>
+                        <li><strong>Per-transaction scoring</strong> (vs. industry-standard seasonal/annual reviews)</li>
+                        <li>Incorporates field-collected ground truth data</li>
+                        <li>Claims 99.8% credit recovery rates</li>
+                        <li>Tighter control over credit distribution to farmers/dealers</li>
+                    </ul>
+                    <p style="margin-top: 12px; margin-bottom: 0;"><span class="tag tag-blue">ML Product</span></p>
+                </div>
+            </div>
+
+            <h2 class="section-subtitle">How the AI Agents Work</h2>
+
+            <div class="section-note">
+                Myca uses a <strong>network of domain-specific AI agents</strong> — not a single model. The architecture suggests multi-agent orchestration where different agents handle planning, validation, and audit functions independently. AgFundNews coverage suggests possible use of <strong>small language models (SLMs)</strong> — domain-specific, smaller models rather than large foundation models. This aligns with the agriculture context where domain-specific knowledge matters more than general reasoning.
+            </div>
+
+            <table class="data-table">
+                <tr>
+                    <th>Agent Function</th>
+                    <th>What It Does</th>
+                    <th>Data Inputs</th>
+                </tr>
+                <tr>
+                    <td><strong>Planning Agent</strong></td>
+                    <td>Distributes field workforce optimally — which field officer visits which farmer, when, and why</td>
+                    <td>Historical sales, crop calendars, climate variables, corporate targets</td>
+                </tr>
+                <tr>
+                    <td><strong>Nudge Agent</strong></td>
+                    <td>Converts ad hoc field activities into intentional, data-driven actions</td>
+                    <td>Real-time field activity logs, planned vs. actual execution</td>
+                </tr>
+                <tr>
+                    <td><strong>Validation Agent</strong></td>
+                    <td>Verifies ground truth from field agent reports</td>
+                    <td>Field agent submissions, satellite/weather data, historical patterns</td>
+                </tr>
+                <tr>
+                    <td><strong>Audit Agent</strong></td>
+                    <td>Creates auditable trails of all field execution</td>
+                    <td>All agent outputs, field logs, decisions made</td>
+                </tr>
+                <tr>
+                    <td><strong>Credit Scoring Agent</strong></td>
+                    <td>Per-transaction credit risk assessment (Watchman)</td>
+                    <td>Transaction history, ground truth data, farmer/dealer profiles</td>
+                </tr>
+            </table>
+
+            <h2 class="section-subtitle">Key Technical Claims</h2>
+
+            <div class="metric-row">
+                <div class="metric-box">
+                    <div class="number">1:60</div>
+                    <div class="label">New Advisor-to-Farmer Ratio (was 1:10)</div>
+                </div>
+                <div class="metric-box">
+                    <div class="number">3-4%</div>
+                    <div class="label">Revenue Drag from Field Team Turnover (problem they solve)</div>
+                </div>
+                <div class="metric-box">
+                    <div class="number">99.8%</div>
+                    <div class="label">Credit Recovery Rate (Watchman)</div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ═══════════════ TARGET BUYER & ICP ═══════════════ -->
+        <div class="section">
+            <h1 class="section-title" style="border-bottom: 3px solid #000000;">Target Buyer & ICP Research</h1>
+
+            <div class="section-note">
+                Myca explicitly does NOT target farmers. Their ICP is the agribusiness that already serves farmers — the company with field teams managing dispersed farmer networks. Seamus Tardif: <em>"Monetizing farmers in the global south is next to impossible to do."</em>
+            </div>
+
+            <h2 class="section-subtitle">Buyer Personas</h2>
+
+            <div class="persona-grid">
+                <div class="persona-card">
+                    <h3>VP / Head of Field Operations</h3>
+                    <div class="label">Company Type</div>
+                    <div class="content">Seed companies, crop input suppliers, agri-procurement firms</div>
+                    <div class="label">Core Pain</div>
+                    <div class="content">Managing hundreds of field officers across rural geographies using WhatsApp and spreadsheets. Can't scale without linear headcount increase.</div>
+                    <div class="label">JTBD</div>
+                    <div class="content">"Scale my field operations from 500 to 5,000 farmers without 10x-ing my field team"</div>
+                </div>
+
+                <div class="persona-card">
+                    <h3>Head of Credit / Risk</h3>
+                    <div class="label">Company Type</div>
+                    <div class="content">Agri-lenders, input companies offering credit, crop procurement firms with advance payments</div>
+                    <div class="label">Core Pain</div>
+                    <div class="content">Seasonal credit reviews miss intra-season risk. Default rates are high. No ground truth in credit models.</div>
+                    <div class="label">JTBD</div>
+                    <div class="content">"Reduce credit defaults by making per-transaction decisions instead of annual reviews"</div>
+                </div>
+
+                <div class="persona-card">
+                    <h3>CEO / Country Head</h3>
+                    <div class="label">Company Type</div>
+                    <div class="content">Mid-size agribusiness (100-1000 field staff)</div>
+                    <div class="label">Core Pain</div>
+                    <div class="content">Field team turnover causes 3-4% revenue drag. Institutional knowledge walks out the door. Technology stack is FMCG hand-me-downs.</div>
+                    <div class="label">JTBD</div>
+                    <div class="content">"Build institutional intelligence that doesn't depend on individual field officers"</div>
+                </div>
+
+                <div class="persona-card">
+                    <h3>CTO / Head of Digital</h3>
+                    <div class="label">Company Type</div>
+                    <div class="content">Large agribusiness enterprises (Syngenta, Bayer, UPL-scale)</div>
+                    <div class="label">Core Pain</div>
+                    <div class="content">Existing ERP/CRM is adapted from other industries. Can't integrate crop calendars, weather, and farmer data into operational decisions.</div>
+                    <div class="label">JTBD</div>
+                    <div class="content">"Add an agriculture-native intelligence layer on top of our existing systems"</div>
+                </div>
+            </div>
+
+            <h2 class="section-subtitle">Jobs to Be Done (Detailed)</h2>
+
+            <table class="data-table">
+                <tr>
+                    <th>JTBD</th>
+                    <th>Current Solution</th>
+                    <th>Myca Solution</th>
+                    <th>Priority</th>
+                </tr>
+                <tr>
+                    <td>Scale field operations without scaling headcount</td>
+                    <td>Hire more field officers, add regional coordinators</td>
+                    <td>AI agents plan optimal visits — 6x improvement in advisor-to-farmer ratio</td>
+                    <td><span class="tag tag-green">Primary</span></td>
+                </tr>
+                <tr>
+                    <td>Make field activities intentional, not ad hoc</td>
+                    <td>WhatsApp groups, morning calls, regional meetings</td>
+                    <td>AI-planned daily schedules with nudges and validation</td>
+                    <td><span class="tag tag-green">Primary</span></td>
+                </tr>
+                <tr>
+                    <td>Reduce credit default risk</td>
+                    <td>Annual/seasonal credit reviews, manual assessment</td>
+                    <td>Per-transaction ML scoring with ground truth data</td>
+                    <td><span class="tag tag-blue">Secondary</span></td>
+                </tr>
+                <tr>
+                    <td>Reconcile field reality with aggregated data</td>
+                    <td>Periodic audits, regional reporting, trust-based</td>
+                    <td>Continuous validation of field-reported data against multiple signals</td>
+                    <td><span class="tag tag-blue">Secondary</span></td>
+                </tr>
+                <tr>
+                    <td>Reduce revenue drag from field team turnover</td>
+                    <td>Hiring, training, knowledge transfer programs</td>
+                    <td>Institutional intelligence in the system, not in people's heads</td>
+                    <td><span class="tag tag-blue">Secondary</span></td>
+                </tr>
+                <tr>
+                    <td>Get agriculture-specific intelligence, not adapted tools</td>
+                    <td>Use FMCG/CPG tools (SAP, Salesforce) with customization</td>
+                    <td>Agriculture-native agents that understand crop cycles, weather, farmer dynamics</td>
+                    <td><span class="tag tag-orange">Tertiary</span></td>
+                </tr>
+                <tr>
+                    <td>Create auditable trails of field execution</td>
+                    <td>Paper reports, Excel uploads, unstructured WhatsApp messages</td>
+                    <td>Automatic audit trails from every AI-planned and field-executed action</td>
+                    <td><span class="tag tag-orange">Tertiary</span></td>
+                </tr>
+            </table>
+
+
+            <h2 class="section-subtitle">Industry Pain Points</h2>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h4>The "Human Middleware" Problem</h4>
+                    <p>Agribusinesses appear digitized (ERP, CRM, apps) but the real operating system is still human — supervisors, coordinators, WhatsApp groups. Technology is a recording layer, not an operating layer. This creates:</p>
+                    <ul>
+                        <li>Linear headcount scaling to reach more farmers</li>
+                        <li>Institutional knowledge loss with every departure</li>
+                        <li>Ad hoc field execution with no accountability</li>
+                        <li>3-4% revenue drag from turnover alone</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h4>Credit Risk in Agri-Lending</h4>
+                    <p>Agricultural credit is high-risk because:</p>
+                    <ul>
+                        <li>Seasonal crop cycles create long repayment windows</li>
+                        <li>Credit assessment happens once annually, not per transaction</li>
+                        <li>No ground truth data in credit models — just financial history</li>
+                        <li>Field agents who know the real situation aren't integrated into credit decisions</li>
+                        <li>Defaults are accepted as cost of doing business</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h4>Technology Mismatch</h4>
+                    <p>Most agri-tech is borrowed from adjacent industries:</p>
+                    <ul>
+                        <li>FMCG/CPG sales tools adapted for seeds/inputs</li>
+                        <li>Generic CRMs that don't understand crop calendars</li>
+                        <li>Weather data that isn't actionable at the field level</li>
+                        <li>Analytics dashboards that no one in the field uses</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h4>Data Reconciliation Gap</h4>
+                    <p>Huge gap between what field agents report and ground reality:</p>
+                    <ul>
+                        <li>Field reports are self-reported and unverified</li>
+                        <li>Aggregated market data doesn't match individual farm reality</li>
+                        <li>No mechanism to cross-validate field data</li>
+                        <li>Decisions made on unreliable data at every level</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ═══════════════ COMPETITIVE LANDSCAPE ═══════════════ -->
+        <div class="section">
+            <h1 class="section-title" style="border-bottom: 3px solid #000000;">Competitive Landscape</h1>
+
+            <p>The agritech competitive landscape is large and fragmented. Myca's specific niche — agentic AI for agribusiness field operations — is relatively uncrowded, but the broader space has well-funded players.</p>
+
+            <h2 class="section-subtitle">Direct Competitors</h2>
+
+            <table class="data-table">
+                <tr>
+                    <th>Company</th>
+                    <th>What They Do</th>
+                    <th>Funding</th>
+                    <th>Key Difference from Myca</th>
+                </tr>
+                <tr>
+                    <td><strong>Cropin</strong><br><span class="tag tag-gray">Bangalore</span></td>
+                    <td>Full-stack AgTech SaaS — satellite imagery, predictive yield analytics, procurement planning. Serves PepsiCo, Walmart, Syngenta, BASF.</td>
+                    <td>$20M+</td>
+                    <td>More enterprise/satellite-focused. Analytics-heavy, not agentic. Myca is field-ops-first, Cropin is data-first.</td>
+                </tr>
+                <tr>
+                    <td><strong>DeHaat</strong><br><span class="tag tag-gray">India</span></td>
+                    <td>End-to-end ag support — input supply, advisory, credit, market linkage via rural centers. Full-stack farmer services.</td>
+                    <td>$100M+</td>
+                    <td>Direct farmer model (B2C). Builds the distribution itself. Myca enables existing distribution (B2B).</td>
+                </tr>
+                <tr>
+                    <td><strong>Jiva</strong><br><span class="tag tag-gray">Singapore/Indonesia</span></td>
+                    <td>Smallholder farmer ecosystem — micro-financing, agri-ecommerce, harvest purchase, agronomy advisory.</td>
+                    <td>Undisclosed</td>
+                    <td>Also direct farmer services. <strong>NOTE:</strong> Myca's co-founder Seamus Tardif previously co-founded Jiva. Myca appears to be an evolution of lessons learned.</td>
+                </tr>
+                <tr>
+                    <td><strong>AgriERP</strong><br><span class="tag tag-gray">Global</span></td>
+                    <td>AI-powered agriculture ERP for farm management and operations.</td>
+                    <td>N/A</td>
+                    <td>Traditional ERP approach. System of record, not system of judgment. Myca sits on top of ERPs.</td>
+                </tr>
+                <tr>
+                    <td><strong>FarmQA</strong><br><span class="tag tag-gray">US</span></td>
+                    <td>Field scouting, advising, and analysis platform for agronomists.</td>
+                    <td>N/A</td>
+                    <td>Narrower scope — scouting-only. No credit, no workforce planning, no agentic automation.</td>
+                </tr>
+                <tr>
+                    <td><strong>Agworld</strong><br><span class="tag tag-gray">Australia</span></td>
+                    <td>Farm management software — data-driven planning, agronomic records.</td>
+                    <td>N/A</td>
+                    <td>Farm-centric (individual farm management), not agribusiness-centric (enterprise field team management).</td>
+                </tr>
+            </table>
+
+            <h2 class="section-subtitle">Indirect / Adjacent Players</h2>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h4>Big Tech / Corporates</h4>
+                    <ul>
+                        <li><strong>Microsoft FarmBeats:</strong> AI-driven farm insights platform</li>
+                        <li><strong>Bayer Digital Farming:</strong> AI crop management insights</li>
+                        <li><strong>AGCO Corporation:</strong> Precision farming + AI analytics</li>
+                        <li><strong>Taranis:</strong> Crop management via aerial imagery</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h4>Emerging Markets / Africa</h4>
+                    <ul>
+                        <li><strong>Apollo Agriculture (Kenya):</strong> AI-driven smallholder farmer lending</li>
+                        <li><strong>Twiga Foods (Kenya):</strong> B2B food distribution platform</li>
+                    </ul>
+                    <p style="margin-top: 10px; margin-bottom: 0;">These serve similar geographies (Global South) but with different models.</p>
+                </div>
+
+                <div class="content-card">
+                    <h4>Public Infrastructure</h4>
+                    <ul>
+                        <li><strong>BharatVistaar:</strong> India's national Digital Public Infrastructure for Agriculture. Krishidotsystem newsletter ran "BharatVistaar vs Myca.Ag" as a comparison piece.</li>
+                    </ul>
+                    <p style="margin-top: 10px; margin-bottom: 0;">Could be a tailwind (digital adoption increases) or headwind (government-funded alternative).</p>
+                </div>
+
+                <div class="content-card">
+                    <h4>Horizontal AI Platforms</h4>
+                    <ul>
+                        <li>Generic field force automation tools (e.g., BeatRoute, FieldAssist) used by FMCG but increasingly entering agri</li>
+                        <li>Agentic AI platforms (e.g., CrewAI, AutoGen) that could be customized for agriculture</li>
+                    </ul>
+                    <p style="margin-top: 10px; margin-bottom: 0;">Myca's moat against these is domain specificity.</p>
+                </div>
+            </div>
+
+            <div class="signal-box">
+                <h4>Competitive Positioning Map</h4>
+                <p>If you think of the landscape across two axes — <strong>farmer-facing vs. agribusiness-facing</strong> (x-axis) and <strong>analytical vs. agentic</strong> (y-axis):</p>
+                <ul>
+                    <li><strong>Myca:</strong> Agribusiness-facing + Agentic (top-right) — relatively uncrowded quadrant</li>
+                    <li><strong>Cropin:</strong> Agribusiness-facing + Analytical (bottom-right)</li>
+                    <li><strong>DeHaat, Jiva:</strong> Farmer-facing + Platform (left side)</li>
+                    <li><strong>FarmBeats, Bayer:</strong> Agribusiness-facing + Analytical (bottom-right, but massive scale)</li>
+                </ul>
+                <p>Myca's "agentic + agribusiness" positioning is genuinely differentiated. The question is whether the market is ready for it.</p>
+            </div>
+        </div>
+
+
+        <!-- ═══════════════ FOUNDING TEAM ═══════════════ -->
+        <div class="section">
+            <h1 class="section-title" style="border-bottom: 3px solid #000000;">Founding Team & Origin Story</h1>
+
+            <p>Understanding the team is critical — at this stage, Myca IS its founders. The Jiva connection is particularly interesting.</p>
+
+            <table class="data-table">
+                <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Background</th>
+                    <th>Signal</th>
+                </tr>
+                <tr>
+                    <td><strong>Seamus Tardif</strong></td>
+                    <td>Co-Founder & CRO</td>
+                    <td>Co-founded Jiva (smallholder farmer platform, Singapore/Indonesia). Previously BCG Digital Ventures — Lead Strategic Designer, launched businesses across APAC valued at $300M+ collectively. BA Literature & Art History (U of Sydney), Master of Management (Sydney Business School).</td>
+                    <td><span class="tag tag-green">Strong</span> Deep domain + enterprise building. 10+ years in startups. The Jiva-to-Myca pivot shows learned conviction.</td>
+                </tr>
+                <tr>
+                    <td><strong>Karthik Yelchuru</strong></td>
+                    <td>Team (role unknown)</td>
+                    <td>Previously Independent Contractor at Jiva (Singapore).</td>
+                    <td><span class="tag tag-blue">Moderate</span> Jiva continuity — team has shared context.</td>
+                </tr>
+                <tr>
+                    <td><strong>Arnav Pandey</strong></td>
+                    <td>Angel Investor</td>
+                    <td>Singapore-based, CPO background, agritech experience, niche product development.</td>
+                    <td><span class="tag tag-blue">Moderate</span> Smart angel — understands product/market fit in agritech.</td>
+                </tr>
+                <tr>
+                    <td><strong>Ashish Pundalik</strong></td>
+                    <td>Team (role unknown)</td>
+                    <td>Listed on LinkedIn, no public details found.</td>
+                    <td><span class="tag tag-gray">Unknown</span></td>
+                </tr>
+            </table>
+
+            <div class="quote-block">
+                "Monetizing farmers in the global south is next to impossible to do."
+                <div class="attribution">— Seamus Tardif, Co-Founder, Myca</div>
+            </div>
+
+            <div class="signal-box">
+                <h4>The Jiva → Myca Evolution</h4>
+                <p>This is the most interesting origin signal. Seamus co-founded <strong>Jiva</strong> — a platform that served farmers directly with micro-financing, ecommerce, and advisory. From that experience, he concluded:</p>
+                <ul>
+                    <li>Direct-to-farmer monetization doesn't work in the Global South</li>
+                    <li>The real leverage point is the agribusiness that already has farmer relationships</li>
+                    <li>The biggest bottleneck isn't data or tools — it's the "human middleware" that operates between corporate and field</li>
+                </ul>
+                <p>Myca represents a <strong>thesis pivot</strong>: from serving farmers directly to empowering the enterprises that serve farmers. This kind of founder learning is a strong signal.</p>
+            </div>
+        </div>
+
+
+        <!-- ═══════════════ MARKET & CATEGORY ═══════════════ -->
+        <div class="section">
+            <h1 class="section-title" style="border-bottom: 3px solid #000000;">Market & Category Context</h1>
+
+            <h2 class="section-subtitle">Market Sizing</h2>
+
+            <div class="metric-row">
+                <div class="metric-box">
+                    <div class="number">$1.7B</div>
+                    <div class="label">AI in Agriculture Market (2023)</div>
+                </div>
+                <div class="metric-box">
+                    <div class="number">$4.7B</div>
+                    <div class="label">Projected by 2028 (23.1% CAGR)</div>
+                </div>
+                <div class="metric-box">
+                    <div class="number">$24B+</div>
+                    <div class="label">Broader AgriTech Market (2024)</div>
+                </div>
+            </div>
+
+            <h2 class="section-subtitle">Category Positioning</h2>
+
+            <p>Myca is creating a category that doesn't have a clean existing label. The closest descriptions:</p>
+
+            <table class="data-table">
+                <tr>
+                    <th>Category Label</th>
+                    <th>Fit</th>
+                    <th>Notes</th>
+                </tr>
+                <tr>
+                    <td>Agricultural Intelligence Platform</td>
+                    <td><span class="tag tag-green">High</span></td>
+                    <td>What Myca calls itself. Broad enough to grow, specific enough to be meaningful.</td>
+                </tr>
+                <tr>
+                    <td>AI Field Force Automation (AgTech)</td>
+                    <td><span class="tag tag-green">High</span></td>
+                    <td>More descriptive of the core product. Field teams + AI planning.</td>
+                </tr>
+                <tr>
+                    <td>Agentic AI for Agriculture</td>
+                    <td><span class="tag tag-blue">Medium</span></td>
+                    <td>Technically accurate but "agentic AI" is still an emerging concept — buyers may not search for this.</td>
+                </tr>
+                <tr>
+                    <td>AgriTech SaaS</td>
+                    <td><span class="tag tag-orange">Low</span></td>
+                    <td>Too broad. Includes everything from drone software to farm management apps.</td>
+                </tr>
+                <tr>
+                    <td>Farm Management Software</td>
+                    <td><span class="tag tag-red">Mismatch</span></td>
+                    <td>Myca manages agribusiness operations, not individual farms. This category implies farmer as user.</td>
+                </tr>
+            </table>
+
+            <h2 class="section-subtitle">Geographic Context</h2>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h4>India (Primary Market)</h4>
+                    <ul>
+                        <li>~150M smallholder farmers (avg. farm size < 2 hectares)</li>
+                        <li>Massive seed/input companies with large field teams</li>
+                        <li>Government push: BharatVistaar, Digital India, AgriStack</li>
+                        <li>Growing agri-fintech market (credit scoring is hot)</li>
+                        <li>Bangalore = deep tech talent pool for AI</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h4>Global South (Expansion)</h4>
+                    <ul>
+                        <li>Singapore office suggests Southeast Asia expansion</li>
+                        <li>Similar smallholder dynamics in Indonesia, Vietnam, Thailand</li>
+                        <li>Africa has parallel market (Apollo Agriculture, Twiga Foods)</li>
+                        <li>Latin America = large agribusiness market (Brazil, Argentina)</li>
+                        <li>The "human middleware" problem is universal in emerging markets</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2 class="section-subtitle">Key Trends Favoring Myca</h2>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h4>Agentic AI Wave</h4>
+                    <p>2025-2026 is the year "agentic AI" goes mainstream. Every enterprise is exploring autonomous AI agents. Myca is riding this wave with domain-specific application. Early mover advantage in agriculture.</p>
+                </div>
+
+                <div class="content-card">
+                    <h4>India AgriTech Funding</h4>
+                    <p>Indian agritech saw ~$1B in funding (2021-2023). While funding has moderated, the market fundamentals are stronger. Government support (BharatVistaar, AgriStack) creates digital infrastructure that Myca can build on.</p>
+                </div>
+
+                <div class="content-card">
+                    <h4>Small Language Models (SLMs)</h4>
+                    <p>Industry trend toward smaller, domain-specific models that run efficiently. Perfect for agriculture where domain knowledge > general reasoning. AgFundNews covered Myca in this context specifically.</p>
+                </div>
+
+                <div class="content-card">
+                    <h4>B2B Over B2C in AgriTech</h4>
+                    <p>After years of failed B2C farmer apps, the industry is shifting to B2B models — selling to agribusinesses, not farmers. Myca's thesis aligns perfectly with this market correction.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ═══════════════ GO-TO-MARKET & CONTENT ═══════════════ -->
+        <div class="section">
+            <h1 class="section-title" style="border-bottom: 3px solid #000000;">Go-to-Market & Content Assessment</h1>
+
+            <h2 class="section-subtitle">Current GTM Approach</h2>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h4>Sales Model</h4>
+                    <p>Enterprise B2B, founder-led sales. Seamus's BCG Digital Ventures + Jiva network is the primary pipeline at this stage. No visible partnerships or channel strategy yet.</p>
+                </div>
+
+                <div class="content-card">
+                    <h4>Content / Thought Leadership</h4>
+                    <p>LinkedIn posts about agribusiness challenges (human middleware, field team turnover, data reconciliation). This is their primary content channel. Strong narratives but no owned content on their domain.</p>
+                </div>
+            </div>
+
+            <h2 class="section-subtitle">Web & SEO Assessment</h2>
+
+            <div class="signal-box" style="background-color: #fff0f0;">
+                <h4>Critical Gap: Almost Zero Web Presence</h4>
+                <ul>
+                    <li><strong>Website is a JS SPA</strong> — renders client-side, meaning search engines can barely crawl it</li>
+                    <li><strong>No blog</strong> — zero indexable content, zero organic traffic potential</li>
+                    <li><strong>No case studies or customer stories</strong> — nothing to validate claims</li>
+                    <li><strong>.ag TLD</strong> — clever for agriculture branding, but lower SEO authority than .com/.io</li>
+                    <li><strong>Not on any review platform</strong> — G2, Capterra, TrustRadius all absent</li>
+                    <li><strong>No thought leadership on-domain</strong> — their best insights (human middleware, agentic planning) are shared on LinkedIn, not on myca.ag</li>
+                </ul>
+                <p style="margin-top: 12px; margin-bottom: 0;"><strong>Assessment:</strong> For a company with strong opinions and compelling narratives, this is a massive missed opportunity. Their LinkedIn content about "human middleware" and "WhatsApp-driven operations" could drive significant organic traffic if published on their domain.</p>
+            </div>
+
+            <h2 class="section-subtitle">Media Coverage</h2>
+
+            <table class="data-table">
+                <tr>
+                    <th>Publication</th>
+                    <th>Type</th>
+                    <th>What It Covers</th>
+                </tr>
+                <tr>
+                    <td><strong>AgFundNews</strong></td>
+                    <td>Feature article</td>
+                    <td>AI in India — small language models for smallholder farming. Myca featured as an example of domain-specific AI in agriculture. Credible agritech publication.</td>
+                </tr>
+                <tr>
+                    <td><strong>Krishidotsystem</strong></td>
+                    <td>Newsletter / analysis</td>
+                    <td>"BharatVistaar vs Myca.Ag: A Tale of Two Seed Systems" — public infra vs. private AI platform comparison. India agritech community newsletter by Venky Ramachandran.</td>
+                </tr>
+                <tr>
+                    <td><strong>TheOrg</strong></td>
+                    <td>Company profile</td>
+                    <td>Basic company listing with team structure.</td>
+                </tr>
+            </table>
+
+            <h2 class="section-subtitle">Content Opportunities (If Myca Were a Client)</h2>
+
+            <p>Based on the S3 research methodology — what would Recurr recommend?</p>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h4>1. The "Human Middleware" Essay</h4>
+                    <p>Their strongest narrative. A definitive essay on why agribusiness technology fails — because the real operating system is human, and software is just a recording layer. This could be their <em>Intercom on Product Management</em> moment.</p>
+                    <p style="margin-bottom: 0;"><span class="tag tag-green">High Impact</span> <span class="tag tag-blue">Category Creation</span></p>
+                </div>
+
+                <div class="content-card">
+                    <h4>2. WhatsApp vs. AI: The Agribusiness Operations Gap</h4>
+                    <p>Relatable hook. Every agribusiness executive knows the WhatsApp chaos. Show the gap between "official tech stack" and "actual operating system" with data.</p>
+                    <p style="margin-bottom: 0;"><span class="tag tag-green">High Impact</span> <span class="tag tag-orange">SEO Potential</span></p>
+                </div>
+
+                <div class="content-card">
+                    <h4>3. Why Per-Transaction Credit Scoring Changes Everything</h4>
+                    <p>The Watchman product thesis deserves its own content piece. Annual credit reviews are broken — make the case for continuous assessment with ground truth data.</p>
+                    <p style="margin-bottom: 0;"><span class="tag tag-blue">Product Marketing</span></p>
+                </div>
+
+                <div class="content-card">
+                    <h4>4. From Jiva to Myca: What We Learned Serving Farmers Directly</h4>
+                    <p>Founder story as thought leadership. The pivot from B2C farmer platform to B2B agribusiness OS is a powerful narrative that validates the thesis.</p>
+                    <p style="margin-bottom: 0;"><span class="tag tag-purple">Founder Brand</span></p>
+                </div>
+            </div>
+
+            <div class="section-note" style="margin-top: 30px;">
+                <strong>Bottom line:</strong> Myca has excellent narratives and a differentiated thesis, but almost zero content infrastructure. For a company that wants to create a category ("agentic AI for agribusiness"), they need to be the loudest voice defining that category — and right now they're whispering on LinkedIn instead of publishing on their own domain.
+            </div>
+        </div>
+
+
+        <!-- ═══════════════ ASSESSMENT & SIGNALS ═══════════════ -->
+        <div class="section">
+            <h1 class="section-title" style="border-bottom: 3px solid #000000;">Assessment & Signals</h1>
+
+            <h2 class="section-subtitle">Strength Signals</h2>
+
+            <table class="data-table">
+                <tr>
+                    <th>Signal</th>
+                    <th>Strength</th>
+                    <th>Evidence</th>
+                </tr>
+                <tr>
+                    <td>Founder-market fit</td>
+                    <td><span class="tag tag-green">Strong</span></td>
+                    <td>Seamus built Jiva (direct farmer model), learned its limits, built Myca (agribusiness model). BCG DV gives enterprise credibility. Deep APAC agritech network.</td>
+                </tr>
+                <tr>
+                    <td>Category differentiation</td>
+                    <td><span class="tag tag-green">Strong</span></td>
+                    <td>"Agentic AI for agribusiness" is genuinely uncrowded. The "human middleware" thesis is compelling and resonates with anyone who's worked in agribusiness.</td>
+                </tr>
+                <tr>
+                    <td>Thesis clarity</td>
+                    <td><span class="tag tag-green">Strong</span></td>
+                    <td>Crystal clear: don't monetize farmers, enable the enterprises that serve them. "Systems of judgment" alongside systems of record. Agentic, not analytical.</td>
+                </tr>
+                <tr>
+                    <td>Initial metrics</td>
+                    <td><span class="tag tag-blue">Moderate</span></td>
+                    <td>6x advisor ratio improvement and 99.8% credit recovery are impressive IF validated at scale. No public customer to verify.</td>
+                </tr>
+                <tr>
+                    <td>Timing</td>
+                    <td><span class="tag tag-blue">Moderate</span></td>
+                    <td>Agentic AI is the 2025-2026 wave. B2B over B2C in agritech is the current correction. India agritech infrastructure growing. But market timing ≠ company timing.</td>
+                </tr>
+                <tr>
+                    <td>Team depth</td>
+                    <td><span class="tag tag-orange">Weak</span></td>
+                    <td>~8 people, most roles unknown. Seamus is the visible face. For an enterprise B2B play, this is thin. Need to see technical co-founder profile.</td>
+                </tr>
+                <tr>
+                    <td>Go-to-market readiness</td>
+                    <td><span class="tag tag-orange">Weak</span></td>
+                    <td>No public customers, no case studies, no web presence, no content infrastructure. Founder-led sales only. Enterprise B2B at this size is a long game.</td>
+                </tr>
+                <tr>
+                    <td>Funding / runway</td>
+                    <td><span class="tag tag-red">Unknown</span></td>
+                    <td>No disclosed funding. Angel investor (Arnav Pandey) listed. For Bangalore + Singapore operations with ~8 people, they need capital — likely raising or bootstrapping from services.</td>
+                </tr>
+            </table>
+
+            <h2 class="section-subtitle">Key Questions to Answer</h2>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h4>Product Validation</h4>
+                    <ul>
+                        <li>Who is using the product today? How many agribusinesses, how many field agents?</li>
+                        <li>Are the 6x and 99.8% metrics from a single pilot or multiple deployments?</li>
+                        <li>Is the product deployed or still in development?</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h4>Business Model</h4>
+                    <ul>
+                        <li>Pricing model — per-user, per-agent, outcome-based?</li>
+                        <li>ACV range — is this a $10K or $100K product?</li>
+                        <li>Revenue today — any, or still pre-revenue?</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h4>Team & Capital</h4>
+                    <ul>
+                        <li>Who is the technical co-founder / CTO?</li>
+                        <li>Funding status — raising? Bootstrapped? Revenue-funded?</li>
+                        <li>Jiva relationship — friendly spin-out or competitive?</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h4>Market Timing</h4>
+                    <ul>
+                        <li>How mature is agentic AI adoption in Indian agribusiness?</li>
+                        <li>Is BharatVistaar a complement or competitor?</li>
+                        <li>How long is the enterprise sales cycle for this buyer?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2 class="section-subtitle" style="margin-top: 60px;">Overall Assessment</h2>
+
+            <div class="signal-box">
+                <h4>Verdict: High-Conviction Thesis, Pre-Validation Stage</h4>
+                <p>Myca has one of the clearest and most differentiated theses in Indian agritech. The "human middleware" insight is genuine — born from real experience (Jiva), not desk research. The agentic AI positioning is timely and the B2B-over-B2C pivot reflects hard-won market knowledge.</p>
+                <p>However, the company is extremely early. No public customers, no disclosed funding, thin team visibility, and almost zero web presence. The gap between thesis quality and execution evidence is wide — which is normal for a 2025-founded startup, but means any engagement requires conviction in the founders over demonstrated traction.</p>
+                <p><strong>Watch for:</strong> Funding announcement (expected soon given pedigree), first named customer, technical team expansion, and whether they start publishing their excellent narratives as owned content.</p>
+            </div>
+        </div>
+
+
+        <!-- ═══════════════ SOURCES ═══════════════ -->
+        <div class="section">
+            <h1 class="section-title">Sources & References</h1>
+
+            <table class="data-table">
+                <tr>
+                    <th>Source</th>
+                    <th>Type</th>
+                    <th>URL</th>
+                </tr>
+                <tr>
+                    <td>Myca Website</td>
+                    <td>Primary</td>
+                    <td><a href="https://www.myca.ag/" target="_blank">myca.ag</a></td>
+                </tr>
+                <tr>
+                    <td>AgFundNews — AI in India</td>
+                    <td>Media</td>
+                    <td><a href="https://agfundernews.com/ai-in-india-the-worlds-ai-back-office-is-betting-on-small-language-models-to-bring-big-impact-to-smallholder-farming" target="_blank">agfundernews.com</a></td>
+                </tr>
+                <tr>
+                    <td>Krishidotsystem — BharatVistaar vs Myca</td>
+                    <td>Newsletter</td>
+                    <td><a href="https://www.krishidotsystem.com/p/a-tale-of-two-seed-systems" target="_blank">krishidotsystem.com</a></td>
+                </tr>
+                <tr>
+                    <td>TheOrg — Myca Profile</td>
+                    <td>Directory</td>
+                    <td><a href="https://theorg.com/org/myca" target="_blank">theorg.com</a></td>
+                </tr>
+                <tr>
+                    <td>Mordor Intelligence — AI in Agriculture</td>
+                    <td>Market Research</td>
+                    <td><a href="https://www.mordorintelligence.com/industry-reports/ai-in-agriculture-market" target="_blank">mordorintelligence.com</a></td>
+                </tr>
+                <tr>
+                    <td>Myca LinkedIn</td>
+                    <td>Social</td>
+                    <td><a href="https://linkedin.com/company/myca-ag" target="_blank">linkedin.com/company/myca-ag</a></td>
+                </tr>
+            </table>
+
+            <p style="margin-top: 30px; font-size: 13px; color: #999999;">
+                <strong>Research Date:</strong> February 26, 2026 &nbsp;|&nbsp;
+                <strong>Methodology:</strong> S3 Research (Recurr Studio) — Web scraping, public data aggregation, competitive analysis, JTBD mapping &nbsp;|&nbsp;
+                <strong>Classification:</strong> Company Intelligence Profile
+            </p>
+        </div>
+
+
+        <div class="footer">
+            S3 Research &mdash; Recurr Studio &mdash; February 2026
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
