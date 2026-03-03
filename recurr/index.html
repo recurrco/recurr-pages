@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recurr — B2B Product Marketing Studio</title>
+  <meta name="description" content="We build and operate your product marketing function. Expert-led, AI-powered. Part software, part human. Monthly retainer starting at $5,000/mo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --purple: #7C5CFC;
+      --purple-light: #EDE9FE;
+      --purple-dark: #5B3FD9;
+      --purple-subtle: #F5F3FF;
+      --text: #1a1a1a;
+      --text-secondary: #555;
+      --text-muted: #999;
+      --bg: #FAFAF9;
+      --white: #fff;
+      --border: #E8E5E0;
+      --max-w: 720px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Fraunces', Georgia, serif; }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 250, 249, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-links .nav-cta {
+      background: var(--purple);
+      color: var(--white);
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+
+    .nav-links .nav-cta:hover {
+      background: var(--purple-dark);
+      color: var(--white);
+    }
+
+    .nav-mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav-mobile-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      margin: 5px 0;
+      transition: 0.2s;
+    }
+
+    /* ── Sections ── */
+    section { padding: 80px 0; }
+    section + section { border-top: 1px solid var(--border); }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--purple);
+      margin-bottom: 16px;
+    }
+
+    .section-hook {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+    }
+
+    .section-body {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 100px 0 80px;
+      border-top: none;
+    }
+
+    .hero h1 {
+      font-size: 40px;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .hero .subtitle {
+      font-size: 19px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      max-width: 600px;
+      margin-bottom: 12px;
+    }
+
+    .hero .hero-detail {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--purple);
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .btn-primary:hover {
+      background: var(--purple-dark);
+      transform: translateY(-1px);
+    }
+
+    /* ── Process (Block Diagram) ── */
+    .process-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .process-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px;
+      position: relative;
+    }
+
+    .process-card.highlighted {
+      border-color: var(--purple);
+      background: var(--purple-subtle);
+    }
+
+    .process-phase {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--purple);
+      margin-bottom: 8px;
+    }
+
+    .process-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .process-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .process-outputs {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .process-card.highlighted .process-outputs {
+      border-top-color: rgba(124, 92, 252, 0.2);
+    }
+
+    .process-outputs li {
+      font-size: 13px;
+      color: var(--text-secondary);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .process-outputs li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--purple);
+      opacity: 0.4;
+    }
+
+    .process-card.highlighted .process-outputs li::before {
+      opacity: 0.7;
+    }
+
+    .process-connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      grid-column: 1 / -1;
+      padding: 8px 0;
+    }
+
+    .process-connector svg {
+      color: var(--text-muted);
+    }
+
+    .process-note {
+      grid-column: 1 / -1;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      font-style: italic;
+      padding-top: 8px;
+    }
+
+    /* ── Loop Diagram ── */
+    .loop-diagram {
+      margin: 40px auto 48px;
+      max-width: 520px;
+    }
+
+    .loop-diagram svg {
+      width: 100%;
+      height: auto;
+    }
+
+    .loop-caption {
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-top: 16px;
+    }
+
+    /* ── Exchange Blocks ── */
+    .exchange-block {
+      margin-bottom: 28px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .exchange-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .exchange-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .exchange-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--purple-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .exchange-icon svg {
+      width: 18px;
+      height: 18px;
+      color: var(--purple);
+    }
+
+    .exchange-header h3 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .exchange-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .exchange-col {
+      padding: 20px 24px;
+    }
+
+    .exchange-col + .exchange-col {
+      border-left: 1px solid var(--border);
+    }
+
+    .exchange-col-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .exchange-col-label.consume { color: var(--text-muted); }
+    .exchange-col-label.deliver { color: var(--purple); }
+
+    .exchange-col-label svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .exchange-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .exchange-list li {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .exchange-col.consume-col .exchange-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+
+    .exchange-col.deliver-col .exchange-list li {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .exchange-col.deliver-col .exchange-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--purple);
+      opacity: 0.6;
+    }
+
+    /* ── Plug Into ── */
+    .plugin-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .plugin-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      text-align: center;
+    }
+
+    .plugin-item h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .plugin-item p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* ── Model ── */
+    .model-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .model-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px;
+    }
+
+    .model-card h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .model-card h4 svg {
+      width: 20px;
+      height: 20px;
+      color: var(--purple);
+      flex-shrink: 0;
+    }
+
+    .model-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .model-note {
+      margin-top: 24px;
+      padding: 24px 28px;
+      background: var(--purple-light);
+      border-radius: 10px;
+      border-left: 4px solid var(--purple);
+    }
+
+    .model-note p {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── Scope ── */
+    .scope-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 32px;
+    }
+
+    .scope-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+    }
+
+    .scope-col.do-col h4 { color: var(--purple); }
+    .scope-col.not-col h4 { color: var(--text-muted); }
+
+    .scope-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .scope-col li {
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .do-col li::before {
+      content: "+";
+      position: absolute;
+      left: 0;
+      color: var(--purple);
+      font-weight: 700;
+    }
+
+    .not-col li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: #ccc;
+    }
+
+    .scope-frame {
+      margin-top: 20px;
+      font-size: 15px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ── ICP ── */
+    .icp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .icp-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .icp-card h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .icp-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ── Engagement ── */
+    .engagement-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      margin-top: 32px;
+    }
+
+    .engagement-box .eng-price {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    .eng-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .eng-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .eng-detail .eng-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+
+    .eng-detail .eng-value {
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .eng-cta {
+      text-align: center;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── FAQ ── */
+    .faq-list {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+
+    .faq-item:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-q {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      cursor: default;
+    }
+
+    .faq-a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 0;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+    }
+
+    .footer-brand {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .footer-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .footer-meta span {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .footer-meta a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .footer-meta a:hover { color: var(--purple); }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        padding: 24px;
+        gap: 20px;
+      }
+      .nav-mobile-toggle { display: block; }
+
+      .hero { padding: 72px 0 60px; }
+      .hero h1 { font-size: 30px; }
+      .hero .subtitle { font-size: 17px; }
+
+      section { padding: 60px 0; }
+      .section-hook { font-size: 24px; }
+
+      .process-grid { grid-template-columns: 1fr; }
+      .process-connector { display: none; }
+
+      .exchange-body { grid-template-columns: 1fr; }
+      .exchange-col + .exchange-col { border-left: none; border-top: 1px solid var(--border); }
+
+      .plugin-grid { grid-template-columns: 1fr 1fr; }
+
+      .model-grid { grid-template-columns: 1fr; }
+
+      .scope-grid { grid-template-columns: 1fr; gap: 28px; }
+
+      .icp-grid { grid-template-columns: 1fr; }
+
+      .eng-details { grid-template-columns: 1fr; }
+
+      .engagement-box { padding: 28px 20px; }
+      .engagement-box .eng-price { font-size: 24px; }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="container">
+      <a href="#" class="nav-logo">Recurr</a>
+      <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#offerings">What you get</a></li>
+        <li><a href="#engage">Engagement</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="mailto:pratik@recurr.co" class="nav-cta">Get in touch</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>We build and operate your product marketing function.</h1>
+      <p class="subtitle">Expert-led, AI-powered product marketing for B2B SaaS companies. We embed into your team, build a context engine around your product and market, and ship the artifacts your sales, marketing, and product teams need — week after week.</p>
+      <p class="hero-detail">Part software, part human. Not a one-off project. A compounding system.</p>
+      <a href="mailto:pratik@recurr.co" class="btn-primary">Get in touch</a>
+    </div>
+  </section>
+
+  <!-- How It Works — Block Diagram -->
+  <section id="how">
+    <div class="container">
+      <div class="section-label">How it works</div>
+      <h2 class="section-hook">Four phases. One continuous system.</h2>
+      <p class="section-body">We don't hand you a strategy deck and disappear. We build a living context engine around your product, market, and buyer — then use it to ship real deliverables, continuously.</p>
+
+      <div class="process-grid">
+        <!-- Build Phase -->
+        <div class="process-card highlighted">
+          <div class="process-phase">Phase 1 &middot; Build</div>
+          <h3>Context</h3>
+          <p>Deep onboarding into your product, market, buyer, and competitive landscape. We build the intelligence layer everything else runs on.</p>
+          <ul class="process-outputs">
+            <li>ICP and buyer persona research</li>
+            <li>Competitive landscape mapping</li>
+            <li>Category definition</li>
+            <li>JTBD interviews and analysis</li>
+          </ul>
+        </div>
+
+        <div class="process-card highlighted">
+          <div class="process-phase">Phase 2 &middot; Build</div>
+          <h3>Strategy</h3>
+          <p>Turn context into a positioning system. Messaging, competitive framing, and a content strategy — all derived from research, not guesswork.</p>
+          <ul class="process-outputs">
+            <li>Positioning and messaging matrix</li>
+            <li>Competitive framing document</li>
+            <li>Content strategy and calendar</li>
+            <li>Value props by persona</li>
+          </ul>
+        </div>
+
+        <div class="process-connector">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </div>
+
+        <!-- Operate Phase -->
+        <div class="process-card">
+          <div class="process-phase">Phase 3 &middot; Operate</div>
+          <h3>Execution</h3>
+          <p>Ship the artifacts. Battle cards, landing pages, sales decks, onboarding copy, content pieces — built on the context engine, not from scratch each time.</p>
+          <ul class="process-outputs">
+            <li>Sales enablement collateral</li>
+            <li>Website and landing page copy</li>
+            <li>Content production</li>
+            <li>Product and onboarding copy</li>
+          </ul>
+        </div>
+
+        <div class="process-card">
+          <div class="process-phase">Phase 4 &middot; Operate</div>
+          <h3>Optimization</h3>
+          <p>Monitor, learn, update. Positioning is a moving target — we keep the context engine current and refine every downstream artifact as your market evolves.</p>
+          <ul class="process-outputs">
+            <li>Performance monitoring</li>
+            <li>Competitive intelligence updates</li>
+            <li>Messaging iteration</li>
+            <li>Quarterly positioning review</li>
+          </ul>
+        </div>
+
+        <div class="process-note">Context and Strategy take 15–30 days. Execution and Optimization are continuous.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Loop -->
+  <section id="offerings">
+    <div class="container">
+      <div class="section-label">The loop</div>
+      <h2 class="section-hook">It's not a funnel. It's a continuous exchange.</h2>
+      <p class="section-body">We sit at the center of your go-to-market. We consume raw inputs from your teams — call recordings, customer feedback, product data, CRM signals — process them through the context engine, and feed back positioning-aligned artifacts that every team can use. This loop runs continuously.</p>
+
+      <!-- Concentric Circle SVG -->
+      <div class="loop-diagram">
+        <svg viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Outer ring background -->
+          <circle cx="260" cy="260" r="240" fill="#FAFAF9" stroke="#E8E5E0" stroke-width="1.5"/>
+
+          <!-- Team segments — labels around the outer ring -->
+          <!-- Top: Sales -->
+          <text x="260" y="52" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#555">SALES</text>
+          <text x="260" y="68" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#999">Call recordings, CRM data, win/loss notes</text>
+
+          <!-- Right: Marketing -->
+          <text x="468" y="256" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#555">MARKETING</text>
+          <text x="468" y="272" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#999">Analytics, traffic data,</text>
+          <text x="468" y="284" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#999">campaign results</text>
+
+          <!-- Bottom: Product -->
+          <text x="260" y="462" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#555">PRODUCT</text>
+          <text x="260" y="478" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#999">User data, onboarding flows, feature docs</text>
+
+          <!-- Left: CS & Partnerships -->
+          <text x="52" y="256" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#555">CS &amp;</text>
+          <text x="52" y="270" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#555">PARTNERS</text>
+          <text x="52" y="286" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#999">Feedback, tickets,</text>
+          <text x="52" y="298" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#999">partner briefs</text>
+
+          <!-- Bidirectional arrows — Top (Sales) -->
+          <line x1="240" y1="100" x2="240" y2="155" stroke="#E8E5E0" stroke-width="1.5"/>
+          <polygon points="240,100 236,110 244,110" fill="#999"/>
+          <line x1="280" y1="100" x2="280" y2="155" stroke="#7C5CFC" stroke-width="1.5"/>
+          <polygon points="280,155 276,145 284,145" fill="#7C5CFC"/>
+
+          <!-- Bidirectional arrows — Right (Marketing) -->
+          <line x1="365" y1="240" x2="420" y2="240" stroke="#E8E5E0" stroke-width="1.5"/>
+          <polygon points="420,240 410,236 410,244" fill="#999"/>
+          <line x1="365" y1="280" x2="420" y2="280" stroke="#7C5CFC" stroke-width="1.5"/>
+          <polygon points="365,280 375,276 375,284" fill="#7C5CFC"/>
+
+          <!-- Bidirectional arrows — Bottom (Product) -->
+          <line x1="280" y1="365" x2="280" y2="420" stroke="#E8E5E0" stroke-width="1.5"/>
+          <polygon points="280,420 276,410 284,410" fill="#999"/>
+          <line x1="240" y1="365" x2="240" y2="420" stroke="#7C5CFC" stroke-width="1.5"/>
+          <polygon points="240,365 236,375 244,375" fill="#7C5CFC"/>
+
+          <!-- Bidirectional arrows — Left (CS & Partners) -->
+          <line x1="100" y1="280" x2="155" y2="280" stroke="#E8E5E0" stroke-width="1.5"/>
+          <polygon points="100,280 110,276 110,284" fill="#999"/>
+          <line x1="100" y1="240" x2="155" y2="240" stroke="#7C5CFC" stroke-width="1.5"/>
+          <polygon points="155,240 145,236 145,244" fill="#7C5CFC"/>
+
+          <!-- Inner circle — Context Engine -->
+          <circle cx="260" cy="260" r="105" fill="#F5F3FF" stroke="#7C5CFC" stroke-width="2"/>
+
+          <!-- Inner circle text -->
+          <text x="260" y="238" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="20" font-weight="600" fill="#1a1a1a">Context</text>
+          <text x="260" y="262" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="20" font-weight="600" fill="#1a1a1a">Engine</text>
+          <text x="260" y="290" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#7C5CFC" font-weight="600">RECURR</text>
+
+          <!-- Arrow legend -->
+          <line x1="150" y1="505" x2="175" y2="505" stroke="#E8E5E0" stroke-width="1.5"/>
+          <polygon points="150,505 158,502 158,508" fill="#999"/>
+          <text x="180" y="509" font-family="Inter, sans-serif" font-size="10" fill="#999">We consume</text>
+
+          <line x1="290" y1="505" x2="315" y2="505" stroke="#7C5CFC" stroke-width="1.5"/>
+          <polygon points="315,505 307,502 307,508" fill="#7C5CFC"/>
+          <text x="320" y="509" font-family="Inter, sans-serif" font-size="10" fill="#7C5CFC">We deliver</text>
+        </svg>
+        <p class="loop-caption">A loop, not a funnel. We consume raw inputs and deliver positioning-aligned outputs — continuously.</p>
+      </div>
+
+      <!-- Exchange Blocks -->
+      <div class="exchange-block">
+        <div class="exchange-header">
+          <div class="exchange-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Sales</h3>
+        </div>
+        <div class="exchange-body">
+          <div class="exchange-col consume-col">
+            <div class="exchange-col-label consume">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              We consume
+            </div>
+            <ul class="exchange-list">
+              <li>Sales call recordings</li>
+              <li>CRM pipeline data</li>
+              <li>Win/loss notes</li>
+              <li>Competitor mentions from deals</li>
+              <li>Demo recordings</li>
+            </ul>
+          </div>
+          <div class="exchange-col deliver-col">
+            <div class="exchange-col-label deliver">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              We deliver
+            </div>
+            <ul class="exchange-list">
+              <li>Competitive battle cards</li>
+              <li>Objection handling playbook</li>
+              <li>Sales narrative deck</li>
+              <li>Pipeline enablement content</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="exchange-block">
+        <div class="exchange-header">
+          <div class="exchange-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Marketing</h3>
+        </div>
+        <div class="exchange-body">
+          <div class="exchange-col consume-col">
+            <div class="exchange-col-label consume">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              We consume
+            </div>
+            <ul class="exchange-list">
+              <li>Website analytics</li>
+              <li>Campaign performance data</li>
+              <li>Existing content library</li>
+              <li>SEO and keyword data</li>
+              <li>Landing page conversion rates</li>
+            </ul>
+          </div>
+          <div class="exchange-col deliver-col">
+            <div class="exchange-col-label deliver">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              We deliver
+            </div>
+            <ul class="exchange-list">
+              <li>Website and landing page copy</li>
+              <li>Blog content and thought leadership</li>
+              <li>Case study frameworks</li>
+              <li>Content strategy and calendar</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="exchange-block">
+        <div class="exchange-header">
+          <div class="exchange-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          </div>
+          <h3>Product</h3>
+        </div>
+        <div class="exchange-body">
+          <div class="exchange-col consume-col">
+            <div class="exchange-col-label consume">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              We consume
+            </div>
+            <ul class="exchange-list">
+              <li>Product usage data</li>
+              <li>Feature documentation</li>
+              <li>Onboarding flow recordings</li>
+              <li>Activation and retention metrics</li>
+              <li>Roadmap and release notes</li>
+            </ul>
+          </div>
+          <div class="exchange-col deliver-col">
+            <div class="exchange-col-label deliver">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              We deliver
+            </div>
+            <ul class="exchange-list">
+              <li>Onboarding flow audit and copy</li>
+              <li>In-app messaging</li>
+              <li>Activation copy optimization</li>
+              <li>Product documentation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="exchange-block">
+        <div class="exchange-header">
+          <div class="exchange-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>CS & Partnerships</h3>
+        </div>
+        <div class="exchange-body">
+          <div class="exchange-col consume-col">
+            <div class="exchange-col-label consume">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              We consume
+            </div>
+            <ul class="exchange-list">
+              <li>Customer feedback and NPS</li>
+              <li>Support tickets and themes</li>
+              <li>Testimonials and reviews</li>
+              <li>Partner briefs and proposals</li>
+              <li>Churn reasons</li>
+            </ul>
+          </div>
+          <div class="exchange-col deliver-col">
+            <div class="exchange-col-label deliver">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              We deliver
+            </div>
+            <ul class="exchange-list">
+              <li>Customer insights analysis</li>
+              <li>Retention and upsell content</li>
+              <li>Integration guides</li>
+              <li>Co-marketing briefs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What We Plug Into -->
+  <section id="sources">
+    <div class="container">
+      <div class="section-label">What we plug into</div>
+      <h2 class="section-hook">We connect to what you already use.</h2>
+      <p class="section-body">The context engine runs on your existing data. We don't need you to prepare anything special — just give us access to the tools your teams already work in.</p>
+
+      <div class="plugin-grid">
+        <div class="plugin-item">
+          <h4>CRM</h4>
+          <p>HubSpot, Salesforce, Pipedrive — pipeline data, deal notes, contact history</p>
+        </div>
+        <div class="plugin-item">
+          <h4>Call recordings</h4>
+          <p>Gong, Chorus, Fireflies — sales calls, demos, discovery sessions</p>
+        </div>
+        <div class="plugin-item">
+          <h4>Analytics</h4>
+          <p>GA4, Mixpanel, Amplitude — traffic, conversion, user behavior</p>
+        </div>
+        <div class="plugin-item">
+          <h4>Support</h4>
+          <p>Intercom, Zendesk, Freshdesk — tickets, themes, customer voice</p>
+        </div>
+        <div class="plugin-item">
+          <h4>Content</h4>
+          <p>Google Docs, Notion, CMS — existing content, sales collateral, docs</p>
+        </div>
+        <div class="plugin-item">
+          <h4>Product</h4>
+          <p>Your app, Figma, Loom — onboarding flows, feature specs, recordings</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Model -->
+  <section id="model">
+    <div class="container">
+      <div class="section-label">The model</div>
+      <h2 class="section-hook">Expert-led. AI-powered.</h2>
+      <p class="section-body">We're not a traditional agency with a team of 15 juniors. A forward-deployed expert embeds into your team, backed by AI systems that maintain context, accelerate research, and keep every output consistent.</p>
+
+      <div class="model-grid">
+        <div class="model-card">
+          <h4>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Forward-deployed expert
+          </h4>
+          <p>A senior product marketer who understands your product, your market, and your buyer. Not a rotating cast of freelancers.</p>
+        </div>
+        <div class="model-card">
+          <h4>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+            AI context engine
+          </h4>
+          <p>Your positioning, competitive intelligence, buyer research, and messaging — maintained as a living system, not a static document.</p>
+        </div>
+        <div class="model-card">
+          <h4>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Compounding, not campaigns
+          </h4>
+          <p>Every artifact we ship feeds back into the context engine. Month 6 outputs are dramatically better than month 1 because the system learns.</p>
+        </div>
+        <div class="model-card">
+          <h4>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Weekly deliverables
+          </h4>
+          <p>No quarterly check-ins and hope. We ship artifacts every week, with async collaboration and regular review cycles.</p>
+        </div>
+      </div>
+
+      <div class="model-note">
+        <p>Product marketing is a moving target. Your market shifts, competitors reposition, buyers change how they evaluate. We keep the engine current — so every downstream artifact stays relevant.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scope -->
+  <section id="scope">
+    <div class="container">
+      <div class="section-label">Scope</div>
+      <h2 class="section-hook">We build the intelligence and the artifacts. Your team runs the distribution.</h2>
+
+      <div class="scope-grid">
+        <div class="scope-col do-col">
+          <h4>What we do</h4>
+          <ul>
+            <li>Positioning and messaging</li>
+            <li>Competitive intelligence</li>
+            <li>Sales enablement</li>
+            <li>Website and landing page copy</li>
+            <li>Onboarding and activation copy</li>
+            <li>Content strategy and production</li>
+            <li>Customer and buyer research</li>
+            <li>Partnership content</li>
+          </ul>
+        </div>
+        <div class="scope-col not-col">
+          <h4>What we don't</h4>
+          <ul>
+            <li>Social media management</li>
+            <li>Paid advertising</li>
+            <li>SEO ranking management</li>
+            <li>MQL target ownership</li>
+            <li>Graphic design production</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who This Is For -->
+  <section id="who">
+    <div class="container">
+      <div class="section-label">Who this is for</div>
+      <h2 class="section-hook">Built for B2B SaaS teams that have product-market fit but not positioning-market fit.</h2>
+
+      <div class="icp-grid">
+        <div class="icp-card">
+          <h4>Series A / B</h4>
+          <p>You've found PMF. Now you need to articulate why you win — to buyers, to investors, to your own team.</p>
+        </div>
+        <div class="icp-card">
+          <h4>Founder-led sales</h4>
+          <p>The founder can sell it. Nobody else can. You need to extract that knowledge into a system.</p>
+        </div>
+        <div class="icp-card">
+          <h4>No PMM yet</h4>
+          <p>You don't have a product marketer. You're not sure you need one full-time. You need the function, not the headcount.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Engagement -->
+  <section id="engage">
+    <div class="container">
+      <div class="section-label">Engagement</div>
+      <h2 class="section-hook">Let's work together</h2>
+
+      <div class="engagement-box">
+        <div class="eng-price">Monthly retainer starting at $5,000/mo</div>
+
+        <div class="eng-details">
+          <div class="eng-detail">
+            <span class="eng-label">Onboarding</span>
+            <span class="eng-value">15–30 days to build context + strategy</span>
+          </div>
+          <div class="eng-detail">
+            <span class="eng-label">Delivery</span>
+            <span class="eng-value">Weekly deliverables, async collaboration</span>
+          </div>
+          <div class="eng-detail">
+            <span class="eng-label">Commitment</span>
+            <span class="eng-value">Minimum 3-month engagement</span>
+          </div>
+          <div class="eng-detail">
+            <span class="eng-label">Expert</span>
+            <span class="eng-value">One dedicated forward-deployed PMM</span>
+          </div>
+        </div>
+
+        <div class="eng-cta">
+          <a href="mailto:pratik@recurr.co" class="btn-primary">Let's talk</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-hook">Common questions</h2>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">What does the first month look like?</div>
+          <div class="faq-a">The first 15–30 days are dedicated to building the context engine — deep research into your product, market, buyer, and competitive landscape. You'll also get the strategy layer: positioning, messaging matrix, competitive framing, and a content roadmap. After that, we start shipping artifacts weekly.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">How is this different from hiring a content agency?</div>
+          <div class="faq-a">Content agencies produce content. We build the intelligence layer that makes content work. Every blog post, landing page, and sales deck we create is derived from a positioning system — not written from a brief. The difference shows up in conversion rates, not word counts.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">What does "AI-powered" actually mean?</div>
+          <div class="faq-a">We maintain a living context engine — your positioning, competitive intelligence, buyer research, messaging frameworks — powered by AI systems that keep it current. When we write a battle card or a landing page, it's informed by this engine, not started from scratch. This is how one expert can deliver what typically requires a team of five.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Do you do customer interviews?</div>
+          <div class="faq-a">Yes. Jobs-to-be-done interviews with your customers and prospects are a core part of the context-building phase. We don't build personas from industry reports — we talk to real buyers and extract what actually drives their decisions.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">What if I don't want to continue the engagement?</div>
+          <div class="faq-a">Everything we build is yours. Depending on the scope, it takes us 15–45 days to do a clean handoff — documenting the context engine, training your team on the systems, and if needed, helping you hire or set up automation to maintain things going forward. We recommend planning the transition so nothing falls through the cracks.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Can you work with companies outside India?</div>
+          <div class="faq-a">Yes. We work with B2B SaaS companies regardless of geography. Many of our engagements involve Indian companies selling to US or global buyers — a context we understand particularly well.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">Recurr Studio</div>
+          <div class="footer-meta">
+            <a href="mailto:pratik@recurr.co">pratik@recurr.co</a>
+          </div>
+        </div>
+        <div class="footer-meta" style="text-align: right;">
+          <span>Bangalore, India</span>
+          <span>2026</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

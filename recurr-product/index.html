@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recurr — Product Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --purple: #7C5CFC;
+      --purple-light: #EDE9FE;
+      --purple-dark: #5B3FD9;
+      --purple-bg: #F5F3FF;
+      --green: #22C55E;
+      --green-light: #DCFCE7;
+      --amber: #F59E0B;
+      --amber-light: #FEF3C7;
+      --red: #EF4444;
+      --red-light: #FEE2E2;
+      --text: #1a1a1a;
+      --text-secondary: #555;
+      --text-muted: #999;
+      --bg: #F8F8F7;
+      --white: #fff;
+      --border: #E5E5E5;
+      --sidebar-bg: #FAFAFA;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Layout ── */
+    .app {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      grid-template-rows: 56px 1fr;
+      height: 100vh;
+    }
+
+    /* ── Top Bar ── */
+    .topbar {
+      grid-column: 1 / -1;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 10;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .topbar-logo {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--purple);
+      letter-spacing: -0.02em;
+    }
+
+    .topbar-sep {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+    }
+
+    .topbar-company {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .topbar-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--green);
+      font-weight: 500;
+    }
+
+    .topbar-status .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .topbar-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--purple-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--purple);
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      padding: 20px 0;
+      overflow-y: auto;
+    }
+
+    .sidebar-section {
+      margin-bottom: 24px;
+    }
+
+    .sidebar-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      padding: 0 20px;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+    }
+
+    .sidebar-nav li {
+      position: relative;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: background 0.1s, color 0.1s;
+      cursor: pointer;
+    }
+
+    .sidebar-nav a:hover {
+      background: var(--white);
+      color: var(--text);
+    }
+
+    .sidebar-nav a.active {
+      background: var(--purple-bg);
+      color: var(--purple);
+      font-weight: 600;
+    }
+
+    .sidebar-nav a.active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 4px;
+      bottom: 4px;
+      width: 3px;
+      background: var(--purple);
+      border-radius: 0 3px 3px 0;
+    }
+
+    .sidebar-nav svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+
+    .sidebar-nav a.active svg {
+      opacity: 1;
+    }
+
+    .sidebar-badge {
+      margin-left: auto;
+      font-size: 10px;
+      font-weight: 600;
+      background: var(--purple-light);
+      color: var(--purple);
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+
+    /* ── Main Content ── */
+    .main {
+      overflow-y: auto;
+      padding: 28px 32px;
+    }
+
+    .page-header {
+      margin-bottom: 28px;
+    }
+
+    .page-header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .page-header p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ── Tab content ── */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* ── Overview Cards ── */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .stat-card .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .stat-card .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .stat-card .stat-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ── Source Status ── */
+    .sources-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .sources-card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .source-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .source-row:last-child { border-bottom: none; }
+
+    .source-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .source-dot.connected { background: var(--green); }
+    .source-dot.pending { background: var(--amber); }
+    .source-dot.disconnected { background: var(--border); }
+
+    .source-name {
+      font-size: 13px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .source-detail {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ── Artifact Cards ── */
+    .artifacts-section {
+      margin-bottom: 24px;
+    }
+
+    .artifacts-section h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .artifact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .artifact-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      cursor: default;
+      transition: border-color 0.15s;
+    }
+
+    .artifact-card:hover {
+      border-color: var(--purple);
+    }
+
+    .artifact-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .artifact-title {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .artifact-status {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+
+    .artifact-status.live {
+      background: var(--green-light);
+      color: #16A34A;
+    }
+
+    .artifact-status.draft {
+      background: var(--amber-light);
+      color: #B45309;
+    }
+
+    .artifact-status.needs-update {
+      background: var(--red-light);
+      color: var(--red);
+    }
+
+    .artifact-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 12px;
+    }
+
+    .artifact-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    /* ── Context Engine Panel ── */
+    .context-health {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .context-module {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+
+    .context-module-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .context-module-header h4 {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .freshness {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    .freshness.fresh {
+      background: var(--green-light);
+      color: #16A34A;
+    }
+
+    .freshness.stale {
+      background: var(--amber-light);
+      color: #B45309;
+    }
+
+    .context-module p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .context-module .last-updated {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* ── Activity Feed ── */
+    .activity-feed {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .activity-feed h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .activity-item {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .activity-item:last-child { border-bottom: none; }
+
+    .activity-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--purple);
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    .activity-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .activity-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .activity-time {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ── Empty / Wireframe hint ── */
+    .wireframe-note {
+      background: var(--purple-bg);
+      border: 1px dashed var(--purple);
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 12px;
+      color: var(--purple-dark);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-logo">Recurr</span>
+      <span class="topbar-sep"></span>
+      <span class="topbar-company">Acme SaaS Inc.</span>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-status">
+        <span class="dot"></span>
+        Context engine active
+      </div>
+      <div class="topbar-avatar">PS</div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Workspace</div>
+      <ul class="sidebar-nav">
+        <li><a class="active" data-tab="overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Overview
+        </a></li>
+        <li><a data-tab="context">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+          Context Engine
+        </a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Teams</div>
+      <ul class="sidebar-nav">
+        <li><a data-tab="sales">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          Sales
+          <span class="sidebar-badge">4</span>
+        </a></li>
+        <li><a data-tab="marketing">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Marketing
+          <span class="sidebar-badge">5</span>
+        </a></li>
+        <li><a data-tab="product">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          Product
+          <span class="sidebar-badge">3</span>
+        </a></li>
+        <li><a data-tab="cs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          CS & Partners
+          <span class="sidebar-badge">3</span>
+        </a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Sources</div>
+      <ul class="sidebar-nav">
+        <li><a data-tab="sources">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Connected Sources
+        </a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+
+    <!-- OVERVIEW TAB -->
+    <div class="tab-content active" id="tab-overview">
+      <div class="page-header">
+        <h1>Overview</h1>
+        <p>Acme SaaS Inc. — Engagement started Jan 15, 2026. Week 7.</p>
+      </div>
+
+      <div class="overview-grid">
+        <div class="stat-card">
+          <div class="stat-label">Artifacts Live</div>
+          <div class="stat-value">12</div>
+          <div class="stat-sub">across 4 teams</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Last Delivery</div>
+          <div class="stat-value">2d ago</div>
+          <div class="stat-sub">Sales battle card v3</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Context Freshness</div>
+          <div class="stat-value" style="color: var(--green);">Fresh</div>
+          <div class="stat-sub">Updated Feb 26, 2026</div>
+        </div>
+      </div>
+
+      <div class="activity-feed">
+        <h3>Recent Activity</h3>
+        <div class="activity-item">
+          <div class="activity-dot"></div>
+          <div>
+            <div class="activity-text"><strong>Competitive battle card v3</strong> shipped to Sales team. Added Competitor X's new pricing.</div>
+            <div class="activity-time">2 days ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot"></div>
+          <div>
+            <div class="activity-text"><strong>Context engine updated</strong> — ingested 14 new Gong calls from last week. 3 new objection patterns detected.</div>
+            <div class="activity-time">3 days ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot"></div>
+          <div>
+            <div class="activity-text"><strong>Homepage copy v2</strong> published. Conversion-aligned with updated positioning.</div>
+            <div class="activity-time">5 days ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot"></div>
+          <div>
+            <div class="activity-text"><strong>Onboarding audit</strong> completed. 6 activation copy improvements identified.</div>
+            <div class="activity-time">1 week ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot"></div>
+          <div>
+            <div class="activity-text"><strong>Q1 positioning review</strong> — competitive landscape shift detected. Messaging matrix updated.</div>
+            <div class="activity-time">1 week ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTEXT ENGINE TAB -->
+    <div class="tab-content" id="tab-context">
+      <div class="page-header">
+        <h1>Context Engine</h1>
+        <p>The intelligence layer that feeds every artifact. Maintained continuously.</p>
+      </div>
+
+      <div class="context-health">
+        <div class="context-module">
+          <div class="context-module-header">
+            <h4>Positioning & Messaging</h4>
+            <span class="freshness fresh">Fresh</span>
+          </div>
+          <p>Core positioning statement, messaging matrix (3 personas x 4 buying stages), category definition, competitive framing.</p>
+          <div class="last-updated">Last updated: Feb 26, 2026</div>
+        </div>
+
+        <div class="context-module">
+          <div class="context-module-header">
+            <h4>Competitive Intelligence</h4>
+            <span class="freshness fresh">Fresh</span>
+          </div>
+          <p>5 competitors tracked. Pricing, positioning, feature changes, content output monitored weekly.</p>
+          <div class="last-updated">Last updated: Feb 25, 2026</div>
+        </div>
+
+        <div class="context-module">
+          <div class="context-module-header">
+            <h4>Buyer Research</h4>
+            <span class="freshness fresh">Fresh</span>
+          </div>
+          <p>12 JTBD interviews completed. 3 buyer personas defined. Decision criteria mapped per persona.</p>
+          <div class="last-updated">Last updated: Feb 20, 2026</div>
+        </div>
+
+        <div class="context-module">
+          <div class="context-module-header">
+            <h4>Content Landscape</h4>
+            <span class="freshness stale">Needs refresh</span>
+          </div>
+          <p>SEO keyword map (89 keywords), content gap analysis, competitor content audit.</p>
+          <div class="last-updated">Last updated: Feb 5, 2026</div>
+        </div>
+      </div>
+
+      <div class="sources-card">
+        <h3>Ingestion Log</h3>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">Gong call recordings</span>
+          <span class="source-detail">14 calls ingested this week</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">HubSpot CRM</span>
+          <span class="source-detail">Pipeline synced 2h ago</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">Intercom tickets</span>
+          <span class="source-detail">23 tickets analyzed this month</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">GA4 analytics</span>
+          <span class="source-detail">Weekly traffic report synced</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot pending"></div>
+          <span class="source-name">G2 reviews</span>
+          <span class="source-detail">Awaiting access — 0 reviews ingested</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SALES TAB -->
+    <div class="tab-content" id="tab-sales">
+      <div class="page-header">
+        <h1>Sales</h1>
+        <p>Artifacts for your sales team. Built from call recordings, CRM data, and competitive intelligence.</p>
+      </div>
+
+      <div class="sources-card">
+        <h3>Connected Inputs</h3>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">Gong — call recordings</span>
+          <span class="source-detail">14 calls this week</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">HubSpot — pipeline & deal notes</span>
+          <span class="source-detail">Synced 2h ago</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">Win/loss interview notes</span>
+          <span class="source-detail">3 interviews this month</span>
+        </div>
+      </div>
+
+      <div class="artifacts-section">
+        <h3>Artifacts</h3>
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="artifact-top">
+              <span class="artifact-title">Competitive Battle Card</span>
+              <span class="artifact-status live">Live</span>
+            </div>
+            <div class="artifact-desc">vs. Competitor X, Competitor Y, Competitor Z. Updated with new pricing intel from last week's Gong calls.</div>
+            <div class="artifact-meta">
+              <span>v3</span>
+              <span>Updated 2 days ago</span>
+            </div>
+          </div>
+
+          <div class="artifact-card">
+            <div class="artifact-top">
+              <span class="artifact-title">Objection Handling Playbook</span>
+              <span class="artifact-status live">Live</span>
+            </div>
+            <div class="artifact-desc">Top 12 objections mapped to responses. Sourced from 47 call recordings. Organized by deal stage.</div>
+            <div class="artifact-meta">
+              <span>v2</span>
+              <span>Updated 1 week ago</span>
+            </div>
+          </div>
+
+          <div class="artifact-card">
+            <div class="artifact-top">
+              <span class="artifact-title">Sales Narrative Deck</span>
+              <span class="artifact-status live">Live</span>
+            </div>
+            <div class="artifact-desc">12-slide positioning-aligned deck. Problem → solution → differentiation → proof → next steps.</div>
+            <div class="artifact-meta">
+              <span>v2</span>
+              <span>Updated 2 weeks ago</span>
+            </div>
+          </div>
+
+          <div class="artifact-card">
+            <div class="artifact-top">
+              <span class="artifact-title">Deal Stage Email Templates</span>
+              <span class="artifact-status draft">Draft</span>
+            </div>
+            <div class="artifact-desc">Follow-up templates for each pipeline stage. Discovery, demo, proposal, negotiation.</div>
+            <div class="artifact-meta">
+              <span>v1</span>
+              <span>In review</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MARKETING TAB -->
+    <div class="tab-content" id="tab-marketing">
+      <div class="page-header">
+        <h1>Marketing</h1>
+        <p>Copy and content built on the positioning system. Every asset ties back to the context engine.</p>
+      </div>
+
+      <div class="sources-card">
+        <h3>Connected Inputs</h3>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">GA4 — website analytics</span>
+          <span class="source-detail">Weekly sync</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">HubSpot — landing page conversion data</span>
+          <span class="source-detail">Synced 2h ago</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">Existing content library (Notion)</span>
+          <span class="source-detail">42 pages indexed</span>
+        </div>
+      </div>
+
+      <div class="artifacts-section">
+        <h3>Artifacts</h3>
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="artifact-top">
+              <span class="artifact-title">Homepage Copy</span>
+              <span class="artifact-status live">Live</span>
+            </div>
+            <div class="artifact-desc">Hero, value props, social proof, CTA sections. Conversion-aligned with updated positioning.</div>
+            <div class="artifact-meta">
+              <span>v2</span>
+              <span>Updated 5 days ago</span>
+            </div>
+          </div>
+
+          <div class="artifact-card">
+            <div class="artifact-top">
+              <span class="artifact-title">Content Calendar — Q1</span>
+              <span class="artifact-status live">Live</span>
+            </div>
+            <div class="artifact-desc">12 pieces planned. 8 published. Keyword-mapped, persona-targeted, stage-aligned.</div>
+            <div class="artifact-meta">
+              <span>Ongoing</span>
+              <span>Updated 3 days ago</span>
+            </div>
+          </div>
+
+          <div class="artifact-card">
+            <div class="artifact-top">
+              <span class="artifact-title">Pricing Page Copy</span>
+              <span class="artifact-status needs-update">Needs update</span>
+            </div>
+            <div class="artifact-desc">Current copy misaligned after pricing change. Rewrite in progress based on new competitive intel.</div>
+            <div class="artifact-meta">
+              <span>v1</span>
+              <span>Flagged 2 days ago</span>
+            </div>
+          </div>
+
+          <div class="artifact-card">
+            <div class="artifact-top">
+              <span class="artifact-title">Case Study Template</span>
+              <span class="artifact-status live">Live</span>
+            </div>
+            <div class="artifact-desc">Standardized framework: challenge, approach, results, quote. 2 case studies completed.</div>
+            <div class="artifact-meta">
+              <span>v1</span>
+              <span>Updated 2 weeks ago</span>
+            </div>
+          </div>
+
+          <div class="artifact-card">
+            <div class="artifact-top">
+              <span class="artifact-title">Feature Landing Pages</span>
+              <span class="artifact-status draft">Draft</span>
+            </div>
+            <div class="artifact-desc">3 feature pages in production. Copy derived from JTBD research — one page per primary use case.</div>
+            <div class="artifact-meta">
+              <span>v1</span>
+              <span>In review</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT TAB -->
+    <div class="tab-content" id="tab-product">
+      <div class="page-header">
+        <h1>Product</h1>
+        <p>Copy that activates, onboards, and retains. Informed by usage data and user research.</p>
+      </div>
+
+      <div class="sources-card">
+        <h3>Connected Inputs</h3>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">Mixpanel — user behavior & activation data</span>
+          <span class="source-detail">Weekly report</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">Loom — onboarding flow recordings</span>
+          <span class="source-detail">6 recordings analyzed</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot pending"></div>
+          <span class="source-name">Product roadmap (Linear)</span>
+          <span class="source-detail">Awaiting access</span>
+        </div>
+      </div>
+
+      <div class="artifacts-section">
+        <h3>Artifacts</h3>
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="artifact-top">
+              <span class="artifact-title">Onboarding Flow Audit</span>
+              <span class="artifact-status live">Live</span>
+            </div>
+            <div class="artifact-desc">Screen-by-screen copy review. 6 improvements identified. 4 implemented, 2 pending product release.</div>
+            <div class="artifact-meta">
+              <span>v1</span>
+              <span>Updated 1 week ago</span>
+            </div>
+          </div>
+
+          <div class="artifact-card">
+            <div class="artifact-top">
+              <span class="artifact-title">In-App Messaging</span>
+              <span class="artifact-status draft">Draft</span>
+            </div>
+            <div class="artifact-desc">Tooltip copy, empty states, upgrade prompts, feature announcements. Aligned to activation milestones.</div>
+            <div class="artifact-meta">
+              <span>v1</span>
+              <span>In review</span>
+            </div>
+          </div>
+
+          <div class="artifact-card">
+            <div class="artifact-top">
+              <span class="artifact-title">Product Documentation</span>
+              <span class="artifact-status live">Live</span>
+            </div>
+            <div class="artifact-desc">Getting started guide, API quickstart, 5 how-to articles. Written for the ICP, not generic developers.</div>
+            <div class="artifact-meta">
+              <span>v1</span>
+              <span>Updated 2 weeks ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CS & PARTNERS TAB -->
+    <div class="tab-content" id="tab-cs">
+      <div class="page-header">
+        <h1>CS & Partnerships</h1>
+        <p>Customer insights feed back into the engine. Partnership content extends your reach.</p>
+      </div>
+
+      <div class="sources-card">
+        <h3>Connected Inputs</h3>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">Intercom — support tickets & themes</span>
+          <span class="source-detail">23 tickets analyzed this month</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">NPS survey responses</span>
+          <span class="source-detail">Last batch: 47 responses</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">G2 / Capterra reviews</span>
+          <span class="source-detail">12 reviews tracked</span>
+        </div>
+      </div>
+
+      <div class="artifacts-section">
+        <h3>Artifacts</h3>
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="artifact-top">
+              <span class="artifact-title">Customer Insights Report</span>
+              <span class="artifact-status live">Live</span>
+            </div>
+            <div class="artifact-desc">Monthly synthesis of support themes, NPS feedback, and churn reasons. Feeds back into positioning.</div>
+            <div class="artifact-meta">
+              <span>Monthly</span>
+              <span>Updated Feb 20</span>
+            </div>
+          </div>
+
+          <div class="artifact-card">
+            <div class="artifact-top">
+              <span class="artifact-title">Integration Guide — Zapier</span>
+              <span class="artifact-status live">Live</span>
+            </div>
+            <div class="artifact-desc">Step-by-step integration guide. Written for the partner's audience, not yours.</div>
+            <div class="artifact-meta">
+              <span>v1</span>
+              <span>Updated 3 weeks ago</span>
+            </div>
+          </div>
+
+          <div class="artifact-card">
+            <div class="artifact-top">
+              <span class="artifact-title">Co-Marketing Brief — Partner X</span>
+              <span class="artifact-status draft">Draft</span>
+            </div>
+            <div class="artifact-desc">Joint webinar brief, shared audience analysis, messaging alignment, promotional plan.</div>
+            <div class="artifact-meta">
+              <span>v1</span>
+              <span>In review</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOURCES TAB -->
+    <div class="tab-content" id="tab-sources">
+      <div class="page-header">
+        <h1>Connected Sources</h1>
+        <p>The context engine runs on your existing tools. Here's what's connected and feeding the system.</p>
+      </div>
+
+      <div class="sources-card">
+        <h3>Active Connections</h3>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">HubSpot CRM</span>
+          <span class="source-detail">Pipeline, deals, contacts — synced every 2h</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">Gong</span>
+          <span class="source-detail">Call recordings, transcripts — 87 calls ingested</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">GA4</span>
+          <span class="source-detail">Traffic, conversions, user flow — weekly report</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">Intercom</span>
+          <span class="source-detail">Tickets, conversations, NPS — 156 tickets analyzed</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">Mixpanel</span>
+          <span class="source-detail">User behavior, activation funnels — weekly sync</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">Notion</span>
+          <span class="source-detail">Content library, product docs — 42 pages indexed</span>
+        </div>
+      </div>
+
+      <div class="sources-card">
+        <h3>Pending</h3>
+        <div class="source-row">
+          <div class="source-dot pending"></div>
+          <span class="source-name">Linear</span>
+          <span class="source-detail">Product roadmap — awaiting access</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot pending"></div>
+          <span class="source-name">G2 Admin</span>
+          <span class="source-detail">Review data API — awaiting credentials</span>
+        </div>
+      </div>
+
+      <div class="sources-card">
+        <h3>Manual Inputs</h3>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">Win/loss interview notes</span>
+          <span class="source-detail">3 interviews uploaded this month</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">Competitor screenshots & announcements</span>
+          <span class="source-detail">Shared via Slack channel</span>
+        </div>
+        <div class="source-row">
+          <div class="source-dot connected"></div>
+          <span class="source-name">Sales demo recordings</span>
+          <span class="source-detail">6 Loom videos uploaded</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Tab navigation
+  document.querySelectorAll('.sidebar-nav a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const tab = link.dataset.tab;
+
+      // Update sidebar active state
+      document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+      link.classList.add('active');
+
+      // Show the right tab
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+
+      // Scroll main to top
+      document.querySelector('.main').scrollTop = 0;
+    });
+  });
+</script>
+
+</body>
+</html>
