@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anthracite — Production Bible</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #1a1a1a;
+      --paper: #fefefe;
+      --muted: #6b7280;
+      --light: #f3f4f6;
+      --border: #e5e7eb;
+      --accent: #92400e;
+      --accent-light: #fef3c7;
+      --accent-bg: #fffbeb;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header */
+    .hero {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 80px 24px 60px;
+      text-align: center;
+    }
+    .hero-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 400;
+      font-style: italic;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .hero h2 {
+      font-size: clamp(14px, 2vw, 18px);
+      font-weight: 400;
+      color: #aaa;
+      max-width: 600px;
+      margin: 0 auto 32px;
+    }
+    .hero-meta {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px;
+      color: #666;
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .hero-meta span { white-space: nowrap; }
+
+    /* Navigation */
+    .toc-bar {
+      position: sticky;
+      top: 0;
+      background: rgba(254,254,254,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .toc-bar-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+      padding: 0 24px;
+    }
+    .toc-bar a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--muted);
+      padding: 14px 16px;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .toc-bar a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* Content */
+    .content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Section */
+    .section {
+      padding: 64px 0 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section:last-child { border-bottom: none; }
+
+    .section-number {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .section > h2 {
+      font-size: clamp(24px, 3.5vw, 32px);
+      font-weight: 400;
+      font-style: italic;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .section-subtitle {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    h3 {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      margin: 32px 0 12px;
+      color: var(--ink);
+    }
+    h4 {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin: 28px 0 10px;
+    }
+
+    p { margin-bottom: 16px; font-size: 16px; }
+
+    /* Lists */
+    ul, ol {
+      margin: 12px 0 20px 20px;
+      font-size: 15px;
+    }
+    li { margin-bottom: 6px; }
+    li ul, li ol { margin-top: 6px; margin-bottom: 6px; }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+    }
+    th {
+      text-align: left;
+      padding: 10px 12px;
+      background: var(--light);
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+
+    /* Callouts */
+    .callout {
+      background: var(--accent-bg);
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 15px;
+    }
+    .callout-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    /* Quotes */
+    blockquote {
+      border-left: 3px solid var(--border);
+      padding: 12px 20px;
+      margin: 20px 0;
+      font-style: italic;
+      color: #4b5563;
+      font-size: 16px;
+    }
+    blockquote strong { color: var(--ink); }
+
+    /* Question blocks (for interview) */
+    .question {
+      background: var(--light);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .question-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .question-text {
+      font-size: 16px;
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+    .question-notes {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .question-notes strong { color: #374151; }
+
+    /* Transition markers */
+    .transition {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 24px 28px;
+      margin: 32px 0;
+      border-radius: 4px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .transition strong { color: #fbbf24; }
+
+    /* Tags */
+    .tag {
+      display: inline-block;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 3px;
+      margin-right: 4px;
+    }
+    .tag-fact { background: #dbeafe; color: #1e40af; }
+    .tag-opinion { background: #fce7f3; color: #9d174d; }
+    .tag-story { background: #d1fae5; color: #065f46; }
+
+    /* Progress tracker */
+    .progress {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .progress-item {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--light);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .progress-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .progress-done { background: #065f46; color: white; }
+    .progress-next { background: var(--accent); color: white; }
+    .progress-pending { background: var(--border); color: var(--muted); }
+
+    /* Epigraph */
+    .epigraph {
+      text-align: center;
+      padding: 40px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .epigraph-hindi {
+      font-size: 16px;
+      line-height: 2;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .epigraph-english {
+      font-style: italic;
+      font-size: 15px;
+      color: #6b7280;
+      max-width: 480px;
+      margin: 0 auto 12px;
+    }
+    .epigraph-source {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 48px 24px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px;
+      color: #ccc;
+    }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      .hero { padding: 60px 20px 40px; }
+      .section { padding: 48px 0 36px; }
+      .toc-bar a { padding: 12px 10px; font-size: 11px; }
+      table { font-size: 12px; }
+      th, td { padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">Vayam &middot; Book Production Bible</div>
+    <h1>Anthracite</h1>
+    <h2>India's Mineral Destiny: From Coal Sovereignty to Critical Minerals Superpower</h2>
+    <div class="hero-meta">
+      <span>Author: Dr. P.S. Mishra</span>
+      <span>Editor: Pratik Mishra</span>
+      <span>Updated: March 6, 2026</span>
+    </div>
+  </div>
+
+  <!-- TOC BAR -->
+  <div class="toc-bar">
+    <div class="toc-bar-inner">
+      <a href="#progress">Progress</a>
+      <a href="#research">Research</a>
+      <a href="#theme-outline">Theme Outline</a>
+      <a href="#voice">Voice Engine</a>
+      <a href="#ch5-outline">Ch 5 Outline</a>
+      <a href="#questionnaire">Questionnaire</a>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ==================== PROGRESS ==================== -->
+    <div class="section" id="progress">
+      <div class="section-number">Overview</div>
+      <h2>Production Status</h2>
+      <p class="section-subtitle">Theme II: The Critical Minerals Pivot (Chapters 5-8)</p>
+
+      <div class="progress">
+        <div class="progress-item"><span class="progress-check progress-done">&#10003;</span> Research &amp; Knowledge Building</div>
+        <div class="progress-item"><span class="progress-check progress-done">&#10003;</span> Theme II Outline</div>
+        <div class="progress-item"><span class="progress-check progress-done">&#10003;</span> Voice &amp; Tone Engine</div>
+        <div class="progress-item"><span class="progress-check progress-done">&#10003;</span> Detailed Chapter 5 Outline</div>
+        <div class="progress-item"><span class="progress-check progress-done">&#10003;</span> Interview Questionnaire</div>
+        <div class="progress-item"><span class="progress-check progress-next">&#8594;</span> Conduct Interview (Call 002)</div>
+        <div class="progress-item"><span class="progress-check progress-pending">&middot;</span> Chapter 5 First Draft</div>
+        <div class="progress-item"><span class="progress-check progress-pending">&middot;</span> Dr. Mishra Review</div>
+      </div>
+
+      <h3>Theme Architecture</h3>
+      <table>
+        <tr><th>Chapter</th><th>Title</th><th>Role</th><th>Status</th></tr>
+        <tr><td>5</td><td>The New Anthracite</td><td>Entry point &mdash; global lens, define the problem</td><td>Outline + questionnaire ready</td></tr>
+        <tr><td>6</td><td>India's Rs 34,300 Crore Bet</td><td>Policy deep-dive &mdash; NCMM expert review</td><td>Theme outline done</td></tr>
+        <tr><td>7</td><td>From Coal to Cobalt</td><td>Institutional argument &mdash; Coal India's DNA</td><td>Theme outline done</td></tr>
+        <tr><td>8</td><td>Mineral Diplomacy</td><td>Strategic lens &mdash; ISA to Pax Silica</td><td>Theme outline done</td></tr>
+      </table>
+
+      <div class="callout">
+        <div class="callout-label">Theme Arc</div>
+        <strong>Understanding &rarr; Response &rarr; Capacity &rarr; Positioning</strong><br>
+        "What is this?" &rarr; "What is India doing?" &rarr; "Who can do it?" &rarr; "Where does India stand?"
+      </div>
+    </div>
+
+    <!-- ==================== RESEARCH ==================== -->
+    <div class="section" id="research">
+      <div class="section-number">Step 1</div>
+      <h2>Research &amp; Knowledge Building</h2>
+      <p class="section-subtitle">Compiled from web research + Call 001 with Dr. Mishra (Feb 26, 2026)</p>
+
+      <h3>Chapter 5: "The New Anthracite"</h3>
+
+      <h4>What Makes a Mineral Critical</h4>
+      <p><strong>Dr. Mishra's reframe:</strong> Criticality is NOT about scarcity. Three factors: <strong>availability</strong> (does it exist?), <strong>accessibility</strong> (can you reach it?), <strong>affordability</strong> (can you extract it economically?).</p>
+      <blockquote>"The mineral is not scarce, but its mining is scarce."</blockquote>
+      <p>Global consensus uses two axes: <strong>economic importance</strong> &times; <strong>supply risk</strong>. No universal definition &mdash; each country's list reflects its own anxieties.</p>
+
+      <h4>How Countries Define Criticality</h4>
+      <table>
+        <tr><th>Country</th><th>List Size</th><th>Lens</th><th>Key Feature</th></tr>
+        <tr><td>India</td><td>30</td><td>Supply risk</td><td>8 indices (4 economic + 4 supply)</td></tr>
+        <tr><td>United States</td><td>50</td><td>Supply risk</td><td>Defense-first framing</td></tr>
+        <tr><td>European Union</td><td>34</td><td>Supply risk</td><td>14 in 2011 &rarr; 34 in 2023 (growing alarm)</td></tr>
+        <tr><td>Australia</td><td>31</td><td>Value capture</td><td>Defines based on partner country needs</td></tr>
+        <tr><td>China</td><td>~30+</td><td>Value capture</td><td>Maintains dominance, not reducing dependency</td></tr>
+        <tr><td>Japan</td><td>34</td><td>Supply risk</td><td>Recycling technology as hedge</td></tr>
+      </table>
+
+      <h4>India's 30 Critical Minerals</h4>
+      <p>Narrowing: 69 (global) &rarr; 38 (India-relevant) &rarr; <strong>30 under MMDR Act</strong>. Committee formed Jan 2022, report Nov 2022, policy published May-June 2023.</p>
+      <p><strong>Economic Importance Indices:</strong> Disruption potential, substitutability, GVA multiplier, cross-cutting index (inter-ministerial team of 8-10).</p>
+      <p><strong>Supply Risk Indices:</strong> Governance-weighted concentration, end-of-life recycling rate, import resilience, substitutability risk.</p>
+      <p><strong>Import dependency:</strong> 95% overall. 100% for ~10 minerals (lithium, cobalt, nickel). ~11 minerals with zero domestic production.</p>
+
+      <h4>China's Dominance</h4>
+      <ul>
+        <li>~70% of global rare earth extraction (2024)</li>
+        <li>90%+ of downstream processing (oxide separation, metal refining, magnet production)</li>
+        <li>94% of sintered NdFeB permanent magnets</li>
+        <li>95%+ of heavy rare earths (dysprosium, terbium &mdash; critical for defense)</li>
+        <li>For 19 of 20 important strategic minerals, China is leading refiner (avg. 70% share)</li>
+      </ul>
+      <p><strong>The Magnequench Story:</strong> GM invents NdFeB magnets (1982) &rarr; establishes Magnequench subsidiary (1986, Indiana) &rarr; magnets used in M1 Abrams tanks &amp; JDAM guided munitions &rarr; GM sells for $70M to consortium with Chinese state firms (1995, buyers included Deng Xiaoping's sons-in-law) &rarr; equipment moved to China (2001-2004) &rarr; US loses capability &rarr; China scales to global monopoly. April 2025: China places export restrictions on medium and heavy REEs.</p>
+
+      <h4>Five-Stage Value Chain</h4>
+      <table>
+        <tr><th>Stage</th><th>Type</th><th>Coal Sector Capability</th><th>Gap</th></tr>
+        <tr><td>1. Exploration</td><td>Upstream</td><td>STRONG (CMPDI)</td><td>Different targets (igneous vs. sedimentary)</td></tr>
+        <tr><td>2. Mining</td><td>Upstream</td><td>STRONG</td><td>Different mineral bodies, same discipline</td></tr>
+        <tr><td>3. Processing</td><td>Midstream</td><td>PARTIAL</td><td>Different chemistry entirely</td></tr>
+        <tr><td>4. Manufacturing</td><td>Downstream</td><td>NONE</td><td>Requires PPP/JV/tech transfer</td></tr>
+        <tr><td>5. Recycling</td><td>Circular</td><td>NONE</td><td>New capability needed</td></tr>
+      </table>
+
+      <h3>Chapter 6: NCMM</h3>
+      <ul>
+        <li>Rs 34,300 crore over 7 years (2024-25 to 2030-31). Rs 16,300 cr govt + Rs 18,000 cr PSU/private.</li>
+        <li>Covers full value chain: exploration, mining, beneficiation, processing, recycling.</li>
+        <li>Domestic: 6 auction tranches, 34 of 55 blocks awarded. First tranche was a setback (14 of 20 cancelled).</li>
+        <li>Recycling: Rs 1,500 cr incentive scheme &mdash; 270 kt capacity, 40 kt annual recovery, 70,000 jobs.</li>
+        <li>Overseas: KABIL portfolio in Argentina, Australia, Chile, Zambia, Congo/Tanzania/Mozambique.</li>
+      </ul>
+
+      <h3>Chapter 7: Coal India</h3>
+      <ul>
+        <li>CIL declared preferred bidder for Ontillu-Chandragiri REE block (Sep 2025).</li>
+        <li>CMPDI expanding into critical mineral exploration, beneficiation, lab services. Hosted "Mineralyse-2025."</li>
+        <li>Venturing into all 30 listed critical minerals. Initial focus: battery metals.</li>
+        <li>Broader diversification: coal gasification, solar/wind, chemicals, fertilizers.</li>
+      </ul>
+
+      <h3>Chapter 8: Mineral Diplomacy</h3>
+      <ul>
+        <li><strong>ISA &rarr; Pax Silica arc:</strong> India went from creating a multilateral coalition (ISA, 2015) to joining a US-led one (Pax Silica, Feb 2026).</li>
+        <li>India initially excluded from Pax Silica (Dec 2025), formally joined Feb 2026 at India AI Impact Summit.</li>
+        <li>KABIL capitalization: Rs 100 cr &rarr; Rs 500 cr. Active in Argentina, Australia, Chile, Zambia.</li>
+        <li>Bilateral deals: Australia, Japan, France, US, UAE, Peru.</li>
+      </ul>
+    </div>
+
+    <!-- ==================== THEME OUTLINE ==================== -->
+    <div class="section" id="theme-outline">
+      <div class="section-number">Step 2</div>
+      <h2>Theme II Outline</h2>
+      <p class="section-subtitle">Progressive flow across all 4 chapters with transition markers</p>
+
+      <h3>Chapter 5: "The New Anthracite"</h3>
+      <p><strong>Role:</strong> Entry point for the uninitiated. Global lens.<br>
+      <strong>Voice:</strong> Pedagogical with authority &mdash; a coal veteran explaining why the world has shifted.</p>
+      <ol>
+        <li>Opening &mdash; The Anthracite Metaphor (personal entry, coal bridge, stakes)</li>
+        <li>What Makes a Mineral Critical (scarcity myth &rarr; availability/accessibility/affordability)</li>
+        <li>How the World Defines Criticality (6 country snapshots, two lenses)</li>
+        <li>India's 30 (committee process, 8 indices, 95% import truth)</li>
+        <li>The 90% Problem (China's dominance + full Magnequench story)</li>
+        <li>The Value Chain (5 stages, coal capability mapped, setup for Ch 6-8)</li>
+        <li>Closing (stakes restated, three questions for remaining chapters)</li>
+      </ol>
+
+      <div class="transition">
+        <strong>Transition Ch 5 &rarr; Ch 6:</strong> Ch 5 ends with problem fully defined. Ch 6 opens with India's policy response. Reader now has vocabulary to evaluate the NCMM. <strong>Do NOT repeat:</strong> criticality definition, 30-mineral list, China stats. <strong>Carries forward:</strong> value chain framework, 95% dependency.
+      </div>
+
+      <h3>Chapter 6: "India's Rs 34,300 Crore Bet"</h3>
+      <p><strong>Role:</strong> Policy deep-dive. Expert review with respect but rigour.<br>
+      <strong>Voice:</strong> Analytical &mdash; industry insider reviewing a government mission.</p>
+      <ol>
+        <li>Architecture of the Mission (budget, scope, institutional machinery)</li>
+        <li>Domestic Exploration (starting from almost zero, auction scorecard)</li>
+        <li>Processing &amp; Beneficiation (the missing middle)</li>
+        <li>The Recycling Bet (Rs 1,500 cr scheme, e-waste potential)</li>
+        <li>Overseas Acquisition (KABIL portfolio, capital constraints)</li>
+        <li>Honest Assessment (what the mission gets right vs. what concerns a veteran)</li>
+      </ol>
+
+      <div class="transition">
+        <strong>Transition Ch 6 &rarr; Ch 7:</strong> Ch 6 ends with assessment that execution is the bottleneck &mdash; hints an existing institution might be the answer. <strong>Do NOT repeat:</strong> NCMM budget, auction mechanics. <strong>Carries forward:</strong> processing gap, speed concern.
+      </div>
+
+      <h3>Chapter 7: "From Coal to Cobalt"</h3>
+      <p><strong>Role:</strong> Institutional argument. Can CIL's DNA pivot?<br>
+      <strong>Voice:</strong> Argumentative with personal stakes &mdash; Dr. Mishra's career is the evidence.</p>
+      <ol>
+        <li>The Mining DNA (CIL's scale, CMPDI, workforce, regulatory muscle)</li>
+        <li>The Parallels (exploration, mining, terrain, government relationships)</li>
+        <li>The Crossroads (processing chemistry, speed, global deal-making, talent)</li>
+        <li>CIL's Moves So Far (REE block, MoUs, CMPDI expansion)</li>
+        <li>The Diversification Roadmap (Dr. Mishra's personal framework)</li>
+      </ol>
+
+      <div class="transition">
+        <strong>Transition Ch 7 &rarr; Ch 8:</strong> Ch 7 ends with CIL needing global partnerships. Ch 8 opens with India's diplomatic strategy. <strong>Carries forward:</strong> processing gap (diplomacy = technology transfer), KABIL (expanded to full overseas portfolio).
+      </div>
+
+      <h3>Chapter 8: "Mineral Diplomacy"</h3>
+      <p><strong>Role:</strong> Strategic lens. India's positioning in the global race.<br>
+      <strong>Voice:</strong> Strategic and narrative &mdash; ISA to Pax Silica storytelling arc.</p>
+      <ol>
+        <li>The ISA Foundation (India as coalition convener, SUNRISE initiative)</li>
+        <li>The Race Intensifies (China/US/EU/Australia/Japan strategies)</li>
+        <li>India's Diplomatic Toolkit (KABIL, bilateral deals, multilateral frameworks)</li>
+        <li>Pax Silica (India's exclusion then inclusion, significance)</li>
+        <li>The Africa Play (ISA goodwill, competing with China's 20-year head start)</li>
+        <li>The Road Ahead (technology transfer, supply diversification, speed)</li>
+      </ol>
+
+      <h3>Content Boundaries</h3>
+      <table>
+        <tr><th>Topic</th><th>Ch 5</th><th>Ch 6</th><th>Ch 7</th><th>Ch 8</th></tr>
+        <tr><td>Definition of criticality</td><td>FULL</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+        <tr><td>30 minerals + committee</td><td>FULL</td><td>Ref only</td><td>&mdash;</td><td>&mdash;</td></tr>
+        <tr><td>China + Magnequench</td><td>FULL</td><td>Ref only</td><td>Contrast</td><td>Strategic</td></tr>
+        <tr><td>Value chain (5 stages)</td><td>Introduce</td><td>Map vs NCMM</td><td>Map vs CIL</td><td>&mdash;</td></tr>
+        <tr><td>NCMM budget + structure</td><td>&mdash;</td><td>FULL</td><td>Ref only</td><td>Ref only</td></tr>
+        <tr><td>CIL capabilities</td><td>Hint</td><td>&mdash;</td><td>FULL</td><td>&mdash;</td></tr>
+        <tr><td>ISA / Pax Silica</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>FULL</td></tr>
+        <tr><td>KABIL portfolio</td><td>&mdash;</td><td>Introduce</td><td>CIL link</td><td>FULL</td></tr>
+        <tr><td>Dr. Mishra personal</td><td>&mdash;</td><td>&mdash;</td><td>FULL</td><td>&mdash;</td></tr>
+      </table>
+    </div>
+
+    <!-- ==================== VOICE ENGINE ==================== -->
+    <div class="section" id="voice">
+      <div class="section-number">Step 3</div>
+      <h2>Voice &amp; Tone Engine</h2>
+      <p class="section-subtitle">Built from Call 001 + 5 public interviews + career research. Will refine with each interview.</p>
+
+      <h3>The Dual Identity</h3>
+      <p>Dr. Mishra is simultaneously a <strong>ground-level mining engineer</strong> who has been underground AND a <strong>PhD researcher</strong> who thinks in frameworks. The book voice must carry both &mdash; the coal dust and the citations.</p>
+
+      <h3>Two Registers</h3>
+      <table>
+        <tr><th>Register</th><th>Context</th><th>Characteristics</th></tr>
+        <tr><td>Public Persona</td><td>Hindi speeches, corporate addresses</td><td>Poetry (Dinkar), mythology (Jatayu, Nachiketa), acronyms (MITAWA, SUDESHH, NACHIKETA), Bollywood references, elaborate greetings, never takes personal credit</td></tr>
+        <tr><td>Technical Expert</td><td>English, in conversation</td><td>Structured thinking, gentle corrections, first principles, real-world grounding, coal bridges, insider vocabulary, institutional respect</td></tr>
+      </table>
+      <p>The book voice = a <strong>third register</strong>: literary English carrying the authority of 37 years underground and the intellectual framework of a PhD researcher.</p>
+
+      <h3>Eight Techniques</h3>
+
+      <h4>1. Authority Through Experience</h4>
+      <blockquote>"When I first descended into Gevra's pit in the early 1990s, the scale of Indian opencast mining was already staggering. What struck me was not the machinery, but the geology &mdash; the sedimentary certainty of coal. Critical minerals offer no such comfort."</blockquote>
+      <p>Earn authority by showing what the eyes have seen, not citing the title on the nameplate.</p>
+
+      <h4>2. Gentle Correction</h4>
+      <p>His signature: acknowledge the intuitive position &rarr; gently negate &rarr; provide better framework &rarr; seal with memorable line.</p>
+      <blockquote>"The intuitive answer is scarcity. It is also the wrong answer. A mineral can be abundant in nature and still be critical &mdash; if it sits beneath a conflict zone, if the processing technology doesn't exist, if the logistics make it unaffordable. <strong>The mineral is not scarce. Its mining is scarce.</strong>"</blockquote>
+
+      <h4>3. Framework Builder</h4>
+      <p>Name frameworks explicitly, use numbered lists, but wrap in narrative &mdash; never present as a slide deck.</p>
+
+      <h4>4. The Coal Bridge</h4>
+      <p>Every chapter returns to coal. "Parallels and crossroads" as recurring device. Never apologize for the coal perspective.</p>
+      <blockquote>"I have spent thirty-seven years mining coal. When I look at the critical minerals value chain, I see &mdash; in its first two stages &mdash; work I have done my entire life. What I do not see is the processing capability. <strong>The crossroad is not small.</strong>"</blockquote>
+
+      <h4>5. Institutional Respect + Honest Assessment</h4>
+      <p>"I respect it because I built it. I can criticize it because I understand it."</p>
+
+      <h4>6. Memorable Lines</h4>
+      <p>Short, declarative, slightly paradoxical:</p>
+      <ul>
+        <li>"India knows how to dig. India does not yet know how to process."</li>
+        <li>"China did not discover rare earths. China discovered that no one else was paying attention."</li>
+        <li>"A coal miner reading a geological survey for lithium will recognize the discipline. He will not recognize the chemistry."</li>
+      </ul>
+
+      <h4>7. The Teacher Voice</h4>
+      <p>Walk the reader through logic step by step. Make them feel they discovered the answer alongside the author.</p>
+
+      <h4>8. Hindi/Literary Echoes</h4>
+      <p>Sparingly: Dinkar epigraphs, Nachiketa analogies, the "Ishq" philosophy &mdash; explained for international readers.</p>
+
+      <h3>Calibration Checklist</h3>
+      <ul>
+        <li>Does it sound like a 37-year mining veteran, not a policy analyst?</li>
+        <li>Is coal mining the lens, not a footnote?</li>
+        <li>Are frameworks named and numbered?</li>
+        <li>Does every disagreement use the "gentle correction" pattern?</li>
+        <li>Are there 3-5 memorable lines per chapter?</li>
+        <li>Is institutional respect paired with honest assessment?</li>
+        <li>Would Dr. Mishra read this aloud and recognize himself?</li>
+      </ul>
+    </div>
+
+    <!-- ==================== CHAPTER 5 OUTLINE ==================== -->
+    <div class="section" id="ch5-outline">
+      <div class="section-number">Step 4</div>
+      <h2>Detailed Chapter 5 Outline</h2>
+      <p class="section-subtitle">"The New Anthracite" &mdash; super-expanded outline for Dr. Mishra's review</p>
+
+      <div class="epigraph">
+        <div class="epigraph-hindi">
+          धनुष से छूटता है बाण कब पथ में ठहरता,<br>
+          देखते ही देखते वह लक्ष्य को है भेदता...<br>
+          लक्ष्य तक पहुंचे बिना पथ में पथिक विश्राम कैसा
+        </div>
+        <div class="epigraph-english">
+          When an arrow leaves the bow, it does not pause on the path &mdash;<br>
+          before you can blink, it has pierced the target.<br>
+          How can a traveler rest before the destination is reached?
+        </div>
+        <div class="epigraph-source">&mdash; Ramdhari Singh Dinkar</div>
+      </div>
+
+      <h3>S1. Opening: The Anthracite Metaphor <span class="tag tag-story">Story</span></h3>
+      <p><strong>~600-800 words.</strong> Open with anthracite &mdash; the highest grade of coal, the fuel that powered empires. America's rise was built on Pennsylvania anthracite. India's energy sovereignty was built on Jharkhand and Chhattisgarh coal. For two centuries, the mineral that mattered most was carbon. That era is not over. But a new era has begun alongside it.</p>
+      <p>Dr. Mishra's personal entry: "I have spent thirty-seven years mining coal. When I look at critical minerals, I see familiar disciplines applied to unfamiliar targets. But I also see a global race where the starting gun fired decades ago, and India is still lacing its shoes."</p>
+      <blockquote>"Anthracite powered the century of carbon. These minerals will power the century of silicon, lithium, and light."</blockquote>
+
+      <h3>S2. What Makes a Mineral Critical <span class="tag tag-opinion">Opinion</span> <span class="tag tag-fact">Fact</span></h3>
+      <p><strong>~800-1,000 words.</strong> Challenge the scarcity myth. Install the correct framework.</p>
+      <ul>
+        <li><strong>The scarcity myth:</strong> Rare earths are not actually rare. The problem is never the mineral itself.</li>
+        <li><strong>Three pillars:</strong> Availability, accessibility, affordability. Dr. Mishra's framework.</li>
+        <li><strong>The defining quote:</strong> "The mineral is not scarce, but its mining is scarce."</li>
+        <li><strong>Example:</strong> Chhattisgarh &mdash; 28 mineral varieties, 80% geology unexplored (Naxal corridor).</li>
+        <li><strong>Two-axis framework:</strong> Economic importance &times; supply risk (global standard).</li>
+        <li><strong>Criticality is not fixed:</strong> Changes with technology (gallium + semiconductors), geopolitics (Russian titanium + Ukraine), industrial strategy (lithium + EVs).</li>
+      </ul>
+      <blockquote>"Criticality is not about what is beneath the ground. It is about what stands between the ground and the factory floor."</blockquote>
+
+      <h3>S3. How the World Defines Criticality <span class="tag tag-fact">Fact</span></h3>
+      <p><strong>~1,000-1,200 words.</strong> Six country snapshots. Two philosophical lenses.</p>
+      <ul>
+        <li><strong>Supply Risk lens</strong> (EU, US, Japan): "We need it and can't get it."</li>
+        <li><strong>Value Capture lens</strong> (Australia, Canada, China): "We have it and want to leverage it."</li>
+        <li><strong>EU:</strong> 14 &rarr; 34 minerals. Growing alarm. Critical Raw Materials Act.</li>
+        <li><strong>US:</strong> 50 minerals. Defense-first. Magnequench as cautionary tale.</li>
+        <li><strong>China:</strong> Playing offense. Maintains dominance, not reducing dependency.</li>
+        <li><strong>Australia:</strong> Defines by what partner countries need.</li>
+        <li><strong>Japan:</strong> Technology dependency + recycling technology as hedge.</li>
+        <li><strong>Overlap:</strong> 10 minerals on every major list (cobalt, lithium, graphite, rare earths...).</li>
+      </ul>
+      <blockquote>"A nation's critical minerals list is a confession &mdash; it tells you what keeps its leaders awake at night."</blockquote>
+
+      <h3>S4. India's 30 <span class="tag tag-fact">Fact</span> <span class="tag tag-opinion">Opinion</span></h3>
+      <p><strong>~1,000-1,200 words.</strong> The committee process, the rigour, and the uncomfortable truth.</p>
+      <ul>
+        <li><strong>Timeline:</strong> 2011-12 first thinking &rarr; Jan 2022 committee &rarr; Nov 2022 report &rarr; May 2023 policy &rarr; Jul 2023 listed &rarr; Nov 2023 first auctions.</li>
+        <li><strong>Narrowing:</strong> 69 &rarr; 38 &rarr; 30. Each step evidence-based.</li>
+        <li><strong>8 indices:</strong> 4 economic importance + 4 supply risk. Inter-ministerial team.</li>
+        <li><strong>The 30 minerals</strong> grouped by application: energy transition, defense, electronics, agriculture, industrial.</li>
+        <li><strong>The import reality:</strong> 95% dependency. 100% for ~10 minerals. Zero domestic production for 11.</li>
+      </ul>
+      <blockquote>"India defined thirty minerals as critical. For eleven of them, it produces nothing. Zero. The gap between definition and capability is the gap this book seeks to close."</blockquote>
+
+      <h3>S5. The 90% Problem <span class="tag tag-fact">Fact</span> <span class="tag tag-story">Story</span></h3>
+      <p><strong>~1,000-1,200 words. THE CLIMAX.</strong> China's dominance and the full Magnequench story.</p>
+      <ul>
+        <li><strong>Numbers:</strong> 70% mining, 90% processing, 94% magnets, 95% heavy rare earths.</li>
+        <li><strong>Magnequench (told in full):</strong> GM invents world's strongest magnet (1982) &rarr; subsidiary in Indiana (1986) &rarr; magnets in M1 Abrams + JDAM &rarr; GM sells to Chinese consortium for $70M (1995, Deng Xiaoping's sons-in-law) &rarr; equipment moves to China (2001-04) &rarr; Indiana closes &rarr; China scales to monopoly.</li>
+        <li><strong>The playbook:</strong> Acquire &rarr; learn &rarr; scale &rarr; undercut &rarr; dominate.</li>
+        <li><strong>April 2025:</strong> China places export restrictions on 7 types of REEs. Weaponization.</li>
+      </ul>
+      <blockquote>"China did not discover rare earths. China discovered that no one else was paying attention. By the time they noticed, the factory had moved to Tianjin."</blockquote>
+
+      <h3>S6. The Value Chain <span class="tag tag-fact">Fact</span> <span class="tag tag-opinion">Opinion</span></h3>
+      <p><strong>~800-1,000 words.</strong> Five stages. Coal sector mapped. Setup for Ch 6-8.</p>
+      <ul>
+        <li><strong>Exploration:</strong> Near zero for critical minerals, but CMPDI infrastructure can be repurposed.</li>
+        <li><strong>Mining:</strong> World-class capability (coal). Same discipline, different target.</li>
+        <li><strong>Processing:</strong> Near zero. Entirely different chemistry. The critical bottleneck.</li>
+        <li><strong>Manufacturing:</strong> Near zero. Requires new business models.</li>
+        <li><strong>Recycling:</strong> Informal/unorganized. Rs 1,500 cr NCMM scheme.</li>
+        <li><strong>The setup:</strong> Ch 6 maps NCMM against this. Ch 7 asks if CIL can stretch. Ch 8 asks if diplomacy can fill gaps.</li>
+      </ul>
+      <blockquote>"India knows how to dig. India does not yet know how to process. That single sentence contains the country's greatest vulnerability &mdash; and its clearest path forward."</blockquote>
+
+      <h3>S7. Closing <span class="tag tag-opinion">Opinion</span></h3>
+      <p><strong>~400-500 words.</strong> Restate stakes. Point to remaining chapters.</p>
+      <ul>
+        <li>Three questions: Has India committed the right resources? (Ch 6). Does it have the institutional muscle? (Ch 7). Can it build the partnerships? (Ch 8).</li>
+        <li>The anthracite metaphor returns: the coal era rewarded patience. The critical minerals era will not.</li>
+      </ul>
+      <blockquote>"The century of anthracite rewarded patience. The century of lithium will not. India has the geology, the institutions, and the ambition. What it lacks is time."</blockquote>
+
+      <h3>Word Distribution</h3>
+      <table>
+        <tr><th>Section</th><th>Words</th><th>%</th></tr>
+        <tr><td>S1. Anthracite Metaphor</td><td>600-800</td><td>12%</td></tr>
+        <tr><td>S2. What Makes a Mineral Critical</td><td>800-1,000</td><td>15%</td></tr>
+        <tr><td>S3. How the World Defines Criticality</td><td>1,000-1,200</td><td>18%</td></tr>
+        <tr><td>S4. India's 30</td><td>1,000-1,200</td><td>18%</td></tr>
+        <tr><td>S5. The 90% Problem + Magnequench</td><td>1,000-1,200</td><td>18%</td></tr>
+        <tr><td>S6. The Value Chain</td><td>800-1,000</td><td>15%</td></tr>
+        <tr><td>S7. Closing</td><td>400-500</td><td>7%</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>5,600-6,900</strong></td><td><strong>100%</strong></td></tr>
+      </table>
+
+      <h3>Fact vs. Opinion Map</h3>
+      <table>
+        <tr><th>Type</th><th>Content</th></tr>
+        <tr><td><span class="tag tag-fact">Fact</span></td><td>30 minerals + committee process, country definitions, China stats, Magnequench, import dependency, value chain, e-waste data</td></tr>
+        <tr><td><span class="tag tag-opinion">Opinion</span></td><td>Scarcity is wrong frame, processing is the critical gap, coal sector can lead exploration, Magnequench was deliberate strategy, India needs speed above all</td></tr>
+        <tr><td><span class="tag tag-story">Story</span></td><td>Personal first encounter with critical minerals, a mine illustrating accessibility, reaction to 95% dependency, coal memory paralleling CM exploration, response to Magnequench</td></tr>
+      </table>
+    </div>
+
+    <!-- ==================== QUESTIONNAIRE ==================== -->
+    <div class="section" id="questionnaire">
+      <div class="section-number">Step 5</div>
+      <h2>Interview Questionnaire</h2>
+      <p class="section-subtitle">Chapter 5 interview for Dr. P.S. Mishra &mdash; ~40-45 minutes</p>
+
+      <div class="callout">
+        <div class="callout-label">Before the Call</div>
+        Send Dr. Mishra the Chapter 5 detailed outline 2-3 days before so he can prepare stories and references.
+      </div>
+
+      <h3>Part 1: The Personal Entry Point <span style="color:var(--muted);font-weight:400;font-size:14px;">&mdash; 8-10 min</span></h3>
+      <p>Locate Dr. Mishra in the story as a person, not an expert.</p>
+
+      <div class="question">
+        <div class="question-label">Q1. The First Encounter</div>
+        <div class="question-text">"Papa, can you remember the first time the phrase 'critical minerals' entered your professional life &mdash; not as a news headline, but as something that touched your work? Was there a specific meeting, a document, a conversation with a colleague? Take me to that moment."</div>
+        <div class="question-notes"><strong>Listen for:</strong> A specific scene &mdash; who was there, what was said, what he felt.<br><strong>Follow-up A:</strong> "Was there a person who first brought this to your attention?"<br><strong>Follow-up B:</strong> "When you first heard about it, did you take it seriously? Or did it feel distant from coal?"</div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Q2. The Coal Man's Reaction</div>
+        <div class="question-text">"You have spent 37 years in coal. Coal has a certainty to it &mdash; the geology is sedimentary, you know where to look. When you first seriously looked at critical minerals, what was your gut reaction? Did it excite you, or did it concern you?"</div>
+        <div class="question-notes"><strong>Listen for:</strong> Honesty about emotional response. Fear? Excitement? "Not my world" vs. "exactly my world, just deeper"?<br><strong>Follow-up:</strong> "Was there a moment when the excitement won over the concern?"</div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Q3. The Anthracite Metaphor</div>
+        <div class="question-text">"What is it about anthracite specifically &mdash; not just coal, but anthracite &mdash; that makes it the right parallel for critical minerals?"</div>
+        <div class="question-notes"><strong>Listen for:</strong> Technical specifics (highest carbon, highest calorific value, purest form) and what purity/potency means as metaphor.<br><strong>Follow-up:</strong> "Have you ever worked with or near an anthracite seam? What is it like physically?"</div>
+      </div>
+
+      <h3>Part 2: The Accessibility Problem <span style="color:var(--muted);font-weight:400;font-size:14px;">&mdash; 8-10 min</span></h3>
+      <p>Make the availability/accessibility/affordability framework vivid with stories.</p>
+
+      <div class="question">
+        <div class="question-label">Q4. The Naxal Corridor</div>
+        <div class="question-text">"Can you paint a picture of what it actually looks like when you know minerals are underground but the area is inaccessible? Have you personally experienced this barrier in your coal career?"</div>
+        <div class="question-notes"><strong>Listen for:</strong> A specific area, mine, or exploration project blocked by the Naxal issue.<br><strong>Follow-up A:</strong> "Chhattisgarh has 28 mineral varieties with 80% unexplored. For a geologist, what does that feel like?"<br><strong>Follow-up B:</strong> "Is the Naxal problem the biggest barrier, or are there others &mdash; land acquisition, environmental clearances, tribal rights?"</div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Q5. An Affordability Story</div>
+        <div class="question-text">"Can you give me a specific example of a mineral that India could theoretically mine but where the economics don't work today?"</div>
+        <div class="question-notes"><strong>Listen for:</strong> Specific mineral + location + reason economics fail.<br><strong>Follow-up:</strong> "Is the barrier mostly technology or scale?"</div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Q6. Underground vs. Surface</div>
+        <div class="question-text">"Critical minerals are in igneous formations, not sedimentary like coal. When a geologist trained in coal tries to survey for lithium, what is different? What surprises them?"</div>
+        <div class="question-notes"><strong>Listen for:</strong> Formation depth, rock types, survey methods, drilling differences.<br><strong>Follow-up:</strong> "If you sent a CMPDI team to explore for rare earths, what would you retrain them on?"</div>
+      </div>
+
+      <h3>Part 3: India's Position <span style="color:var(--muted);font-weight:400;font-size:14px;">&mdash; 8-10 min</span></h3>
+      <p>Unvarnished assessment. Not the government line. His line.</p>
+
+      <div class="question">
+        <div class="question-label">Q7. The 95% Dependency</div>
+        <div class="question-text">"India imports 95% of its critical minerals. For 10 of the 30, we produce nothing. When you read that statistic, what do you feel? Not as a policy analyst &mdash; as a mining man who gave his career to making India self-sufficient in energy."</div>
+        <div class="question-notes"><strong>Listen for:</strong> Emotional response. The contrast between coal sovereignty and critical mineral dependency.<br><strong>Follow-up A:</strong> "Can you imagine a national effort for critical minerals like Coal India was for coal?"<br><strong>Follow-up B:</strong> "If India had started in 2011-12, would we be in a different position today?"</div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Q8. Did the Committee Get It Right?</div>
+        <div class="question-text">"You were CMD of SECL when the committee was working. Looking at the final 30 &mdash; did they get it right? Is there a mineral that should be there that isn't?"</div>
+        <div class="question-notes"><strong>Listen for:</strong> Insider perspective. Agreement or disagreement with specific choices.<br><strong>Follow-up:</strong> "Did they weight the 8 indices correctly?"</div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Q9. Magnequench Through a Miner's Eyes</div>
+        <div class="question-text">"I want to tell the Magnequench story in this chapter &mdash; GM inventing the strongest magnet, selling the subsidiary to Chinese state firms, the whole capability moving to China in a decade. When a coal mining veteran reads that, what stands out? What does a mining man see that a policy analyst might miss?"</div>
+        <div class="question-notes"><strong>Listen for:</strong> Operational/industrial perspective on equipment transfer and process replication.<br><strong>Follow-up A:</strong> "Have you seen this acquire-learn-scale-undercut pattern in any Indian industry?"<br><strong>Follow-up B:</strong> "If you were advising the PM today, what is the one thing India must do first?"</div>
+      </div>
+
+      <h3>Part 4: The Coal Bridge <span style="color:var(--muted);font-weight:400;font-size:14px;">&mdash; 8-10 min</span></h3>
+      <p>Deepen the parallels and crossroads with operational detail.</p>
+
+      <div class="question">
+        <div class="question-label">Q10. A Day at CMPDI</div>
+        <div class="question-text">"Most readers won't know what CMPDI does day to day. Walk me through a typical exploration project. A team goes to a site &mdash; what do they do? What equipment? How long does it take?"</div>
+        <div class="question-notes"><strong>Listen for:</strong> Operational reality of geological exploration &mdash; the basis for the parallel.<br><strong>Follow-up:</strong> "Now imagine the same team explores for rare earths. What changes? What stays the same?"</div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Q11. The Processing Crossroad</div>
+        <div class="question-text">"If I walk into a coal washery, what do I see? And if I walk into a lithium processing plant? What is the physical, tangible difference?"</div>
+        <div class="question-notes"><strong>Listen for:</strong> Sensory details &mdash; sights, sounds, scale. The contrast should be visual.<br><strong>Follow-up:</strong> "Is the processing gap technology, talent, or capital?"</div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Q12. The Honest Case Against CIL</div>
+        <div class="question-text">"Chapter 7 argues CIL can lead the critical minerals charge. So let me ask the hard version first: what is the strongest argument AGAINST Coal India leading this effort?"</div>
+        <div class="question-notes"><strong>Listen for:</strong> Candid assessment &mdash; bureaucratic speed, aging workforce, domestic orientation, PSU constraints.<br><strong>Follow-up:</strong> "Knowing those limitations &mdash; why do you still believe CIL is the right institution?"</div>
+      </div>
+
+      <h3>Part 5: The Provocations <span style="color:var(--muted);font-weight:400;font-size:14px;">&mdash; 8-10 min</span></h3>
+      <p>Push beyond safe positions. Generate the chapter's most memorable moments.</p>
+
+      <div class="question">
+        <div class="question-label">Q13. The Bold Prediction</div>
+        <div class="question-text">"In 2050, who won the critical minerals race? Is it still China? The US? Could it be India?"</div>
+        <div class="question-notes"><strong>Listen for:</strong> Vision, conviction &mdash; not diplomacy.<br><strong>Follow-up:</strong> "What would it actually take for India to be in the winner's circle?"</div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Q14. The Uncomfortable Truth</div>
+        <div class="question-text">"What is the one thing about India's critical minerals position that nobody in government or industry wants to say out loud?"</div>
+        <div class="question-notes"><strong>Listen for:</strong> The insider truth. 37 years of being inside the system.<br><strong>Follow-up (if he hedges):</strong> "Papa, this is your book. Your name. What do you want to say that you couldn't say as CMD?"</div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Q15. Message to the Next Generation</div>
+        <div class="question-text">"If a young mining engineer &mdash; fresh out of ISM Dhanbad, the way you were in 1987 &mdash; asked 'Sir, should I go into coal or critical minerals?' &mdash; what would you tell them?"</div>
+        <div class="question-notes"><strong>Listen for:</strong> Personal, emotional close. A career's worth of wisdom.<br><strong>Follow-up:</strong> "Do you wish you could do that career? Start over with critical minerals?"</div>
+      </div>
+
+      <h3>Post-Interview Checklist</h3>
+      <ul>
+        <li>Did we get at least 3 personal stories with specific people, places, or moments?</li>
+        <li>Did we get his emotional response to the 95% import dependency?</li>
+        <li>Did we get the Magnequench story through a mining veteran's eyes?</li>
+        <li>Did we get the CMPDI exploration walkthrough?</li>
+        <li>Did we get the coal beneficiation vs. mineral processing contrast?</li>
+        <li>Did we get at least 2 provocative opinions beyond safe institutional positions?</li>
+        <li>Did we get a quotable line we hadn't planned for?</li>
+        <li>Did we get his honest assessment of CIL's limitations?</li>
+        <li>Did we get a future prediction (2050)?</li>
+        <li>Did we get the "uncomfortable truth"?</li>
+      </ul>
+      <p><strong>If any are missing, schedule a 15-minute follow-up within 48 hours.</strong></p>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Anthracite &middot; Vayam &middot; Recurr Studio &middot; March 2026
+  </div>
+
+</body>
+</html>
