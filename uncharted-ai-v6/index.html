@@ -89,8 +89,12 @@ img { display: block; max-width: 100%; }
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
   overflow: hidden;
+}
+.svg-pattern-overlay svg {
+  width: 100%;
+  height: 100%;
 }
 
 /* ===== FOLD 1: HERO (Nav → Copy → 3 Robot Images) ===== */
@@ -114,6 +118,7 @@ img { display: block; max-width: 100%; }
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1;
   background: linear-gradient(
     to bottom,
     rgba(10,10,10,0.3) 0%,
@@ -666,122 +671,86 @@ img { display: block; max-width: 100%; }
 
   <!-- agentmail.to-style SVG pattern: dashed grid, crosshairs, contour lines, point cloud -->
   <div class="svg-pattern-overlay">
-    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <!-- Gradient dissolve masks — key to the agentmail.to technique -->
-        <linearGradient id="fade-v" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="white" stop-opacity="0.3"/>
-          <stop offset="20%" stop-color="white" stop-opacity="1"/>
-          <stop offset="80%" stop-color="white" stop-opacity="1"/>
-          <stop offset="100%" stop-color="white" stop-opacity="0"/>
-        </linearGradient>
         <radialGradient id="fade-r" cx="50%" cy="45%" r="55%">
           <stop offset="0%" stop-color="white" stop-opacity="1"/>
           <stop offset="60%" stop-color="white" stop-opacity="0.6"/>
           <stop offset="100%" stop-color="white" stop-opacity="0"/>
         </radialGradient>
         <mask id="hero-mask">
-          <rect width="100%" height="100%" fill="url(#fade-r)"/>
+          <rect width="1000" height="1000" fill="url(#fade-r)"/>
         </mask>
       </defs>
 
       <g mask="url(#hero-mask)">
-        <!-- LAYER 1: Dashed blueprint grid (agentmail.to signature) -->
-        <g opacity="0.06">
-          <!-- Vertical grid -->
-          <line x1="10%" y1="0" x2="10%" y2="100%" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="4,20"/>
-          <line x1="20%" y1="0" x2="20%" y2="100%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,28"/>
-          <line x1="30%" y1="0" x2="30%" y2="100%" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="4,20"/>
-          <line x1="40%" y1="0" x2="40%" y2="100%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,28"/>
-          <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="4,20"/>
-          <line x1="60%" y1="0" x2="60%" y2="100%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,28"/>
-          <line x1="70%" y1="0" x2="70%" y2="100%" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="4,20"/>
-          <line x1="80%" y1="0" x2="80%" y2="100%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,28"/>
-          <line x1="90%" y1="0" x2="90%" y2="100%" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="4,20"/>
-          <!-- Horizontal grid -->
-          <line x1="0" y1="10%" x2="100%" y2="10%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,28"/>
-          <line x1="0" y1="20%" x2="100%" y2="20%" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="4,20"/>
-          <line x1="0" y1="30%" x2="100%" y2="30%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,28"/>
-          <line x1="0" y1="40%" x2="100%" y2="40%" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="4,20"/>
-          <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,28"/>
-          <line x1="0" y1="60%" x2="100%" y2="60%" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="4,20"/>
-          <line x1="0" y1="70%" x2="100%" y2="70%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,28"/>
-          <line x1="0" y1="80%" x2="100%" y2="80%" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="4,20"/>
-          <line x1="0" y1="90%" x2="100%" y2="90%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,28"/>
+        <!-- LAYER 1: Dashed blueprint grid -->
+        <g opacity="0.08" stroke="#00D4FF">
+          <line x1="100" y1="0" x2="100" y2="1000" stroke-width="0.5" stroke-dasharray="4,20"/>
+          <line x1="200" y1="0" x2="200" y2="1000" stroke-width="0.3" stroke-dasharray="2,28"/>
+          <line x1="300" y1="0" x2="300" y2="1000" stroke-width="0.5" stroke-dasharray="4,20"/>
+          <line x1="400" y1="0" x2="400" y2="1000" stroke-width="0.3" stroke-dasharray="2,28"/>
+          <line x1="500" y1="0" x2="500" y2="1000" stroke-width="0.5" stroke-dasharray="4,20"/>
+          <line x1="600" y1="0" x2="600" y2="1000" stroke-width="0.3" stroke-dasharray="2,28"/>
+          <line x1="700" y1="0" x2="700" y2="1000" stroke-width="0.5" stroke-dasharray="4,20"/>
+          <line x1="800" y1="0" x2="800" y2="1000" stroke-width="0.3" stroke-dasharray="2,28"/>
+          <line x1="900" y1="0" x2="900" y2="1000" stroke-width="0.5" stroke-dasharray="4,20"/>
+          <line x1="0" y1="100" x2="1000" y2="100" stroke-width="0.3" stroke-dasharray="2,28"/>
+          <line x1="0" y1="200" x2="1000" y2="200" stroke-width="0.5" stroke-dasharray="4,20"/>
+          <line x1="0" y1="300" x2="1000" y2="300" stroke-width="0.3" stroke-dasharray="2,28"/>
+          <line x1="0" y1="400" x2="1000" y2="400" stroke-width="0.5" stroke-dasharray="4,20"/>
+          <line x1="0" y1="500" x2="1000" y2="500" stroke-width="0.3" stroke-dasharray="2,28"/>
+          <line x1="0" y1="600" x2="1000" y2="600" stroke-width="0.5" stroke-dasharray="4,20"/>
+          <line x1="0" y1="700" x2="1000" y2="700" stroke-width="0.3" stroke-dasharray="2,28"/>
+          <line x1="0" y1="800" x2="1000" y2="800" stroke-width="0.5" stroke-dasharray="4,20"/>
+          <line x1="0" y1="900" x2="1000" y2="900" stroke-width="0.3" stroke-dasharray="2,28"/>
         </g>
 
-        <!-- LAYER 2: Crosshair registration marks at grid intersections -->
-        <g opacity="0.08">
-          <!-- Top-left region -->
-          <line x1="9%" y1="20%" x2="11%" y2="20%" stroke="#00D4FF" stroke-width="0.8"/>
-          <line x1="10%" y1="19%" x2="10%" y2="21%" stroke="#00D4FF" stroke-width="0.8"/>
-          <!-- Center-left -->
-          <line x1="29%" y1="40%" x2="31%" y2="40%" stroke="#00D4FF" stroke-width="0.8"/>
-          <line x1="30%" y1="39%" x2="30%" y2="41%" stroke="#00D4FF" stroke-width="0.8"/>
-          <!-- Center -->
-          <line x1="49%" y1="30%" x2="51%" y2="30%" stroke="#00D4FF" stroke-width="0.8"/>
-          <line x1="50%" y1="29%" x2="50%" y2="31%" stroke="#00D4FF" stroke-width="0.8"/>
-          <!-- Center-right -->
-          <line x1="69%" y1="50%" x2="71%" y2="50%" stroke="#00D4FF" stroke-width="0.8"/>
-          <line x1="70%" y1="49%" x2="70%" y2="51%" stroke="#00D4FF" stroke-width="0.8"/>
-          <!-- Top-right -->
-          <line x1="89%" y1="20%" x2="91%" y2="20%" stroke="#00D4FF" stroke-width="0.8"/>
-          <line x1="90%" y1="19%" x2="90%" y2="21%" stroke="#00D4FF" stroke-width="0.8"/>
-          <!-- Bottom -->
-          <line x1="49%" y1="70%" x2="51%" y2="70%" stroke="#00D4FF" stroke-width="0.8"/>
-          <line x1="50%" y1="69%" x2="50%" y2="71%" stroke="#00D4FF" stroke-width="0.8"/>
+        <!-- LAYER 2: Crosshair registration marks -->
+        <g opacity="0.12" stroke="#00D4FF" stroke-width="1">
+          <line x1="95" y1="200" x2="105" y2="200"/><line x1="100" y1="195" x2="100" y2="205"/>
+          <line x1="295" y1="400" x2="305" y2="400"/><line x1="300" y1="395" x2="300" y2="405"/>
+          <line x1="495" y1="300" x2="505" y2="300"/><line x1="500" y1="295" x2="500" y2="305"/>
+          <line x1="695" y1="500" x2="705" y2="500"/><line x1="700" y1="495" x2="700" y2="505"/>
+          <line x1="895" y1="200" x2="905" y2="200"/><line x1="900" y1="195" x2="900" y2="205"/>
+          <line x1="495" y1="700" x2="505" y2="700"/><line x1="500" y1="695" x2="500" y2="705"/>
         </g>
 
-        <!-- LAYER 3: Topographic contour lines (geological data) -->
-        <g opacity="0.07">
-          <path d="M 0,180 Q 150,160 300,185 T 600,170 T 900,195 T 1200,175 T 1500,190 T 1920,180" fill="none" stroke="#00D4FF" stroke-width="0.6" stroke-dasharray="8,16"/>
-          <path d="M 0,280 Q 200,265 400,290 T 800,270 T 1200,300 T 1600,275 T 1920,290" fill="none" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="6,20"/>
-          <path d="M 0,400 Q 250,380 500,410 T 1000,390 T 1500,420 T 1920,395" fill="none" stroke="#00D4FF" stroke-width="0.6" stroke-dasharray="10,14"/>
-          <path d="M 0,520 Q 180,500 360,530 T 720,510 T 1080,540 T 1440,515 T 1920,535" fill="none" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="4,22"/>
-          <path d="M 0,650 Q 300,630 600,660 T 1200,640 T 1920,665" fill="none" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="8,18"/>
+        <!-- LAYER 3: Topographic contour lines -->
+        <g opacity="0.09" fill="none" stroke="#00D4FF">
+          <path d="M 0 180 Q 150 160 300 185 T 600 170 T 900 195 T 1000 180" stroke-width="0.8" stroke-dasharray="8,16"/>
+          <path d="M 0 300 Q 200 280 400 310 T 800 290 T 1000 305" stroke-width="0.5" stroke-dasharray="6,20"/>
+          <path d="M 0 440 Q 250 420 500 450 T 1000 430" stroke-width="0.8" stroke-dasharray="10,14"/>
+          <path d="M 0 570 Q 180 550 360 580 T 720 560 T 1000 575" stroke-width="0.5" stroke-dasharray="4,22"/>
+          <path d="M 0 700 Q 300 680 600 710 T 1000 690" stroke-width="0.7" stroke-dasharray="8,18"/>
         </g>
 
-        <!-- LAYER 4: Point cloud scatter (geological survey data points) -->
-        <g opacity="0.08">
-          <circle cx="8%" cy="15%" r="1.5" fill="#00D4FF"/>
-          <circle cx="15%" cy="25%" r="1" fill="#00D4FF"/>
-          <circle cx="22%" cy="12%" r="2" fill="#00D4FF"/>
-          <circle cx="28%" cy="35%" r="1" fill="#00D4FF"/>
-          <circle cx="35%" cy="18%" r="1.5" fill="#00D4FF"/>
-          <circle cx="42%" cy="42%" r="1" fill="#00D4FF"/>
-          <circle cx="48%" cy="22%" r="2" fill="#00D4FF"/>
-          <circle cx="55%" cy="35%" r="1.5" fill="#00D4FF"/>
-          <circle cx="62%" cy="15%" r="1" fill="#00D4FF"/>
-          <circle cx="68%" cy="28%" r="2" fill="#00D4FF"/>
-          <circle cx="75%" cy="45%" r="1" fill="#00D4FF"/>
-          <circle cx="82%" cy="18%" r="1.5" fill="#00D4FF"/>
-          <circle cx="88%" cy="32%" r="1" fill="#00D4FF"/>
-          <circle cx="92%" cy="48%" r="2" fill="#00D4FF"/>
-          <circle cx="12%" cy="55%" r="1" fill="#00D4FF"/>
-          <circle cx="25%" cy="52%" r="1.5" fill="#00D4FF"/>
-          <circle cx="38%" cy="58%" r="1" fill="#00D4FF"/>
-          <circle cx="52%" cy="55%" r="2" fill="#00D4FF"/>
-          <circle cx="65%" cy="62%" r="1" fill="#00D4FF"/>
-          <circle cx="78%" cy="58%" r="1.5" fill="#00D4FF"/>
-          <circle cx="85%" cy="65%" r="1" fill="#00D4FF"/>
-          <circle cx="18%" cy="68%" r="1.5" fill="#00D4FF"/>
-          <circle cx="45%" cy="72%" r="1" fill="#00D4FF"/>
-          <circle cx="72%" cy="70%" r="2" fill="#00D4FF"/>
-          <circle cx="90%" cy="75%" r="1" fill="#00D4FF"/>
-          <!-- Denser cluster (simulating survey area of interest) -->
-          <circle cx="33%" cy="30%" r="1" fill="#00D4FF"/>
-          <circle cx="34%" cy="32%" r="0.8" fill="#00D4FF"/>
-          <circle cx="36%" cy="29%" r="1.2" fill="#00D4FF"/>
-          <circle cx="35%" cy="33%" r="0.8" fill="#00D4FF"/>
-          <circle cx="37%" cy="31%" r="1" fill="#00D4FF"/>
-          <circle cx="32%" cy="34%" r="0.8" fill="#00D4FF"/>
+        <!-- LAYER 4: Point cloud scatter -->
+        <g opacity="0.12" fill="#00D4FF">
+          <circle cx="80" cy="150" r="2"/><circle cx="150" cy="250" r="1.5"/>
+          <circle cx="220" cy="120" r="2.5"/><circle cx="280" cy="350" r="1.5"/>
+          <circle cx="350" cy="180" r="2"/><circle cx="420" cy="420" r="1.5"/>
+          <circle cx="480" cy="220" r="2.5"/><circle cx="550" cy="350" r="2"/>
+          <circle cx="620" cy="150" r="1.5"/><circle cx="680" cy="280" r="2.5"/>
+          <circle cx="750" cy="450" r="1.5"/><circle cx="820" cy="180" r="2"/>
+          <circle cx="880" cy="320" r="1.5"/><circle cx="920" cy="480" r="2.5"/>
+          <circle cx="120" cy="550" r="1.5"/><circle cx="250" cy="520" r="2"/>
+          <circle cx="380" cy="580" r="1.5"/><circle cx="520" cy="550" r="2.5"/>
+          <circle cx="650" cy="620" r="1.5"/><circle cx="780" cy="580" r="2"/>
+          <circle cx="850" cy="650" r="1.5"/><circle cx="180" cy="680" r="2"/>
+          <circle cx="450" cy="720" r="1.5"/><circle cx="720" cy="700" r="2.5"/>
+          <circle cx="900" cy="750" r="1.5"/>
+          <!-- Dense cluster -->
+          <circle cx="330" cy="300" r="1.5"/><circle cx="340" cy="320" r="1.2"/>
+          <circle cx="360" cy="290" r="1.8"/><circle cx="350" cy="330" r="1.2"/>
+          <circle cx="370" cy="310" r="1.5"/><circle cx="320" cy="340" r="1.2"/>
         </g>
 
-        <!-- LAYER 5: Dashed border rectangles (technical blueprint zones) -->
-        <g opacity="0.05">
-          <rect x="15%" y="15%" width="25%" height="20%" fill="none" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="6,10"/>
-          <rect x="55%" y="35%" width="30%" height="25%" fill="none" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="6,10"/>
-          <rect x="5%" y="55%" width="20%" height="15%" fill="none" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="4,12"/>
+        <!-- LAYER 5: Blueprint zone rectangles -->
+        <g opacity="0.06" fill="none" stroke="#00D4FF">
+          <rect x="150" y="150" width="250" height="200" stroke-width="0.7" stroke-dasharray="6,10"/>
+          <rect x="550" y="350" width="300" height="250" stroke-width="0.7" stroke-dasharray="6,10"/>
+          <rect x="50" y="550" width="200" height="150" stroke-width="0.5" stroke-dasharray="4,12"/>
         </g>
       </g>
     </svg>
@@ -865,7 +834,7 @@ img { display: block; max-width: 100%; }
 <section class="problem">
   <!-- agentmail.to pattern — sparse scatter + contour -->
   <div class="svg-pattern-overlay">
-    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 1000 600" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="prob-fade" x1="1" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="white" stop-opacity="1"/>
@@ -873,33 +842,29 @@ img { display: block; max-width: 100%; }
           <stop offset="100%" stop-color="white" stop-opacity="0"/>
         </linearGradient>
         <mask id="prob-mask">
-          <rect width="100%" height="100%" fill="url(#prob-fade)"/>
+          <rect width="1000" height="600" fill="url(#prob-fade)"/>
         </mask>
       </defs>
       <g mask="url(#prob-mask)">
-        <g opacity="0.05">
-          <line x1="25%" y1="0" x2="25%" y2="100%" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="3,22"/>
-          <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="3,22"/>
-          <line x1="75%" y1="0" x2="75%" y2="100%" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="3,22"/>
-          <line x1="0" y1="33%" x2="100%" y2="33%" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="3,22"/>
-          <line x1="0" y1="66%" x2="100%" y2="66%" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="3,22"/>
+        <g opacity="0.07" stroke="#00D4FF">
+          <line x1="250" y1="0" x2="250" y2="600" stroke-width="0.5" stroke-dasharray="3,22"/>
+          <line x1="500" y1="0" x2="500" y2="600" stroke-width="0.5" stroke-dasharray="3,22"/>
+          <line x1="750" y1="0" x2="750" y2="600" stroke-width="0.5" stroke-dasharray="3,22"/>
+          <line x1="0" y1="200" x2="1000" y2="200" stroke-width="0.5" stroke-dasharray="3,22"/>
+          <line x1="0" y1="400" x2="1000" y2="400" stroke-width="0.5" stroke-dasharray="3,22"/>
         </g>
-        <g opacity="0.06">
-          <circle cx="72%" cy="18%" r="1.5" fill="#00D4FF"/>
-          <circle cx="78%" cy="32%" r="1" fill="#00D4FF"/>
-          <circle cx="85%" cy="22%" r="2" fill="#00D4FF"/>
-          <circle cx="68%" cy="45%" r="1" fill="#00D4FF"/>
-          <circle cx="90%" cy="38%" r="1.5" fill="#00D4FF"/>
-          <circle cx="82%" cy="55%" r="1" fill="#00D4FF"/>
-          <circle cx="75%" cy="65%" r="1.5" fill="#00D4FF"/>
-          <circle cx="88%" cy="72%" r="1" fill="#00D4FF"/>
-          <path d="M 60%,25% Q 72%,20% 85%,28% T 100%,22%" fill="none" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="6,16"/>
-          <path d="M 65%,50% Q 78%,45% 90%,52% T 100%,48%" fill="none" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="4,18"/>
+        <g opacity="0.10" fill="#00D4FF">
+          <circle cx="720" cy="108" r="2"/><circle cx="780" cy="192" r="1.5"/>
+          <circle cx="850" cy="132" r="2.5"/><circle cx="680" cy="270" r="1.5"/>
+          <circle cx="900" cy="228" r="2"/><circle cx="820" cy="330" r="1.5"/>
+          <circle cx="750" cy="390" r="2"/><circle cx="880" cy="432" r="1.5"/>
         </g>
-        <!-- Crosshair at grid intersection -->
-        <g opacity="0.07">
-          <line x1="74%" y1="33%" x2="76%" y2="33%" stroke="#00D4FF" stroke-width="0.8"/>
-          <line x1="75%" y1="32%" x2="75%" y2="34%" stroke="#00D4FF" stroke-width="0.8"/>
+        <g opacity="0.08" fill="none" stroke="#00D4FF">
+          <path d="M 600 150 Q 720 120 850 168 T 1000 132" stroke-width="0.7" stroke-dasharray="6,16"/>
+          <path d="M 650 300 Q 780 270 900 312 T 1000 288" stroke-width="0.5" stroke-dasharray="4,18"/>
+        </g>
+        <g opacity="0.10" stroke="#00D4FF" stroke-width="1">
+          <line x1="745" y1="200" x2="755" y2="200"/><line x1="750" y1="195" x2="750" y2="205"/>
         </g>
       </g>
     </svg>
@@ -932,7 +897,7 @@ img { display: block; max-width: 100%; }
 <section class="technology" id="technology">
   <!-- agentmail.to pattern — grid + crosshairs + zones -->
   <div class="svg-pattern-overlay">
-    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 1000 800" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="tech-fade" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="white" stop-opacity="0"/>
@@ -941,37 +906,31 @@ img { display: block; max-width: 100%; }
           <stop offset="100%" stop-color="white" stop-opacity="0"/>
         </linearGradient>
         <mask id="tech-mask">
-          <rect width="100%" height="100%" fill="url(#tech-fade)"/>
+          <rect width="1000" height="800" fill="url(#tech-fade)"/>
         </mask>
       </defs>
       <g mask="url(#tech-mask)">
-        <g opacity="0.05">
-          <line x1="12.5%" y1="0" x2="12.5%" y2="100%" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="3,22"/>
-          <line x1="25%" y1="0" x2="25%" y2="100%" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="4,18"/>
-          <line x1="37.5%" y1="0" x2="37.5%" y2="100%" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="3,22"/>
-          <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="4,18"/>
-          <line x1="62.5%" y1="0" x2="62.5%" y2="100%" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="3,22"/>
-          <line x1="75%" y1="0" x2="75%" y2="100%" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="4,18"/>
-          <line x1="87.5%" y1="0" x2="87.5%" y2="100%" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="3,22"/>
-          <line x1="0" y1="25%" x2="100%" y2="25%" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="3,22"/>
-          <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="4,18"/>
-          <line x1="0" y1="75%" x2="100%" y2="75%" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="3,22"/>
+        <g opacity="0.07" stroke="#00D4FF">
+          <line x1="125" y1="0" x2="125" y2="800" stroke-width="0.5" stroke-dasharray="3,22"/>
+          <line x1="250" y1="0" x2="250" y2="800" stroke-width="0.6" stroke-dasharray="4,18"/>
+          <line x1="375" y1="0" x2="375" y2="800" stroke-width="0.5" stroke-dasharray="3,22"/>
+          <line x1="500" y1="0" x2="500" y2="800" stroke-width="0.6" stroke-dasharray="4,18"/>
+          <line x1="625" y1="0" x2="625" y2="800" stroke-width="0.5" stroke-dasharray="3,22"/>
+          <line x1="750" y1="0" x2="750" y2="800" stroke-width="0.6" stroke-dasharray="4,18"/>
+          <line x1="875" y1="0" x2="875" y2="800" stroke-width="0.5" stroke-dasharray="3,22"/>
+          <line x1="0" y1="200" x2="1000" y2="200" stroke-width="0.5" stroke-dasharray="3,22"/>
+          <line x1="0" y1="400" x2="1000" y2="400" stroke-width="0.6" stroke-dasharray="4,18"/>
+          <line x1="0" y1="600" x2="1000" y2="600" stroke-width="0.5" stroke-dasharray="3,22"/>
         </g>
-        <!-- Crosshairs -->
-        <g opacity="0.07">
-          <line x1="24%" y1="25%" x2="26%" y2="25%" stroke="#00D4FF" stroke-width="0.8"/>
-          <line x1="25%" y1="24%" x2="25%" y2="26%" stroke="#00D4FF" stroke-width="0.8"/>
-          <line x1="49%" y1="50%" x2="51%" y2="50%" stroke="#00D4FF" stroke-width="0.8"/>
-          <line x1="50%" y1="49%" x2="50%" y2="51%" stroke="#00D4FF" stroke-width="0.8"/>
-          <line x1="74%" y1="25%" x2="76%" y2="25%" stroke="#00D4FF" stroke-width="0.8"/>
-          <line x1="75%" y1="24%" x2="75%" y2="26%" stroke="#00D4FF" stroke-width="0.8"/>
-          <line x1="74%" y1="75%" x2="76%" y2="75%" stroke="#00D4FF" stroke-width="0.8"/>
-          <line x1="75%" y1="74%" x2="75%" y2="76%" stroke="#00D4FF" stroke-width="0.8"/>
+        <g opacity="0.10" stroke="#00D4FF" stroke-width="1">
+          <line x1="245" y1="200" x2="255" y2="200"/><line x1="250" y1="195" x2="250" y2="205"/>
+          <line x1="495" y1="400" x2="505" y2="400"/><line x1="500" y1="395" x2="500" y2="405"/>
+          <line x1="745" y1="200" x2="755" y2="200"/><line x1="750" y1="195" x2="750" y2="205"/>
+          <line x1="745" y1="600" x2="755" y2="600"/><line x1="750" y1="595" x2="750" y2="605"/>
         </g>
-        <!-- Blueprint zone rectangles -->
-        <g opacity="0.04">
-          <rect x="8%" y="20%" width="18%" height="30%" fill="none" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="6,12"/>
-          <rect x="60%" y="15%" width="22%" height="25%" fill="none" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="6,12"/>
+        <g opacity="0.05" fill="none" stroke="#00D4FF">
+          <rect x="80" y="160" width="180" height="240" stroke-width="0.7" stroke-dasharray="6,12"/>
+          <rect x="600" y="120" width="220" height="200" stroke-width="0.7" stroke-dasharray="6,12"/>
         </g>
       </g>
     </svg>
@@ -1108,7 +1067,7 @@ img { display: block; max-width: 100%; }
 <section class="cta">
   <!-- agentmail.to pattern — centered radial with scatter -->
   <div class="svg-pattern-overlay">
-    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 1000 500" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <radialGradient id="cta-fade" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stop-color="white" stop-opacity="1"/>
@@ -1116,33 +1075,29 @@ img { display: block; max-width: 100%; }
           <stop offset="100%" stop-color="white" stop-opacity="0"/>
         </radialGradient>
         <mask id="cta-mask">
-          <rect width="100%" height="100%" fill="url(#cta-fade)"/>
+          <rect width="1000" height="500" fill="url(#cta-fade)"/>
         </mask>
       </defs>
       <g mask="url(#cta-mask)">
-        <g opacity="0.05">
-          <line x1="25%" y1="0" x2="25%" y2="100%" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="3,22"/>
-          <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="4,18"/>
-          <line x1="75%" y1="0" x2="75%" y2="100%" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="3,22"/>
-          <line x1="0" y1="33%" x2="100%" y2="33%" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="3,22"/>
-          <line x1="0" y1="66%" x2="100%" y2="66%" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="3,22"/>
+        <g opacity="0.07" stroke="#00D4FF">
+          <line x1="250" y1="0" x2="250" y2="500" stroke-width="0.5" stroke-dasharray="3,22"/>
+          <line x1="500" y1="0" x2="500" y2="500" stroke-width="0.6" stroke-dasharray="4,18"/>
+          <line x1="750" y1="0" x2="750" y2="500" stroke-width="0.5" stroke-dasharray="3,22"/>
+          <line x1="0" y1="165" x2="1000" y2="165" stroke-width="0.5" stroke-dasharray="3,22"/>
+          <line x1="0" y1="335" x2="1000" y2="335" stroke-width="0.5" stroke-dasharray="3,22"/>
         </g>
-        <g opacity="0.07">
-          <circle cx="35%" cy="25%" r="1.5" fill="#00D4FF"/>
-          <circle cx="48%" cy="35%" r="1" fill="#00D4FF"/>
-          <circle cx="58%" cy="22%" r="2" fill="#00D4FF"/>
-          <circle cx="42%" cy="55%" r="1" fill="#00D4FF"/>
-          <circle cx="65%" cy="45%" r="1.5" fill="#00D4FF"/>
-          <circle cx="55%" cy="68%" r="1" fill="#00D4FF"/>
-          <circle cx="38%" cy="72%" r="1.5" fill="#00D4FF"/>
-          <circle cx="62%" cy="75%" r="1" fill="#00D4FF"/>
-          <path d="M 25%,40% Q 40%,35% 55%,42% T 75%,38%" fill="none" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="6,16"/>
-          <path d="M 30%,65% Q 45%,60% 60%,67% T 80%,62%" fill="none" stroke="#00D4FF" stroke-width="0.4" stroke-dasharray="4,18"/>
+        <g opacity="0.10" fill="#00D4FF">
+          <circle cx="350" cy="125" r="2"/><circle cx="480" cy="175" r="1.5"/>
+          <circle cx="580" cy="110" r="2.5"/><circle cx="420" cy="275" r="1.5"/>
+          <circle cx="650" cy="225" r="2"/><circle cx="550" cy="340" r="1.5"/>
+          <circle cx="380" cy="360" r="2"/><circle cx="620" cy="375" r="1.5"/>
         </g>
-        <!-- Crosshair center -->
-        <g opacity="0.06">
-          <line x1="49%" y1="50%" x2="51%" y2="50%" stroke="#00D4FF" stroke-width="0.8"/>
-          <line x1="50%" y1="49%" x2="50%" y2="51%" stroke="#00D4FF" stroke-width="0.8"/>
+        <g opacity="0.08" fill="none" stroke="#00D4FF">
+          <path d="M 250 200 Q 400 175 550 210 T 750 190" stroke-width="0.7" stroke-dasharray="6,16"/>
+          <path d="M 300 325 Q 450 300 600 335 T 800 310" stroke-width="0.5" stroke-dasharray="4,18"/>
+        </g>
+        <g opacity="0.10" stroke="#00D4FF" stroke-width="1">
+          <line x1="495" y1="250" x2="505" y2="250"/><line x1="500" y1="245" x2="500" y2="255"/>
         </g>
       </g>
     </svg>
