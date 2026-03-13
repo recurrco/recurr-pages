@@ -68,19 +68,6 @@ a { color: inherit; text-decoration: none; }
   transition: opacity 0.2s;
 }
 .btn-primary:hover { opacity: 0.85; }
-.btn-outline {
-  display: inline-block;
-  padding: 14px 36px;
-  border: 1px solid rgba(255,255,255,0.35);
-  color: #fff;
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 500;
-  border-radius: 6px;
-  background: rgba(255,255,255,0.05);
-  transition: border-color 0.2s;
-}
-.btn-outline:hover { border-color: rgba(255,255,255,0.6); }
 
 /* =========================================================
    FOLD 1: HERO
@@ -142,7 +129,7 @@ a { color: inherit; text-decoration: none; }
 .hero-spacer {
   position: relative;
   z-index: 1;
-  height: 380px;
+  height: 480px;
 }
 /* Hero logos: 5 columns × 2 rows — images are 284×120 intrinsic */
 .hero-logos {
@@ -235,18 +222,12 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* =========================================================
-   FOLD 3: TECHNOLOGY — max 750px sticky height
+   FOLD 3: TECHNOLOGY — restructured: heading inside sticky,
+   fixed pixel heights, no column borders, centered text
    ========================================================= */
-.tech-header {
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 100px 64px 80px;
-  text-align: center;
-}
 .tech-scroll {
   position: relative;
-  height: 220vh;
+  height: 3000px;
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
@@ -254,17 +235,37 @@ a { color: inherit; text-decoration: none; }
 .tech-sticky {
   position: sticky;
   top: 0;
-  height: 750px;
-  max-height: 80vh;
+  height: 700px;
+  max-height: 100vh;
   display: flex;
+  flex-direction: column;
   overflow: hidden;
+}
+.tech-heading {
+  padding: 48px 48px 0;
+  text-align: center;
+  flex-shrink: 0;
+}
+.tech-heading h2 {
+  font-family: var(--serif);
+  font-size: clamp(26px, 3.2vw, 45px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+.tech-heading h2 .accent { color: var(--accent); }
+.tech-content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
 }
 .tech-text {
   flex: 0 0 45%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 40px 48px;
+  padding: 24px 48px;
 }
 .tech-item {
   transition: all 0.5s ease;
@@ -318,12 +319,11 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px;
-  border-left: 1px solid var(--border);
+  padding: 24px 40px;
 }
 .tech-img-box {
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
   aspect-ratio: 1 / 1;
   border-radius: 16px;
   overflow: hidden;
@@ -489,7 +489,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* =========================================================
-   FOOTER — full info matching UAI website
+   FOOTER — full info, single white CTA button
    ========================================================= */
 .site-footer {
   padding: 56px 48px 40px;
@@ -517,30 +517,18 @@ a { color: inherit; text-decoration: none; }
 }
 .footer-col a { transition: color 0.2s; }
 .footer-col a:hover { color: #fff; }
-.footer-cta-link {
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #fff;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  display: block;
-  margin-bottom: 12px;
-}
-.footer-email {
+.footer-cta-btn {
   display: inline-block;
+  padding: 14px 36px;
+  background: #fff;
+  color: #111;
   font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 500;
-  color: #fff;
-  background: var(--red);
-  padding: 8px 16px;
-  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 6px;
   transition: opacity 0.2s;
 }
-.footer-email:hover { opacity: 0.85; }
+.footer-cta-btn:hover { opacity: 0.85; }
 .footer-bottom {
   display: flex;
   justify-content: space-between;
@@ -559,13 +547,13 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 1024px) {
   .page { width: 92%; }
   .hero-content { padding: 80px 36px 0; }
-  .hero-spacer { height: 240px; }
+  .hero-spacer { height: 320px; }
   .hero-logos { grid-template-rows: 80px 80px; }
   .problem-inner { padding: 72px 36px; flex-direction: column; }
   .problem-stats { flex-wrap: wrap; }
-  .tech-header { padding: 72px 36px 56px; }
-  .tech-text { padding: 32px 36px; }
-  .tech-image-wrap { padding: 32px; }
+  .tech-heading { padding: 36px 36px 0; }
+  .tech-text { padding: 20px 36px; }
+  .tech-image-wrap { padding: 20px 32px; }
   .impact-inner { padding: 72px 36px; }
   .impact-stats { gap: 36px; flex-wrap: wrap; }
   .team-inner { padding: 72px 36px 60px; }
@@ -574,17 +562,17 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 768px) {
   .page { width: 95%; }
   .hero-content { padding: 64px 24px 0; }
-  .hero-spacer { height: 160px; }
+  .hero-spacer { height: 200px; }
   .hero-logos { grid-template-columns: repeat(5, 1fr); grid-template-rows: 64px 64px; padding: 0 12px 16px; }
   .hero-logo-cell img { max-width: 120px; }
-  .hero-ctas { flex-direction: column; align-items: center; }
   .problem-inner { padding: 56px 24px; }
   .problem-stat-card { width: 160px; height: 130px; }
   .problem-stat-num { font-size: 28px; }
-  .tech-header { padding: 56px 24px 40px; }
   .tech-sticky { flex-direction: column; height: auto; max-height: none; min-height: 600px; }
-  .tech-text { flex: none; padding: 24px; justify-content: flex-start; }
-  .tech-image-wrap { flex: none; min-height: 300px; padding: 24px; border-left: none; border-top: 1px solid var(--border); }
+  .tech-heading { padding: 24px 24px 0; }
+  .tech-content { flex-direction: column; }
+  .tech-text { flex: none; padding: 16px 24px; justify-content: flex-start; }
+  .tech-image-wrap { flex: none; min-height: 280px; padding: 16px 24px; }
   .impact-inner { padding: 56px 24px; }
   .team-inner { padding: 56px 24px 48px; }
   .team-grid { grid-template-columns: 1fr; }
@@ -613,7 +601,6 @@ a { color: inherit; text-decoration: none; }
       <p class="hero-sub">Uncharted AI deploys autonomous robots with multi-modal sensing to collapse the longest, most expensive stage of the mining pipeline — field exploration.</p>
       <div class="hero-ctas">
         <a href="mailto:contact@uncharted-ai.com" class="btn-primary">Talk to Us</a>
-        <a href="#technology" class="btn-outline">See the Technology</a>
       </div>
     </div>
     <div class="hero-spacer"></div>
@@ -655,44 +642,46 @@ a { color: inherit; text-decoration: none; }
     </div>
   </section>
 
-  <!-- FOLD 3: TECHNOLOGY -->
-  <div class="tech-header" id="technology">
-    <h2 class="heading">We are building the mineral exploration<br>stack for our planet, and beyond.</h2>
-  </div>
-  <div class="tech-scroll">
+  <!-- FOLD 3: TECHNOLOGY — heading inside sticky, fixed height -->
+  <div class="tech-scroll" id="technology">
     <div class="tech-sticky">
-      <div class="tech-text">
-        <div class="tech-item active" data-index="0">
-          <p class="tech-num">01</p>
-          <h3 class="tech-title">TRACE</h3>
-          <p class="tech-subtitle">Autonomous Robots</p>
-          <p class="tech-desc">Tracked ground robots that navigate extreme, GPS-denied terrain. SLAM navigation, swarm coordination, decentralized comms. Go where humans can't — and stay there.</p>
-        </div>
-        <div class="tech-item future" data-index="1">
-          <p class="tech-num">02</p>
-          <h3 class="tech-title">Multi-Modal Sensing</h3>
-          <p class="tech-subtitle">Ground Truth Data</p>
-          <p class="tech-desc">LiDAR, hyperspectral imaging, XRF, ground-penetrating radar. Contact-based measurements that only a ground robot can perform — the data satellites cannot see.</p>
-        </div>
-        <div class="tech-item future" data-index="2">
-          <p class="tech-num">03</p>
-          <h3 class="tech-title">FiND</h3>
-          <p class="tech-subtitle">AI Decision Engine</p>
-          <p class="tech-desc">ML-guided planning, perception, and real-time decision-making. Fuses multi-modal sensor data into actionable intelligence. Where to go next, what to measure, and why.</p>
-        </div>
-        <div class="tech-item future" data-index="3">
-          <p class="tech-num">04</p>
-          <h3 class="tech-title">Digital Twin</h3>
-          <p class="tech-subtitle">Drill-Ready Intelligence</p>
-          <p class="tech-desc">Real-time 3D subsurface model. All sensor data fused into one explorable map. Where to drill is no longer a guess — it's a data-driven decision.</p>
-        </div>
+      <div class="tech-heading">
+        <h2>We are building the <span class="accent">mineral exploration<br>stack</span> for our planet, and beyond.</h2>
       </div>
-      <div class="tech-image-wrap">
-        <div class="tech-img-box">
-          <img src="images/trace.png" alt="TRACE" class="tech-img active" data-index="0">
-          <img src="images/sensing.png" alt="Multi-Modal Sensing" class="tech-img" data-index="1">
-          <img src="images/find.png" alt="FiND" class="tech-img" data-index="2">
-          <img src="images/twin.png" alt="Digital Twin" class="tech-img" data-index="3">
+      <div class="tech-content">
+        <div class="tech-text">
+          <div class="tech-item active" data-index="0">
+            <p class="tech-num">01</p>
+            <h3 class="tech-title">TRACE</h3>
+            <p class="tech-subtitle">Autonomous Robots</p>
+            <p class="tech-desc">Tracked ground robots that navigate extreme, GPS-denied terrain. SLAM navigation, swarm coordination, decentralized comms. Go where humans can't — and stay there.</p>
+          </div>
+          <div class="tech-item future" data-index="1">
+            <p class="tech-num">02</p>
+            <h3 class="tech-title">Multi-Modal Sensing</h3>
+            <p class="tech-subtitle">Ground Truth Data</p>
+            <p class="tech-desc">LiDAR, hyperspectral imaging, XRF, ground-penetrating radar. Contact-based measurements that only a ground robot can perform — the data satellites cannot see.</p>
+          </div>
+          <div class="tech-item future" data-index="2">
+            <p class="tech-num">03</p>
+            <h3 class="tech-title">FiND</h3>
+            <p class="tech-subtitle">AI Decision Engine</p>
+            <p class="tech-desc">ML-guided planning, perception, and real-time decision-making. Fuses multi-modal sensor data into actionable intelligence. Where to go next, what to measure, and why.</p>
+          </div>
+          <div class="tech-item future" data-index="3">
+            <p class="tech-num">04</p>
+            <h3 class="tech-title">Digital Twin</h3>
+            <p class="tech-subtitle">Drill-Ready Intelligence</p>
+            <p class="tech-desc">Real-time 3D subsurface model. All sensor data fused into one explorable map. Where to drill is no longer a guess — it's a data-driven decision.</p>
+          </div>
+        </div>
+        <div class="tech-image-wrap">
+          <div class="tech-img-box">
+            <img src="images/trace.png" alt="TRACE" class="tech-img active" data-index="0">
+            <img src="images/sensing.png" alt="Multi-Modal Sensing" class="tech-img" data-index="1">
+            <img src="images/find.png" alt="FiND" class="tech-img" data-index="2">
+            <img src="images/twin.png" alt="Digital Twin" class="tech-img" data-index="3">
+          </div>
         </div>
       </div>
     </div>
@@ -797,8 +786,7 @@ a { color: inherit; text-decoration: none; }
       Quebec H3T 1J4</p>
     </div>
     <div class="footer-col" style="text-align: right;">
-      <a href="mailto:contact@uncharted-ai.com" class="footer-cta-link">GET IN TOUCH</a>
-      <a href="mailto:contact@uncharted-ai.com" class="footer-email">contact@uncharted-ai.com</a>
+      <a href="mailto:contact@uncharted-ai.com" class="footer-cta-btn">Get In Touch</a>
     </div>
   </div>
   <div class="footer-bottom">
