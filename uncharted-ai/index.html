@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ===== RESET ===== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
@@ -21,7 +20,6 @@ body {
 }
 a { color: inherit; text-decoration: none; }
 
-/* ===== TOKENS ===== */
 :root {
   --bg: #111;
   --bg-light: #222;
@@ -33,11 +31,19 @@ a { color: inherit; text-decoration: none; }
   --sans: 'Work Sans', -apple-system, sans-serif;
 }
 
-/* ===== PAGE WRAPPER ===== */
-.page {
-  width: 80%;
-  max-width: 1440px;
-  margin: 0 auto;
+.page { width: 80%; max-width: 1440px; margin: 0 auto; }
+.fold {
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.heading {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  color: #fff;
 }
 
 /* ===== TOPBAR ===== */
@@ -47,7 +53,7 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   padding: 24px 0;
 }
-.topbar-logo { height: 24px; opacity: 0.8; }
+.topbar-logo { width: 180px; height: auto; opacity: 0.8; }
 
 /* ===== BUTTONS ===== */
 .btn-primary {
@@ -76,23 +82,6 @@ a { color: inherit; text-decoration: none; }
 }
 .btn-outline:hover { border-color: rgba(255,255,255,0.6); }
 
-/* ===== FOLD (shared border) ===== */
-.fold {
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-/* ===== HEADING UTILITY ===== */
-.heading {
-  font-family: var(--serif);
-  font-size: clamp(32px, 4vw, 52px);
-  font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.04em;
-  color: #fff;
-}
-
 /* =========================================================
    FOLD 1: HERO
    ========================================================= */
@@ -116,10 +105,10 @@ a { color: inherit; text-decoration: none; }
   top: 0; left: 0; right: 0; bottom: 0;
   background: linear-gradient(
     to bottom,
-    rgba(17, 17, 17, 0.15) 0%,
-    rgba(17, 17, 17, 0.05) 30%,
-    rgba(17, 17, 17, 0.2) 60%,
-    rgba(17, 17, 17, 0.88) 100%
+    rgba(17,17,17,0.15) 0%,
+    rgba(17,17,17,0.05) 30%,
+    rgba(17,17,17,0.2) 60%,
+    rgba(17,17,17,0.88) 100%
   );
 }
 .hero-content {
@@ -140,8 +129,7 @@ a { color: inherit; text-decoration: none; }
 .hero-sub {
   font-family: var(--sans);
   font-size: 17px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255,255,255,0.6);
   line-height: 1.7;
   max-width: 580px;
   margin: 0 auto 40px;
@@ -151,30 +139,31 @@ a { color: inherit; text-decoration: none; }
   gap: 14px;
   justify-content: center;
 }
-/* Spacer between CTAs and logos to show full image */
 .hero-spacer {
   position: relative;
   z-index: 1;
   height: 380px;
 }
-/* Hero logos: 5 columns, 2 rows, each cell ~280x120 */
+/* Hero logos: 5 columns × 2 rows — images are 284×120 intrinsic */
 .hero-logos {
   position: relative;
   z-index: 2;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: 120px 120px;
-  padding: 0;
+  grid-template-rows: 100px 100px;
+  padding: 0 24px 24px;
 }
 .hero-logo-cell {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 10px 16px;
 }
 .hero-logo-cell img {
-  max-height: 36px;
-  max-width: 140px;
+  width: 100%;
+  height: auto;
+  max-width: 180px;
+  object-fit: contain;
   opacity: 0.5;
   filter: grayscale(100%) brightness(1.8);
   transition: all 0.3s ease;
@@ -187,32 +176,27 @@ a { color: inherit; text-decoration: none; }
 /* =========================================================
    FOLD 2: PROBLEM — #222 bg, left text + right cards
    ========================================================= */
-.problem {
-  background: var(--bg-light);
-}
+.problem { background: var(--bg-light); }
 .problem-inner {
   padding: 100px 64px;
   display: flex;
   align-items: flex-start;
   gap: 64px;
 }
-.problem-text {
-  flex: 1;
-  min-width: 0;
-}
+.problem-text { flex: 1; min-width: 0; }
 .problem-text h2 {
   font-family: var(--serif);
-  font-size: clamp(30px, 3.8vw, 48px);
+  font-size: clamp(26px, 3.2vw, 40px);
   font-weight: 600;
-  line-height: 1.15;
+  line-height: 1.2;
   letter-spacing: -0.04em;
   color: #fff;
+  opacity: 0.8;
   margin-bottom: 24px;
 }
 .problem-text p {
   font-family: var(--sans);
   font-size: 15px;
-  font-weight: 400;
   color: #999;
   line-height: 1.7;
   max-width: 520px;
@@ -246,13 +230,12 @@ a { color: inherit; text-decoration: none; }
 .problem-stat-label {
   font-family: var(--sans);
   font-size: 13px;
-  font-weight: 400;
   color: #999;
   line-height: 1.4;
 }
 
 /* =========================================================
-   FOLD 3: TECHNOLOGY — scroll animation
+   FOLD 3: TECHNOLOGY — max 750px sticky height
    ========================================================= */
 .tech-header {
   border-left: 1px solid var(--border);
@@ -263,7 +246,7 @@ a { color: inherit; text-decoration: none; }
 }
 .tech-scroll {
   position: relative;
-  height: 250vh;
+  height: 220vh;
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
@@ -271,17 +254,17 @@ a { color: inherit; text-decoration: none; }
 .tech-sticky {
   position: sticky;
   top: 0;
-  height: 80vh;
+  height: 750px;
+  max-height: 80vh;
   display: flex;
   overflow: hidden;
 }
-/* Text column */
 .tech-text {
   flex: 0 0 45%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 40px 48px 56px;
+  justify-content: center;
+  padding: 40px 48px;
 }
 .tech-item {
   transition: all 0.5s ease;
@@ -330,7 +313,6 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.7;
   max-width: 400px;
 }
-/* Image column */
 .tech-image-wrap {
   flex: 0 0 55%;
   display: flex;
@@ -341,7 +323,7 @@ a { color: inherit; text-decoration: none; }
 }
 .tech-img-box {
   width: 100%;
-  max-width: 460px;
+  max-width: 420px;
   aspect-ratio: 1 / 1;
   border-radius: 16px;
   overflow: hidden;
@@ -357,21 +339,13 @@ a { color: inherit; text-decoration: none; }
   transform: translateY(30px);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
-.tech-img.active {
-  opacity: 1;
-  transform: translateY(0);
-}
+.tech-img.active { opacity: 1; transform: translateY(0); }
 
 /* =========================================================
-   FOLD 4: IMPACT — #222 bg, blue numbers, blue "With Uncharted AI"
+   FOLD 4: IMPACT — #222 bg, blue numbers
    ========================================================= */
-.impact {
-  background: var(--bg-light);
-}
-.impact-inner {
-  padding: 100px 64px;
-  text-align: center;
-}
+.impact { background: var(--bg-light); }
+.impact-inner { padding: 100px 64px; text-align: center; }
 .impact-stats {
   display: flex;
   justify-content: center;
@@ -393,10 +367,7 @@ a { color: inherit; text-decoration: none; }
   color: #666;
   line-height: 1.5;
 }
-.comparison-wrap {
-  max-width: 800px;
-  margin: 64px auto 0;
-}
+.comparison-wrap { max-width: 800px; margin: 64px auto 0; }
 .comparison-table {
   width: 100%;
   border-collapse: collapse;
@@ -417,22 +388,48 @@ a { color: inherit; text-decoration: none; }
 .comparison-table thead th.col-after { color: var(--accent); }
 .comparison-table tbody td {
   padding: 16px;
-  border-top: 1px solid rgba(250, 250, 250, 0.08);
+  border-top: 1px solid rgba(250,250,250,0.08);
   vertical-align: top;
 }
-.comparison-table tbody td:first-child {
-  padding-left: 0;
-  color: #aaa;
-  font-weight: 500;
-}
+.comparison-table tbody td:first-child { padding-left: 0; color: #aaa; font-weight: 500; }
 .comparison-table .val-before { color: #777; }
 .comparison-table .val-after { color: #fff; font-weight: 600; }
 
 /* =========================================================
-   FOLD 5: TEAM — heading → video → cards
+   FOLD 5: TEAM — hero bg, heading → video → cards with photos
    ========================================================= */
+.team-fold {
+  position: relative;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  border-radius: 0 0 24px 24px;
+  overflow: hidden;
+}
+.team-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('images/hero.png');
+  background-size: cover;
+  background-position: center center;
+  z-index: 0;
+}
+.team-bg::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(17,17,17,0.8) 0%,
+    rgba(17,17,17,0.55) 40%,
+    rgba(17,17,17,0.75) 70%,
+    rgba(17,17,17,0.92) 100%
+  );
+}
 .team-inner {
-  padding: 100px 64px;
+  position: relative;
+  z-index: 2;
+  padding: 100px 64px 80px;
   text-align: center;
 }
 .team-video-wrap {
@@ -442,10 +439,7 @@ a { color: inherit; text-decoration: none; }
   overflow: hidden;
   border: 1px solid var(--border);
 }
-.team-video-wrap video {
-  display: block;
-  width: 100%;
-}
+.team-video-wrap video { display: block; width: 100%; }
 .team-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -456,10 +450,22 @@ a { color: inherit; text-decoration: none; }
 }
 .team-card {
   padding: 28px 24px;
-  background: var(--bg-card);
+  background: rgba(26,26,26,0.8);
+  backdrop-filter: blur(8px);
   border: 1px solid var(--border);
   border-radius: 12px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
 }
+.team-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.team-info { flex: 1; }
 .team-name {
   font-family: var(--serif);
   font-size: 17px;
@@ -473,133 +479,120 @@ a { color: inherit; text-decoration: none; }
   font-size: 12px;
   font-weight: 500;
   color: var(--accent);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 .team-bio {
   font-family: var(--sans);
   font-size: 13px;
-  color: #777;
+  color: #999;
   line-height: 1.6;
 }
 
 /* =========================================================
-   FOOTER CTA — taller, image centered
+   FOOTER — full info matching UAI website
    ========================================================= */
-.footer-cta {
-  position: relative;
-  min-height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  border-radius: 0 0 24px 24px;
-  overflow: hidden;
+.site-footer {
+  padding: 56px 48px 40px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
-.footer-cta-bg {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image: url('images/hero.png');
-  background-size: cover;
-  background-position: center center;
-  z-index: 0;
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
 }
-.footer-cta-bg::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(17, 17, 17, 0.75) 0%,
-    rgba(17, 17, 17, 0.4) 50%,
-    rgba(17, 17, 17, 0.8) 100%
-  );
-}
-.footer-cta-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  padding: 120px 64px;
-}
-.footer-cta h2 {
-  font-family: var(--serif);
-  font-size: clamp(30px, 3.8vw, 44px);
-  font-weight: 600;
-  letter-spacing: -0.04em;
-  line-height: 1.2;
-  color: #fff;
-  margin-bottom: 16px;
-}
-.footer-cta p {
+.footer-col h4 {
   font-family: var(--sans);
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 36px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 12px;
 }
-
-/* =========================================================
-   BOTTOMBAR
-   ========================================================= */
-.bottombar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 32px 0 40px;
-  gap: 16px;
-}
-.bottombar-logo { height: 20px; opacity: 0.5; }
-.bottombar-row {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0 16px;
-}
-.bottombar-row span {
+.footer-col p, .footer-col a {
   font-family: var(--sans);
   font-size: 12px;
-  color: #444;
+  color: #777;
+  line-height: 1.7;
+}
+.footer-col a { transition: color 0.2s; }
+.footer-col a:hover { color: #fff; }
+.footer-cta-link {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  display: block;
+  margin-bottom: 12px;
+}
+.footer-email {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  background: var(--red);
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: opacity 0.2s;
+}
+.footer-email:hover { opacity: 0.85; }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  border-top: 1px solid rgba(250,250,250,0.08);
+}
+.footer-bottom-logo { width: 120px; height: auto; opacity: 0.4; }
+.footer-bottom span {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: #555;
 }
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
   .page { width: 92%; }
   .hero-content { padding: 80px 36px 0; }
   .hero-spacer { height: 240px; }
-  .hero-logos { grid-template-rows: 100px 100px; }
+  .hero-logos { grid-template-rows: 80px 80px; }
   .problem-inner { padding: 72px 36px; flex-direction: column; }
   .problem-stats { flex-wrap: wrap; }
   .tech-header { padding: 72px 36px 56px; }
-  .tech-text { padding: 32px 36px 48px; }
+  .tech-text { padding: 32px 36px; }
   .tech-image-wrap { padding: 32px; }
   .impact-inner { padding: 72px 36px; }
   .impact-stats { gap: 36px; flex-wrap: wrap; }
-  .team-inner { padding: 72px 36px; }
-  .footer-cta-content { padding: 80px 36px; }
+  .team-inner { padding: 72px 36px 60px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 768px) {
   .page { width: 95%; }
   .hero-content { padding: 64px 24px 0; }
   .hero-spacer { height: 160px; }
-  .hero-logos { grid-template-columns: repeat(5, 1fr); grid-template-rows: 80px 80px; }
-  .hero-logo-cell img { max-height: 24px; max-width: 100px; }
+  .hero-logos { grid-template-columns: repeat(5, 1fr); grid-template-rows: 64px 64px; padding: 0 12px 16px; }
+  .hero-logo-cell img { max-width: 120px; }
   .hero-ctas { flex-direction: column; align-items: center; }
   .problem-inner { padding: 56px 24px; }
   .problem-stat-card { width: 160px; height: 130px; }
   .problem-stat-num { font-size: 28px; }
   .tech-header { padding: 56px 24px 40px; }
-  .tech-sticky { flex-direction: column; height: auto; min-height: 80vh; }
+  .tech-sticky { flex-direction: column; height: auto; max-height: none; min-height: 600px; }
   .tech-text { flex: none; padding: 24px; justify-content: flex-start; }
-  .tech-image-wrap { flex: none; min-height: 40vh; padding: 24px; border-left: none; border-top: 1px solid var(--border); }
+  .tech-image-wrap { flex: none; min-height: 300px; padding: 24px; border-left: none; border-top: 1px solid var(--border); }
   .impact-inner { padding: 56px 24px; }
-  .team-inner { padding: 56px 24px; }
+  .team-inner { padding: 56px 24px 48px; }
   .team-grid { grid-template-columns: 1fr; }
-  .footer-cta { min-height: 60vh; }
-  .footer-cta-content { padding: 56px 24px; }
+  .team-card { flex-direction: column; align-items: center; text-align: center; }
+  .footer-grid { grid-template-columns: 1fr; }
   .comparison-table { font-size: 12px; }
   .comparison-table tbody td { padding: 12px 8px; }
+  .site-footer { padding: 40px 24px 32px; }
 }
 </style>
 </head>
@@ -619,7 +612,7 @@ a { color: inherit; text-decoration: none; }
       <h1>A new chapter in mineral<br>exploration is here</h1>
       <p class="hero-sub">Uncharted AI deploys autonomous robots with multi-modal sensing to collapse the longest, most expensive stage of the mining pipeline — field exploration.</p>
       <div class="hero-ctas">
-        <a href="mailto:hello@uncharted-ai.com" class="btn-primary">Talk to Us</a>
+        <a href="mailto:contact@uncharted-ai.com" class="btn-primary">Talk to Us</a>
         <a href="#technology" class="btn-outline">See the Technology</a>
       </div>
     </div>
@@ -638,7 +631,7 @@ a { color: inherit; text-decoration: none; }
     </div>
   </section>
 
-  <!-- FOLD 2: PROBLEM — #222 bg, left text + right cards, red numbers -->
+  <!-- FOLD 2: PROBLEM -->
   <section class="fold problem" id="problem">
     <div class="problem-inner">
       <div class="problem-text">
@@ -705,10 +698,10 @@ a { color: inherit; text-decoration: none; }
     </div>
   </div>
 
-  <!-- FOLD 4: IMPACT — #222 bg, blue numbers -->
+  <!-- FOLD 4: IMPACT -->
   <section class="fold impact">
     <div class="impact-inner">
-      <h2 class="heading">What changes when the exploration<br>stack goes autonomous.</h2>
+      <h2 class="heading">Go from exploration to mining<br>100x faster.</h2>
       <div class="impact-stats">
         <div class="impact-stat">
           <div class="impact-stat-num">95%</div>
@@ -733,51 +726,24 @@ a { color: inherit; text-decoration: none; }
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Timeline</td>
-              <td class="val-before">12+ years</td>
-              <td class="val-after">2–3 years</td>
-            </tr>
-            <tr>
-              <td>Cost per program</td>
-              <td class="val-before">$200M+</td>
-              <td class="val-after">$10M</td>
-            </tr>
-            <tr>
-              <td>Daily coverage</td>
-              <td class="val-before">2–5 km²</td>
-              <td class="val-after">50+ km²</td>
-            </tr>
-            <tr>
-              <td>Discovery rate</td>
-              <td class="val-before">0.5%</td>
-              <td class="val-after">~75%</td>
-            </tr>
-            <tr>
-              <td>Sensing</td>
-              <td class="val-before">Single-modal, manual</td>
-              <td class="val-after">Multi-modal, fused</td>
-            </tr>
-            <tr>
-              <td>Field crew</td>
-              <td class="val-before">Large teams, hazardous</td>
-              <td class="val-after">Autonomous, zero-risk</td>
-            </tr>
-            <tr>
-              <td>Drill decisions</td>
-              <td class="val-before">Expert intuition</td>
-              <td class="val-after">Data-driven targeting</td>
-            </tr>
+            <tr><td>Timeline</td><td class="val-before">12+ years</td><td class="val-after">2–3 years</td></tr>
+            <tr><td>Cost per program</td><td class="val-before">$200M+</td><td class="val-after">$10M</td></tr>
+            <tr><td>Daily coverage</td><td class="val-before">2–5 km²</td><td class="val-after">50+ km²</td></tr>
+            <tr><td>Discovery rate</td><td class="val-before">0.5%</td><td class="val-after">~75%</td></tr>
+            <tr><td>Sensing</td><td class="val-before">Single-modal, manual</td><td class="val-after">Multi-modal, fused</td></tr>
+            <tr><td>Field crew</td><td class="val-before">Large teams, hazardous</td><td class="val-after">Autonomous, zero-risk</td></tr>
+            <tr><td>Drill decisions</td><td class="val-before">Expert intuition</td><td class="val-after">Data-driven targeting</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- FOLD 5: TEAM — heading → video → cards -->
-  <section class="fold team" id="team">
+  <!-- FOLD 5: TEAM (final bordered fold — hero bg, rounded bottom) -->
+  <section class="team-fold" id="team">
+    <div class="team-bg"></div>
     <div class="team-inner">
-      <h2 class="heading">NASA JPL. DARPA. IISc.<br>Three continents of field deployments.</h2>
+      <h2 class="heading">The future of mineral<br>exploration starts here.</h2>
       <div class="team-video-wrap">
         <video autoplay muted loop playsinline>
           <source src="https://lightcyan-quail-720430.hostingersite.com/wp-content/uploads/2025/06/WhatsApp-Video-2025-06-05-at-23.11.28-2.mp4" type="video/mp4">
@@ -785,46 +751,67 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="team-grid">
         <div class="team-card">
-          <div class="team-name">Pradyumna Vyshnav</div>
-          <div class="team-role">CEO</div>
-          <div class="team-bio">M.S. Space Robotics. 10+ years in space tech & robotics. Founding member of 3 robotics startups. Led portfolio of 15 deep tech ventures.</div>
+          <img src="images/pradyumna.webp" alt="Pradyumna Vyshnav" class="team-photo">
+          <div class="team-info">
+            <div class="team-name">Pradyumna Vyshnav</div>
+            <div class="team-role">CEO</div>
+            <div class="team-bio">M.S. Space Robotics. 10+ years in space tech & robotics. Founding member of 3 robotics startups. Led portfolio of 15 deep tech ventures.</div>
+          </div>
         </div>
         <div class="team-card">
-          <div class="team-name">Dr. Vivek Varadharajan</div>
-          <div class="team-role">CTO</div>
-          <div class="team-bio">PhD Field Robotics. NASA JPL CoSTAR team (DARPA Subterranean Challenge). Postdoc at Polytechnique Montreal. Led 20+ researchers on extreme-environment missions.</div>
+          <img src="images/vivek.webp" alt="Dr. Vivek Varadharajan" class="team-photo">
+          <div class="team-info">
+            <div class="team-name">Dr. Vivek Varadharajan</div>
+            <div class="team-role">CTO</div>
+            <div class="team-bio">PhD Field Robotics. NASA JPL CoSTAR team (DARPA Subterranean Challenge). Postdoc at Polytechnique Montreal. Led 20+ researchers on extreme-environment missions.</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER CTA -->
-  <section class="footer-cta">
-    <div class="footer-cta-bg"></div>
-    <div class="footer-cta-content">
-      <h2>The future of mineral exploration starts here.</h2>
-      <p>Talk to us about deploying autonomous exploration.</p>
-      <a href="mailto:hello@uncharted-ai.com" class="btn-outline">Get in Touch</a>
-    </div>
-  </section>
-
-  <!-- BOTTOMBAR -->
-  <footer class="bottombar">
-    <img src="images/logo.png" alt="Uncharted AI" class="bottombar-logo">
-    <div class="bottombar-row">
-      <span>&copy; 2026 Uncharted AI</span>
-      <span>Bengaluru, India</span>
-    </div>
-  </footer>
-
 </div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>India — Corporate Office</h4>
+      <p><strong>WeWork Prestige Cube</strong><br>
+      Site No. 26, Laskar, Hosur Rd,<br>
+      Chikku Lakshmaiah layout, Adugodi<br>
+      Bengaluru Karnataka 560029 India</p>
+      <br>
+      <h4>R&D Lab</h4>
+      <p><strong>ARTPARK@IISc</strong><br>
+      177, HMT Colony, HMT Staff Quarters,<br>
+      HMT Estate, Jalahalli, Bengaluru,<br>
+      Karnataka 560013, India</p>
+    </div>
+    <div class="footer-col">
+      <h4>Canada</h4>
+      <p><strong>Polytechnique Montreal</strong><br>
+      <strong>MIST Lab</strong><br>
+      M4212 — Lassonde Pavilion<br>
+      2700 Tour Rd, Montreal<br>
+      Quebec H3T 1J4</p>
+    </div>
+    <div class="footer-col" style="text-align: right;">
+      <a href="mailto:contact@uncharted-ai.com" class="footer-cta-link">GET IN TOUCH</a>
+      <a href="mailto:contact@uncharted-ai.com" class="footer-email">contact@uncharted-ai.com</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <img src="images/logo.png" alt="Uncharted AI" class="footer-bottom-logo">
+    <span>&copy; 2026 Uncharted AI. All rights reserved.</span>
+  </div>
+</footer>
 
 <!-- SCROLL ANIMATION -->
 <script>
 (function() {
   var techScroll = document.querySelector('.tech-scroll');
   if (!techScroll) return;
-
   var items = document.querySelectorAll('.tech-item');
   var imgs = document.querySelectorAll('.tech-img');
   var total = items.length;
@@ -834,19 +821,16 @@ a { color: inherit; text-decoration: none; }
     if (index < 0) index = 0;
     if (index >= total) index = total - 1;
     if (index === current) return;
-
     items.forEach(function(item, i) {
       item.classList.remove('active', 'collapsed', 'future');
       if (i < index) item.classList.add('collapsed');
       else if (i === index) item.classList.add('active');
       else item.classList.add('future');
     });
-
     imgs.forEach(function(img, i) {
       if (i === index) img.classList.add('active');
       else img.classList.remove('active');
     });
-
     current = index;
   }
 
@@ -862,13 +846,11 @@ a { color: inherit; text-decoration: none; }
   window.addEventListener('scroll', onScroll, { passive: true });
   setStep(0);
 
-  // Video autoplay on visibility
   var video = document.querySelector('.team-video-wrap video');
   if (video) {
     var obs = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
-        if (e.isIntersecting) video.play();
-        else video.pause();
+        if (e.isIntersecting) video.play(); else video.pause();
       });
     }, { threshold: 0.3 });
     obs.observe(video);
