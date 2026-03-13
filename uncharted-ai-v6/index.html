@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uncharted AI — Autonomous Robots for Mineral Exploration</title>
+<meta name="description" content="Autonomous robots with multi-modal sensing that collapse the longest, most expensive stage of the mining pipeline — field exploration.">
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'IBM Plex Mono', monospace;
+  background: #0A0A0A;
+  color: #F5F5F0;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+:root {
+  --bg: #0A0A0A;
+  --bg-alt: #0F0F0F;
+  --bg-card: #111111;
+  --border: #1A1A1A;
+  --cyan: #00D4FF;
+  --text: #F5F5F0;
+  --text-secondary: #6B6B6B;
+  --text-tertiary: #4D4D4D;
+  --text-muted: #3D3D3D;
+  --white: #FFFFFF;
+  --heading: 'Space Grotesk', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+
+/* ===== GLOBAL ===== */
+.section-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+.section-heading {
+  font-family: var(--heading);
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  color: var(--text);
+}
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+.btn-primary {
+  display: inline-block;
+  padding: 14px 32px;
+  background: var(--white);
+  color: #0A0A0A;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn-primary:hover { opacity: 0.85; }
+.btn-ghost {
+  display: inline-block;
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(245,245,240,0.25);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.btn-ghost:hover { border-color: rgba(245,245,240,0.5); }
+
+/* ===== SVG BACKGROUND PATTERN ===== */
+.svg-pattern-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* ===== FOLD 1: HERO ===== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 64px 100px;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+}
+.hero-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) brightness(0.45) contrast(1.1);
+}
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,10,10,0.2) 0%,
+    rgba(10,10,10,0.4) 40%,
+    rgba(10,10,10,0.85) 75%,
+    #0A0A0A 100%
+  );
+}
+/* grain texture */
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  opacity: 0.5;
+}
+.hero-nav {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 64px;
+  z-index: 10;
+}
+.hero-nav-logo {
+  font-family: var(--heading);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.hero-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+.hero-nav-links a {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(245,245,240,0.7);
+  transition: color 0.2s;
+}
+.hero-nav-links a:hover { color: var(--text); }
+.hero-nav-links .btn-primary {
+  padding: 10px 24px;
+  font-size: 11px;
+}
+.hero-content {
+  position: relative;
+  z-index: 5;
+  max-width: 800px;
+}
+.hero-content h1 {
+  font-family: var(--heading);
+  font-size: clamp(42px, 5vw, 68px);
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+.hero-content p {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: rgba(245,245,240,0.65);
+  max-width: 600px;
+  margin-bottom: 40px;
+}
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+}
+
+/* ===== FOLD 2: LOGO BAR ===== */
+.logos {
+  padding: 56px 64px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.logos-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 40px;
+}
+.logos-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.logos-row img {
+  height: 36px;
+  width: auto;
+  filter: grayscale(100%) brightness(0.6);
+  opacity: 0.5;
+  transition: all 0.3s;
+}
+.logos-row img:hover {
+  filter: grayscale(0%) brightness(1);
+  opacity: 1;
+}
+
+/* ===== FOLD 3: PROBLEM ===== */
+.problem {
+  padding: 100px 64px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  position: relative;
+}
+.problem-left .section-tag { margin-bottom: 24px; }
+.problem-left h2 {
+  font-size: clamp(36px, 4vw, 52px);
+  margin-bottom: 28px;
+}
+.problem-left p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  max-width: 480px;
+}
+.problem-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.stat-card {
+  padding: 32px 0;
+  border-top: 1px solid var(--border);
+}
+.stat-card:last-child { border-bottom: 1px solid var(--border); }
+.stat-number {
+  font-family: var(--heading);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ===== FOLD 4: TECHNOLOGY ===== */
+.technology {
+  padding: 100px 64px;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+.tech-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 64px;
+  gap: 40px;
+}
+.tech-header h2 {
+  font-size: clamp(32px, 3.5vw, 48px);
+  max-width: 560px;
+}
+.tech-header p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  max-width: 400px;
+  text-align: right;
+}
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+.tech-card {
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+}
+.tech-card-image {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: #0D0D0D;
+}
+.tech-card-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(50%) brightness(0.85);
+  transition: filter 0.3s;
+}
+.tech-card:hover .tech-card-image img {
+  filter: grayscale(20%) brightness(1);
+}
+.tech-card-body {
+  padding: 28px 24px;
+  flex: 1;
+}
+.tech-card-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cyan);
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+.tech-card-title {
+  font-family: var(--heading);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.tech-card-desc {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+/* ===== FOLD 5: DEPLOYMENTS ===== */
+.deployments {
+  padding: 100px 64px;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+.deploy-header {
+  margin-bottom: 64px;
+}
+.deploy-header .section-tag { margin-bottom: 24px; }
+.deploy-header h2 {
+  font-size: clamp(32px, 3.5vw, 48px);
+  margin-bottom: 16px;
+}
+.deploy-header p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.deploy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.deploy-card {
+  background: var(--bg-card);
+  border: 1px solid #2A2A2A;
+  overflow: hidden;
+}
+.deploy-card-image {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  position: relative;
+}
+.deploy-card-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) brightness(0.75) contrast(1.1);
+}
+.deploy-card-body {
+  padding: 20px 24px;
+  border-top: 1px solid #2A2A2A;
+}
+.deploy-card-cap {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+.deploy-card-loc {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* ===== FOLD 6: IMPACT ===== */
+.impact {
+  padding: 100px 64px;
+  background: var(--bg-alt);
+  border-top: 1px solid var(--border);
+}
+.impact .section-tag { margin-bottom: 24px; }
+.impact h2 {
+  font-size: clamp(32px, 3.5vw, 48px);
+  margin-bottom: 64px;
+}
+.impact-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+.impact-stat {
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+}
+.impact-stat:not(:last-child) {
+  padding-right: 40px;
+}
+.impact-stat-number {
+  font-family: var(--heading);
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: -1.5px;
+  margin-bottom: 12px;
+}
+.impact-stat-label {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ===== FOLD 7: TEAM ===== */
+.team {
+  padding: 100px 64px;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+.team .section-tag { margin-bottom: 24px; }
+.team > h2 {
+  font-size: clamp(32px, 3.5vw, 48px);
+  margin-bottom: 64px;
+}
+.team-video {
+  margin-bottom: 64px;
+  border: 1px solid #2A2A2A;
+  overflow: hidden;
+}
+.team-video video {
+  display: block;
+  width: 100%;
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.team-card {
+  background: var(--bg-card);
+  border: 1px solid #2A2A2A;
+  overflow: hidden;
+  display: flex;
+}
+.team-card-image {
+  width: 240px;
+  min-height: 280px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.team-card-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) brightness(0.8) contrast(1.05);
+}
+.team-card-body {
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.team-card-name {
+  font-family: var(--heading);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.team-card-role {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 16px;
+}
+.team-card-bio {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+/* ===== FOLD 8: CTA + FOOTER ===== */
+.cta {
+  padding: 120px 64px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+.cta h2 {
+  font-size: clamp(36px, 4vw, 56px);
+  margin-bottom: 32px;
+}
+.cta-proof {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0 auto 48px;
+}
+.footer {
+  padding: 40px 64px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.footer-logo {
+  height: 28px;
+  width: auto;
+  opacity: 0.6;
+}
+.footer-copy {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.footer-right {
+  display: flex;
+  gap: 32px;
+}
+.footer-right a {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  transition: color 0.2s;
+}
+.footer-right a:hover { color: var(--text); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .hero { padding: 0 40px 80px; }
+  .hero-nav { padding: 24px 40px; }
+  .logos, .problem, .technology, .deployments, .impact, .team, .cta { padding-left: 40px; padding-right: 40px; }
+  .footer { padding: 32px 40px; }
+  .tech-grid { grid-template-columns: repeat(2, 1fr); }
+  .deploy-grid { grid-template-columns: repeat(3, 1fr); }
+  .problem { grid-template-columns: 1fr; gap: 48px; }
+  .tech-header { flex-direction: column; }
+  .tech-header p { text-align: left; }
+}
+@media (max-width: 768px) {
+  .hero { padding: 0 24px 60px; }
+  .hero-nav { padding: 20px 24px; }
+  .hero-nav-links a:not(.btn-primary) { display: none; }
+  .logos, .problem, .technology, .deployments, .impact, .team, .cta { padding-left: 24px; padding-right: 24px; }
+  .footer { padding: 24px; flex-direction: column; gap: 20px; text-align: center; }
+  .tech-grid { grid-template-columns: 1fr; }
+  .deploy-grid { grid-template-columns: 1fr; }
+  .deploy-card-image { aspect-ratio: 16/9; }
+  .impact-stats { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .team-card { flex-direction: column; }
+  .team-card-image { width: 100%; min-height: 320px; }
+  .logos-row { gap: 32px; }
+  .logos-row img { height: 28px; }
+  .footer-right { flex-wrap: wrap; justify-content: center; gap: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================== -->
+<!-- FOLD 1: HERO                   -->
+<!-- ============================== -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <img src="images/hero.png" alt="Field exploration terrain">
+  </div>
+
+  <!-- SVG point-cloud pattern overlay -->
+  <div class="svg-pattern-overlay">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="hero-fade" cx="50%" cy="50%" r="60%">
+          <stop offset="0%" stop-color="white" stop-opacity="1"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0"/>
+        </radialGradient>
+        <mask id="hero-mask">
+          <rect width="100%" height="100%" fill="url(#hero-fade)"/>
+        </mask>
+      </defs>
+      <g mask="url(#hero-mask)" opacity="0.05">
+        <!-- Scattered point cloud dots -->
+        <circle cx="5%" cy="12%" r="1.5" fill="#00D4FF"/>
+        <circle cx="12%" cy="8%" r="1" fill="#00D4FF"/>
+        <circle cx="18%" cy="22%" r="2" fill="#00D4FF"/>
+        <circle cx="25%" cy="15%" r="1" fill="#00D4FF"/>
+        <circle cx="32%" cy="28%" r="1.5" fill="#00D4FF"/>
+        <circle cx="38%" cy="10%" r="1" fill="#00D4FF"/>
+        <circle cx="45%" cy="35%" r="2" fill="#00D4FF"/>
+        <circle cx="52%" cy="18%" r="1" fill="#00D4FF"/>
+        <circle cx="58%" cy="42%" r="1.5" fill="#00D4FF"/>
+        <circle cx="65%" cy="25%" r="1" fill="#00D4FF"/>
+        <circle cx="72%" cy="32%" r="2" fill="#00D4FF"/>
+        <circle cx="78%" cy="8%" r="1" fill="#00D4FF"/>
+        <circle cx="85%" cy="38%" r="1.5" fill="#00D4FF"/>
+        <circle cx="92%" cy="20%" r="1" fill="#00D4FF"/>
+        <circle cx="8%" cy="45%" r="1" fill="#00D4FF"/>
+        <circle cx="15%" cy="55%" r="2" fill="#00D4FF"/>
+        <circle cx="22%" cy="48%" r="1" fill="#00D4FF"/>
+        <circle cx="30%" cy="60%" r="1.5" fill="#00D4FF"/>
+        <circle cx="42%" cy="52%" r="1" fill="#00D4FF"/>
+        <circle cx="55%" cy="58%" r="2" fill="#00D4FF"/>
+        <circle cx="68%" cy="45%" r="1" fill="#00D4FF"/>
+        <circle cx="75%" cy="55%" r="1.5" fill="#00D4FF"/>
+        <circle cx="82%" cy="48%" r="1" fill="#00D4FF"/>
+        <circle cx="90%" cy="62%" r="2" fill="#00D4FF"/>
+        <circle cx="95%" cy="40%" r="1" fill="#00D4FF"/>
+        <!-- Contour lines -->
+        <path d="M 0,200 Q 200,180 400,210 T 800,190 T 1200,220 T 1600,195 T 2000,215" fill="none" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="8,12"/>
+        <path d="M 0,350 Q 250,330 500,360 T 1000,340 T 1500,370 T 2000,345" fill="none" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="6,14"/>
+        <path d="M 0,500 Q 300,480 600,510 T 1200,490 T 1800,520" fill="none" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="4,16"/>
+        <!-- Grid mesh -->
+        <line x1="10%" y1="0" x2="10%" y2="100%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,20"/>
+        <line x1="30%" y1="0" x2="30%" y2="100%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,24"/>
+        <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,28"/>
+        <line x1="70%" y1="0" x2="70%" y2="100%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,22"/>
+        <line x1="90%" y1="0" x2="90%" y2="100%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,26"/>
+      </g>
+    </svg>
+  </div>
+
+  <nav class="hero-nav">
+    <a href="#" class="hero-nav-logo">Uncharted AI</a>
+    <div class="hero-nav-links">
+      <a href="#technology">Technology</a>
+      <a href="#deployments">Deployments</a>
+      <a href="#team">Team</a>
+      <a href="mailto:pradyumna@unchartedai.xyz" class="btn-primary">Contact</a>
+    </div>
+  </nav>
+
+  <div class="hero-content">
+    <h1>Autonomous robots for mineral exploration.</h1>
+    <p>Multi-modal sensing platforms that collapse the longest, most expensive stage of the mining pipeline — field exploration.</p>
+    <div class="hero-ctas">
+      <a href="mailto:pradyumna@unchartedai.xyz" class="btn-primary">Get in Touch</a>
+      <a href="#technology" class="btn-ghost">See the Technology</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- FOLD 2: LOGO BAR               -->
+<!-- ============================== -->
+<section class="logos">
+  <p class="logos-label">Trusted by leaders in mining, defence &amp; space</p>
+  <div class="logos-row">
+    <img src="logos/Frame 28.png" alt="Vedanta">
+    <img src="logos/Frame 29.png" alt="Tata Steel">
+    <img src="logos/Frame 30.png" alt="NASA">
+    <img src="logos/Frame 34.png" alt="DARPA">
+    <img src="logos/Frame 31.png" alt="Ministry of Mines">
+    <img src="logos/Frame 32.png" alt="MILA">
+    <img src="logos/Frame 33.png" alt="Antler">
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- FOLD 3: PROBLEM                -->
+<!-- ============================== -->
+<section class="problem">
+  <!-- SVG pattern behind problem section -->
+  <div class="svg-pattern-overlay">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <g opacity="0.03">
+        <circle cx="70%" cy="20%" r="1.5" fill="#00D4FF"/>
+        <circle cx="75%" cy="35%" r="1" fill="#00D4FF"/>
+        <circle cx="80%" cy="15%" r="2" fill="#00D4FF"/>
+        <circle cx="85%" cy="45%" r="1" fill="#00D4FF"/>
+        <circle cx="90%" cy="25%" r="1.5" fill="#00D4FF"/>
+        <circle cx="65%" cy="50%" r="1" fill="#00D4FF"/>
+        <circle cx="72%" cy="60%" r="1.5" fill="#00D4FF"/>
+        <circle cx="88%" cy="55%" r="1" fill="#00D4FF"/>
+        <circle cx="78%" cy="70%" r="2" fill="#00D4FF"/>
+        <circle cx="82%" cy="80%" r="1" fill="#00D4FF"/>
+        <path d="M 60%,30% Q 70%,25% 80%,32% T 100%,28%" fill="none" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="6,14"/>
+        <path d="M 65%,55% Q 75%,50% 85%,58% T 100%,52%" fill="none" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="4,16"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="problem-left">
+    <p class="section-tag">The Problem</p>
+    <h2 class="section-heading">Mineral exploration is broken.</h2>
+    <p>The mining industry spends billions annually on field exploration — sending geologists into remote, hazardous terrain for months. The process hasn't fundamentally changed in decades. It's slow, dangerous, expensive, and produces sparse data that leads to poor decisions.</p>
+  </div>
+  <div class="problem-right">
+    <div class="stat-card">
+      <div class="stat-number">$12.5B</div>
+      <div class="stat-label">Spent annually on mineral exploration globally — most of it on manual field surveys</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">100+</div>
+      <div class="stat-label">Geologists die every year in field exploration accidents in mines and remote terrain</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">&lt;0.5%</div>
+      <div class="stat-label">Of explored terrain is characterized with sufficient data density for confident decisions</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- FOLD 4: TECHNOLOGY             -->
+<!-- ============================== -->
+<section class="technology" id="technology">
+  <!-- SVG pattern behind tech section -->
+  <div class="svg-pattern-overlay">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="tech-fade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="white" stop-opacity="0"/>
+          <stop offset="30%" stop-color="white" stop-opacity="1"/>
+          <stop offset="70%" stop-color="white" stop-opacity="1"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0"/>
+        </linearGradient>
+        <mask id="tech-mask">
+          <rect width="100%" height="100%" fill="url(#tech-fade)"/>
+        </mask>
+      </defs>
+      <g mask="url(#tech-mask)" opacity="0.04">
+        <line x1="20%" y1="0" x2="20%" y2="100%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,18"/>
+        <line x1="40%" y1="0" x2="40%" y2="100%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,22"/>
+        <line x1="60%" y1="0" x2="60%" y2="100%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,20"/>
+        <line x1="80%" y1="0" x2="80%" y2="100%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,24"/>
+        <line x1="0" y1="25%" x2="100%" y2="25%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,18"/>
+        <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,22"/>
+        <line x1="0" y1="75%" x2="100%" y2="75%" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="2,20"/>
+        <circle cx="20%" cy="25%" r="3" fill="none" stroke="#00D4FF" stroke-width="0.5"/>
+        <circle cx="40%" cy="50%" r="3" fill="none" stroke="#00D4FF" stroke-width="0.5"/>
+        <circle cx="60%" cy="75%" r="3" fill="none" stroke="#00D4FF" stroke-width="0.5"/>
+        <circle cx="80%" cy="25%" r="3" fill="none" stroke="#00D4FF" stroke-width="0.5"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="tech-header">
+    <h2 class="section-heading">A full-stack mineral exploration platform.</h2>
+    <p>Four integrated modules that take you from satellite imagery to subsurface intelligence — fully autonomous, with 150× the data density of manual surveys.</p>
+  </div>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-card-image">
+        <img src="images/trace.png" alt="TRACE — Satellite terrain analysis">
+      </div>
+      <div class="tech-card-body">
+        <div class="tech-card-num">01</div>
+        <div class="tech-card-title">TRACE</div>
+        <p class="tech-card-desc">Satellite and aerial imagery analysis to identify high-potential exploration targets before boots hit the ground.</p>
+      </div>
+    </div>
+
+    <div class="tech-card">
+      <div class="tech-card-image">
+        <img src="images/sensing.png" alt="Multi-Modal Sensing — LiDAR point cloud">
+      </div>
+      <div class="tech-card-body">
+        <div class="tech-card-num">02</div>
+        <div class="tech-card-title">Multi-Modal Sensing</div>
+        <p class="tech-card-desc">LiDAR, hyperspectral, XRF, and ground-penetrating radar fused into a single autonomous sensing platform.</p>
+      </div>
+    </div>
+
+    <div class="tech-card">
+      <div class="tech-card-image">
+        <img src="images/find.png" alt="FiND — Traversability mapping">
+      </div>
+      <div class="tech-card-body">
+        <div class="tech-card-num">03</div>
+        <div class="tech-card-title">FiND</div>
+        <p class="tech-card-desc">Autonomous traversability analysis and path planning that navigates complex terrain without human intervention.</p>
+      </div>
+    </div>
+
+    <div class="tech-card">
+      <div class="tech-card-image">
+        <img src="images/twin.png" alt="Digital Twin — 3D subsurface model">
+      </div>
+      <div class="tech-card-body">
+        <div class="tech-card-num">04</div>
+        <div class="tech-card-title">Digital Twin</div>
+        <p class="tech-card-desc">Real-time 3D reconstruction of terrain and subsurface geology — a living model that updates with every pass.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- FOLD 5: DEPLOYMENTS            -->
+<!-- ============================== -->
+<section class="deployments" id="deployments">
+  <div class="deploy-header">
+    <p class="section-tag">Deployments</p>
+    <h2 class="section-heading">$300K in pilots across 3 continents.</h2>
+    <p>Not simulations. Real robots in real terrain.</p>
+  </div>
+
+  <div class="deploy-grid">
+    <div class="deploy-card">
+      <div class="deploy-card-image">
+        <img src="images/robots-composite.png" alt="Spot robot in cave environment" style="object-position: left center;">
+      </div>
+      <div class="deploy-card-body">
+        <p class="deploy-card-cap">Underground exploration in hazardous environment</p>
+        <p class="deploy-card-loc">CA, North America</p>
+      </div>
+    </div>
+
+    <div class="deploy-card">
+      <div class="deploy-card-image">
+        <img src="images/robots-composite.png" alt="Drone and Spot swarm in snow" style="object-position: center center;">
+      </div>
+      <div class="deploy-card-body">
+        <p class="deploy-card-cap">Swarm capabilities in action in extreme weather</p>
+        <p class="deploy-card-loc">CA, North America</p>
+      </div>
+    </div>
+
+    <div class="deploy-card">
+      <div class="deploy-card-image">
+        <img src="images/robots-composite.png" alt="RoadRunner rover on terrain" style="object-position: right center;">
+      </div>
+      <div class="deploy-card-body">
+        <p class="deploy-card-cap">Terrain exploration and geospatial discovery</p>
+        <p class="deploy-card-loc">BLR, India</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- FOLD 6: IMPACT                 -->
+<!-- ============================== -->
+<section class="impact">
+  <p class="section-tag">The Impact</p>
+  <h2 class="section-heading">Not incremental. Transformational.</h2>
+
+  <div class="impact-stats">
+    <div class="impact-stat">
+      <div class="impact-stat-number">95%</div>
+      <p class="impact-stat-label">Reduction in human exposure to hazardous exploration environments</p>
+    </div>
+    <div class="impact-stat">
+      <div class="impact-stat-number">5×</div>
+      <p class="impact-stat-label">Faster terrain characterization compared to traditional manual survey methods</p>
+    </div>
+    <div class="impact-stat">
+      <div class="impact-stat-number">150×</div>
+      <p class="impact-stat-label">More data points collected per expedition than conventional geological surveys</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- FOLD 7: TEAM                   -->
+<!-- ============================== -->
+<section class="team" id="team">
+  <p class="section-tag">The Team</p>
+  <h2 class="section-heading">Built by roboticists. Backed by conviction.</h2>
+
+  <div class="team-video">
+    <video autoplay muted loop playsinline>
+      <source src="https://lightcyan-quail-720430.hostingersite.com/wp-content/uploads/2025/06/WhatsApp-Video-2025-06-05-at-23.11.28-2.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-card-image">
+        <img src="images/pradyumna.webp" alt="Pradyumna Vyshnav">
+      </div>
+      <div class="team-card-body">
+        <div class="team-card-name">Pradyumna Vyshnav</div>
+        <div class="team-card-role">Co-Founder &amp; CEO</div>
+        <p class="team-card-bio">M.S. Space Robotics. Former ISRO. Building autonomous systems that redefine how humanity explores the Earth's subsurface.</p>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-card-image">
+        <img src="images/vivek.webp" alt="Dr. Vivek Varadharajan">
+      </div>
+      <div class="team-card-body">
+        <div class="team-card-name">Dr. Vivek Varadharajan</div>
+        <div class="team-card-role">Co-Founder &amp; CTO</div>
+        <p class="team-card-bio">PhD Field Robotics. NASA JPL CoSTAR team. DARPA Subterranean Challenge veteran. Led autonomy systems for some of the hardest exploration problems on Earth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== -->
+<!-- FOLD 8: CTA + FOOTER           -->
+<!-- ============================== -->
+<section class="cta">
+  <!-- SVG pattern behind CTA -->
+  <div class="svg-pattern-overlay">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="cta-fade" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="white" stop-opacity="1"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0"/>
+        </radialGradient>
+        <mask id="cta-mask">
+          <rect width="100%" height="100%" fill="url(#cta-fade)"/>
+        </mask>
+      </defs>
+      <g mask="url(#cta-mask)" opacity="0.04">
+        <circle cx="30%" cy="30%" r="1.5" fill="#00D4FF"/>
+        <circle cx="45%" cy="20%" r="1" fill="#00D4FF"/>
+        <circle cx="55%" cy="40%" r="2" fill="#00D4FF"/>
+        <circle cx="70%" cy="30%" r="1" fill="#00D4FF"/>
+        <circle cx="40%" cy="60%" r="1.5" fill="#00D4FF"/>
+        <circle cx="60%" cy="70%" r="1" fill="#00D4FF"/>
+        <circle cx="50%" cy="50%" r="2" fill="#00D4FF"/>
+        <path d="M 20%,40% Q 35%,35% 50%,42% T 80%,38%" fill="none" stroke="#00D4FF" stroke-width="0.5" stroke-dasharray="6,14"/>
+        <path d="M 25%,65% Q 40%,60% 55%,67% T 75%,62%" fill="none" stroke="#00D4FF" stroke-width="0.3" stroke-dasharray="4,16"/>
+      </g>
+    </svg>
+  </div>
+
+  <h2 class="section-heading">The future of exploration is autonomous.</h2>
+  <p class="cta-proof">$300K in pilots across 3 continents. $150K won at Future Minerals Forum, Riyadh. Backed by Antler. Incubated at ARTPARK, IISc.</p>
+  <a href="mailto:pradyumna@unchartedai.xyz" class="btn-primary">Get in Touch</a>
+</section>
+
+<footer class="footer">
+  <div class="footer-left">
+    <img src="images/logo.png" alt="Uncharted AI" class="footer-logo">
+    <span class="footer-copy">&copy; 2026 Uncharted AI. All rights reserved.</span>
+  </div>
+  <div class="footer-right">
+    <a href="#">Bangalore</a>
+    <a href="#">Montreal</a>
+    <a href="https://linkedin.com/company/uncharted-ai" target="_blank">LinkedIn</a>
+    <a href="mailto:pradyumna@unchartedai.xyz">Contact</a>
+  </div>
+</footer>
+
+<script>
+// Lazy video play/pause on scroll
+var video = document.querySelector('.team-video video');
+if (video && 'IntersectionObserver' in window) {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) video.play(); else video.pause();
+    });
+  }, { threshold: 0.2 });
+  obs.observe(video);
+}
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
