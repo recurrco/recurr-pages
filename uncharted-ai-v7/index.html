@@ -42,7 +42,7 @@ img { display: block; max-width: 100%; }
   --px: 64px;
 }
 
-/* ===== GLOBAL SVG PATTERN (enhanced — more prominent) ===== */
+/* ===== GLOBAL SVG PATTERN ===== */
 .global-pattern {
   position: fixed;
   top: 0; left: 0;
@@ -51,8 +51,6 @@ img { display: block; max-width: 100%; }
   z-index: 0;
 }
 .global-pattern svg { width: 100%; height: 100%; }
-
-/* ===== MOUSE PARALLAX on SVG ===== */
 .global-pattern svg g.parallax-layer {
   transition: transform 0.3s ease-out;
 }
@@ -83,21 +81,22 @@ img { display: block; max-width: 100%; }
   line-height: 1.1;
   color: var(--text);
 }
+/* CTA buttons — pure black/white, NO cyan */
 .btn-primary {
   display: inline-block;
   padding: 14px 32px;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--white);
+  color: var(--bg);
   font-family: var(--mono);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  border: 1px solid var(--cyan);
+  border: 1px solid var(--white);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: opacity 0.2s;
 }
-.btn-primary:hover { background: var(--cyan); color: var(--bg); }
+.btn-primary:hover { opacity: 0.85; }
 .btn-ghost {
   display: inline-block;
   padding: 14px 32px;
@@ -124,7 +123,6 @@ img { display: block; max-width: 100%; }
   opacity: 1;
   transform: translateY(0);
 }
-/* Staggered delays for children */
 .reveal-delay-1 { transition-delay: 0.15s; }
 .reveal-delay-2 { transition-delay: 0.3s; }
 .reveal-delay-3 { transition-delay: 0.45s; }
@@ -133,7 +131,8 @@ img { display: block; max-width: 100%; }
 .hero {
   position: relative;
   overflow: hidden;
-  min-height: 100vh;
+  height: 100vh;
+  min-height: 700px;
   display: flex;
   flex-direction: column;
 }
@@ -170,7 +169,6 @@ img { display: block; max-width: 100%; }
   background-size: 256px 256px;
   opacity: 0.5;
 }
-/* ASCII terrain canvas overlay */
 .hero-ascii {
   position: absolute;
   top: 0; left: 0;
@@ -194,14 +192,14 @@ img { display: block; max-width: 100%; }
   max-width: var(--max-w);
   margin: 0 auto;
   width: 100%;
+  flex-shrink: 0;
 }
 .hero-nav-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
 }
 .hero-nav-logo img {
-  height: 36px;
+  height: 32px;
   width: auto;
   filter: brightness(0) invert(1);
 }
@@ -214,8 +212,13 @@ img { display: block; max-width: 100%; }
   padding: 10px 24px;
   font-size: 11px;
 }
+/* Hero content — vertically centered between nav and carousel */
 .hero-content {
-  padding: 60px var(--px) 56px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 var(--px);
   max-width: var(--max-w);
   margin: 0 auto;
   width: 100%;
@@ -244,26 +247,22 @@ img { display: block; max-width: 100%; }
   gap: 16px;
 }
 
-/* ===== HERO CAROUSEL ===== */
+/* ===== HERO CAROUSEL (infinite continuous) ===== */
 .carousel {
   overflow: hidden;
   width: 100%;
-  padding: 0 0 0 var(--px);
-  margin-top: auto;
+  flex-shrink: 0;
   padding-bottom: 40px;
 }
 .carousel-track {
   display: flex;
   gap: 20px;
-  animation: carousel-scroll 50s linear infinite;
   width: max-content;
-}
-.carousel-track:hover {
-  animation-play-state: paused;
+  will-change: transform;
 }
 @keyframes carousel-scroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(calc(-50%)); }
 }
 .carousel-card {
   flex-shrink: 0;
@@ -289,7 +288,6 @@ img { display: block; max-width: 100%; }
 .carousel-card:hover img {
   filter: grayscale(60%) brightness(0.85) contrast(1.1);
 }
-/* Animated cyan corner brackets */
 .carousel-card::before,
 .carousel-card::after {
   content: '';
@@ -378,7 +376,7 @@ img { display: block; max-width: 100%; }
   color: var(--text-tertiary);
 }
 
-/* ===== FOLD 2: LOGO BAR ===== */
+/* ===== FOLD 2: LOGO BAR — single row or balanced rows ===== */
 .logos {
   padding: 56px 0;
   border-top: 1px solid var(--border);
@@ -395,29 +393,28 @@ img { display: block; max-width: 100%; }
   margin-bottom: 40px;
 }
 .logos-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 24px;
   align-items: center;
-  justify-content: center;
-  gap: 48px;
-  flex-wrap: wrap;
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 0 var(--px);
 }
 .logos-row img {
   height: 80px;
-  width: auto;
+  width: 100%;
+  object-fit: contain;
   filter: grayscale(100%) brightness(0.6);
   opacity: 0.5;
   transition: all 0.3s;
-  object-fit: contain;
 }
 .logos-row img:hover {
   filter: grayscale(0%) brightness(1);
   opacity: 1;
 }
 
-/* ===== FOLD 3: PROBLEM — red accent ===== */
+/* ===== FOLD 3: PROBLEM — tabular format, no section tag, red "choke" ===== */
 .problem {
   border-top: 1px solid var(--border);
   position: relative;
@@ -437,51 +434,55 @@ img { display: block; max-width: 100%; }
 .problem .container {
   padding-top: 100px;
   padding-bottom: 100px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
   position: relative;
 }
-.problem-left .section-tag {
+.problem-content {
+  max-width: 800px;
+}
+.problem-content h2 {
+  font-size: clamp(32px, 3.5vw, 48px);
   margin-bottom: 24px;
-  color: var(--red);
+  line-height: 1.15;
 }
-.problem-left h2 {
-  font-size: clamp(36px, 4vw, 52px);
-  margin-bottom: 28px;
-}
-.problem-left p {
+.problem-content h2 .red { color: var(--red); }
+.problem-content > p {
   font-size: 14px;
   line-height: 1.75;
   color: var(--text-secondary);
-  max-width: 480px;
+  max-width: 640px;
+  margin-bottom: 56px;
 }
-.problem-right {
-  display: flex;
-  flex-direction: column;
+/* Problem stats as a table */
+.problem-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
 }
-.stat-card {
-  padding: 32px 0;
-  border-top: 1px solid rgba(255,59,48,0.2);
+.problem-table tr {
+  border-bottom: 1px solid rgba(255,59,48,0.15);
 }
-.stat-card:last-child { border-bottom: 1px solid rgba(255,59,48,0.2); }
-.stat-number {
+.problem-table tr:last-child { border-bottom: none; }
+.problem-table td {
+  padding: 20px 0;
+  vertical-align: top;
+}
+.problem-table td:first-child {
   font-family: var(--heading);
-  font-size: 48px;
+  font-size: 28px;
   font-weight: 700;
   color: var(--red);
-  letter-spacing: -1px;
-  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+  width: 140px;
+  padding-right: 32px;
+  white-space: nowrap;
 }
-.stat-label {
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 500;
+.problem-table td:last-child {
+  font-size: 14px;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-/* ===== FOLD 4: TECHNOLOGY — vertical + horizontal cards ===== */
+/* ===== FOLD 4: TECHNOLOGY — taller cards, hover animation ===== */
 .technology {
   border-top: 1px solid var(--border);
 }
@@ -515,7 +516,11 @@ img { display: block; max-width: 100%; }
   background: var(--bg-card);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 400px;
+  min-height: 480px;
+  transition: background 0.3s ease;
+}
+.tech-card:hover {
+  background: #151515;
 }
 .tech-card:nth-child(even) {
   direction: rtl;
@@ -530,6 +535,10 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: center;
   position: relative;
+  transition: background 0.3s ease;
+}
+.tech-card:hover .tech-card-image {
+  background: #101010;
 }
 .tech-card-image .tech-placeholder {
   width: calc(100% - 48px);
@@ -541,6 +550,10 @@ img { display: block; max-width: 100%; }
   justify-content: center;
   gap: 12px;
   position: relative;
+  transition: border-color 0.3s ease;
+}
+.tech-card:hover .tech-placeholder {
+  border-color: rgba(0,212,255,0.2);
 }
 .tech-placeholder::before,
 .tech-placeholder::after {
@@ -548,6 +561,7 @@ img { display: block; max-width: 100%; }
   position: absolute;
   width: 14px;
   height: 14px;
+  transition: all 0.3s ease;
 }
 .tech-placeholder::before {
   top: -1px; left: -1px;
@@ -559,6 +573,12 @@ img { display: block; max-width: 100%; }
   border-bottom: 1px solid var(--cyan);
   border-right: 1px solid var(--cyan);
 }
+.tech-card:hover .tech-placeholder::before,
+.tech-card:hover .tech-placeholder::after {
+  width: 20px;
+  height: 20px;
+  filter: drop-shadow(0 0 4px rgba(0,212,255,0.3));
+}
 .tech-placeholder-label {
   font-family: var(--mono);
   font-size: 10px;
@@ -566,6 +586,10 @@ img { display: block; max-width: 100%; }
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+.tech-card:hover .tech-placeholder-label {
+  color: var(--text-tertiary);
 }
 .tech-placeholder-sub {
   font-family: var(--mono);
@@ -596,6 +620,10 @@ img { display: block; max-width: 100%; }
   color: var(--text);
   margin-bottom: 8px;
   line-height: 1.15;
+  transition: color 0.3s ease;
+}
+.tech-card:hover .tech-card-title {
+  color: #fff;
 }
 .tech-card-acronym {
   font-family: var(--mono);
@@ -606,6 +634,10 @@ img { display: block; max-width: 100%; }
   color: var(--cyan);
   opacity: 0.6;
   margin-bottom: 20px;
+  transition: opacity 0.3s ease;
+}
+.tech-card:hover .tech-card-acronym {
+  opacity: 1;
 }
 .tech-card-desc {
   font-size: 13px;
@@ -613,7 +645,7 @@ img { display: block; max-width: 100%; }
   color: var(--text-secondary);
 }
 
-/* ===== FOLD 5: IMPACT — split layout (infographics left, table right) ===== */
+/* ===== FOLD 5: IMPACT — single column, full width ===== */
 .impact {
   background: var(--bg-alt);
   border-top: 1px solid var(--border);
@@ -627,43 +659,27 @@ img { display: block; max-width: 100%; }
   font-size: clamp(32px, 3.5vw, 48px);
   margin-bottom: 80px;
 }
-.impact-split {
+/* Stats row — full width within container */
+.impact-stats {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  align-items: start;
-}
-/* Left: vertical stacked infographics */
-.impact-infographics {
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
+  margin-bottom: 48px;
 }
-.impact-card {
+.impact-stat-card {
   background: var(--bg-alt);
-  padding: 40px 36px;
-  display: flex;
-  align-items: center;
-  gap: 32px;
+  padding: 48px 40px;
+  text-align: center;
 }
-.impact-infographic {
-  flex-shrink: 0;
-  width: 120px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.impact-stat-content { flex: 1; }
 .impact-stat-number {
   font-family: var(--heading);
-  font-size: 48px;
+  font-size: 56px;
   font-weight: 700;
   color: var(--cyan);
   letter-spacing: -1.5px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 .impact-stat-label {
   font-family: var(--mono);
@@ -672,29 +688,20 @@ img { display: block; max-width: 100%; }
   color: var(--text-secondary);
   line-height: 1.6;
 }
-/* Right: comparison table */
+/* Comparison table — full width */
 .impact-table-wrap {
   border: 1px solid var(--border);
-  padding: 40px;
   background: rgba(17,17,17,0.5);
-}
-.impact-table-wrap h3 {
-  font-family: var(--heading);
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 32px;
-  letter-spacing: -0.3px;
 }
 .comparison-table {
   width: 100%;
   border-collapse: collapse;
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 14px;
 }
 .comparison-table thead th {
   text-align: left;
-  padding: 12px 16px;
+  padding: 20px 24px;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 2px;
@@ -702,19 +709,20 @@ img { display: block; max-width: 100%; }
   border-bottom: 1px solid var(--border);
   color: var(--text-secondary);
 }
-.comparison-table thead th:first-child { padding-left: 0; }
+.comparison-table thead th:first-child { padding-left: 24px; }
 .comparison-table thead th.col-before { color: var(--red); }
 .comparison-table thead th.col-after { color: var(--cyan); }
 .comparison-table tbody td {
-  padding: 14px 16px;
+  padding: 16px 24px;
   border-bottom: 1px solid rgba(26,26,26,0.5);
   line-height: 1.5;
 }
-.comparison-table tbody td:first-child { padding-left: 0; color: #aaa; font-weight: 500; }
+.comparison-table tbody td:first-child { padding-left: 24px; color: #aaa; font-weight: 500; }
+.comparison-table tbody tr:last-child td { border-bottom: none; }
 .comparison-table .val-before { color: #666; }
 .comparison-table .val-after { color: #fff; font-weight: 600; }
 
-/* ===== FOLD 6: TEAM — simplified, statement-style ===== */
+/* ===== FOLD 6: TEAM ===== */
 .team {
   border-top: 1px solid var(--border);
 }
@@ -723,7 +731,6 @@ img { display: block; max-width: 100%; }
   padding-bottom: 100px;
 }
 .team .section-tag { margin-bottom: 40px; }
-/* The founder statement — reads as a headline-weight paragraph */
 .team-statement {
   font-family: var(--heading);
   font-size: clamp(22px, 2.5vw, 32px);
@@ -809,14 +816,12 @@ img { display: block; max-width: 100%; }
 
 /* ===== FOLD 7: CTA + VIDEO BG + FOOTER (merged) ===== */
 .cta-footer {
-  position: relative;
   border-top: 1px solid var(--border);
 }
-/* Video background container */
 .cta-video-bg {
   position: relative;
   overflow: hidden;
-  min-height: 600px;
+  min-height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -835,7 +840,7 @@ img { display: block; max-width: 100%; }
   background: linear-gradient(
     to bottom,
     rgba(10,10,10,0.5) 0%,
-    rgba(10,10,10,0.65) 50%,
+    rgba(10,10,10,0.6) 50%,
     rgba(10,10,10,0.9) 100%
   );
   z-index: 1;
@@ -867,16 +872,22 @@ img { display: block; max-width: 100%; }
 .cta-overlay .cta-schedule {
   font-family: var(--mono);
   font-size: 13px;
-  color: var(--text-tertiary);
+  color: rgba(245,245,240,0.5);
   margin-bottom: 48px;
 }
 .cta-overlay .cta-schedule a {
-  color: var(--cyan);
-  border-bottom: 1px solid rgba(0,212,255,0.3);
-  transition: border-color 0.2s;
+  color: rgba(245,245,240,0.7);
+  border-bottom: 1px solid rgba(245,245,240,0.3);
+  transition: all 0.2s;
 }
-.cta-overlay .cta-schedule a:hover { border-color: var(--cyan); }
-/* Footer section below video */
+.cta-overlay .cta-schedule a:hover { color: var(--text); border-color: var(--text); }
+/* CTA button in footer overlay — white/black, no cyan */
+.cta-overlay .btn-primary {
+  background: var(--white);
+  color: var(--bg);
+  border-color: var(--white);
+}
+.cta-overlay .btn-primary:hover { opacity: 0.85; }
 .footer-section {
   background: var(--bg);
   border-top: 1px solid var(--border);
@@ -909,10 +920,11 @@ img { display: block; max-width: 100%; }
   color: var(--text);
   font-weight: 600;
 }
+/* Footer CTA — also pure white/black */
 .footer-col .footer-cta-btn {
   display: inline-block;
   padding: 14px 32px;
-  background: var(--cyan);
+  background: var(--white);
   color: var(--bg);
   font-family: var(--mono);
   font-size: 12px;
@@ -960,68 +972,70 @@ img { display: block; max-width: 100%; }
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
   :root { --px: 40px; }
+  .hero { min-height: 600px; }
   .hero-content h1 { font-size: clamp(42px, 6vw, 72px); }
-  .problem .container { grid-template-columns: 1fr; gap: 48px; }
   .tech-card { grid-template-columns: 1fr; min-height: auto; }
   .tech-card:nth-child(even) { direction: ltr; }
-  .tech-card-image { min-height: 280px; }
+  .tech-card-image { min-height: 320px; }
   .tech-card-body { padding: 40px 32px; }
-  .impact-split { grid-template-columns: 1fr; gap: 48px; }
-  .impact-card { padding: 32px 28px; }
+  .impact-stats { grid-template-columns: repeat(3, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .carousel-card { width: 260px; }
+  .logos-row { grid-template-columns: repeat(4, 1fr); }
 }
 @media (max-width: 768px) {
   :root { --px: 24px; }
-  .hero { min-height: auto; }
-  .hero-content { padding: 40px var(--px) 40px; }
+  .hero { height: auto; min-height: auto; }
+  .hero-inner { min-height: 100vh; }
+  .hero-content { padding: 0 var(--px); }
   .hero-content h1 { font-size: 36px; letter-spacing: -1px; }
   .hero-content p { font-size: 14px; margin-bottom: 28px; }
   .hero-ctas { flex-direction: column; gap: 12px; }
   .hero-ctas a { text-align: center; }
   .carousel { padding-bottom: 24px; }
   .carousel-card { width: 220px; }
-  .logos-row { gap: 24px; }
+  .logos-row { grid-template-columns: repeat(4, 1fr); gap: 16px; }
   .logos-row img { height: 56px; }
-  .problem .container { padding-top: 64px; padding-bottom: 64px; gap: 40px; }
-  .problem-left h2 { font-size: 30px; }
-  .stat-number { font-size: 36px; }
+  .problem .container { padding-top: 64px; padding-bottom: 64px; }
+  .problem-content h2 { font-size: 28px; }
+  .problem-table td:first-child { font-size: 22px; width: auto; display: block; padding-bottom: 4px; }
+  .problem-table td:last-child { display: block; padding-top: 0; }
   .technology .container { padding-top: 64px; padding-bottom: 64px; }
   .tech-header { margin-bottom: 48px; }
   .tech-card-body { padding: 32px 24px; }
   .tech-card-title { font-size: 22px; }
   .impact .container { padding-top: 64px; padding-bottom: 64px; }
   .impact h2 { margin-bottom: 48px; }
-  .impact-card { flex-direction: column; gap: 16px; padding: 28px 24px; }
-  .impact-infographic { width: 100px; height: 60px; }
-  .impact-stat-number { font-size: 36px; }
-  .impact-table-wrap { padding: 24px; }
-  .comparison-table { font-size: 11px; }
-  .comparison-table thead th { font-size: 10px; padding: 8px 8px; letter-spacing: 1px; }
-  .comparison-table tbody td { padding: 10px 8px; }
+  .impact-stats { grid-template-columns: 1fr; }
+  .impact-stat-card { padding: 32px 24px; }
+  .impact-stat-number { font-size: 40px; }
+  .comparison-table { font-size: 12px; }
+  .comparison-table thead th { font-size: 10px; padding: 12px 16px; letter-spacing: 1px; }
+  .comparison-table tbody td { padding: 12px 16px; }
   .team .container { padding-top: 64px; padding-bottom: 64px; }
   .team-statement { font-size: 20px; margin-bottom: 48px; }
   .team-grid { grid-template-columns: 1fr; }
   .team-card-image { height: 280px; }
-  .cta-video-bg { min-height: 400px; }
+  .cta-video-bg { min-height: 70vh; }
   .cta-overlay { padding: 48px var(--px); }
   .cta-overlay h2 { font-size: 28px; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
-  .team-letter { padding: 24px 28px; }
 }
 @media (max-width: 480px) {
   .hero-nav { padding: 20px var(--px); }
-  .hero-nav-logo img { height: 28px; }
+  .hero-nav-logo img { height: 24px; }
   .hero-nav-links .btn-primary { padding: 8px 16px; font-size: 10px; }
-  .hero-content h1 { font-size: 30px; }
+  .hero-content h1 { font-size: 28px; }
   .carousel-card { width: 180px; }
+  .logos-row { grid-template-columns: repeat(3, 1fr); }
   .logos-row img { height: 48px; }
-  .problem-left h2 { font-size: 26px; }
-  .stat-number { font-size: 32px; }
+  .problem-content h2 { font-size: 24px; }
+  .problem-table td:first-child { font-size: 20px; }
   .impact-stat-number { font-size: 32px; }
   .team-statement { font-size: 18px; }
   .team-card-image { height: 240px; }
+  .cta-video-bg { min-height: 60vh; }
   .cta-overlay h2 { font-size: 24px; }
 }
 </style>
@@ -1029,7 +1043,7 @@ img { display: block; max-width: 100%; }
 <body>
 
 <!-- ============================================================ -->
-<!-- GLOBAL SVG PATTERN (enhanced — more prominent + parallax)     -->
+<!-- GLOBAL SVG PATTERN                                            -->
 <!-- ============================================================ -->
 <div class="global-pattern" id="global-pattern">
   <svg viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -1044,7 +1058,6 @@ img { display: block; max-width: 100%; }
       </mask>
     </defs>
     <g mask="url(#gp-mask)">
-      <!-- Layer 1: Dashed blueprint grid — tighter spacing -->
       <g class="parallax-layer" data-speed="0.01" opacity="0.12" stroke="#00D4FF">
         <line x1="80" y1="0" x2="80" y2="1000" stroke-width="0.5" stroke-dasharray="4,16"/>
         <line x1="160" y1="0" x2="160" y2="1000" stroke-width="0.3" stroke-dasharray="2,20"/>
@@ -1071,7 +1084,6 @@ img { display: block; max-width: 100%; }
         <line x1="0" y1="880" x2="1000" y2="880" stroke-width="0.3" stroke-dasharray="2,20"/>
         <line x1="0" y1="960" x2="1000" y2="960" stroke-width="0.5" stroke-dasharray="4,16"/>
       </g>
-      <!-- Layer 2: Crosshair registration marks -->
       <g class="parallax-layer" data-speed="0.02" opacity="0.15" stroke="#00D4FF" stroke-width="1">
         <line x1="75" y1="160" x2="85" y2="160"/><line x1="80" y1="155" x2="80" y2="165"/>
         <line x1="235" y1="320" x2="245" y2="320"/><line x1="240" y1="315" x2="240" y2="325"/>
@@ -1086,7 +1098,6 @@ img { display: block; max-width: 100%; }
         <line x1="635" y1="800" x2="645" y2="800"/><line x1="640" y1="795" x2="640" y2="805"/>
         <line x1="955" y1="720" x2="965" y2="720"/><line x1="960" y1="715" x2="960" y2="725"/>
       </g>
-      <!-- Layer 3: Topographic contour lines — thicker, more visible -->
       <g class="parallax-layer" data-speed="0.015" opacity="0.14" fill="none" stroke="#00D4FF">
         <path d="M 0 140 Q 120 120 240 145 T 480 130 T 720 155 T 1000 140" stroke-width="0.8" stroke-dasharray="8,12"/>
         <path d="M 0 300 Q 160 280 320 310 T 640 290 T 1000 305" stroke-width="0.6" stroke-dasharray="6,16"/>
@@ -1095,7 +1106,6 @@ img { display: block; max-width: 100%; }
         <path d="M 0 780 Q 240 760 480 790 T 960 770 T 1000 785" stroke-width="0.7" stroke-dasharray="8,14"/>
         <path d="M 0 900 Q 180 880 360 910 T 720 890 T 1000 905" stroke-width="0.5" stroke-dasharray="6,16"/>
       </g>
-      <!-- Layer 4: Point cloud scatter — denser -->
       <g class="parallax-layer" data-speed="0.025" opacity="0.16" fill="#00D4FF">
         <circle cx="60" cy="120" r="2"/><circle cx="130" cy="200" r="1.5"/>
         <circle cx="180" cy="100" r="2.5"/><circle cx="240" cy="300" r="1.5"/>
@@ -1112,17 +1122,14 @@ img { display: block; max-width: 100%; }
         <circle cx="860" cy="880" r="1.5"/><circle cx="50" cy="830" r="2"/>
         <circle cx="280" cy="860" r="1.8"/><circle cx="540" cy="920" r="1.2"/>
         <circle cx="960" cy="560" r="1.8"/><circle cx="40" cy="380" r="1.5"/>
-        <!-- Dense cluster 1 -->
         <circle cx="290" cy="260" r="1.5"/><circle cx="300" cy="280" r="1.2"/>
         <circle cx="320" cy="250" r="1.8"/><circle cx="310" cy="290" r="1.2"/>
         <circle cx="330" cy="270" r="1.5"/><circle cx="280" cy="300" r="1.2"/>
         <circle cx="305" cy="245" r="1"/><circle cx="325" cy="295" r="1.3"/>
-        <!-- Dense cluster 2 -->
         <circle cx="660" cy="590" r="1.5"/><circle cx="670" cy="610" r="1.2"/>
         <circle cx="650" cy="580" r="1.8"/><circle cx="680" cy="600" r="1"/>
         <circle cx="645" cy="615" r="1.3"/><circle cx="675" cy="585" r="1.5"/>
       </g>
-      <!-- Layer 5: Blueprint zone rectangles -->
       <g class="parallax-layer" data-speed="0.008" opacity="0.08" fill="none" stroke="#00D4FF">
         <rect x="120" y="120" width="200" height="160" stroke-width="0.7" stroke-dasharray="6,10"/>
         <rect x="480" y="340" width="260" height="200" stroke-width="0.7" stroke-dasharray="6,10"/>
@@ -1140,7 +1147,7 @@ img { display: block; max-width: 100%; }
 <!-- ============================================================ -->
 <div class="page-content">
 
-<!-- FOLD 1: HERO — logo only in nav, larger headline, bigger carousel, fixed CTA -->
+<!-- FOLD 1: HERO -->
 <section class="hero" id="hero">
   <div class="hero-bg">
     <img src="images/hero.png" alt="Field exploration terrain">
@@ -1150,7 +1157,7 @@ img { display: block; max-width: 100%; }
   <div class="hero-inner">
     <nav class="hero-nav">
       <a href="#" class="hero-nav-logo">
-        <img src="images/logo.png" alt="Uncharted AI">
+        <img src="images/logo-nav.png" alt="Uncharted AI">
       </a>
       <div class="hero-nav-links">
         <a href="mailto:pradyumna@unchartedai.xyz" class="btn-primary">Contact</a>
@@ -1166,7 +1173,6 @@ img { display: block; max-width: 100%; }
       </div>
     </div>
 
-    <!-- 5-card carousel, 9:16, larger cards (325px) -->
     <div class="carousel">
       <div class="carousel-track" id="carousel-track">
         <div class="carousel-card">
@@ -1209,53 +1215,12 @@ img { display: block; max-width: 100%; }
             <span class="carousel-card-loc">BLR, India</span>
           </div>
         </div>
-        <!-- Clones for infinite scroll -->
-        <div class="carousel-card">
-          <span class="corner-tr"></span><span class="corner-bl"></span>
-          <img src="images/trace.png" alt="Autonomous ground robot scanning terrain">
-          <div class="carousel-card-overlay">
-            <span class="carousel-card-label">Subsurface terrain mapping</span>
-            <span class="carousel-card-loc">Saudi Arabia</span>
-          </div>
-        </div>
-        <div class="carousel-card">
-          <span class="corner-tr"></span><span class="corner-bl"></span>
-          <img src="images/sensing.png" alt="Robot with multi-modal sensors in field">
-          <div class="carousel-card-overlay">
-            <span class="carousel-card-label">Multi-modal sensor deployment</span>
-            <span class="carousel-card-loc">CA, North America</span>
-          </div>
-        </div>
-        <div class="carousel-card">
-          <span class="corner-tr"></span><span class="corner-bl"></span>
-          <img src="images/find.png" alt="AI-guided exploration with real-time data">
-          <div class="carousel-card-overlay">
-            <span class="carousel-card-label">AI-guided exploration intelligence</span>
-            <span class="carousel-card-loc">QC, Canada</span>
-          </div>
-        </div>
-        <div class="carousel-card">
-          <span class="corner-tr"></span><span class="corner-bl"></span>
-          <img src="images/twin.png" alt="Multi-robot swarm coordinating in terrain">
-          <div class="carousel-card-overlay">
-            <span class="carousel-card-label">Coordinated swarm deployment</span>
-            <span class="carousel-card-loc">Bengaluru, India</span>
-          </div>
-        </div>
-        <div class="carousel-card">
-          <span class="corner-tr"></span><span class="corner-bl"></span>
-          <img src="images/robots-composite.png" alt="RoadRunner rover on rocky terrain">
-          <div class="carousel-card-overlay">
-            <span class="carousel-card-label">Terrain exploration and geospatial discovery</span>
-            <span class="carousel-card-loc">BLR, India</span>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOLD 2: LOGO BAR — larger logos (80px) -->
+<!-- FOLD 2: LOGO BAR — grid for even columns -->
 <section class="logos">
   <p class="logos-label">Trusted by leaders in mining, defence &amp; space</p>
   <div class="logos-row">
@@ -1269,32 +1234,35 @@ img { display: block; max-width: 100%; }
   </div>
 </section>
 
-<!-- FOLD 3: PROBLEM — new headline + stacking animation on stat cards -->
+<!-- FOLD 3: PROBLEM — no tag, tabular stats, red "choke" -->
 <section class="problem">
   <div class="container">
-    <div class="problem-left reveal">
-      <p class="section-tag">The Problem</p>
-      <h2 class="section-heading">Global mineral demand is choked by traditional exploration.</h2>
-      <p>Takes 12+ years, costs billions. We have found just 45 deposits in the last 2 decades. Geologists on foot. Hammers, notebooks, lab samples. 2-5 km per day. Manual, hazardous, human-dependent.</p>
+    <div class="problem-content reveal">
+      <h2 class="section-heading">Traditional exploration methods <span class="red">choke</span> the trillion dollar global demand for critical minerals.</h2>
+      <p>12+ years per discovery. Billions spent. Geologists on foot with hammers, notebooks, and lab samples — covering 2-5 km a day. Only 45 major deposits found in two decades.</p>
     </div>
-    <div class="problem-right">
-      <div class="stat-card reveal reveal-delay-1">
-        <div class="stat-number">$12.5B</div>
-        <div class="stat-label">Spent in exploration every year</div>
-      </div>
-      <div class="stat-card reveal reveal-delay-2">
-        <div class="stat-number">100+</div>
-        <div class="stat-label">Lives lost during exploration</div>
-      </div>
-      <div class="stat-card reveal reveal-delay-3">
-        <div class="stat-number">&lt;0.5%</div>
-        <div class="stat-label">Exploration efforts succeed</div>
-      </div>
-    </div>
+    <table class="problem-table reveal">
+      <tr>
+        <td>$12.5B</td>
+        <td>Annual global spend on mineral exploration — with diminishing returns year over year</td>
+      </tr>
+      <tr>
+        <td>&lt;0.5%</td>
+        <td>Success rate of exploration programs — 199 out of 200 fail to produce a viable mine</td>
+      </tr>
+      <tr>
+        <td>100+</td>
+        <td>Lives lost annually in field exploration — hazardous, remote, GPS-denied environments</td>
+      </tr>
+      <tr>
+        <td>12 yrs</td>
+        <td>Average timeline from first exploration to mine production — a decade of uncertainty</td>
+      </tr>
+    </table>
   </div>
 </section>
 
-<!-- FOLD 4: TECHNOLOGY — new headline + working scroll reveal -->
+<!-- FOLD 4: TECHNOLOGY — taller cards (480px), hover effects -->
 <section class="technology" id="technology">
   <div class="container">
     <div class="tech-header reveal">
@@ -1345,7 +1313,7 @@ img { display: block; max-width: 100%; }
           <div class="tech-card-num">03</div>
           <div class="tech-card-title">AI-Guided Exploration Intelligence</div>
           <div class="tech-card-acronym">FiND</div>
-          <p class="tech-card-desc">ML-guided planning, perception, and real-time decision-making. FiND (Field Intelligence for Navigation and Discovery) fuses multi-modal sensor data into actionable intelligence — determining where to go next, what to measure, and why.</p>
+          <p class="tech-card-desc">ML-guided planning, perception, and real-time decision-making. FiND fuses multi-modal sensor data into actionable intelligence — determining where to go next, what to measure, and why.</p>
         </div>
       </div>
 
@@ -1360,127 +1328,60 @@ img { display: block; max-width: 100%; }
           <div class="tech-card-num">04</div>
           <div class="tech-card-title">Real-Time 3D Subsurface Modeling</div>
           <div class="tech-card-acronym">Digital Twin</div>
-          <p class="tech-card-desc">A living 3D subsurface model built in real-time as robots traverse terrain. All sensor data fused into one explorable map. Where to drill is no longer a guess — it's a data-driven decision backed by multi-modal evidence.</p>
+          <p class="tech-card-desc">A living 3D subsurface model built in real-time as robots traverse terrain. All sensor data fused into one explorable map. Where to drill is no longer a guess — it's a data-driven decision.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOLD 5: IMPACT — split layout: vertical infographics left, comparison table right -->
+<!-- FOLD 5: IMPACT — single column: big numbers first, then table -->
 <section class="impact">
   <div class="container">
     <p class="section-tag reveal">The Impact</p>
     <h2 class="section-heading reveal">Groundbreaking insights. Without breaking the ground.</h2>
 
-    <div class="impact-split">
-      <!-- LEFT: vertical stacked infographics -->
-      <div class="impact-infographics">
-        <!-- 95% Reduction -->
-        <div class="impact-card reveal">
-          <div class="impact-infographic">
-            <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="0" y="0" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="24" y="0" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="48" y="0" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="72" y="0" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="96" y="0" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="0" y="20" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="24" y="20" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="48" y="20" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="72" y="20" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="96" y="20" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="0" y="40" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="24" y="40" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="48" y="40" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="72" y="40" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="96" y="40" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="0" y="60" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="24" y="60" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="48" y="60" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="72" y="60" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
-              <rect x="96" y="60" width="20" height="16" rx="1" fill="#FF3B30" opacity="0.9"/>
-              <text x="106" y="72" font-family="IBM Plex Mono" font-size="7" fill="#fff" text-anchor="middle" font-weight="600">5%</text>
-            </svg>
-          </div>
-          <div class="impact-stat-content">
-            <div class="impact-stat-number">95%</div>
-            <p class="impact-stat-label">Reduction in human exposure to hazardous exploration environments</p>
-          </div>
-        </div>
-
-        <!-- 5x Faster -->
-        <div class="impact-card reveal">
-          <div class="impact-infographic">
-            <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="0" y="60" width="16" height="20" rx="1" fill="#666" opacity="0.3"/>
-              <text x="8" y="56" font-family="IBM Plex Mono" font-size="6" fill="#666" text-anchor="middle">OLD</text>
-              <rect x="24" y="20" width="16" height="60" rx="1" fill="#00D4FF" opacity="0.5"/>
-              <rect x="48" y="20" width="16" height="60" rx="1" fill="#00D4FF" opacity="0.6"/>
-              <rect x="72" y="20" width="16" height="60" rx="1" fill="#00D4FF" opacity="0.7"/>
-              <rect x="96" y="20" width="16" height="60" rx="1" fill="#00D4FF" opacity="0.8"/>
-              <text x="72" y="14" font-family="IBM Plex Mono" font-size="6" fill="#00D4FF" text-anchor="middle">5×</text>
-            </svg>
-          </div>
-          <div class="impact-stat-content">
-            <div class="impact-stat-number">5x</div>
-            <p class="impact-stat-label">Faster time-to-discovery compared to traditional exploration methods</p>
-          </div>
-        </div>
-
-        <!-- 150x Data Density -->
-        <div class="impact-card reveal">
-          <div class="impact-infographic">
-            <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="40" r="6" fill="#666" opacity="0.3"/>
-              <text x="20" y="58" font-family="IBM Plex Mono" font-size="6" fill="#666" text-anchor="middle">1×</text>
-              <line x1="30" y1="40" x2="44" y2="40" stroke="#00D4FF" stroke-width="0.5" opacity="0.3"/>
-              <circle cx="56" cy="40" r="4" fill="#00D4FF" opacity="0.4"/>
-              <circle cx="68" cy="30" r="3" fill="#00D4FF" opacity="0.5"/>
-              <circle cx="74" cy="46" r="5" fill="#00D4FF" opacity="0.6"/>
-              <circle cx="86" cy="34" r="3.5" fill="#00D4FF" opacity="0.7"/>
-              <circle cx="96" cy="44" r="4" fill="#00D4FF" opacity="0.8"/>
-              <circle cx="108" cy="36" r="6" fill="#00D4FF" opacity="0.9"/>
-              <circle cx="62" cy="52" r="2.5" fill="#00D4FF" opacity="0.5"/>
-              <circle cx="80" cy="24" r="2" fill="#00D4FF" opacity="0.6"/>
-              <circle cx="102" cy="54" r="3" fill="#00D4FF" opacity="0.7"/>
-              <text x="82" y="14" font-family="IBM Plex Mono" font-size="6" fill="#00D4FF" text-anchor="middle">150×</text>
-            </svg>
-          </div>
-          <div class="impact-stat-content">
-            <div class="impact-stat-number">150x</div>
-            <p class="impact-stat-label">Improvement in discovery success rate through multi-modal data density</p>
-          </div>
-        </div>
+    <!-- Stats row — big numbers, full width -->
+    <div class="impact-stats reveal">
+      <div class="impact-stat-card">
+        <div class="impact-stat-number">95%</div>
+        <p class="impact-stat-label">Reduction in human exposure to hazardous environments</p>
       </div>
-
-      <!-- RIGHT: comparison table from v5 -->
-      <div class="impact-table-wrap reveal">
-        <h3>Before vs. With Uncharted AI</h3>
-        <table class="comparison-table">
-          <thead>
-            <tr>
-              <th></th>
-              <th class="col-before">Before</th>
-              <th class="col-after">With Uncharted AI</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>Timeline</td><td class="val-before">12+ years</td><td class="val-after">2–3 years</td></tr>
-            <tr><td>Cost per program</td><td class="val-before">$200M+</td><td class="val-after">$10M</td></tr>
-            <tr><td>Daily coverage</td><td class="val-before">2–5 km²</td><td class="val-after">50+ km²</td></tr>
-            <tr><td>Discovery rate</td><td class="val-before">0.5%</td><td class="val-after">~75%</td></tr>
-            <tr><td>Sensing</td><td class="val-before">Single-modal, manual</td><td class="val-after">Multi-modal, fused</td></tr>
-            <tr><td>Field crew</td><td class="val-before">Large teams, hazardous</td><td class="val-after">Autonomous, zero-risk</td></tr>
-            <tr><td>Drill decisions</td><td class="val-before">Expert intuition</td><td class="val-after">Data-driven targeting</td></tr>
-          </tbody>
-        </table>
+      <div class="impact-stat-card">
+        <div class="impact-stat-number">5x</div>
+        <p class="impact-stat-label">Faster time-to-discovery vs traditional methods</p>
       </div>
+      <div class="impact-stat-card">
+        <div class="impact-stat-number">150x</div>
+        <p class="impact-stat-label">Improvement in data density and discovery success</p>
+      </div>
+    </div>
+
+    <!-- Comparison table — full width, no heading -->
+    <div class="impact-table-wrap reveal">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="col-before">Before</th>
+            <th class="col-after">With Uncharted AI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Timeline</td><td class="val-before">12+ years</td><td class="val-after">2–3 years</td></tr>
+          <tr><td>Cost per program</td><td class="val-before">$200M+</td><td class="val-after">$10M</td></tr>
+          <tr><td>Daily coverage</td><td class="val-before">2–5 km²</td><td class="val-after">50+ km²</td></tr>
+          <tr><td>Discovery rate</td><td class="val-before">0.5%</td><td class="val-after">~75%</td></tr>
+          <tr><td>Sensing</td><td class="val-before">Single-modal, manual</td><td class="val-after">Multi-modal, fused</td></tr>
+          <tr><td>Field crew</td><td class="val-before">Large teams, hazardous</td><td class="val-after">Autonomous, zero-risk</td></tr>
+          <tr><td>Drill decisions</td><td class="val-before">Expert intuition</td><td class="val-after">Data-driven targeting</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
 
-<!-- FOLD 6: TEAM — simplified, statement as headline, no cheesy heading -->
+<!-- FOLD 6: TEAM -->
 <section class="team" id="team">
   <div class="container">
     <p class="section-tag reveal">The Team</p>
@@ -1526,9 +1427,8 @@ img { display: block; max-width: 100%; }
   </div>
 </section>
 
-<!-- FOLD 7: CTA + VIDEO BACKGROUND + FOOTER (merged into one section) -->
+<!-- FOLD 7: CTA + VIDEO BG + FOOTER -->
 <section class="cta-footer">
-  <!-- Video bg with CTA overlay -->
   <div class="cta-video-bg">
     <video autoplay muted loop playsinline id="cta-video">
       <source src="https://lightcyan-quail-720430.hostingersite.com/wp-content/uploads/2025/06/WhatsApp-Video-2025-06-05-at-23.11.28-2.mp4" type="video/mp4">
@@ -1543,7 +1443,6 @@ img { display: block; max-width: 100%; }
     </div>
   </div>
 
-  <!-- Footer addresses below video -->
   <div class="footer-section">
     <div class="container">
       <div class="footer-grid">
@@ -1567,7 +1466,7 @@ img { display: block; max-width: 100%; }
         </div>
       </div>
       <div class="footer-bottom">
-        <img src="images/logo.png" alt="Uncharted AI" class="footer-bottom-logo">
+        <img src="images/logo-nav.png" alt="Uncharted AI" class="footer-bottom-logo">
         <span>&copy; 2026 Uncharted AI. All rights reserved.</span>
       </div>
     </div>
@@ -1583,8 +1482,7 @@ img { display: block; max-width: 100%; }
 (function() {
   'use strict';
 
-  // ===== SCROLL REVEAL (IntersectionObserver) =====
-  // Wait for DOM ready, then observe all .reveal elements
+  // ===== SCROLL REVEAL =====
   function initReveal() {
     var els = document.querySelectorAll('.reveal');
     if (!els.length) return;
@@ -1606,7 +1504,46 @@ img { display: block; max-width: 100%; }
     });
   }
 
-  // ===== ASCII TERRAIN ANIMATION (Canvas) =====
+  // ===== INFINITE CAROUSEL (JS-driven for true seamless loop) =====
+  function initCarousel() {
+    var track = document.getElementById('carousel-track');
+    if (!track) return;
+
+    var cards = track.children;
+    var cardCount = cards.length;
+    if (cardCount === 0) return;
+
+    // Clone all cards for seamless looping
+    var origHTML = track.innerHTML;
+    track.innerHTML = origHTML + origHTML + origHTML;
+
+    var speed = 0.5; // px per frame
+    var pos = 0;
+    var paused = false;
+
+    // Calculate single set width
+    var singleSetWidth = 0;
+    for (var i = 0; i < cardCount; i++) {
+      singleSetWidth += track.children[i].offsetWidth + 20; // card width + gap
+    }
+
+    track.addEventListener('mouseenter', function() { paused = true; });
+    track.addEventListener('mouseleave', function() { paused = false; });
+
+    function animate() {
+      if (!paused) {
+        pos -= speed;
+        if (Math.abs(pos) >= singleSetWidth) {
+          pos += singleSetWidth;
+        }
+        track.style.transform = 'translateX(' + pos + 'px)';
+      }
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  }
+
+  // ===== ASCII TERRAIN ANIMATION =====
   function initAsciiTerrain() {
     var canvas = document.getElementById('ascii-canvas');
     if (!canvas) return;
@@ -1615,7 +1552,6 @@ img { display: block; max-width: 100%; }
     var chars = [' ', ' ', ' ', '.', '.', ':', ':', '-', '~', '=', '+', '#'];
     var t = 0;
     var raf;
-    var fontLoaded = false;
 
     function resize() {
       var hero = canvas.parentElement;
@@ -1660,22 +1596,17 @@ img { display: block; max-width: 100%; }
       raf = requestAnimationFrame(draw);
     }
 
-    // Wait for font to load before starting
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(function() {
         resize();
         draw();
       });
     } else {
-      // Fallback: start after short delay
       setTimeout(function() { resize(); draw(); }, 500);
     }
 
-    window.addEventListener('resize', function() {
-      resize();
-    });
+    window.addEventListener('resize', resize);
 
-    // Pause when not visible
     var heroObs = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
@@ -1688,7 +1619,7 @@ img { display: block; max-width: 100%; }
     heroObs.observe(canvas.parentElement);
   }
 
-  // ===== CTA VIDEO — IntersectionObserver play/pause =====
+  // ===== CTA VIDEO — play/pause on scroll =====
   function initVideoObserver() {
     var video = document.getElementById('cta-video');
     if (!video) return;
@@ -1705,13 +1636,10 @@ img { display: block; max-width: 100%; }
     obs.observe(video);
   }
 
-  // ===== SVG PARALLAX on mouse move =====
+  // ===== SVG PARALLAX =====
   function initParallax() {
     var layers = document.querySelectorAll('.parallax-layer');
-    if (!layers.length) return;
-
-    // Only on desktop
-    if (window.innerWidth < 768) return;
+    if (!layers.length || window.innerWidth < 768) return;
 
     document.addEventListener('mousemove', function(e) {
       var cx = window.innerWidth / 2;
@@ -1729,18 +1657,18 @@ img { display: block; max-width: 100%; }
   }
 
   // ===== INIT =====
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      initReveal();
-      initAsciiTerrain();
-      initVideoObserver();
-      initParallax();
-    });
-  } else {
+  function init() {
     initReveal();
+    initCarousel();
     initAsciiTerrain();
     initVideoObserver();
     initParallax();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 })();
 </script>
