@@ -1,30 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <title>recurr.co — Brand & Design System</title>
-  <meta name="theme-color" content="#E8E6E3">
+  <meta name="theme-color" content="#E5E8E8">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --gray-paper: #E8E6E3;
-      --whiteboard: #DDDBD8;
-      --notebook: #F4F3F1;
+      /* ── Surface tones — cool blue-green grays ── */
+      --gray-paper: #E5E8E8;
+      --whiteboard: #D8DDDC;
+      --notebook: #F1F4F3;
       --ink: #2A2A2A;
       --graphite: #555;
-      --pencil: #888;
-      --faint: #BDBBB8;
+      --pencil: #808888;
+      --faint: #B4BAB9;
+
+      /* ── Marker accents ── */
       --red: #E03E36;
       --yellow: #F5D547;
       --yellow-hl: #F5D54750;
       --blue: #2B6CB0;
       --green: #3D8C6E;
+
+      /* ── Typography ── */
       --serif: 'New York', ui-serif, Georgia, Charter, 'Times New Roman', serif;
       --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
       --sans: -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', sans-serif;
+
+      /* ── Fluid type scale ── */
       --fs-mega: clamp(3.5rem, 2rem + 6vw, 8rem);
       --fs-display: clamp(2.5rem, 1.8rem + 3vw, 4.5rem);
       --fs-h1: clamp(2rem, 1.4rem + 2.5vw, 3.5rem);
@@ -34,6 +41,8 @@
       --fs-body: clamp(0.95rem, 0.9rem + 0.2vw, 1.1rem);
       --fs-small: clamp(0.8rem, 0.75rem + 0.15vw, 0.9rem);
       --fs-label: clamp(0.6rem, 0.55rem + 0.15vw, 0.7rem);
+
+      /* ── Fluid spacing ── */
       --space-xs: clamp(0.5rem, 0.4rem + 0.3vw, 0.75rem);
       --space-s: clamp(1rem, 0.8rem + 0.6vw, 1.5rem);
       --space-m: clamp(2rem, 1.5rem + 1.5vw, 3rem);
@@ -41,9 +50,29 @@
       --space-xl: clamp(4rem, 2.5rem + 5vw, 8rem);
       --space-2xl: clamp(6rem, 4rem + 7vw, 12rem);
       --margin: clamp(1.5rem, 1rem + 4vw, 5rem);
+
+      /* ── Layout ── */
       --content-w: 680px;
       --wide-w: 1080px;
       --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+      /* ── Subtle borders ── */
+      --border-color: #C0C6C5;
+      --border-faint: #D0D5D4;
+    }
+
+    /* ── Dark mode ── */
+    [data-theme="dark"] {
+      --gray-paper: #1A1D1D;
+      --whiteboard: #222626;
+      --notebook: #2C3030;
+      --ink: #E8ECEC;
+      --graphite: #A8B0AF;
+      --pencil: #7A8282;
+      --faint: #3E4444;
+      --yellow-hl: #F5D54730;
+      --border-color: #3A4040;
+      --border-faint: #333939;
     }
 
     ::selection { background: var(--yellow-hl); color: var(--ink); }
@@ -61,13 +90,17 @@
       overflow-x: hidden;
     }
 
-    /* ── SVG diamond grid background — breaks flat gray ── */
+    /* ── SVG diamond grid background — cool-tinted ── */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       z-index: -2;
-      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z' fill='none' stroke='%23d4d2cf' stroke-width='0.5' stroke-dasharray='3 3'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z' fill='none' stroke='%23c5cbc9' stroke-width='0.5' stroke-dasharray='3 3'/%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+    [data-theme="dark"] body::before {
+      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z' fill='none' stroke='%232a3030' stroke-width='0.5' stroke-dasharray='3 3'/%3E%3C/svg%3E");
       opacity: 0.5;
     }
 
@@ -95,23 +128,30 @@
     /* ══════════ NAV ══════════ */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(232,230,227,0.75);
+      background: rgba(229,232,232,0.75);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      border-bottom: 2px solid var(--ink);
+      border-bottom: 1px dashed var(--border-color);
     }
+    [data-theme="dark"] nav { background: rgba(26,29,29,0.8); }
     .nav-inner {
       max-width: var(--wide-w); margin: 0 auto; padding: 0 var(--margin);
       height: clamp(3rem, 2.5rem + 1.5vw, 4rem);
       display: flex; align-items: center; justify-content: space-between;
     }
     .nav-logo { font-family: var(--serif); font-size: clamp(1rem, 0.9rem + 0.4vw, 1.3rem); font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: -0.03em; }
-    .nav-right { display: flex; align-items: center; gap: clamp(1.2rem, 1rem + 1vw, 2.5rem); }
+    .nav-right { display: flex; align-items: center; gap: clamp(1rem, 0.8rem + 0.8vw, 2rem); }
     .nav-right a { font-family: var(--mono); font-size: var(--fs-label); color: var(--pencil); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s var(--ease); }
     @media (hover:hover) { .nav-right a:hover { color: var(--ink); } }
     .nav-clock { font-family: var(--mono); font-size: var(--fs-label); color: var(--faint); letter-spacing: 0.03em; }
+    .theme-toggle {
+      font-family: var(--mono); font-size: clamp(0.9rem, 0.8rem + 0.3vw, 1.1rem);
+      background: none; border: none; color: var(--pencil); cursor: pointer;
+      padding: 0 4px; line-height: 1; transition: color 0.2s var(--ease);
+    }
+    @media (hover:hover) { .theme-toggle:hover { color: var(--ink); } }
 
-    /* ══════════ HERO — Statement as architecture ══════════ */
+    /* ══════════ HERO ══════════ */
     .hero {
       min-height: 85vh;
       display: flex; flex-direction: column; justify-content: center;
@@ -119,7 +159,6 @@
       max-width: 1400px; margin: 0 auto;
       position: relative;
     }
-
     .hero h1 {
       font-family: var(--serif);
       font-size: var(--fs-mega);
@@ -128,7 +167,6 @@
       letter-spacing: -0.04em;
       color: var(--ink);
     }
-
     .hero h1 .word {
       display: inline-block;
       opacity: 0;
@@ -136,7 +174,6 @@
       transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
     }
     .hero h1 .word.visible { opacity: 1; transform: translateY(0); }
-
     .hero-underline {
       width: 0; height: clamp(4px, 0.4vw, 6px);
       background: var(--red);
@@ -144,7 +181,6 @@
       transition: width 1s var(--ease);
     }
     .hero-underline.drawn { width: clamp(200px, 25vw, 400px); }
-
     .hero-bottom {
       display: flex; justify-content: space-between; align-items: flex-end;
       margin-top: var(--space-l);
@@ -164,19 +200,39 @@
 
     /* ══════════ SECTION PRIMITIVES ══════════ */
     .section-wide { padding: var(--space-2xl) var(--margin); max-width: 1400px; margin: 0 auto; }
-    .section-label { font-family: var(--mono); font-size: var(--fs-label); font-weight: 700; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: var(--space-s); }
+    .section-label {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      color: var(--ink); letter-spacing: 0.15em; text-transform: uppercase;
+      margin-bottom: var(--space-s);
+      display: flex; align-items: center; gap: 0.6em;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 2px;
+      background: var(--red);
+      flex-shrink: 0;
+    }
     .section-desc { font-family: var(--serif); font-size: var(--fs-body); color: var(--graphite); max-width: var(--content-w); line-height: 1.65; margin-bottom: var(--space-m); }
 
     .full-bleed { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; }
 
-    .divider-thick { height: 2px; background: var(--ink); }
-    .divider-thin { height: 1px; background: var(--faint); margin: 0 var(--margin); max-width: 1400px; }
+    /* Section dividers — subtle dashed lines */
+    .divider { border: none; border-top: 1px dashed var(--border-color); margin: 0 var(--margin); max-width: 1400px; }
+
+    /* Colored dot variants for section labels */
+    .dot-yellow::before { background: var(--yellow); }
+    .dot-blue::before { background: var(--blue); }
+    .dot-green::before { background: var(--green); }
+    .dot-red::before { background: var(--red); }
+    .dot-ink::before { background: var(--ink); }
 
     /* ══════════ PALETTE ══════════ */
     .palette-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 0;
+      gap: 2px;
       margin-bottom: var(--space-xs);
     }
     .swatch-tall {
@@ -184,20 +240,22 @@
       position: relative; overflow: hidden;
       display: flex; flex-direction: column; justify-content: flex-end; padding: clamp(10px, 1.5vw, 20px);
       transition: transform 0.4s var(--ease);
+      border-radius: 4px;
     }
     @media (hover:hover) { .swatch-tall:hover { transform: scale(1.03); z-index: 2; } }
     .swatch-tall .s-name { font-family: var(--serif); font-size: var(--fs-small); font-weight: 700; }
     .swatch-tall .s-hex { font-family: var(--mono); font-size: clamp(0.5rem, 0.45rem + 0.1vw, 0.6rem); opacity: 0.7; }
-    .swatch-tall.light .s-name, .swatch-tall.light .s-hex { color: var(--ink); }
-    .swatch-tall.dark .s-name, .swatch-tall.dark .s-hex { color: var(--notebook); }
+    .swatch-tall.light .s-name, .swatch-tall.light .s-hex { color: #2A2A2A; }
+    .swatch-tall.dark .s-name, .swatch-tall.dark .s-hex { color: #F1F4F3; }
 
     .marker-strip {
-      display: flex; gap: 0; margin-top: var(--space-s);
+      display: flex; gap: 2px; margin-top: var(--space-s);
     }
     .marker-swatch {
       flex: 1; height: clamp(48px, 5vw, 72px);
       position: relative; display: flex; align-items: center; justify-content: center;
       transition: flex 0.4s var(--ease);
+      border-radius: 4px;
     }
     @media (hover:hover) { .marker-swatch:hover { flex: 2; } }
     .marker-swatch span { font-family: var(--mono); font-size: clamp(0.5rem, 0.4rem + 0.15vw, 0.6rem); color: white; font-weight: 700; letter-spacing: 0.08em; opacity: 0; transition: opacity 0.3s; }
@@ -226,9 +284,11 @@
       line-height: 1.5; color: var(--notebook);
       background: var(--ink); padding: var(--space-s);
       white-space: pre; overflow-x: auto;
-      border: 2px solid var(--graphite);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
       position: relative;
     }
+    [data-theme="dark"] .type-mono-live { color: var(--gray-paper); background: #111414; }
     .type-mono-live::before {
       content: '> MONO'; position: absolute; top: 8px; right: 12px;
       font-size: 0.55rem; color: var(--pencil); letter-spacing: 0.1em;
@@ -243,6 +303,7 @@
       position: relative;
       overflow: hidden;
     }
+    [data-theme="dark"] .ascii-full { background: #111414; }
     .ascii-full::before {
       content: '';
       position: absolute; inset: 0;
@@ -251,6 +312,7 @@
     }
     .ascii-inner { max-width: 1400px; margin: 0 auto; padding: 0 var(--margin); position: relative; z-index: 1; }
     .ascii-full .section-label { color: var(--yellow); }
+    .ascii-full .section-label::before { background: var(--yellow); }
     .ascii-full .section-desc { color: var(--faint); }
 
     .ascii-canvas {
@@ -260,6 +322,7 @@
       white-space: pre; overflow-x: auto;
       padding: var(--space-m); min-height: 240px;
     }
+    [data-theme="dark"] .ascii-canvas { color: #D0D5D4; }
     .ascii-canvas .ch { opacity: 0; transition: opacity 0.03s; }
     .ascii-canvas .ch.v { opacity: 1; }
 
@@ -269,7 +332,7 @@
       margin-top: var(--space-s);
     }
 
-    /* ══════════ CARDS — Asymmetric grid ══════════ */
+    /* ══════════ CARDS ══════════ */
     .card-grid-asym {
       display: grid;
       grid-template-columns: 1.6fr 1fr;
@@ -279,43 +342,46 @@
 
     .card {
       background: var(--whiteboard);
-      border: 2px solid var(--ink);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
       padding: clamp(1.5rem, 1.2rem + 1vw, 2.2rem);
       display: flex; flex-direction: column; gap: var(--space-xs);
       transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
     }
     @media (hover:hover) {
-      .card:hover { transform: translateY(-4px); box-shadow: 6px 6px 0 var(--ink); }
+      .card:hover { transform: translateY(-3px); box-shadow: 4px 4px 0 var(--border-color); }
     }
     .card.card-featured { grid-row: 1 / 3; }
     .card.card-featured .card-title { font-size: var(--fs-h2); }
 
     .card-pillar { font-family: var(--mono); font-size: var(--fs-label); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
     .card-title { font-family: var(--serif); font-size: var(--fs-h3); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
-    .card-rule { width: clamp(60px, 35%, 140px); height: 3px; }
+    .card-rule { width: clamp(60px, 35%, 140px); height: 3px; border-radius: 1px; }
     .card-excerpt { font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); line-height: 1.55; }
     .card-meta { font-family: var(--mono); font-size: clamp(0.5rem, 0.45rem + 0.1vw, 0.6rem); color: var(--pencil); margin-top: auto; }
 
-    /* ══════════ MOTION SECTION ══════════ */
+    /* ══════════ MOTION ══════════ */
     .motion-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: var(--space-s);
     }
     .motion-item {
-      border: 2px solid var(--ink); padding: var(--space-s); background: var(--whiteboard);
+      border: 1px solid var(--border-color); border-radius: 4px;
+      padding: var(--space-s); background: var(--whiteboard);
       display: flex; flex-direction: column; gap: 8px;
     }
     .motion-demo {
       height: clamp(60px, 6vw, 90px);
-      background: var(--ink); display: flex; align-items: center; justify-content: center;
+      background: var(--ink); border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
       font-family: var(--mono); font-size: var(--fs-label); color: var(--gray-paper);
       overflow: hidden; position: relative;
     }
+    [data-theme="dark"] .motion-demo { background: #111414; }
     .motion-title { font-family: var(--mono); font-size: clamp(0.7rem, 0.65rem + 0.15vw, 0.8rem); font-weight: 700; }
     .motion-desc { font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); line-height: 1.5; }
 
-    /* underline drawing demo */
     .draw-underline { display: inline; position: relative; }
     .draw-underline::after {
       content: ''; position: absolute; bottom: -2px; left: 0; height: 3px; background: var(--red);
@@ -323,20 +389,274 @@
     }
     .draw-underline.active::after { width: 100%; }
 
-    /* ══════════ SPACING VISUAL ══════════ */
-    .spacing-vis {
-      display: flex; flex-direction: column; gap: 6px;
-    }
-    .sp-row {
-      display: flex; align-items: center; gap: var(--space-xs);
-    }
+    /* ══════════ SPACING ══════════ */
+    .spacing-vis { display: flex; flex-direction: column; gap: 6px; }
+    .sp-row { display: flex; align-items: center; gap: var(--space-xs); }
     .sp-label { font-family: var(--mono); font-size: clamp(0.5rem, 0.45rem + 0.1vw, 0.6rem); color: var(--pencil); min-width: clamp(60px, 8vw, 90px); }
-    .sp-bar { height: clamp(16px, 1.5vw, 24px); background: var(--red); opacity: 0.2; transition: opacity 0.3s var(--ease), transform 0.3s var(--ease); }
+    .sp-bar { height: clamp(16px, 1.5vw, 24px); background: var(--red); opacity: 0.2; border-radius: 2px; transition: opacity 0.3s var(--ease), transform 0.3s var(--ease); }
     @media (hover:hover) { .sp-row:hover .sp-bar { opacity: 0.5; transform: scaleY(1.3); } }
     .sp-val { font-family: var(--mono); font-size: clamp(0.45rem, 0.4rem + 0.1vw, 0.55rem); color: var(--faint); }
 
+    /* ══════════ TABLES ══════════ */
+    .data-table-wrap { overflow-x: auto; }
+    .data-table {
+      width: 100%; border-collapse: collapse;
+      font-size: var(--fs-small);
+    }
+    .data-table thead th {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--pencil); text-align: left;
+      padding: var(--space-xs) var(--space-xs);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .data-table tbody td {
+      font-family: var(--serif); font-size: var(--fs-small);
+      padding: var(--space-xs) var(--space-xs);
+      border-bottom: 1px solid var(--border-faint);
+      color: var(--ink);
+    }
+    .data-table tbody tr:nth-child(even) { background: var(--notebook); }
+    .data-table tbody tr:nth-child(odd) { background: transparent; }
+    .data-table .num { font-family: var(--mono); font-size: clamp(0.7rem, 0.65rem + 0.1vw, 0.8rem); }
+    .data-table .status-badge {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.05em; padding: 2px 8px; border-radius: 3px;
+    }
+    .status-live { background: #3D8C6E20; color: var(--green); }
+    .status-draft { background: #F5D54730; color: #A08A00; }
+    .status-archived { background: #E03E3615; color: var(--red); }
+
+    /* ══════════ ACCORDION ══════════ */
+    .accordion { display: flex; flex-direction: column; gap: 0; }
+    .accordion-item { border-bottom: 1px dashed var(--border-color); }
+    .accordion-item:first-child { border-top: 1px dashed var(--border-color); }
+    .accordion-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-s) 0; cursor: pointer;
+      font-family: var(--serif); font-size: var(--fs-body); font-weight: 700;
+      color: var(--ink); transition: color 0.2s var(--ease);
+      -webkit-user-select: none; user-select: none;
+    }
+    @media (hover:hover) { .accordion-header:hover { color: var(--blue); } }
+    .accordion-icon {
+      font-family: var(--mono); font-size: var(--fs-body); color: var(--pencil);
+      transition: transform 0.3s var(--ease);
+      flex-shrink: 0;
+    }
+    .accordion-item.open .accordion-icon { transform: rotate(45deg); }
+    .accordion-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s var(--ease), padding 0.3s var(--ease);
+    }
+    .accordion-item.open .accordion-body { max-height: 600px; }
+    .accordion-body-inner {
+      padding: 0 0 var(--space-s) 0;
+      font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); line-height: 1.65;
+    }
+
+    /* ══════════ FORMS ══════════ */
+    .form-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--space-s);
+    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label {
+      font-family: var(--serif); font-size: var(--fs-small); font-weight: 700; color: var(--ink);
+    }
+    .form-input, .form-textarea, .form-select {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--ink); background: var(--notebook);
+      border: 1px solid var(--border-color); border-radius: 4px;
+      padding: clamp(8px, 1vw, 12px) clamp(10px, 1.2vw, 16px);
+      transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+      outline: none;
+    }
+    .form-input::placeholder, .form-textarea::placeholder {
+      font-family: var(--mono); font-size: var(--fs-label);
+      color: var(--pencil); letter-spacing: 0.03em;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px #2B6CB020;
+    }
+    .form-textarea { resize: vertical; min-height: 100px; }
+    .form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23808888' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+    .form-check-row { display: flex; align-items: center; gap: var(--space-xs); }
+    .form-check {
+      width: 16px; height: 16px; accent-color: var(--blue);
+      cursor: pointer;
+    }
+    .form-check-label { font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); cursor: pointer; }
+
+    /* ══════════ TABS ══════════ */
+    .tabs-nav {
+      display: flex; gap: 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .tab-btn {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--pencil); background: none; border: none;
+      padding: var(--space-xs) var(--space-s);
+      cursor: pointer; position: relative;
+      transition: color 0.2s var(--ease);
+    }
+    .tab-btn::after {
+      content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+      height: 3px; background: transparent; border-radius: 2px 2px 0 0;
+      transition: background 0.2s var(--ease);
+    }
+    .tab-btn.active { color: var(--ink); }
+    .tab-btn.active::after { background: var(--red); }
+    @media (hover:hover) { .tab-btn:hover { color: var(--ink); } }
+    .tab-panel { display: none; padding: var(--space-s) 0; }
+    .tab-panel.active { display: block; }
+    .tab-panel p { font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); line-height: 1.65; }
+
+    /* ══════════ BUTTONS / CTA ══════════ */
+    .btn {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      border: none; border-radius: 4px; cursor: pointer;
+      padding: clamp(10px, 1.2vw, 14px) clamp(20px, 2.5vw, 32px);
+      transition: all 0.25s var(--ease);
+      display: inline-flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .btn-primary { background: var(--ink); color: var(--notebook); }
+    @media (hover:hover) { .btn-primary:hover { background: var(--graphite); } }
+    .btn-secondary { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+    @media (hover:hover) { .btn-secondary:hover { background: var(--ink); color: var(--notebook); } }
+    .btn-ghost {
+      background: transparent; color: var(--ink); padding-left: 0; padding-right: 0;
+      letter-spacing: 0.05em;
+    }
+    .btn-ghost .arrow { transition: transform 0.25s var(--ease); }
+    @media (hover:hover) { .btn-ghost:hover .arrow { transform: translateX(4px); } }
+    .btn:disabled, .btn.btn-disabled {
+      opacity: 0.35; cursor: not-allowed; pointer-events: none;
+    }
+    .btn.btn-loading { pointer-events: none; position: relative; }
+    .btn.btn-loading .btn-text { opacity: 0; }
+    .btn.btn-loading::after {
+      content: ''; position: absolute;
+      width: 14px; height: 14px;
+      border: 2px solid var(--notebook); border-top-color: transparent;
+      border-radius: 50%; animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .cta-card {
+      background: var(--yellow-hl);
+      border: 1px dashed var(--yellow);
+      border-radius: 6px;
+      padding: var(--space-m);
+      display: flex; flex-direction: column; gap: var(--space-xs);
+    }
+    .cta-card h3 { font-family: var(--serif); font-size: var(--fs-h3); font-weight: 700; color: var(--ink); }
+    .cta-card p { font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); line-height: 1.55; }
+
+    /* ══════════ CALLOUT / HIGHLIGHT BOXES ══════════ */
+    .callout {
+      padding: var(--space-s);
+      border-radius: 4px;
+      font-family: var(--serif); font-size: var(--fs-small);
+      line-height: 1.6;
+      border-left: 4px solid;
+      margin-bottom: var(--space-s);
+    }
+    .callout-label {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 6px; display: flex; align-items: center; gap: 6px;
+    }
+    .callout-yellow { background: #F5D54712; border-color: var(--yellow); color: var(--ink); }
+    .callout-yellow .callout-label { color: #A08A00; }
+    .callout-blue { background: #2B6CB010; border-color: var(--blue); color: var(--ink); }
+    .callout-blue .callout-label { color: var(--blue); }
+    .callout-red { background: #E03E3610; border-color: var(--red); color: var(--ink); }
+    .callout-red .callout-label { color: var(--red); }
+
+    /* ══════════ MULTI-COLUMN LAYOUTS ══════════ */
+    .col-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-s); }
+    .col-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-s); }
+    .col-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-s); }
+    .col-1-2 { display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-s); }
+    .col-demo-box {
+      background: var(--whiteboard); border: 1px dashed var(--border-color); border-radius: 4px;
+      padding: var(--space-s); display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); font-size: var(--fs-label); color: var(--pencil);
+      min-height: clamp(80px, 8vw, 120px);
+      letter-spacing: 0.05em;
+    }
+
+    /* ══════════ BANNERS ══════════ */
+    .banner-top {
+      background: var(--ink); color: var(--notebook);
+      padding: clamp(8px, 1vw, 12px) var(--margin);
+      text-align: center;
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+    [data-theme="dark"] .banner-top { background: #111414; }
+    .banner-top a { color: var(--yellow); }
+    .banner-section {
+      background: var(--notebook); border: 1px dashed var(--border-color);
+      border-radius: 6px;
+      padding: var(--space-m);
+      text-align: center;
+    }
+    .banner-section h3 { font-family: var(--serif); font-size: var(--fs-h2); font-weight: 700; color: var(--ink); margin-bottom: var(--space-xs); }
+    .banner-section p { font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); line-height: 1.5; }
+
+    /* ══════════ STATES ══════════ */
+    .states-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-s);
+    }
+    .state-card {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: var(--space-s);
+      border: 1px dashed var(--border-color); border-radius: 4px;
+      background: var(--whiteboard);
+    }
+    .state-label {
+      font-family: var(--mono); font-size: var(--fs-label); color: var(--pencil);
+      letter-spacing: 0.06em;
+    }
+    .btn-focus-demo:focus { border-color: var(--blue); box-shadow: 0 0 0 3px #2B6CB030; outline: none; }
+    .input-disabled {
+      opacity: 0.4; cursor: not-allowed; background: var(--whiteboard);
+    }
+
+    /* ASCII spinner */
+    .ascii-spinner {
+      font-family: var(--mono); font-size: var(--fs-body);
+      color: var(--pencil); display: inline-block;
+    }
+
+    /* ══════════ ILLUSTRATION PLACEHOLDERS ══════════ */
+    .illust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-s); }
+    .illust-frame {
+      position: relative; overflow: hidden;
+      border-radius: 6px; border: 1px solid var(--border-color);
+      aspect-ratio: 16/10;
+    }
+    .illust-frame img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(30%) contrast(0.95);
+      transition: filter 0.4s var(--ease);
+    }
+    @media (hover:hover) { .illust-frame:hover img { filter: grayscale(0%) contrast(1); } }
+    .illust-caption {
+      font-family: var(--mono); font-size: var(--fs-label); color: var(--pencil);
+      margin-top: 6px; letter-spacing: 0.04em;
+    }
+
     /* ══════════ FOOTER ══════════ */
-    footer { border-top: 2px solid var(--ink); padding: var(--space-l) 0; }
+    footer { border-top: 1px dashed var(--border-color); padding: var(--space-l) 0; }
     .footer-inner { max-width: 1400px; margin: 0 auto; padding: 0 var(--margin); display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--space-s); }
     .footer-entity { font-family: var(--serif); font-size: var(--fs-small); font-weight: 700; }
     .footer-loc { font-family: var(--mono); font-size: var(--fs-label); color: var(--pencil); margin-top: 4px; }
@@ -352,6 +672,10 @@
       .palette-row { grid-template-columns: repeat(2, 1fr); }
       .hero-bottom { flex-direction: column; }
       .hero-ascii { display: none; }
+      .form-grid { grid-template-columns: 1fr; }
+      .col-2, .col-3, .col-2-1, .col-1-2 { grid-template-columns: 1fr; }
+      .states-grid { grid-template-columns: 1fr 1fr; }
+      .nav-right a.hide-mobile { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -365,6 +689,12 @@
 </head>
 <body>
 
+  <!-- ══════════ TOP BANNER ══════════ -->
+  <div class="banner-top">
+    INTERNAL DESIGN SYSTEM — V4 MAR 2026 &nbsp;&middot;&nbsp; <a href="#cta">SHARE FEEDBACK</a>
+  </div>
+
+  <!-- ══════════ NAV ══════════ -->
   <nav>
     <div class="nav-inner">
       <a href="/recurr-brand/" class="nav-logo">recurr</a>
@@ -374,7 +704,10 @@
         <a href="#type">type</a>
         <a href="#ascii">ascii</a>
         <a href="#cards">cards</a>
-        <a href="#motion">motion</a>
+        <a href="#tables" class="hide-mobile">tables</a>
+        <a href="#forms" class="hide-mobile">forms</a>
+        <a href="#cta" class="hide-mobile">cta</a>
+        <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode" aria-label="Toggle dark mode">&#x25D0;</button>
       </div>
     </div>
   </nav>
@@ -385,44 +718,44 @@
     <div class="hero-underline" id="hero-ul"></div>
     <div class="hero-bottom">
       <p class="hero-sub">The design system for recurr.co. Practitioner thinking, magazine presentation, absurdly sophisticated technology underneath.</p>
-      <pre class="hero-ascii" id="hero-ascii">┌──────────────────┐
-│  recurr.co       │
-│  brand system    │
-│  v3 · mar 2026   │
-│                  │
-│  ██████░░░░ 60%  │
-└──────────────────┘</pre>
+      <pre class="hero-ascii" id="hero-ascii">&#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
+&#9474;  recurr.co       &#9474;
+&#9474;  brand system    &#9474;
+&#9474;  v4 · mar 2026   &#9474;
+&#9474;                  &#9474;
+&#9474;  &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9617;&#9617; 80%  &#9474;
+&#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;</pre>
     </div>
   </section>
 
-  <div class="full-bleed divider-thick"></div>
+  <hr class="divider" style="margin:0 auto;max-width:1400px">
 
   <!-- ══════════ PALETTE ══════════ -->
   <section class="section-wide" id="palette">
-    <p class="section-label" data-reveal>Palette — Whiteboard markers on gray paper</p>
-    <p class="section-desc" data-reveal>Not warm cream. Not clinical white. Gray paper with dashed diamond grid underneath. Marker accents for emphasis — red underlines, yellow highlights, blue links, green status. Hover the swatches.</p>
+    <p class="section-label dot-red" data-reveal>Palette — Cool paper with marker accents</p>
+    <p class="section-desc" data-reveal>Cool blue-green grays as surface tones. Not warm cream, not clinical white. Faintest hint of teal in the paper. Marker accents for emphasis — red underlines, yellow highlights, blue links, green status. Hover the swatches.</p>
 
     <div class="palette-row" data-reveal>
-      <div class="swatch-tall light" style="background:var(--gray-paper);outline:1px solid var(--faint)"><span class="s-name">Gray Paper</span><span class="s-hex">#E8E6E3</span></div>
-      <div class="swatch-tall light" style="background:var(--whiteboard)"><span class="s-name">Whiteboard</span><span class="s-hex">#DDDBD8</span></div>
-      <div class="swatch-tall light" style="background:var(--notebook)"><span class="s-name">Notebook</span><span class="s-hex">#F4F3F1</span></div>
-      <div class="swatch-tall dark" style="background:var(--ink)"><span class="s-name">Ink</span><span class="s-hex">#2A2A2A</span></div>
+      <div class="swatch-tall light" style="background:#E5E8E8;outline:1px solid #C0C6C5"><span class="s-name">Gray Paper</span><span class="s-hex">#E5E8E8</span></div>
+      <div class="swatch-tall light" style="background:#D8DDDC"><span class="s-name">Whiteboard</span><span class="s-hex">#D8DDDC</span></div>
+      <div class="swatch-tall light" style="background:#F1F4F3"><span class="s-name">Notebook</span><span class="s-hex">#F1F4F3</span></div>
+      <div class="swatch-tall dark" style="background:#2A2A2A"><span class="s-name">Ink</span><span class="s-hex">#2A2A2A</span></div>
     </div>
 
     <div class="marker-strip" data-reveal>
-      <div class="marker-swatch" style="background:var(--red)"><span>RED · UNDERLINE</span></div>
-      <div class="marker-swatch" style="background:var(--yellow)"><span>YELLOW · HIGHLIGHT</span></div>
-      <div class="marker-swatch" style="background:var(--blue)"><span>BLUE · LINK</span></div>
-      <div class="marker-swatch" style="background:var(--green)"><span>GREEN · ACTIVE</span></div>
-      <div class="marker-swatch" style="background:var(--ink)"><span>INK · STROKE</span></div>
+      <div class="marker-swatch" style="background:var(--red)"><span>RED &middot; UNDERLINE</span></div>
+      <div class="marker-swatch" style="background:var(--yellow)"><span>YELLOW &middot; HIGHLIGHT</span></div>
+      <div class="marker-swatch" style="background:var(--blue)"><span>BLUE &middot; LINK</span></div>
+      <div class="marker-swatch" style="background:var(--green)"><span>GREEN &middot; ACTIVE</span></div>
+      <div class="marker-swatch" style="background:#2A2A2A"><span>INK &middot; STROKE</span></div>
     </div>
   </section>
 
-  <div class="divider-thin"></div>
+  <hr class="divider" style="margin:0 auto;max-width:1400px">
 
   <!-- ══════════ TYPOGRAPHY ══════════ -->
   <section class="section-wide" id="type">
-    <p class="section-label" data-reveal>Typography — Serif is the voice. Mono is the thinking.</p>
+    <p class="section-label dot-blue" data-reveal>Typography — Serif is the voice. Mono is the thinking.</p>
 
     <div class="type-grid">
       <div>
@@ -433,7 +766,7 @@
         <p class="section-desc" data-reveal>
           Serif is the default for everything — headlines, body, pull quotes, article text. Yellow highlight marks key insight. Red underline marks emphasis. Monospace marginalia annotates the thinking.
         </p>
-        <p class="marginalia" data-reveal>← this is how annotations work. mono, red, smaller.</p>
+        <p class="marginalia" data-reveal>&larr; this is how annotations work. mono, red, smaller.</p>
       </div>
 
       <div class="type-mono-live" data-reveal>FONT STACKS
@@ -462,7 +795,7 @@ label   clamp(0.6rem..0.7rem)</div>
       <p style="font-family:var(--serif);font-size:var(--fs-h2);font-weight:700;line-height:1.1;color:var(--graphite)">Heading Two</p>
       <p style="font-family:var(--serif);font-size:var(--fs-h3);font-weight:700;line-height:1.2;color:var(--graphite)">Heading Three</p>
       <p style="font-family:var(--serif);font-size:var(--fs-body-lg);line-height:1.5;color:var(--graphite)">Body Large — for lead paragraphs and introductions that deserve weight</p>
-      <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);letter-spacing:0.1em;margin-top:4px">MONO LABEL — METADATA · TAGS · SECTION HEADERS · TIMESTAMPS</p>
+      <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);letter-spacing:0.1em;margin-top:4px">MONO LABEL — METADATA &middot; TAGS &middot; SECTION HEADERS &middot; TIMESTAMPS</p>
     </div>
   </section>
 
@@ -476,12 +809,12 @@ label   clamp(0.6rem..0.7rem)</div>
     </div>
   </div>
 
-  <div class="full-bleed divider-thick"></div>
+  <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ SAMPLE CARDS ══════════ -->
+  <!-- ══════════ CARDS ══════════ -->
   <section class="section-wide" id="cards">
-    <p class="section-label" data-reveal>Cards — Asymmetric grid, hover lift, marker accents</p>
-    <p class="section-desc" data-reveal>Not a uniform 3-column grid. The featured card spans two rows. Hover lifts with a solid ink shadow — no soft drop shadows. Each pillar gets its own marker color.</p>
+    <p class="section-label dot-green" data-reveal>Cards — Asymmetric grid, hover lift, marker accents</p>
+    <p class="section-desc" data-reveal>Not a uniform 3-column grid. The featured card spans two rows. Hover lifts with a soft offset shadow. Each pillar gets its own marker color.</p>
 
     <div class="card-grid-asym">
       <div class="card card-featured" data-reveal>
@@ -489,30 +822,350 @@ label   clamp(0.6rem..0.7rem)</div>
         <span class="card-title" style="font-size:var(--fs-h2)">The Adoption Chasm</span>
         <div class="card-rule" style="background:var(--red)"></div>
         <span class="card-excerpt">Why 88% of enterprises experiment with AI but only 5.5% transform. Most enterprises treat AI like a feature. The ones that win treat it like a reorganization. A framework for crossing the gap between experimentation and transformation — drawing from our work with Clarisights and others.</span>
-        <span class="card-meta">Pratik Mishra · Mar 14, 2026 · 12 min read</span>
+        <span class="card-meta">Pratik Mishra &middot; Mar 14, 2026 &middot; 12 min read</span>
       </div>
       <div class="card" data-reveal>
         <span class="card-pillar" style="color:var(--blue)">GTM</span>
         <span class="card-title">Your First PMM Hire is Wrong.</span>
         <div class="card-rule" style="background:var(--blue)"></div>
         <span class="card-excerpt">The job description you wrote is actually three different jobs.</span>
-        <span class="card-meta">Pratik Mishra · Mar 12</span>
+        <span class="card-meta">Pratik Mishra &middot; Mar 12</span>
       </div>
       <div class="card" data-reveal>
         <span class="card-pillar" style="color:var(--green)">AI & NEW STACK</span>
         <span class="card-title">SCADA Meets LLMs</span>
         <div class="card-rule" style="background:var(--green)"></div>
         <span class="card-excerpt">Renewable energy monitoring, rebuilt from the sensor up.</span>
-        <span class="card-meta">Pratik Mishra · Mar 1</span>
+        <span class="card-meta">Pratik Mishra &middot; Mar 1</span>
       </div>
     </div>
   </section>
 
-  <div class="divider-thin"></div>
+  <hr class="divider" style="margin:0 auto;max-width:1400px">
+
+  <!-- ══════════ TABLES ══════════ -->
+  <section class="section-wide" id="tables">
+    <p class="section-label dot-yellow" data-reveal>Tables — Clean data, no heavy borders</p>
+    <p class="section-desc" data-reveal>Mono headers, serif body, subtle row alternation using surface tones. Bottom borders only. Status badges use marker color tints.</p>
+
+    <div class="data-table-wrap" data-reveal>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Outlet</th>
+            <th>Channel</th>
+            <th>Orders</th>
+            <th>Revenue</th>
+            <th>AOV</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>HSR Layout</td>
+            <td>Swiggy</td>
+            <td class="num">4,821</td>
+            <td class="num">14,58,741</td>
+            <td class="num">302</td>
+            <td><span class="status-badge status-live">LIVE</span></td>
+          </tr>
+          <tr>
+            <td>Indiranagar</td>
+            <td>Swiggy</td>
+            <td class="num">3,912</td>
+            <td class="num">11,82,024</td>
+            <td class="num">302</td>
+            <td><span class="status-badge status-live">LIVE</span></td>
+          </tr>
+          <tr>
+            <td>JP Nagar</td>
+            <td>Zomato</td>
+            <td class="num">2,187</td>
+            <td class="num">6,60,474</td>
+            <td class="num">302</td>
+            <td><span class="status-badge status-live">LIVE</span></td>
+          </tr>
+          <tr>
+            <td>Central</td>
+            <td>Swiggy</td>
+            <td class="num">1,843</td>
+            <td class="num">5,56,586</td>
+            <td class="num">302</td>
+            <td><span class="status-badge status-draft">DRAFT</span></td>
+          </tr>
+          <tr>
+            <td>Doddanekundi</td>
+            <td>Zomato</td>
+            <td class="num">987</td>
+            <td class="num">2,98,074</td>
+            <td class="num">302</td>
+            <td><span class="status-badge status-archived">PAUSED</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="divider" style="margin:0 auto;max-width:1400px">
+
+  <!-- ══════════ ACCORDION ══════════ -->
+  <section class="section-wide" id="accordion">
+    <p class="section-label dot-red" data-reveal>Accordion — Click to expand, smooth transitions</p>
+    <p class="section-desc" data-reveal>Collapsible content sections for FAQs, documentation, or progressive disclosure. Simple +/- indicator, smooth height animation.</p>
+
+    <div class="accordion" data-reveal>
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>What typefaces does recurr use?</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            Serif (New York / Georgia) is the primary voice for all editorial content — headlines, body, pull quotes, article text. Monospace (SF Mono / Menlo) handles metadata, labels, code blocks, and marginalia annotations. Sans-serif (SF Pro / system-ui) is reserved for navigation and UI chrome only.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>Why cool blue-green grays instead of warm cream?</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            Warm cream felt cozy but lacked crispness. The cool blue-green tint sits between paper and screen — grounded enough for long reading sessions, sharp enough for professional presentation. It pairs better with the marker accents, creating contrast without collision.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>How do the marker colors map to content types?</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            Red marks emphasis — underlines, warnings, and important callouts. Yellow marks insight — highlights, key phrases, and "aha" moments. Blue marks navigation — links, interactive elements, and CTAs. Green marks status — active, live, success states. This mapping is consistent across all pages.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>What's the motion philosophy?</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            Three layers: ASCII self-draw on scroll (signature, &lt;2KB), scroll-triggered reveals with staggered children (content entrance), and background parallax at 0.95x scroll rate (depth). All gated behind prefers-reduced-motion and @media(hover:hover). Custom easing: cubic-bezier(0.16, 1, 0.3, 1) — fast snap, gentle float.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" style="margin:0 auto;max-width:1400px">
+
+  <!-- ══════════ FORMS ══════════ -->
+  <section class="section-wide" id="forms">
+    <p class="section-label dot-blue" data-reveal>Forms — Serif labels, mono placeholders, marker focus</p>
+    <p class="section-desc" data-reveal>Input styling follows the design system. Serif for labels, mono for placeholder and helper text, blue focus ring, subtle borders that don't fight for attention.</p>
+
+    <div class="form-grid" data-reveal>
+      <div class="form-group">
+        <label class="form-label">Full name</label>
+        <input type="text" class="form-input" placeholder="e.g. Pratik Mishra">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input type="email" class="form-input" placeholder="you@company.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select class="form-select">
+          <option>Select a category</option>
+          <option>Positioning & Category Design</option>
+          <option>GTM & Go-to-Market</option>
+          <option>Content & Distribution</option>
+          <option>Product-Led Growth</option>
+          <option>SaaS Intelligence</option>
+          <option>AI & the New Stack</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Priority</label>
+        <select class="form-select">
+          <option>Select priority</option>
+          <option>High</option>
+          <option>Medium</option>
+          <option>Low</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Brief description</label>
+        <textarea class="form-textarea" placeholder="Describe what you're working on..."></textarea>
+      </div>
+      <div class="form-group">
+        <div class="form-check-row">
+          <input type="checkbox" class="form-check" id="check1" checked>
+          <label class="form-check-label" for="check1">Subscribe to newsletter</label>
+        </div>
+        <div class="form-check-row">
+          <input type="checkbox" class="form-check" id="check2">
+          <label class="form-check-label" for="check2">Receive product updates</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-check-row">
+          <input type="radio" name="contact" class="form-check" id="radio1" checked>
+          <label class="form-check-label" for="radio1">Contact via email</label>
+        </div>
+        <div class="form-check-row">
+          <input type="radio" name="contact" class="form-check" id="radio2">
+          <label class="form-check-label" for="radio2">Contact via Slack</label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" style="margin:0 auto;max-width:1400px">
+
+  <!-- ══════════ TABS ══════════ -->
+  <section class="section-wide" id="tabs">
+    <p class="section-label dot-green" data-reveal>Tabs — Content panels with marker underline</p>
+    <p class="section-desc" data-reveal>Active tab uses a red marker underline. Smooth panel switching. Mono labels, serif body content.</p>
+
+    <div data-reveal>
+      <div class="tabs-nav" id="tabs-nav">
+        <button class="tab-btn active" data-tab="tab-research" onclick="switchTab(this)">Research</button>
+        <button class="tab-btn" data-tab="tab-editorial" onclick="switchTab(this)">Editorial</button>
+        <button class="tab-btn" data-tab="tab-studio" onclick="switchTab(this)">Studio</button>
+        <button class="tab-btn" data-tab="tab-ops" onclick="switchTab(this)">Operations</button>
+      </div>
+      <div class="tab-panel active" id="tab-research">
+        <p>S3 Research is the structured intelligence engine. Six entities — Industries, Functions, Personas, Jobs to Be Done, Products, and Buyers — form a knowledge graph that maps real-world buyer intent to software capabilities. Not a review site. Not a category directory. A dimensional matching system built for AI agents to navigate and humans to browse.</p>
+      </div>
+      <div class="tab-panel" id="tab-editorial">
+        <p>S3 Editorial is how Recurr builds authority. Operator interviews, research essays, video, thought leadership, founder conversations. Fed by two sources: structured research output and Content Studio experience. Six pillars: Positioning, GTM, Content & Distribution, PLG, SaaS Intelligence, and AI & New Stack.</p>
+      </div>
+      <div class="tab-panel" id="tab-studio">
+        <p>Recurr Studio is the venture studio arm. Four products — Canteen (workplace F&B), PMM Hub (product marketing), x0 (B2B design), and Refound (SEO operations). Each has a lead who builds their own brand alongside Recurr. Not an agency model — an embedded operator model.</p>
+      </div>
+      <div class="tab-panel" id="tab-ops">
+        <p>Outpost Kitchen powers the kitchen infrastructure. 88,000+ orders served across 6 outlets, 3 brands. Automated data pipeline syncing daily from Rista POS to Supabase warehouse. 7 Metabase dashboards, 39 reports. Category control center with 75 categories and 144 SKUs.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" style="margin:0 auto;max-width:1400px">
+
+  <!-- ══════════ BUTTONS & CTA ══════════ -->
+  <section class="section-wide" id="cta">
+    <p class="section-label dot-red" data-reveal>Buttons & CTAs — Primary, secondary, ghost, card</p>
+    <p class="section-desc" data-reveal>Three button styles for different hierarchy levels. Primary for key actions, secondary for alternatives, ghost for navigation. CTA cards for highlighted calls to action.</p>
+
+    <div style="display:flex;gap:var(--space-s);flex-wrap:wrap;align-items:center;margin-bottom:var(--space-m)" data-reveal>
+      <button class="btn btn-primary">Subscribe</button>
+      <button class="btn btn-secondary">Learn more</button>
+      <button class="btn btn-ghost">Read the essay <span class="arrow">&rarr;</span></button>
+    </div>
+
+    <div style="display:flex;gap:var(--space-s);flex-wrap:wrap;align-items:center;margin-bottom:var(--space-m)" data-reveal>
+      <button class="btn btn-primary btn-disabled" disabled>Disabled</button>
+      <button class="btn btn-primary btn-loading"><span class="btn-text">Loading</span></button>
+    </div>
+
+    <div class="cta-card" data-reveal>
+      <h3>Ready to build your category?</h3>
+      <p>We work with 3 clients at a time. Each engagement is custom — not productized. Start with a conversation about your market, your buyers, and where the whitespace is.</p>
+      <div style="margin-top:var(--space-xs)">
+        <button class="btn btn-primary">Start a conversation</button>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" style="margin:0 auto;max-width:1400px">
+
+  <!-- ══════════ CALLOUTS / HIGHLIGHTS ══════════ -->
+  <section class="section-wide" id="callouts">
+    <p class="section-label dot-yellow" data-reveal>Callouts — Margin notes, info, warnings</p>
+    <p class="section-desc" data-reveal>Three callout styles for different purposes. Yellow for insights and margin notes, blue for informational context, red for warnings and emphasis. Left border accent + tinted background.</p>
+
+    <div data-reveal>
+      <div class="callout callout-yellow">
+        <div class="callout-label">Margin note</div>
+        This is the kind of insight you scribble in the margin of a book. Important enough to flag, not important enough for its own section. Yellow highlight energy — "pay attention to this."
+      </div>
+      <div class="callout callout-blue">
+        <div class="callout-label">Context</div>
+        Informational callout for background context, definitions, or supplementary material. Like the "note" boxes in technical documentation but without the clinical feel.
+      </div>
+      <div class="callout callout-red">
+        <div class="callout-label">Important</div>
+        Red callout for warnings, breaking changes, or critical information. Not alarmist — just firm. "You need to know this before proceeding."
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" style="margin:0 auto;max-width:1400px">
+
+  <!-- ══════════ MULTI-COLUMN LAYOUTS ══════════ -->
+  <section class="section-wide" id="layouts">
+    <p class="section-label dot-blue" data-reveal>Layouts — Symmetric and asymmetric grids</p>
+    <p class="section-desc" data-reveal>Column systems for different content arrangements. Equal splits for comparison, asymmetric for content + sidebar patterns.</p>
+
+    <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);letter-spacing:0.08em;margin-bottom:var(--space-xs)" data-reveal>2-COLUMN (1FR 1FR)</p>
+    <div class="col-2" data-reveal style="margin-bottom:var(--space-m)">
+      <div class="col-demo-box">Column 1</div>
+      <div class="col-demo-box">Column 2</div>
+    </div>
+
+    <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);letter-spacing:0.08em;margin-bottom:var(--space-xs)" data-reveal>3-COLUMN (1FR 1FR 1FR)</p>
+    <div class="col-3" data-reveal style="margin-bottom:var(--space-m)">
+      <div class="col-demo-box">Col 1</div>
+      <div class="col-demo-box">Col 2</div>
+      <div class="col-demo-box">Col 3</div>
+    </div>
+
+    <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);letter-spacing:0.08em;margin-bottom:var(--space-xs)" data-reveal>ASYMMETRIC (2FR 1FR)</p>
+    <div class="col-2-1" data-reveal style="margin-bottom:var(--space-m)">
+      <div class="col-demo-box">Main content area &mdash; 2fr</div>
+      <div class="col-demo-box">Sidebar &mdash; 1fr</div>
+    </div>
+
+    <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);letter-spacing:0.08em;margin-bottom:var(--space-xs)" data-reveal>ASYMMETRIC (1FR 2FR)</p>
+    <div class="col-1-2" data-reveal>
+      <div class="col-demo-box">Nav &mdash; 1fr</div>
+      <div class="col-demo-box">Content area &mdash; 2fr</div>
+    </div>
+  </section>
+
+  <hr class="divider" style="margin:0 auto;max-width:1400px">
+
+  <!-- ══════════ BANNERS ══════════ -->
+  <section class="section-wide" id="banners">
+    <p class="section-label dot-green" data-reveal>Banners — Announcement strips and section banners</p>
+    <p class="section-desc" data-reveal>Top announcement bar uses ink background. Section banners use notebook surface with dashed border.</p>
+
+    <div data-reveal style="margin-bottom:var(--space-s)">
+      <div class="banner-top" style="position:relative;border-radius:4px">
+        RECURR STUDIO LAUNCHES APRIL 3, 2026 &nbsp;&middot;&nbsp; <a href="#">JOIN THE WAITLIST</a>
+      </div>
+    </div>
+
+    <div data-reveal>
+      <div class="banner-section">
+        <h3>Build with operators, not pundits.</h3>
+        <p>Every framework we publish comes from real client work. Evidence-backed, story-led, generous with methodology.</p>
+        <div style="margin-top:var(--space-s)">
+          <button class="btn btn-primary">Explore research</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" style="margin:0 auto;max-width:1400px">
 
   <!-- ══════════ MOTION ══════════ -->
   <section class="section-wide" id="motion">
-    <p class="section-label" data-reveal>Motion — Three layers, all lightweight</p>
+    <p class="section-label dot-red" data-reveal>Motion — Three layers, all lightweight</p>
     <p class="section-desc" data-reveal>Custom easing <span style="font-family:var(--mono);font-size:0.85em;color:var(--pencil)">cubic-bezier(0.16, 1, 0.3, 1)</span> — fast snap, gentle float. prefers-reduced-motion kills everything.</p>
 
     <div class="motion-grid">
@@ -525,28 +1178,71 @@ label   clamp(0.6rem..0.7rem)</div>
         <div class="motion-demo">
           <span class="draw-underline" id="draw-demo" style="font-family:var(--serif);font-size:var(--fs-small);color:var(--notebook)">this underline draws itself</span>
         </div>
-        <span class="motion-title">GSAP scroll reveals</span>
-        <span class="motion-desc">Headlines draw underlines. Highlights fade in. Sections enter with staggered children. ScrollTrigger. ~30KB.</span>
+        <span class="motion-title">Scroll reveals</span>
+        <span class="motion-desc">Headlines draw underlines. Highlights fade in. Sections enter with staggered children. IntersectionObserver.</span>
       </div>
       <div class="motion-item" data-reveal>
-        <div class="motion-demo"><span style="opacity:0.35">pen sketches · marker circles · page turns</span></div>
+        <div class="motion-demo"><span style="opacity:0.35">pen sketches &middot; marker circles &middot; page turns</span></div>
         <span class="motion-title">Lottie micro-stories</span>
         <span class="motion-desc">One per page max. A pen drawing a framework. A marker circling a word. Plays once. ~30KB.</span>
       </div>
       <div class="motion-item" data-reveal>
-        <div class="motion-demo"><span style="opacity:0.35">diamond grid shifts at 0.95× scroll rate</span></div>
+        <div class="motion-demo"><span style="opacity:0.35">diamond grid shifts at 0.95&times; scroll rate</span></div>
         <span class="motion-title">Background parallax</span>
         <span class="motion-desc">The dashed diamond grid moves at a slightly different rate than content. Physical depth. Barely perceptible.</span>
       </div>
     </div>
   </section>
 
-  <div class="divider-thin"></div>
+  <hr class="divider" style="margin:0 auto;max-width:1400px">
+
+  <!-- ══════════ STATES ══════════ -->
+  <section class="section-wide" id="states">
+    <p class="section-label dot-yellow" data-reveal>States — Hover, active, disabled, focus, loading</p>
+    <p class="section-desc" data-reveal>Interactive element states rendered live. Focus rings use blue marker, disabled dims to 35% opacity, loading shows an ASCII spinner.</p>
+
+    <div class="states-grid" data-reveal>
+      <div class="state-card">
+        <span class="state-label">DEFAULT</span>
+        <button class="btn btn-primary">Button</button>
+      </div>
+      <div class="state-card">
+        <span class="state-label">HOVER (move cursor)</span>
+        <button class="btn btn-secondary">Hover me</button>
+      </div>
+      <div class="state-card">
+        <span class="state-label">FOCUS (tab to)</span>
+        <button class="btn btn-secondary btn-focus-demo" tabindex="0">Focus me</button>
+      </div>
+      <div class="state-card">
+        <span class="state-label">DISABLED</span>
+        <button class="btn btn-primary" disabled>Disabled</button>
+      </div>
+      <div class="state-card">
+        <span class="state-label">LOADING</span>
+        <button class="btn btn-primary btn-loading"><span class="btn-text">Loading</span></button>
+      </div>
+      <div class="state-card">
+        <span class="state-label">ASCII SPINNER</span>
+        <span class="ascii-spinner" id="ascii-spin"></span>
+      </div>
+      <div class="state-card">
+        <span class="state-label">INPUT DEFAULT</span>
+        <input type="text" class="form-input" placeholder="Type here..." style="width:100%">
+      </div>
+      <div class="state-card">
+        <span class="state-label">INPUT DISABLED</span>
+        <input type="text" class="form-input input-disabled" value="Read only" disabled style="width:100%">
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" style="margin:0 auto;max-width:1400px">
 
   <!-- ══════════ SPACING ══════════ -->
   <section class="section-wide" id="spacing">
-    <p class="section-label" data-reveal>Spacing — Whitespace is the design</p>
-    <p class="section-desc" data-reveal>Every value is fluid. 2–3× what most sites use. Resize the browser — watch the bars respond in real time.</p>
+    <p class="section-label dot-ink" data-reveal>Spacing — Whitespace is the design</p>
+    <p class="section-desc" data-reveal>Every value is fluid. 2-3x what most sites use. Resize the browser — watch the bars respond in real time.</p>
 
     <div class="spacing-vis" data-reveal>
       <div class="sp-row"><span class="sp-label">--space-xs</span><div class="sp-bar" style="width:var(--space-xs)"></div><span class="sp-val">clamp(0.5rem..0.75rem)</span></div>
@@ -559,6 +1255,36 @@ label   clamp(0.6rem..0.7rem)</div>
     </div>
   </section>
 
+  <hr class="divider" style="margin:0 auto;max-width:1400px">
+
+  <!-- ══════════ ILLUSTRATIONS ══════════ -->
+  <section class="section-wide" id="illustrations">
+    <p class="section-label dot-blue" data-reveal>Illustrations — Placeholder frames for editorial imagery</p>
+    <p class="section-desc" data-reveal>Where photography and illustrations would live. Desaturated by default, full color on hover. Ratio locked at 16:10 for consistency.</p>
+
+    <div class="illust-grid" data-reveal>
+      <div>
+        <div class="illust-frame">
+          <img src="https://images.unsplash.com/photo-1517842645767-c639042777db?w=800&q=80" alt="Notebook and pen on desk" loading="lazy">
+        </div>
+        <p class="illust-caption">Editorial — notebook, research, long-form thinking</p>
+      </div>
+      <div>
+        <div class="illust-frame">
+          <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80" alt="Whiteboard collaboration session" loading="lazy">
+        </div>
+        <p class="illust-caption">Whiteboard — collaborative strategy sessions</p>
+      </div>
+      <div>
+        <div class="illust-frame">
+          <img src="https://images.unsplash.com/photo-1504711434969-e33886168d8c?w=800&q=80" alt="Magazine spread flat lay" loading="lazy">
+        </div>
+        <p class="illust-caption">Magazine — publication-quality presentation</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ FOOTER ══════════ -->
   <footer>
     <div class="footer-inner">
       <div>
@@ -574,6 +1300,21 @@ label   clamp(0.6rem..0.7rem)</div>
   </footer>
 
   <script>
+    // ── Theme toggle ──
+    (function() {
+      const html = document.documentElement;
+      const btn = document.getElementById('theme-toggle');
+      const stored = localStorage.getItem('recurr-theme');
+      if (stored) html.setAttribute('data-theme', stored);
+
+      btn.addEventListener('click', function() {
+        const current = html.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('recurr-theme', next);
+      });
+    })();
+
     // ── Live clock in nav ──
     (function() {
       const el = document.getElementById('clock');
@@ -583,7 +1324,7 @@ label   clamp(0.6rem..0.7rem)</div>
         const h = ist.getHours(), m = ist.getMinutes();
         const ampm = h >= 12 ? 'PM' : 'AM';
         const hh = h % 12 || 12;
-        el.textContent = `${hh}:${String(m).padStart(2,'0')} ${ampm} IST`;
+        el.textContent = hh + ':' + String(m).padStart(2,'0') + ' ' + ampm + ' IST';
       }
       tick();
       setInterval(tick, 10000);
@@ -594,92 +1335,95 @@ label   clamp(0.6rem..0.7rem)</div>
       const h1 = document.getElementById('hero-h1');
       const text = h1.textContent;
       h1.innerHTML = '';
-      text.split(' ').forEach((word, i, arr) => {
-        const s = document.createElement('span');
+      text.split(' ').forEach(function(word, i, arr) {
+        var s = document.createElement('span');
         s.className = 'word';
         s.textContent = word;
         s.style.transitionDelay = (i * 70) + 'ms';
         h1.appendChild(s);
         if (i < arr.length - 1) h1.appendChild(document.createTextNode(' '));
       });
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        h1.querySelectorAll('.word').forEach(w => w.classList.add('visible'));
+      requestAnimationFrame(function() { requestAnimationFrame(function() {
+        h1.querySelectorAll('.word').forEach(function(w) { w.classList.add('visible'); });
         document.getElementById('hero-ul').classList.add('drawn');
         document.getElementById('hero-ascii').classList.add('visible');
-      }));
+      }); });
     })();
 
     // ── Scroll reveal (IntersectionObserver) ──
     (function() {
-      const items = document.querySelectorAll('[data-reveal]');
-      const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
+      var items = document.querySelectorAll('[data-reveal]');
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
           if (e.isIntersecting) {
-            const siblings = e.target.parentElement ? Array.from(e.target.parentElement.querySelectorAll(':scope > [data-reveal]')) : [];
-            const idx = siblings.indexOf(e.target);
-            const delay = idx >= 0 ? idx * 80 : 0;
-            setTimeout(() => e.target.classList.add('visible'), delay);
+            var siblings = e.target.parentElement ? Array.from(e.target.parentElement.querySelectorAll(':scope > [data-reveal]')) : [];
+            var idx = siblings.indexOf(e.target);
+            var delay = idx >= 0 ? idx * 80 : 0;
+            setTimeout(function() { e.target.classList.add('visible'); }, delay);
             obs.unobserve(e.target);
           }
         });
       }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-      items.forEach(i => obs.observe(i));
+      items.forEach(function(i) { obs.observe(i); });
     })();
 
     // ── ASCII self-draw ──
     (function() {
-      const art = `
-  ╭──────────────────────────────────────────────╮
-  │                                              │
-  │    buyer ──────────────────── product         │
-  │      │                          │            │
-  │      ├── job to be done ────────┤            │
-  │      │         ↕                │            │
-  │      ├── context ───────────────┤            │
-  │      │         ↕                │            │
-  │      ├── signal ────────────────┤            │
-  │      │                          │            │
-  │      └────── match score ───────┘            │
-  │                                              │
-  │    ░░░░░░░░░░░░░████████████████░░  72%      │
-  │                                              │
-  │    RECURR S3 INTELLIGENCE ENGINE             │
-  │    search. sort. select.                     │
-  │                                              │
-  ╰──────────────────────────────────────────────╯`;
+      var art = '\n' +
+        '  \u256D\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256E\n' +
+        '  \u2502                                              \u2502\n' +
+        '  \u2502    buyer \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 product         \u2502\n' +
+        '  \u2502      \u2502                          \u2502            \u2502\n' +
+        '  \u2502      \u251C\u2500\u2500 job to be done \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524            \u2502\n' +
+        '  \u2502      \u2502         \u2195                \u2502            \u2502\n' +
+        '  \u2502      \u251C\u2500\u2500 context \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524            \u2502\n' +
+        '  \u2502      \u2502         \u2195                \u2502            \u2502\n' +
+        '  \u2502      \u251C\u2500\u2500 signal \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524            \u2502\n' +
+        '  \u2502      \u2502                          \u2502            \u2502\n' +
+        '  \u2502      \u2514\u2500\u2500\u2500\u2500\u2500\u2500 match score \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518            \u2502\n' +
+        '  \u2502                                              \u2502\n' +
+        '  \u2502    \u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2591\u2591  72%      \u2502\n' +
+        '  \u2502                                              \u2502\n' +
+        '  \u2502    RECURR S3 INTELLIGENCE ENGINE             \u2502\n' +
+        '  \u2502    search. sort. select.                     \u2502\n' +
+        '  \u2502                                              \u2502\n' +
+        '  \u256E\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256F';
 
-      const canvas = document.getElementById('ascii-art');
-      let html = '';
-      for (const c of art) {
+      var canvas = document.getElementById('ascii-art');
+      var html = '';
+      for (var ci = 0; ci < art.length; ci++) {
+        var c = art[ci];
         if (c === '\n') html += '\n';
         else if (c === ' ') html += ' ';
-        else html += `<span class="ch">${c === '<' ? '&lt;' : c === '>' ? '&gt;' : c}</span>`;
+        else html += '<span class="ch">' + (c === '<' ? '&lt;' : c === '>' ? '&gt;' : c) + '</span>';
       }
       canvas.innerHTML = html;
 
-      let fired = false;
-      new IntersectionObserver((entries) => {
+      var fired = false;
+      new IntersectionObserver(function(entries) {
         if (entries[0].isIntersecting && !fired) {
           fired = true;
-          canvas.querySelectorAll('.ch').forEach((s, i) => setTimeout(() => s.classList.add('v'), i * 3));
+          canvas.querySelectorAll('.ch').forEach(function(s, i) {
+            setTimeout(function() { s.classList.add('v'); }, i * 3);
+          });
         }
       }, { threshold: 0.2 }).observe(canvas);
     })();
 
     // ── ASCII ticker ──
     (function() {
-      const el = document.getElementById('ascii-ticker');
+      var el = document.getElementById('ascii-ticker');
       if (!el) return;
-      const f = ['░░░░░░░░░░','▓░░░░░░░░░','▓▓░░░░░░░░','▓▓▓░░░░░░░','▓▓▓▓░░░░░░','▓▓▓▓▓░░░░░','▓▓▓▓▓▓░░░░','▓▓▓▓▓▓▓░░░','▓▓▓▓▓▓▓▓░░','▓▓▓▓▓▓▓▓▓░','▓▓▓▓▓▓▓▓▓▓','██████████'];
-      let i = 0;
-      setInterval(() => { el.textContent = `│ ${f[i%f.length]} │`; i++; }, 180);
+      var f = ['\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591','\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591','\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591','\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591\u2591','\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2591','\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591\u2591','\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591','\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591\u2591','\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2591\u2591','\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2591','\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593','\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588'];
+      var i = 0;
+      setInterval(function() { el.textContent = '\u2502 ' + f[i%f.length] + ' \u2502'; i++; }, 180);
     })();
 
     // ── Draw underline demo ──
     (function() {
-      const el = document.getElementById('draw-demo');
+      var el = document.getElementById('draw-demo');
       if (!el) return;
-      new IntersectionObserver((entries) => {
+      new IntersectionObserver(function(entries) {
         if (entries[0].isIntersecting) el.classList.add('active');
         else el.classList.remove('active');
       }, { threshold: 0.5 }).observe(el);
@@ -687,11 +1431,11 @@ label   clamp(0.6rem..0.7rem)</div>
 
     // ── Background parallax ──
     (function() {
-      let ticking = false;
-      window.addEventListener('scroll', () => {
+      var ticking = false;
+      window.addEventListener('scroll', function() {
         if (!ticking) {
-          requestAnimationFrame(() => {
-            const y = window.scrollY * 0.05;
+          requestAnimationFrame(function() {
+            var y = window.scrollY * 0.05;
             document.body.style.setProperty('--bg-offset', y + 'px');
             if (document.body.style.backgroundPositionY !== undefined) {
               document.body.style.backgroundPositionY = y + 'px';
@@ -701,6 +1445,41 @@ label   clamp(0.6rem..0.7rem)</div>
           ticking = true;
         }
       }, { passive: true });
+    })();
+
+    // ── Accordion toggle ──
+    function toggleAccordion(header) {
+      var item = header.parentElement;
+      var wasOpen = item.classList.contains('open');
+      // Close all
+      item.parentElement.querySelectorAll('.accordion-item').forEach(function(ai) {
+        ai.classList.remove('open');
+      });
+      // Open clicked if it was closed
+      if (!wasOpen) item.classList.add('open');
+    }
+
+    // ── Tabs ──
+    function switchTab(btn) {
+      var tabId = btn.getAttribute('data-tab');
+      // Deactivate all
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+      // Activate clicked
+      btn.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    // ── ASCII spinner ──
+    (function() {
+      var el = document.getElementById('ascii-spin');
+      if (!el) return;
+      var frames = ['|', '/', '-', '\\'];
+      var i = 0;
+      setInterval(function() {
+        el.textContent = '  ' + frames[i % frames.length] + '  loading...';
+        i++;
+      }, 120);
     })();
   </script>
 
