@@ -7,36 +7,25 @@
   <title>recurr.co — Brand & Design System</title>
   <meta name="theme-color" content="#E8E6E3">
   <style>
-    /* ══════════════════════════════════════════
-       RESET & CUSTOM PROPERTIES
-       Fluid everything. clamp() on all measurements.
-       Zero hard breakpoints.
-    ══════════════════════════════════════════ */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      /* ── Surfaces ── */
       --gray-paper: #E8E6E3;
       --whiteboard: #DDDBD8;
       --notebook: #F4F3F1;
       --ink: #2A2A2A;
-      --graphite: #555555;
-      --pencil: #888888;
+      --graphite: #555;
+      --pencil: #888;
       --faint: #BDBBB8;
-
-      /* ── Markers ── */
       --red: #E03E36;
       --yellow: #F5D547;
       --yellow-hl: #F5D54750;
       --blue: #2B6CB0;
       --green: #3D8C6E;
-
-      /* ── Typography ── */
       --serif: 'New York', ui-serif, Georgia, Charter, 'Times New Roman', serif;
-      --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, 'Cascadia Code', Consolas, monospace;
+      --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
       --sans: -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', sans-serif;
-
-      /* ── Fluid Type Scale ── */
+      --fs-mega: clamp(3.5rem, 2rem + 6vw, 8rem);
       --fs-display: clamp(2.5rem, 1.8rem + 3vw, 4.5rem);
       --fs-h1: clamp(2rem, 1.4rem + 2.5vw, 3.5rem);
       --fs-h2: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
@@ -44,41 +33,24 @@
       --fs-body-lg: clamp(1.05rem, 0.95rem + 0.4vw, 1.3rem);
       --fs-body: clamp(0.95rem, 0.9rem + 0.2vw, 1.1rem);
       --fs-small: clamp(0.8rem, 0.75rem + 0.15vw, 0.9rem);
-      --fs-mono-label: clamp(0.6rem, 0.55rem + 0.15vw, 0.7rem);
-
-      /* ── Fluid Spacing ── */
+      --fs-label: clamp(0.6rem, 0.55rem + 0.15vw, 0.7rem);
       --space-xs: clamp(0.5rem, 0.4rem + 0.3vw, 0.75rem);
       --space-s: clamp(1rem, 0.8rem + 0.6vw, 1.5rem);
       --space-m: clamp(2rem, 1.5rem + 1.5vw, 3rem);
       --space-l: clamp(3rem, 2rem + 3vw, 5rem);
       --space-xl: clamp(4rem, 2.5rem + 5vw, 8rem);
-      --space-2xl: clamp(5rem, 3rem + 6vw, 10rem);
-
-      /* ── Layout ── */
-      --site-margin: clamp(1.5rem, 1rem + 4vw, 5rem);
+      --space-2xl: clamp(6rem, 4rem + 7vw, 12rem);
+      --margin: clamp(1.5rem, 1rem + 4vw, 5rem);
       --content-w: 680px;
       --wide-w: 1080px;
-
-      /* ── Motion ── */
-      --ease-snap: cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* ── Selection ── */
-    ::selection {
-      background: var(--yellow-hl);
-      color: var(--ink);
-    }
-
-    /* ── Scrollbar ── */
+    ::selection { background: var(--yellow-hl); color: var(--ink); }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--faint); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--pencil); }
-    html { scrollbar-color: var(--faint) transparent; }
-
-    /* ── Base ── */
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scrollbar-color: var(--faint) transparent; }
 
     body {
       font-family: var(--serif);
@@ -86,817 +58,512 @@
       color: var(--ink);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      /* Paper grain — tileable SVG noise at very low opacity */
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      overflow-x: hidden;
+    }
+
+    /* ── SVG diamond grid background — breaks flat gray ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z' fill='none' stroke='%23d4d2cf' stroke-width='0.5' stroke-dasharray='3 3'/%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+
+    /* ── Paper grain overlay ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
     }
 
     a { color: var(--blue); text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 0.06em; }
-    a:hover { color: var(--ink); }
+    @media (hover:hover) { a:hover { color: var(--ink); } }
 
-    /* ══════════════════════════════════════════
-       NAV — Backdrop blur, serif logo, mono links
-    ══════════════════════════════════════════ */
+    /* ── Scroll reveal base ── */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(clamp(16px, 2vw, 32px));
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    }
+    [data-reveal].visible { opacity: 1; transform: translateY(0); }
+
+    /* ══════════ NAV ══════════ */
     nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(232, 230, 227, 0.8);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(232,230,227,0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       border-bottom: 2px solid var(--ink);
     }
-
     .nav-inner {
-      max-width: var(--wide-w);
-      margin: 0 auto;
-      padding: 0 var(--site-margin);
+      max-width: var(--wide-w); margin: 0 auto; padding: 0 var(--margin);
       height: clamp(3rem, 2.5rem + 1.5vw, 4rem);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
     }
+    .nav-logo { font-family: var(--serif); font-size: clamp(1rem, 0.9rem + 0.4vw, 1.3rem); font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: -0.03em; }
+    .nav-right { display: flex; align-items: center; gap: clamp(1.2rem, 1rem + 1vw, 2.5rem); }
+    .nav-right a { font-family: var(--mono); font-size: var(--fs-label); color: var(--pencil); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s var(--ease); }
+    @media (hover:hover) { .nav-right a:hover { color: var(--ink); } }
+    .nav-clock { font-family: var(--mono); font-size: var(--fs-label); color: var(--faint); letter-spacing: 0.03em; }
 
-    .nav-logo {
-      font-family: var(--serif);
-      font-size: clamp(1rem, 0.9rem + 0.4vw, 1.3rem);
-      font-weight: 700;
-      color: var(--ink);
-      text-decoration: none;
-      letter-spacing: -0.03em;
-    }
-
-    .nav-links { display: flex; gap: clamp(1rem, 0.8rem + 1vw, 2rem); }
-    .nav-links a {
-      font-family: var(--mono);
-      font-size: var(--fs-mono-label);
-      font-weight: 400;
-      color: var(--pencil);
-      text-decoration: none;
-      letter-spacing: 0.05em;
-      text-transform: lowercase;
-      transition: color 0.2s var(--ease-snap);
-    }
-    .nav-links a:hover { color: var(--ink); }
-
-    /* ══════════════════════════════════════════
-       SECTIONS — Generous spacing
-    ══════════════════════════════════════════ */
-    .section {
-      max-width: var(--wide-w);
-      margin: 0 auto;
-      padding: var(--space-xl) var(--site-margin);
-    }
-
-    .section-label {
-      font-family: var(--mono);
-      font-size: var(--fs-mono-label);
-      font-weight: 700;
-      color: var(--red);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: var(--space-s);
-    }
-
-    .divider {
-      max-width: var(--wide-w);
-      margin: 0 auto;
-      padding: 0 var(--site-margin);
-    }
-    .divider-line { border: none; height: 2px; background: var(--ink); }
-    .divider-line.thin { height: 1px; background: var(--faint); }
-
-    /* ══════════════════════════════════════════
-       HERO
-    ══════════════════════════════════════════ */
+    /* ══════════ HERO — Statement as architecture ══════════ */
     .hero {
-      max-width: var(--wide-w);
-      margin: 0 auto;
-      padding: var(--space-2xl) var(--site-margin) var(--space-xl);
+      min-height: 85vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: var(--space-2xl) var(--margin) var(--space-xl);
+      max-width: 1400px; margin: 0 auto;
+      position: relative;
     }
 
     .hero h1 {
       font-family: var(--serif);
-      font-size: var(--fs-display);
+      font-size: var(--fs-mega);
       font-weight: 700;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
       color: var(--ink);
-      max-width: 14ch;
     }
 
     .hero h1 .word {
       display: inline-block;
       opacity: 0;
-      transform: translateY(clamp(12px, 1vw, 24px));
-      transition: opacity 0.6s var(--ease-snap), transform 0.6s var(--ease-snap);
+      transform: translateY(clamp(20px, 3vw, 50px));
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
     }
-
-    .hero h1 .word.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .hero h1 .word.visible { opacity: 1; transform: translateY(0); }
 
     .hero-underline {
-      display: block;
-      width: 0;
-      height: 4px;
+      width: 0; height: clamp(4px, 0.4vw, 6px);
       background: var(--red);
-      margin-top: var(--space-xs);
-      transition: width 0.8s var(--ease-snap);
+      margin-top: var(--space-s);
+      transition: width 1s var(--ease);
     }
+    .hero-underline.drawn { width: clamp(200px, 25vw, 400px); }
 
-    .hero-underline.drawn { width: clamp(180px, 20vw, 320px); }
-
+    .hero-bottom {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-top: var(--space-l);
+      flex-wrap: wrap; gap: var(--space-m);
+    }
     .hero-sub {
-      margin-top: var(--space-m);
-      font-family: var(--serif);
-      font-size: var(--fs-body-lg);
-      font-style: italic;
-      color: var(--graphite);
-      max-width: 38ch;
-      line-height: 1.55;
+      font-family: var(--serif); font-size: var(--fs-body-lg);
+      font-style: italic; color: var(--graphite);
+      max-width: 36ch; line-height: 1.55;
     }
-
-    .hero-meta {
-      margin-top: var(--space-s);
-      font-family: var(--mono);
-      font-size: var(--fs-mono-label);
-      color: var(--pencil);
-      letter-spacing: 0.08em;
+    .hero-ascii {
+      font-family: var(--mono); font-size: clamp(0.5rem, 0.45rem + 0.2vw, 0.65rem);
+      color: var(--faint); line-height: 1.3; white-space: pre;
+      opacity: 0; transition: opacity 1.5s 0.8s;
     }
+    .hero-ascii.visible { opacity: 1; }
 
-    /* ══════════════════════════════════════════
-       COLOR PALETTE
-    ══════════════════════════════════════════ */
-    .color-grid {
+    /* ══════════ SECTION PRIMITIVES ══════════ */
+    .section-wide { padding: var(--space-2xl) var(--margin); max-width: 1400px; margin: 0 auto; }
+    .section-label { font-family: var(--mono); font-size: var(--fs-label); font-weight: 700; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: var(--space-s); }
+    .section-desc { font-family: var(--serif); font-size: var(--fs-body); color: var(--graphite); max-width: var(--content-w); line-height: 1.65; margin-bottom: var(--space-m); }
+
+    .full-bleed { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; }
+
+    .divider-thick { height: 2px; background: var(--ink); }
+    .divider-thin { height: 1px; background: var(--faint); margin: 0 var(--margin); max-width: 1400px; }
+
+    /* ══════════ PALETTE ══════════ */
+    .palette-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(clamp(120px, 10vw, 180px), 1fr));
-      gap: var(--space-s);
-      margin-top: var(--space-s);
-    }
-
-    .color-swatch {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .swatch-block {
-      height: clamp(48px, 5vw, 72px);
-      border: 2px solid var(--ink);
-    }
-
-    .swatch-block.no-border { border-color: var(--faint); }
-
-    .swatch-name {
-      font-family: var(--serif);
-      font-size: var(--fs-small);
-      font-weight: 700;
-      color: var(--ink);
-    }
-
-    .swatch-hex {
-      font-family: var(--mono);
-      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.65rem);
-      color: var(--pencil);
-    }
-
-    /* ══════════════════════════════════════════
-       TYPOGRAPHY SHOWCASE
-    ══════════════════════════════════════════ */
-    .type-demo { margin-top: var(--space-m); }
-
-    .type-specimen {
-      margin-bottom: var(--space-l);
-    }
-
-    .type-specimen-label {
-      font-family: var(--mono);
-      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.65rem);
-      font-weight: 700;
-      color: var(--red);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
       margin-bottom: var(--space-xs);
     }
+    .swatch-tall {
+      height: clamp(100px, 12vw, 180px);
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: clamp(10px, 1.5vw, 20px);
+      transition: transform 0.4s var(--ease);
+    }
+    @media (hover:hover) { .swatch-tall:hover { transform: scale(1.03); z-index: 2; } }
+    .swatch-tall .s-name { font-family: var(--serif); font-size: var(--fs-small); font-weight: 700; }
+    .swatch-tall .s-hex { font-family: var(--mono); font-size: clamp(0.5rem, 0.45rem + 0.1vw, 0.6rem); opacity: 0.7; }
+    .swatch-tall.light .s-name, .swatch-tall.light .s-hex { color: var(--ink); }
+    .swatch-tall.dark .s-name, .swatch-tall.dark .s-hex { color: var(--notebook); }
 
-    .type-serif-display {
+    .marker-strip {
+      display: flex; gap: 0; margin-top: var(--space-s);
+    }
+    .marker-swatch {
+      flex: 1; height: clamp(48px, 5vw, 72px);
+      position: relative; display: flex; align-items: center; justify-content: center;
+      transition: flex 0.4s var(--ease);
+    }
+    @media (hover:hover) { .marker-swatch:hover { flex: 2; } }
+    .marker-swatch span { font-family: var(--mono); font-size: clamp(0.5rem, 0.4rem + 0.15vw, 0.6rem); color: white; font-weight: 700; letter-spacing: 0.08em; opacity: 0; transition: opacity 0.3s; }
+    @media (hover:hover) { .marker-swatch:hover span { opacity: 1; } }
+
+    /* ══════════ TYPOGRAPHY ══════════ */
+    .type-hero-text {
       font-family: var(--serif);
-      font-size: var(--fs-h1);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      color: var(--ink);
+      font-size: clamp(2.2rem, 1.5rem + 3vw, 5rem);
+      font-weight: 700; line-height: 1.05; letter-spacing: -0.03em;
+      color: var(--ink); margin-bottom: var(--space-m);
+    }
+    .type-hero-text .hl { background: var(--yellow-hl); padding: 0 0.1em; }
+    .type-hero-text .ul { text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 0.08em; text-decoration-thickness: clamp(2px, 0.25vw, 4px); }
+
+    .type-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr;
+      gap: var(--space-l);
+      align-items: start;
     }
 
-    .type-serif-body {
-      font-family: var(--serif);
-      font-size: var(--fs-body-lg);
-      line-height: 1.65;
-      color: var(--graphite);
-      max-width: var(--content-w);
-      margin-top: var(--space-xs);
-    }
-
-    .type-mono-block {
+    .type-mono-live {
       font-family: var(--mono);
-      font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.9rem);
-      line-height: 1.5;
-      color: var(--ink);
-      background: var(--whiteboard);
-      border: 2px solid var(--ink);
-      padding: var(--space-s);
-      margin-top: var(--space-xs);
-      max-width: var(--content-w);
-      white-space: pre;
-      overflow-x: auto;
+      font-size: clamp(0.7rem, 0.6rem + 0.2vw, 0.85rem);
+      line-height: 1.5; color: var(--notebook);
+      background: var(--ink); padding: var(--space-s);
+      white-space: pre; overflow-x: auto;
+      border: 2px solid var(--graphite);
+      position: relative;
+    }
+    .type-mono-live::before {
+      content: '> MONO'; position: absolute; top: 8px; right: 12px;
+      font-size: 0.55rem; color: var(--pencil); letter-spacing: 0.1em;
     }
 
-    .highlight-demo {
-      background: var(--yellow-hl);
-      padding: 1px 4px;
-    }
+    .marginalia { font-family: var(--mono); font-size: var(--fs-label); color: var(--red); margin-top: 6px; }
 
-    .underline-demo {
-      text-decoration: underline;
-      text-decoration-color: var(--red);
-      text-underline-offset: 0.15em;
-      text-decoration-thickness: 2.5px;
-    }
-
-    .marginalia {
-      font-family: var(--mono);
-      font-size: clamp(0.6rem, 0.55rem + 0.1vw, 0.7rem);
-      color: var(--red);
-      margin-top: 4px;
-    }
-
-    /* ══════════════════════════════════════════
-       ASCII SECTION — Dark background
-    ══════════════════════════════════════════ */
-    .ascii-section {
+    /* ══════════ ASCII FULL-BLEED ══════════ */
+    .ascii-full {
       background: var(--ink);
-      padding: var(--space-xl) 0;
+      padding: var(--space-2xl) 0;
+      position: relative;
+      overflow: hidden;
     }
-
-    .ascii-inner {
-      max-width: var(--wide-w);
-      margin: 0 auto;
-      padding: 0 var(--site-margin);
+    .ascii-full::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z' fill='none' stroke='%23444' stroke-width='0.3' stroke-dasharray='2 4'/%3E%3C/svg%3E");
+      opacity: 0.3;
     }
-
-    .ascii-section .section-label { color: var(--yellow); }
-
-    .ascii-desc {
-      font-family: var(--serif);
-      font-size: var(--fs-body-lg);
-      font-style: italic;
-      color: var(--faint);
-      max-width: 50ch;
-      line-height: 1.55;
-      margin-bottom: var(--space-m);
-    }
+    .ascii-inner { max-width: 1400px; margin: 0 auto; padding: 0 var(--margin); position: relative; z-index: 1; }
+    .ascii-full .section-label { color: var(--yellow); }
+    .ascii-full .section-desc { color: var(--faint); }
 
     .ascii-canvas {
       font-family: var(--mono);
-      font-size: clamp(0.7rem, 0.6rem + 0.3vw, 0.85rem);
-      line-height: 1.45;
-      color: var(--gray-paper);
-      white-space: pre;
-      overflow-x: auto;
-      padding: var(--space-s);
-      background: #353533;
-      border: 2px solid #555;
-      min-height: 200px;
+      font-size: clamp(0.65rem, 0.55rem + 0.3vw, 0.85rem);
+      line-height: 1.45; color: var(--gray-paper);
+      white-space: pre; overflow-x: auto;
+      padding: var(--space-m); min-height: 240px;
     }
-
-    .ascii-canvas .char {
-      opacity: 0;
-      transition: opacity 0.05s;
-    }
-    .ascii-canvas .char.visible { opacity: 1; }
+    .ascii-canvas .ch { opacity: 0; transition: opacity 0.03s; }
+    .ascii-canvas .ch.v { opacity: 1; }
 
     .ascii-note {
-      font-family: var(--serif);
-      font-size: var(--fs-small);
-      color: var(--pencil);
+      font-family: var(--serif); font-size: var(--fs-small);
+      font-style: italic; color: var(--pencil);
       margin-top: var(--space-s);
-      font-style: italic;
     }
 
-    /* ══════════════════════════════════════════
-       SAMPLE CARDS
-    ══════════════════════════════════════════ */
-    .card-grid {
+    /* ══════════ CARDS — Asymmetric grid ══════════ */
+    .card-grid-asym {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(clamp(260px, 22vw, 340px), 1fr));
+      grid-template-columns: 1.6fr 1fr;
+      grid-template-rows: auto auto;
       gap: var(--space-s);
-      margin-top: var(--space-s);
     }
 
     .card {
       background: var(--whiteboard);
       border: 2px solid var(--ink);
-      padding: clamp(1.2rem, 1rem + 0.8vw, 1.8rem);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-xs);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s var(--ease-snap), transform 0.5s var(--ease-snap);
+      padding: clamp(1.5rem, 1.2rem + 1vw, 2.2rem);
+      display: flex; flex-direction: column; gap: var(--space-xs);
+      transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
     }
-
-    .card.visible {
-      opacity: 1;
-      transform: translateY(0);
+    @media (hover:hover) {
+      .card:hover { transform: translateY(-4px); box-shadow: 6px 6px 0 var(--ink); }
     }
+    .card.card-featured { grid-row: 1 / 3; }
+    .card.card-featured .card-title { font-size: var(--fs-h2); }
 
-    .card-pillar {
-      font-family: var(--mono);
-      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.65rem);
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
+    .card-pillar { font-family: var(--mono); font-size: var(--fs-label); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    .card-title { font-family: var(--serif); font-size: var(--fs-h3); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
+    .card-rule { width: clamp(60px, 35%, 140px); height: 3px; }
+    .card-excerpt { font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); line-height: 1.55; }
+    .card-meta { font-family: var(--mono); font-size: clamp(0.5rem, 0.45rem + 0.1vw, 0.6rem); color: var(--pencil); margin-top: auto; }
 
-    .card-title {
-      font-family: var(--serif);
-      font-size: var(--fs-h3);
-      font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-    }
-
-    .card-rule {
-      width: clamp(80px, 40%, 160px);
-      height: 3px;
-    }
-
-    .card-excerpt {
-      font-family: var(--serif);
-      font-size: var(--fs-small);
-      color: var(--graphite);
-      line-height: 1.55;
-    }
-
-    .card-meta {
-      font-family: var(--mono);
-      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.6rem);
-      color: var(--pencil);
-      margin-top: auto;
-    }
-
-    /* ══════════════════════════════════════════
-       ANIMATION PRINCIPLES
-    ══════════════════════════════════════════ */
-    .anim-grid {
+    /* ══════════ MOTION SECTION ══════════ */
+    .motion-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 18vw, 300px), 1fr));
-      gap: var(--space-s);
-      margin-top: var(--space-s);
-    }
-
-    .anim-card {
-      background: var(--whiteboard);
-      border: 2px solid var(--ink);
-      padding: var(--space-s);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .anim-card-title {
-      font-family: var(--mono);
-      font-size: clamp(0.75rem, 0.7rem + 0.15vw, 0.85rem);
-      font-weight: 700;
-      color: var(--ink);
-    }
-
-    .anim-card-desc {
-      font-family: var(--serif);
-      font-size: var(--fs-small);
-      color: var(--graphite);
-      line-height: 1.5;
-    }
-
-    .anim-demo {
-      height: clamp(48px, 4vw, 64px);
-      background: #353533;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--mono);
-      font-size: clamp(0.6rem, 0.55rem + 0.1vw, 0.7rem);
-      color: var(--gray-paper);
-      overflow: hidden;
-    }
-
-    /* ══════════════════════════════════════════
-       SPACING DEMO
-    ══════════════════════════════════════════ */
-    .spacing-bars {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: var(--space-s);
-    }
-
-    .spacing-row {
-      display: flex;
-      align-items: center;
-      gap: var(--space-xs);
-    }
-
-    .spacing-bar {
-      height: clamp(20px, 2vw, 28px);
-      background: var(--red);
-      opacity: 0.25;
-      transition: opacity 0.3s, width 0.6s var(--ease-snap);
-    }
-
-    .spacing-row:hover .spacing-bar { opacity: 0.6; }
-
-    .spacing-label {
-      font-family: var(--mono);
-      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.65rem);
-      color: var(--pencil);
-      white-space: nowrap;
-      min-width: 80px;
-    }
-
-    .spacing-value {
-      font-family: var(--mono);
-      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.6rem);
-      color: var(--faint);
-      white-space: nowrap;
-    }
-
-    /* ══════════════════════════════════════════
-       LOTTIE PLACEHOLDER
-    ══════════════════════════════════════════ */
-    .lottie-area {
-      background: var(--notebook);
-      border: 2px dashed var(--faint);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: clamp(160px, 15vw, 240px);
-      margin-top: var(--space-s);
-    }
-
-    .lottie-placeholder {
-      font-family: var(--mono);
-      font-size: var(--fs-small);
-      color: var(--pencil);
-      text-align: center;
-      line-height: 1.6;
-    }
-
-    /* ══════════════════════════════════════════
-       FOOTER
-    ══════════════════════════════════════════ */
-    footer {
-      border-top: 2px solid var(--ink);
-      padding: var(--space-l) 0;
-      margin-top: var(--space-xl);
-    }
-
-    .footer-inner {
-      max-width: var(--wide-w);
-      margin: 0 auto;
-      padding: 0 var(--site-margin);
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-
-    .footer-entity {
-      font-family: var(--serif);
-      font-size: var(--fs-small);
-      font-weight: 700;
-      color: var(--ink);
-    }
-
-    .footer-location {
-      font-family: var(--mono);
-      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.65rem);
-      color: var(--pencil);
-      margin-top: 4px;
-    }
-
-    .footer-links {
-      display: flex;
+      grid-template-columns: 1fr 1fr;
       gap: var(--space-s);
     }
+    .motion-item {
+      border: 2px solid var(--ink); padding: var(--space-s); background: var(--whiteboard);
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .motion-demo {
+      height: clamp(60px, 6vw, 90px);
+      background: var(--ink); display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); font-size: var(--fs-label); color: var(--gray-paper);
+      overflow: hidden; position: relative;
+    }
+    .motion-title { font-family: var(--mono); font-size: clamp(0.7rem, 0.65rem + 0.15vw, 0.8rem); font-weight: 700; }
+    .motion-desc { font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); line-height: 1.5; }
 
-    .footer-links a {
-      font-family: var(--mono);
-      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.65rem);
-      color: var(--pencil);
-      text-decoration: none;
+    /* underline drawing demo */
+    .draw-underline { display: inline; position: relative; }
+    .draw-underline::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; height: 3px; background: var(--red);
+      width: 0; transition: width 1.2s var(--ease);
+    }
+    .draw-underline.active::after { width: 100%; }
+
+    /* ══════════ SPACING VISUAL ══════════ */
+    .spacing-vis {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .sp-row {
+      display: flex; align-items: center; gap: var(--space-xs);
+    }
+    .sp-label { font-family: var(--mono); font-size: clamp(0.5rem, 0.45rem + 0.1vw, 0.6rem); color: var(--pencil); min-width: clamp(60px, 8vw, 90px); }
+    .sp-bar { height: clamp(16px, 1.5vw, 24px); background: var(--red); opacity: 0.2; transition: opacity 0.3s var(--ease), transform 0.3s var(--ease); }
+    @media (hover:hover) { .sp-row:hover .sp-bar { opacity: 0.5; transform: scaleY(1.3); } }
+    .sp-val { font-family: var(--mono); font-size: clamp(0.45rem, 0.4rem + 0.1vw, 0.55rem); color: var(--faint); }
+
+    /* ══════════ FOOTER ══════════ */
+    footer { border-top: 2px solid var(--ink); padding: var(--space-l) 0; }
+    .footer-inner { max-width: 1400px; margin: 0 auto; padding: 0 var(--margin); display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--space-s); }
+    .footer-entity { font-family: var(--serif); font-size: var(--fs-small); font-weight: 700; }
+    .footer-loc { font-family: var(--mono); font-size: var(--fs-label); color: var(--pencil); margin-top: 4px; }
+    .footer-links { display: flex; gap: var(--space-s); }
+    .footer-links a { font-family: var(--mono); font-size: var(--fs-label); color: var(--pencil); text-decoration: none; }
+
+    /* ══════════ RESPONSIVE ══════════ */
+    @media (max-width: 700px) {
+      .type-grid { grid-template-columns: 1fr; }
+      .card-grid-asym { grid-template-columns: 1fr; }
+      .card.card-featured { grid-row: auto; }
+      .motion-grid { grid-template-columns: 1fr; }
+      .palette-row { grid-template-columns: repeat(2, 1fr); }
+      .hero-bottom { flex-direction: column; }
+      .hero-ascii { display: none; }
     }
 
-    .footer-links a:hover { color: var(--ink); }
-
-    /* ══════════════════════════════════════════
-       REDUCED MOTION
-    ══════════════════════════════════════════ */
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-      .hero h1 .word { opacity: 1; transform: none; }
-      .hero-underline { width: clamp(180px, 20vw, 320px); }
-      .card { opacity: 1; transform: none; }
-      .ascii-canvas .char { opacity: 1; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .hero h1 .word, [data-reveal] { opacity: 1; transform: none; }
+      .hero-underline { width: clamp(200px, 25vw, 400px); }
+      .ascii-canvas .ch { opacity: 1; }
+      .draw-underline::after { width: 100%; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ════════ NAV ════════ -->
   <nav>
     <div class="nav-inner">
       <a href="/recurr-brand/" class="nav-logo">recurr</a>
-      <div class="nav-links">
+      <div class="nav-right">
+        <span class="nav-clock" id="clock"></span>
         <a href="#palette">palette</a>
-        <a href="#typography">type</a>
+        <a href="#type">type</a>
         <a href="#ascii">ascii</a>
         <a href="#cards">cards</a>
-        <a href="#animation">motion</a>
-        <a href="#spacing">spacing</a>
+        <a href="#motion">motion</a>
       </div>
     </div>
   </nav>
 
-  <!-- ════════ HERO ════════ -->
+  <!-- ══════════ HERO ══════════ -->
   <section class="hero">
-    <h1 id="hero-headline">What if a whiteboard got published as a magazine?</h1>
-    <div class="hero-underline" id="hero-underline"></div>
-    <p class="hero-sub">The design system for recurr.co. A practitioner's publication where the thinking stays raw, the presentation is magazine-grade, and the technology underneath is quietly, absurdly sophisticated.</p>
-    <p class="hero-meta">DESIGN SYSTEM &middot; MARCH 2026 &middot; v2</p>
-  </section>
-
-  <div class="divider"><hr class="divider-line"></div>
-
-  <!-- ════════ COLOR PALETTE ════════ -->
-  <section class="section" id="palette">
-    <p class="section-label">Palette &mdash; Whiteboard markers on gray paper</p>
-
-    <p style="font-family:var(--serif);font-size:var(--fs-body);color:var(--graphite);max-width:var(--content-w);line-height:1.6;margin-bottom:var(--space-m);">
-      The base is gray paper. Not warm cream, not clinical white. Cards sit on whiteboard surfaces. The accent system is a set of markers &mdash; red for emphasis, yellow for highlights, blue for links, green for status. Black for bold strokes.
-    </p>
-
-    <p style="font-family:var(--mono);font-size:var(--fs-mono-label);color:var(--pencil);letter-spacing:0.08em;margin-bottom:var(--space-xs);">SURFACES</p>
-    <div class="color-grid">
-      <div class="color-swatch">
-        <div class="swatch-block no-border" style="background:var(--gray-paper)"></div>
-        <span class="swatch-name">Gray Paper</span>
-        <span class="swatch-hex">#E8E6E3 &mdash; page background</span>
-      </div>
-      <div class="color-swatch">
-        <div class="swatch-block no-border" style="background:var(--whiteboard)"></div>
-        <span class="swatch-name">Whiteboard</span>
-        <span class="swatch-hex">#DDDBD8 &mdash; cards, callouts</span>
-      </div>
-      <div class="color-swatch">
-        <div class="swatch-block no-border" style="background:var(--notebook)"></div>
-        <span class="swatch-name">Notebook Page</span>
-        <span class="swatch-hex">#F4F3F1 &mdash; reading surface</span>
-      </div>
-      <div class="color-swatch">
-        <div class="swatch-block" style="background:var(--ink)"></div>
-        <span class="swatch-name">Dry-Erase Ink</span>
-        <span class="swatch-hex">#2A2A2A &mdash; text, strokes</span>
-      </div>
-    </div>
-
-    <p style="font-family:var(--mono);font-size:var(--fs-mono-label);color:var(--pencil);letter-spacing:0.08em;margin-top:var(--space-m);margin-bottom:var(--space-xs);">MARKERS</p>
-    <div class="color-grid">
-      <div class="color-swatch">
-        <div class="swatch-block" style="background:var(--red)"></div>
-        <span class="swatch-name">Red Marker</span>
-        <span class="swatch-hex">#E03E36 &mdash; underlines, emphasis</span>
-      </div>
-      <div class="color-swatch">
-        <div class="swatch-block" style="background:var(--yellow)"></div>
-        <span class="swatch-name">Yellow Highlighter</span>
-        <span class="swatch-hex">#F5D547 &mdash; highlights, key phrases</span>
-      </div>
-      <div class="color-swatch">
-        <div class="swatch-block" style="background:var(--blue)"></div>
-        <span class="swatch-name">Blue Marker</span>
-        <span class="swatch-hex">#2B6CB0 &mdash; links, annotations</span>
-      </div>
-      <div class="color-swatch">
-        <div class="swatch-block" style="background:var(--green)"></div>
-        <span class="swatch-name">Green Marker</span>
-        <span class="swatch-hex">#3D8C6E &mdash; active, success</span>
-      </div>
+    <h1 id="hero-h1">What if a whiteboard got published as a magazine?</h1>
+    <div class="hero-underline" id="hero-ul"></div>
+    <div class="hero-bottom">
+      <p class="hero-sub">The design system for recurr.co. Practitioner thinking, magazine presentation, absurdly sophisticated technology underneath.</p>
+      <pre class="hero-ascii" id="hero-ascii">┌──────────────────┐
+│  recurr.co       │
+│  brand system    │
+│  v3 · mar 2026   │
+│                  │
+│  ██████░░░░ 60%  │
+└──────────────────┘</pre>
     </div>
   </section>
 
-  <div class="divider"><hr class="divider-line thin"></div>
+  <div class="full-bleed divider-thick"></div>
 
-  <!-- ════════ TYPOGRAPHY ════════ -->
-  <section class="section" id="typography">
-    <p class="section-label">Typography &mdash; Serif is the voice. Mono is the thinking.</p>
+  <!-- ══════════ PALETTE ══════════ -->
+  <section class="section-wide" id="palette">
+    <p class="section-label" data-reveal>Palette — Whiteboard markers on gray paper</p>
+    <p class="section-desc" data-reveal>Not warm cream. Not clinical white. Gray paper with dashed diamond grid underneath. Marker accents for emphasis — red underlines, yellow highlights, blue links, green status. Hover the swatches.</p>
 
-    <div class="type-demo">
-      <div class="type-specimen">
-        <p class="type-specimen-label">Primary &mdash; Serif (New York &rarr; Georgia &rarr; Charter)</p>
-        <p class="type-serif-display">Research, essays and<br>field notes for <span class="underline-demo">B2B teams</span>.</p>
-        <p class="type-serif-body">
-          Practitioner-led writing on positioning, GTM, and building service businesses. By operators who've done the work, not pundits who comment on it. Every article is a whiteboard session, <span class="highlight-demo">art-directed and published</span>.
-        </p>
-        <p class="marginalia">&larr; yellow highlight = key insight. red underline = emphasis.</p>
-      </div>
-
-      <div class="type-specimen">
-        <p class="type-specimen-label">Secondary &mdash; Mono (SF Mono &rarr; Menlo &rarr; Consolas)</p>
-        <div class="type-mono-block">FONT STACK    ui-monospace, 'SF Mono', Menlo, Consolas
-USAGE         labels, metadata, ASCII, data, code
-WEIGHT        400 regular, 700 bold
-ROLE          the whiteboard marker
-
-Pratik Mishra  &middot;  Mar 14, 2026  &middot;  Positioning
-─────────────────────────────────────────────</div>
-      </div>
-
-      <div class="type-specimen">
-        <p class="type-specimen-label">Tertiary &mdash; Sans (SF Pro &rarr; system-ui &rarr; Segoe UI)</p>
-        <p style="font-family:var(--sans);font-size:var(--fs-body);color:var(--graphite);max-width:var(--content-w);line-height:1.6;">
-          Used only for navigation, buttons, and UI chrome. Supporting role. The serif and mono do the talking. Sans stays invisible.
-        </p>
-      </div>
+    <div class="palette-row" data-reveal>
+      <div class="swatch-tall light" style="background:var(--gray-paper);outline:1px solid var(--faint)"><span class="s-name">Gray Paper</span><span class="s-hex">#E8E6E3</span></div>
+      <div class="swatch-tall light" style="background:var(--whiteboard)"><span class="s-name">Whiteboard</span><span class="s-hex">#DDDBD8</span></div>
+      <div class="swatch-tall light" style="background:var(--notebook)"><span class="s-name">Notebook</span><span class="s-hex">#F4F3F1</span></div>
+      <div class="swatch-tall dark" style="background:var(--ink)"><span class="s-name">Ink</span><span class="s-hex">#2A2A2A</span></div>
     </div>
 
-    <!-- Fluid type scale demo -->
-    <p class="type-specimen-label" style="margin-top:var(--space-m)">Fluid Type Scale &mdash; clamp() everywhere</p>
-    <div style="display:flex;flex-direction:column;gap:var(--space-xs);margin-top:var(--space-xs)">
-      <p style="font-family:var(--serif);font-size:var(--fs-display);font-weight:700;color:var(--ink);letter-spacing:-0.03em;line-height:1.05">Display</p>
-      <p style="font-family:var(--serif);font-size:var(--fs-h1);font-weight:700;color:var(--ink);letter-spacing:-0.02em;line-height:1.1">Heading 1</p>
-      <p style="font-family:var(--serif);font-size:var(--fs-h2);font-weight:700;color:var(--ink);line-height:1.15">Heading 2</p>
-      <p style="font-family:var(--serif);font-size:var(--fs-h3);font-weight:700;color:var(--ink);line-height:1.2">Heading 3</p>
-      <p style="font-family:var(--serif);font-size:var(--fs-body-lg);color:var(--graphite);line-height:1.55">Body Large &mdash; for lead paragraphs and introductions</p>
-      <p style="font-family:var(--serif);font-size:var(--fs-body);color:var(--graphite);line-height:1.6">Body &mdash; for article text and descriptions</p>
-      <p style="font-family:var(--mono);font-size:var(--fs-mono-label);color:var(--pencil);letter-spacing:0.08em">MONO LABEL &mdash; METADATA, TAGS, SECTION HEADERS</p>
+    <div class="marker-strip" data-reveal>
+      <div class="marker-swatch" style="background:var(--red)"><span>RED · UNDERLINE</span></div>
+      <div class="marker-swatch" style="background:var(--yellow)"><span>YELLOW · HIGHLIGHT</span></div>
+      <div class="marker-swatch" style="background:var(--blue)"><span>BLUE · LINK</span></div>
+      <div class="marker-swatch" style="background:var(--green)"><span>GREEN · ACTIVE</span></div>
+      <div class="marker-swatch" style="background:var(--ink)"><span>INK · STROKE</span></div>
     </div>
   </section>
 
-  <!-- ════════ ASCII / TECH ════════ -->
-  <div class="ascii-section" id="ascii">
-    <div class="ascii-inner">
-      <p class="section-label">The Whiteboard Layer &mdash; Where tech meets thinking</p>
-      <p class="ascii-desc">This is what makes the site feel alive. ASCII diagrams that assemble character-by-character on scroll. Pure JavaScript. No libraries. Under 2KB. You can feel something is different. You can't explain what. That's craft.</p>
+  <div class="divider-thin"></div>
 
-      <div class="ascii-canvas" id="ascii-art"></div>
-      <p class="ascii-note">Scroll-triggered. Each character appears individually. Frameworks rendered in monospace. The whiteboard, digitized.</p>
+  <!-- ══════════ TYPOGRAPHY ══════════ -->
+  <section class="section-wide" id="type">
+    <p class="section-label" data-reveal>Typography — Serif is the voice. Mono is the thinking.</p>
 
-      <!-- Lottie placeholder -->
-      <div class="lottie-area" style="margin-top:var(--space-m)">
-        <div class="lottie-placeholder">
-          LOTTIE MICRO-STORY<br>
-          One per page. A pen sketching a framework.<br>
-          A marker circling a word. Plays once on scroll.<br>
-          <span style="color:var(--faint)">&mdash; slot for .json animation file &mdash;</span>
+    <div class="type-grid">
+      <div>
+        <div class="type-hero-text" data-reveal>
+          Research, essays and field notes for <span class="hl">B2B teams</span>.<br>
+          By <span class="ul">operators</span>, not pundits.
         </div>
+        <p class="section-desc" data-reveal>
+          Serif is the default for everything — headlines, body, pull quotes, article text. Yellow highlight marks key insight. Red underline marks emphasis. Monospace marginalia annotates the thinking.
+        </p>
+        <p class="marginalia" data-reveal>← this is how annotations work. mono, red, smaller.</p>
       </div>
+
+      <div class="type-mono-live" data-reveal>FONT STACKS
+─────────────
+serif   New York → Georgia
+mono    SF Mono → Menlo
+sans    SF Pro → system-ui
+
+TYPE SCALE (fluid)
+─────────────
+mega    clamp(3.5rem..8rem)
+display clamp(2.5rem..4.5rem)
+h1      clamp(2rem..3.5rem)
+h2      clamp(1.5rem..2.25rem)
+h3      clamp(1.25rem..1.6rem)
+body-lg clamp(1.05rem..1.3rem)
+body    clamp(0.95rem..1.1rem)
+label   clamp(0.6rem..0.7rem)</div>
+    </div>
+
+    <!-- Live type scale -->
+    <div style="margin-top:var(--space-l);display:flex;flex-direction:column;gap:2px" data-reveal>
+      <p style="font-family:var(--serif);font-size:var(--fs-mega);font-weight:700;letter-spacing:-0.04em;line-height:0.95;color:var(--ink)">Mega</p>
+      <p style="font-family:var(--serif);font-size:var(--fs-display);font-weight:700;letter-spacing:-0.03em;line-height:1;color:var(--ink)">Display</p>
+      <p style="font-family:var(--serif);font-size:var(--fs-h1);font-weight:700;letter-spacing:-0.02em;line-height:1.05;color:var(--ink)">Heading One</p>
+      <p style="font-family:var(--serif);font-size:var(--fs-h2);font-weight:700;line-height:1.1;color:var(--graphite)">Heading Two</p>
+      <p style="font-family:var(--serif);font-size:var(--fs-h3);font-weight:700;line-height:1.2;color:var(--graphite)">Heading Three</p>
+      <p style="font-family:var(--serif);font-size:var(--fs-body-lg);line-height:1.5;color:var(--graphite)">Body Large — for lead paragraphs and introductions that deserve weight</p>
+      <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);letter-spacing:0.1em;margin-top:4px">MONO LABEL — METADATA · TAGS · SECTION HEADERS · TIMESTAMPS</p>
+    </div>
+  </section>
+
+  <!-- ══════════ ASCII — Full bleed dark ══════════ -->
+  <div class="full-bleed ascii-full" id="ascii">
+    <div class="ascii-inner">
+      <p class="section-label" data-reveal>The Whiteboard Layer — Where tech meets thinking</p>
+      <p class="section-desc" data-reveal>ASCII diagrams assemble character-by-character on scroll. Pure JS, no libraries, under 2KB. The subtle technology layer you feel but can't name. That's craft.</p>
+      <div class="ascii-canvas" id="ascii-art"></div>
+      <p class="ascii-note" data-reveal>Scroll-triggered. ~400 characters. 3ms per character. Total draw time: ~1.2 seconds.</p>
     </div>
   </div>
 
-  <div class="divider"><hr class="divider-line"></div>
+  <div class="full-bleed divider-thick"></div>
 
-  <!-- ════════ SAMPLE CARDS ════════ -->
-  <section class="section" id="cards">
-    <p class="section-label">Sample &mdash; How an article card feels</p>
-    <p style="font-family:var(--serif);font-size:var(--fs-body);color:var(--graphite);max-width:var(--content-w);line-height:1.6;margin-bottom:var(--space-xs)">
-      Bold 2px borders. Marker-colored pillar labels. Serif titles. Mono metadata. Each card's topic gets its own marker color. Cards enter on scroll with GSAP-style staggered reveal.
-    </p>
+  <!-- ══════════ SAMPLE CARDS ══════════ -->
+  <section class="section-wide" id="cards">
+    <p class="section-label" data-reveal>Cards — Asymmetric grid, hover lift, marker accents</p>
+    <p class="section-desc" data-reveal>Not a uniform 3-column grid. The featured card spans two rows. Hover lifts with a solid ink shadow — no soft drop shadows. Each pillar gets its own marker color.</p>
 
-    <div class="card-grid">
-      <div class="card" data-reveal>
+    <div class="card-grid-asym">
+      <div class="card card-featured" data-reveal>
         <span class="card-pillar" style="color:var(--red)">POSITIONING</span>
-        <span class="card-title">The Adoption Chasm</span>
+        <span class="card-title" style="font-size:var(--fs-h2)">The Adoption Chasm</span>
         <div class="card-rule" style="background:var(--red)"></div>
-        <span class="card-excerpt">Why 88% of enterprises experiment with AI but only 5.5% transform. A framework for crossing the gap between experimentation and transformation.</span>
-        <span class="card-meta">Pratik Mishra &middot; Mar 14, 2026</span>
+        <span class="card-excerpt">Why 88% of enterprises experiment with AI but only 5.5% transform. Most enterprises treat AI like a feature. The ones that win treat it like a reorganization. A framework for crossing the gap between experimentation and transformation — drawing from our work with Clarisights and others.</span>
+        <span class="card-meta">Pratik Mishra · Mar 14, 2026 · 12 min read</span>
       </div>
-
       <div class="card" data-reveal>
         <span class="card-pillar" style="color:var(--blue)">GTM</span>
         <span class="card-title">Your First PMM Hire is Wrong.</span>
         <div class="card-rule" style="background:var(--blue)"></div>
-        <span class="card-excerpt">The default B2B playbook says hire a PMM at Series A. But the job description you wrote is actually three different jobs.</span>
-        <span class="card-meta">Pratik Mishra &middot; Mar 12, 2026</span>
+        <span class="card-excerpt">The job description you wrote is actually three different jobs.</span>
+        <span class="card-meta">Pratik Mishra · Mar 12</span>
       </div>
-
       <div class="card" data-reveal>
         <span class="card-pillar" style="color:var(--green)">AI & NEW STACK</span>
         <span class="card-title">SCADA Meets LLMs</span>
         <div class="card-rule" style="background:var(--green)"></div>
-        <span class="card-excerpt">The $24B renewable energy analytics market still runs on dashboards designed for gas turbines. One company is rebuilding from the sensor up.</span>
-        <span class="card-meta">Pratik Mishra &middot; Mar 1, 2026</span>
+        <span class="card-excerpt">Renewable energy monitoring, rebuilt from the sensor up.</span>
+        <span class="card-meta">Pratik Mishra · Mar 1</span>
       </div>
     </div>
   </section>
 
-  <div class="divider"><hr class="divider-line thin"></div>
+  <div class="divider-thin"></div>
 
-  <!-- ════════ ANIMATION PRINCIPLES ════════ -->
-  <section class="section" id="animation">
-    <p class="section-label">Motion &mdash; Three layers, all lightweight</p>
-    <p style="font-family:var(--serif);font-size:var(--fs-body);color:var(--graphite);max-width:var(--content-w);line-height:1.6;margin-bottom:var(--space-xs)">
-      Every animation serves structure, not decoration. Custom easing <span style="font-family:var(--mono);font-size:0.85em;color:var(--pencil)">cubic-bezier(0.16, 1, 0.3, 1)</span> &mdash; fast snap, then float. prefers-reduced-motion kills everything.
-    </p>
+  <!-- ══════════ MOTION ══════════ -->
+  <section class="section-wide" id="motion">
+    <p class="section-label" data-reveal>Motion — Three layers, all lightweight</p>
+    <p class="section-desc" data-reveal>Custom easing <span style="font-family:var(--mono);font-size:0.85em;color:var(--pencil)">cubic-bezier(0.16, 1, 0.3, 1)</span> — fast snap, gentle float. prefers-reduced-motion kills everything.</p>
 
-    <div class="anim-grid">
-      <div class="anim-card">
-        <div class="anim-demo" id="ascii-ticker"></div>
-        <span class="anim-card-title">ASCII self-draw</span>
-        <span class="anim-card-desc">Diagrams assemble character-by-character on scroll. Pure JS. &lt;2KB. No libraries. The signature differentiator.</span>
+    <div class="motion-grid">
+      <div class="motion-item" data-reveal>
+        <div class="motion-demo" id="ascii-ticker"></div>
+        <span class="motion-title">ASCII self-draw</span>
+        <span class="motion-desc">Characters appear one-by-one on scroll intersection. Pure JS. &lt;2KB. No libraries. The signature move.</span>
       </div>
-      <div class="anim-card">
-        <div class="anim-demo" id="gsap-demo">
-          <span style="opacity:0.4">sections enter &rarr; headlines underline &rarr; highlights fade</span>
+      <div class="motion-item" data-reveal>
+        <div class="motion-demo">
+          <span class="draw-underline" id="draw-demo" style="font-family:var(--serif);font-size:var(--fs-small);color:var(--notebook)">this underline draws itself</span>
         </div>
-        <span class="anim-card-title">GSAP scroll reveals</span>
-        <span class="anim-card-desc">ScrollTrigger for section entrance. Line-by-line text reveals. Underlines that draw themselves. ~30KB gzipped.</span>
+        <span class="motion-title">GSAP scroll reveals</span>
+        <span class="motion-desc">Headlines draw underlines. Highlights fade in. Sections enter with staggered children. ScrollTrigger. ~30KB.</span>
       </div>
-      <div class="anim-card">
-        <div class="anim-demo">
-          <span style="opacity:0.4">pen sketches &middot; marker circles &middot; page turns</span>
-        </div>
-        <span class="anim-card-title">Lottie micro-stories</span>
-        <span class="anim-card-desc">One per page, max. A pen drawing a line. A marker circling a word. Scroll-triggered, plays once. ~30KB.</span>
+      <div class="motion-item" data-reveal>
+        <div class="motion-demo"><span style="opacity:0.35">pen sketches · marker circles · page turns</span></div>
+        <span class="motion-title">Lottie micro-stories</span>
+        <span class="motion-desc">One per page max. A pen drawing a framework. A marker circling a word. Plays once. ~30KB.</span>
       </div>
-      <div class="anim-card">
-        <div class="anim-demo" id="parallax-demo">
-          <span style="opacity:0.4">paper grain shifts at 0.95x scroll rate</span>
-        </div>
-        <span class="anim-card-title">Paper texture parallax</span>
-        <span class="anim-card-desc">Gray paper grain moves at a slightly different rate than content. Physical depth. Barely perceptible. Subconscious.</span>
+      <div class="motion-item" data-reveal>
+        <div class="motion-demo"><span style="opacity:0.35">diamond grid shifts at 0.95× scroll rate</span></div>
+        <span class="motion-title">Background parallax</span>
+        <span class="motion-desc">The dashed diamond grid moves at a slightly different rate than content. Physical depth. Barely perceptible.</span>
       </div>
     </div>
   </section>
 
-  <div class="divider"><hr class="divider-line thin"></div>
+  <div class="divider-thin"></div>
 
-  <!-- ════════ SPACING ════════ -->
-  <section class="section" id="spacing">
-    <p class="section-label">Spacing &mdash; Whitespace is the design</p>
-    <p style="font-family:var(--serif);font-size:var(--fs-body);color:var(--graphite);max-width:var(--content-w);line-height:1.6;margin-bottom:var(--space-xs)">
-      Every value is fluid. 2&ndash;3x what most sites use. Site margins go from 24px on mobile to 80px on desktop. Section padding is minimum 64px. When in doubt, add more space. Resize your browser to see these bars respond.
-    </p>
+  <!-- ══════════ SPACING ══════════ -->
+  <section class="section-wide" id="spacing">
+    <p class="section-label" data-reveal>Spacing — Whitespace is the design</p>
+    <p class="section-desc" data-reveal>Every value is fluid. 2–3× what most sites use. Resize the browser — watch the bars respond in real time.</p>
 
-    <div class="spacing-bars">
-      <div class="spacing-row">
-        <span class="spacing-label">--space-xs</span>
-        <div class="spacing-bar" style="width:var(--space-xs)"></div>
-        <span class="spacing-value">clamp(0.5rem, 0.4rem + 0.3vw, 0.75rem)</span>
-      </div>
-      <div class="spacing-row">
-        <span class="spacing-label">--space-s</span>
-        <div class="spacing-bar" style="width:var(--space-s)"></div>
-        <span class="spacing-value">clamp(1rem, 0.8rem + 0.6vw, 1.5rem)</span>
-      </div>
-      <div class="spacing-row">
-        <span class="spacing-label">--space-m</span>
-        <div class="spacing-bar" style="width:var(--space-m)"></div>
-        <span class="spacing-value">clamp(2rem, 1.5rem + 1.5vw, 3rem)</span>
-      </div>
-      <div class="spacing-row">
-        <span class="spacing-label">--space-l</span>
-        <div class="spacing-bar" style="width:var(--space-l)"></div>
-        <span class="spacing-value">clamp(3rem, 2rem + 3vw, 5rem)</span>
-      </div>
-      <div class="spacing-row">
-        <span class="spacing-label">--space-xl</span>
-        <div class="spacing-bar" style="width:var(--space-xl)"></div>
-        <span class="spacing-value">clamp(4rem, 2.5rem + 5vw, 8rem)</span>
-      </div>
-      <div class="spacing-row">
-        <span class="spacing-label">--space-2xl</span>
-        <div class="spacing-bar" style="width:var(--space-2xl)"></div>
-        <span class="spacing-value">clamp(5rem, 3rem + 6vw, 10rem)</span>
-      </div>
-      <div class="spacing-row">
-        <span class="spacing-label">--site-margin</span>
-        <div class="spacing-bar" style="width:var(--site-margin);background:var(--blue);opacity:0.3"></div>
-        <span class="spacing-value">clamp(1.5rem, 1rem + 4vw, 5rem)</span>
-      </div>
+    <div class="spacing-vis" data-reveal>
+      <div class="sp-row"><span class="sp-label">--space-xs</span><div class="sp-bar" style="width:var(--space-xs)"></div><span class="sp-val">clamp(0.5rem..0.75rem)</span></div>
+      <div class="sp-row"><span class="sp-label">--space-s</span><div class="sp-bar" style="width:var(--space-s)"></div><span class="sp-val">clamp(1rem..1.5rem)</span></div>
+      <div class="sp-row"><span class="sp-label">--space-m</span><div class="sp-bar" style="width:var(--space-m)"></div><span class="sp-val">clamp(2rem..3rem)</span></div>
+      <div class="sp-row"><span class="sp-label">--space-l</span><div class="sp-bar" style="width:var(--space-l)"></div><span class="sp-val">clamp(3rem..5rem)</span></div>
+      <div class="sp-row"><span class="sp-label">--space-xl</span><div class="sp-bar" style="width:var(--space-xl)"></div><span class="sp-val">clamp(4rem..8rem)</span></div>
+      <div class="sp-row"><span class="sp-label">--space-2xl</span><div class="sp-bar" style="width:var(--space-2xl)"></div><span class="sp-val">clamp(6rem..12rem)</span></div>
+      <div class="sp-row"><span class="sp-label">--margin</span><div class="sp-bar" style="width:var(--margin);background:var(--blue);opacity:0.15"></div><span class="sp-val">clamp(1.5rem..5rem)</span></div>
     </div>
   </section>
 
-  <!-- ════════ FOOTER ════════ -->
   <footer>
     <div class="footer-inner">
       <div>
         <p class="footer-entity">Recurr Studio Private Limited</p>
-        <p class="footer-location">Bengaluru, India</p>
+        <p class="footer-loc">Bengaluru, India</p>
       </div>
       <div class="footer-links">
         <a href="#">linkedin</a>
@@ -906,125 +573,134 @@ Pratik Mishra  &middot;  Mar 14, 2026  &middot;  Positioning
     </div>
   </footer>
 
-  <!-- ══════════════════════════════════════════
-       SCRIPTS — All animation logic
-  ══════════════════════════════════════════ -->
   <script>
-    // ── Hero: Word-by-word staggered reveal ──
+    // ── Live clock in nav ──
     (function() {
-      const h1 = document.getElementById('hero-headline');
+      const el = document.getElementById('clock');
+      function tick() {
+        const now = new Date();
+        const ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+        const h = ist.getHours(), m = ist.getMinutes();
+        const ampm = h >= 12 ? 'PM' : 'AM';
+        const hh = h % 12 || 12;
+        el.textContent = `${hh}:${String(m).padStart(2,'0')} ${ampm} IST`;
+      }
+      tick();
+      setInterval(tick, 10000);
+    })();
+
+    // ── Hero word-by-word ──
+    (function() {
+      const h1 = document.getElementById('hero-h1');
       const text = h1.textContent;
       h1.innerHTML = '';
-      const words = text.split(' ');
-      words.forEach((word, i) => {
-        const span = document.createElement('span');
-        span.className = 'word';
-        span.textContent = word;
-        span.style.transitionDelay = (i * 80) + 'ms';
-        h1.appendChild(span);
-        if (i < words.length - 1) h1.appendChild(document.createTextNode(' '));
+      text.split(' ').forEach((word, i, arr) => {
+        const s = document.createElement('span');
+        s.className = 'word';
+        s.textContent = word;
+        s.style.transitionDelay = (i * 70) + 'ms';
+        h1.appendChild(s);
+        if (i < arr.length - 1) h1.appendChild(document.createTextNode(' '));
       });
-
-      // Trigger after paint
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          document.querySelectorAll('.hero h1 .word').forEach(w => w.classList.add('visible'));
-          document.getElementById('hero-underline').classList.add('drawn');
-        });
-      });
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        h1.querySelectorAll('.word').forEach(w => w.classList.add('visible'));
+        document.getElementById('hero-ul').classList.add('drawn');
+        document.getElementById('hero-ascii').classList.add('visible');
+      }));
     })();
 
-    // ── ASCII self-draw animation ──
+    // ── Scroll reveal (IntersectionObserver) ──
     (function() {
-      const ascii = `
-  ╭──────────────────────────────────────────╮
-  │                                          │
-  │    buyer ────────────── product           │
-  │      │                    │              │
-  │      ├── job to be done ──┤              │
-  │      │       ↕            │              │
-  │      ├── context ─────────┤              │
-  │      │       ↕            │              │
-  │      ├── signal ──────────┤              │
-  │      │                    │              │
-  │      └──── match score ───┘              │
-  │                                          │
-  │    ░░░░░░░░░░░░████████████░░  72%       │
-  │                                          │
-  │    RECURR S3 INTELLIGENCE ENGINE         │
-  │    search. sort. select.                 │
-  │                                          │
-  ╰──────────────────────────────────────────╯`;
+      const items = document.querySelectorAll('[data-reveal]');
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            const siblings = e.target.parentElement ? Array.from(e.target.parentElement.querySelectorAll(':scope > [data-reveal]')) : [];
+            const idx = siblings.indexOf(e.target);
+            const delay = idx >= 0 ? idx * 80 : 0;
+            setTimeout(() => e.target.classList.add('visible'), delay);
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      items.forEach(i => obs.observe(i));
+    })();
+
+    // ── ASCII self-draw ──
+    (function() {
+      const art = `
+  ╭──────────────────────────────────────────────╮
+  │                                              │
+  │    buyer ──────────────────── product         │
+  │      │                          │            │
+  │      ├── job to be done ────────┤            │
+  │      │         ↕                │            │
+  │      ├── context ───────────────┤            │
+  │      │         ↕                │            │
+  │      ├── signal ────────────────┤            │
+  │      │                          │            │
+  │      └────── match score ───────┘            │
+  │                                              │
+  │    ░░░░░░░░░░░░░████████████████░░  72%      │
+  │                                              │
+  │    RECURR S3 INTELLIGENCE ENGINE             │
+  │    search. sort. select.                     │
+  │                                              │
+  ╰──────────────────────────────────────────────╯`;
 
       const canvas = document.getElementById('ascii-art');
-      const chars = ascii.split('');
       let html = '';
-      chars.forEach((c, i) => {
-        if (c === '\n') {
-          html += '\n';
-        } else if (c === ' ') {
-          html += ' ';
-        } else {
-          html += `<span class="char" data-i="${i}">${c.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</span>`;
-        }
-      });
+      for (const c of art) {
+        if (c === '\n') html += '\n';
+        else if (c === ' ') html += ' ';
+        else html += `<span class="ch">${c === '<' ? '&lt;' : c === '>' ? '&gt;' : c}</span>`;
+      }
       canvas.innerHTML = html;
 
-      let drawn = false;
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && !drawn) {
-            drawn = true;
-            const spans = canvas.querySelectorAll('.char');
-            spans.forEach((span, i) => {
-              setTimeout(() => span.classList.add('visible'), i * 4);
-            });
-          }
-        });
-      }, { threshold: 0.3 });
-      observer.observe(canvas);
+      let fired = false;
+      new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !fired) {
+          fired = true;
+          canvas.querySelectorAll('.ch').forEach((s, i) => setTimeout(() => s.classList.add('v'), i * 3));
+        }
+      }, { threshold: 0.2 }).observe(canvas);
     })();
 
-    // ── Card staggered reveal ──
-    (function() {
-      const cards = document.querySelectorAll('[data-reveal]');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, i) => {
-          if (entry.isIntersecting) {
-            const card = entry.target;
-            const siblings = Array.from(card.parentElement.children);
-            const index = siblings.indexOf(card);
-            setTimeout(() => card.classList.add('visible'), index * 120);
-            observer.unobserve(card);
-          }
-        });
-      }, { threshold: 0.15 });
-      cards.forEach(card => observer.observe(card));
-    })();
-
-    // ── ASCII ticker in animation demo ──
+    // ── ASCII ticker ──
     (function() {
       const el = document.getElementById('ascii-ticker');
       if (!el) return;
-      const frames = [
-        '│ ░░░░░░░░░░ │',
-        '│ ▓░░░░░░░░░ │',
-        '│ ▓▓░░░░░░░░ │',
-        '│ ▓▓▓░░░░░░░ │',
-        '│ ▓▓▓▓░░░░░░ │',
-        '│ ▓▓▓▓▓░░░░░ │',
-        '│ ▓▓▓▓▓▓░░░░ │',
-        '│ ▓▓▓▓▓▓▓░░░ │',
-        '│ ▓▓▓▓▓▓▓▓░░ │',
-        '│ ▓▓▓▓▓▓▓▓▓░ │',
-        '│ ▓▓▓▓▓▓▓▓▓▓ │',
-        '│ ████████████ │',
-      ];
+      const f = ['░░░░░░░░░░','▓░░░░░░░░░','▓▓░░░░░░░░','▓▓▓░░░░░░░','▓▓▓▓░░░░░░','▓▓▓▓▓░░░░░','▓▓▓▓▓▓░░░░','▓▓▓▓▓▓▓░░░','▓▓▓▓▓▓▓▓░░','▓▓▓▓▓▓▓▓▓░','▓▓▓▓▓▓▓▓▓▓','██████████'];
       let i = 0;
-      setInterval(() => {
-        el.textContent = frames[i % frames.length];
-        i++;
-      }, 200);
+      setInterval(() => { el.textContent = `│ ${f[i%f.length]} │`; i++; }, 180);
+    })();
+
+    // ── Draw underline demo ──
+    (function() {
+      const el = document.getElementById('draw-demo');
+      if (!el) return;
+      new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) el.classList.add('active');
+        else el.classList.remove('active');
+      }, { threshold: 0.5 }).observe(el);
+    })();
+
+    // ── Background parallax ──
+    (function() {
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const y = window.scrollY * 0.05;
+            document.body.style.setProperty('--bg-offset', y + 'px');
+            if (document.body.style.backgroundPositionY !== undefined) {
+              document.body.style.backgroundPositionY = y + 'px';
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
     })();
   </script>
 
