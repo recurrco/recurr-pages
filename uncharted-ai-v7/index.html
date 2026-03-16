@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Uncharted AI — A New Chapter in Mineral Exploration</title>
+<meta name="description" content="Autonomous robots with multi-modal sensing that collapse the longest, most expensive stage of the mining pipeline — field exploration.">
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'IBM Plex Mono', monospace;
+  background: #0A0A0A;
+  color: #F5F5F0;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+:root {
+  --bg: #0A0A0A;
+  --bg-alt: #0F0F0F;
+  --bg-card: #111111;
+  --border: #1A1A1A;
+  --cyan: #00D4FF;
+  --red: #FF3B30;
+  --text: #F5F5F0;
+  --text-secondary: #6B6B6B;
+  --text-tertiary: #4D4D4D;
+  --text-muted: #3D3D3D;
+  --white: #FFFFFF;
+  --heading: 'Space Grotesk', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+  --max-w: 1440px;
+  --px: 64px;
+}
+
+/* ===== GLOBAL SVG PATTERN (enhanced — more prominent) ===== */
+.global-pattern {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.global-pattern svg { width: 100%; height: 100%; }
+
+/* ===== MOUSE PARALLAX on SVG ===== */
+.global-pattern svg g.parallax-layer {
+  transition: transform 0.3s ease-out;
+}
+
+/* ===== PAGE CONTENT WRAPPER ===== */
+.page-content { position: relative; z-index: 1; }
+
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding-left: var(--px);
+  padding-right: var(--px);
+}
+
+/* ===== GLOBAL TYPOGRAPHY ===== */
+.section-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+.section-heading {
+  font-family: var(--heading);
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  color: var(--text);
+}
+.btn-primary {
+  display: inline-block;
+  padding: 14px 32px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid var(--cyan);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-primary:hover { background: var(--cyan); color: var(--bg); }
+.btn-ghost {
+  display: inline-block;
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(245,245,240,0.25);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.btn-ghost:hover { border-color: rgba(245,245,240,0.5); }
+
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Staggered delays for children */
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+
+/* ===== FOLD 1: HERO ===== */
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.hero-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+}
+.hero-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) brightness(0.35) contrast(1.1);
+}
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,10,10,0.3) 0%,
+    rgba(10,10,10,0.5) 30%,
+    rgba(10,10,10,0.75) 55%,
+    #0A0A0A 85%
+  );
+}
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 2;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  opacity: 0.5;
+}
+/* ASCII terrain canvas overlay */
+.hero-ascii {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 2;
+  opacity: 0.18;
+  pointer-events: none;
+}
+.hero-inner {
+  position: relative;
+  z-index: 3;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.hero-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px var(--px);
+  max-width: var(--max-w);
+  margin: 0 auto;
+  width: 100%;
+}
+.hero-nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-nav-logo img {
+  height: 36px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+.hero-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.hero-nav-links .btn-primary {
+  padding: 10px 24px;
+  font-size: 11px;
+}
+.hero-content {
+  padding: 60px var(--px) 56px;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  width: 100%;
+}
+.hero-content h1 {
+  font-family: var(--heading);
+  font-size: clamp(52px, 7vw, 96px);
+  font-weight: 700;
+  letter-spacing: -2px;
+  line-height: 1.02;
+  color: var(--text);
+  margin-bottom: 24px;
+  max-width: 100%;
+}
+.hero-content p {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: rgba(245,245,240,0.65);
+  max-width: 600px;
+  margin-bottom: 40px;
+}
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+}
+
+/* ===== HERO CAROUSEL ===== */
+.carousel {
+  overflow: hidden;
+  width: 100%;
+  padding: 0 0 0 var(--px);
+  margin-top: auto;
+  padding-bottom: 40px;
+}
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  animation: carousel-scroll 50s linear infinite;
+  width: max-content;
+}
+.carousel-track:hover {
+  animation-play-state: paused;
+}
+@keyframes carousel-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.carousel-card {
+  flex-shrink: 0;
+  width: 325px;
+  aspect-ratio: 9/16;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #2A2A2A;
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.carousel-card:hover {
+  transform: scale(1.03);
+  border-color: rgba(0,212,255,0.3);
+}
+.carousel-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) brightness(0.7) contrast(1.1);
+  transition: filter 0.4s ease;
+}
+.carousel-card:hover img {
+  filter: grayscale(60%) brightness(0.85) contrast(1.1);
+}
+/* Animated cyan corner brackets */
+.carousel-card::before,
+.carousel-card::after {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+.carousel-card::before {
+  top: 10px; left: 10px;
+  border-top: 2px solid var(--cyan);
+  border-left: 2px solid var(--cyan);
+  opacity: 0.4;
+  animation: corner-pulse 3s ease-in-out infinite;
+}
+.carousel-card::after {
+  bottom: 10px; right: 10px;
+  border-bottom: 2px solid var(--cyan);
+  border-right: 2px solid var(--cyan);
+  opacity: 0.4;
+  animation: corner-pulse 3s ease-in-out infinite 1.5s;
+}
+.carousel-card:hover::before,
+.carousel-card:hover::after {
+  opacity: 1;
+  width: 36px;
+  height: 36px;
+  filter: drop-shadow(0 0 6px var(--cyan));
+}
+.carousel-card .corner-tr,
+.carousel-card .corner-bl {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+.carousel-card .corner-tr {
+  top: 10px; right: 10px;
+  border-top: 2px solid var(--cyan);
+  border-right: 2px solid var(--cyan);
+  opacity: 0.4;
+  animation: corner-pulse 3s ease-in-out infinite 0.75s;
+}
+.carousel-card .corner-bl {
+  bottom: 10px; left: 10px;
+  border-bottom: 2px solid var(--cyan);
+  border-left: 2px solid var(--cyan);
+  opacity: 0.4;
+  animation: corner-pulse 3s ease-in-out infinite 2.25s;
+}
+.carousel-card:hover .corner-tr,
+.carousel-card:hover .corner-bl {
+  opacity: 1;
+  width: 36px;
+  height: 36px;
+  filter: drop-shadow(0 0 6px var(--cyan));
+}
+@keyframes corner-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+.carousel-card-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 28px 18px 18px;
+  background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, transparent 100%);
+  z-index: 3;
+}
+.carousel-card-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+.carousel-card-loc {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* ===== FOLD 2: LOGO BAR ===== */
+.logos {
+  padding: 56px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.logos-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 40px;
+}
+.logos-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--px);
+}
+.logos-row img {
+  height: 80px;
+  width: auto;
+  filter: grayscale(100%) brightness(0.6);
+  opacity: 0.5;
+  transition: all 0.3s;
+  object-fit: contain;
+}
+.logos-row img:hover {
+  filter: grayscale(0%) brightness(1);
+  opacity: 1;
+}
+
+/* ===== FOLD 3: PROBLEM — red accent ===== */
+.problem {
+  border-top: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.problem::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,59,48,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.problem .container {
+  padding-top: 100px;
+  padding-bottom: 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  position: relative;
+}
+.problem-left .section-tag {
+  margin-bottom: 24px;
+  color: var(--red);
+}
+.problem-left h2 {
+  font-size: clamp(36px, 4vw, 52px);
+  margin-bottom: 28px;
+}
+.problem-left p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  max-width: 480px;
+}
+.problem-right {
+  display: flex;
+  flex-direction: column;
+}
+.stat-card {
+  padding: 32px 0;
+  border-top: 1px solid rgba(255,59,48,0.2);
+}
+.stat-card:last-child { border-bottom: 1px solid rgba(255,59,48,0.2); }
+.stat-number {
+  font-family: var(--heading);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ===== FOLD 4: TECHNOLOGY — vertical + horizontal cards ===== */
+.technology {
+  border-top: 1px solid var(--border);
+}
+.technology .container {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+.tech-header {
+  margin-bottom: 80px;
+  max-width: 800px;
+}
+.tech-header .section-tag { margin-bottom: 24px; }
+.tech-header h2 {
+  font-size: clamp(32px, 3.5vw, 48px);
+  margin-bottom: 24px;
+}
+.tech-header h2 .accent { color: var(--cyan); }
+.tech-header p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  max-width: 600px;
+}
+.tech-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+}
+.tech-card {
+  background: var(--bg-card);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 400px;
+}
+.tech-card:nth-child(even) {
+  direction: rtl;
+}
+.tech-card:nth-child(even) > * {
+  direction: ltr;
+}
+.tech-card-image {
+  overflow: hidden;
+  background: #0D0D0D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.tech-card-image .tech-placeholder {
+  width: calc(100% - 48px);
+  height: calc(100% - 48px);
+  border: 1px dashed #2A2A2A;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+}
+.tech-placeholder::before,
+.tech-placeholder::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+}
+.tech-placeholder::before {
+  top: -1px; left: -1px;
+  border-top: 1px solid var(--cyan);
+  border-left: 1px solid var(--cyan);
+}
+.tech-placeholder::after {
+  bottom: -1px; right: -1px;
+  border-bottom: 1px solid var(--cyan);
+  border-right: 1px solid var(--cyan);
+}
+.tech-placeholder-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.tech-placeholder-sub {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #2A2A2A;
+  text-transform: uppercase;
+}
+.tech-card-body {
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.tech-card-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cyan);
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+.tech-card-title {
+  font-family: var(--heading);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.15;
+}
+.tech-card-acronym {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  opacity: 0.6;
+  margin-bottom: 20px;
+}
+.tech-card-desc {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* ===== FOLD 5: IMPACT — split layout (infographics left, table right) ===== */
+.impact {
+  background: var(--bg-alt);
+  border-top: 1px solid var(--border);
+}
+.impact .container {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+.impact .section-tag { margin-bottom: 24px; }
+.impact h2 {
+  font-size: clamp(32px, 3.5vw, 48px);
+  margin-bottom: 80px;
+}
+.impact-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+/* Left: vertical stacked infographics */
+.impact-infographics {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.impact-card {
+  background: var(--bg-alt);
+  padding: 40px 36px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.impact-infographic {
+  flex-shrink: 0;
+  width: 120px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.impact-stat-content { flex: 1; }
+.impact-stat-number {
+  font-family: var(--heading);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: -1.5px;
+  margin-bottom: 8px;
+}
+.impact-stat-label {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+/* Right: comparison table */
+.impact-table-wrap {
+  border: 1px solid var(--border);
+  padding: 40px;
+  background: rgba(17,17,17,0.5);
+}
+.impact-table-wrap h3 {
+  font-family: var(--heading);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 32px;
+  letter-spacing: -0.3px;
+}
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+.comparison-table thead th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+.comparison-table thead th:first-child { padding-left: 0; }
+.comparison-table thead th.col-before { color: var(--red); }
+.comparison-table thead th.col-after { color: var(--cyan); }
+.comparison-table tbody td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(26,26,26,0.5);
+  line-height: 1.5;
+}
+.comparison-table tbody td:first-child { padding-left: 0; color: #aaa; font-weight: 500; }
+.comparison-table .val-before { color: #666; }
+.comparison-table .val-after { color: #fff; font-weight: 600; }
+
+/* ===== FOLD 6: TEAM — simplified, statement-style ===== */
+.team {
+  border-top: 1px solid var(--border);
+}
+.team .container {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+.team .section-tag { margin-bottom: 40px; }
+/* The founder statement — reads as a headline-weight paragraph */
+.team-statement {
+  font-family: var(--heading);
+  font-size: clamp(22px, 2.5vw, 32px);
+  font-weight: 500;
+  line-height: 1.55;
+  color: rgba(245,245,240,0.85);
+  max-width: 900px;
+  margin-bottom: 72px;
+  letter-spacing: -0.3px;
+}
+.team-statement em {
+  color: var(--cyan);
+  font-style: normal;
+  font-weight: 700;
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.team-card {
+  background: var(--bg-card);
+  border: 1px solid #2A2A2A;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.team-card-image {
+  width: 100%;
+  height: 360px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.team-card-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  filter: grayscale(100%) brightness(0.8) contrast(1.05);
+}
+.team-card-body {
+  padding: 32px;
+  flex: 1;
+}
+.team-card-name {
+  font-family: var(--heading);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.team-card-role {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 20px;
+}
+.team-card-bio {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+.team-card-highlights {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.team-card-highlights li {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  padding: 4px 10px;
+  border: 1px solid #2A2A2A;
+}
+
+/* ===== FOLD 7: CTA + VIDEO BG + FOOTER (merged) ===== */
+.cta-footer {
+  position: relative;
+  border-top: 1px solid var(--border);
+}
+/* Video background container */
+.cta-video-bg {
+  position: relative;
+  overflow: hidden;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cta-video-bg video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(70%) brightness(0.3) contrast(1.1);
+}
+.cta-video-bg::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,10,10,0.5) 0%,
+    rgba(10,10,10,0.65) 50%,
+    rgba(10,10,10,0.9) 100%
+  );
+  z-index: 1;
+}
+.cta-overlay {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 80px var(--px);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.cta-overlay h2 {
+  font-family: var(--heading);
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 32px;
+}
+.cta-overlay .cta-proof {
+  font-size: 14px;
+  line-height: 1.75;
+  color: rgba(245,245,240,0.7);
+  max-width: 640px;
+  margin: 0 auto 24px;
+}
+.cta-overlay .cta-schedule {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-bottom: 48px;
+}
+.cta-overlay .cta-schedule a {
+  color: var(--cyan);
+  border-bottom: 1px solid rgba(0,212,255,0.3);
+  transition: border-color 0.2s;
+}
+.cta-overlay .cta-schedule a:hover { border-color: var(--cyan); }
+/* Footer section below video */
+.footer-section {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+}
+.footer-section .container {
+  padding-top: 64px;
+  padding-bottom: 40px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+.footer-col h4 {
+  font-family: var(--heading);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+  letter-spacing: -0.3px;
+}
+.footer-col p {
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+.footer-col strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.footer-col .footer-cta-btn {
+  display: inline-block;
+  padding: 14px 32px;
+  background: var(--cyan);
+  color: var(--bg);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: opacity 0.2s;
+}
+.footer-col .footer-cta-btn:hover { opacity: 0.85; }
+.footer-col-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+.footer-col-links a {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  transition: color 0.2s;
+}
+.footer-col-links a:hover { color: var(--text); }
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.footer-bottom-logo {
+  height: 28px;
+  width: auto;
+  opacity: 0.4;
+  filter: brightness(0) invert(1);
+}
+.footer-bottom span {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  :root { --px: 40px; }
+  .hero-content h1 { font-size: clamp(42px, 6vw, 72px); }
+  .problem .container { grid-template-columns: 1fr; gap: 48px; }
+  .tech-card { grid-template-columns: 1fr; min-height: auto; }
+  .tech-card:nth-child(even) { direction: ltr; }
+  .tech-card-image { min-height: 280px; }
+  .tech-card-body { padding: 40px 32px; }
+  .impact-split { grid-template-columns: 1fr; gap: 48px; }
+  .impact-card { padding: 32px 28px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .carousel-card { width: 260px; }
+}
+@media (max-width: 768px) {
+  :root { --px: 24px; }
+  .hero { min-height: auto; }
+  .hero-content { padding: 40px var(--px) 40px; }
+  .hero-content h1 { font-size: 36px; letter-spacing: -1px; }
+  .hero-content p { font-size: 14px; margin-bottom: 28px; }
+  .hero-ctas { flex-direction: column; gap: 12px; }
+  .hero-ctas a { text-align: center; }
+  .carousel { padding-bottom: 24px; }
+  .carousel-card { width: 220px; }
+  .logos-row { gap: 24px; }
+  .logos-row img { height: 56px; }
+  .problem .container { padding-top: 64px; padding-bottom: 64px; gap: 40px; }
+  .problem-left h2 { font-size: 30px; }
+  .stat-number { font-size: 36px; }
+  .technology .container { padding-top: 64px; padding-bottom: 64px; }
+  .tech-header { margin-bottom: 48px; }
+  .tech-card-body { padding: 32px 24px; }
+  .tech-card-title { font-size: 22px; }
+  .impact .container { padding-top: 64px; padding-bottom: 64px; }
+  .impact h2 { margin-bottom: 48px; }
+  .impact-card { flex-direction: column; gap: 16px; padding: 28px 24px; }
+  .impact-infographic { width: 100px; height: 60px; }
+  .impact-stat-number { font-size: 36px; }
+  .impact-table-wrap { padding: 24px; }
+  .comparison-table { font-size: 11px; }
+  .comparison-table thead th { font-size: 10px; padding: 8px 8px; letter-spacing: 1px; }
+  .comparison-table tbody td { padding: 10px 8px; }
+  .team .container { padding-top: 64px; padding-bottom: 64px; }
+  .team-statement { font-size: 20px; margin-bottom: 48px; }
+  .team-grid { grid-template-columns: 1fr; }
+  .team-card-image { height: 280px; }
+  .cta-video-bg { min-height: 400px; }
+  .cta-overlay { padding: 48px var(--px); }
+  .cta-overlay h2 { font-size: 28px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .team-letter { padding: 24px 28px; }
+}
+@media (max-width: 480px) {
+  .hero-nav { padding: 20px var(--px); }
+  .hero-nav-logo img { height: 28px; }
+  .hero-nav-links .btn-primary { padding: 8px 16px; font-size: 10px; }
+  .hero-content h1 { font-size: 30px; }
+  .carousel-card { width: 180px; }
+  .logos-row img { height: 48px; }
+  .problem-left h2 { font-size: 26px; }
+  .stat-number { font-size: 32px; }
+  .impact-stat-number { font-size: 32px; }
+  .team-statement { font-size: 18px; }
+  .team-card-image { height: 240px; }
+  .cta-overlay h2 { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- GLOBAL SVG PATTERN (enhanced — more prominent + parallax)     -->
+<!-- ============================================================ -->
+<div class="global-pattern" id="global-pattern">
+  <svg viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="gp-fade" cx="50%" cy="50%" r="65%">
+        <stop offset="0%" stop-color="white" stop-opacity="1"/>
+        <stop offset="40%" stop-color="white" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="white" stop-opacity="0.15"/>
+      </radialGradient>
+      <mask id="gp-mask">
+        <rect width="1000" height="1000" fill="url(#gp-fade)"/>
+      </mask>
+    </defs>
+    <g mask="url(#gp-mask)">
+      <!-- Layer 1: Dashed blueprint grid — tighter spacing -->
+      <g class="parallax-layer" data-speed="0.01" opacity="0.12" stroke="#00D4FF">
+        <line x1="80" y1="0" x2="80" y2="1000" stroke-width="0.5" stroke-dasharray="4,16"/>
+        <line x1="160" y1="0" x2="160" y2="1000" stroke-width="0.3" stroke-dasharray="2,20"/>
+        <line x1="240" y1="0" x2="240" y2="1000" stroke-width="0.5" stroke-dasharray="4,16"/>
+        <line x1="320" y1="0" x2="320" y2="1000" stroke-width="0.3" stroke-dasharray="2,20"/>
+        <line x1="400" y1="0" x2="400" y2="1000" stroke-width="0.5" stroke-dasharray="4,16"/>
+        <line x1="480" y1="0" x2="480" y2="1000" stroke-width="0.3" stroke-dasharray="2,20"/>
+        <line x1="560" y1="0" x2="560" y2="1000" stroke-width="0.5" stroke-dasharray="4,16"/>
+        <line x1="640" y1="0" x2="640" y2="1000" stroke-width="0.3" stroke-dasharray="2,20"/>
+        <line x1="720" y1="0" x2="720" y2="1000" stroke-width="0.5" stroke-dasharray="4,16"/>
+        <line x1="800" y1="0" x2="800" y2="1000" stroke-width="0.3" stroke-dasharray="2,20"/>
+        <line x1="880" y1="0" x2="880" y2="1000" stroke-width="0.5" stroke-dasharray="4,16"/>
+        <line x1="960" y1="0" x2="960" y2="1000" stroke-width="0.3" stroke-dasharray="2,20"/>
+        <line x1="0" y1="80" x2="1000" y2="80" stroke-width="0.3" stroke-dasharray="2,20"/>
+        <line x1="0" y1="160" x2="1000" y2="160" stroke-width="0.5" stroke-dasharray="4,16"/>
+        <line x1="0" y1="240" x2="1000" y2="240" stroke-width="0.3" stroke-dasharray="2,20"/>
+        <line x1="0" y1="320" x2="1000" y2="320" stroke-width="0.5" stroke-dasharray="4,16"/>
+        <line x1="0" y1="400" x2="1000" y2="400" stroke-width="0.3" stroke-dasharray="2,20"/>
+        <line x1="0" y1="480" x2="1000" y2="480" stroke-width="0.5" stroke-dasharray="4,16"/>
+        <line x1="0" y1="560" x2="1000" y2="560" stroke-width="0.3" stroke-dasharray="2,20"/>
+        <line x1="0" y1="640" x2="1000" y2="640" stroke-width="0.5" stroke-dasharray="4,16"/>
+        <line x1="0" y1="720" x2="1000" y2="720" stroke-width="0.3" stroke-dasharray="2,20"/>
+        <line x1="0" y1="800" x2="1000" y2="800" stroke-width="0.5" stroke-dasharray="4,16"/>
+        <line x1="0" y1="880" x2="1000" y2="880" stroke-width="0.3" stroke-dasharray="2,20"/>
+        <line x1="0" y1="960" x2="1000" y2="960" stroke-width="0.5" stroke-dasharray="4,16"/>
+      </g>
+      <!-- Layer 2: Crosshair registration marks -->
+      <g class="parallax-layer" data-speed="0.02" opacity="0.15" stroke="#00D4FF" stroke-width="1">
+        <line x1="75" y1="160" x2="85" y2="160"/><line x1="80" y1="155" x2="80" y2="165"/>
+        <line x1="235" y1="320" x2="245" y2="320"/><line x1="240" y1="315" x2="240" y2="325"/>
+        <line x1="395" y1="240" x2="405" y2="240"/><line x1="400" y1="235" x2="400" y2="245"/>
+        <line x1="555" y1="480" x2="565" y2="480"/><line x1="560" y1="475" x2="560" y2="485"/>
+        <line x1="715" y1="160" x2="725" y2="160"/><line x1="720" y1="155" x2="720" y2="165"/>
+        <line x1="875" y1="400" x2="885" y2="400"/><line x1="880" y1="395" x2="880" y2="405"/>
+        <line x1="155" y1="640" x2="165" y2="640"/><line x1="160" y1="635" x2="160" y2="645"/>
+        <line x1="475" y1="720" x2="485" y2="720"/><line x1="480" y1="715" x2="480" y2="725"/>
+        <line x1="795" y1="640" x2="805" y2="640"/><line x1="800" y1="635" x2="800" y2="645"/>
+        <line x1="315" y1="880" x2="325" y2="880"/><line x1="320" y1="875" x2="320" y2="885"/>
+        <line x1="635" y1="800" x2="645" y2="800"/><line x1="640" y1="795" x2="640" y2="805"/>
+        <line x1="955" y1="720" x2="965" y2="720"/><line x1="960" y1="715" x2="960" y2="725"/>
+      </g>
+      <!-- Layer 3: Topographic contour lines — thicker, more visible -->
+      <g class="parallax-layer" data-speed="0.015" opacity="0.14" fill="none" stroke="#00D4FF">
+        <path d="M 0 140 Q 120 120 240 145 T 480 130 T 720 155 T 1000 140" stroke-width="0.8" stroke-dasharray="8,12"/>
+        <path d="M 0 300 Q 160 280 320 310 T 640 290 T 1000 305" stroke-width="0.6" stroke-dasharray="6,16"/>
+        <path d="M 0 460 Q 200 440 400 470 T 800 450 T 1000 465" stroke-width="0.8" stroke-dasharray="10,10"/>
+        <path d="M 0 620 Q 140 600 280 630 T 560 610 T 840 635 T 1000 620" stroke-width="0.6" stroke-dasharray="4,18"/>
+        <path d="M 0 780 Q 240 760 480 790 T 960 770 T 1000 785" stroke-width="0.7" stroke-dasharray="8,14"/>
+        <path d="M 0 900 Q 180 880 360 910 T 720 890 T 1000 905" stroke-width="0.5" stroke-dasharray="6,16"/>
+      </g>
+      <!-- Layer 4: Point cloud scatter — denser -->
+      <g class="parallax-layer" data-speed="0.025" opacity="0.16" fill="#00D4FF">
+        <circle cx="60" cy="120" r="2"/><circle cx="130" cy="200" r="1.5"/>
+        <circle cx="180" cy="100" r="2.5"/><circle cx="240" cy="300" r="1.5"/>
+        <circle cx="310" cy="150" r="2"/><circle cx="380" cy="380" r="1.5"/>
+        <circle cx="440" cy="190" r="2.5"/><circle cx="510" cy="310" r="2"/>
+        <circle cx="580" cy="130" r="1.5"/><circle cx="640" cy="250" r="2.5"/>
+        <circle cx="710" cy="400" r="1.5"/><circle cx="780" cy="160" r="2"/>
+        <circle cx="840" cy="280" r="1.5"/><circle cx="900" cy="430" r="2.5"/>
+        <circle cx="100" cy="500" r="1.5"/><circle cx="210" cy="560" r="2"/>
+        <circle cx="340" cy="520" r="1.5"/><circle cx="470" cy="590" r="2.5"/>
+        <circle cx="590" cy="650" r="1.5"/><circle cx="720" cy="520" r="2"/>
+        <circle cx="810" cy="680" r="1.5"/><circle cx="150" cy="710" r="2"/>
+        <circle cx="400" cy="750" r="1.5"/><circle cx="660" cy="810" r="2.5"/>
+        <circle cx="860" cy="880" r="1.5"/><circle cx="50" cy="830" r="2"/>
+        <circle cx="280" cy="860" r="1.8"/><circle cx="540" cy="920" r="1.2"/>
+        <circle cx="960" cy="560" r="1.8"/><circle cx="40" cy="380" r="1.5"/>
+        <!-- Dense cluster 1 -->
+        <circle cx="290" cy="260" r="1.5"/><circle cx="300" cy="280" r="1.2"/>
+        <circle cx="320" cy="250" r="1.8"/><circle cx="310" cy="290" r="1.2"/>
+        <circle cx="330" cy="270" r="1.5"/><circle cx="280" cy="300" r="1.2"/>
+        <circle cx="305" cy="245" r="1"/><circle cx="325" cy="295" r="1.3"/>
+        <!-- Dense cluster 2 -->
+        <circle cx="660" cy="590" r="1.5"/><circle cx="670" cy="610" r="1.2"/>
+        <circle cx="650" cy="580" r="1.8"/><circle cx="680" cy="600" r="1"/>
+        <circle cx="645" cy="615" r="1.3"/><circle cx="675" cy="585" r="1.5"/>
+      </g>
+      <!-- Layer 5: Blueprint zone rectangles -->
+      <g class="parallax-layer" data-speed="0.008" opacity="0.08" fill="none" stroke="#00D4FF">
+        <rect x="120" y="120" width="200" height="160" stroke-width="0.7" stroke-dasharray="6,10"/>
+        <rect x="480" y="340" width="260" height="200" stroke-width="0.7" stroke-dasharray="6,10"/>
+        <rect x="40" y="580" width="180" height="140" stroke-width="0.5" stroke-dasharray="4,12"/>
+        <rect x="640" y="80" width="160" height="120" stroke-width="0.5" stroke-dasharray="4,12"/>
+        <rect x="760" y="600" width="180" height="160" stroke-width="0.6" stroke-dasharray="5,11"/>
+        <rect x="300" y="700" width="220" height="140" stroke-width="0.5" stroke-dasharray="4,12"/>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE CONTENT                                                  -->
+<!-- ============================================================ -->
+<div class="page-content">
+
+<!-- FOLD 1: HERO — logo only in nav, larger headline, bigger carousel, fixed CTA -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <img src="images/hero.png" alt="Field exploration terrain">
+  </div>
+  <canvas class="hero-ascii" id="ascii-canvas"></canvas>
+
+  <div class="hero-inner">
+    <nav class="hero-nav">
+      <a href="#" class="hero-nav-logo">
+        <img src="images/logo.png" alt="Uncharted AI">
+      </a>
+      <div class="hero-nav-links">
+        <a href="mailto:pradyumna@unchartedai.xyz" class="btn-primary">Contact</a>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <h1>A new chapter in mineral exploration is here.</h1>
+      <p>Autonomous robots with multi-modal sensing that collapse the longest, most expensive stage of the mining pipeline — field exploration.</p>
+      <div class="hero-ctas">
+        <a href="mailto:pradyumna@unchartedai.xyz" class="btn-primary">Get in Touch</a>
+        <a href="#technology" class="btn-ghost">See the Technology</a>
+      </div>
+    </div>
+
+    <!-- 5-card carousel, 9:16, larger cards (325px) -->
+    <div class="carousel">
+      <div class="carousel-track" id="carousel-track">
+        <div class="carousel-card">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <img src="images/trace.png" alt="Autonomous ground robot scanning terrain">
+          <div class="carousel-card-overlay">
+            <span class="carousel-card-label">Subsurface terrain mapping</span>
+            <span class="carousel-card-loc">Saudi Arabia</span>
+          </div>
+        </div>
+        <div class="carousel-card">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <img src="images/sensing.png" alt="Robot with multi-modal sensors in field">
+          <div class="carousel-card-overlay">
+            <span class="carousel-card-label">Multi-modal sensor deployment</span>
+            <span class="carousel-card-loc">CA, North America</span>
+          </div>
+        </div>
+        <div class="carousel-card">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <img src="images/find.png" alt="AI-guided exploration with real-time data">
+          <div class="carousel-card-overlay">
+            <span class="carousel-card-label">AI-guided exploration intelligence</span>
+            <span class="carousel-card-loc">QC, Canada</span>
+          </div>
+        </div>
+        <div class="carousel-card">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <img src="images/twin.png" alt="Multi-robot swarm coordinating in terrain">
+          <div class="carousel-card-overlay">
+            <span class="carousel-card-label">Coordinated swarm deployment</span>
+            <span class="carousel-card-loc">Bengaluru, India</span>
+          </div>
+        </div>
+        <div class="carousel-card">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <img src="images/robots-composite.png" alt="RoadRunner rover on rocky terrain">
+          <div class="carousel-card-overlay">
+            <span class="carousel-card-label">Terrain exploration and geospatial discovery</span>
+            <span class="carousel-card-loc">BLR, India</span>
+          </div>
+        </div>
+        <!-- Clones for infinite scroll -->
+        <div class="carousel-card">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <img src="images/trace.png" alt="Autonomous ground robot scanning terrain">
+          <div class="carousel-card-overlay">
+            <span class="carousel-card-label">Subsurface terrain mapping</span>
+            <span class="carousel-card-loc">Saudi Arabia</span>
+          </div>
+        </div>
+        <div class="carousel-card">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <img src="images/sensing.png" alt="Robot with multi-modal sensors in field">
+          <div class="carousel-card-overlay">
+            <span class="carousel-card-label">Multi-modal sensor deployment</span>
+            <span class="carousel-card-loc">CA, North America</span>
+          </div>
+        </div>
+        <div class="carousel-card">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <img src="images/find.png" alt="AI-guided exploration with real-time data">
+          <div class="carousel-card-overlay">
+            <span class="carousel-card-label">AI-guided exploration intelligence</span>
+            <span class="carousel-card-loc">QC, Canada</span>
+          </div>
+        </div>
+        <div class="carousel-card">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <img src="images/twin.png" alt="Multi-robot swarm coordinating in terrain">
+          <div class="carousel-card-overlay">
+            <span class="carousel-card-label">Coordinated swarm deployment</span>
+            <span class="carousel-card-loc">Bengaluru, India</span>
+          </div>
+        </div>
+        <div class="carousel-card">
+          <span class="corner-tr"></span><span class="corner-bl"></span>
+          <img src="images/robots-composite.png" alt="RoadRunner rover on rocky terrain">
+          <div class="carousel-card-overlay">
+            <span class="carousel-card-label">Terrain exploration and geospatial discovery</span>
+            <span class="carousel-card-loc">BLR, India</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOLD 2: LOGO BAR — larger logos (80px) -->
+<section class="logos">
+  <p class="logos-label">Trusted by leaders in mining, defence &amp; space</p>
+  <div class="logos-row">
+    <img src="logos/Frame 28.png" alt="Vedanta">
+    <img src="logos/Frame 29.png" alt="Tata Steel">
+    <img src="logos/Frame 30.png" alt="NASA">
+    <img src="logos/Frame 34.png" alt="DARPA">
+    <img src="logos/Frame 31.png" alt="Ministry of Mines">
+    <img src="logos/Frame 32.png" alt="MILA">
+    <img src="logos/Frame 33.png" alt="Antler">
+  </div>
+</section>
+
+<!-- FOLD 3: PROBLEM — new headline + stacking animation on stat cards -->
+<section class="problem">
+  <div class="container">
+    <div class="problem-left reveal">
+      <p class="section-tag">The Problem</p>
+      <h2 class="section-heading">Global mineral demand is choked by traditional exploration.</h2>
+      <p>Takes 12+ years, costs billions. We have found just 45 deposits in the last 2 decades. Geologists on foot. Hammers, notebooks, lab samples. 2-5 km per day. Manual, hazardous, human-dependent.</p>
+    </div>
+    <div class="problem-right">
+      <div class="stat-card reveal reveal-delay-1">
+        <div class="stat-number">$12.5B</div>
+        <div class="stat-label">Spent in exploration every year</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-2">
+        <div class="stat-number">100+</div>
+        <div class="stat-label">Lives lost during exploration</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-3">
+        <div class="stat-number">&lt;0.5%</div>
+        <div class="stat-label">Exploration efforts succeed</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOLD 4: TECHNOLOGY — new headline + working scroll reveal -->
+<section class="technology" id="technology">
+  <div class="container">
+    <div class="tech-header reveal">
+      <p class="section-tag">The Technology</p>
+      <h2 class="section-heading">The <span class="accent">Exploration Platform</span> for our planet. And beyond.</h2>
+      <p>Four integrated modules that take you from satellite imagery to subsurface intelligence — fully autonomous, with 150x the data density of manual surveys.</p>
+    </div>
+
+    <div class="tech-stack">
+      <div class="tech-card reveal">
+        <div class="tech-card-image">
+          <div class="tech-placeholder">
+            <span class="tech-placeholder-label">Satellite Terrain Scan</span>
+            <span class="tech-placeholder-sub">Contour Map Visualization</span>
+          </div>
+        </div>
+        <div class="tech-card-body">
+          <div class="tech-card-num">01</div>
+          <div class="tech-card-title">Autonomous Ground Navigation</div>
+          <div class="tech-card-acronym">TRACE</div>
+          <p class="tech-card-desc">Tracked ground robots that navigate extreme, GPS-denied terrain autonomously. SLAM-based navigation, swarm coordination, and decentralized communications let our robots go where humans can't — and stay there for extended missions.</p>
+        </div>
+      </div>
+
+      <div class="tech-card reveal">
+        <div class="tech-card-image">
+          <div class="tech-placeholder">
+            <span class="tech-placeholder-label">LiDAR Point Cloud</span>
+            <span class="tech-placeholder-sub">Elevation Heatmap</span>
+          </div>
+        </div>
+        <div class="tech-card-body">
+          <div class="tech-card-num">02</div>
+          <div class="tech-card-title">Subsurface Data Acquisition</div>
+          <div class="tech-card-acronym">Multi-Modal Sensing</div>
+          <p class="tech-card-desc">LiDAR, hyperspectral imaging, X-ray fluorescence, and ground-penetrating radar working in concert. Contact-based measurements that only a ground robot can perform — capturing the data that satellites and drones cannot see.</p>
+        </div>
+      </div>
+
+      <div class="tech-card reveal">
+        <div class="tech-card-image">
+          <div class="tech-placeholder">
+            <span class="tech-placeholder-label">Traversability Map</span>
+            <span class="tech-placeholder-sub">Segmented Terrain Analysis</span>
+          </div>
+        </div>
+        <div class="tech-card-body">
+          <div class="tech-card-num">03</div>
+          <div class="tech-card-title">AI-Guided Exploration Intelligence</div>
+          <div class="tech-card-acronym">FiND</div>
+          <p class="tech-card-desc">ML-guided planning, perception, and real-time decision-making. FiND (Field Intelligence for Navigation and Discovery) fuses multi-modal sensor data into actionable intelligence — determining where to go next, what to measure, and why.</p>
+        </div>
+      </div>
+
+      <div class="tech-card reveal">
+        <div class="tech-card-image">
+          <div class="tech-placeholder">
+            <span class="tech-placeholder-label">3D Subsurface Model</span>
+            <span class="tech-placeholder-sub">Risk Map Wireframe</span>
+          </div>
+        </div>
+        <div class="tech-card-body">
+          <div class="tech-card-num">04</div>
+          <div class="tech-card-title">Real-Time 3D Subsurface Modeling</div>
+          <div class="tech-card-acronym">Digital Twin</div>
+          <p class="tech-card-desc">A living 3D subsurface model built in real-time as robots traverse terrain. All sensor data fused into one explorable map. Where to drill is no longer a guess — it's a data-driven decision backed by multi-modal evidence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOLD 5: IMPACT — split layout: vertical infographics left, comparison table right -->
+<section class="impact">
+  <div class="container">
+    <p class="section-tag reveal">The Impact</p>
+    <h2 class="section-heading reveal">Groundbreaking insights. Without breaking the ground.</h2>
+
+    <div class="impact-split">
+      <!-- LEFT: vertical stacked infographics -->
+      <div class="impact-infographics">
+        <!-- 95% Reduction -->
+        <div class="impact-card reveal">
+          <div class="impact-infographic">
+            <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="0" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="24" y="0" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="48" y="0" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="72" y="0" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="96" y="0" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="0" y="20" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="24" y="20" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="48" y="20" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="72" y="20" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="96" y="20" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="0" y="40" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="24" y="40" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="48" y="40" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="72" y="40" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="96" y="40" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="0" y="60" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="24" y="60" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="48" y="60" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="72" y="60" width="20" height="16" rx="1" fill="#00D4FF" opacity="0.25"/>
+              <rect x="96" y="60" width="20" height="16" rx="1" fill="#FF3B30" opacity="0.9"/>
+              <text x="106" y="72" font-family="IBM Plex Mono" font-size="7" fill="#fff" text-anchor="middle" font-weight="600">5%</text>
+            </svg>
+          </div>
+          <div class="impact-stat-content">
+            <div class="impact-stat-number">95%</div>
+            <p class="impact-stat-label">Reduction in human exposure to hazardous exploration environments</p>
+          </div>
+        </div>
+
+        <!-- 5x Faster -->
+        <div class="impact-card reveal">
+          <div class="impact-infographic">
+            <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="60" width="16" height="20" rx="1" fill="#666" opacity="0.3"/>
+              <text x="8" y="56" font-family="IBM Plex Mono" font-size="6" fill="#666" text-anchor="middle">OLD</text>
+              <rect x="24" y="20" width="16" height="60" rx="1" fill="#00D4FF" opacity="0.5"/>
+              <rect x="48" y="20" width="16" height="60" rx="1" fill="#00D4FF" opacity="0.6"/>
+              <rect x="72" y="20" width="16" height="60" rx="1" fill="#00D4FF" opacity="0.7"/>
+              <rect x="96" y="20" width="16" height="60" rx="1" fill="#00D4FF" opacity="0.8"/>
+              <text x="72" y="14" font-family="IBM Plex Mono" font-size="6" fill="#00D4FF" text-anchor="middle">5×</text>
+            </svg>
+          </div>
+          <div class="impact-stat-content">
+            <div class="impact-stat-number">5x</div>
+            <p class="impact-stat-label">Faster time-to-discovery compared to traditional exploration methods</p>
+          </div>
+        </div>
+
+        <!-- 150x Data Density -->
+        <div class="impact-card reveal">
+          <div class="impact-infographic">
+            <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="40" r="6" fill="#666" opacity="0.3"/>
+              <text x="20" y="58" font-family="IBM Plex Mono" font-size="6" fill="#666" text-anchor="middle">1×</text>
+              <line x1="30" y1="40" x2="44" y2="40" stroke="#00D4FF" stroke-width="0.5" opacity="0.3"/>
+              <circle cx="56" cy="40" r="4" fill="#00D4FF" opacity="0.4"/>
+              <circle cx="68" cy="30" r="3" fill="#00D4FF" opacity="0.5"/>
+              <circle cx="74" cy="46" r="5" fill="#00D4FF" opacity="0.6"/>
+              <circle cx="86" cy="34" r="3.5" fill="#00D4FF" opacity="0.7"/>
+              <circle cx="96" cy="44" r="4" fill="#00D4FF" opacity="0.8"/>
+              <circle cx="108" cy="36" r="6" fill="#00D4FF" opacity="0.9"/>
+              <circle cx="62" cy="52" r="2.5" fill="#00D4FF" opacity="0.5"/>
+              <circle cx="80" cy="24" r="2" fill="#00D4FF" opacity="0.6"/>
+              <circle cx="102" cy="54" r="3" fill="#00D4FF" opacity="0.7"/>
+              <text x="82" y="14" font-family="IBM Plex Mono" font-size="6" fill="#00D4FF" text-anchor="middle">150×</text>
+            </svg>
+          </div>
+          <div class="impact-stat-content">
+            <div class="impact-stat-number">150x</div>
+            <p class="impact-stat-label">Improvement in discovery success rate through multi-modal data density</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: comparison table from v5 -->
+      <div class="impact-table-wrap reveal">
+        <h3>Before vs. With Uncharted AI</h3>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="col-before">Before</th>
+              <th class="col-after">With Uncharted AI</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Timeline</td><td class="val-before">12+ years</td><td class="val-after">2–3 years</td></tr>
+            <tr><td>Cost per program</td><td class="val-before">$200M+</td><td class="val-after">$10M</td></tr>
+            <tr><td>Daily coverage</td><td class="val-before">2–5 km²</td><td class="val-after">50+ km²</td></tr>
+            <tr><td>Discovery rate</td><td class="val-before">0.5%</td><td class="val-after">~75%</td></tr>
+            <tr><td>Sensing</td><td class="val-before">Single-modal, manual</td><td class="val-after">Multi-modal, fused</td></tr>
+            <tr><td>Field crew</td><td class="val-before">Large teams, hazardous</td><td class="val-after">Autonomous, zero-risk</td></tr>
+            <tr><td>Drill decisions</td><td class="val-before">Expert intuition</td><td class="val-after">Data-driven targeting</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOLD 6: TEAM — simplified, statement as headline, no cheesy heading -->
+<section class="team" id="team">
+  <div class="container">
+    <p class="section-tag reveal">The Team</p>
+
+    <p class="team-statement reveal">We spent a decade building robots for the hardest environments on Earth — and beyond. NASA missions, DARPA challenges, subterranean worlds where GPS doesn't exist. We saw what autonomous systems could do when the stakes were real.<br><br>With Uncharted, we want to apply the science to solve the next orbit of problems for humanity — <em>Minerals, Space and Defense.</em></p>
+
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-card-image">
+          <img src="images/pradyumna.webp" alt="Pradyumna Vyshnav">
+        </div>
+        <div class="team-card-body">
+          <div class="team-card-name">Pradyumna Vyshnav</div>
+          <div class="team-card-role">CEO &amp; Co-Founder</div>
+          <p class="team-card-bio">M.S. Space Robotics, MIST Lab — Polytechnique Montréal. Built autonomous systems for NASA and Canadian Space Agency missions. Led robotics teams in DARPA Subterranean Challenge.</p>
+          <ul class="team-card-highlights">
+            <li>NASA JPL</li>
+            <li>CSA</li>
+            <li>DARPA SubT</li>
+            <li>MIST Lab</li>
+            <li>IISc ARTPARK</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="team-card reveal">
+        <div class="team-card-image">
+          <img src="images/vivek.webp" alt="Dr. Vivek Varadharajan">
+        </div>
+        <div class="team-card-body">
+          <div class="team-card-name">Dr. Vivek Varadharajan</div>
+          <div class="team-card-role">CTO &amp; Co-Founder</div>
+          <p class="team-card-bio">PhD Field Robotics, Polytechnique Montréal. Former research scientist at NASA JPL CoSTAR team. Published 20+ papers on autonomous navigation, multi-robot systems, and field AI.</p>
+          <ul class="team-card-highlights">
+            <li>NASA JPL CoSTAR</li>
+            <li>DARPA SubT</li>
+            <li>20+ Publications</li>
+            <li>Field Robotics PhD</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOLD 7: CTA + VIDEO BACKGROUND + FOOTER (merged into one section) -->
+<section class="cta-footer">
+  <!-- Video bg with CTA overlay -->
+  <div class="cta-video-bg">
+    <video autoplay muted loop playsinline id="cta-video">
+      <source src="https://lightcyan-quail-720430.hostingersite.com/wp-content/uploads/2025/06/WhatsApp-Video-2025-06-05-at-23.11.28-2.mp4" type="video/mp4">
+    </video>
+    <div class="cta-overlay">
+      <h2 class="section-heading">The future of mineral exploration starts here.</h2>
+      <p class="cta-proof">$300K+ in signed pilot contracts across 3 continents. Winners of $150K at Future Minerals Forum, Riyadh. Backed by Antler &amp; ARTPARK @ IISc.</p>
+      <p class="cta-schedule">
+        <a href="mailto:pradyumna@unchartedai.xyz">Schedule a conversation with our founders →</a>
+      </p>
+      <a href="mailto:pradyumna@unchartedai.xyz" class="btn-primary">Get in Touch</a>
+    </div>
+  </div>
+
+  <!-- Footer addresses below video -->
+  <div class="footer-section">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>Bengaluru, India</h4>
+          <p>WeWork Prestige Cube<br>Site No. 26, Laskar Hosur Road<br>Adugodi, Bengaluru 560030</p>
+          <p style="margin-top: 16px;"><strong>ARTPARK @ IISc</strong><br>Indian Institute of Science<br>Bengaluru 560012</p>
+        </div>
+        <div class="footer-col">
+          <h4>Montréal, Canada</h4>
+          <p>MIST Lab — Polytechnique Montréal<br>2500 Chemin de Polytechnique<br>Montréal, QC H3T 1J4</p>
+        </div>
+        <div class="footer-col">
+          <h4>Get in Touch</h4>
+          <p><strong>Pradyumna Vyshnav</strong>, CEO<br>pradyumna@unchartedai.xyz</p>
+          <a href="mailto:pradyumna@unchartedai.xyz" class="footer-cta-btn" style="margin-top: 16px;">Contact Us</a>
+          <div class="footer-col-links">
+            <a href="#">LinkedIn</a>
+            <a href="#">Twitter / X</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <img src="images/logo.png" alt="Uncharted AI" class="footer-bottom-logo">
+        <span>&copy; 2026 Uncharted AI. All rights reserved.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /.page-content -->
+
+<!-- ============================================================ -->
+<!-- JAVASCRIPT                                                    -->
+<!-- ============================================================ -->
+<script>
+(function() {
+  'use strict';
+
+  // ===== SCROLL REVEAL (IntersectionObserver) =====
+  // Wait for DOM ready, then observe all .reveal elements
+  function initReveal() {
+    var els = document.querySelectorAll('.reveal');
+    if (!els.length) return;
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: '0px 0px -20px 0px'
+    });
+
+    els.forEach(function(el) {
+      observer.observe(el);
+    });
+  }
+
+  // ===== ASCII TERRAIN ANIMATION (Canvas) =====
+  function initAsciiTerrain() {
+    var canvas = document.getElementById('ascii-canvas');
+    if (!canvas) return;
+
+    var ctx = canvas.getContext('2d');
+    var chars = [' ', ' ', ' ', '.', '.', ':', ':', '-', '~', '=', '+', '#'];
+    var t = 0;
+    var raf;
+    var fontLoaded = false;
+
+    function resize() {
+      var hero = canvas.parentElement;
+      canvas.width = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+    }
+
+    function noise(x, y, time) {
+      return (
+        Math.sin(x * 0.03 + time * 0.3) * 0.2 +
+        Math.sin(y * 0.05 + time * 0.2) * 0.2 +
+        Math.sin((x + y) * 0.02 + time * 0.12) * 0.3 +
+        Math.sin(x * 0.06 - y * 0.04 + time * 0.08) * 0.3
+      ) * 0.5 + 0.5;
+    }
+
+    function draw() {
+      if (!canvas.width || !canvas.height) { resize(); }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = '12px "IBM Plex Mono", monospace';
+      ctx.fillStyle = '#00D4FF';
+
+      var cellW = 10;
+      var cellH = 16;
+      var cols = Math.ceil(canvas.width / cellW);
+      var rows = Math.ceil(canvas.height / cellH);
+
+      for (var row = 0; row < rows; row++) {
+        for (var col = 0; col < cols; col++) {
+          var val = noise(col, row, t);
+          var idx = Math.floor(val * (chars.length - 1));
+          var ch = chars[Math.min(idx, chars.length - 1)];
+          if (ch !== ' ') {
+            ctx.globalAlpha = val * 0.5;
+            ctx.fillText(ch, col * cellW, row * cellH);
+          }
+        }
+      }
+
+      t += 0.015;
+      raf = requestAnimationFrame(draw);
+    }
+
+    // Wait for font to load before starting
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function() {
+        resize();
+        draw();
+      });
+    } else {
+      // Fallback: start after short delay
+      setTimeout(function() { resize(); draw(); }, 500);
+    }
+
+    window.addEventListener('resize', function() {
+      resize();
+    });
+
+    // Pause when not visible
+    var heroObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          if (!raf) draw();
+        } else {
+          if (raf) { cancelAnimationFrame(raf); raf = null; }
+        }
+      });
+    }, { threshold: 0 });
+    heroObs.observe(canvas.parentElement);
+  }
+
+  // ===== CTA VIDEO — IntersectionObserver play/pause =====
+  function initVideoObserver() {
+    var video = document.getElementById('cta-video');
+    if (!video) return;
+
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          video.play().catch(function() {});
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.2 });
+    obs.observe(video);
+  }
+
+  // ===== SVG PARALLAX on mouse move =====
+  function initParallax() {
+    var layers = document.querySelectorAll('.parallax-layer');
+    if (!layers.length) return;
+
+    // Only on desktop
+    if (window.innerWidth < 768) return;
+
+    document.addEventListener('mousemove', function(e) {
+      var cx = window.innerWidth / 2;
+      var cy = window.innerHeight / 2;
+      var dx = (e.clientX - cx) / cx;
+      var dy = (e.clientY - cy) / cy;
+
+      layers.forEach(function(layer) {
+        var speed = parseFloat(layer.getAttribute('data-speed')) || 0.01;
+        var tx = dx * speed * 100;
+        var ty = dy * speed * 100;
+        layer.style.transform = 'translate(' + tx + 'px, ' + ty + 'px)';
+      });
+    });
+  }
+
+  // ===== INIT =====
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initReveal();
+      initAsciiTerrain();
+      initVideoObserver();
+      initParallax();
+    });
+  } else {
+    initReveal();
+    initAsciiTerrain();
+    initVideoObserver();
+    initParallax();
+  }
+})();
+</script>
+</body>
+</html>
