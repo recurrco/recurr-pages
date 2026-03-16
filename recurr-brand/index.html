@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>recurr.co — Brand & Design System</title>
+  <meta name="theme-color" content="#E8E6E3">
+  <style>
+    /* ══════════════════════════════════════════
+       RESET & CUSTOM PROPERTIES
+       Fluid everything. clamp() on all measurements.
+       Zero hard breakpoints.
+    ══════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      /* ── Surfaces ── */
+      --gray-paper: #E8E6E3;
+      --whiteboard: #DDDBD8;
+      --notebook: #F4F3F1;
+      --ink: #2A2A2A;
+      --graphite: #555555;
+      --pencil: #888888;
+      --faint: #BDBBB8;
+
+      /* ── Markers ── */
+      --red: #E03E36;
+      --yellow: #F5D547;
+      --yellow-hl: #F5D54750;
+      --blue: #2B6CB0;
+      --green: #3D8C6E;
+
+      /* ── Typography ── */
+      --serif: 'New York', ui-serif, Georgia, Charter, 'Times New Roman', serif;
+      --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, 'Cascadia Code', Consolas, monospace;
+      --sans: -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', sans-serif;
+
+      /* ── Fluid Type Scale ── */
+      --fs-display: clamp(2.5rem, 1.8rem + 3vw, 4.5rem);
+      --fs-h1: clamp(2rem, 1.4rem + 2.5vw, 3.5rem);
+      --fs-h2: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+      --fs-h3: clamp(1.25rem, 1rem + 0.8vw, 1.6rem);
+      --fs-body-lg: clamp(1.05rem, 0.95rem + 0.4vw, 1.3rem);
+      --fs-body: clamp(0.95rem, 0.9rem + 0.2vw, 1.1rem);
+      --fs-small: clamp(0.8rem, 0.75rem + 0.15vw, 0.9rem);
+      --fs-mono-label: clamp(0.6rem, 0.55rem + 0.15vw, 0.7rem);
+
+      /* ── Fluid Spacing ── */
+      --space-xs: clamp(0.5rem, 0.4rem + 0.3vw, 0.75rem);
+      --space-s: clamp(1rem, 0.8rem + 0.6vw, 1.5rem);
+      --space-m: clamp(2rem, 1.5rem + 1.5vw, 3rem);
+      --space-l: clamp(3rem, 2rem + 3vw, 5rem);
+      --space-xl: clamp(4rem, 2.5rem + 5vw, 8rem);
+      --space-2xl: clamp(5rem, 3rem + 6vw, 10rem);
+
+      /* ── Layout ── */
+      --site-margin: clamp(1.5rem, 1rem + 4vw, 5rem);
+      --content-w: 680px;
+      --wide-w: 1080px;
+
+      /* ── Motion ── */
+      --ease-snap: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Selection ── */
+    ::selection {
+      background: var(--yellow-hl);
+      color: var(--ink);
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--faint); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--pencil); }
+    html { scrollbar-color: var(--faint) transparent; }
+
+    /* ── Base ── */
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--serif);
+      background: var(--gray-paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      /* Paper grain — tileable SVG noise at very low opacity */
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    }
+
+    a { color: var(--blue); text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 0.06em; }
+    a:hover { color: var(--ink); }
+
+    /* ══════════════════════════════════════════
+       NAV — Backdrop blur, serif logo, mono links
+    ══════════════════════════════════════════ */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(232, 230, 227, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .nav-inner {
+      max-width: var(--wide-w);
+      margin: 0 auto;
+      padding: 0 var(--site-margin);
+      height: clamp(3rem, 2.5rem + 1.5vw, 4rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 0.9rem + 0.4vw, 1.3rem);
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.03em;
+    }
+
+    .nav-links { display: flex; gap: clamp(1rem, 0.8rem + 1vw, 2rem); }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: var(--fs-mono-label);
+      font-weight: 400;
+      color: var(--pencil);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: lowercase;
+      transition: color 0.2s var(--ease-snap);
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ══════════════════════════════════════════
+       SECTIONS — Generous spacing
+    ══════════════════════════════════════════ */
+    .section {
+      max-width: var(--wide-w);
+      margin: 0 auto;
+      padding: var(--space-xl) var(--site-margin);
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: var(--fs-mono-label);
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-s);
+    }
+
+    .divider {
+      max-width: var(--wide-w);
+      margin: 0 auto;
+      padding: 0 var(--site-margin);
+    }
+    .divider-line { border: none; height: 2px; background: var(--ink); }
+    .divider-line.thin { height: 1px; background: var(--faint); }
+
+    /* ══════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════ */
+    .hero {
+      max-width: var(--wide-w);
+      margin: 0 auto;
+      padding: var(--space-2xl) var(--site-margin) var(--space-xl);
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: var(--fs-display);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      max-width: 14ch;
+    }
+
+    .hero h1 .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(clamp(12px, 1vw, 24px));
+      transition: opacity 0.6s var(--ease-snap), transform 0.6s var(--ease-snap);
+    }
+
+    .hero h1 .word.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-underline {
+      display: block;
+      width: 0;
+      height: 4px;
+      background: var(--red);
+      margin-top: var(--space-xs);
+      transition: width 0.8s var(--ease-snap);
+    }
+
+    .hero-underline.drawn { width: clamp(180px, 20vw, 320px); }
+
+    .hero-sub {
+      margin-top: var(--space-m);
+      font-family: var(--serif);
+      font-size: var(--fs-body-lg);
+      font-style: italic;
+      color: var(--graphite);
+      max-width: 38ch;
+      line-height: 1.55;
+    }
+
+    .hero-meta {
+      margin-top: var(--space-s);
+      font-family: var(--mono);
+      font-size: var(--fs-mono-label);
+      color: var(--pencil);
+      letter-spacing: 0.08em;
+    }
+
+    /* ══════════════════════════════════════════
+       COLOR PALETTE
+    ══════════════════════════════════════════ */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(clamp(120px, 10vw, 180px), 1fr));
+      gap: var(--space-s);
+      margin-top: var(--space-s);
+    }
+
+    .color-swatch {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .swatch-block {
+      height: clamp(48px, 5vw, 72px);
+      border: 2px solid var(--ink);
+    }
+
+    .swatch-block.no-border { border-color: var(--faint); }
+
+    .swatch-name {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .swatch-hex {
+      font-family: var(--mono);
+      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.65rem);
+      color: var(--pencil);
+    }
+
+    /* ══════════════════════════════════════════
+       TYPOGRAPHY SHOWCASE
+    ══════════════════════════════════════════ */
+    .type-demo { margin-top: var(--space-m); }
+
+    .type-specimen {
+      margin-bottom: var(--space-l);
+    }
+
+    .type-specimen-label {
+      font-family: var(--mono);
+      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.65rem);
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-xs);
+    }
+
+    .type-serif-display {
+      font-family: var(--serif);
+      font-size: var(--fs-h1);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .type-serif-body {
+      font-family: var(--serif);
+      font-size: var(--fs-body-lg);
+      line-height: 1.65;
+      color: var(--graphite);
+      max-width: var(--content-w);
+      margin-top: var(--space-xs);
+    }
+
+    .type-mono-block {
+      font-family: var(--mono);
+      font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.9rem);
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--whiteboard);
+      border: 2px solid var(--ink);
+      padding: var(--space-s);
+      margin-top: var(--space-xs);
+      max-width: var(--content-w);
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    .highlight-demo {
+      background: var(--yellow-hl);
+      padding: 1px 4px;
+    }
+
+    .underline-demo {
+      text-decoration: underline;
+      text-decoration-color: var(--red);
+      text-underline-offset: 0.15em;
+      text-decoration-thickness: 2.5px;
+    }
+
+    .marginalia {
+      font-family: var(--mono);
+      font-size: clamp(0.6rem, 0.55rem + 0.1vw, 0.7rem);
+      color: var(--red);
+      margin-top: 4px;
+    }
+
+    /* ══════════════════════════════════════════
+       ASCII SECTION — Dark background
+    ══════════════════════════════════════════ */
+    .ascii-section {
+      background: var(--ink);
+      padding: var(--space-xl) 0;
+    }
+
+    .ascii-inner {
+      max-width: var(--wide-w);
+      margin: 0 auto;
+      padding: 0 var(--site-margin);
+    }
+
+    .ascii-section .section-label { color: var(--yellow); }
+
+    .ascii-desc {
+      font-family: var(--serif);
+      font-size: var(--fs-body-lg);
+      font-style: italic;
+      color: var(--faint);
+      max-width: 50ch;
+      line-height: 1.55;
+      margin-bottom: var(--space-m);
+    }
+
+    .ascii-canvas {
+      font-family: var(--mono);
+      font-size: clamp(0.7rem, 0.6rem + 0.3vw, 0.85rem);
+      line-height: 1.45;
+      color: var(--gray-paper);
+      white-space: pre;
+      overflow-x: auto;
+      padding: var(--space-s);
+      background: #353533;
+      border: 2px solid #555;
+      min-height: 200px;
+    }
+
+    .ascii-canvas .char {
+      opacity: 0;
+      transition: opacity 0.05s;
+    }
+    .ascii-canvas .char.visible { opacity: 1; }
+
+    .ascii-note {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--pencil);
+      margin-top: var(--space-s);
+      font-style: italic;
+    }
+
+    /* ══════════════════════════════════════════
+       SAMPLE CARDS
+    ══════════════════════════════════════════ */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(clamp(260px, 22vw, 340px), 1fr));
+      gap: var(--space-s);
+      margin-top: var(--space-s);
+    }
+
+    .card {
+      background: var(--whiteboard);
+      border: 2px solid var(--ink);
+      padding: clamp(1.2rem, 1rem + 0.8vw, 1.8rem);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s var(--ease-snap), transform 0.5s var(--ease-snap);
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card-pillar {
+      font-family: var(--mono);
+      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.65rem);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .card-title {
+      font-family: var(--serif);
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .card-rule {
+      width: clamp(80px, 40%, 160px);
+      height: 3px;
+    }
+
+    .card-excerpt {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      line-height: 1.55;
+    }
+
+    .card-meta {
+      font-family: var(--mono);
+      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.6rem);
+      color: var(--pencil);
+      margin-top: auto;
+    }
+
+    /* ══════════════════════════════════════════
+       ANIMATION PRINCIPLES
+    ══════════════════════════════════════════ */
+    .anim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 18vw, 300px), 1fr));
+      gap: var(--space-s);
+      margin-top: var(--space-s);
+    }
+
+    .anim-card {
+      background: var(--whiteboard);
+      border: 2px solid var(--ink);
+      padding: var(--space-s);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .anim-card-title {
+      font-family: var(--mono);
+      font-size: clamp(0.75rem, 0.7rem + 0.15vw, 0.85rem);
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .anim-card-desc {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      line-height: 1.5;
+    }
+
+    .anim-demo {
+      height: clamp(48px, 4vw, 64px);
+      background: #353533;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: clamp(0.6rem, 0.55rem + 0.1vw, 0.7rem);
+      color: var(--gray-paper);
+      overflow: hidden;
+    }
+
+    /* ══════════════════════════════════════════
+       SPACING DEMO
+    ══════════════════════════════════════════ */
+    .spacing-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: var(--space-s);
+    }
+
+    .spacing-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .spacing-bar {
+      height: clamp(20px, 2vw, 28px);
+      background: var(--red);
+      opacity: 0.25;
+      transition: opacity 0.3s, width 0.6s var(--ease-snap);
+    }
+
+    .spacing-row:hover .spacing-bar { opacity: 0.6; }
+
+    .spacing-label {
+      font-family: var(--mono);
+      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.65rem);
+      color: var(--pencil);
+      white-space: nowrap;
+      min-width: 80px;
+    }
+
+    .spacing-value {
+      font-family: var(--mono);
+      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.6rem);
+      color: var(--faint);
+      white-space: nowrap;
+    }
+
+    /* ══════════════════════════════════════════
+       LOTTIE PLACEHOLDER
+    ══════════════════════════════════════════ */
+    .lottie-area {
+      background: var(--notebook);
+      border: 2px dashed var(--faint);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: clamp(160px, 15vw, 240px);
+      margin-top: var(--space-s);
+    }
+
+    .lottie-placeholder {
+      font-family: var(--mono);
+      font-size: var(--fs-small);
+      color: var(--pencil);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    footer {
+      border-top: 2px solid var(--ink);
+      padding: var(--space-l) 0;
+      margin-top: var(--space-xl);
+    }
+
+    .footer-inner {
+      max-width: var(--wide-w);
+      margin: 0 auto;
+      padding: 0 var(--site-margin);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .footer-entity {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .footer-location {
+      font-family: var(--mono);
+      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.65rem);
+      color: var(--pencil);
+      margin-top: 4px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: var(--space-s);
+    }
+
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: clamp(0.55rem, 0.5rem + 0.1vw, 0.65rem);
+      color: var(--pencil);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover { color: var(--ink); }
+
+    /* ══════════════════════════════════════════
+       REDUCED MOTION
+    ══════════════════════════════════════════ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .hero h1 .word { opacity: 1; transform: none; }
+      .hero-underline { width: clamp(180px, 20vw, 320px); }
+      .card { opacity: 1; transform: none; }
+      .ascii-canvas .char { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════ NAV ════════ -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/recurr-brand/" class="nav-logo">recurr</a>
+      <div class="nav-links">
+        <a href="#palette">palette</a>
+        <a href="#typography">type</a>
+        <a href="#ascii">ascii</a>
+        <a href="#cards">cards</a>
+        <a href="#animation">motion</a>
+        <a href="#spacing">spacing</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════════ HERO ════════ -->
+  <section class="hero">
+    <h1 id="hero-headline">What if a whiteboard got published as a magazine?</h1>
+    <div class="hero-underline" id="hero-underline"></div>
+    <p class="hero-sub">The design system for recurr.co. A practitioner's publication where the thinking stays raw, the presentation is magazine-grade, and the technology underneath is quietly, absurdly sophisticated.</p>
+    <p class="hero-meta">DESIGN SYSTEM &middot; MARCH 2026 &middot; v2</p>
+  </section>
+
+  <div class="divider"><hr class="divider-line"></div>
+
+  <!-- ════════ COLOR PALETTE ════════ -->
+  <section class="section" id="palette">
+    <p class="section-label">Palette &mdash; Whiteboard markers on gray paper</p>
+
+    <p style="font-family:var(--serif);font-size:var(--fs-body);color:var(--graphite);max-width:var(--content-w);line-height:1.6;margin-bottom:var(--space-m);">
+      The base is gray paper. Not warm cream, not clinical white. Cards sit on whiteboard surfaces. The accent system is a set of markers &mdash; red for emphasis, yellow for highlights, blue for links, green for status. Black for bold strokes.
+    </p>
+
+    <p style="font-family:var(--mono);font-size:var(--fs-mono-label);color:var(--pencil);letter-spacing:0.08em;margin-bottom:var(--space-xs);">SURFACES</p>
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="swatch-block no-border" style="background:var(--gray-paper)"></div>
+        <span class="swatch-name">Gray Paper</span>
+        <span class="swatch-hex">#E8E6E3 &mdash; page background</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block no-border" style="background:var(--whiteboard)"></div>
+        <span class="swatch-name">Whiteboard</span>
+        <span class="swatch-hex">#DDDBD8 &mdash; cards, callouts</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block no-border" style="background:var(--notebook)"></div>
+        <span class="swatch-name">Notebook Page</span>
+        <span class="swatch-hex">#F4F3F1 &mdash; reading surface</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:var(--ink)"></div>
+        <span class="swatch-name">Dry-Erase Ink</span>
+        <span class="swatch-hex">#2A2A2A &mdash; text, strokes</span>
+      </div>
+    </div>
+
+    <p style="font-family:var(--mono);font-size:var(--fs-mono-label);color:var(--pencil);letter-spacing:0.08em;margin-top:var(--space-m);margin-bottom:var(--space-xs);">MARKERS</p>
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:var(--red)"></div>
+        <span class="swatch-name">Red Marker</span>
+        <span class="swatch-hex">#E03E36 &mdash; underlines, emphasis</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:var(--yellow)"></div>
+        <span class="swatch-name">Yellow Highlighter</span>
+        <span class="swatch-hex">#F5D547 &mdash; highlights, key phrases</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:var(--blue)"></div>
+        <span class="swatch-name">Blue Marker</span>
+        <span class="swatch-hex">#2B6CB0 &mdash; links, annotations</span>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-block" style="background:var(--green)"></div>
+        <span class="swatch-name">Green Marker</span>
+        <span class="swatch-hex">#3D8C6E &mdash; active, success</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><hr class="divider-line thin"></div>
+
+  <!-- ════════ TYPOGRAPHY ════════ -->
+  <section class="section" id="typography">
+    <p class="section-label">Typography &mdash; Serif is the voice. Mono is the thinking.</p>
+
+    <div class="type-demo">
+      <div class="type-specimen">
+        <p class="type-specimen-label">Primary &mdash; Serif (New York &rarr; Georgia &rarr; Charter)</p>
+        <p class="type-serif-display">Research, essays and<br>field notes for <span class="underline-demo">B2B teams</span>.</p>
+        <p class="type-serif-body">
+          Practitioner-led writing on positioning, GTM, and building service businesses. By operators who've done the work, not pundits who comment on it. Every article is a whiteboard session, <span class="highlight-demo">art-directed and published</span>.
+        </p>
+        <p class="marginalia">&larr; yellow highlight = key insight. red underline = emphasis.</p>
+      </div>
+
+      <div class="type-specimen">
+        <p class="type-specimen-label">Secondary &mdash; Mono (SF Mono &rarr; Menlo &rarr; Consolas)</p>
+        <div class="type-mono-block">FONT STACK    ui-monospace, 'SF Mono', Menlo, Consolas
+USAGE         labels, metadata, ASCII, data, code
+WEIGHT        400 regular, 700 bold
+ROLE          the whiteboard marker
+
+Pratik Mishra  &middot;  Mar 14, 2026  &middot;  Positioning
+─────────────────────────────────────────────</div>
+      </div>
+
+      <div class="type-specimen">
+        <p class="type-specimen-label">Tertiary &mdash; Sans (SF Pro &rarr; system-ui &rarr; Segoe UI)</p>
+        <p style="font-family:var(--sans);font-size:var(--fs-body);color:var(--graphite);max-width:var(--content-w);line-height:1.6;">
+          Used only for navigation, buttons, and UI chrome. Supporting role. The serif and mono do the talking. Sans stays invisible.
+        </p>
+      </div>
+    </div>
+
+    <!-- Fluid type scale demo -->
+    <p class="type-specimen-label" style="margin-top:var(--space-m)">Fluid Type Scale &mdash; clamp() everywhere</p>
+    <div style="display:flex;flex-direction:column;gap:var(--space-xs);margin-top:var(--space-xs)">
+      <p style="font-family:var(--serif);font-size:var(--fs-display);font-weight:700;color:var(--ink);letter-spacing:-0.03em;line-height:1.05">Display</p>
+      <p style="font-family:var(--serif);font-size:var(--fs-h1);font-weight:700;color:var(--ink);letter-spacing:-0.02em;line-height:1.1">Heading 1</p>
+      <p style="font-family:var(--serif);font-size:var(--fs-h2);font-weight:700;color:var(--ink);line-height:1.15">Heading 2</p>
+      <p style="font-family:var(--serif);font-size:var(--fs-h3);font-weight:700;color:var(--ink);line-height:1.2">Heading 3</p>
+      <p style="font-family:var(--serif);font-size:var(--fs-body-lg);color:var(--graphite);line-height:1.55">Body Large &mdash; for lead paragraphs and introductions</p>
+      <p style="font-family:var(--serif);font-size:var(--fs-body);color:var(--graphite);line-height:1.6">Body &mdash; for article text and descriptions</p>
+      <p style="font-family:var(--mono);font-size:var(--fs-mono-label);color:var(--pencil);letter-spacing:0.08em">MONO LABEL &mdash; METADATA, TAGS, SECTION HEADERS</p>
+    </div>
+  </section>
+
+  <!-- ════════ ASCII / TECH ════════ -->
+  <div class="ascii-section" id="ascii">
+    <div class="ascii-inner">
+      <p class="section-label">The Whiteboard Layer &mdash; Where tech meets thinking</p>
+      <p class="ascii-desc">This is what makes the site feel alive. ASCII diagrams that assemble character-by-character on scroll. Pure JavaScript. No libraries. Under 2KB. You can feel something is different. You can't explain what. That's craft.</p>
+
+      <div class="ascii-canvas" id="ascii-art"></div>
+      <p class="ascii-note">Scroll-triggered. Each character appears individually. Frameworks rendered in monospace. The whiteboard, digitized.</p>
+
+      <!-- Lottie placeholder -->
+      <div class="lottie-area" style="margin-top:var(--space-m)">
+        <div class="lottie-placeholder">
+          LOTTIE MICRO-STORY<br>
+          One per page. A pen sketching a framework.<br>
+          A marker circling a word. Plays once on scroll.<br>
+          <span style="color:var(--faint)">&mdash; slot for .json animation file &mdash;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><hr class="divider-line"></div>
+
+  <!-- ════════ SAMPLE CARDS ════════ -->
+  <section class="section" id="cards">
+    <p class="section-label">Sample &mdash; How an article card feels</p>
+    <p style="font-family:var(--serif);font-size:var(--fs-body);color:var(--graphite);max-width:var(--content-w);line-height:1.6;margin-bottom:var(--space-xs)">
+      Bold 2px borders. Marker-colored pillar labels. Serif titles. Mono metadata. Each card's topic gets its own marker color. Cards enter on scroll with GSAP-style staggered reveal.
+    </p>
+
+    <div class="card-grid">
+      <div class="card" data-reveal>
+        <span class="card-pillar" style="color:var(--red)">POSITIONING</span>
+        <span class="card-title">The Adoption Chasm</span>
+        <div class="card-rule" style="background:var(--red)"></div>
+        <span class="card-excerpt">Why 88% of enterprises experiment with AI but only 5.5% transform. A framework for crossing the gap between experimentation and transformation.</span>
+        <span class="card-meta">Pratik Mishra &middot; Mar 14, 2026</span>
+      </div>
+
+      <div class="card" data-reveal>
+        <span class="card-pillar" style="color:var(--blue)">GTM</span>
+        <span class="card-title">Your First PMM Hire is Wrong.</span>
+        <div class="card-rule" style="background:var(--blue)"></div>
+        <span class="card-excerpt">The default B2B playbook says hire a PMM at Series A. But the job description you wrote is actually three different jobs.</span>
+        <span class="card-meta">Pratik Mishra &middot; Mar 12, 2026</span>
+      </div>
+
+      <div class="card" data-reveal>
+        <span class="card-pillar" style="color:var(--green)">AI & NEW STACK</span>
+        <span class="card-title">SCADA Meets LLMs</span>
+        <div class="card-rule" style="background:var(--green)"></div>
+        <span class="card-excerpt">The $24B renewable energy analytics market still runs on dashboards designed for gas turbines. One company is rebuilding from the sensor up.</span>
+        <span class="card-meta">Pratik Mishra &middot; Mar 1, 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><hr class="divider-line thin"></div>
+
+  <!-- ════════ ANIMATION PRINCIPLES ════════ -->
+  <section class="section" id="animation">
+    <p class="section-label">Motion &mdash; Three layers, all lightweight</p>
+    <p style="font-family:var(--serif);font-size:var(--fs-body);color:var(--graphite);max-width:var(--content-w);line-height:1.6;margin-bottom:var(--space-xs)">
+      Every animation serves structure, not decoration. Custom easing <span style="font-family:var(--mono);font-size:0.85em;color:var(--pencil)">cubic-bezier(0.16, 1, 0.3, 1)</span> &mdash; fast snap, then float. prefers-reduced-motion kills everything.
+    </p>
+
+    <div class="anim-grid">
+      <div class="anim-card">
+        <div class="anim-demo" id="ascii-ticker"></div>
+        <span class="anim-card-title">ASCII self-draw</span>
+        <span class="anim-card-desc">Diagrams assemble character-by-character on scroll. Pure JS. &lt;2KB. No libraries. The signature differentiator.</span>
+      </div>
+      <div class="anim-card">
+        <div class="anim-demo" id="gsap-demo">
+          <span style="opacity:0.4">sections enter &rarr; headlines underline &rarr; highlights fade</span>
+        </div>
+        <span class="anim-card-title">GSAP scroll reveals</span>
+        <span class="anim-card-desc">ScrollTrigger for section entrance. Line-by-line text reveals. Underlines that draw themselves. ~30KB gzipped.</span>
+      </div>
+      <div class="anim-card">
+        <div class="anim-demo">
+          <span style="opacity:0.4">pen sketches &middot; marker circles &middot; page turns</span>
+        </div>
+        <span class="anim-card-title">Lottie micro-stories</span>
+        <span class="anim-card-desc">One per page, max. A pen drawing a line. A marker circling a word. Scroll-triggered, plays once. ~30KB.</span>
+      </div>
+      <div class="anim-card">
+        <div class="anim-demo" id="parallax-demo">
+          <span style="opacity:0.4">paper grain shifts at 0.95x scroll rate</span>
+        </div>
+        <span class="anim-card-title">Paper texture parallax</span>
+        <span class="anim-card-desc">Gray paper grain moves at a slightly different rate than content. Physical depth. Barely perceptible. Subconscious.</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><hr class="divider-line thin"></div>
+
+  <!-- ════════ SPACING ════════ -->
+  <section class="section" id="spacing">
+    <p class="section-label">Spacing &mdash; Whitespace is the design</p>
+    <p style="font-family:var(--serif);font-size:var(--fs-body);color:var(--graphite);max-width:var(--content-w);line-height:1.6;margin-bottom:var(--space-xs)">
+      Every value is fluid. 2&ndash;3x what most sites use. Site margins go from 24px on mobile to 80px on desktop. Section padding is minimum 64px. When in doubt, add more space. Resize your browser to see these bars respond.
+    </p>
+
+    <div class="spacing-bars">
+      <div class="spacing-row">
+        <span class="spacing-label">--space-xs</span>
+        <div class="spacing-bar" style="width:var(--space-xs)"></div>
+        <span class="spacing-value">clamp(0.5rem, 0.4rem + 0.3vw, 0.75rem)</span>
+      </div>
+      <div class="spacing-row">
+        <span class="spacing-label">--space-s</span>
+        <div class="spacing-bar" style="width:var(--space-s)"></div>
+        <span class="spacing-value">clamp(1rem, 0.8rem + 0.6vw, 1.5rem)</span>
+      </div>
+      <div class="spacing-row">
+        <span class="spacing-label">--space-m</span>
+        <div class="spacing-bar" style="width:var(--space-m)"></div>
+        <span class="spacing-value">clamp(2rem, 1.5rem + 1.5vw, 3rem)</span>
+      </div>
+      <div class="spacing-row">
+        <span class="spacing-label">--space-l</span>
+        <div class="spacing-bar" style="width:var(--space-l)"></div>
+        <span class="spacing-value">clamp(3rem, 2rem + 3vw, 5rem)</span>
+      </div>
+      <div class="spacing-row">
+        <span class="spacing-label">--space-xl</span>
+        <div class="spacing-bar" style="width:var(--space-xl)"></div>
+        <span class="spacing-value">clamp(4rem, 2.5rem + 5vw, 8rem)</span>
+      </div>
+      <div class="spacing-row">
+        <span class="spacing-label">--space-2xl</span>
+        <div class="spacing-bar" style="width:var(--space-2xl)"></div>
+        <span class="spacing-value">clamp(5rem, 3rem + 6vw, 10rem)</span>
+      </div>
+      <div class="spacing-row">
+        <span class="spacing-label">--site-margin</span>
+        <div class="spacing-bar" style="width:var(--site-margin);background:var(--blue);opacity:0.3"></div>
+        <span class="spacing-value">clamp(1.5rem, 1rem + 4vw, 5rem)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FOOTER ════════ -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <p class="footer-entity">Recurr Studio Private Limited</p>
+        <p class="footer-location">Bengaluru, India</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">linkedin</a>
+        <a href="#">twitter</a>
+        <a href="#">subscribe</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════
+       SCRIPTS — All animation logic
+  ══════════════════════════════════════════ -->
+  <script>
+    // ── Hero: Word-by-word staggered reveal ──
+    (function() {
+      const h1 = document.getElementById('hero-headline');
+      const text = h1.textContent;
+      h1.innerHTML = '';
+      const words = text.split(' ');
+      words.forEach((word, i) => {
+        const span = document.createElement('span');
+        span.className = 'word';
+        span.textContent = word;
+        span.style.transitionDelay = (i * 80) + 'ms';
+        h1.appendChild(span);
+        if (i < words.length - 1) h1.appendChild(document.createTextNode(' '));
+      });
+
+      // Trigger after paint
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          document.querySelectorAll('.hero h1 .word').forEach(w => w.classList.add('visible'));
+          document.getElementById('hero-underline').classList.add('drawn');
+        });
+      });
+    })();
+
+    // ── ASCII self-draw animation ──
+    (function() {
+      const ascii = `
+  ╭──────────────────────────────────────────╮
+  │                                          │
+  │    buyer ────────────── product           │
+  │      │                    │              │
+  │      ├── job to be done ──┤              │
+  │      │       ↕            │              │
+  │      ├── context ─────────┤              │
+  │      │       ↕            │              │
+  │      ├── signal ──────────┤              │
+  │      │                    │              │
+  │      └──── match score ───┘              │
+  │                                          │
+  │    ░░░░░░░░░░░░████████████░░  72%       │
+  │                                          │
+  │    RECURR S3 INTELLIGENCE ENGINE         │
+  │    search. sort. select.                 │
+  │                                          │
+  ╰──────────────────────────────────────────╯`;
+
+      const canvas = document.getElementById('ascii-art');
+      const chars = ascii.split('');
+      let html = '';
+      chars.forEach((c, i) => {
+        if (c === '\n') {
+          html += '\n';
+        } else if (c === ' ') {
+          html += ' ';
+        } else {
+          html += `<span class="char" data-i="${i}">${c.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</span>`;
+        }
+      });
+      canvas.innerHTML = html;
+
+      let drawn = false;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !drawn) {
+            drawn = true;
+            const spans = canvas.querySelectorAll('.char');
+            spans.forEach((span, i) => {
+              setTimeout(() => span.classList.add('visible'), i * 4);
+            });
+          }
+        });
+      }, { threshold: 0.3 });
+      observer.observe(canvas);
+    })();
+
+    // ── Card staggered reveal ──
+    (function() {
+      const cards = document.querySelectorAll('[data-reveal]');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            const card = entry.target;
+            const siblings = Array.from(card.parentElement.children);
+            const index = siblings.indexOf(card);
+            setTimeout(() => card.classList.add('visible'), index * 120);
+            observer.unobserve(card);
+          }
+        });
+      }, { threshold: 0.15 });
+      cards.forEach(card => observer.observe(card));
+    })();
+
+    // ── ASCII ticker in animation demo ──
+    (function() {
+      const el = document.getElementById('ascii-ticker');
+      if (!el) return;
+      const frames = [
+        '│ ░░░░░░░░░░ │',
+        '│ ▓░░░░░░░░░ │',
+        '│ ▓▓░░░░░░░░ │',
+        '│ ▓▓▓░░░░░░░ │',
+        '│ ▓▓▓▓░░░░░░ │',
+        '│ ▓▓▓▓▓░░░░░ │',
+        '│ ▓▓▓▓▓▓░░░░ │',
+        '│ ▓▓▓▓▓▓▓░░░ │',
+        '│ ▓▓▓▓▓▓▓▓░░ │',
+        '│ ▓▓▓▓▓▓▓▓▓░ │',
+        '│ ▓▓▓▓▓▓▓▓▓▓ │',
+        '│ ████████████ │',
+      ];
+      let i = 0;
+      setInterval(() => {
+        el.textContent = frames[i % frames.length];
+        i++;
+      }, 200);
+    })();
+  </script>
+
+</body>
+</html>
