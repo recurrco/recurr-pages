@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Recurr — Research, essays and field notes for B2B teams</title>
+  <meta name="description" content="Research, essays and field notes for B2B teams. By practitioners, not pundits.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --serif: 'Newsreader', 'New York', Georgia, 'Times New Roman', serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+      --text: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --text-muted: #999;
+      --bg: #faf9f7;
+      --surface: #fff;
+      --border: #e5e5e5;
+      --accent: #1d1d1f;
+      --accent-subtle: #f5f5f0;
+      --highlight: #fff8e1;
+      --max-w: 680px;
+      --max-w-wide: 1080px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      /* paper grain texture */
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 249, 247, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: var(--max-w-wide);
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-search {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    .nav-search:hover { border-color: var(--text-secondary); }
+
+    .nav-search svg { width: 14px; height: 14px; color: var(--text-secondary); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 80px 32px 48px;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: 42px;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      max-width: 560px;
+    }
+
+    .hero p {
+      margin-top: 16px;
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 480px;
+    }
+
+    /* ── Pillars ── */
+    .pillars {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px 48px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      text-decoration: none;
+      transition: all 0.15s;
+      background: var(--surface);
+    }
+
+    .pill:hover {
+      border-color: var(--text);
+      color: var(--text);
+    }
+
+    .pill.active {
+      background: var(--text);
+      color: var(--surface);
+      border-color: var(--text);
+    }
+
+    /* ── Divider ── */
+    .divider {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    .divider hr {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Content Feed ── */
+    .feed {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 32px 32px 80px;
+    }
+
+    .feed-section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .feed-item {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      display: block;
+      transition: background 0.15s;
+    }
+
+    .feed-item:first-of-type { padding-top: 0; }
+
+    .feed-item:hover { background: transparent; }
+
+    .feed-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .feed-pillar {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .feed-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .feed-date {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .feed-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--text);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .feed-item:hover .feed-title { text-decoration: underline; text-underline-offset: 3px; }
+
+    .feed-excerpt {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      max-width: 560px;
+    }
+
+    .feed-author {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .feed-author strong {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* ── Featured (first article) ── */
+    .featured {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 48px 32px;
+    }
+
+    .featured-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .featured-card {
+      display: block;
+      text-decoration: none;
+      padding: 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: border-color 0.2s;
+    }
+
+    .featured-card:hover { border-color: var(--text-secondary); }
+
+    .featured-card .feed-pillar { margin-bottom: 12px; }
+
+    .featured-card .feed-title {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .featured-card .feed-excerpt {
+      font-size: 15px;
+      max-width: 100%;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 32px;
+    }
+
+    .footer-inner {
+      max-width: var(--max-w-wide);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .footer-left p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .footer-left .footer-entity {
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── Mobile ── */
+    @media (max-width: 640px) {
+      .nav-inner { padding: 0 20px; }
+      .nav-links { gap: 20px; }
+      .hero { padding: 48px 20px 32px; }
+      .hero h1 { font-size: 32px; }
+      .pillars { padding: 0 20px 32px; }
+      .featured { padding: 32px 20px; }
+      .featured-card { padding: 24px; }
+      .featured-card .feed-title { font-size: 22px; }
+      .feed { padding: 24px 20px 60px; }
+      .feed-title { font-size: 19px; }
+      .divider { padding: 0 20px; }
+      footer { padding: 32px 20px; }
+      .footer-inner { flex-direction: column; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/recurr-co/" class="nav-logo">recurr</a>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <button class="nav-search" aria-label="Search">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <div class="nav-links">
+          <a href="/recurr-co-studio/">studio</a>
+          <a href="/recurr-co-events/">events</a>
+          <a href="#">subscribe</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Research, essays and field notes for B2B teams.</h1>
+    <p>Practitioner-led writing on positioning, GTM, and building software companies. By operators, not pundits.</p>
+  </section>
+
+  <!-- Pillars -->
+  <div class="pillars">
+    <a href="#" class="pill active">All</a>
+    <a href="#" class="pill">Positioning</a>
+    <a href="#" class="pill">GTM</a>
+    <a href="#" class="pill">Content & Distribution</a>
+    <a href="#" class="pill">PLG</a>
+    <a href="#" class="pill">SaaS Intelligence</a>
+    <a href="#" class="pill">AI & New Stack</a>
+  </div>
+
+  <!-- Featured -->
+  <section class="featured">
+    <div class="featured-label">Featured</div>
+    <a href="#" class="featured-card">
+      <div class="feed-pillar">Positioning</div>
+      <div class="feed-title">The Adoption Chasm: Why 88% of Enterprises Experiment with AI but Only 5.5% Transform</div>
+      <div class="feed-excerpt">Most enterprises treat AI like a feature. The ones that win treat it like a reorganization. A framework for crossing the gap between experimentation and transformation.</div>
+      <div class="feed-author">By <strong>Pratik Mishra</strong> &middot; Mar 14, 2026</div>
+    </a>
+  </section>
+
+  <div class="divider"><hr></div>
+
+  <!-- Feed -->
+  <section class="feed">
+    <div class="feed-section-label">Latest</div>
+
+    <a href="#" class="feed-item">
+      <div class="feed-meta">
+        <span class="feed-pillar">GTM</span>
+        <span class="feed-dot"></span>
+        <span class="feed-date">Mar 12, 2026</span>
+      </div>
+      <div class="feed-title">Your First PMM Hire is Wrong. Here's What to Do Instead.</div>
+      <div class="feed-excerpt">The default B2B playbook says hire a PMM at Series A. But the job description you wrote is actually three different jobs. A breakdown of what early-stage companies actually need.</div>
+      <div class="feed-author">By <strong>Pratik Mishra</strong></div>
+    </a>
+
+    <a href="#" class="feed-item">
+      <div class="feed-meta">
+        <span class="feed-pillar">Content & Distribution</span>
+        <span class="feed-dot"></span>
+        <span class="feed-date">Mar 10, 2026</span>
+      </div>
+      <div class="feed-title">The Content Studio SOP: Six Phases from Intake to Production</div>
+      <div class="feed-excerpt">How we run content marketing engagements at Recurr. The system behind the system. Discovery, intelligence, strategy, execution, delivery, review.</div>
+      <div class="feed-author">By <strong>Pratik Mishra</strong></div>
+    </a>
+
+    <a href="#" class="feed-item">
+      <div class="feed-meta">
+        <span class="feed-pillar">SaaS Intelligence</span>
+        <span class="feed-dot"></span>
+        <span class="feed-date">Mar 8, 2026</span>
+      </div>
+      <div class="feed-title">Marketing Analytics in 2026: The Landscape After Attribution Died</div>
+      <div class="feed-excerpt">Clarisights, Lifesight, Northbeam, Triple Whale. A category map of what's actually happening in marketing analytics after iOS 14 rewrote the rules.</div>
+      <div class="feed-author">By <strong>Pratik Mishra</strong> &amp; <strong>Arun Srinivasan</strong></div>
+    </a>
+
+    <a href="#" class="feed-item">
+      <div class="feed-meta">
+        <span class="feed-pillar">PLG</span>
+        <span class="feed-dot"></span>
+        <span class="feed-date">Mar 5, 2026</span>
+      </div>
+      <div class="feed-title">The Canteen Thesis: Why Workplace F&B is a Software Problem</div>
+      <div class="feed-excerpt">Office food sucks because the ordering layer is broken, not because kitchens are bad. What happens when you treat it as a B2B2C platform problem.</div>
+      <div class="feed-author">By <strong>Ankita Sharma</strong> &amp; <strong>Pratik Mishra</strong></div>
+    </a>
+
+    <a href="#" class="feed-item">
+      <div class="feed-meta">
+        <span class="feed-pillar">AI & New Stack</span>
+        <span class="feed-dot"></span>
+        <span class="feed-date">Mar 1, 2026</span>
+      </div>
+      <div class="feed-title">SCADA Meets LLMs: How Smart Grid Analytics is Rethinking Renewable Energy Monitoring</div>
+      <div class="feed-excerpt">The $24B renewable energy analytics market still runs on dashboards designed for gas turbines. One company is rebuilding the stack from the sensor up.</div>
+      <div class="feed-author">By <strong>Pratik Mishra</strong></div>
+    </a>
+
+    <a href="#" class="feed-item">
+      <div class="feed-meta">
+        <span class="feed-pillar">Positioning</span>
+        <span class="feed-dot"></span>
+        <span class="feed-date">Feb 26, 2026</span>
+      </div>
+      <div class="feed-title">Category Design is Dead. Long Live Category Context.</div>
+      <div class="feed-excerpt">Play Bigger told everyone to create a category. Most created confusion instead. The better move: map the context your buyer already lives in.</div>
+      <div class="feed-author">By <strong>Pratik Mishra</strong></div>
+    </a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-left">
+        <p class="footer-entity">Recurr Studio Private Limited</p>
+        <p>Bengaluru, India</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">LinkedIn</a>
+        <a href="#">Twitter</a>
+        <a href="#">Subscribe</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

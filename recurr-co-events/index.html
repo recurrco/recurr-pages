@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Events — Recurr</title>
+  <meta name="description" content="Events hosted and co-hosted by Recurr. Conversations, workshops, and meetups for B2B practitioners.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --serif: 'Newsreader', 'New York', Georgia, 'Times New Roman', serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+      --text: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --text-muted: #999;
+      --bg: #faf9f7;
+      --surface: #fff;
+      --border: #e5e5e5;
+      --max-w: 680px;
+      --max-w-wide: 1080px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 249, 247, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: var(--max-w-wide);
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--text); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 80px 32px 48px;
+    }
+
+    .hero-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: 38px;
+      font-weight: 400;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .hero p {
+      margin-top: 16px;
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 480px;
+    }
+
+    /* ── Events List ── */
+    .events {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px 32px;
+    }
+
+    .events-section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .event-card {
+      display: flex;
+      gap: 24px;
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      text-decoration: none;
+      transition: border-color 0.2s;
+    }
+
+    .event-card:hover { border-color: var(--text-secondary); }
+
+    .event-date-block {
+      flex-shrink: 0;
+      width: 56px;
+      text-align: center;
+    }
+
+    .event-month {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .event-day {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .event-weekday {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .event-details { flex: 1; }
+
+    .event-title {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .event-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .event-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .event-meta-row svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    .event-tag {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    /* ── Past Events ── */
+    .past-events {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 32px 32px 0;
+    }
+
+    .past-events .event-card {
+      opacity: 0.6;
+    }
+
+    .past-events .event-card:hover { opacity: 0.8; }
+
+    /* ── Luma CTA ── */
+    .luma-cta {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 48px 32px;
+      text-align: center;
+    }
+
+    .luma-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--surface);
+      background: var(--text);
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+
+    .luma-btn:hover { opacity: 0.85; }
+
+    .luma-btn svg { width: 14px; height: 14px; }
+
+    /* ── Co-host ── */
+    .cohost {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px 80px;
+      text-align: center;
+    }
+
+    .cohost p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .cohost a {
+      color: var(--text-secondary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .cohost a:hover { color: var(--text); }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 32px;
+    }
+
+    .footer-inner {
+      max-width: var(--max-w-wide);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .footer-left p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .footer-left .footer-entity {
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── Mobile ── */
+    @media (max-width: 640px) {
+      .nav-inner { padding: 0 20px; }
+      .nav-links { gap: 20px; }
+      .hero { padding: 48px 20px 32px; }
+      .hero h1 { font-size: 30px; }
+      .events { padding: 0 20px 24px; }
+      .event-card { padding: 20px; gap: 16px; }
+      .event-date-block { width: 48px; }
+      .event-day { font-size: 24px; }
+      .past-events { padding: 24px 20px 0; }
+      .luma-cta { padding: 32px 20px; }
+      .cohost { padding: 0 20px 60px; }
+      footer { padding: 32px 20px; }
+      .footer-inner { flex-direction: column; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/recurr-co/" class="nav-logo">recurr</a>
+      <div class="nav-links">
+        <a href="/recurr-co-studio/">studio</a>
+        <a href="/recurr-co-events/" class="active">events</a>
+        <a href="#">subscribe</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-label">Events</div>
+    <h1>Conversations worth having in person.</h1>
+    <p>Small-group workshops, founder conversations, and practitioner meetups. Usually in Bengaluru. Always curated.</p>
+  </section>
+
+  <!-- Upcoming Events -->
+  <section class="events">
+    <div class="events-section-label">Upcoming</div>
+
+    <a href="#" class="event-card">
+      <div class="event-date-block">
+        <div class="event-month">Apr</div>
+        <div class="event-day">3</div>
+        <div class="event-weekday">Thu</div>
+      </div>
+      <div class="event-details">
+        <div class="event-title">Launch Day: Recurr Studio</div>
+        <div class="event-desc">The studio opens. Four products, four operators, one system. Join us for the first public walkthrough of what we're building and why.</div>
+        <div class="event-meta-row">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Bengaluru</span>
+          <span>&middot;</span>
+          <span>6:00 PM IST</span>
+          <span>&middot;</span>
+          <span class="event-tag">Launch</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#" class="event-card">
+      <div class="event-date-block">
+        <div class="event-month">Apr</div>
+        <div class="event-day">12</div>
+        <div class="event-weekday">Sat</div>
+      </div>
+      <div class="event-details">
+        <div class="event-title">Positioning Clinic: B2B Founders Only</div>
+        <div class="event-desc">Bring your landing page. We'll tear it apart together. 8 founders, 2 hours, zero slides. Structured feedback from practitioners who've done this at scale.</div>
+        <div class="event-meta-row">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Bengaluru</span>
+          <span>&middot;</span>
+          <span>10:00 AM IST</span>
+          <span>&middot;</span>
+          <span class="event-tag">Workshop</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#" class="event-card">
+      <div class="event-date-block">
+        <div class="event-month">Apr</div>
+        <div class="event-day">26</div>
+        <div class="event-weekday">Sat</div>
+      </div>
+      <div class="event-details">
+        <div class="event-title">The GTM Stack in 2026</div>
+        <div class="event-desc">A conversation with 3 operators on what their GTM stack actually looks like today. Tools, workflows, what they dropped, what surprised them.</div>
+        <div class="event-meta-row">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Bengaluru</span>
+          <span>&middot;</span>
+          <span>6:00 PM IST</span>
+          <span>&middot;</span>
+          <span class="event-tag">Conversation</span>
+        </div>
+      </div>
+    </a>
+  </section>
+
+  <!-- Past Events -->
+  <section class="past-events">
+    <div class="events-section-label">Past</div>
+
+    <a href="#" class="event-card">
+      <div class="event-date-block">
+        <div class="event-month">Mar</div>
+        <div class="event-day">8</div>
+        <div class="event-weekday">Sat</div>
+      </div>
+      <div class="event-details">
+        <div class="event-title">Content That Compounds: A Practitioner's Workshop</div>
+        <div class="event-desc">6 B2B content operators shared what's actually working. Frameworks, not theories.</div>
+        <div class="event-meta-row">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Bengaluru</span>
+          <span>&middot;</span>
+          <span>12 attended</span>
+        </div>
+      </div>
+    </a>
+  </section>
+
+  <!-- Luma CTA -->
+  <div class="luma-cta">
+    <a href="#" class="luma-btn">
+      View full calendar on Luma
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+    </a>
+  </div>
+
+  <!-- Co-host -->
+  <div class="cohost">
+    <p>Want to co-host or sponsor an event? <a href="mailto:hello@recurr.co">Reach out</a>.</p>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-left">
+        <p class="footer-entity">Recurr Studio Private Limited</p>
+        <p>Bengaluru, India</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">LinkedIn</a>
+        <a href="#">Twitter</a>
+        <a href="/recurr-co/">Editorial</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
