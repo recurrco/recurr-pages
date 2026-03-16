@@ -10,28 +10,29 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      /* ── Surface tones — cool blue-green grays ── */
+      /* -- Surface tones -- cool blue-green grays -- */
       --gray-paper: #E5E8E8;
       --whiteboard: #D8DDDC;
       --notebook: #F1F4F3;
       --ink: #2A2A2A;
-      --graphite: #555;
-      --pencil: #808888;
+      --graphite: #484848;
+      --pencil: #6A7170;
       --faint: #B4BAB9;
 
-      /* ── Marker accents ── */
+      /* -- Marker accents -- */
       --red: #E03E36;
-      --yellow: #F5D547;
-      --yellow-hl: #F5D54750;
+      --yellow: #D4B82C;
+      --yellow-bright: #F5D547;
+      --yellow-hl: rgba(212,184,44,0.25);
       --blue: #2B6CB0;
       --green: #3D8C6E;
 
-      /* ── Typography ── */
+      /* -- Typography -- */
       --serif: 'New York', ui-serif, Georgia, Charter, 'Times New Roman', serif;
       --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
       --sans: -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', sans-serif;
 
-      /* ── Fluid type scale ── */
+      /* -- Fluid type scale -- */
       --fs-mega: clamp(3.5rem, 2rem + 6vw, 8rem);
       --fs-display: clamp(2.5rem, 1.8rem + 3vw, 4.5rem);
       --fs-h1: clamp(2rem, 1.4rem + 2.5vw, 3.5rem);
@@ -42,7 +43,7 @@
       --fs-small: clamp(0.8rem, 0.75rem + 0.15vw, 0.9rem);
       --fs-label: clamp(0.6rem, 0.55rem + 0.15vw, 0.7rem);
 
-      /* ── Fluid spacing ── */
+      /* -- Fluid spacing -- */
       --space-xs: clamp(0.5rem, 0.4rem + 0.3vw, 0.75rem);
       --space-s: clamp(1rem, 0.8rem + 0.6vw, 1.5rem);
       --space-m: clamp(2rem, 1.5rem + 1.5vw, 3rem);
@@ -51,28 +52,32 @@
       --space-2xl: clamp(6rem, 4rem + 7vw, 12rem);
       --margin: clamp(1.5rem, 1rem + 4vw, 5rem);
 
-      /* ── Layout ── */
+      /* -- Layout -- */
       --content-w: 680px;
       --wide-w: 1080px;
       --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
-      /* ── Subtle borders ── */
+      /* -- Subtle borders -- */
       --border-color: #C0C6C5;
       --border-faint: #D0D5D4;
+
+      /* -- Dot grid -- */
+      --dot-color: #C5CAC8;
     }
 
-    /* ── Dark mode ── */
+    /* -- Dark mode -- */
     [data-theme="dark"] {
       --gray-paper: #1A1D1D;
       --whiteboard: #222626;
       --notebook: #2C3030;
       --ink: #E8ECEC;
-      --graphite: #A8B0AF;
+      --graphite: #A8AEAD;
       --pencil: #7A8282;
       --faint: #3E4444;
-      --yellow-hl: #F5D54730;
+      --yellow-hl: rgba(212,184,44,0.18);
       --border-color: #3A4040;
       --border-faint: #333939;
+      --dot-color: #2A2E2D;
     }
 
     ::selection { background: var(--yellow-hl); color: var(--ink); }
@@ -90,21 +95,15 @@
       overflow-x: hidden;
     }
 
-    /* ── SVG diamond grid background — cool-tinted ── */
-    body::before {
-      content: '';
+    /* -- Dot grid background -- */
+    .dot-grid-canvas {
       position: fixed;
       inset: 0;
       z-index: -2;
-      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z' fill='none' stroke='%23c5cbc9' stroke-width='0.5' stroke-dasharray='3 3'/%3E%3C/svg%3E");
-      opacity: 0.4;
-    }
-    [data-theme="dark"] body::before {
-      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z' fill='none' stroke='%232a3030' stroke-width='0.5' stroke-dasharray='3 3'/%3E%3C/svg%3E");
-      opacity: 0.5;
+      pointer-events: none;
     }
 
-    /* ── Paper grain overlay ── */
+    /* -- Paper grain overlay -- */
     body::after {
       content: '';
       position: fixed;
@@ -117,7 +116,7 @@
     a { color: var(--blue); text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 0.06em; }
     @media (hover:hover) { a:hover { color: var(--ink); } }
 
-    /* ── Scroll reveal base ── */
+    /* -- Scroll reveal base -- */
     [data-reveal] {
       opacity: 0;
       transform: translateY(clamp(16px, 2vw, 32px));
@@ -125,7 +124,7 @@
     }
     [data-reveal].visible { opacity: 1; transform: translateY(0); }
 
-    /* ══════════ NAV ══════════ */
+    /* ========== NAV ========== */
     nav {
       position: sticky; top: 0; z-index: 100;
       background: rgba(229,232,232,0.75);
@@ -151,7 +150,7 @@
     }
     @media (hover:hover) { .theme-toggle:hover { color: var(--ink); } }
 
-    /* ══════════ HERO ══════════ */
+    /* ========== HERO ========== */
     .hero {
       min-height: 85vh;
       display: flex; flex-direction: column; justify-content: center;
@@ -174,13 +173,6 @@
       transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
     }
     .hero h1 .word.visible { opacity: 1; transform: translateY(0); }
-    .hero-underline {
-      width: 0; height: clamp(4px, 0.4vw, 6px);
-      background: var(--red);
-      margin-top: var(--space-s);
-      transition: width 1s var(--ease);
-    }
-    .hero-underline.drawn { width: clamp(200px, 25vw, 400px); }
     .hero-bottom {
       display: flex; justify-content: space-between; align-items: flex-end;
       margin-top: var(--space-l);
@@ -198,7 +190,7 @@
     }
     .hero-ascii.visible { opacity: 1; }
 
-    /* ══════════ SECTION PRIMITIVES ══════════ */
+    /* ========== SECTION PRIMITIVES ========== */
     .section-wide { padding: var(--space-2xl) var(--margin); max-width: 1400px; margin: 0 auto; }
     .section-label {
       font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
@@ -210,7 +202,7 @@
       content: '';
       display: inline-block;
       width: 8px; height: 8px;
-      border-radius: 2px;
+      border-radius: 50%;
       background: var(--red);
       flex-shrink: 0;
     }
@@ -218,7 +210,7 @@
 
     .full-bleed { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; }
 
-    /* Section dividers — subtle dashed lines */
+    /* Section dividers */
     .divider { border: none; border-top: 1px dashed var(--border-color); margin: 0 var(--margin); max-width: 1400px; }
 
     /* Colored dot variants for section labels */
@@ -228,7 +220,7 @@
     .dot-red::before { background: var(--red); }
     .dot-ink::before { background: var(--ink); }
 
-    /* ══════════ PALETTE ══════════ */
+    /* ========== PALETTE ========== */
     .palette-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -261,7 +253,7 @@
     .marker-swatch span { font-family: var(--mono); font-size: clamp(0.5rem, 0.4rem + 0.15vw, 0.6rem); color: white; font-weight: 700; letter-spacing: 0.08em; opacity: 0; transition: opacity 0.3s; }
     @media (hover:hover) { .marker-swatch:hover span { opacity: 1; } }
 
-    /* ══════════ TYPOGRAPHY ══════════ */
+    /* ========== TYPOGRAPHY ========== */
     .type-hero-text {
       font-family: var(--serif);
       font-size: clamp(2.2rem, 1.5rem + 3vw, 5rem);
@@ -269,7 +261,6 @@
       color: var(--ink); margin-bottom: var(--space-m);
     }
     .type-hero-text .hl { background: var(--yellow-hl); padding: 0 0.1em; }
-    .type-hero-text .ul { text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 0.08em; text-decoration-thickness: clamp(2px, 0.25vw, 4px); }
 
     .type-grid {
       display: grid;
@@ -281,22 +272,22 @@
     .type-mono-live {
       font-family: var(--mono);
       font-size: clamp(0.7rem, 0.6rem + 0.2vw, 0.85rem);
-      line-height: 1.5; color: var(--notebook);
+      line-height: 1.5; color: #C8CECC;
       background: var(--ink); padding: var(--space-s);
       white-space: pre; overflow-x: auto;
       border: 1px solid var(--border-color);
       border-radius: 4px;
       position: relative;
     }
-    [data-theme="dark"] .type-mono-live { color: var(--gray-paper); background: #111414; }
+    [data-theme="dark"] .type-mono-live { color: #C8CECC; background: #111414; }
     .type-mono-live::before {
       content: '> MONO'; position: absolute; top: 8px; right: 12px;
-      font-size: 0.55rem; color: var(--pencil); letter-spacing: 0.1em;
+      font-size: 0.55rem; color: #8A9292; letter-spacing: 0.1em;
     }
 
     .marginalia { font-family: var(--mono); font-size: var(--fs-label); color: var(--red); margin-top: 6px; }
 
-    /* ══════════ ASCII FULL-BLEED ══════════ */
+    /* ========== ASCII FULL-BLEED ========== */
     .ascii-full {
       background: var(--ink);
       padding: var(--space-2xl) 0;
@@ -307,32 +298,33 @@
     .ascii-full::before {
       content: '';
       position: absolute; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z' fill='none' stroke='%23444' stroke-width='0.3' stroke-dasharray='2 4'/%3E%3C/svg%3E");
-      opacity: 0.3;
+      background-image: radial-gradient(circle, #555 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.2;
     }
     .ascii-inner { max-width: 1400px; margin: 0 auto; padding: 0 var(--margin); position: relative; z-index: 1; }
-    .ascii-full .section-label { color: var(--yellow); }
+    .ascii-full .section-label { color: #E8ECEC; }
     .ascii-full .section-label::before { background: var(--yellow); }
-    .ascii-full .section-desc { color: var(--faint); }
+    .ascii-full .section-desc { color: #A8AEAD; }
 
     .ascii-canvas {
       font-family: var(--mono);
       font-size: clamp(0.65rem, 0.55rem + 0.3vw, 0.85rem);
-      line-height: 1.45; color: var(--gray-paper);
+      line-height: 1.45; color: #C8CECC;
       white-space: pre; overflow-x: auto;
       padding: var(--space-m); min-height: 240px;
     }
-    [data-theme="dark"] .ascii-canvas { color: #D0D5D4; }
+    [data-theme="dark"] .ascii-canvas { color: #C8CECC; }
     .ascii-canvas .ch { opacity: 0; transition: opacity 0.03s; }
     .ascii-canvas .ch.v { opacity: 1; }
 
     .ascii-note {
       font-family: var(--serif); font-size: var(--fs-small);
-      font-style: italic; color: var(--pencil);
+      font-style: italic; color: #8A9292;
       margin-top: var(--space-s);
     }
 
-    /* ══════════ CARDS ══════════ */
+    /* ========== CARDS ========== */
     .card-grid-asym {
       display: grid;
       grid-template-columns: 1.6fr 1fr;
@@ -346,21 +338,48 @@
       border-radius: 4px;
       padding: clamp(1.5rem, 1.2rem + 1vw, 2.2rem);
       display: flex; flex-direction: column; gap: var(--space-xs);
-      transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+      transition: background 0.35s var(--ease);
+      position: relative;
     }
     @media (hover:hover) {
-      .card:hover { transform: translateY(-3px); box-shadow: 4px 4px 0 var(--border-color); }
+      .card:hover { background: var(--notebook); }
+      .card:hover .card-corner { opacity: 1; }
     }
     .card.card-featured { grid-row: 1 / 3; }
     .card.card-featured .card-title { font-size: var(--fs-h2); }
 
-    .card-pillar { font-family: var(--mono); font-size: var(--fs-label); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    /* ASCII corner decoration on hover */
+    .card-corner {
+      position: absolute;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--faint);
+      opacity: 0;
+      transition: opacity 0.35s var(--ease);
+      pointer-events: none;
+      line-height: 1;
+    }
+    .card-corner-tl { top: 4px; left: 6px; }
+    .card-corner-tr { top: 4px; right: 6px; }
+    .card-corner-bl { bottom: 4px; left: 6px; }
+    .card-corner-br { bottom: 4px; right: 6px; }
+
+    .card-pillar {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 0.5em;
+    }
+    .card-pillar-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
     .card-title { font-family: var(--serif); font-size: var(--fs-h3); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
-    .card-rule { width: clamp(60px, 35%, 140px); height: 3px; border-radius: 1px; }
     .card-excerpt { font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); line-height: 1.55; }
     .card-meta { font-family: var(--mono); font-size: clamp(0.5rem, 0.45rem + 0.1vw, 0.6rem); color: var(--pencil); margin-top: auto; }
 
-    /* ══════════ MOTION ══════════ */
+    /* ========== MOTION ========== */
     .motion-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -375,7 +394,7 @@
       height: clamp(60px, 6vw, 90px);
       background: var(--ink); border-radius: 3px;
       display: flex; align-items: center; justify-content: center;
-      font-family: var(--mono); font-size: var(--fs-label); color: var(--gray-paper);
+      font-family: var(--mono); font-size: var(--fs-label); color: #C8CECC;
       overflow: hidden; position: relative;
     }
     [data-theme="dark"] .motion-demo { background: #111414; }
@@ -389,7 +408,7 @@
     }
     .draw-underline.active::after { width: 100%; }
 
-    /* ══════════ SPACING ══════════ */
+    /* ========== SPACING ========== */
     .spacing-vis { display: flex; flex-direction: column; gap: 6px; }
     .sp-row { display: flex; align-items: center; gap: var(--space-xs); }
     .sp-label { font-family: var(--mono); font-size: clamp(0.5rem, 0.45rem + 0.1vw, 0.6rem); color: var(--pencil); min-width: clamp(60px, 8vw, 90px); }
@@ -397,7 +416,7 @@
     @media (hover:hover) { .sp-row:hover .sp-bar { opacity: 0.5; transform: scaleY(1.3); } }
     .sp-val { font-family: var(--mono); font-size: clamp(0.45rem, 0.4rem + 0.1vw, 0.55rem); color: var(--faint); }
 
-    /* ══════════ TABLES ══════════ */
+    /* ========== TABLES ========== */
     .data-table-wrap { overflow-x: auto; }
     .data-table {
       width: 100%; border-collapse: collapse;
@@ -424,10 +443,11 @@
       letter-spacing: 0.05em; padding: 2px 8px; border-radius: 3px;
     }
     .status-live { background: #3D8C6E20; color: var(--green); }
-    .status-draft { background: #F5D54730; color: #A08A00; }
+    .status-draft { background: rgba(212,184,44,0.18); color: #8A7A1A; }
+    [data-theme="dark"] .status-draft { color: var(--yellow); }
     .status-archived { background: #E03E3615; color: var(--red); }
 
-    /* ══════════ ACCORDION ══════════ */
+    /* ========== ACCORDION ========== */
     .accordion { display: flex; flex-direction: column; gap: 0; }
     .accordion-item { border-bottom: 1px dashed var(--border-color); }
     .accordion-item:first-child { border-top: 1px dashed var(--border-color); }
@@ -455,7 +475,7 @@
       font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); line-height: 1.65;
     }
 
-    /* ══════════ FORMS ══════════ */
+    /* ========== FORMS ========== */
     .form-grid {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: var(--space-s);
@@ -470,7 +490,7 @@
       color: var(--ink); background: var(--notebook);
       border: 1px solid var(--border-color); border-radius: 4px;
       padding: clamp(8px, 1vw, 12px) clamp(10px, 1.2vw, 16px);
-      transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+      transition: border-color 0.2s var(--ease);
       outline: none;
     }
     .form-input::placeholder, .form-textarea::placeholder {
@@ -479,10 +499,11 @@
     }
     .form-input:focus, .form-textarea:focus, .form-select:focus {
       border-color: var(--blue);
-      box-shadow: 0 0 0 2px #2B6CB020;
+      outline: 2px solid rgba(43,108,176,0.15);
+      outline-offset: 1px;
     }
     .form-textarea { resize: vertical; min-height: 100px; }
-    .form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23808888' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+    .form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236A7170' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
     .form-check-row { display: flex; align-items: center; gap: var(--space-xs); }
     .form-check {
       width: 16px; height: 16px; accent-color: var(--blue);
@@ -490,7 +511,7 @@
     }
     .form-check-label { font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); cursor: pointer; }
 
-    /* ══════════ TABS ══════════ */
+    /* ========== TABS ========== */
     .tabs-nav {
       display: flex; gap: 0;
       border-bottom: 1px solid var(--border-color);
@@ -515,7 +536,7 @@
     .tab-panel.active { display: block; }
     .tab-panel p { font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); line-height: 1.65; }
 
-    /* ══════════ BUTTONS / CTA ══════════ */
+    /* ========== BUTTONS / CTA ========== */
     .btn {
       font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
       letter-spacing: 0.08em; text-transform: uppercase;
@@ -558,7 +579,7 @@
     .cta-card h3 { font-family: var(--serif); font-size: var(--fs-h3); font-weight: 700; color: var(--ink); }
     .cta-card p { font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); line-height: 1.55; }
 
-    /* ══════════ CALLOUT / HIGHLIGHT BOXES ══════════ */
+    /* ========== CALLOUT / HIGHLIGHT BOXES ========== */
     .callout {
       padding: var(--space-s);
       border-radius: 4px;
@@ -572,14 +593,15 @@
       letter-spacing: 0.1em; text-transform: uppercase;
       margin-bottom: 6px; display: flex; align-items: center; gap: 6px;
     }
-    .callout-yellow { background: #F5D54712; border-color: var(--yellow); color: var(--ink); }
-    .callout-yellow .callout-label { color: #A08A00; }
+    .callout-yellow { background: rgba(212,184,44,0.07); border-color: var(--yellow); color: var(--ink); }
+    .callout-yellow .callout-label { color: #8A7A1A; }
+    [data-theme="dark"] .callout-yellow .callout-label { color: var(--yellow); }
     .callout-blue { background: #2B6CB010; border-color: var(--blue); color: var(--ink); }
     .callout-blue .callout-label { color: var(--blue); }
     .callout-red { background: #E03E3610; border-color: var(--red); color: var(--ink); }
     .callout-red .callout-label { color: var(--red); }
 
-    /* ══════════ MULTI-COLUMN LAYOUTS ══════════ */
+    /* ========== MULTI-COLUMN LAYOUTS ========== */
     .col-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-s); }
     .col-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-s); }
     .col-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-s); }
@@ -592,16 +614,16 @@
       letter-spacing: 0.05em;
     }
 
-    /* ══════════ BANNERS ══════════ */
+    /* ========== BANNERS ========== */
     .banner-top {
-      background: var(--ink); color: var(--notebook);
+      background: #1A1D1D; color: #E8ECEC;
       padding: clamp(8px, 1vw, 12px) var(--margin);
       text-align: center;
       font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
       letter-spacing: 0.08em;
     }
-    [data-theme="dark"] .banner-top { background: #111414; }
-    .banner-top a { color: var(--yellow); }
+    [data-theme="dark"] .banner-top { background: #111414; color: #E8ECEC; }
+    .banner-top a { color: #EDD23B; text-decoration: underline; text-underline-offset: 0.15em; }
     .banner-section {
       background: var(--notebook); border: 1px dashed var(--border-color);
       border-radius: 6px;
@@ -611,7 +633,7 @@
     .banner-section h3 { font-family: var(--serif); font-size: var(--fs-h2); font-weight: 700; color: var(--ink); margin-bottom: var(--space-xs); }
     .banner-section p { font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); line-height: 1.5; }
 
-    /* ══════════ STATES ══════════ */
+    /* ========== STATES ========== */
     .states-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: var(--space-s);
@@ -626,7 +648,7 @@
       font-family: var(--mono); font-size: var(--fs-label); color: var(--pencil);
       letter-spacing: 0.06em;
     }
-    .btn-focus-demo:focus { border-color: var(--blue); box-shadow: 0 0 0 3px #2B6CB030; outline: none; }
+    .btn-focus-demo:focus { border-color: var(--blue); outline: 2px solid rgba(43,108,176,0.2); outline-offset: 1px; }
     .input-disabled {
       opacity: 0.4; cursor: not-allowed; background: var(--whiteboard);
     }
@@ -637,7 +659,7 @@
       color: var(--pencil); display: inline-block;
     }
 
-    /* ══════════ ILLUSTRATION PLACEHOLDERS ══════════ */
+    /* ========== ILLUSTRATION PLACEHOLDERS ========== */
     .illust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-s); }
     .illust-frame {
       position: relative; overflow: hidden;
@@ -655,7 +677,7 @@
       margin-top: 6px; letter-spacing: 0.04em;
     }
 
-    /* ══════════ FOOTER ══════════ */
+    /* ========== FOOTER ========== */
     footer { border-top: 1px dashed var(--border-color); padding: var(--space-l) 0; }
     .footer-inner { max-width: 1400px; margin: 0 auto; padding: 0 var(--margin); display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--space-s); }
     .footer-entity { font-family: var(--serif); font-size: var(--fs-small); font-weight: 700; }
@@ -663,7 +685,7 @@
     .footer-links { display: flex; gap: var(--space-s); }
     .footer-links a { font-family: var(--mono); font-size: var(--fs-label); color: var(--pencil); text-decoration: none; }
 
-    /* ══════════ RESPONSIVE ══════════ */
+    /* ========== RESPONSIVE ========== */
     @media (max-width: 700px) {
       .type-grid { grid-template-columns: 1fr; }
       .card-grid-asym { grid-template-columns: 1fr; }
@@ -681,7 +703,6 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
       .hero h1 .word, [data-reveal] { opacity: 1; transform: none; }
-      .hero-underline { width: clamp(200px, 25vw, 400px); }
       .ascii-canvas .ch { opacity: 1; }
       .draw-underline::after { width: 100%; }
     }
@@ -689,12 +710,15 @@
 </head>
 <body>
 
-  <!-- ══════════ TOP BANNER ══════════ -->
+  <!-- Dot grid canvas (rendered via JS for parallax control) -->
+  <canvas class="dot-grid-canvas" id="dot-grid"></canvas>
+
+  <!-- ========== TOP BANNER ========== -->
   <div class="banner-top">
-    INTERNAL DESIGN SYSTEM — V4 MAR 2026 &nbsp;&middot;&nbsp; <a href="#cta">SHARE FEEDBACK</a>
+    INTERNAL DESIGN SYSTEM — V5 MAR 2026 &nbsp;&middot;&nbsp; <a href="#cta">SHARE FEEDBACK</a>
   </div>
 
-  <!-- ══════════ NAV ══════════ -->
+  <!-- ========== NAV ========== -->
   <nav>
     <div class="nav-inner">
       <a href="/recurr-brand/" class="nav-logo">recurr</a>
@@ -712,16 +736,15 @@
     </div>
   </nav>
 
-  <!-- ══════════ HERO ══════════ -->
+  <!-- ========== HERO ========== -->
   <section class="hero">
     <h1 id="hero-h1">What if a whiteboard got published as a magazine?</h1>
-    <div class="hero-underline" id="hero-ul"></div>
     <div class="hero-bottom">
       <p class="hero-sub">The design system for recurr.co. Practitioner thinking, magazine presentation, absurdly sophisticated technology underneath.</p>
       <pre class="hero-ascii" id="hero-ascii">&#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
 &#9474;  recurr.co       &#9474;
 &#9474;  brand system    &#9474;
-&#9474;  v4 · mar 2026   &#9474;
+&#9474;  v5 · mar 2026   &#9474;
 &#9474;                  &#9474;
 &#9474;  &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9617;&#9617; 80%  &#9474;
 &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;</pre>
@@ -730,7 +753,7 @@
 
   <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ PALETTE ══════════ -->
+  <!-- ========== PALETTE ========== -->
   <section class="section-wide" id="palette">
     <p class="section-label dot-red" data-reveal>Palette — Cool paper with marker accents</p>
     <p class="section-desc" data-reveal>Cool blue-green grays as surface tones. Not warm cream, not clinical white. Faintest hint of teal in the paper. Marker accents for emphasis — red underlines, yellow highlights, blue links, green status. Hover the swatches.</p>
@@ -743,7 +766,7 @@
     </div>
 
     <div class="marker-strip" data-reveal>
-      <div class="marker-swatch" style="background:var(--red)"><span>RED &middot; UNDERLINE</span></div>
+      <div class="marker-swatch" style="background:var(--red)"><span>RED &middot; EMPHASIS</span></div>
       <div class="marker-swatch" style="background:var(--yellow)"><span>YELLOW &middot; HIGHLIGHT</span></div>
       <div class="marker-swatch" style="background:var(--blue)"><span>BLUE &middot; LINK</span></div>
       <div class="marker-swatch" style="background:var(--green)"><span>GREEN &middot; ACTIVE</span></div>
@@ -753,18 +776,17 @@
 
   <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ TYPOGRAPHY ══════════ -->
+  <!-- ========== TYPOGRAPHY ========== -->
   <section class="section-wide" id="type">
     <p class="section-label dot-blue" data-reveal>Typography — Serif is the voice. Mono is the thinking.</p>
 
     <div class="type-grid">
       <div>
         <div class="type-hero-text" data-reveal>
-          Research, essays and field notes for <span class="hl">B2B teams</span>.<br>
-          By <span class="ul">operators</span>, not pundits.
+          Research, essays and field notes for <span class="hl">B2B teams</span>.
         </div>
         <p class="section-desc" data-reveal>
-          Serif is the default for everything — headlines, body, pull quotes, article text. Yellow highlight marks key insight. Red underline marks emphasis. Monospace marginalia annotates the thinking.
+          Serif is the default for everything — headlines, body, pull quotes, article text. Yellow highlight marks key insight. Monospace marginalia annotates the thinking.
         </p>
         <p class="marginalia" data-reveal>&larr; this is how annotations work. mono, red, smaller.</p>
       </div>
@@ -799,7 +821,7 @@ label   clamp(0.6rem..0.7rem)</div>
     </div>
   </section>
 
-  <!-- ══════════ ASCII — Full bleed dark ══════════ -->
+  <!-- ========== ASCII — Full bleed dark ========== -->
   <div class="full-bleed ascii-full" id="ascii">
     <div class="ascii-inner">
       <p class="section-label" data-reveal>The Whiteboard Layer — Where tech meets thinking</p>
@@ -811,30 +833,39 @@ label   clamp(0.6rem..0.7rem)</div>
 
   <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ CARDS ══════════ -->
+  <!-- ========== CARDS ========== -->
   <section class="section-wide" id="cards">
-    <p class="section-label dot-green" data-reveal>Cards — Asymmetric grid, hover lift, marker accents</p>
-    <p class="section-desc" data-reveal>Not a uniform 3-column grid. The featured card spans two rows. Hover lifts with a soft offset shadow. Each pillar gets its own marker color.</p>
+    <p class="section-label dot-green" data-reveal>Cards — Flat, clean, dot-grid between them</p>
+    <p class="section-desc" data-reveal>No shadows. No colored underlines. Pillar indicated by a filled circle before the label. Hover shifts the background tint. ASCII corner characters appear on hover.</p>
 
     <div class="card-grid-asym">
       <div class="card card-featured" data-reveal>
-        <span class="card-pillar" style="color:var(--red)">POSITIONING</span>
+        <span class="card-corner card-corner-tl">&#x256D;</span>
+        <span class="card-corner card-corner-tr">&#x256E;</span>
+        <span class="card-corner card-corner-bl">&#x2570;</span>
+        <span class="card-corner card-corner-br">&#x256F;</span>
+        <span class="card-pillar"><span class="card-pillar-dot" style="background:var(--red)"></span> POSITIONING</span>
         <span class="card-title" style="font-size:var(--fs-h2)">The Adoption Chasm</span>
-        <div class="card-rule" style="background:var(--red)"></div>
         <span class="card-excerpt">Why 88% of enterprises experiment with AI but only 5.5% transform. Most enterprises treat AI like a feature. The ones that win treat it like a reorganization. A framework for crossing the gap between experimentation and transformation — drawing from our work with Clarisights and others.</span>
         <span class="card-meta">Pratik Mishra &middot; Mar 14, 2026 &middot; 12 min read</span>
       </div>
       <div class="card" data-reveal>
-        <span class="card-pillar" style="color:var(--blue)">GTM</span>
+        <span class="card-corner card-corner-tl">&#x256D;</span>
+        <span class="card-corner card-corner-tr">&#x256E;</span>
+        <span class="card-corner card-corner-bl">&#x2570;</span>
+        <span class="card-corner card-corner-br">&#x256F;</span>
+        <span class="card-pillar"><span class="card-pillar-dot" style="background:var(--blue)"></span> GTM</span>
         <span class="card-title">Your First PMM Hire is Wrong.</span>
-        <div class="card-rule" style="background:var(--blue)"></div>
         <span class="card-excerpt">The job description you wrote is actually three different jobs.</span>
         <span class="card-meta">Pratik Mishra &middot; Mar 12</span>
       </div>
       <div class="card" data-reveal>
-        <span class="card-pillar" style="color:var(--green)">AI & NEW STACK</span>
+        <span class="card-corner card-corner-tl">&#x256D;</span>
+        <span class="card-corner card-corner-tr">&#x256E;</span>
+        <span class="card-corner card-corner-bl">&#x2570;</span>
+        <span class="card-corner card-corner-br">&#x256F;</span>
+        <span class="card-pillar"><span class="card-pillar-dot" style="background:var(--green)"></span> AI & NEW STACK</span>
         <span class="card-title">SCADA Meets LLMs</span>
-        <div class="card-rule" style="background:var(--green)"></div>
         <span class="card-excerpt">Renewable energy monitoring, rebuilt from the sensor up.</span>
         <span class="card-meta">Pratik Mishra &middot; Mar 1</span>
       </div>
@@ -843,7 +874,7 @@ label   clamp(0.6rem..0.7rem)</div>
 
   <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ TABLES ══════════ -->
+  <!-- ========== TABLES ========== -->
   <section class="section-wide" id="tables">
     <p class="section-label dot-yellow" data-reveal>Tables — Clean data, no heavy borders</p>
     <p class="section-desc" data-reveal>Mono headers, serif body, subtle row alternation using surface tones. Bottom borders only. Status badges use marker color tints.</p>
@@ -908,7 +939,7 @@ label   clamp(0.6rem..0.7rem)</div>
 
   <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ ACCORDION ══════════ -->
+  <!-- ========== ACCORDION ========== -->
   <section class="section-wide" id="accordion">
     <p class="section-label dot-red" data-reveal>Accordion — Click to expand, smooth transitions</p>
     <p class="section-desc" data-reveal>Collapsible content sections for FAQs, documentation, or progressive disclosure. Simple +/- indicator, smooth height animation.</p>
@@ -963,7 +994,7 @@ label   clamp(0.6rem..0.7rem)</div>
 
   <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ FORMS ══════════ -->
+  <!-- ========== FORMS ========== -->
   <section class="section-wide" id="forms">
     <p class="section-label dot-blue" data-reveal>Forms — Serif labels, mono placeholders, marker focus</p>
     <p class="section-desc" data-reveal>Input styling follows the design system. Serif for labels, mono for placeholder and helper text, blue focus ring, subtle borders that don't fight for attention.</p>
@@ -1027,7 +1058,7 @@ label   clamp(0.6rem..0.7rem)</div>
 
   <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ TABS ══════════ -->
+  <!-- ========== TABS ========== -->
   <section class="section-wide" id="tabs">
     <p class="section-label dot-green" data-reveal>Tabs — Content panels with marker underline</p>
     <p class="section-desc" data-reveal>Active tab uses a red marker underline. Smooth panel switching. Mono labels, serif body content.</p>
@@ -1056,7 +1087,7 @@ label   clamp(0.6rem..0.7rem)</div>
 
   <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ BUTTONS & CTA ══════════ -->
+  <!-- ========== BUTTONS & CTA ========== -->
   <section class="section-wide" id="cta">
     <p class="section-label dot-red" data-reveal>Buttons & CTAs — Primary, secondary, ghost, card</p>
     <p class="section-desc" data-reveal>Three button styles for different hierarchy levels. Primary for key actions, secondary for alternatives, ghost for navigation. CTA cards for highlighted calls to action.</p>
@@ -1083,7 +1114,7 @@ label   clamp(0.6rem..0.7rem)</div>
 
   <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ CALLOUTS / HIGHLIGHTS ══════════ -->
+  <!-- ========== CALLOUTS / HIGHLIGHTS ========== -->
   <section class="section-wide" id="callouts">
     <p class="section-label dot-yellow" data-reveal>Callouts — Margin notes, info, warnings</p>
     <p class="section-desc" data-reveal>Three callout styles for different purposes. Yellow for insights and margin notes, blue for informational context, red for warnings and emphasis. Left border accent + tinted background.</p>
@@ -1106,7 +1137,7 @@ label   clamp(0.6rem..0.7rem)</div>
 
   <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ MULTI-COLUMN LAYOUTS ══════════ -->
+  <!-- ========== MULTI-COLUMN LAYOUTS ========== -->
   <section class="section-wide" id="layouts">
     <p class="section-label dot-blue" data-reveal>Layouts — Symmetric and asymmetric grids</p>
     <p class="section-desc" data-reveal>Column systems for different content arrangements. Equal splits for comparison, asymmetric for content + sidebar patterns.</p>
@@ -1139,10 +1170,10 @@ label   clamp(0.6rem..0.7rem)</div>
 
   <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ BANNERS ══════════ -->
+  <!-- ========== BANNERS ========== -->
   <section class="section-wide" id="banners">
     <p class="section-label dot-green" data-reveal>Banners — Announcement strips and section banners</p>
-    <p class="section-desc" data-reveal>Top announcement bar uses ink background. Section banners use notebook surface with dashed border.</p>
+    <p class="section-desc" data-reveal>Top announcement bar uses ink background with high-contrast text. Section banners use notebook surface with dashed border.</p>
 
     <div data-reveal style="margin-bottom:var(--space-s)">
       <div class="banner-top" style="position:relative;border-radius:4px">
@@ -1163,7 +1194,7 @@ label   clamp(0.6rem..0.7rem)</div>
 
   <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ MOTION ══════════ -->
+  <!-- ========== MOTION ========== -->
   <section class="section-wide" id="motion">
     <p class="section-label dot-red" data-reveal>Motion — Three layers, all lightweight</p>
     <p class="section-desc" data-reveal>Custom easing <span style="font-family:var(--mono);font-size:0.85em;color:var(--pencil)">cubic-bezier(0.16, 1, 0.3, 1)</span> — fast snap, gentle float. prefers-reduced-motion kills everything.</p>
@@ -1176,27 +1207,27 @@ label   clamp(0.6rem..0.7rem)</div>
       </div>
       <div class="motion-item" data-reveal>
         <div class="motion-demo">
-          <span class="draw-underline" id="draw-demo" style="font-family:var(--serif);font-size:var(--fs-small);color:var(--notebook)">this underline draws itself</span>
+          <span class="draw-underline" id="draw-demo" style="font-family:var(--serif);font-size:var(--fs-small);color:#C8CECC">this underline draws itself</span>
         </div>
         <span class="motion-title">Scroll reveals</span>
         <span class="motion-desc">Headlines draw underlines. Highlights fade in. Sections enter with staggered children. IntersectionObserver.</span>
       </div>
       <div class="motion-item" data-reveal>
-        <div class="motion-demo"><span style="opacity:0.35">pen sketches &middot; marker circles &middot; page turns</span></div>
+        <div class="motion-demo"><span style="opacity:0.5;color:#C8CECC">pen sketches &middot; marker circles &middot; page turns</span></div>
         <span class="motion-title">Lottie micro-stories</span>
         <span class="motion-desc">One per page max. A pen drawing a framework. A marker circling a word. Plays once. ~30KB.</span>
       </div>
       <div class="motion-item" data-reveal>
-        <div class="motion-demo"><span style="opacity:0.35">diamond grid shifts at 0.95&times; scroll rate</span></div>
+        <div class="motion-demo"><span style="opacity:0.5;color:#C8CECC">dot grid shifts at 0.92&times; scroll rate</span></div>
         <span class="motion-title">Background parallax</span>
-        <span class="motion-desc">The dashed diamond grid moves at a slightly different rate than content. Physical depth. Barely perceptible.</span>
+        <span class="motion-desc">The dot grid moves at a slightly different rate than content. Physical depth. Barely perceptible. Subtle horizontal drift via sine wave.</span>
       </div>
     </div>
   </section>
 
   <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ STATES ══════════ -->
+  <!-- ========== STATES ========== -->
   <section class="section-wide" id="states">
     <p class="section-label dot-yellow" data-reveal>States — Hover, active, disabled, focus, loading</p>
     <p class="section-desc" data-reveal>Interactive element states rendered live. Focus rings use blue marker, disabled dims to 35% opacity, loading shows an ASCII spinner.</p>
@@ -1239,7 +1270,7 @@ label   clamp(0.6rem..0.7rem)</div>
 
   <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ SPACING ══════════ -->
+  <!-- ========== SPACING ========== -->
   <section class="section-wide" id="spacing">
     <p class="section-label dot-ink" data-reveal>Spacing — Whitespace is the design</p>
     <p class="section-desc" data-reveal>Every value is fluid. 2-3x what most sites use. Resize the browser — watch the bars respond in real time.</p>
@@ -1257,7 +1288,7 @@ label   clamp(0.6rem..0.7rem)</div>
 
   <hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <!-- ══════════ ILLUSTRATIONS ══════════ -->
+  <!-- ========== ILLUSTRATIONS ========== -->
   <section class="section-wide" id="illustrations">
     <p class="section-label dot-blue" data-reveal>Illustrations — Placeholder frames for editorial imagery</p>
     <p class="section-desc" data-reveal>Where photography and illustrations would live. Desaturated by default, full color on hover. Ratio locked at 16:10 for consistency.</p>
@@ -1284,7 +1315,7 @@ label   clamp(0.6rem..0.7rem)</div>
     </div>
   </section>
 
-  <!-- ══════════ FOOTER ══════════ -->
+  <!-- ========== FOOTER ========== -->
   <footer>
     <div class="footer-inner">
       <div>
@@ -1300,40 +1331,42 @@ label   clamp(0.6rem..0.7rem)</div>
   </footer>
 
   <script>
-    // ── Theme toggle ──
+    // -- Theme toggle --
     (function() {
-      const html = document.documentElement;
-      const btn = document.getElementById('theme-toggle');
-      const stored = localStorage.getItem('recurr-theme');
+      var html = document.documentElement;
+      var btn = document.getElementById('theme-toggle');
+      var stored = localStorage.getItem('recurr-theme');
       if (stored) html.setAttribute('data-theme', stored);
 
       btn.addEventListener('click', function() {
-        const current = html.getAttribute('data-theme');
-        const next = current === 'dark' ? 'light' : 'dark';
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
         html.setAttribute('data-theme', next);
         localStorage.setItem('recurr-theme', next);
+        // Redraw dot grid for new theme
+        if (typeof drawDotGrid === 'function') drawDotGrid();
       });
     })();
 
-    // ── Live clock in nav ──
+    // -- Live clock in nav --
     (function() {
-      const el = document.getElementById('clock');
+      var el = document.getElementById('clock');
       function tick() {
-        const now = new Date();
-        const ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
-        const h = ist.getHours(), m = ist.getMinutes();
-        const ampm = h >= 12 ? 'PM' : 'AM';
-        const hh = h % 12 || 12;
+        var now = new Date();
+        var ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+        var h = ist.getHours(), m = ist.getMinutes();
+        var ampm = h >= 12 ? 'PM' : 'AM';
+        var hh = h % 12 || 12;
         el.textContent = hh + ':' + String(m).padStart(2,'0') + ' ' + ampm + ' IST';
       }
       tick();
       setInterval(tick, 10000);
     })();
 
-    // ── Hero word-by-word ──
+    // -- Hero word-by-word --
     (function() {
-      const h1 = document.getElementById('hero-h1');
-      const text = h1.textContent;
+      var h1 = document.getElementById('hero-h1');
+      var text = h1.textContent;
       h1.innerHTML = '';
       text.split(' ').forEach(function(word, i, arr) {
         var s = document.createElement('span');
@@ -1345,12 +1378,11 @@ label   clamp(0.6rem..0.7rem)</div>
       });
       requestAnimationFrame(function() { requestAnimationFrame(function() {
         h1.querySelectorAll('.word').forEach(function(w) { w.classList.add('visible'); });
-        document.getElementById('hero-ul').classList.add('drawn');
         document.getElementById('hero-ascii').classList.add('visible');
       }); });
     })();
 
-    // ── Scroll reveal (IntersectionObserver) ──
+    // -- Scroll reveal (IntersectionObserver) --
     (function() {
       var items = document.querySelectorAll('[data-reveal]');
       var obs = new IntersectionObserver(function(entries) {
@@ -1367,7 +1399,7 @@ label   clamp(0.6rem..0.7rem)</div>
       items.forEach(function(i) { obs.observe(i); });
     })();
 
-    // ── ASCII self-draw ──
+    // -- ASCII self-draw --
     (function() {
       var art = '\n' +
         '  \u256D\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256E\n' +
@@ -1410,7 +1442,7 @@ label   clamp(0.6rem..0.7rem)</div>
       }, { threshold: 0.2 }).observe(canvas);
     })();
 
-    // ── ASCII ticker ──
+    // -- ASCII ticker --
     (function() {
       var el = document.getElementById('ascii-ticker');
       if (!el) return;
@@ -1419,7 +1451,7 @@ label   clamp(0.6rem..0.7rem)</div>
       setInterval(function() { el.textContent = '\u2502 ' + f[i%f.length] + ' \u2502'; i++; }, 180);
     })();
 
-    // ── Draw underline demo ──
+    // -- Draw underline demo --
     (function() {
       var el = document.getElementById('draw-demo');
       if (!el) return;
@@ -1429,48 +1461,111 @@ label   clamp(0.6rem..0.7rem)</div>
       }, { threshold: 0.5 }).observe(el);
     })();
 
-    // ── Background parallax ──
+    // -- Dot grid background with parallax --
+    var drawDotGrid;
     (function() {
-      var ticking = false;
-      window.addEventListener('scroll', function() {
-        if (!ticking) {
-          requestAnimationFrame(function() {
-            var y = window.scrollY * 0.05;
-            document.body.style.setProperty('--bg-offset', y + 'px');
-            if (document.body.style.backgroundPositionY !== undefined) {
-              document.body.style.backgroundPositionY = y + 'px';
+      var canvas = document.getElementById('dot-grid');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var gridSize = 28;
+      var dotRadius = 1;
+      var scrollY = 0;
+      var time = 0;
+      var rafId = null;
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      drawDotGrid = function() {
+        isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        render();
+      };
+
+      function render() {
+        var w = canvas.width;
+        var h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+
+        // Dot color based on theme
+        var dotColor = isDark ? 'rgba(42,46,45,0.8)' : 'rgba(197,202,200,0.55)';
+        ctx.fillStyle = dotColor;
+
+        // Parallax offset: dots scroll at ~92% of content speed (8% parallax)
+        var parallaxY = scrollY * 0.08;
+        // Subtle horizontal sine drift
+        var driftX = Math.sin(time * 0.0005) * 2.5;
+
+        var startCol = Math.floor((-driftX) / gridSize) - 1;
+        var endCol = Math.ceil((w - driftX) / gridSize) + 1;
+        var startRow = Math.floor((-parallaxY % gridSize - gridSize) / gridSize);
+        var endRow = Math.ceil((h + gridSize) / gridSize) + 1;
+
+        for (var row = startRow; row <= endRow; row++) {
+          for (var col = startCol; col <= endCol; col++) {
+            var x = col * gridSize + driftX;
+            var y = row * gridSize + (parallaxY % gridSize);
+            if (x >= -2 && x <= w + 2 && y >= -2 && y <= h + 2) {
+              ctx.beginPath();
+              ctx.arc(x, y, dotRadius, 0, 6.283);
+              ctx.fill();
             }
-            ticking = false;
-          });
-          ticking = true;
+          }
         }
+      }
+
+      function loop(ts) {
+        time = ts || 0;
+        render();
+        rafId = requestAnimationFrame(loop);
+      }
+
+      window.addEventListener('scroll', function() {
+        scrollY = window.scrollY;
       }, { passive: true });
+
+      window.addEventListener('resize', function() {
+        resize();
+      });
+
+      // Respect reduced motion
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        resize();
+        render();
+        // Static render only, no animation loop
+        window.addEventListener('scroll', function() {
+          scrollY = window.scrollY;
+          render();
+        }, { passive: true });
+      } else {
+        resize();
+        scrollY = window.scrollY;
+        loop(0);
+      }
     })();
 
-    // ── Accordion toggle ──
+    // -- Accordion toggle --
     function toggleAccordion(header) {
       var item = header.parentElement;
       var wasOpen = item.classList.contains('open');
-      // Close all
       item.parentElement.querySelectorAll('.accordion-item').forEach(function(ai) {
         ai.classList.remove('open');
       });
-      // Open clicked if it was closed
       if (!wasOpen) item.classList.add('open');
     }
 
-    // ── Tabs ──
+    // -- Tabs --
     function switchTab(btn) {
       var tabId = btn.getAttribute('data-tab');
-      // Deactivate all
       document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
       document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
-      // Activate clicked
       btn.classList.add('active');
       document.getElementById(tabId).classList.add('active');
     }
 
-    // ── ASCII spinner ──
+    // -- ASCII spinner --
     (function() {
       var el = document.getElementById('ascii-spin');
       if (!el) return;
