@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <title>Recurr Pages</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -11,42 +12,115 @@
       background: #fafafa;
       color: #1a1a1a;
       min-height: 100vh;
-      padding: 80px 24px;
     }
-    .container { max-width: 640px; margin: 0 auto; }
-    h1 {
+
+    /* Password Gate */
+    .gate {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .gate-box {
+      text-align: center;
+      max-width: 320px;
+      width: 100%;
+    }
+    .gate-box h1 {
       font-size: 14px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: #888;
+      margin-bottom: 32px;
+    }
+    .gate-box input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .gate-box input:focus { border-color: #6366f1; }
+    .gate-box input.error { border-color: #ef4444; }
+    .gate-box .hint {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #ccc;
+    }
+
+    /* Content (hidden until auth) */
+    .content {
+      display: none;
+      padding: 80px 24px;
+    }
+    .content.visible { display: block; }
+
+    .container { max-width: 640px; margin: 0 auto; }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 48px;
     }
-    .pages { list-style: none; }
-    .pages li {
+    .header h1 {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #888;
+    }
+    .header button {
+      font-size: 12px;
+      color: #ccc;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .header button:hover { color: #888; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #bbb;
+      margin-top: 40px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
       border-bottom: 1px solid #eee;
     }
+    .section-label:first-of-type { margin-top: 0; }
+
+    .pages { list-style: none; }
+    .pages li { border-bottom: 1px solid #f0f0f0; }
     .pages a {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 0;
+      padding: 16px 0;
       text-decoration: none;
       color: #1a1a1a;
       transition: color 0.15s;
     }
     .pages a:hover { color: #6366f1; }
-    .page-name {
-      font-size: 17px;
-      font-weight: 500;
-    }
-    .page-project {
-      font-size: 13px;
+    .page-name { font-size: 16px; font-weight: 500; }
+    .page-tag {
+      font-size: 12px;
       color: #999;
       background: #f0f0f0;
-      padding: 4px 10px;
+      padding: 3px 8px;
       border-radius: 4px;
+      white-space: nowrap;
     }
+    .page-tag.latest {
+      background: #eef2ff;
+      color: #6366f1;
+    }
+
     .footer {
       margin-top: 64px;
       font-size: 13px;
@@ -55,167 +129,131 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Recurr Pages</h1>
-    <ul class="pages">
-      <li>
-        <a href="/ministry-of-oats/">
-          <span class="page-name">Ministry of Oats — Brand Landing Page</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/the-whole-fruit/">
-          <span class="page-name">The Whole Fruit — Brand Landing Page</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/protein-police/">
-          <span class="page-name">Protein Police — Brand Landing Page</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/outpost-kitchen/">
-          <span class="page-name">Outpost Kitchen — Landing Page</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/team-menu-admin/">
-          <span class="page-name">Team Menu — Admin App</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/team-menu-employee/">
-          <span class="page-name">Team Menu — Employee App</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/team-menu-meals/">
-          <span class="page-name">Team Menu — Meals</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/team-menu-pantry/">
-          <span class="page-name">Team Menu — Pantry</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/team-menu-brand-reference/">
-          <span class="page-name">Team Menu — Brand Reference</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/canteen/">
-          <span class="page-name">Canteen — Landing Page</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/canteen-app/">
-          <span class="page-name">Canteen — Employee App (Post-Signup)</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/canteen-home/">
-          <span class="page-name">Canteen — Employee Home Page</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/canteen-menu/">
-          <span class="page-name">Canteen — Menu Page</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/canteen-enterprise/">
-          <span class="page-name">Canteen — Enterprise (Employer Landing)</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/canteen-gym/">
-          <span class="page-name">Canteen — Gym & Fitness Partner Page</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/canteen-gym-members/">
-          <span class="page-name">Canteen — Gym Member Experience</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/payout-analyser/">
-          <span class="page-name">Payout Analyser — Platform Mockup</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/myca-ag/">
-          <span class="page-name">Myca AG — S3 Company Intelligence</span>
-          <span class="page-project">Content Studio</span>
-        </a>
-      </li>
-      <li>
-        <a href="/recurr/">
-          <span class="page-name">Recurr — B2B Product Marketing Studio</span>
-          <span class="page-project">Content Studio</span>
-        </a>
-      </li>
-      <li>
-        <a href="/uncharted-ai/">
-          <span class="page-name">Uncharted AI — Homepage (v5)</span>
-          <span class="page-project">Content Studio</span>
-        </a>
-      </li>
-      <li>
-        <a href="/uncharted-ai-v1/">
-          <span class="page-name">Uncharted AI — Homepage (v1)</span>
-          <span class="page-project">Content Studio</span>
-        </a>
-      </li>
-      <li>
-        <a href="/clarisights-seo/">
-          <span class="page-name">Clarisights — SEO & Content Plan</span>
-          <span class="page-project">Content Studio</span>
-        </a>
-      </li>
-      <li>
-        <a href="/anthracite/">
-          <span class="page-name">Anthracite — Book Production Bible</span>
-          <span class="page-project">Vayam</span>
-        </a>
-      </li>
-      <li>
-        <a href="/admin-portal/">
-          <span class="page-name">Admin Portal</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/user-portal/">
-          <span class="page-name">User Portal</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-      <li>
-        <a href="/ops-dashboard/">
-          <span class="page-name">Ops Dashboard</span>
-          <span class="page-project">Outpost</span>
-        </a>
-      </li>
-    </ul>
-    <p class="footer">recurr.co</p>
+
+  <!-- Password Gate -->
+  <div class="gate" id="gate">
+    <div class="gate-box">
+      <h1>Recurr Pages</h1>
+      <input type="password" id="pwd" placeholder="Password" autocomplete="off" autofocus>
+      <p class="hint">Internal pages directory</p>
+    </div>
   </div>
+
+  <!-- Directory Content -->
+  <div class="content" id="content">
+    <div class="container">
+      <div class="header">
+        <h1>Recurr Pages</h1>
+        <button onclick="logout()">Lock</button>
+      </div>
+
+      <p class="section-label">Outpost Kitchen</p>
+      <ul class="pages">
+        <li><a href="/outpost-kitchen/"><span class="page-name">Outpost Kitchen &mdash; Landing Page</span><span class="page-tag">brand</span></a></li>
+        <li><a href="/outpost-storefront/"><span class="page-name">Outpost Storefront &mdash; MOO Retail</span><span class="page-tag">retail</span></a></li>
+        <li><a href="/ministry-of-oats/"><span class="page-name">Ministry of Oats &mdash; Brand Page</span><span class="page-tag">brand</span></a></li>
+        <li><a href="/the-whole-fruit/"><span class="page-name">The Whole Fruit &mdash; Brand Page</span><span class="page-tag">brand</span></a></li>
+        <li><a href="/protein-police/"><span class="page-name">Protein Police &mdash; Brand Page</span><span class="page-tag">brand</span></a></li>
+        <li><a href="/payout-analyser/"><span class="page-name">Payout Analyser &mdash; Platform Mockup</span><span class="page-tag">tool</span></a></li>
+      </ul>
+
+      <p class="section-label">Canteen</p>
+      <ul class="pages">
+        <li><a href="/canteen/"><span class="page-name">Canteen &mdash; Landing Page (v1)</span><span class="page-tag">landing</span></a></li>
+        <li><a href="/canteen-home/"><span class="page-name">Canteen &mdash; Employee Home</span><span class="page-tag">app</span></a></li>
+        <li><a href="/canteen-menu/"><span class="page-name">Canteen &mdash; Menu</span><span class="page-tag">app</span></a></li>
+        <li><a href="/canteen-app/"><span class="page-name">Canteen &mdash; Post-Signup Experience</span><span class="page-tag">app</span></a></li>
+        <li><a href="/canteen-enterprise/"><span class="page-name">Canteen &mdash; Enterprise (Employer)</span><span class="page-tag">landing</span></a></li>
+        <li><a href="/canteen-gym/"><span class="page-name">Canteen &mdash; Gym & Fitness Partner</span><span class="page-tag">landing</span></a></li>
+        <li><a href="/canteen-gym-members/"><span class="page-name">Canteen &mdash; Gym Member Experience</span><span class="page-tag">landing</span></a></li>
+      </ul>
+
+      <p class="section-label">Team Menu (Archived)</p>
+      <ul class="pages">
+        <li><a href="/team-menu-admin/"><span class="page-name">Team Menu &mdash; Admin App</span><span class="page-tag">archived</span></a></li>
+        <li><a href="/team-menu-employee/"><span class="page-name">Team Menu &mdash; Employee App</span><span class="page-tag">archived</span></a></li>
+        <li><a href="/team-menu-meals/"><span class="page-name">Team Menu &mdash; Meals</span><span class="page-tag">archived</span></a></li>
+        <li><a href="/team-menu-pantry/"><span class="page-name">Team Menu &mdash; Pantry</span><span class="page-tag">archived</span></a></li>
+        <li><a href="/team-menu-brand-reference/"><span class="page-name">Team Menu &mdash; Brand Reference</span><span class="page-tag">archived</span></a></li>
+        <li><a href="/admin-portal/"><span class="page-name">Admin Portal</span><span class="page-tag">archived</span></a></li>
+        <li><a href="/user-portal/"><span class="page-name">User Portal</span><span class="page-tag">archived</span></a></li>
+        <li><a href="/ops-dashboard/"><span class="page-name">Ops Dashboard</span><span class="page-tag">archived</span></a></li>
+      </ul>
+
+      <p class="section-label">Uncharted AI</p>
+      <ul class="pages">
+        <li><a href="/uncharted-ai-v6/"><span class="page-name">Uncharted AI &mdash; Homepage v6</span><span class="page-tag latest">latest</span></a></li>
+        <li><a href="/uncharted-ai/"><span class="page-name">Uncharted AI &mdash; Homepage v5</span><span class="page-tag">v5</span></a></li>
+        <li><a href="/uncharted-ai-v5/"><span class="page-name">Uncharted AI &mdash; Homepage v5 (archive)</span><span class="page-tag">archived</span></a></li>
+        <li><a href="/uncharted-ai-v1/"><span class="page-name">Uncharted AI &mdash; Homepage v1</span><span class="page-tag">v1</span></a></li>
+      </ul>
+
+      <p class="section-label">Content Studio</p>
+      <ul class="pages">
+        <li><a href="/recurr/"><span class="page-name">Recurr &mdash; B2B Product Marketing Studio</span><span class="page-tag">landing</span></a></li>
+        <li><a href="/recurr-product/"><span class="page-name">Recurr &mdash; Product Mockup</span><span class="page-tag">mockup</span></a></li>
+        <li><a href="/clarisights-seo/"><span class="page-name">Clarisights &mdash; SEO & Content Plan</span><span class="page-tag">client</span></a></li>
+        <li><a href="/myca-ag/"><span class="page-name">Myca AG &mdash; S3 Company Intelligence</span><span class="page-tag">s3</span></a></li>
+      </ul>
+
+      <p class="section-label">Vayam</p>
+      <ul class="pages">
+        <li><a href="/anthracite/"><span class="page-name">Anthracite &mdash; Book Production Bible</span><span class="page-tag">content</span></a></li>
+      </ul>
+
+      <p class="footer">recurr.co &middot; Internal use only</p>
+    </div>
+  </div>
+
+  <script>
+    // Simple client-side password gate
+    // SHA-256 hash of password — not military-grade, but sufficient for an internal directory
+    const HASH = 'f7232b31d8f1c962a1db15570603ed332fc42f3c50d621447547ce25e234c98c';
+    const STORAGE_KEY = 'recurr_pages_auth';
+
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function checkPassword(pwd) {
+      const hash = await sha256(pwd);
+      if (hash === HASH) {
+        sessionStorage.setItem(STORAGE_KEY, '1');
+        document.getElementById('gate').style.display = 'none';
+        document.getElementById('content').classList.add('visible');
+        return true;
+      }
+      return false;
+    }
+
+    function logout() {
+      sessionStorage.removeItem(STORAGE_KEY);
+      document.getElementById('content').classList.remove('visible');
+      document.getElementById('gate').style.display = 'flex';
+      document.getElementById('pwd').value = '';
+      document.getElementById('pwd').focus();
+    }
+
+    // Check if already authed this session
+    if (sessionStorage.getItem(STORAGE_KEY)) {
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('content').classList.add('visible');
+    }
+
+    // Password input handler
+    document.getElementById('pwd').addEventListener('keydown', async function(e) {
+      if (e.key === 'Enter') {
+        const ok = await checkPassword(this.value);
+        if (!ok) {
+          this.classList.add('error');
+          this.value = '';
+          setTimeout(() => this.classList.remove('error'), 1000);
+        }
+      }
+    });
+  </script>
 </body>
 </html>

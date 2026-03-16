@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+<title>Ministry of Oats — Storefront Concept</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a1a;
+    color: #fff;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+  }
+
+  .header {
+    text-align: center;
+    padding: 40px 20px 20px;
+  }
+  .header h1 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #666;
+    margin-bottom: 8px;
+  }
+  .header h2 {
+    font-size: 28px;
+    font-weight: 300;
+    color: #fff;
+  }
+
+  /* === STOREFRONT VIEW === */
+  .storefront-container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+
+  .storefront {
+    position: relative;
+    background: #2a2a2a;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  /* Building context - the upper fascia */
+  .building-fascia {
+    background: #3a3a3a;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 3px solid #555;
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #888;
+  }
+
+  /* Main storefront area */
+  .storefront-main {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    height: 380px;
+    gap: 0;
+  }
+
+  /* ZONE 1: Glass storefront */
+  .glass-zone {
+    position: relative;
+    background: linear-gradient(135deg, #0a1520 0%, #0d1f30 50%, #0a1520 100%);
+    border-right: 8px solid #444;
+    overflow: hidden;
+  }
+
+  .glass-zone::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+  }
+
+  /* MOO vinyl design on glass */
+  .moo-vinyl {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 40px;
+  }
+
+  .moo-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .moo-logo-area {
+    flex: 1;
+  }
+
+  .moo-ministry {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: -4px;
+  }
+
+  .moo-oats {
+    font-size: 72px;
+    font-weight: 900;
+    color: #00AAFF;
+    line-height: 0.9;
+    text-shadow: 0 0 40px rgba(0,170,255,0.3);
+  }
+
+  .moo-tagline {
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* Mascot area */
+  .mascot-area {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 180px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mascot-placeholder {
+    width: 160px;
+    height: 200px;
+    border: 2px dashed rgba(0,170,255,0.4);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0,170,255,0.6);
+    font-size: 12px;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .mascot-placeholder .bunny-icon {
+    font-size: 60px;
+    margin-bottom: 8px;
+    filter: hue-rotate(180deg);
+  }
+
+  /* Menu highlights strip */
+  .menu-strip {
+    position: absolute;
+    bottom: 20px;
+    left: 40px;
+    right: 220px;
+    display: flex;
+    gap: 16px;
+  }
+
+  .menu-item-card {
+    background: rgba(0,170,255,0.12);
+    border: 1px solid rgba(0,170,255,0.25);
+    border-radius: 12px;
+    padding: 14px 18px;
+    flex: 1;
+    backdrop-filter: blur(4px);
+  }
+
+  .menu-item-card .item-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+
+  .menu-item-card .item-desc {
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .menu-item-card .item-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #00AAFF;
+    margin-top: 6px;
+  }
+
+  /* QR code area */
+  .qr-area {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    width: 80px;
+    text-align: center;
+  }
+
+  .qr-box {
+    width: 70px;
+    height: 70px;
+    background: #fff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 4px;
+  }
+
+  .qr-box span {
+    font-size: 10px;
+    color: #333;
+    font-weight: 700;
+  }
+
+  .qr-label {
+    font-size: 9px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ZONE 2: Entrance door */
+  .entrance-zone {
+    position: relative;
+    background: #222;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .entrance-door {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-left: 0;
+  }
+
+  /* Door panels */
+  .door-header {
+    background: #00AAFF;
+    padding: 20px 16px;
+    text-align: center;
+  }
+
+  .door-header .brand-mark {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #fff;
+  }
+
+  .door-header .brand-sub {
+    font-size: 9px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 2px;
+    letter-spacing: 1px;
+  }
+
+  /* Audience routing */
+  .route-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .route-panel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 16px 12px;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .route-panel.delivery {
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+    border-bottom: 1px solid #333;
+  }
+
+  .route-panel.walkin {
+    background: linear-gradient(180deg, #1a2e1a 0%, #162e21 100%);
+  }
+
+  .route-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+
+  .route-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #fff;
+  }
+
+  .route-sub {
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 4px;
+  }
+
+  .route-arrow {
+    font-size: 20px;
+    margin-top: 8px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* Divider between routes */
+  .route-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00AAFF, transparent);
+  }
+
+  /* Floor / base */
+  .storefront-base {
+    height: 40px;
+    background: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #666;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  /* Labels */
+  .zone-labels {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 12px 20px 0;
+  }
+
+  .zone-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #666;
+  }
+
+  .zone-label .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .zone-label .dot.blue { background: #00AAFF; }
+  .zone-label .dot.green { background: #4CAF50; }
+
+  /* === DIMENSIONS CALLOUT === */
+  .dimensions {
+    max-width: 1100px;
+    margin: 40px auto 0;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 20px;
+  }
+
+  .dim-box {
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .dim-box h3 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #00AAFF;
+    margin-bottom: 12px;
+  }
+
+  .dim-box ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .dim-box li {
+    font-size: 13px;
+    color: #aaa;
+    padding: 6px 0;
+    border-bottom: 1px solid #2a2a2a;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .dim-box li:last-child { border: none; }
+
+  .dim-box li::before {
+    content: '→';
+    color: #555;
+    flex-shrink: 0;
+  }
+
+  .dim-box li strong {
+    color: #ddd;
+    font-weight: 600;
+  }
+
+  /* === NOTES === */
+  .notes {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px 60px;
+  }
+
+  .notes h3 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #666;
+    margin-bottom: 16px;
+  }
+
+  .note-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .note-card {
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .note-card h4 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #00AAFF;
+    margin-bottom: 8px;
+  }
+
+  .note-card p {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.6;
+  }
+
+  /* Neon glow effect on glass */
+  .neon-strip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #00AAFF, #00ddff, #00AAFF, transparent);
+    box-shadow: 0 0 15px rgba(0,170,255,0.5), 0 0 30px rgba(0,170,255,0.2);
+  }
+
+  .neon-strip-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0,170,255,0.5), transparent);
+  }
+
+  /* Interior hint */
+  .interior-hint {
+    position: absolute;
+    bottom: 80px;
+    left: 40px;
+    display: flex;
+    gap: 20px;
+    opacity: 0.15;
+  }
+
+  .barstool {
+    width: 20px;
+    height: 40px;
+    border: 2px solid #fff;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+  }
+
+  .barstool::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 8px;
+    background: #fff;
+  }
+
+  /* Pillar markers */
+  .pillar-left, .pillar-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 12px;
+    background: #444;
+  }
+  .pillar-left { left: 0; }
+
+  @media (max-width: 768px) {
+    .storefront-main { height: 300px; }
+    .moo-oats { font-size: 48px; }
+    .menu-strip { display: none; }
+    .note-grid { grid-template-columns: 1fr; }
+    .dimensions { grid-template-columns: 1fr; }
+    .mascot-area { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Outpost Kitchen — Urban Vault HSR</h1>
+  <h2>Storefront Concept: Ministry of Oats</h2>
+</div>
+
+<!-- Zone Labels -->
+<div class="zone-labels">
+  <div class="zone-label"><span class="dot blue"></span> Glass Storefront — Brand Canvas</div>
+  <div class="zone-label"><span class="dot green"></span> Entrance — Routing</div>
+</div>
+
+<!-- Main Storefront -->
+<div class="storefront-container">
+  <div class="storefront">
+
+    <!-- Building fascia -->
+    <div class="building-fascia">Urban Vault — Building Signage Above</div>
+
+    <!-- Main area -->
+    <div class="storefront-main">
+
+      <!-- ZONE 1: Glass Storefront -->
+      <div class="glass-zone">
+        <div class="pillar-left"></div>
+        <div class="neon-strip"></div>
+        <div class="neon-strip-bottom"></div>
+
+        <div class="moo-vinyl">
+          <!-- Top: Logo + Tagline -->
+          <div class="moo-top-bar">
+            <div class="moo-logo-area">
+              <div class="moo-ministry">Ministry of</div>
+              <div class="moo-oats">OATS</div>
+              <div class="moo-tagline">Oats, But Lazier</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mascot -->
+        <div class="mascot-area">
+          <div class="mascot-placeholder">
+            <div class="bunny-icon">🐰</div>
+            <span>DJ Bunny Mascot<br>(Vinyl Cutout)</span>
+          </div>
+        </div>
+
+        <!-- Interior hint - barstools visible through glass -->
+        <div class="interior-hint">
+          <div class="barstool"></div>
+          <div class="barstool"></div>
+          <div class="barstool"></div>
+          <div class="barstool"></div>
+        </div>
+
+        <!-- Menu highlights at bottom -->
+        <div class="menu-strip">
+          <div class="menu-item-card">
+            <div class="item-name">Classic Overnight Oats</div>
+            <div class="item-desc">Peanut butter • banana • granola</div>
+            <div class="item-price">₹199</div>
+          </div>
+          <div class="menu-item-card">
+            <div class="item-name">Berry Blast Bowl</div>
+            <div class="item-desc">Mixed berries • chia • honey</div>
+            <div class="item-price">₹229</div>
+          </div>
+          <div class="menu-item-card">
+            <div class="item-name">Choco Crunch</div>
+            <div class="item-desc">Dark chocolate • almonds • oats</div>
+            <div class="item-price">₹219</div>
+          </div>
+        </div>
+
+        <!-- QR Code -->
+        <div class="qr-area">
+          <div class="qr-box"><span>QR</span></div>
+          <div class="qr-label">Order Now</div>
+        </div>
+      </div>
+
+      <!-- ZONE 2: Entrance Door -->
+      <div class="entrance-zone">
+        <div class="entrance-door">
+
+          <!-- Brand header on door -->
+          <div class="door-header">
+            <div class="brand-mark">MOO</div>
+            <div class="brand-sub">Ministry of Oats</div>
+          </div>
+
+          <!-- Audience routing -->
+          <div class="route-section">
+            <div class="route-panel delivery">
+              <div class="route-icon">🛵</div>
+              <div class="route-label">Delivery</div>
+              <div class="route-sub">Swiggy • Zomato • Partners</div>
+              <div class="route-arrow">↓</div>
+            </div>
+
+            <div class="route-divider"></div>
+
+            <div class="route-panel walkin">
+              <div class="route-icon">🚶</div>
+              <div class="route-label">Pickup</div>
+              <div class="route-sub">Walk-in Orders</div>
+              <div class="route-arrow">↓</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Base -->
+    <div class="storefront-base">Street Level — Sidewalk</div>
+
+  </div>
+</div>
+
+<!-- Dimensions & Specs -->
+<div class="dimensions">
+  <div class="dim-box">
+    <h3>Glass Storefront — What Goes On It</h3>
+    <ul>
+      <li><strong>Full vinyl wrap</strong> — MOO logo massive on left, DJ bunny mascot vinyl cutout on right</li>
+      <li><strong>Neon strip</strong> along top edge of glass — sky blue LED, visible from street at night</li>
+      <li><strong>Menu highlight cards</strong> — frosted vinyl panels at bottom showing 3 bestsellers with prices</li>
+      <li><strong>QR code</strong> — bottom right, links to Swiggy/ordering page</li>
+      <li><strong>Interior visible</strong> through clear glass between vinyl elements — barstools, kitchen activity create life</li>
+      <li><strong>Frosted band</strong> at bottom 1ft — hides under-counter clutter, adds premium feel</li>
+    </ul>
+  </div>
+  <div class="dim-box">
+    <h3>Entrance Door — Routing</h3>
+    <ul>
+      <li><strong>Blue header panel</strong> — MOO branding at top of door</li>
+      <li><strong>Split signage</strong> — delivery partners directed one way, walk-ins another</li>
+      <li><strong>Floor markers</strong> inside — colored tape/paint continuing the routing</li>
+      <li><strong>Door pull handle</strong> branded with MOO wordmark</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Design Notes -->
+<div class="notes">
+  <h3>Design Decisions</h3>
+  <div class="note-grid">
+    <div class="note-card">
+      <h4>Why Dark Glass</h4>
+      <p>The glass is already dark/tinted (visible in photo). White vinyl + sky blue neon will pop against it. Don't fight the darkness — use it as a canvas. The blue becomes the hero.</p>
+    </div>
+    <div class="note-card">
+      <h4>Mascot Placement</h4>
+      <p>DJ Bunny at eye level on the right third of the glass. Large enough to be recognizable from across the street. Vinyl cutout (not printed on background) — so it "floats" on the glass.</p>
+    </div>
+    <div class="note-card">
+      <h4>Audience Separation</h4>
+      <p>Delivery riders need clear, instant wayfinding — they're in a hurry. Color-coded door panels + floor markers. Walk-in/pickup gets a different entry flow so riders don't block the counter.</p>
+    </div>
+    <div class="note-card">
+      <h4>Menu as Marketing</h4>
+      <p>3 bestseller cards at bottom of glass = impulse awareness for foot traffic. Frosted vinyl cards feel premium, not like a restaurant menu board stuck on glass.</p>
+    </div>
+    <div class="note-card">
+      <h4>Night Visibility</h4>
+      <p>The neon LED strip along the top edge makes the storefront glow blue at night. Combined with interior lighting visible through clear glass sections, it pulls attention even after dark.</p>
+    </div>
+    <div class="note-card">
+      <h4>What This Isn't</h4>
+      <p>Not a full opaque wrap — that kills the glass advantage. You can still see inside (barstools, activity, warmth). The vinyl is strategic: branding on top, menu at bottom, clear in the middle.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
