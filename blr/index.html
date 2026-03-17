@@ -1,0 +1,1943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>BLR — India's Premium Consumer Product Media</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A0A;
+            --bg-elevated: #111111;
+            --bg-card: #161616;
+            --border: #1E1E1E;
+            --border-light: #2A2A2A;
+            --text: #F5F5F3;
+            --text-secondary: #8A8A8A;
+            --text-muted: #5A5A5A;
+            --gold: #D4A853;
+            --gold-dim: #B8923F;
+            --gold-glow: rgba(212, 168, 83, 0.08);
+            --serif: 'Playfair Display', Georgia, serif;
+            --sans: 'Inter', -apple-system, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px 256px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.8);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.4s ease;
+        }
+
+        .nav-logo {
+            font-family: var(--serif);
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            color: var(--text);
+        }
+
+        .nav-logo span {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            padding: 160px 48px 120px;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+        .reveal-delay-5 { transition-delay: 0.5s; }
+
+        /* Section Labels */
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        /* Dividers */
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ==================== FOLD 1: HERO ==================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 100px;
+        }
+
+        .hero-tagline {
+            font-family: var(--serif);
+            font-size: clamp(48px, 7vw, 96px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 48px;
+            max-width: 900px;
+        }
+
+        .hero-tagline em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .hero-sub {
+            font-size: 20px;
+            font-weight: 300;
+            color: var(--text-secondary);
+            max-width: 640px;
+            line-height: 1.7;
+            margin-bottom: 64px;
+        }
+
+        .hero-systems {
+            display: flex;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .hero-system {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .hero-system-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        .hero-system-name {
+            font-family: var(--serif);
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-system-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .hero-scroll-hint {
+            position: absolute;
+            bottom: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            animation: pulse-down 2s ease infinite;
+        }
+
+        .hero-scroll-hint::after {
+            content: '';
+            width: 1px;
+            height: 32px;
+            background: linear-gradient(to bottom, var(--text-muted), transparent);
+        }
+
+        @keyframes pulse-down {
+            0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
+            50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+        }
+
+        /* ==================== FOLD 2: BLR STORE — THE FACE ==================== */
+        .store-face {
+            background: var(--bg);
+        }
+
+        .store-face h2 {
+            font-family: var(--serif);
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        .store-face h2 em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .store-face-intro {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 640px;
+            line-height: 1.7;
+            margin-bottom: 80px;
+        }
+
+        .ig-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            margin-bottom: 64px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .ig-cell {
+            aspect-ratio: 1;
+            background: var(--bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .ig-cell:hover {
+            background: var(--bg-elevated);
+        }
+
+        .ig-cell-content {
+            text-align: center;
+            padding: 16px;
+        }
+
+        .ig-cell-emoji {
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: block;
+            filter: grayscale(0.3);
+        }
+
+        .ig-cell-label {
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .ig-cell.featured {
+            grid-column: span 2;
+            grid-row: span 2;
+            background: var(--gold-glow);
+            border: 1px solid rgba(212, 168, 83, 0.15);
+        }
+
+        .ig-cell.featured .ig-cell-emoji {
+            font-size: 48px;
+            filter: none;
+        }
+
+        .ig-cell.featured .ig-cell-label {
+            font-size: 12px;
+            color: var(--gold);
+        }
+
+        .social-proof {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .social-stat {
+            padding: 32px;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+        }
+
+        .social-stat-number {
+            font-family: var(--serif);
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .social-stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* ==================== FOLD 3: APP VISION ==================== */
+        .app-vision {
+            background: var(--bg-elevated);
+        }
+
+        .app-vision h2 {
+            font-family: var(--serif);
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        .app-vision-intro {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 640px;
+            line-height: 1.7;
+            margin-bottom: 80px;
+        }
+
+        .app-mockup-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .app-mockup {
+            background: var(--bg);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-mockup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(180deg, rgba(212, 168, 83, 0.06), transparent);
+            pointer-events: none;
+        }
+
+        .app-mockup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .app-mockup-brand {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .app-mockup-brand span {
+            color: var(--gold);
+        }
+
+        .app-mockup-pills {
+            display: flex;
+            gap: 8px;
+        }
+
+        .app-mockup-pill {
+            padding: 4px 12px;
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            font-size: 10px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .app-mockup-pill.active {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: var(--gold-glow);
+        }
+
+        .app-product-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .app-product-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .app-product-thumb {
+            width: 56px;
+            height: 56px;
+            border-radius: 8px;
+            background: var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .app-product-info {
+            flex: 1;
+        }
+
+        .app-product-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .app-product-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .app-product-price {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .app-product-price .old {
+            color: var(--text-muted);
+            text-decoration: line-through;
+            font-weight: 400;
+            font-size: 12px;
+            margin-left: 6px;
+        }
+
+        .anti-hoarder {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .anti-hoarder-statement {
+            font-family: var(--serif);
+            font-size: 28px;
+            font-weight: 400;
+            font-style: italic;
+            line-height: 1.4;
+            color: var(--text);
+            border-left: 2px solid var(--gold);
+            padding-left: 24px;
+        }
+
+        .anti-hoarder-points {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .anti-hoarder-point {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .anti-hoarder-point-icon {
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .anti-hoarder-point-icon::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        .anti-hoarder-point p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .audience-badge {
+            display: inline-block;
+            padding: 12px 24px;
+            border: 1px solid var(--gold);
+            border-radius: 2px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gold);
+            letter-spacing: 0.05em;
+            margin-top: 16px;
+            background: var(--gold-glow);
+        }
+
+        /* ==================== FOLD 4: MAGAZINE ENGINE ==================== */
+        .magazine {
+            background: var(--bg);
+        }
+
+        .magazine h2 {
+            font-family: var(--serif);
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        .magazine h2 em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .magazine-intro {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 640px;
+            line-height: 1.7;
+            margin-bottom: 80px;
+        }
+
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            position: relative;
+            margin-bottom: 80px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border-light);
+        }
+
+        .timeline-week {
+            padding: 0 24px;
+            position: relative;
+        }
+
+        .timeline-week::before {
+            content: '';
+            position: absolute;
+            top: 36px;
+            left: 24px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--gold);
+            border: 2px solid var(--bg);
+            z-index: 1;
+        }
+
+        .timeline-week-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 40px;
+        }
+
+        .timeline-week-title {
+            font-family: var(--serif);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .timeline-week-items {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .timeline-week-items li {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .timeline-week-items li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 4px;
+            height: 1px;
+            background: var(--text-muted);
+        }
+
+        .magazine-recurring {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .recurring-card {
+            padding: 32px;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            transition: border-color 0.3s ease;
+        }
+
+        .recurring-card:hover {
+            border-color: var(--border-light);
+        }
+
+        .recurring-card-title {
+            font-family: var(--serif);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .recurring-card-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ==================== FOLD 5: BLR PRESS ==================== */
+        .press {
+            background: var(--bg-elevated);
+        }
+
+        .press h2 {
+            font-family: var(--serif);
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        .press h2 em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .press-intro {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 640px;
+            line-height: 1.7;
+            margin-bottom: 80px;
+        }
+
+        .press-interface {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 64px;
+        }
+
+        .press-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+
+        .press-toolbar-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .press-toolbar-dot.red { background: #FF5F57; }
+        .press-toolbar-dot.yellow { background: #FFBD2E; }
+        .press-toolbar-dot.green { background: #28CA41; }
+
+        .press-toolbar-url {
+            flex: 1;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-family: var(--sans);
+        }
+
+        .press-compare {
+            display: grid;
+            grid-template-columns: 1fr 48px 1fr;
+            gap: 0;
+            padding: 32px;
+        }
+
+        .press-product {
+            padding: 24px;
+            background: var(--bg-card);
+            border-radius: 4px;
+        }
+
+        .press-product-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border: 1px solid var(--border-light);
+            border-radius: 2px;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .press-product-name {
+            font-family: var(--serif);
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .press-product-category {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .press-bar {
+            margin-bottom: 16px;
+        }
+
+        .press-bar-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .press-bar-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .press-bar-value {
+            font-size: 11px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .press-bar-track {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .press-bar-fill {
+            height: 100%;
+            background: var(--gold);
+            border-radius: 2px;
+            transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .press-vs {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .press-vs-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .press-features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .press-feature {
+            padding: 28px;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+        }
+
+        .press-feature-icon {
+            font-size: 24px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .press-feature-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .press-feature-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ==================== FOLD 6: BLR VC ==================== */
+        .vc-show {
+            background: var(--bg);
+            min-height: auto;
+            padding-top: 120px;
+            padding-bottom: 120px;
+        }
+
+        .vc-show h2 {
+            font-family: var(--serif);
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        .vc-show h2 em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .vc-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .vc-desc {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 40px;
+        }
+
+        .vc-guests {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .vc-guest-type {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .vc-guest-type::before {
+            content: '';
+            width: 8px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .vc-player {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .vc-player-screen {
+            aspect-ratio: 16/9;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .vc-play-btn {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .vc-play-btn::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 20px solid var(--gold);
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 4px;
+        }
+
+        .vc-player-label {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .vc-player-info {
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .vc-player-title {
+            font-family: var(--serif);
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .vc-player-ep {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .vc-flywheel {
+            margin-top: 24px;
+            padding: 20px 24px;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .vc-flywheel span {
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        /* ==================== FOLD 7: BUSINESS MODEL ==================== */
+        .business {
+            background: var(--bg-elevated);
+        }
+
+        .business h2 {
+            font-family: var(--serif);
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        .business h2 em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .business-intro {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 640px;
+            line-height: 1.7;
+            margin-bottom: 80px;
+        }
+
+        .flywheel {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .flywheel-row {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 40px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+        }
+
+        .flywheel-row:last-child {
+            border-bottom: none;
+        }
+
+        .flywheel-source {
+            font-family: var(--serif);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .flywheel-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .revenue-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .revenue-card {
+            padding: 40px 32px;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            text-align: center;
+            transition: border-color 0.3s ease;
+        }
+
+        .revenue-card:hover {
+            border-color: var(--gold);
+        }
+
+        .revenue-card.primary {
+            border-color: var(--gold);
+            background: var(--gold-glow);
+        }
+
+        .revenue-icon {
+            font-size: 28px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .revenue-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .revenue-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .revenue-tag {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 4px 10px;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: 2px;
+        }
+
+        .revenue-tag.now {
+            color: var(--gold);
+            border: 1px solid var(--gold);
+        }
+
+        .revenue-tag.future {
+            color: var(--text-muted);
+            border: 1px solid var(--border-light);
+        }
+
+        /* ==================== FOLD 8: FOOTER ==================== */
+        .site-footer {
+            min-height: auto;
+            padding: 120px 48px;
+            text-align: center;
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-logo {
+            font-family: var(--serif);
+            font-size: clamp(48px, 6vw, 80px);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+
+        .footer-logo span {
+            color: var(--gold);
+        }
+
+        .footer-tagline {
+            font-size: 20px;
+            font-weight: 300;
+            color: var(--text-secondary);
+            margin-bottom: 64px;
+        }
+
+        .footer-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 40px;
+            border: 1px solid var(--gold);
+            background: transparent;
+            color: var(--gold);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .footer-cta:hover {
+            background: var(--gold);
+            color: var(--bg);
+        }
+
+        .footer-systems {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-system {
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+
+        .footer-system span {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .footer-copy {
+            margin-top: 48px;
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            nav {
+                padding: 16px 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            section {
+                padding: 120px 24px 80px;
+            }
+
+            .hero {
+                padding-top: 80px;
+            }
+
+            .hero-systems {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .hero-scroll-hint {
+                display: none;
+            }
+
+            .ig-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .ig-cell.featured {
+                grid-column: span 2;
+                grid-row: span 1;
+            }
+
+            .social-proof {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .app-mockup-container {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .timeline {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .timeline::before {
+                top: 0;
+                bottom: 0;
+                left: 24px;
+                width: 1px;
+                height: auto;
+            }
+
+            .timeline-week::before {
+                top: 0;
+                left: 20px;
+            }
+
+            .timeline-week {
+                padding-left: 48px;
+                padding-right: 0;
+            }
+
+            .timeline-week-label {
+                margin-bottom: 16px;
+            }
+
+            .magazine-recurring {
+                grid-template-columns: 1fr;
+            }
+
+            .press-compare {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                padding: 16px;
+            }
+
+            .press-vs {
+                display: none;
+            }
+
+            .press-features {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+
+            .vc-layout {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .flywheel-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .revenue-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .site-footer {
+                padding: 80px 24px;
+            }
+
+            .footer-systems {
+                flex-direction: column;
+                gap: 16px;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .press-features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-logo">BLR<span>.</span></div>
+        <ul class="nav-links">
+            <li><a href="#store">Store</a></li>
+            <li><a href="#app">App</a></li>
+            <li><a href="#magazine">Magazine</a></li>
+            <li><a href="#press">Press</a></li>
+            <li><a href="#vc">VC</a></li>
+            <li><a href="#business">Business</a></li>
+        </ul>
+    </nav>
+
+    <!-- FOLD 1: HERO -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="reveal">
+                <h1 class="hero-tagline">If you have money to spend,<br>spend it <em>well.</em></h1>
+            </div>
+            <p class="hero-sub reveal reveal-delay-1">
+                India's premium consumer product media. Three systems. One mission: help India's discerning consumers discover, evaluate, and choose mindfully.
+            </p>
+            <div class="hero-systems reveal reveal-delay-2">
+                <div class="hero-system">
+                    <div class="hero-system-dot"></div>
+                    <div>
+                        <div class="hero-system-name">blr.store</div>
+                        <div class="hero-system-desc">The magazine</div>
+                    </div>
+                </div>
+                <div class="hero-system">
+                    <div class="hero-system-dot"></div>
+                    <div>
+                        <div class="hero-system-name">blr.press</div>
+                        <div class="hero-system-desc">The intelligence</div>
+                    </div>
+                </div>
+                <div class="hero-system">
+                    <div class="hero-system-dot"></div>
+                    <div>
+                        <div class="hero-system-name">blr.vc</div>
+                        <div class="hero-system-desc">The show</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll-hint">Scroll</div>
+    </section>
+
+    <!-- FOLD 2: BLR STORE — THE FACE -->
+    <div class="section-divider"></div>
+    <section class="store-face" id="store">
+        <div class="container">
+            <div class="section-label reveal">BLR Store</div>
+            <h2 class="reveal">The <em>face</em> of BLR</h2>
+            <p class="store-face-intro reveal reveal-delay-1">
+                A viral media brand living across Instagram, YouTube, and Reddit. Magazine-like editorial. Curated collections. Cultural commentary on how India shops. This is where the audience lives.
+            </p>
+
+            <div class="ig-grid reveal reveal-delay-2">
+                <div class="ig-cell featured">
+                    <div class="ig-cell-content">
+                        <span class="ig-cell-emoji">&#9830;</span>
+                        <span class="ig-cell-label">Monthly Theme</span>
+                    </div>
+                </div>
+                <div class="ig-cell">
+                    <div class="ig-cell-content">
+                        <span class="ig-cell-emoji">&#9733;</span>
+                        <span class="ig-cell-label">Top Picks</span>
+                    </div>
+                </div>
+                <div class="ig-cell">
+                    <div class="ig-cell-content">
+                        <span class="ig-cell-emoji">&#9670;</span>
+                        <span class="ig-cell-label">Collections</span>
+                    </div>
+                </div>
+                <div class="ig-cell">
+                    <div class="ig-cell-content">
+                        <span class="ig-cell-emoji">&#9998;</span>
+                        <span class="ig-cell-label">Commentary</span>
+                    </div>
+                </div>
+                <div class="ig-cell">
+                    <div class="ig-cell-content">
+                        <span class="ig-cell-emoji">&#9881;</span>
+                        <span class="ig-cell-label">Brand Deep-dive</span>
+                    </div>
+                </div>
+                <div class="ig-cell">
+                    <div class="ig-cell-content">
+                        <span class="ig-cell-emoji">&#10052;</span>
+                        <span class="ig-cell-label">Gift Guide</span>
+                    </div>
+                </div>
+                <div class="ig-cell">
+                    <div class="ig-cell-content">
+                        <span class="ig-cell-emoji">&#9673;</span>
+                        <span class="ig-cell-label">Reels</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-proof reveal reveal-delay-3">
+                <div class="social-stat">
+                    <div class="social-stat-number">IG + YT</div>
+                    <div class="social-stat-label">Viral editorial. Curated collections. The consumer voice India trusts.</div>
+                </div>
+                <div class="social-stat">
+                    <div class="social-stat-number">Reddit</div>
+                    <div class="social-stat-label">Community-owned product conversations. Real people, real opinions.</div>
+                </div>
+                <div class="social-stat">
+                    <div class="social-stat-number">Top 10%</div>
+                    <div class="social-stat-label">Targeting India's premium ecommerce shoppers. Design, brand, trust.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOLD 3: APP VISION -->
+    <div class="section-divider"></div>
+    <section class="app-vision" id="app">
+        <div class="container">
+            <div class="section-label reveal">The Vision</div>
+            <h2 class="reveal">The anti-hoarder<br>shopping app</h2>
+            <p class="app-vision-intro reveal reveal-delay-1">
+                Marketplaces are designed to make you spend more. We help you spend your money right. A curated, intelligent app for India's most discerning shoppers.
+            </p>
+
+            <div class="app-mockup-container">
+                <div class="app-mockup reveal reveal-delay-2">
+                    <div class="app-mockup-header">
+                        <div class="app-mockup-brand">BLR<span>.</span>store</div>
+                        <div class="app-mockup-pills">
+                            <div class="app-mockup-pill active">For You</div>
+                            <div class="app-mockup-pill">Shortlist</div>
+                            <div class="app-mockup-pill">Drops</div>
+                        </div>
+                    </div>
+                    <div class="app-product-cards">
+                        <div class="app-product-card">
+                            <div class="app-product-thumb">&#9671;</div>
+                            <div class="app-product-info">
+                                <div class="app-product-name">Mekong Brewing Co.</div>
+                                <div class="app-product-meta">Cold-pressed coffee concentrate</div>
+                            </div>
+                            <div class="app-product-price">&#8377;890</div>
+                        </div>
+                        <div class="app-product-card">
+                            <div class="app-product-thumb">&#9651;</div>
+                            <div class="app-product-info">
+                                <div class="app-product-name">Pahadi Local Honey</div>
+                                <div class="app-product-meta">Wild forest, single-origin</div>
+                            </div>
+                            <div class="app-product-price">&#8377;1,240 <span class="old">&#8377;1,600</span></div>
+                        </div>
+                        <div class="app-product-card">
+                            <div class="app-product-thumb">&#9673;</div>
+                            <div class="app-product-info">
+                                <div class="app-product-name">Studio Indigene Chair</div>
+                                <div class="app-product-meta">Solid teak, handcrafted</div>
+                            </div>
+                            <div class="app-product-price">&#8377;34,500</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="anti-hoarder reveal reveal-delay-3">
+                    <div class="anti-hoarder-statement">
+                        Not merely discounts. Finding the product that works best for you.
+                    </div>
+                    <div class="anti-hoarder-points">
+                        <div class="anti-hoarder-point">
+                            <div class="anti-hoarder-point-icon"></div>
+                            <p>Curated collections with special price drops from brands we believe in</p>
+                        </div>
+                        <div class="anti-hoarder-point">
+                            <div class="anti-hoarder-point-icon"></div>
+                            <p>Shortlist products, share wishlists, curate links, track price changes</p>
+                        </div>
+                        <div class="anti-hoarder-point">
+                            <div class="anti-hoarder-point-icon"></div>
+                            <p>We focus on segments that attract India's top 10% ecommerce shoppers</p>
+                        </div>
+                        <div class="anti-hoarder-point">
+                            <div class="anti-hoarder-point-icon"></div>
+                            <p>For people who appreciate intelligent design and expression of art and creativity</p>
+                        </div>
+                    </div>
+                    <div class="audience-badge">Mindful spending. Not less spending.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOLD 4: MAGAZINE ENGINE -->
+    <div class="section-divider"></div>
+    <section class="magazine" id="magazine">
+        <div class="container">
+            <div class="section-label reveal">The Engine</div>
+            <h2 class="reveal">Monthly <em>magazine</em><br>machine</h2>
+            <p class="magazine-intro reveal reveal-delay-1">
+                Every month, a new theme that we want the internet to start talking about. Research, editorial, conversations, and curation — all orchestrated across four weeks.
+            </p>
+
+            <div class="timeline reveal reveal-delay-2">
+                <div class="timeline-week">
+                    <div class="timeline-week-label">Week 1</div>
+                    <div class="timeline-week-title">Research &amp; Intelligence</div>
+                    <ul class="timeline-week-items">
+                        <li>Theme announced publicly</li>
+                        <li>Deep research published on BLR Press</li>
+                        <li>Product profiles updated</li>
+                        <li>Reddit discussion seeded</li>
+                    </ul>
+                </div>
+                <div class="timeline-week">
+                    <div class="timeline-week-label">Week 2</div>
+                    <div class="timeline-week-title">Conversations</div>
+                    <ul class="timeline-week-items">
+                        <li>BLR vc episodes with category experts</li>
+                        <li>Brand founder interviews</li>
+                        <li>Investor perspectives filmed</li>
+                        <li>Community polls and feedback</li>
+                    </ul>
+                </div>
+                <div class="timeline-week">
+                    <div class="timeline-week-label">Week 3</div>
+                    <div class="timeline-week-title">Editorial &amp; Opinion</div>
+                    <ul class="timeline-week-items">
+                        <li>Magazine editorial formed</li>
+                        <li>Curated collections built</li>
+                        <li>Comparison pages launched</li>
+                        <li>Instagram/YouTube content drops</li>
+                    </ul>
+                </div>
+                <div class="timeline-week">
+                    <div class="timeline-week-label">Week 4</div>
+                    <div class="timeline-week-title">Launch &amp; Distribution</div>
+                    <ul class="timeline-week-items">
+                        <li>Full magazine edition published</li>
+                        <li>1-2 curated collections live on Store</li>
+                        <li>Newsletter blast to subscribers</li>
+                        <li>Social distribution blitz</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="magazine-recurring reveal reveal-delay-3">
+                <div class="recurring-card">
+                    <div class="recurring-card-title">Curated Collections</div>
+                    <div class="recurring-card-desc">Every edition features 1-2 handpicked collections tied to the monthly theme. Products chosen for design, quality, and intent.</div>
+                </div>
+                <div class="recurring-card">
+                    <div class="recurring-card-title">Editor's Commentary</div>
+                    <div class="recurring-card-desc">Opinionated takes on the state of Indian consumer markets. What's overhyped, what's underrated, what deserves attention.</div>
+                </div>
+                <div class="recurring-card">
+                    <div class="recurring-card-title">The Shelf</div>
+                    <div class="recurring-card-desc">Products discovered through BLR vc guest conversations. Every episode spawns a shelf collection for the audience.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOLD 5: BLR PRESS -->
+    <div class="section-divider"></div>
+    <section class="press" id="press">
+        <div class="container">
+            <div class="section-label reveal">BLR Press</div>
+            <h2 class="reveal">Wikipedia for India's <em>consumer</em> products</h2>
+            <p class="press-intro reveal reveal-delay-1">
+                A research platform built programmatically. Product profiles. Aggregated reviews. Brand intelligence. Comparison engine. The most comprehensive, always-updated reference for Indian consumers.
+            </p>
+
+            <div class="press-interface reveal reveal-delay-2">
+                <div class="press-toolbar">
+                    <div class="press-toolbar-dot red"></div>
+                    <div class="press-toolbar-dot yellow"></div>
+                    <div class="press-toolbar-dot green"></div>
+                    <div class="press-toolbar-url">blr.press/compare/earbuds</div>
+                </div>
+                <div class="press-compare">
+                    <div class="press-product">
+                        <div class="press-product-badge">Product A</div>
+                        <div class="press-product-name">Sennheiser MTW4</div>
+                        <div class="press-product-category">Premium Wireless Earbuds</div>
+                        <div class="press-bar">
+                            <div class="press-bar-header">
+                                <span class="press-bar-label">Sound Quality</span>
+                                <span class="press-bar-value">94/100</span>
+                            </div>
+                            <div class="press-bar-track">
+                                <div class="press-bar-fill" style="width: 94%"></div>
+                            </div>
+                        </div>
+                        <div class="press-bar">
+                            <div class="press-bar-header">
+                                <span class="press-bar-label">Comfort</span>
+                                <span class="press-bar-value">88/100</span>
+                            </div>
+                            <div class="press-bar-track">
+                                <div class="press-bar-fill" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div class="press-bar">
+                            <div class="press-bar-header">
+                                <span class="press-bar-label">Sentiment</span>
+                                <span class="press-bar-value">91/100</span>
+                            </div>
+                            <div class="press-bar-track">
+                                <div class="press-bar-fill" style="width: 91%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="press-vs">
+                        <div class="press-vs-badge">VS</div>
+                    </div>
+                    <div class="press-product">
+                        <div class="press-product-badge">Product B</div>
+                        <div class="press-product-name">Sony WF-1000XM5</div>
+                        <div class="press-product-category">Premium Wireless Earbuds</div>
+                        <div class="press-bar">
+                            <div class="press-bar-header">
+                                <span class="press-bar-label">Sound Quality</span>
+                                <span class="press-bar-value">92/100</span>
+                            </div>
+                            <div class="press-bar-track">
+                                <div class="press-bar-fill" style="width: 92%"></div>
+                            </div>
+                        </div>
+                        <div class="press-bar">
+                            <div class="press-bar-header">
+                                <span class="press-bar-label">Comfort</span>
+                                <span class="press-bar-value">82/100</span>
+                            </div>
+                            <div class="press-bar-track">
+                                <div class="press-bar-fill" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        <div class="press-bar">
+                            <div class="press-bar-header">
+                                <span class="press-bar-label">Sentiment</span>
+                                <span class="press-bar-value">87/100</span>
+                            </div>
+                            <div class="press-bar-track">
+                                <div class="press-bar-fill" style="width: 87%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="press-features reveal reveal-delay-3">
+                <div class="press-feature">
+                    <span class="press-feature-icon">&#9635;</span>
+                    <div class="press-feature-title">Product Profiles</div>
+                    <div class="press-feature-desc">Facts, specs, pricing history. Updated programmatically. Every product gets a living page.</div>
+                </div>
+                <div class="press-feature">
+                    <span class="press-feature-icon">&#9733;</span>
+                    <div class="press-feature-title">Aggregated Reviews</div>
+                    <div class="press-feature-desc">Sentiment from Amazon, Reddit, Instagram, Nykaa, and more. Real opinions, not paid placements.</div>
+                </div>
+                <div class="press-feature">
+                    <span class="press-feature-icon">&#9879;</span>
+                    <div class="press-feature-title">Open Comparisons</div>
+                    <div class="press-feature-desc">Pull any two products. Compare side-by-side. Open-ended, not template-locked.</div>
+                </div>
+                <div class="press-feature">
+                    <span class="press-feature-icon">&#9775;</span>
+                    <div class="press-feature-title">SEO + LLM Optimized</div>
+                    <div class="press-feature-desc">Programmatic pages capturing search volume and AI citation. The largest share of consumer queries.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOLD 6: BLR VC -->
+    <div class="section-divider"></div>
+    <section class="vc-show" id="vc">
+        <div class="container">
+            <div class="section-label reveal">BLR vc</div>
+            <div class="vc-layout">
+                <div>
+                    <h2 class="reveal">The <em>show</em></h2>
+                    <p class="vc-desc reveal reveal-delay-1">
+                        Conversations with the people who build, fund, and shape India's consumer brands. YouTube-first. Every episode creates a ripple — a shelf collection on BLR Store, a data update on BLR Press, a cultural moment in the community.
+                    </p>
+                    <div class="vc-guests reveal reveal-delay-2">
+                        <div class="vc-guest-type">Consumer brand founders</div>
+                        <div class="vc-guest-type">Early-stage investors in D2C</div>
+                        <div class="vc-guest-type">Category domain experts</div>
+                        <div class="vc-guest-type">Health, fitness, wellness voices</div>
+                        <div class="vc-guest-type">Design and craft practitioners</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="vc-player reveal reveal-delay-2">
+                        <div class="vc-player-screen">
+                            <div class="vc-play-btn"></div>
+                            <div class="vc-player-label">YouTube Primary</div>
+                        </div>
+                        <div class="vc-player-info">
+                            <div class="vc-player-title">Coming Soon</div>
+                            <div class="vc-player-ep">BLR vc S01</div>
+                        </div>
+                    </div>
+                    <div class="vc-flywheel reveal reveal-delay-3">
+                        <span>Episode</span> &#8594; <span>Shelf Collection</span> &#8594; <span>Press Update</span> &#8594; <span>Community Discussion</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOLD 7: BUSINESS MODEL -->
+    <div class="section-divider"></div>
+    <section class="business" id="business">
+        <div class="container">
+            <div class="section-label reveal">The Business</div>
+            <h2 class="reveal">Media that <em>monetizes</em></h2>
+            <p class="business-intro reveal reveal-delay-1">
+                Build a media property that captures a significant share of media budget from India's eCommerce venture ecosystem. Audience first, revenue follows.
+            </p>
+
+            <div class="flywheel reveal reveal-delay-2">
+                <div class="flywheel-row">
+                    <div class="flywheel-source">BLR Store</div>
+                    <div class="flywheel-desc">Builds audience trust through curated editorial. Drives affiliate revenue from every recommendation. Brands pay for featured placement.</div>
+                </div>
+                <div class="flywheel-row">
+                    <div class="flywheel-source">BLR Press</div>
+                    <div class="flywheel-desc">Captures organic search traffic with programmatic pages. Comparison pages attract high-intent buyers. Premium ad inventory on high-traffic pages.</div>
+                </div>
+                <div class="flywheel-row">
+                    <div class="flywheel-source">BLR vc</div>
+                    <div class="flywheel-desc">Distribution through guest networks. Brand relationships open sponsorship doors. Every episode is a touchpoint with India's consumer ecosystem.</div>
+                </div>
+            </div>
+
+            <div class="revenue-grid reveal reveal-delay-3">
+                <div class="revenue-card primary">
+                    <span class="revenue-icon">&#9670;</span>
+                    <div class="revenue-title">Affiliate Revenue</div>
+                    <div class="revenue-desc">Commission on every product purchased through BLR Store's curated recommendations.</div>
+                    <div class="revenue-tag now">Day 1</div>
+                </div>
+                <div class="revenue-card">
+                    <span class="revenue-icon">&#9733;</span>
+                    <div class="revenue-title">SEO Monetization</div>
+                    <div class="revenue-desc">High-intent traffic from BLR Press comparison and "best of" pages. Premium placements.</div>
+                    <div class="revenue-tag now">Day 1</div>
+                </div>
+                <div class="revenue-card">
+                    <span class="revenue-icon">&#9830;</span>
+                    <div class="revenue-title">Brand Partnerships</div>
+                    <div class="revenue-desc">Sponsored content, featured collections, native integrations for consumer brands.</div>
+                    <div class="revenue-tag now">Day 1</div>
+                </div>
+                <div class="revenue-card">
+                    <span class="revenue-icon">&#9673;</span>
+                    <div class="revenue-title">Premium Ad Inventory</div>
+                    <div class="revenue-desc">High-CPM placements on BLR Press comparison pages with purchase-intent audience.</div>
+                    <div class="revenue-tag future">Month 6</div>
+                </div>
+                <div class="revenue-card">
+                    <span class="revenue-icon">&#9651;</span>
+                    <div class="revenue-title">Commerce Layer</div>
+                    <div class="revenue-desc">Direct checkout on BLR Store. Pass orders to brands. Own the transaction, not just the click.</div>
+                    <div class="revenue-tag future">Year 2</div>
+                </div>
+                <div class="revenue-card">
+                    <span class="revenue-icon">&#9775;</span>
+                    <div class="revenue-title">Data Licensing</div>
+                    <div class="revenue-desc">Consumer sentiment, brand intelligence, and market trend data from BLR Press research engine.</div>
+                    <div class="revenue-tag future">Year 2</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOLD 8: FOOTER -->
+    <div class="section-divider"></div>
+    <section class="site-footer">
+        <div class="container">
+            <div class="footer-logo reveal">BLR<span>.</span></div>
+            <p class="footer-tagline reveal reveal-delay-1">Redefining how India shops.</p>
+            <a href="mailto:pratik@recurr.co" class="footer-cta reveal reveal-delay-2">
+                Get in Touch &#8594;
+            </a>
+            <div class="footer-systems reveal reveal-delay-3">
+                <div class="footer-system"><span>blr.store</span> &mdash; The Magazine</div>
+                <div class="footer-system"><span>blr.press</span> &mdash; The Intelligence</div>
+                <div class="footer-system"><span>blr.vc</span> &mdash; The Show</div>
+            </div>
+            <p class="footer-copy reveal reveal-delay-4">&copy; 2026 BLR Media. A Recurr Studio venture.</p>
+        </div>
+    </section>
+
+    <script>
+        // IntersectionObserver for scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -60px 0px'
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Animate progress bars when visible
+        const barObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bars = entry.target.querySelectorAll('.press-bar-fill');
+                    bars.forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0%';
+                        requestAnimationFrame(() => {
+                            requestAnimationFrame(() => {
+                                bar.style.width = width;
+                            });
+                        });
+                    });
+                    barObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const pressInterface = document.querySelector('.press-interface');
+        if (pressInterface) barObserver.observe(pressInterface);
+
+        // Nav background on scroll
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.style.borderBottomColor = 'rgba(30, 30, 30, 0.8)';
+            } else {
+                nav.style.borderBottomColor = 'var(--border)';
+            }
+        }, { passive: true });
+    </script>
+
+</body>
+</html>
