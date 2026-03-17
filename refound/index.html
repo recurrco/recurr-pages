@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#E5E8E8">
+  <title>Refound — We run your SEO function</title>
+  <meta name="description" content="Refound designs, builds, and operates the SEO function for your team. An always-on system for internet discovery — from Recurr Studio.">
+  <link rel="stylesheet" href="/recurr-system/style.css">
+  <style>
+    /* -- Refound-specific overrides -- */
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-s);
+    }
+    .pillar-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.5rem, 1.2rem + 1vw, 2.2rem);
+      display: flex; flex-direction: column; gap: var(--space-xs);
+      position: relative;
+      transition: background 0.35s var(--ease);
+    }
+    @media (hover:hover) {
+      .pillar-card:hover { background: var(--notebook); }
+      .pillar-card:hover .card-corner { opacity: 1; }
+    }
+    .pillar-num {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--pencil);
+    }
+    .pillar-title {
+      font-family: var(--serif); font-size: var(--fs-h3); font-weight: 700;
+      line-height: 1.15; letter-spacing: -0.02em;
+    }
+    .pillar-sub {
+      font-family: var(--serif); font-size: var(--fs-body); font-style: italic;
+      color: var(--graphite); line-height: 1.5;
+    }
+    .pillar-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .pillar-list li {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.55;
+      padding-left: 1.2em; position: relative;
+    }
+    .pillar-list li::before {
+      content: '~'; position: absolute; left: 0;
+      font-family: var(--mono); color: var(--faint);
+    }
+    .compare-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; border: 1px solid var(--border-color); border-radius: 4px;
+      overflow: hidden;
+    }
+    .compare-col { padding: clamp(1.5rem, 1.2rem + 1vw, 2.2rem); }
+    .compare-col:first-child {
+      background: var(--whiteboard);
+      border-right: 1px solid var(--border-color);
+    }
+    .compare-col:last-child { background: var(--notebook); }
+    .compare-label {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--pencil);
+      margin-bottom: var(--space-s);
+    }
+    .compare-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .compare-list li {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.5;
+      padding-left: 1.4em; position: relative;
+    }
+    .compare-list li::before {
+      position: absolute; left: 0;
+      font-family: var(--mono); font-size: var(--fs-small);
+    }
+    .compare-col:first-child .compare-list li::before {
+      content: '\2013'; color: var(--faint);
+    }
+    .compare-col:last-child .compare-list li::before {
+      content: '+'; color: var(--green); font-weight: 700;
+    }
+    .step-row {
+      display: grid; grid-template-columns: auto 1fr;
+      gap: var(--space-m); align-items: start;
+      padding: var(--space-m) 0;
+      border-bottom: 1px dashed var(--border-faint);
+    }
+    .step-row:last-child { border-bottom: none; }
+    .step-num {
+      font-family: var(--mono); font-size: var(--fs-h1); font-weight: 700;
+      color: var(--faint); line-height: 1; min-width: 3ch;
+    }
+    .step-content { display: flex; flex-direction: column; gap: 4px; }
+    .step-title {
+      font-family: var(--serif); font-size: var(--fs-h3); font-weight: 700;
+      line-height: 1.2; letter-spacing: -0.01em;
+    }
+    .step-desc {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.55;
+    }
+    .icp-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--space-s);
+    }
+    .icp-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.2rem, 1rem + 0.8vw, 1.8rem);
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .icp-label {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil);
+    }
+    .icp-text {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.55;
+    }
+    @media (max-width: 700px) {
+      .pillar-grid { grid-template-columns: 1fr; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .compare-col:first-child { border-right: none; border-bottom: 1px solid var(--border-color); }
+      .icp-grid { grid-template-columns: 1fr; }
+      .step-row { grid-template-columns: 1fr; gap: var(--space-xs); }
+    }
+  </style>
+</head>
+<body>
+
+<canvas class="dot-grid-canvas" id="dot-grid"></canvas>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="/recurr-co/" class="nav-logo">recurr</a>
+    <div class="nav-right">
+      <span class="nav-clock" id="clock"></span>
+      <a href="/recurr-co-studio/">studio</a>
+      <a href="/recurr-co-events/">events</a>
+      <a href="https://www.linkedin.com/newsletters/">subscribe</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9681;</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <h1 id="hero-h1">We design, build, and operate the SEO function for your team.</h1>
+  <div class="hero-bottom">
+    <p class="hero-sub">The internet changed. User journeys are fuzzy, destinations keep shifting, and the old playbook stopped working. Refound is an always-on system that helps your brand be discovered by people on the internet.</p>
+    <pre class="hero-ascii" id="hero-ascii">
+ ┌───────────────────────┐
+ │                       │
+ │    r e f o u n d      │
+ │                       │
+ │   ~ webmaster         │
+ │   ~ content engine    │
+ │   ~ distribution      │
+ │                       │
+ │   from recurr studio  │
+ └───────────────────────┘
+    </pre>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- The Problem -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-red">The Internet Changed</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">Every brand wants to be found by their customer. The biggest channels on the planet are still search engines &mdash; and now a growing wave of LLMs. The other big channel is user-generated content: more ephemeral, but it converts better. Search is more lasting. It has a sense of permanence.</p>
+  <p class="section-desc" style="max-width:var(--wide-w);margin-top:var(--space-xs)">But the internet has become much fuzzier in the last decade. It&rsquo;s not simply search or social anymore. Traffic is fuzzy, it crosses platforms, and the entropy is very high. We can&rsquo;t afford to think linearly &mdash; search <em>or</em> social &mdash; we need to think: <strong>internet.</strong></p>
+
+  <div class="callout callout-blue" style="margin-top:var(--space-m);max-width:var(--wide-w)">
+    <div class="callout-label">The shift</div>
+    User journeys are fuzzier. The destinations where people spend time and traverse the internet through are disrupted and not the same anymore. Think of the internet as a constantly shape-shifting graph. Refound maximises your share of voice in that graph.
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- What We Actually Do -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-green">What We Do</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">Refound is an evolved version of what an SEO agency used to do. Not a few pages and a few backlinks. We programmatically build and update content. We programmatically distribute links. We continuously monitor and fix your web infrastructure.</p>
+  <p class="section-desc" style="max-width:var(--wide-w);margin-top:var(--space-xs)">Three arms. One operated service.</p>
+</section>
+
+<!-- Three Pillars -->
+<section class="section-wide" style="padding-top:0" data-reveal>
+  <div class="pillar-grid">
+
+    <div class="pillar-card" data-reveal>
+      <span class="card-corner card-corner-tl">+</span>
+      <span class="card-corner card-corner-tr">+</span>
+      <span class="card-corner card-corner-bl">+</span>
+      <span class="card-corner card-corner-br">+</span>
+      <div class="pillar-num">01 &middot; Technical</div>
+      <div class="pillar-title">AI-Native Webmaster</div>
+      <div class="pillar-sub">The technical foundation your site runs on.</div>
+      <ul class="pillar-list">
+        <li>Automated link audits and redirect management</li>
+        <li>Indexing health, crawlability, and coverage monitoring</li>
+        <li>HTML-to-text ratios, page speed, structured data</li>
+        <li>LLM readability &mdash; how well AI systems can parse and cite your content</li>
+        <li>Live reporting dashboard, not a quarterly PDF</li>
+      </ul>
+      <p class="marginalia">Framework-based. Custom-built for your site.</p>
+    </div>
+
+    <div class="pillar-card" data-reveal>
+      <span class="card-corner card-corner-tl">+</span>
+      <span class="card-corner card-corner-tr">+</span>
+      <span class="card-corner card-corner-bl">+</span>
+      <span class="card-corner card-corner-br">+</span>
+      <div class="pillar-num">02 &middot; Content</div>
+      <div class="pillar-title">Continuous Content Engine</div>
+      <div class="pillar-sub">Always-on publishing and maintenance.</div>
+      <ul class="pillar-list">
+        <li>Auto-built content calendars from keyword gaps and traffic data</li>
+        <li>Drafts pushed to your content team on cadence</li>
+        <li>Blog posts, backlink articles, Reddit contributions, product listings</li>
+        <li>Programmatic SEO projects &mdash; template-driven pages at scale</li>
+        <li>Content age, freshness, and decay tracking</li>
+      </ul>
+      <p class="marginalia">Runs continuously. Not in quarterly sprints.</p>
+    </div>
+
+    <div class="pillar-card" data-reveal>
+      <span class="card-corner card-corner-tl">+</span>
+      <span class="card-corner card-corner-tr">+</span>
+      <span class="card-corner card-corner-bl">+</span>
+      <span class="card-corner card-corner-br">+</span>
+      <div class="pillar-num">03 &middot; Distribution</div>
+      <div class="pillar-title">Social &amp; UGC Distribution</div>
+      <div class="pillar-sub">Not posting. Distributing.</div>
+      <ul class="pillar-list">
+        <li>Content syndication to UGC platforms, forums, and communities</li>
+        <li>Product listings and profiles on comparison sites</li>
+        <li>Relevant conversation monitoring and participation</li>
+        <li>Referral traffic tracking from every distribution channel</li>
+        <li>Brand mention monitoring across the web</li>
+      </ul>
+      <p class="marginalia">Every piece of content gets a distribution plan.</p>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Before / After -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-yellow">Old SEO vs. Refound</div>
+  <div class="compare-grid">
+    <div class="compare-col">
+      <div class="compare-label">The Old Way</div>
+      <ul class="compare-list">
+        <li>Project-based audits, once a quarter</li>
+        <li>Manual link building outreach</li>
+        <li>Static content calendars</li>
+        <li>Monthly PDF reports</li>
+        <li>&ldquo;We&rsquo;ll improve your SEO&rdquo;</li>
+        <li>One-off pages, manually maintained</li>
+        <li>Ignores LLMs entirely</li>
+      </ul>
+    </div>
+    <div class="compare-col">
+      <div class="compare-label">Refound</div>
+      <ul class="compare-list">
+        <li>Always-on operations, every day</li>
+        <li>Programmatic link distribution</li>
+        <li>Continuous content engine with auto-calendars</li>
+        <li>Live dashboards, real-time health</li>
+        <li>&ldquo;We run your SEO function&rdquo;</li>
+        <li>Programmatic pages at scale</li>
+        <li>Optimises for AI readability and LLM citations</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- How It Works -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-blue">How It Works</div>
+
+  <div class="step-row" data-reveal>
+    <div class="step-num">01</div>
+    <div class="step-content">
+      <div class="step-title">Setup</div>
+      <div class="step-desc">Full site audit &mdash; technical health, content inventory, backlink profile. We deploy our framework: a custom webmaster dashboard, content engine, and distribution playbook built around your site. You get a 90-day roadmap with baseline metrics and clear priorities. One-time fee.</div>
+    </div>
+  </div>
+
+  <div class="step-row" data-reveal>
+    <div class="step-num">02</div>
+    <div class="step-content">
+      <div class="step-title">Operations</div>
+      <div class="step-desc">Webmaster monitoring runs continuously. Content drafts are pushed to your team on a weekly or bi-weekly cadence. Programmatic projects launch as opportunities are identified. Distribution is ongoing. You see everything in live dashboards &mdash; not in a report that arrives 30 days late. Easy-on-the-wallet monthly retainer.</div>
+    </div>
+  </div>
+
+  <div class="step-row" data-reveal>
+    <div class="step-num">03</div>
+    <div class="step-content">
+      <div class="step-title">Compound</div>
+      <div class="step-desc">SEO compounds. Every page indexed, every link built, every programmatic template deployed &mdash; they stack. The longer the system runs, the harder it is for competitors to catch up. This is not a one-time project. It&rsquo;s infrastructure.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Who It's For -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-ink">Who It&rsquo;s For</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">Refound is most exciting for brands where internet journeys have high entropy &mdash; more people searching, more competitive keywords, larger voice to capture, larger tickets at stake. That&rsquo;s when investing in a continuous, always-on discovery system makes sense.</p>
+
+  <div class="icp-grid" style="margin-top:var(--space-m)">
+    <div class="icp-card" data-reveal>
+      <div class="icp-label">Best Fit</div>
+      <div class="icp-text">B2B SaaS, D2C, fintech, edtech, healthtech &mdash; companies where organic traffic is a real business channel, not a vanity metric.</div>
+    </div>
+    <div class="icp-card" data-reveal>
+      <div class="icp-label">Buyer</div>
+      <div class="icp-text">Content marketers and content team leads who already know SEO matters but are frustrated with agencies that deliver reports instead of results.</div>
+    </div>
+    <div class="icp-card" data-reveal>
+      <div class="icp-label">Stage</div>
+      <div class="icp-text">You&rsquo;ve outgrown one-off SEO audits. You need someone to actually run the function &mdash; not advise you on it.</div>
+    </div>
+    <div class="icp-card" data-reveal>
+      <div class="icp-label">Not For</div>
+      <div class="icp-text">If you need one landing page optimised or you&rsquo;re looking for a tool with a login &mdash; we&rsquo;re not that. This is an operated service.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Recurr Ecosystem -->
+<section class="section-wide" data-reveal>
+  <div class="callout callout-yellow">
+    <div class="callout-label">Part of Recurr Studio</div>
+    Refound clients get content coverage and backlinks on recurr.co &mdash; a trusted B2B publication. It&rsquo;s a small side benefit of being in the studio ecosystem, but it compounds over time.
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-wide" data-reveal>
+  <div class="cta-card">
+    <h3>Let&rsquo;s talk.</h3>
+    <p>If organic discovery matters to your business and you want someone to actually run it &mdash; not just audit it &mdash; we should talk. One-time setup, easy monthly retainer, clear output commitments.</p>
+    <div style="margin-top:var(--space-xs)">
+      <a href="mailto:pratik@recurr.co" class="btn btn-primary">GET IN TOUCH</a>
+      <a href="/recurr-co-studio/" class="btn btn-ghost" style="margin-left:var(--space-xs)">BACK TO STUDIO <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-entity">Recurr Studio Private Limited</div>
+      <div class="footer-loc">Bengaluru, India</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/company/recurrco/">LinkedIn</a>
+      <a href="https://twitter.com/pikiishra">Twitter</a>
+      <a href="https://www.linkedin.com/newsletters/">Subscribe</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/recurr-system/engine.js"></script>
+</body>
+</html>
