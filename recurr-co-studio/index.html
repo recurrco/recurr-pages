@@ -5,131 +5,260 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#E5E8E8">
-  <title>recurr studio — Software layers for service businesses</title>
-  <meta name="description" content="A venture studio for AI-enhanced service businesses. We build software layers that wrap traditional services into effective experiences.">
+  <title>recurr studio — Growth services, reimagined for the AI era</title>
+  <meta name="description" content="Recurr Studio rebuilds growth services from the ground up for the post-AI era. Product marketing, design, and SEO — operated, not advised.">
   <link rel="stylesheet" href="/recurr-system/style.css">
+  <style>
+    .service-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .service-card {
+      padding: clamp(2rem, 1.5rem + 1.5vw, 3rem);
+      display: grid; grid-template-columns: 1fr 1.2fr;
+      gap: var(--space-m);
+      border-bottom: 1px solid var(--border-color);
+      transition: background 0.35s var(--ease);
+      text-decoration: none; color: inherit;
+      position: relative;
+    }
+    .service-card:last-child { border-bottom: none; }
+    @media (hover:hover) { .service-card:hover { background: var(--notebook); } }
+    .service-left { display: flex; flex-direction: column; gap: var(--space-xs); }
+    .service-right { display: flex; flex-direction: column; gap: var(--space-xs); justify-content: center; }
+    .service-label {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--pencil);
+      display: flex; align-items: center; gap: 0.5em;
+    }
+    .service-name {
+      font-family: var(--serif); font-size: var(--fs-h2); font-weight: 700;
+      line-height: 1.1; letter-spacing: -0.02em;
+    }
+    .service-one-liner {
+      font-family: var(--serif); font-size: var(--fs-body); font-style: italic;
+      color: var(--graphite); line-height: 1.5;
+    }
+    .service-lead {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil);
+      margin-top: auto;
+    }
+    .service-desc {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.6;
+    }
+    .service-link {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--blue); text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: auto;
+    }
+    .service-link .arrow { transition: transform 0.25s var(--ease); }
+    @media (hover:hover) { .service-card:hover .service-link .arrow { transform: translateX(4px); } }
+
+    .thesis-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-s);
+    }
+    .thesis-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.2rem, 1rem + 0.8vw, 1.8rem);
+      display: flex; flex-direction: column; gap: var(--space-xs);
+      position: relative;
+      transition: background 0.35s var(--ease);
+    }
+    @media (hover:hover) {
+      .thesis-card:hover { background: var(--notebook); }
+      .thesis-card:hover .card-corner { opacity: 1; }
+    }
+    .thesis-title {
+      font-family: var(--serif); font-size: var(--fs-h3); font-weight: 700;
+      line-height: 1.15; letter-spacing: -0.02em;
+    }
+    .thesis-text {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.55;
+    }
+
+    @media (max-width: 700px) {
+      .service-card { grid-template-columns: 1fr; gap: var(--space-s); }
+      .thesis-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-  <canvas class="dot-grid-canvas" id="dot-grid"></canvas>
+<canvas class="dot-grid-canvas" id="dot-grid"></canvas>
 
-  <!-- Nav -->
-  <nav>
-    <div class="nav-inner">
-      <a href="/recurr-co/" class="nav-logo">recurr</a>
-      <div class="nav-right">
-        <span class="nav-clock" id="clock"></span>
-        <a href="/recurr-co-studio/" class="nav-active">studio</a>
-        <a href="/recurr-co-events/">events</a>
-        <a href="https://www.linkedin.com/newsletters/">subscribe</a>
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9681;</button>
-      </div>
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="/recurr-co/" class="nav-logo">recurr</a>
+    <div class="nav-right">
+      <span class="nav-clock" id="clock"></span>
+      <a href="/recurr-co-studio/" class="nav-active">studio</a>
+      <a href="/recurr-co-events/">events</a>
+      <a href="https://www.linkedin.com/newsletters/">subscribe</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9681;</button>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <!-- Hero -->
-  <section class="hero">
-    <h1 id="hero-h1">We build software layers that wrap traditional services into effective experiences.</h1>
-    <div class="hero-bottom">
-      <p class="hero-sub">Smart people with real skills, trapped in freelance mode. We give them a studio — brand, clients, infrastructure — and build together.</p>
+<!-- Hero -->
+<section class="hero">
+  <h1 id="hero-h1">Growth services, reimagined for the AI era.</h1>
+  <div class="hero-bottom">
+    <p class="hero-sub">Product marketing, design, and SEO have been done the same way for a decade. The tools changed. The workflows didn&rsquo;t. We rebuild these services from the ground up &mdash; AI-native methodology, operated as a function, not advised as a retainer.</p>
+    <pre class="hero-ascii" id="hero-ascii">
+ ┌──────────────────────────┐
+ │                          │
+ │    r e c u r r           │
+ │    s t u d i o           │
+ │                          │
+ │   ~ north   intelligence │
+ │   ~ x0      design       │
+ │   ~ refound discovery    │
+ │                          │
+ │   bengaluru              │
+ └──────────────────────────┘
+    </pre>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Thesis -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-red">The Thesis</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">The services that help companies grow &mdash; product marketing, design, SEO &mdash; are still run the way they were in 2015. Manual research, static deliverables, quarterly reports. The entire category is ripe for reinvention.</p>
+  <p class="section-desc" style="max-width:var(--wide-w);margin-top:var(--space-xs)">We take each of these functions, redesign the methodology for how AI actually works today, and operate it as a continuous system &mdash; not a project with a start and end date.</p>
+
+  <div class="thesis-grid" style="margin-top:var(--space-m)">
+    <div class="thesis-card" data-reveal>
+      <span class="card-corner card-corner-tl">+</span>
+      <span class="card-corner card-corner-tr">+</span>
+      <span class="card-corner card-corner-bl">+</span>
+      <span class="card-corner card-corner-br">+</span>
+      <div class="thesis-title">Operated, not advised.</div>
+      <div class="thesis-text">We don&rsquo;t hand you a strategy deck and walk away. We plug into your systems, run the function, and ship the output. You get results, not recommendations.</div>
     </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- Products -->
-  <section class="section-wide" data-reveal>
-    <div class="section-label dot-green">Studio Products</div>
-
-    <div class="product-grid">
-
-      <div class="product-card" data-reveal>
-        <span class="card-corner card-corner-tl">+</span>
-        <span class="card-corner card-corner-tr">+</span>
-        <span class="card-corner card-corner-bl">+</span>
-        <span class="card-corner card-corner-br">+</span>
-        <div class="card-pillar">
-          <span class="card-pillar-dot" style="background:var(--green)"></span>
-          ACTIVE
-        </div>
-        <div class="product-name">Canteen</div>
-        <div class="product-lead">ANKITA + RUSHIL</div>
-        <div class="product-desc">Workplace F&amp;B software. We turn cafeterias and team food into a managed, subscription experience. Outpost Kitchen powers the supply — Canteen powers the demand.</div>
-      </div>
-
-      <div class="product-card" data-reveal>
-        <span class="card-corner card-corner-tl">+</span>
-        <span class="card-corner card-corner-tr">+</span>
-        <span class="card-corner card-corner-bl">+</span>
-        <span class="card-corner card-corner-br">+</span>
-        <div class="card-pillar">
-          <span class="card-pillar-dot" style="background:var(--yellow)"></span>
-          BUILDING
-        </div>
-        <div class="product-name">North</div>
-        <div class="product-lead">PRATIK</div>
-        <div class="product-desc">Product marketing for B2B SaaS. Intelligence-first PMM — category research, positioning, content strategy, delivered as an embedded operator.</div>
-      </div>
-
-      <div class="product-card" data-reveal>
-        <span class="card-corner card-corner-tl">+</span>
-        <span class="card-corner card-corner-tr">+</span>
-        <span class="card-corner card-corner-bl">+</span>
-        <span class="card-corner card-corner-br">+</span>
-        <div class="card-pillar">
-          <span class="card-pillar-dot" style="background:var(--blue)"></span>
-          ONBOARDING
-        </div>
-        <div class="product-name">x0</div>
-        <div class="product-lead">NAGENDRA</div>
-        <div class="product-desc">B2B design that converts. Landing pages, product UI, brand systems — designed by someone who understands enterprise buyers.</div>
-      </div>
-
-      <div class="product-card" data-reveal>
-        <span class="card-corner card-corner-tl">+</span>
-        <span class="card-corner card-corner-tr">+</span>
-        <span class="card-corner card-corner-bl">+</span>
-        <span class="card-corner card-corner-br">+</span>
-        <div class="card-pillar">
-          <span class="card-pillar-dot" style="background:var(--blue)"></span>
-          ONBOARDING
-        </div>
-        <div class="product-name">Refound</div>
-        <div class="product-lead">SUJITH</div>
-        <div class="product-desc">SEO operations at scale. Technical audits, content velocity, programmatic pages — the boring work that compounds into traffic.</div>
-      </div>
-
+    <div class="thesis-card" data-reveal>
+      <span class="card-corner card-corner-tl">+</span>
+      <span class="card-corner card-corner-tr">+</span>
+      <span class="card-corner card-corner-bl">+</span>
+      <span class="card-corner card-corner-br">+</span>
+      <div class="thesis-title">AI-native methodology.</div>
+      <div class="thesis-text">Not &ldquo;we use AI tools.&rdquo; The entire workflow is redesigned for what LLMs and agents can do today. The methodology is the product. The AI is the engine.</div>
     </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- About -->
-  <section class="section-wide" data-reveal>
-    <div class="section-label dot-red">The Model</div>
-    <p class="section-desc">Not an agency. Not a marketplace. A venture studio for AI-enhanced service businesses. Each product has a lead who builds their own brand alongside Recurr. We find exceptional operators — people we already know — and wrap them in studio infrastructure: brand, clients, tooling, shared revenue.</p>
-
-    <div class="callout callout-blue">
-      <div class="callout-label">How it starts</div>
-      Every Studio product starts the same way: Pratik finds someone he already knows — someone with real skill but stuck in freelance mode — and proposes a build-together model. No cold recruiting. No job boards.
+    <div class="thesis-card" data-reveal>
+      <span class="card-corner card-corner-tl">+</span>
+      <span class="card-corner card-corner-tr">+</span>
+      <span class="card-corner card-corner-bl">+</span>
+      <span class="card-corner card-corner-br">+</span>
+      <div class="thesis-title">Compounds over time.</div>
+      <div class="thesis-text">Every service we run gets better the longer it runs. Intelligence layers deepen. Content compounds. Design systems mature. These aren&rsquo;t projects &mdash; they&rsquo;re infrastructure.</div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-inner">
-      <div>
-        <div class="footer-entity">Recurr Studio Private Limited</div>
-        <div class="footer-loc">Bengaluru, India</div>
+<hr class="divider">
+
+<!-- Services -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-green">Services</div>
+
+  <div class="service-grid">
+
+    <a href="/north/" class="service-card" data-reveal>
+      <div class="service-left">
+        <div class="service-label"><span class="card-pillar-dot" style="background:var(--red)"></span> Intelligence</div>
+        <div class="service-name">North</div>
+        <div class="service-one-liner">Product marketing, operated.</div>
+        <div class="service-lead">Pratik</div>
       </div>
-      <div class="footer-links">
-        <a href="https://www.linkedin.com/company/recurrco/">LinkedIn</a>
-        <a href="https://twitter.com/pikiishra">Twitter</a>
-        <a href="https://www.linkedin.com/newsletters/">Subscribe</a>
+      <div class="service-right">
+        <div class="service-desc">We connect to your systems &mdash; CRM, call recordings, team chat, support tickets &mdash; and build a live intelligence layer. That feeds into structured middleware: ICP docs, messaging matrices, competitive intel. Which feeds into collaterals: sales decks, buyer guides, marketing pages, onboarding flows. The entire PMM function, continuously operated.</div>
+        <div class="service-link">Learn more <span class="arrow">&rarr;</span></div>
       </div>
+    </a>
+
+    <a href="/x0/" class="service-card" data-reveal>
+      <div class="service-left">
+        <div class="service-label"><span class="card-pillar-dot" style="background:var(--blue)"></span> Design</div>
+        <div class="service-name">x0</div>
+        <div class="service-one-liner">First versions only.</div>
+        <div class="service-lead">Nagendra</div>
+      </div>
+      <div class="service-right">
+        <div class="service-desc">We build the 0&rarr;1 of design for B2B software businesses. Your first real website, your first real product design, the first time the world takes you seriously. Sprint-based, fixed-price, no retainer. We don&rsquo;t do rebrands or v2s &mdash; we want the blank canvas.</div>
+        <div class="service-link">Learn more <span class="arrow">&rarr;</span></div>
+      </div>
+    </a>
+
+    <a href="/refound/" class="service-card" data-reveal>
+      <div class="service-left">
+        <div class="service-label"><span class="card-pillar-dot" style="background:var(--green)"></span> Discovery</div>
+        <div class="service-name">Refound</div>
+        <div class="service-one-liner">SEO, reimagined.</div>
+        <div class="service-lead">Sujith</div>
+      </div>
+      <div class="service-right">
+        <div class="service-desc">The three traditional pillars &mdash; technical SEO, content development, link building &mdash; fully reimagined with AI. Programmatic content, programmatic distribution, AI-native webmaster. An always-on system that helps your brand be discovered on the internet.</div>
+        <div class="service-link">Learn more <span class="arrow">&rarr;</span></div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- The Model -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-yellow">The Model</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">Each service is led by someone Pratik has worked with before &mdash; people with real expertise who were stuck in freelance mode. Recurr wraps them in studio infrastructure: brand, pipeline, tooling, shared methodology. They build their own reputation alongside Recurr. No cold recruiting. No job boards. Every service starts with trust.</p>
+
+  <div class="callout callout-blue" style="margin-top:var(--space-m)">
+    <div class="callout-label">More services, same thesis</div>
+    We&rsquo;re not stopping at three. Every growth function that can be redesigned for the AI era is a candidate. The pattern is the same: find an exceptional operator, rebuild the methodology, operate it as a system. If you&rsquo;re that operator &mdash; <a href="mailto:pratik@recurr.co">let&rsquo;s talk</a>.
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-wide" data-reveal>
+  <div class="cta-card">
+    <h3>Need one of these?</h3>
+    <p>If your company needs product marketing, design, or SEO &mdash; and you want it done by people who&rsquo;ve rebuilt the methodology from scratch &mdash; reach out. We&rsquo;ll figure out which service fits.</p>
+    <div style="margin-top:var(--space-xs)">
+      <a href="mailto:pratik@recurr.co" class="btn btn-primary">GET IN TOUCH</a>
+      <a href="/recurr-co/" class="btn btn-ghost" style="margin-left:var(--space-xs)">BACK TO RECURR <span class="arrow">&rarr;</span></a>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script src="/recurr-system/engine.js"></script>
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-entity">Recurr Studio Private Limited</div>
+      <div class="footer-loc">Bengaluru, India</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/company/recurrco/">LinkedIn</a>
+      <a href="https://twitter.com/pikiishra">Twitter</a>
+      <a href="https://www.linkedin.com/newsletters/">Subscribe</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/recurr-system/engine.js"></script>
 </body>
 </html>
