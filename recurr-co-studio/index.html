@@ -1,435 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Studio — Recurr</title>
+  <meta name="theme-color" content="#E5E8E8">
+  <title>recurr studio — Software layers for service businesses</title>
   <meta name="description" content="A venture studio for AI-enhanced service businesses. We build software layers that wrap traditional services into effective experiences.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --serif: 'Newsreader', 'New York', Georgia, 'Times New Roman', serif;
-      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
-      --text: #1d1d1f;
-      --text-secondary: #6e6e73;
-      --text-muted: #999;
-      --bg: #faf9f7;
-      --surface: #fff;
-      --border: #e5e5e5;
-      --max-w: 680px;
-      --max-w-wide: 1080px;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: var(--sans);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    }
-
-    /* ── Nav ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(250, 249, 247, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-inner {
-      max-width: var(--max-w-wide);
-      margin: 0 auto;
-      padding: 0 32px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .nav-logo {
-      font-family: var(--sans);
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-    }
-
-    .nav-links a {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      text-decoration: none;
-      letter-spacing: 0.01em;
-      transition: color 0.15s;
-    }
-
-    .nav-links a:hover { color: var(--text); }
-    .nav-links a.active { color: var(--text); }
-
-    /* ── Hero ── */
-    .hero {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 80px 32px 64px;
-    }
-
-    .hero-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-    }
-
-    .hero h1 {
-      font-family: var(--serif);
-      font-size: 38px;
-      font-weight: 400;
-      line-height: 1.25;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      max-width: 580px;
-    }
-
-    .hero p {
-      margin-top: 20px;
-      font-size: 16px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      max-width: 520px;
-    }
-
-    /* ── Products ── */
-    .products {
-      max-width: var(--max-w-wide);
-      margin: 0 auto;
-      padding: 0 32px 80px;
-    }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .product-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 32px;
-      text-decoration: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-card:hover {
-      border-color: var(--text-secondary);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-    }
-
-    .product-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-bottom: 16px;
-    }
-
-    .product-name {
-      font-family: var(--sans);
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: -0.01em;
-    }
-
-    .product-status {
-      font-size: 11px;
-      font-weight: 500;
-      padding: 3px 10px;
-      border-radius: 100px;
-      letter-spacing: 0.02em;
-    }
-
-    .status-live {
-      background: #ecfdf5;
-      color: #059669;
-    }
-
-    .status-building {
-      background: #fef3c7;
-      color: #b45309;
-    }
-
-    .status-soon {
-      background: #f3f4f6;
-      color: #6b7280;
-    }
-
-    .product-oneliner {
-      font-family: var(--serif);
-      font-size: 16px;
-      font-weight: 400;
-      color: var(--text);
-      line-height: 1.4;
-      margin-bottom: 12px;
-      flex: 1;
-    }
-
-    .product-description {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-      margin-bottom: 20px;
-    }
-
-    .product-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: auto;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-    }
-
-    .product-lead {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .product-lead strong {
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-
-    .product-link {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .product-link svg { width: 12px; height: 12px; }
-
-    /* ── About ── */
-    .about {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 32px 80px;
-    }
-
-    .about-divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin-bottom: 48px;
-    }
-
-    .about-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-
-    .about h2 {
-      font-family: var(--serif);
-      font-size: 24px;
-      font-weight: 400;
-      line-height: 1.35;
-      letter-spacing: -0.01em;
-      margin-bottom: 16px;
-    }
-
-    .about p {
-      font-size: 15px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      margin-bottom: 12px;
-      max-width: 560px;
-    }
-
-    .about p:last-of-type { margin-bottom: 0; }
-
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 48px 32px;
-    }
-
-    .footer-inner {
-      max-width: var(--max-w-wide);
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-
-    .footer-left p {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .footer-left .footer-entity {
-      font-weight: 500;
-      color: var(--text-secondary);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 24px;
-    }
-
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-secondary);
-      text-decoration: none;
-    }
-
-    .footer-links a:hover { color: var(--text); }
-
-    /* ── Mobile ── */
-    @media (max-width: 720px) {
-      .nav-inner { padding: 0 20px; }
-      .nav-links { gap: 20px; }
-      .hero { padding: 48px 20px 48px; }
-      .hero h1 { font-size: 30px; }
-      .products { padding: 0 20px 60px; }
-      .products-grid { grid-template-columns: 1fr; }
-      .product-card { padding: 24px; }
-      .about { padding: 0 20px 60px; }
-      footer { padding: 32px 20px; }
-      .footer-inner { flex-direction: column; gap: 20px; }
-    }
-  </style>
+  <link rel="stylesheet" href="/recurr-system/style.css">
 </head>
 <body>
+
+  <canvas class="dot-grid-canvas" id="dot-grid"></canvas>
 
   <!-- Nav -->
   <nav>
     <div class="nav-inner">
       <a href="/recurr-co/" class="nav-logo">recurr</a>
-      <div class="nav-links">
-        <a href="/recurr-co-studio/" class="active">studio</a>
+      <div class="nav-right">
+        <span class="nav-clock" id="clock"></span>
+        <a href="/recurr-co-studio/" class="nav-active">studio</a>
         <a href="/recurr-co-events/">events</a>
-        <a href="#">subscribe</a>
+        <a href="https://www.linkedin.com/newsletters/">subscribe</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9681;</button>
       </div>
     </div>
   </nav>
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-label">Studio</div>
-    <h1>We build software layers that wrap traditional services into effective experiences.</h1>
-    <p>Recurr is a venture studio. We partner with experienced operators and give them brand, pipeline, billing, and mentorship to turn their expertise into scalable service businesses with a tech edge.</p>
+    <h1 id="hero-h1">We build software layers that wrap traditional services into effective experiences.</h1>
+    <div class="hero-bottom">
+      <p class="hero-sub">Smart people with real skills, trapped in freelance mode. We give them a studio — brand, clients, infrastructure — and build together.</p>
+    </div>
   </section>
 
+  <hr class="divider">
+
   <!-- Products -->
-  <section class="products">
-    <div class="products-grid">
+  <section class="section-wide" data-reveal>
+    <div class="section-label dot-green">Studio Products</div>
 
-      <a href="#" class="product-card">
-        <div class="product-header">
-          <span class="product-name">Canteen</span>
-          <span class="product-status status-building">Building</span>
-        </div>
-        <div class="product-oneliner">Workplace food, redesigned.</div>
-        <div class="product-description">Software that turns any kitchen into a managed workplace canteen. Ordering, subscriptions, employer sponsorship, pantry management. Outpost Kitchen is the first vendor.</div>
-        <div class="product-footer">
-          <span class="product-lead">Led by <strong>Ankita &amp; Rushil</strong></span>
-          <span class="product-link">canteen.recurr.co <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-        </div>
-      </a>
+    <div class="product-grid">
 
-      <a href="#" class="product-card">
-        <div class="product-header">
-          <span class="product-name">North</span>
-          <span class="product-status status-live">Active</span>
+      <div class="product-card" data-reveal>
+        <span class="card-corner card-corner-tl">+</span>
+        <span class="card-corner card-corner-tr">+</span>
+        <span class="card-corner card-corner-bl">+</span>
+        <span class="card-corner card-corner-br">+</span>
+        <div class="card-pillar">
+          <span class="card-pillar-dot" style="background:var(--green)"></span>
+          ACTIVE
         </div>
-        <div class="product-oneliner">Product marketing for B2B.</div>
-        <div class="product-description">Build and operate your product marketing function. Discovery, category intelligence, content strategy, and execution. Each engagement is custom, powered by reusable frameworks.</div>
-        <div class="product-footer">
-          <span class="product-lead">Led by <strong>Pratik Mishra</strong></span>
-          <span class="product-link">north.recurr.co <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-        </div>
-      </a>
+        <div class="product-name">Canteen</div>
+        <div class="product-lead">ANKITA + RUSHIL</div>
+        <div class="product-desc">Workplace F&amp;B software. We turn cafeterias and team food into a managed, subscription experience. Outpost Kitchen powers the supply — Canteen powers the demand.</div>
+      </div>
 
-      <a href="#" class="product-card">
-        <div class="product-header">
-          <span class="product-name">x0</span>
-          <span class="product-status status-soon">Coming soon</span>
+      <div class="product-card" data-reveal>
+        <span class="card-corner card-corner-tl">+</span>
+        <span class="card-corner card-corner-tr">+</span>
+        <span class="card-corner card-corner-bl">+</span>
+        <span class="card-corner card-corner-br">+</span>
+        <div class="card-pillar">
+          <span class="card-pillar-dot" style="background:var(--yellow)"></span>
+          BUILDING
         </div>
-        <div class="product-oneliner">B2B design that ships.</div>
-        <div class="product-description">Design for SaaS companies that care about craft. Brand identity, product UI, marketing assets. Built by an operator who spent years in the trenches, not an agency that sends mood boards.</div>
-        <div class="product-footer">
-          <span class="product-lead">Led by <strong>Nagendra</strong></span>
-          <span class="product-link">x0.recurr.co <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-        </div>
-      </a>
+        <div class="product-name">North</div>
+        <div class="product-lead">PRATIK</div>
+        <div class="product-desc">Product marketing for B2B SaaS. Intelligence-first PMM — category research, positioning, content strategy, delivered as an embedded operator.</div>
+      </div>
 
-      <a href="#" class="product-card">
-        <div class="product-header">
-          <span class="product-name">Refound</span>
-          <span class="product-status status-soon">Coming soon</span>
+      <div class="product-card" data-reveal>
+        <span class="card-corner card-corner-tl">+</span>
+        <span class="card-corner card-corner-tr">+</span>
+        <span class="card-corner card-corner-bl">+</span>
+        <span class="card-corner card-corner-br">+</span>
+        <div class="card-pillar">
+          <span class="card-pillar-dot" style="background:var(--blue)"></span>
+          ONBOARDING
         </div>
-        <div class="product-oneliner">SEO that compounds.</div>
-        <div class="product-description">Technical SEO, programmatic pages, and content infrastructure. Not link farms and keyword stuffing. Structured operations that build organic moats over quarters, not weeks.</div>
-        <div class="product-footer">
-          <span class="product-lead">Led by <strong>Sujith</strong></span>
-          <span class="product-link">refound.recurr.co <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+        <div class="product-name">x0</div>
+        <div class="product-lead">NAGENDRA</div>
+        <div class="product-desc">B2B design that converts. Landing pages, product UI, brand systems — designed by someone who understands enterprise buyers.</div>
+      </div>
+
+      <div class="product-card" data-reveal>
+        <span class="card-corner card-corner-tl">+</span>
+        <span class="card-corner card-corner-tr">+</span>
+        <span class="card-corner card-corner-bl">+</span>
+        <span class="card-corner card-corner-br">+</span>
+        <div class="card-pillar">
+          <span class="card-pillar-dot" style="background:var(--blue)"></span>
+          ONBOARDING
         </div>
-      </a>
+        <div class="product-name">Refound</div>
+        <div class="product-lead">SUJITH</div>
+        <div class="product-desc">SEO operations at scale. Technical audits, content velocity, programmatic pages — the boring work that compounds into traffic.</div>
+      </div>
 
     </div>
   </section>
 
+  <hr class="divider">
+
   <!-- About -->
-  <section class="about">
-    <hr class="about-divider">
-    <div class="about-label">About</div>
-    <h2>Smart people with real skills, trapped in freelance mode.</h2>
-    <p>That's the pattern Recurr was built to solve. We find experienced operators who are great at what they do but can't scale beyond personal bandwidth &mdash; because scaling a service business requires brand, pipeline, billing, and a system around you.</p>
-    <p>Recurr is that system. Each product in the studio is led by someone who's done the work for years. We give them the infrastructure to turn expertise into a real business. Every product has its own service model and a software layer that makes the experience meaningfully better.</p>
-    <p>We're not building the next SaaS unicorn. We're building a portfolio of focused, profitable service businesses that are better because they have technology in the right places.</p>
+  <section class="section-wide" data-reveal>
+    <div class="section-label dot-red">The Model</div>
+    <p class="section-desc">Not an agency. Not a marketplace. A venture studio for AI-enhanced service businesses. Each product has a lead who builds their own brand alongside Recurr. We find exceptional operators — people we already know — and wrap them in studio infrastructure: brand, clients, tooling, shared revenue.</p>
+
+    <div class="callout callout-blue">
+      <div class="callout-label">How it starts</div>
+      Every Studio product starts the same way: Pratik finds someone he already knows — someone with real skill but stuck in freelance mode — and proposes a build-together model. No cold recruiting. No job boards.
+    </div>
   </section>
 
   <!-- Footer -->
   <footer>
     <div class="footer-inner">
-      <div class="footer-left">
-        <p class="footer-entity">Recurr Studio Private Limited</p>
-        <p>Bengaluru, India</p>
+      <div>
+        <div class="footer-entity">Recurr Studio Private Limited</div>
+        <div class="footer-loc">Bengaluru, India</div>
       </div>
       <div class="footer-links">
-        <a href="#">LinkedIn</a>
-        <a href="#">Twitter</a>
-        <a href="/recurr-co/">Editorial</a>
+        <a href="https://www.linkedin.com/company/recurrco/">LinkedIn</a>
+        <a href="https://twitter.com/pikiishra">Twitter</a>
+        <a href="https://www.linkedin.com/newsletters/">Subscribe</a>
       </div>
     </div>
   </footer>
 
+  <script src="/recurr-system/engine.js"></script>
 </body>
 </html>
