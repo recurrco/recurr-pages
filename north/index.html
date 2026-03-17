@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#E5E8E8">
+  <title>North — Product marketing for B2B software teams</title>
+  <meta name="description" content="North designs, builds, and operates the product marketing function for B2B software teams. Intelligence-first, AI-operated. From Recurr Studio.">
+  <link rel="stylesheet" href="/recurr-system/style.css">
+  <style>
+    .layer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .layer-card {
+      padding: clamp(1.8rem, 1.5rem + 1.2vw, 2.8rem);
+      display: flex; flex-direction: column; gap: var(--space-xs);
+      border-bottom: 1px solid var(--border-color);
+      transition: background 0.35s var(--ease);
+    }
+    .layer-card:last-child { border-bottom: none; }
+    @media (hover:hover) { .layer-card:hover { background: var(--notebook); } }
+    .layer-header {
+      display: flex; align-items: baseline; gap: var(--space-s);
+      flex-wrap: wrap;
+    }
+    .layer-num {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--pencil);
+      flex-shrink: 0;
+    }
+    .layer-title {
+      font-family: var(--serif); font-size: var(--fs-h2); font-weight: 700;
+      line-height: 1.1; letter-spacing: -0.02em;
+    }
+    .layer-sub {
+      font-family: var(--serif); font-size: var(--fs-body); font-style: italic;
+      color: var(--graphite); line-height: 1.5; max-width: 60ch;
+    }
+    .layer-items {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-top: 4px;
+    }
+    .layer-tag {
+      font-family: var(--mono); font-size: var(--fs-label);
+      color: var(--pencil); background: var(--whiteboard);
+      border: 1px solid var(--border-faint);
+      padding: 3px 10px; border-radius: 100px;
+      white-space: nowrap;
+    }
+    [data-theme="dark"] .layer-tag { background: var(--notebook); }
+
+    .flow-row {
+      display: grid; grid-template-columns: auto 1fr;
+      gap: var(--space-m); align-items: start;
+      padding: var(--space-m) 0;
+      border-bottom: 1px dashed var(--border-faint);
+    }
+    .flow-row:last-child { border-bottom: none; }
+    .flow-num {
+      font-family: var(--mono); font-size: var(--fs-h1); font-weight: 700;
+      color: var(--faint); line-height: 1; min-width: 3ch;
+    }
+    .flow-content { display: flex; flex-direction: column; gap: 4px; }
+    .flow-title {
+      font-family: var(--serif); font-size: var(--fs-h3); font-weight: 700;
+      line-height: 1.2; letter-spacing: -0.01em;
+    }
+    .flow-desc {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.55;
+    }
+
+    .shift-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; border: 1px solid var(--border-color);
+      border-radius: 4px; overflow: hidden;
+    }
+    .shift-col { padding: clamp(1.5rem, 1.2rem + 1vw, 2.2rem); }
+    .shift-col:first-child {
+      background: var(--whiteboard);
+      border-right: 1px solid var(--border-color);
+    }
+    .shift-col:last-child { background: var(--notebook); }
+    .shift-label {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--pencil);
+      margin-bottom: var(--space-s);
+    }
+    .shift-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .shift-list li {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.5;
+      padding-left: 1.4em; position: relative;
+    }
+    .shift-list li::before {
+      position: absolute; left: 0;
+      font-family: var(--mono); font-size: var(--fs-small);
+    }
+    .shift-col:first-child .shift-list li::before {
+      content: '\2013'; color: var(--faint);
+    }
+    .shift-col:last-child .shift-list li::before {
+      content: '+'; color: var(--green); font-weight: 700;
+    }
+
+    .icp-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--space-s);
+    }
+    .icp-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.2rem, 1rem + 0.8vw, 1.8rem);
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .icp-label {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil);
+    }
+    .icp-text {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.55;
+    }
+
+    @media (max-width: 700px) {
+      .shift-grid { grid-template-columns: 1fr; }
+      .shift-col:first-child { border-right: none; border-bottom: 1px solid var(--border-color); }
+      .icp-grid { grid-template-columns: 1fr; }
+      .flow-row { grid-template-columns: 1fr; gap: var(--space-xs); }
+    }
+  </style>
+</head>
+<body>
+
+<canvas class="dot-grid-canvas" id="dot-grid"></canvas>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="/recurr-co/" class="nav-logo">recurr</a>
+    <div class="nav-right">
+      <span class="nav-clock" id="clock"></span>
+      <a href="/recurr-co-studio/">studio</a>
+      <a href="/recurr-co-events/">events</a>
+      <a href="https://www.linkedin.com/newsletters/">subscribe</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9681;</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <h1 id="hero-h1">We design, build, and operate the product marketing function for B2B software teams.</h1>
+  <div class="hero-bottom">
+    <p class="hero-sub">Product marketing is the most knowledge-intensive work in B2B. It&rsquo;s also the most productisable with AI. We connect to your systems, build a live intelligence layer, and ship the collaterals your teams actually need.</p>
+    <pre class="hero-ascii" id="hero-ascii">
+ ┌─────────────────────────────┐
+ │                             │
+ │    n o r t h                │
+ │                             │
+ │   intelligence              │
+ │       → middleware          │
+ │           → collaterals     │
+ │                             │
+ │   from recurr studio        │
+ └─────────────────────────────┘
+    </pre>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- The Problem -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-red">The Problem</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">Every B2B software company sits on a gold mine of intelligence &mdash; buried in sales calls, CRM notes, team conversations, customer tickets, competitor moves, and market shifts. The product marketer&rsquo;s job is to consume all of this, build intelligence from it, and turn it into things every other team can use.</p>
+  <p class="section-desc" style="max-width:var(--wide-w);margin-top:var(--space-xs)">But the work is brutally manual. PMMs spend 80% of their time gathering and organising information, and 20% creating the things that actually move the needle. The systems of record differ at every company &mdash; different CRM, different call tool, different team chat &mdash; which makes it even harder to systematise.</p>
+
+  <div class="callout callout-blue" style="margin-top:var(--space-m);max-width:var(--wide-w)">
+    <div class="callout-label">The shift</div>
+    With current LLM capabilities, product marketing is the most effectively productisable knowledge work in B2B. The consumption, structuring, and distillation layers are now ideal for AI agents &mdash; leaving the product marketer to ship higher-value work in higher volume. Same person, 10x output.
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- The Three Layers -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-green">Three Layers</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">Product marketing work, in every company, follows the same three-layer structure. The specifics differ &mdash; but the workflow is universal.</p>
+
+  <div class="layer-grid" style="margin-top:var(--space-m)">
+
+    <div class="layer-card" data-reveal>
+      <div class="layer-header">
+        <div class="layer-num">Layer 01</div>
+        <div class="layer-title">Intelligence</div>
+      </div>
+      <div class="layer-sub">Connect to the real feeds. Pull live data from the systems your team already uses. Not a one-time audit &mdash; a living, continuous stream.</div>
+      <div class="layer-items">
+        <span class="layer-tag">Slack / Zulip / Teams</span>
+        <span class="layer-tag">Gong / Chorus</span>
+        <span class="layer-tag">HubSpot / Salesforce</span>
+        <span class="layer-tag">Intercom / Zendesk</span>
+        <span class="layer-tag">Gartner / G2</span>
+        <span class="layer-tag">Product roadmaps</span>
+        <span class="layer-tag">Competitor sites</span>
+        <span class="layer-tag">Forums &amp; social</span>
+      </div>
+    </div>
+
+    <div class="layer-card" data-reveal>
+      <div class="layer-header">
+        <div class="layer-num">Layer 02</div>
+        <div class="layer-title">Middleware</div>
+      </div>
+      <div class="layer-sub">Turn raw intelligence into structured, usable knowledge artifacts. This is the company&rsquo;s product marketing brain &mdash; structured, current, and accessible. Every collateral draws from this.</div>
+      <div class="layer-items">
+        <span class="layer-tag">ICP documentation</span>
+        <span class="layer-tag">Messaging matrix</span>
+        <span class="layer-tag">Competitive intel</span>
+        <span class="layer-tag">Win/loss analysis</span>
+        <span class="layer-tag">Customer profiles</span>
+        <span class="layer-tag">Product intelligence</span>
+        <span class="layer-tag">Category context</span>
+        <span class="layer-tag">Buyer journey maps</span>
+      </div>
+    </div>
+
+    <div class="layer-card" data-reveal>
+      <div class="layer-header">
+        <div class="layer-num">Layer 03</div>
+        <div class="layer-title">Collaterals</div>
+      </div>
+      <div class="layer-sub">Ship the things that other teams need to engage better with their stakeholders &mdash; sales, marketing, customer success, product, leadership. With the middleware in place, production is fast and consistent.</div>
+      <div class="layer-items">
+        <span class="layer-tag">Sales decks</span>
+        <span class="layer-tag">Battle cards</span>
+        <span class="layer-tag">Buyer guides</span>
+        <span class="layer-tag">Use case pages</span>
+        <span class="layer-tag">Onboarding docs</span>
+        <span class="layer-tag">Email journeys</span>
+        <span class="layer-tag">FAQs</span>
+        <span class="layer-tag">Marketing pages</span>
+        <span class="layer-tag">Feature rundowns</span>
+        <span class="layer-tag">Board narratives</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- How It Works -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-blue">How It Works</div>
+
+  <div class="flow-row" data-reveal>
+    <div class="flow-num">01</div>
+    <div class="flow-content">
+      <div class="flow-title">Connect</div>
+      <div class="flow-desc">We plug into your existing systems. Whatever you use &mdash; CRM, call recordings, team chat, project management, support tickets &mdash; we set up continuous intelligence streams. No new tools to adopt. No migration. We work where your data already lives.</div>
+    </div>
+  </div>
+
+  <div class="flow-row" data-reveal>
+    <div class="flow-num">02</div>
+    <div class="flow-content">
+      <div class="flow-title">Build</div>
+      <div class="flow-desc">We construct the middleware layer. ICP documentation, messaging matrix, competitive intel, win/loss patterns, customer profiles. This is the foundation everything else draws from. It&rsquo;s structured, versioned, and kept current.</div>
+    </div>
+  </div>
+
+  <div class="flow-row" data-reveal>
+    <div class="flow-num">03</div>
+    <div class="flow-content">
+      <div class="flow-title">Ship</div>
+      <div class="flow-desc">We produce collaterals on cadence. Sales needs a new battle card? Built from the middleware. Marketing needs updated positioning for a campaign? Already structured. New feature launching? The messaging is ready. No more one-off requests that take weeks.</div>
+    </div>
+  </div>
+
+  <div class="flow-row" data-reveal>
+    <div class="flow-num">04</div>
+    <div class="flow-content">
+      <div class="flow-title">Compound</div>
+      <div class="flow-desc">The intelligence layer gets richer over time. Every call recorded, every deal closed, every competitor move tracked &mdash; it all feeds back in. The longer North runs, the sharper the output. This is infrastructure, not a project.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- The Shift -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-yellow">The Shift</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">Product marketing used to be entirely manual. With AI agents handling the consumption and structuring, the PMM&rsquo;s job changes fundamentally.</p>
+
+  <div class="shift-grid" style="margin-top:var(--space-m)">
+    <div class="shift-col">
+      <div class="shift-label">Before</div>
+      <ul class="shift-list">
+        <li>Manually reading call transcripts, one by one</li>
+        <li>Maintaining spreadsheets of competitive intel</li>
+        <li>Building ICP docs from memory and gut feel</li>
+        <li>Creating each sales deck from scratch</li>
+        <li>Messaging that drifts across teams and channels</li>
+        <li>80% gathering, 20% creating</li>
+      </ul>
+    </div>
+    <div class="shift-col">
+      <div class="shift-label">With North</div>
+      <ul class="shift-list">
+        <li>AI agents read and tag every call continuously</li>
+        <li>Competitive intel auto-updates from live sources</li>
+        <li>ICP docs built from real data across all systems</li>
+        <li>Collaterals generated from structured middleware</li>
+        <li>One source of truth for positioning and messaging</li>
+        <li>20% reviewing, 80% shipping</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Who It's For -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-ink">Who It&rsquo;s For</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">North is for B2B software companies that have the data but not the system. You have sales calls, CRM records, team conversations, and customer feedback &mdash; but no structured way to turn it into marketing intelligence.</p>
+
+  <div class="icp-grid" style="margin-top:var(--space-m)">
+    <div class="icp-card" data-reveal>
+      <div class="icp-label">Minimum</div>
+      <div class="icp-text">At least one marketing team member. You don&rsquo;t need a PMM team &mdash; you need one person who cares about positioning, messaging, and how the market sees your product.</div>
+    </div>
+    <div class="icp-card" data-reveal>
+      <div class="icp-label">Stage</div>
+      <div class="icp-text">Series A to Series C. Enough customer conversations and deal data to be useful. Enough product complexity to need structured intelligence.</div>
+    </div>
+    <div class="icp-card" data-reveal>
+      <div class="icp-label">Signal</div>
+      <div class="icp-text">Your founder is still doing positioning in a Google Doc. Your sales team makes their own decks. Your messaging drifts every quarter. You know the intelligence is somewhere in your systems &mdash; you just can&rsquo;t access it.</div>
+    </div>
+    <div class="icp-card" data-reveal>
+      <div class="icp-label">Not For</div>
+      <div class="icp-text">Pre-product companies. Companies looking for a content agency. Teams that think product marketing is blog posts. Companies with a mature PMM team that needs tools, not operators.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Proof Point -->
+<div class="ascii-full" data-reveal>
+  <div class="ascii-inner">
+    <div class="section-label">Built Live With</div>
+    <p style="font-family:var(--serif);font-size:var(--fs-h2);font-weight:700;color:#E8ECEC;line-height:1.15;letter-spacing:-0.02em;margin-bottom:var(--space-xs)">Clarisights</p>
+    <p style="font-family:var(--serif);font-size:var(--fs-body);color:#A8AEAD;line-height:1.6;max-width:var(--content-w)">North&rsquo;s methodology is being built live with Clarisights &mdash; a Sequoia-backed marketing analytics platform. We connected to their internal team conversations and extracted a gold mine of intelligence that was sitting in plain sight: customer patterns, competitive signals, product feedback, deal context. All structured, all usable, all invisible before.</p>
+    <p style="font-family:var(--serif);font-size:var(--fs-small);font-style:italic;color:#7A8282;margin-top:var(--space-s)">This kind of extraction was nowhere close to possible even a year ago.</p>
+  </div>
+</div>
+
+<!-- Recurr Ecosystem -->
+<section class="section-wide" data-reveal>
+  <div class="callout callout-yellow">
+    <div class="callout-label">Part of Recurr Studio</div>
+    North is a Recurr Studio product, led by Pratik. Every methodology built here becomes reusable IP. Every engagement deepens the framework. The intelligence layer compounds across clients &mdash; patterns from one engagement sharpen the approach for the next.
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-wide" data-reveal>
+  <div class="cta-card">
+    <h3>Let&rsquo;s talk.</h3>
+    <p>If you&rsquo;re a B2B software company with at least one marketing team member and you want a structured, operated product marketing function &mdash; not a tool, not an agency, but someone who embeds into your systems and runs it &mdash; we should talk.</p>
+    <div style="margin-top:var(--space-xs)">
+      <a href="mailto:pratik@recurr.co" class="btn btn-primary">GET IN TOUCH</a>
+      <a href="/recurr-co-studio/" class="btn btn-ghost" style="margin-left:var(--space-xs)">BACK TO STUDIO <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-entity">Recurr Studio Private Limited</div>
+      <div class="footer-loc">Bengaluru, India</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/company/recurrco/">LinkedIn</a>
+      <a href="https://twitter.com/pikiishra">Twitter</a>
+      <a href="https://www.linkedin.com/newsletters/">Subscribe</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/recurr-system/engine.js"></script>
+</body>
+</html>
