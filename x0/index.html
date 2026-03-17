@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#E5E8E8">
+  <title>x0 — We build the 0→1 of design for B2B</title>
+  <meta name="description" content="x0 is the first serious design investment you make into your B2B company. Website design, landing pages, product UX — first versions only. From Recurr Studio.">
+  <link rel="stylesheet" href="/recurr-system/style.css">
+  <style>
+    /* -- x0-specific styles -- */
+    .service-tabs {
+      display: flex; gap: 0;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: var(--space-m);
+    }
+    .service-tab {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--pencil); background: none; border: none;
+      padding: var(--space-xs) var(--space-s);
+      cursor: pointer; position: relative;
+      transition: color 0.2s var(--ease);
+    }
+    .service-tab::after {
+      content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+      height: 3px; background: transparent; border-radius: 2px 2px 0 0;
+      transition: background 0.2s var(--ease);
+    }
+    .service-tab.active { color: var(--ink); }
+    .service-tab.active::after { background: var(--red); }
+    @media (hover:hover) { .service-tab:hover { color: var(--ink); } }
+    .service-panel { display: none; }
+    .service-panel.active { display: block; }
+
+    .service-meta {
+      display: flex; flex-wrap: wrap; gap: var(--space-m);
+      margin-bottom: var(--space-m);
+    }
+    .meta-item { display: flex; flex-direction: column; gap: 2px; }
+    .meta-label {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil);
+    }
+    .meta-value {
+      font-family: var(--serif); font-size: var(--fs-h3); font-weight: 700;
+      line-height: 1.2; letter-spacing: -0.01em;
+    }
+    .meta-tools {
+      font-family: var(--mono); font-size: var(--fs-small); font-weight: 700;
+      color: var(--ink); letter-spacing: 0.02em;
+    }
+
+    .deliverables-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--space-s);
+    }
+    .deliverable-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.2rem, 1rem + 0.8vw, 1.8rem);
+    }
+    .deliverable-card h4 {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil);
+      margin-bottom: 8px;
+    }
+    .del-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .del-list li {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.55;
+      padding-left: 1.2em; position: relative;
+    }
+    .del-list li::before {
+      content: '~'; position: absolute; left: 0;
+      font-family: var(--mono); color: var(--faint);
+    }
+
+    .philosophy-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--space-s);
+    }
+    .philosophy-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.5rem, 1.2rem + 1vw, 2.2rem);
+      display: flex; flex-direction: column; gap: var(--space-xs);
+      position: relative;
+      transition: background 0.35s var(--ease);
+    }
+    @media (hover:hover) {
+      .philosophy-card:hover { background: var(--notebook); }
+      .philosophy-card:hover .card-corner { opacity: 1; }
+    }
+    .phi-title {
+      font-family: var(--serif); font-size: var(--fs-h3); font-weight: 700;
+      line-height: 1.15; letter-spacing: -0.02em;
+    }
+    .phi-text {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.55;
+    }
+
+    .icp-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--space-s);
+    }
+    .icp-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.2rem, 1rem + 0.8vw, 1.8rem);
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .icp-label {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil);
+    }
+    .icp-text {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.55;
+    }
+
+    .research-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .research-list li {
+      font-family: var(--serif); font-size: var(--fs-body);
+      color: var(--ink); line-height: 1.4;
+      padding: var(--space-xs) 0;
+      border-bottom: 1px dashed var(--border-faint);
+      display: flex; align-items: baseline; gap: 0.8em;
+    }
+    .research-list li::before {
+      content: attr(data-num);
+      font-family: var(--mono); font-size: var(--fs-label);
+      color: var(--faint); flex-shrink: 0;
+    }
+
+    @media (max-width: 700px) {
+      .philosophy-grid { grid-template-columns: 1fr; }
+      .deliverables-grid { grid-template-columns: 1fr; }
+      .icp-grid { grid-template-columns: 1fr; }
+      .service-tabs { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas class="dot-grid-canvas" id="dot-grid"></canvas>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="/recurr-co/" class="nav-logo">recurr</a>
+    <div class="nav-right">
+      <span class="nav-clock" id="clock"></span>
+      <a href="/recurr-co-studio/">studio</a>
+      <a href="/recurr-co-events/">events</a>
+      <a href="https://www.linkedin.com/newsletters/">subscribe</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9681;</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <h1 id="hero-h1">We build the 0&rarr;1 of design for B2B software businesses.</h1>
+  <div class="hero-bottom">
+    <p class="hero-sub">Your first real website. Your first real product design. The first time the world takes you seriously. We are the first serious design investment you make into your company.</p>
+    <pre class="hero-ascii" id="hero-ascii">
+ ┌──────────────────────────┐
+ │                          │
+ │    x 0                   │
+ │                          │
+ │   ~ website design       │
+ │   ~ landing pages        │
+ │   ~ product design       │
+ │                          │
+ │   first versions only.   │
+ │   from recurr studio     │
+ └──────────────────────────┘
+    </pre>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- The Catch -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-red">The Catch</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">We only do first versions. No rebrands. No v2s. No redesigns.</p>
+  <p class="section-desc" style="max-width:var(--wide-w);margin-top:var(--space-xs)">Rebrands and redesigns carry baggage &mdash; legacy decisions, internal politics, accumulated compromises. That&rsquo;s not what excites us. We want the blank canvas. The moment before the world sees you. The 0&rarr;1.</p>
+
+  <div class="philosophy-grid" style="margin-top:var(--space-m)">
+    <div class="philosophy-card" data-reveal>
+      <span class="card-corner card-corner-tl">+</span>
+      <span class="card-corner card-corner-tr">+</span>
+      <span class="card-corner card-corner-bl">+</span>
+      <span class="card-corner card-corner-br">+</span>
+      <div class="phi-title">First versions are pure.</div>
+      <div class="phi-text">No &ldquo;but we&rsquo;ve always done it this way.&rdquo; No emotional attachment to old decisions. The constraints are clearer and the possibilities are wider. We&rsquo;re building the first impression the world has of your product.</div>
+    </div>
+    <div class="philosophy-card" data-reveal>
+      <span class="card-corner card-corner-tl">+</span>
+      <span class="card-corner card-corner-tr">+</span>
+      <span class="card-corner card-corner-bl">+</span>
+      <span class="card-corner card-corner-br">+</span>
+      <div class="phi-title">We know B2B.</div>
+      <div class="phi-text">Enterprise buyers don&rsquo;t browse &mdash; they evaluate. They don&rsquo;t impulse-buy &mdash; they build business cases. B2B design isn&rsquo;t boring corporate. It&rsquo;s design that respects the buyer&rsquo;s intelligence and converts through trust, not tricks.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Services -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-green">Services</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">We run in sprints. Every engagement has a defined timeline, clear deliverables, and a fixed price. No hourly billing, no retainer lock-in.</p>
+
+  <div class="service-tabs">
+    <button class="service-tab active" onclick="switchServiceTab(this, 'panel-website')">Website Design + Build</button>
+    <button class="service-tab" onclick="switchServiceTab(this, 'panel-landing')">Landing Page</button>
+    <button class="service-tab" onclick="switchServiceTab(this, 'panel-product')">Product Design</button>
+  </div>
+
+  <!-- Website Design + Build -->
+  <div class="service-panel active" id="panel-website">
+    <div class="service-meta">
+      <div class="meta-item">
+        <div class="meta-label">Timeline</div>
+        <div class="meta-value">4 weeks</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Starting at</div>
+        <div class="meta-value">$3,000</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Tools</div>
+        <div class="meta-tools">Figma &middot; Webflow &middot; Claude</div>
+      </div>
+    </div>
+    <div class="deliverables-grid">
+      <div class="deliverable-card" data-reveal>
+        <h4>Deliverables</h4>
+        <ul class="del-list">
+          <li>Strategy, sitemap, design system</li>
+          <li>Custom UI design &mdash; responsive, mobile-first</li>
+          <li>Development on Webflow or Framer</li>
+          <li>Product animations and micro-interactions</li>
+          <li>CMS setup for blog and updates</li>
+          <li>SEO foundation + analytics integration</li>
+          <li>30-day post-launch support</li>
+        </ul>
+      </div>
+      <div class="deliverable-card" data-reveal>
+        <h4>Good Fit If You</h4>
+        <ul class="del-list">
+          <li>Are an AI, SaaS, or Web3 startup that needs to look credible fast</li>
+          <li>Just raised funding and need a site before your next milestone</li>
+          <li>Have an existing site that doesn&rsquo;t convert or reflect your current product</li>
+          <li>Want an expert who designs, builds, and ships &mdash; no agency overhead</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Landing Page -->
+  <div class="service-panel" id="panel-landing">
+    <div class="service-meta">
+      <div class="meta-item">
+        <div class="meta-label">Timeline</div>
+        <div class="meta-value">1&ndash;2 weeks</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Starting at</div>
+        <div class="meta-value">$1,000</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Tools</div>
+        <div class="meta-tools">Figma &middot; Framer &middot; Claude</div>
+      </div>
+    </div>
+    <div class="deliverables-grid">
+      <div class="deliverable-card" data-reveal>
+        <h4>Deliverables</h4>
+        <ul class="del-list">
+          <li>Copy direction and messaging framework</li>
+          <li>Custom responsive design</li>
+          <li>Build on Webflow or Framer</li>
+          <li>Hero animation or product demo section</li>
+          <li>A/B-ready structure</li>
+          <li>Form / CTA integration</li>
+        </ul>
+      </div>
+      <div class="deliverable-card" data-reveal>
+        <h4>Good Fit If You</h4>
+        <ul class="del-list">
+          <li>Are launching a new feature or product and need a dedicated page</li>
+          <li>Are running paid campaigns and need a high-converting destination</li>
+          <li>Need a waitlist or signup page before your full site is ready</li>
+          <li>Have an event, campaign, or announcement to promote</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Design -->
+  <div class="service-panel" id="panel-product">
+    <div class="service-meta">
+      <div class="meta-item">
+        <div class="meta-label">Timeline</div>
+        <div class="meta-value">4&ndash;8 weeks</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Starting at</div>
+        <div class="meta-value">$5,000</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Tools</div>
+        <div class="meta-tools">Figma &middot; Claude</div>
+      </div>
+    </div>
+    <div class="deliverables-grid">
+      <div class="deliverable-card" data-reveal>
+        <h4>Deliverables</h4>
+        <ul class="del-list">
+          <li>UX audit of existing product (if applicable)</li>
+          <li>User flow mapping and information architecture</li>
+          <li>Wireframes and high-fidelity UI design</li>
+          <li>Interactive prototypes in Figma</li>
+          <li>Design system foundations (components, tokens, patterns)</li>
+          <li>Developer handoff</li>
+        </ul>
+      </div>
+      <div class="deliverable-card" data-reveal>
+        <h4>Good Fit If You</h4>
+        <ul class="del-list">
+          <li>Have a working product that feels clunky or hard to use</li>
+          <li>Are building a new B2B SaaS and need UX from day one</li>
+          <li>Need a design system so your product scales visually</li>
+          <li>Don&rsquo;t have a full-time designer yet and need serious product thinking</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Who It's For -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-blue">Who It&rsquo;s For</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">x0 is for B2B software companies at a milestone moment &mdash; the fundraise, the launch, the first enterprise deal. The moment where looking serious is no longer optional.</p>
+
+  <div class="icp-grid" style="margin-top:var(--space-m)">
+    <div class="icp-card" data-reveal>
+      <div class="icp-label">Verticals</div>
+      <div class="icp-text">B2B SaaS, AI, and Web3 startups &mdash; seed to Series A. Companies where the product is real but the design hasn&rsquo;t caught up yet.</div>
+    </div>
+    <div class="icp-card" data-reveal>
+      <div class="icp-label">Buyer</div>
+      <div class="icp-text">Technical founders, first marketing hires, and product leads who know they need design but don&rsquo;t want agency overhead or freelancer uncertainty.</div>
+    </div>
+    <div class="icp-card" data-reveal>
+      <div class="icp-label">Moment</div>
+      <div class="icp-text">You just raised funding. Or you&rsquo;re about to. Or you&rsquo;re closing your first enterprise deal and your website looks like it was built in a weekend. That&rsquo;s the moment.</div>
+    </div>
+    <div class="icp-card" data-reveal>
+      <div class="icp-label">Not For</div>
+      <div class="icp-text">Rebrands, redesigns, ongoing retainers, or consumer brands. We do 0&rarr;1 for B2B. That&rsquo;s it.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- How We Think -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-yellow">How We Think</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">We&rsquo;re curious about what great design for businesses looks like. So we research, build tools, and share with the world. Here&rsquo;s what we publish:</p>
+
+  <ul class="research-list" style="margin-top:var(--space-s);max-width:var(--wide-w)">
+    <li data-num="01">Design teardowns &mdash; products doing it well, and why</li>
+    <li data-num="02">This vs That &mdash; fixing and recreating what&rsquo;s live out there</li>
+    <li data-num="03">Why this converts &mdash; breakdowns of pages that actually work</li>
+    <li data-num="04">AI crawler &amp; SEO structure explainers</li>
+    <li data-num="05">Build-in-public posts from real client projects</li>
+    <li data-num="06">Hot takes on design trends in SaaS &mdash; short and opinionated</li>
+  </ul>
+</section>
+
+<hr class="divider">
+
+<!-- Recurr Ecosystem -->
+<section class="section-wide" data-reveal>
+  <div class="callout callout-yellow">
+    <div class="callout-label">Part of Recurr Studio</div>
+    x0 is a Recurr Studio product. Led by Nagendra &mdash; an expert B2B designer who&rsquo;s designed for enterprise buyers for years. Recurr provides the brand, the pipeline, and the studio infrastructure. Nagendra brings the craft.
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-wide" data-reveal>
+  <div class="cta-card">
+    <h3>Let&rsquo;s talk.</h3>
+    <p>If you&rsquo;re building a B2B product and need your first serious design investment &mdash; a website, a landing page, or product UX &mdash; we should talk. Fixed scope, fixed price, defined sprint.</p>
+    <div style="margin-top:var(--space-xs)">
+      <a href="mailto:pratik@recurr.co" class="btn btn-primary">GET IN TOUCH</a>
+      <a href="/recurr-co-studio/" class="btn btn-ghost" style="margin-left:var(--space-xs)">BACK TO STUDIO <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-entity">Recurr Studio Private Limited</div>
+      <div class="footer-loc">Bengaluru, India</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/company/recurrco/">LinkedIn</a>
+      <a href="https://twitter.com/pikiishra">Twitter</a>
+      <a href="https://www.linkedin.com/newsletters/">Subscribe</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/recurr-system/engine.js"></script>
+<script>
+  function switchServiceTab(btn, panelId) {
+    document.querySelectorAll('.service-tab').forEach(function(t) { t.classList.remove('active'); });
+    document.querySelectorAll('.service-panel').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById(panelId).classList.add('active');
+  }
+</script>
+</body>
+</html>
