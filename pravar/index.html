@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#E5E8E8">
+  <title>Pravar — Notes on GTM, positioning, and the first year</title>
+  <meta name="description" content="A strategic note for Pravar: how to cross the Adoption Chasm and build a category-defining enterprise AI transformation firm.">
+  <link rel="stylesheet" href="/recurr-system/style.css">
+  <style>
+    /* -- Page-specific: Chasm visualization -- */
+    .chasm-viz {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: var(--space-m);
+    }
+    .chasm-side {
+      padding: clamp(1.5rem, 1.2rem + 1vw, 2.2rem);
+      display: flex; flex-direction: column; gap: var(--space-xs);
+    }
+    .chasm-left { background: var(--whiteboard); }
+    .chasm-right { background: var(--notebook); }
+    .chasm-center {
+      width: clamp(80px, 8vw, 140px);
+      background: var(--ink);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: var(--space-s) var(--space-xs);
+      position: relative;
+    }
+    [data-theme="dark"] .chasm-center { background: #111414; }
+    .chasm-center-label {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--red); writing-mode: vertical-rl;
+      text-orientation: mixed; transform: rotate(180deg);
+    }
+    .chasm-pct {
+      font-family: var(--mono); font-size: var(--fs-display); font-weight: 700;
+      line-height: 1; letter-spacing: -0.04em;
+    }
+    .chasm-pct-label {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--pencil); margin-top: 2px;
+    }
+    .chasm-pct-desc {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.5; margin-top: 4px;
+    }
+    .chasm-stat-row {
+      display: flex; align-items: baseline; gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--border-faint);
+    }
+    .chasm-stat-row:last-child { border-bottom: none; }
+    .chasm-stat-num {
+      font-family: var(--mono); font-size: var(--fs-h3); font-weight: 700;
+      color: var(--ink); flex-shrink: 0; min-width: 4ch;
+    }
+    .chasm-stat-text {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.4;
+    }
+
+    /* -- Three bridges -- */
+    .bridge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-s);
+      margin-top: var(--space-m);
+    }
+    .bridge-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.5rem, 1.2rem + 1vw, 2.2rem);
+      display: flex; flex-direction: column; gap: var(--space-xs);
+      transition: background 0.35s var(--ease);
+      position: relative;
+    }
+    @media (hover:hover) {
+      .bridge-card:hover { background: var(--notebook); }
+      .bridge-card:hover .card-corner { opacity: 1; }
+    }
+    .bridge-num {
+      font-family: var(--mono); font-size: clamp(3rem, 2rem + 3vw, 5rem);
+      font-weight: 700; line-height: 1; color: var(--faint); opacity: 0.3;
+      position: absolute; top: 12px; right: 16px;
+    }
+    .bridge-title {
+      font-family: var(--serif); font-size: var(--fs-h2); font-weight: 700;
+      line-height: 1.1; letter-spacing: -0.02em;
+    }
+    .bridge-sub {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil);
+    }
+    .bridge-desc {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.55;
+    }
+    .bridge-stat {
+      font-family: var(--mono); font-size: var(--fs-label);
+      color: var(--blue); margin-top: auto; padding-top: var(--space-xs);
+      border-top: 1px dashed var(--border-faint);
+      line-height: 1.5;
+    }
+
+    /* -- Audience definition -- */
+    .audience-stack {
+      display: flex; flex-direction: column; gap: 0;
+      border: 1px solid var(--border-color);
+      border-radius: 4px; overflow: hidden;
+      margin-top: var(--space-m);
+    }
+    .audience-row {
+      display: grid; grid-template-columns: auto 1fr;
+      gap: var(--space-m); align-items: start;
+      padding: clamp(1.2rem, 1rem + 0.8vw, 1.8rem);
+      border-bottom: 1px solid var(--border-faint);
+      transition: background 0.35s var(--ease);
+    }
+    .audience-row:last-child { border-bottom: none; }
+    @media (hover:hover) { .audience-row:hover { background: var(--notebook); } }
+    .audience-key {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil);
+      min-width: clamp(80px, 10vw, 140px);
+      padding-top: 3px;
+    }
+    .audience-val {
+      font-family: var(--serif); font-size: var(--fs-body);
+      color: var(--ink); line-height: 1.55;
+    }
+    .audience-val-sub {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.5; margin-top: 4px;
+    }
+
+    /* -- Two-track split -- */
+    .split-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; border: 1px solid var(--border-color);
+      border-radius: 4px; overflow: hidden;
+      margin-top: var(--space-m);
+    }
+    .split-col {
+      padding: clamp(1.8rem, 1.5rem + 1.2vw, 2.8rem);
+      display: flex; flex-direction: column; gap: var(--space-xs);
+    }
+    .split-col:first-child {
+      border-right: 1px solid var(--border-color);
+      background: var(--whiteboard);
+    }
+    .split-col:last-child { background: var(--notebook); }
+    .split-num {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--pencil);
+    }
+    .split-title {
+      font-family: var(--serif); font-size: var(--fs-h2); font-weight: 700;
+      line-height: 1.1; letter-spacing: -0.02em;
+    }
+    .split-desc {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.55;
+    }
+    .split-tag {
+      font-family: var(--mono); font-size: var(--fs-label);
+      color: var(--pencil); background: transparent;
+      border: 1px solid var(--border-faint);
+      padding: 3px 10px; border-radius: 100px;
+      display: inline-block; margin: 2px 4px 2px 0;
+    }
+
+    /* -- Timeline -- */
+    .timeline {
+      display: flex; flex-direction: column; gap: 0;
+      margin-top: var(--space-m);
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute; left: clamp(24px, 3vw, 40px); top: 0; bottom: 0;
+      width: 1px; border-left: 1px dashed var(--border-color);
+    }
+    .timeline-step {
+      display: grid; grid-template-columns: auto 1fr;
+      gap: var(--space-s); align-items: start;
+      padding: var(--space-s) 0;
+      position: relative;
+    }
+    .timeline-marker {
+      width: clamp(48px, 6vw, 80px);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 1;
+    }
+    .timeline-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--ink); border: 2px solid var(--gray-paper);
+    }
+    .timeline-dot.active { background: var(--red); }
+    .timeline-dot.future { background: var(--faint); }
+    .timeline-content { display: flex; flex-direction: column; gap: 4px; }
+    .timeline-title {
+      font-family: var(--serif); font-size: var(--fs-h3); font-weight: 700;
+      line-height: 1.2; letter-spacing: -0.01em;
+    }
+    .timeline-desc {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.55;
+    }
+    .timeline-label {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil);
+    }
+
+    /* -- Founder cards -- */
+    .founder-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--space-s);
+      margin-top: var(--space-m);
+    }
+    .founder-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.5rem, 1.2rem + 1vw, 2.2rem);
+      display: flex; flex-direction: column; gap: var(--space-xs);
+    }
+    .founder-name {
+      font-family: var(--serif); font-size: var(--fs-h2); font-weight: 700;
+      line-height: 1.1; letter-spacing: -0.02em;
+    }
+    .founder-role {
+      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil);
+    }
+    .founder-bio {
+      font-family: var(--serif); font-size: var(--fs-small);
+      color: var(--graphite); line-height: 1.55;
+    }
+    .founder-cred {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 4px;
+      margin-top: auto; padding-top: var(--space-xs);
+      border-top: 1px dashed var(--border-faint);
+    }
+    .founder-cred li {
+      font-family: var(--mono); font-size: var(--fs-label);
+      color: var(--pencil); line-height: 1.5;
+      padding-left: 1.2em; position: relative;
+    }
+    .founder-cred li::before {
+      content: '\2192'; position: absolute; left: 0;
+      color: var(--faint);
+    }
+
+    /* -- Big quote -- */
+    .big-quote {
+      font-family: var(--serif);
+      font-size: var(--fs-h2);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      max-width: 36ch;
+      position: relative;
+      padding-left: clamp(1.5rem, 2vw, 2.5rem);
+    }
+    .big-quote::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 4px; background: var(--red); border-radius: 2px;
+    }
+
+    /* -- Responsive -- */
+    @media (max-width: 700px) {
+      .chasm-viz { grid-template-columns: 1fr; }
+      .chasm-center {
+        width: auto; writing-mode: horizontal-tb;
+        flex-direction: row; gap: var(--space-s);
+        padding: var(--space-s);
+      }
+      .chasm-center-label { writing-mode: horizontal-tb; transform: none; }
+      .bridge-grid { grid-template-columns: 1fr; }
+      .split-grid { grid-template-columns: 1fr; }
+      .split-col:first-child { border-right: none; border-bottom: 1px solid var(--border-color); }
+      .founder-grid { grid-template-columns: 1fr; }
+      .audience-row { grid-template-columns: 1fr; gap: var(--space-xs); }
+    }
+  </style>
+</head>
+<body>
+
+<canvas class="dot-grid-canvas" id="dot-grid"></canvas>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="/recurr-co/" class="nav-logo">recurr</a>
+    <div class="nav-right">
+      <span class="nav-clock" id="clock"></span>
+      <a href="/recurr-co-studio/">studio</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9681;</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== FOLD 1: HERO ========== -->
+<section class="hero">
+  <div class="section-label dot-red" style="margin-bottom:var(--space-s)">Strategic Note for Pravar</div>
+  <h1 id="hero-h1">88% of enterprises are using AI. Only 5.5% are generating value.</h1>
+  <div class="hero-bottom">
+    <p class="hero-sub">The gap between AI experimentation and AI transformation is structural, widening, and unclaimed as a category. This note is a framework for Pravar&rsquo;s first year &mdash; positioning, GTM, and the sequence of bets that get you from stealth to category leader.</p>
+    <pre class="hero-ascii" id="hero-ascii">
+ ┌────────────────────────────────┐
+ │                                │
+ │   p r a v a r                  │
+ │                                │
+ │   positioning                  │
+ │       + GTM framework          │
+ │           + year one plan      │
+ │                                │
+ │   from recurr studio           │
+ │   march 2026                   │
+ └────────────────────────────────┘
+    </pre>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ========== FOLD 2: WHAT PRAVAR DOES + WHY NOW ========== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-blue">What Pravar Does</div>
+  <p class="type-hero-text" style="max-width:20ch;margin-bottom:var(--space-s)">Enterprise AI <span class="hl">transformation</span>, not experimentation.</p>
+  <p class="section-desc" style="max-width:var(--wide-w)">Pravar helps large enterprises cross from AI pilots to AI-native operations. Not a consulting firm that delivers strategy decks. Not a tool vendor that sells software. Pravar is a forward-deployed AI function &mdash; platform, people, and redesigned workflows &mdash; embedded inside the enterprise until the transformation is self-sustaining.</p>
+
+  <div class="callout callout-yellow" style="margin-top:var(--space-m);max-width:var(--wide-w)">
+    <div class="callout-label">Why now</div>
+    Every board in the country is having the same conversation behind closed doors: <em>"We know AI changes everything. We&rsquo;ve spent money. Nothing has fundamentally changed."</em> PwC 2026 says 56% of companies are getting zero financial benefit from AI. Half of CEOs believe their job depends on getting this right. The anxiety is real, the budgets are allocated, the methodology doesn&rsquo;t exist. That&rsquo;s the gap Pravar walks into.
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ========== FOLD 3: THE PROBLEM — CHASM VISUALIZATION ========== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-red">The Problem</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">The Adoption Chasm is the structural gap between AI experimentation and AI transformation. It is not a technology problem. The technology works. It is an organizational failure &mdash; a fundamental inability to rewire how a company operates, decides, and deploys talent around AI capabilities.</p>
+
+  <div class="chasm-viz" data-reveal>
+
+    <!-- Left: Experimentation -->
+    <div class="chasm-side chasm-left">
+      <div class="chasm-pct" style="color:var(--red)">88%</div>
+      <div class="chasm-pct-label">Experimenting</div>
+      <div class="chasm-pct-desc">Running pilots, buying tools, hiring "AI teams", presenting dashboards to the board. No measurable business impact.</div>
+      <div style="margin-top:var(--space-xs)">
+        <div class="chasm-stat-row">
+          <span class="chasm-stat-num">74%</span>
+          <span class="chasm-stat-text">struggle to move beyond proofs of concept (BCG)</span>
+        </div>
+        <div class="chasm-stat-row">
+          <span class="chasm-stat-num">42%</span>
+          <span class="chasm-stat-text">abandoned most AI initiatives (S&amp;P Global)</span>
+        </div>
+        <div class="chasm-stat-row">
+          <span class="chasm-stat-num">56%</span>
+          <span class="chasm-stat-text">getting zero financial benefit (PwC 2026)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center: The Chasm -->
+    <div class="chasm-center">
+      <div class="chasm-center-label">THE ADOPTION CHASM</div>
+    </div>
+
+    <!-- Right: Transformation -->
+    <div class="chasm-side chasm-right">
+      <div class="chasm-pct" style="color:var(--green)">5.5%</div>
+      <div class="chasm-pct-label">Transformed</div>
+      <div class="chasm-pct-desc">AI has changed how they operate. Platform established, workflows redesigned, talent embedded. Measurable P&amp;L impact.</div>
+      <div style="margin-top:var(--space-xs)">
+        <div class="chasm-stat-row">
+          <span class="chasm-stat-num">1.5x</span>
+          <span class="chasm-stat-text">higher revenue growth vs peers (BCG)</span>
+        </div>
+        <div class="chasm-stat-row">
+          <span class="chasm-stat-num">1.6x</span>
+          <span class="chasm-stat-text">greater shareholder returns (BCG)</span>
+        </div>
+        <div class="chasm-stat-row">
+          <span class="chasm-stat-num">+4pp</span>
+          <span class="chasm-stat-text">higher profit margins (PwC)</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p style="font-family:var(--serif);font-size:var(--fs-small);font-style:italic;color:var(--graphite);margin-top:var(--space-s);max-width:var(--wide-w)">The 82.5% in between are trapped. The chasm doesn&rsquo;t close on its own &mdash; it widens. Every quarter in pilot purgatory, the leaders on the other side gain compounding advantages in cost, speed, and capability.</p>
+</section>
+
+<!-- ASCII Chasm Diagram -->
+<div class="ascii-full" data-reveal>
+  <div class="ascii-inner">
+    <div class="section-label">The Widening Gap</div>
+    <div class="ascii-canvas" id="chasm-ascii"></div>
+    <p class="ascii-note">Three simultaneous failures &mdash; no platform, legacy workflows, no embedded talent &mdash; create organizational scar tissue that makes each attempt harder than the last.</p>
+  </div>
+</div>
+<script>
+  recurr.asciiDraw('chasm-ascii',
+    '                                                                          \n' +
+    '  AWARENESS         EXPERIMENTATION            TRANSFORMATION    AI-NATIVE \n' +
+    '  "We need to       "We\'re running             "AI is changing   "AI is    \n' +
+    '   do something"     pilots"                    how we operate"   how we    \n' +
+    '                                                                  operate" \n' +
+    '       |                  |                           |              |     \n' +
+    '  -----+------------------+---.                 .-----+--------------+---- \n' +
+    '                              |                 |                          \n' +
+    '                              |  T H E          |                          \n' +
+    '                              |  C H A S M      |                          \n' +
+    '                              |                 |                          \n' +
+    '       88% of enterprises     |   No platform   |     5.5% generating     \n' +
+    '       are here               |   No workflows  |     real value          \n' +
+    '                              |   No talent     |                          \n' +
+    '                              |                 |                          \n' +
+    '  ----------------------------\'                 \'--------------------------\n' +
+    '                                                                          \n' +
+    '           < < <  WIDENING OVER TIME  > > >                               \n' +
+    '                                                                          '
+  );
+</script>
+
+<hr class="divider">
+
+<!-- ========== FOLD 4: THE SOLUTION — THREE BRIDGES ========== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-green">The Solution</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">Pravar is a forward-deployed AI function. Not a consulting engagement. Not a tool. Three bridges, deployed simultaneously, because they are interdependent. A platform without redesigned workflows is infrastructure nobody uses. Talent without a platform has nothing to work with. All three, orchestrated together.</p>
+
+  <div class="bridge-grid">
+
+    <div class="bridge-card" data-reveal>
+      <span class="card-corner card-corner-tl">&#9581;</span>
+      <span class="card-corner card-corner-tr">&#9582;</span>
+      <span class="card-corner card-corner-bl">&#9584;</span>
+      <span class="card-corner card-corner-br">&#9583;</span>
+      <div class="bridge-num">1</div>
+      <div class="bridge-sub">Bridge One</div>
+      <div class="bridge-title">Enterprise AI Platform</div>
+      <div class="bridge-desc">Centralized, secure, enterprise-grade. Not a vendor&rsquo;s SaaS product &mdash; an internal platform designed for the org&rsquo;s data, workflows, security, and regulatory context. Turns isolated experiments into enterprise-wide capability.</div>
+      <div class="bridge-stat">Infrastructure that makes scale possible.</div>
+    </div>
+
+    <div class="bridge-card" data-reveal>
+      <span class="card-corner card-corner-tl">&#9581;</span>
+      <span class="card-corner card-corner-tr">&#9582;</span>
+      <span class="card-corner card-corner-bl">&#9584;</span>
+      <span class="card-corner card-corner-br">&#9583;</span>
+      <div class="bridge-num">2</div>
+      <div class="bridge-sub">Bridge Two</div>
+      <div class="bridge-title">Workflow Redesign</div>
+      <div class="bridge-desc">The highest-value workflows redesigned from the ground up around AI capabilities. Not &ldquo;AI-assisted&rdquo; old processes. New processes that are only possible because of AI. This is where 70% of the value lives.</div>
+      <div class="bridge-stat">BCG: 70% of AI value = people + process, not tech.</div>
+    </div>
+
+    <div class="bridge-card" data-reveal>
+      <span class="card-corner card-corner-tl">&#9581;</span>
+      <span class="card-corner card-corner-tr">&#9582;</span>
+      <span class="card-corner card-corner-bl">&#9584;</span>
+      <span class="card-corner card-corner-br">&#9583;</span>
+      <div class="bridge-num">3</div>
+      <div class="bridge-sub">Bridge Three</div>
+      <div class="bridge-title">Talent Injection</div>
+      <div class="bridge-desc">AI-native professionals embedded directly in business units. Not in innovation labs. Not in IT. Sitting next to operators, analysts, and decision-makers. They sustain the transformation after the engagement ends.</div>
+      <div class="bridge-stat">What makes the transformation durable.</div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ========== FOLD 5: THE AUDIENCE ========== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-yellow">Year One &mdash; The Audience</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">Not every enterprise. Not yet. Year one is about a very specific boardroom &mdash; one where AI transformation impact shows up directly in financial figures, making ROI undeniable.</p>
+
+  <div class="audience-stack">
+    <div class="audience-row" data-reveal>
+      <div class="audience-key">Profile</div>
+      <div>
+        <div class="audience-val">An anxious boardroom at a firm with $10M+ / &#8377;50Cr+ revenue</div>
+        <div class="audience-val-sub">Boards living in fear and uncertainty. Can&rsquo;t say what they&rsquo;re really thinking. Half of CEOs believe job security depends on getting AI right. Leaders more anxious (43%) than their own teams (34%).</div>
+      </div>
+    </div>
+    <div class="audience-row" data-reveal>
+      <div class="audience-key">Sector</div>
+      <div>
+        <div class="audience-val">Indian Financial Services firms and PEs</div>
+        <div class="audience-val-sub">Not because it&rsquo;s the biggest market. Because financial analysis is the core competency &mdash; every deployment impact shows up directly in financial figures. Easy to gauge ROI. Easy to build case studies.</div>
+      </div>
+    </div>
+    <div class="audience-row" data-reveal>
+      <div class="audience-key">Stakeholder</div>
+      <div>
+        <div class="audience-val">Where financial analysis is the core competency</div>
+        <div class="audience-val-sub">Investment analysis, risk modelling, portfolio management, compliance. Workflows that are knowledge-intensive, repetitive at the structural level, and directly tied to P&amp;L. One validated case: avoided hiring ~200 investment analysts.</div>
+      </div>
+    </div>
+    <div class="audience-row" data-reveal>
+      <div class="audience-key">Why this works</div>
+      <div>
+        <div class="audience-val">Compound learning in one domain before expanding</div>
+        <div class="audience-val-sub">Every engagement deepens the methodology. Financial services is a tight enough vertical to build repeatable playbooks, large enough to sustain a multi-year practice. Progressive productization from here.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ========== FOLD 6: THE SPLIT — TWO MARKETABLE ASSETS ========== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-ink">The GTM Split</div>
+  <p class="section-desc" style="max-width:var(--wide-w)">Pravar has exactly two marketable assets in year one. Everything else is a distraction. The job is to make both assets compound, and to shift weight from Track 1 to Track 2 as fast as possible.</p>
+
+  <div class="split-grid">
+    <div class="split-col" data-reveal>
+      <div class="split-num">Track 01</div>
+      <div class="split-title">The Founders</div>
+      <div class="split-desc">Ayon and Ranjan are the product. Their credibility, their thinking, their ability to hold the uncomfortable truth about AI transformation in the boardroom. This is the primary asset today &mdash; and the primary constraint. Every minute of founder time is finite. This track needs to be amplified, not expanded.</div>
+      <div style="margin-top:var(--space-xs)">
+        <span class="split-tag">Credibility</span>
+        <span class="split-tag">Network</span>
+        <span class="split-tag">Thought leadership</span>
+        <span class="split-tag">Speaking</span>
+      </div>
+    </div>
+    <div class="split-col" data-reveal>
+      <div class="split-num">Track 02</div>
+      <div class="split-title">Customer Success</div>
+      <div class="split-desc">This track doesn&rsquo;t exist yet. And that&rsquo;s the most urgent problem. The first 3 customers need to come from the founders&rsquo; network &mdash; shortest path to success. But they must be closed with a mindset of shipping customer stories and collaterals at the earliest. Customer success is the second most marketable asset and is needed ASAP to reduce pressure on Track 1 and strengthen it instead.</div>
+      <div style="margin-top:var(--space-xs)">
+        <span class="split-tag">Case studies</span>
+        <span class="split-tag">Testimonials</span>
+        <span class="split-tag">ROI proof</span>
+        <span class="split-tag">Referenceable logos</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ========== FOLD 7: TRACK 1 — FOUNDERS ========== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-red">Track 01 &mdash; The Founders</div>
+
+  <div class="big-quote" data-reveal>
+    The founders need to get their voice out there. The thinking exists. The frameworks exist. The credibility is extraordinary. What doesn&rsquo;t exist is the distribution.
+  </div>
+
+  <div class="founder-grid" style="margin-top:var(--space-m)">
+    <div class="founder-card" data-reveal>
+      <div class="founder-name">Ayon Banerjee</div>
+      <div class="founder-role">Co-founder</div>
+      <div class="founder-bio">30+ year tech industry veteran. Has sat in the exact boardroom chair Pravar&rsquo;s clients sit in. Understands the unspeakable truth about AI transformation &mdash; the fear, the politics, the paralysis.</div>
+      <ul class="founder-cred">
+        <li>MD &amp; Partner, BCG (Transformation / TURN, India)</li>
+        <li>Chief Strategy &amp; Growth Officer, Persistent Systems</li>
+        <li>President, ANSR</li>
+        <li>Operating Advisor, Gaja Capital</li>
+      </ul>
+    </div>
+    <div class="founder-card" data-reveal>
+      <div class="founder-name">Ranjan</div>
+      <div class="founder-role">Co-founder</div>
+      <div class="founder-bio">Technical leadership background. Together with Ayon, has already led six enterprise AI transformations during Pravar&rsquo;s stealth phase. The methodology is proven &mdash; it just hasn&rsquo;t been branded yet.</div>
+      <ul class="founder-cred">
+        <li>6 enterprise transformations in stealth</li>
+        <li>Financial services case: ~200 analysts avoided</li>
+        <li>Platform + workflow + talent methodology</li>
+        <li>Background details TBD</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top:var(--space-m);max-width:var(--wide-w)">
+    <p style="font-family:var(--serif);font-size:var(--fs-body);font-weight:700;color:var(--ink);margin-bottom:var(--space-s)">The distribution playbook:</p>
+
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          Conferences &amp; Speaking
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">Show up everywhere the anxious boardroom shows up. Not tech conferences &mdash; financial services leadership summits, PE conclaves, CXO forums. The goal is panel seats, not booths. Ayon&rsquo;s BCG pedigree opens every door. The ask: get on 2-3 marquee stages in the first 6 months.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          Press &amp; Media
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">One well-placed interview with a journalist who covers enterprise tech or financial services. Not a press release blast. A genuine conversation where Ayon can articulate the Adoption Chasm thesis. ET, Mint, or a global outlet like HBR. The story isn&rsquo;t &ldquo;new company launches&rdquo; &mdash; it&rsquo;s &ldquo;here&rsquo;s why 88% of enterprises are stuck.&rdquo;</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          Publishing
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">Publish on platforms that carry weight in the boardroom: McKinsey Digital, BCG Henderson Institute, HBR.org. Ayon&rsquo;s former affiliations make this possible. Simultaneously, consistently high-quality publishing on the Pravar website itself &mdash; this is the long game. The website becomes a body of work that demonstrates the thinking, not just describes it.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          The Thesis as Content
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">The &ldquo;Adoption Chasm&rdquo; framework is the content strategy. Own this term. A founding essay under Ayon and Ranjan&rsquo;s names that defines the problem, gives it a name, and makes Pravar the citation. Every subsequent piece of content &mdash; talks, interviews, articles &mdash; reinforces this frame. The first person to name a problem owns it.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ========== FOLD 8: TRACK 2 — CUSTOMER SUCCESS ========== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-blue">Track 02 &mdash; Customer Success</div>
+
+  <div class="callout callout-red" style="max-width:var(--wide-w);margin-bottom:var(--space-m)">
+    <div class="callout-label">The hard truth</div>
+    This track does not exist yet. And it is the single biggest bottleneck to Pravar&rsquo;s growth. Without referenceable customer stories, every sale depends on founder credibility alone. That doesn&rsquo;t scale.
+  </div>
+
+  <div style="max-width:var(--wide-w)">
+    <div style="display:flex;flex-direction:column;gap:0">
+
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:var(--space-m);padding:var(--space-s) 0;border-bottom:1px dashed var(--border-faint);align-items:start" data-reveal>
+        <div style="font-family:var(--mono);font-size:var(--fs-h1);font-weight:700;color:var(--faint);line-height:1;min-width:3ch">01</div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div style="font-family:var(--serif);font-size:var(--fs-h3);font-weight:700;line-height:1.2">First 3 customers from the network</div>
+          <div style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.55">Not inbound. Not marketing. The fastest path to a referenceable customer is a warm introduction from Ayon or Ranjan&rsquo;s network. Financial services firms or PEs where someone owes them a meeting. The bar is low: one real engagement, not a pilot.</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:var(--space-m);padding:var(--space-s) 0;border-bottom:1px dashed var(--border-faint);align-items:start" data-reveal>
+        <div style="font-family:var(--mono);font-size:var(--fs-h1);font-weight:700;color:var(--faint);line-height:1;min-width:3ch">02</div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div style="font-family:var(--serif);font-size:var(--fs-h3);font-weight:700;line-height:1.2">Ship the story, not just the work</div>
+          <div style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.55">Every engagement must be designed for storytelling from day one. The deliverable is transformation AND a case study. Bake documentation, before/after metrics, and permission-to-share into the SOW. If you wait until after the engagement to ask, it&rsquo;s too late.</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:var(--space-m);padding:var(--space-s) 0;align-items:start" data-reveal>
+        <div style="font-family:var(--mono);font-size:var(--fs-h1);font-weight:700;color:var(--faint);line-height:1;min-width:3ch">03</div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div style="font-family:var(--serif);font-size:var(--fs-h3);font-weight:700;line-height:1.2">Reduce pressure on Track 1</div>
+          <div style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.55">Today, every sale requires a founder in the room. Customer stories change that equation. A case study that says &ldquo;we avoided hiring 200 analysts&rdquo; does more selling than any founder pitch. The faster Track 2 spins up, the less Track 1 has to carry alone.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ========== FOLD 9: THE LAUNCH ========== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-green">Launch &mdash; A Milestone, Not a Marketing Activity</div>
+
+  <div class="big-quote" data-reveal style="margin-bottom:var(--space-m)">
+    Launch should happen ASAP. It is the line from which you start actively marketing on your GTM. Not the day the world changes &mdash; the day the clock starts.
+  </div>
+
+  <p class="section-desc" style="max-width:var(--wide-w)">The problem statement should lead all messaging. Not &ldquo;we&rsquo;re a new company&rdquo; but &ldquo;88% of enterprises are stuck in AI pilot purgatory &mdash; here&rsquo;s why, and here&rsquo;s how to cross.&rdquo;</p>
+
+  <div class="timeline">
+
+    <div class="timeline-step" data-reveal>
+      <div class="timeline-marker"><div class="timeline-dot active"></div></div>
+      <div class="timeline-content">
+        <div class="timeline-label">Before Launch</div>
+        <div class="timeline-title">Website + Essays</div>
+        <div class="timeline-desc">A website that is a body of work, not a brochure. The Adoption Chasm founding essay. 2-3 supporting pieces that demonstrate the thinking. Published and live before anything else happens. This is what a journalist reads before agreeing to cover you. This is what a board member sees when they Google you.</div>
+      </div>
+    </div>
+
+    <div class="timeline-step" data-reveal>
+      <div class="timeline-marker"><div class="timeline-dot active"></div></div>
+      <div class="timeline-content">
+        <div class="timeline-label">Launch Day</div>
+        <div class="timeline-title">Journalist + Press Release</div>
+        <div class="timeline-desc">Engage one journalist you know well. Not a press blast. A genuine interview where Ayon articulates the Adoption Chasm. Push a press release on the same day &mdash; wires pick it up, it creates a baseline of coverage. The story is the problem, not the company. The maximum aspiration from this spectrum: print coverage in ET or Mint.</div>
+      </div>
+    </div>
+
+    <div class="timeline-step" data-reveal>
+      <div class="timeline-marker"><div class="timeline-dot"></div></div>
+      <div class="timeline-content">
+        <div class="timeline-label">Week 1&ndash;4</div>
+        <div class="timeline-title">Activate GTM Tracks</div>
+        <div class="timeline-desc">Both tracks start running. Track 1: speaking applications, publishing pipeline, LinkedIn presence. Track 2: first 3 warm intros from network. The launch gave you something to point to. Now you use it.</div>
+      </div>
+    </div>
+
+    <div class="timeline-step" data-reveal>
+      <div class="timeline-marker"><div class="timeline-dot future"></div></div>
+      <div class="timeline-content">
+        <div class="timeline-label">Month 2&ndash;6</div>
+        <div class="timeline-title">Compound</div>
+        <div class="timeline-desc">First customer story ships. Publishing cadence established. Speaking engagements land. Each asset reinforces the next. The Adoption Chasm becomes the lens through which your market thinks about the problem. You own the category.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="callout callout-blue" style="margin-top:var(--space-m);max-width:var(--wide-w)">
+    <div class="callout-label">Total launch budget</div>
+    Under &#8377;10 lakhs. No event, no splash, no PR agency. What happens after launch day &mdash; consistent, high-quality execution on both tracks &mdash; is what compounds. The launch is a starting gun, not a finish line.
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ========== FOLD 10: CTA ========== -->
+<section class="section-wide" data-reveal>
+  <div class="cta-card">
+    <h3>Let&rsquo;s build this.</h3>
+    <p>Three deliverables, in sequence: a <strong>deck</strong> that sharpens the Adoption Chasm into 10 slides (forces brevity, crystallizes the pitch), a <strong>landing page</strong> that uses the sharpened language (the body of work starts here), and the <strong>founding essay</strong> (the thought leadership piece that names the problem and makes Pravar the citation).</p>
+    <div style="margin-top:var(--space-s);font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.6">
+      <p style="margin-bottom:var(--space-xs)"><strong>Pratik Sagar Mishra</strong><br>Recurr Studio, Bengaluru</p>
+      <p>pratik@recurr.co</p>
+    </div>
+    <div style="margin-top:var(--space-xs)">
+      <a href="mailto:pratik@recurr.co" class="btn btn-primary">REPLY TO THIS NOTE</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-entity">Recurr Studio Private Limited</div>
+      <div class="footer-loc">Bengaluru, India &middot; March 2026</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/company/recurrco/">LinkedIn</a>
+      <a href="https://twitter.com/pikiishra">Twitter</a>
+      <a href="/recurr-co/">recurr.co</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/recurr-system/engine.js"></script>
+</body>
+</html>
