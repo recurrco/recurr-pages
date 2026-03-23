@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Clarisights — SEO & Content Strategy V2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+.header{max-width:960px;margin:0 auto;padding:60px 24px 40px}
+.header h1{font-size:28px;font-weight:700;color:#1a1a2e;margin-bottom:6px}
+.header .subtitle{font-size:14px;color:#6b7280;font-weight:400}
+.summary{max-width:960px;margin:0 auto;padding:0 24px 32px}
+.summary p{font-size:15px;color:#374151;margin-bottom:16px;max-width:800px}
+.summary .highlight{background:#f0f4ff;border-left:3px solid #4361ee;padding:12px 16px;border-radius:0 6px 6px 0;margin-bottom:16px;font-size:14px}
+.summary .highlight strong{color:#1a1a2e}
+.tab-bar-wrapper{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid #e5e7eb;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.tab-bar{max-width:960px;margin:0 auto;padding:0 24px;display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{padding:14px 18px;font-size:13px;font-weight:500;color:#6b7280;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:color .15s,border-color .15s;font-family:inherit}
+.tab-btn:hover{color:#1a1a2e}
+.tab-btn.active{color:#4361ee;border-bottom-color:#4361ee;font-weight:600}
+.content{max-width:960px;margin:0 auto;padding:32px 24px 80px}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+h2{font-size:22px;font-weight:700;color:#1a1a2e;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e5e7eb}
+h2:first-child{margin-top:0}
+h3{font-size:17px;font-weight:600;color:#1a1a2e;margin:28px 0 12px}
+h4{font-size:15px;font-weight:600;color:#374151;margin:20px 0 8px}
+p{font-size:14px;margin-bottom:12px;color:#374151}
+ul,ol{font-size:14px;margin:0 0 16px 20px;color:#374151}
+li{margin-bottom:6px}
+li strong{color:#1a1a2e}
+strong{color:#1a1a2e}
+.callout{background:#f0f4ff;border-left:3px solid #4361ee;padding:12px 16px;border-radius:0 6px 6px 0;margin:16px 0;font-size:14px}
+.callout-warn{background:#fef3c7;border-left-color:#f59e0b}
+.callout-green{background:#ecfdf5;border-left-color:#10b981}
+.callout-red{background:#fef2f2;border-left-color:#ef4444}
+.table-wrap{overflow-x:auto;margin:16px 0 24px;border:1px solid #e5e7eb;border-radius:6px}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:500px}
+thead{background:#f8f9fb}
+th{text-align:left;padding:10px 14px;font-weight:600;color:#1a1a2e;border-bottom:1px solid #e5e7eb;white-space:nowrap}
+td{padding:9px 14px;border-bottom:1px solid #f3f4f6;color:#374151}
+tbody tr:nth-child(even){background:#fafbfc}
+tbody tr:hover{background:#f0f4ff}
+code{font-family:'SF Mono',Consolas,monospace;font-size:12px;background:#f3f4f6;padding:2px 6px;border-radius:3px}
+hr{border:none;border-top:1px solid #e5e7eb;margin:32px 0}
+.badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:6px}
+.badge-green{background:#ecfdf5;color:#059669}
+.badge-blue{background:#eff6ff;color:#2563eb}
+.badge-amber{background:#fef3c7;color:#d97706}
+.badge-red{background:#fef2f2;color:#dc2626}
+.footer{max-width:960px;margin:0 auto;padding:40px 24px;border-top:1px solid #e5e7eb;font-size:13px;color:#9ca3af;text-align:center}
+
+/* V2-specific: comparison cards */
+.shift-grid{display:grid;gap:16px;margin:24px 0}
+.shift-card{border:1px solid #e5e7eb;border-radius:8px;overflow:hidden}
+.shift-card .shift-num{display:flex;align-items:center;gap:10px;padding:12px 16px;background:#f8f9fb;font-size:13px;font-weight:600;color:#374151;border-bottom:1px solid #e5e7eb}
+.shift-card .shift-num span.num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#4361ee;color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
+.shift-body{display:grid;grid-template-columns:1fr 40px 1fr;align-items:stretch}
+.shift-before,.shift-after{padding:12px 16px;font-size:13px;line-height:1.5}
+.shift-before{background:#fef2f2;color:#991b1b}
+.shift-arrow{display:flex;align-items:center;justify-content:center;background:#f3f4f6;font-size:18px;color:#6b7280}
+.shift-after{background:#ecfdf5;color:#065f46}
+
+/* Category callout */
+.category-callout{background:linear-gradient(135deg,#eff6ff,#f0f4ff);border:1px solid #bfdbfe;border-radius:8px;padding:20px 24px;margin:28px 0;font-size:14px;color:#1e40af}
+.category-callout strong{color:#1e3a8a}
+
+/* Cluster section */
+.cluster-header{background:#f8f9fb;border:1px solid #e5e7eb;border-radius:8px;padding:16px 20px;margin:28px 0 16px}
+.cluster-header h3{margin:0 0 6px;font-size:16px}
+.cluster-header p{margin:0;font-size:13px;color:#6b7280}
+
+/* Constraint cards */
+.constraint{background:#fef3c7;border-left:3px solid #f59e0b;padding:10px 16px;border-radius:0 6px 6px 0;margin:10px 0;font-size:13px;display:flex;gap:10px;align-items:baseline}
+.constraint .rule-num{font-weight:700;color:#92400e;flex-shrink:0;min-width:18px}
+.constraint-do{background:#ecfdf5;border-left-color:#10b981}
+.constraint-do .rule-num{color:#065f46}
+
+/* Calendar priority colors */
+.priority-p0{background:#fef2f2;color:#dc2626;font-weight:600;font-size:11px;padding:2px 8px;border-radius:10px}
+.priority-p1{background:#fef3c7;color:#d97706;font-weight:600;font-size:11px;padding:2px 8px;border-radius:10px}
+.priority-p2{background:#eff6ff;color:#2563eb;font-weight:600;font-size:11px;padding:2px 8px;border-radius:10px}
+
+/* Map category cards */
+.map-cat{margin:20px 0}
+.map-cat-header{font-size:14px;font-weight:600;padding:10px 16px;border-radius:6px 6px 0 0;color:#fff}
+.map-cat-a .map-cat-header{background:#7c3aed}
+.map-cat-b .map-cat-header{background:#0891b2}
+.map-cat-c .map-cat-header{background:#059669}
+
+@media(max-width:640px){
+  .header{padding:40px 16px 24px}
+  .header h1{font-size:22px}
+  .summary,.content{padding-left:16px;padding-right:16px}
+  .tab-btn{padding:12px 14px;font-size:12px}
+  h2{font-size:18px}
+  h3{font-size:15px}
+  .shift-body{grid-template-columns:1fr;gap:0}
+  .shift-arrow{padding:4px;transform:rotate(90deg)}
+  .shift-before,.shift-after{padding:10px 14px;font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Clarisights &mdash; SEO &amp; Content Strategy V2</h1>
+  <p class="subtitle">Revised March 23, 2026 &middot; Powered by Customer Intelligence</p>
+</div>
+
+<div class="summary">
+  <p>V2 replaces the keyword-volume-chasing approach of V1 with a customer-insight-led strategy. Every content topic traces back to a real customer pain point, competitive gap, or market signal from the 92-entity intelligence system. The result: fewer pieces, higher specificity, and category creation instead of category-chasing.</p>
+
+  <div class="highlight">
+    <strong>Core thesis:</strong> The category "cross-channel marketing reporting" doesn't exist as a search term yet (20/mo, growing 100% YoY). Clarisights creates this category, not chases it. V2 shifts from 69 items / 90 days to 25 items / 30 days &mdash; quality over volume.
+  </div>
+</div>
+
+<div class="tab-bar-wrapper">
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="changes">What Changed</button>
+    <button class="tab-btn" data-tab="clusters">Keyword Clusters</button>
+    <button class="tab-btn" data-tab="landscape">Creative Analytics</button>
+    <button class="tab-btn" data-tab="programmatic">Programmatic SEO</button>
+    <button class="tab-btn" data-tab="constraints">Positioning Constraints</button>
+    <button class="tab-btn" data-tab="calendar">30-Day Calendar</button>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ============================================================ -->
+<!-- TAB 1: WHAT CHANGED -->
+<!-- ============================================================ -->
+<div class="tab-panel active" id="tab-changes">
+
+<h2>V1 &rarr; V2: 7 Key Shifts</h2>
+
+<p>V1 was built purely on DataForSEO keyword data &mdash; 69 content pieces across 90 days, optimized for search volume. V2 is rebuilt from the ground up using customer intelligence from Zulip, product-gap analysis, competitive research, and positioning constraints from the Clarisights team.</p>
+
+<div class="shift-grid">
+
+  <div class="shift-card">
+    <div class="shift-num"><span class="num">1</span> Content Strategy Foundation</div>
+    <div class="shift-body">
+      <div class="shift-before">Generic keyword SEO &mdash; pick high-volume terms and write "Complete Guide to X" articles</div>
+      <div class="shift-arrow">&rarr;</div>
+      <div class="shift-after">Customer-insight-led content &mdash; every topic traces to a real customer problem, competitive gap, or market signal</div>
+    </div>
+  </div>
+
+  <div class="shift-card">
+    <div class="shift-num"><span class="num">2</span> Funnel Focus</div>
+    <div class="shift-body">
+      <div class="shift-before">TOFU volume play &mdash; chase awareness-stage search volume to build traffic</div>
+      <div class="shift-arrow">&rarr;</div>
+      <div class="shift-after">BOFU + category creation &mdash; comparison pages, displacement content, and owning the emerging "cross-channel reporting" category</div>
+    </div>
+  </div>
+
+  <div class="shift-card">
+    <div class="shift-num"><span class="num">3</span> Metric Content</div>
+    <div class="shift-body">
+      <div class="shift-before">Metric glossary pages &mdash; "What is CPM?" commodity content (Improvado's game)</div>
+      <div class="shift-arrow">&rarr;</div>
+      <div class="shift-after">Cross-channel metric comparisons &mdash; "How ROAS calculation differs across Meta, Google, TikTok" (practitioner voice)</div>
+    </div>
+  </div>
+
+  <div class="shift-card">
+    <div class="shift-num"><span class="num">4</span> Creative Analytics</div>
+    <div class="shift-body">
+      <div class="shift-before">Ignore creative analytics &mdash; not part of V1 keyword strategy at all</div>
+      <div class="shift-arrow">&rarr;</div>
+      <div class="shift-after">Own "ad fatigue" and creative testing problems &mdash; with product caveats (Philip's warning: don't oversell until product catches up)</div>
+    </div>
+  </div>
+
+  <div class="shift-card">
+    <div class="shift-num"><span class="num">5</span> Category Approach</div>
+    <div class="shift-body">
+      <div class="shift-before">Chase competitor keywords &mdash; fight Improvado for "marketing analytics" (3,600/mo, crowded)</div>
+      <div class="shift-arrow">&rarr;</div>
+      <div class="shift-after">Create "cross-channel reporting" category &mdash; 20/mo but growing 100% YoY, first-mover advantage</div>
+    </div>
+  </div>
+
+  <div class="shift-card">
+    <div class="shift-num"><span class="num">6</span> Competitive Framing</div>
+    <div class="shift-body">
+      <div class="shift-before">Competitors as full alternatives &mdash; treat Looker, Supermetrics, Funnel as same-category competitors</div>
+      <div class="shift-arrow">&rarr;</div>
+      <div class="shift-after">Competitors as partial overlaps &mdash; Looker = BI, Supermetrics = ETL, Funnel = data hub. None do cross-channel marketing reporting.</div>
+    </div>
+  </div>
+
+  <div class="shift-card">
+    <div class="shift-num"><span class="num">7</span> Production Volume</div>
+    <div class="shift-body">
+      <div class="shift-before">69 items / 90 days &mdash; high volume, generic content, thin quality</div>
+      <div class="shift-arrow">&rarr;</div>
+      <div class="shift-after">25 items / 30 days &mdash; quality over volume, practitioner-voiced, customer-insight sourced</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="category-callout">
+  <strong>The category-creation bet:</strong> "Cross-channel marketing reporting" gets just 20 searches/month today &mdash; but it's growing 100% year-over-year. The CPC is $42 for that tiny volume, meaning buyers who search for this are extremely high-intent. Clarisights doesn't chase a category. Clarisights <em>creates</em> this category. Every content piece in V2 is designed to make "cross-channel marketing reporting" the term buyers use when they have the problem Clarisights solves.
+</div>
+
+<h3>What Powered the Shift</h3>
+<p>V2 is built on a 92-entity intelligence system synthesizing:</p>
+<ul>
+  <li><strong>16 product-gap analyses</strong> from internal Zulip conversations (Philip, Jan, Avi, Anshul, Arun, Cindy, Sylvia)</li>
+  <li><strong>10 market signals</strong> including Funnel.io crisis, AI/Cursor disruption, GA4 cross-channel budgeting</li>
+  <li><strong>10 customer intelligence files</strong> from enterprise accounts (Taxfix, Wolt, Superbet, On Running, UMG, Delivery Hero, AboutYou, Three.e, Enpal, Xero)</li>
+  <li><strong>3 competitor deep-dives</strong> (Improvado, Funnel.io, Adverity) plus landscape research on 20+ tools</li>
+  <li><strong>DataForSEO keyword validation</strong> across 6 clusters, confirming demand signals from customer research</li>
+</ul>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 2: KEYWORD CLUSTERS -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab-clusters">
+
+<h2>6 Keyword Clusters</h2>
+<p>Clusters are organized by strategic priority, not search volume. Each cluster connects to specific customer pain points and competitive gaps identified in the intelligence system.</p>
+
+<!-- Cluster 1 -->
+<div class="cluster-header">
+  <h3>Cluster 1: Creative Analytics &amp; Ad Creative Performance</h3>
+  <p>The opportunity is NOT the category term &mdash; it's the problems creative analytics solves.</p>
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Keyword</th><th>Volume</th><th>CPC</th><th>Competition</th><th>Intent</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>ad fatigue</td><td>480</td><td>$100</td><td>LOW</td><td>Info</td><td>Massive. Clarisights already ranks #49 for "creative fatigue"</td></tr>
+<tr><td>creative analytics</td><td>590</td><td>$8</td><td>LOW</td><td>Nav</td><td>Mostly navigational for a company called "Creative Analytics." Declining 64% YoY</td></tr>
+<tr><td>motion creative analytics</td><td>210</td><td>$8</td><td>MEDIUM</td><td>Commercial</td><td>Motion (tool) brand term</td></tr>
+<tr><td>ad creative testing</td><td>90</td><td>$11</td><td>LOW</td><td>Commercial</td><td>High intent, $50 top bid</td></tr>
+<tr><td>creative testing framework</td><td>20</td><td>$7</td><td>LOW</td><td>Commercial</td><td>$41 top bid = very high intent</td></tr>
+<tr><td>data driven creative</td><td>20</td><td>&mdash;</td><td>LOW</td><td>Info</td><td>Low volume but growing angle</td></tr>
+<tr><td>creative intelligence platform</td><td>10</td><td>&mdash;</td><td>LOW</td><td>Commercial</td><td>Alison.ai, Motion territory</td></tr>
+</tbody>
+</table></div>
+
+<div class="callout callout-green"><strong>Strategic angle:</strong> Don't compete on "creative analytics" (brand term pollution). Instead own "ad fatigue" (diagnostic content + how Clarisights detects it across channels), "creative testing at scale" (cross-channel creative performance comparison), and "creative performance by channel" (the workflow: FB + Google + TikTok creative side by side).</div>
+<div class="callout callout-warn"><strong>Positioning constraint:</strong> Philip's warning stands &mdash; don't oversell creative analytics until product catches up. Use as secondary capability, never lead.</div>
+
+<!-- Cluster 2 -->
+<div class="cluster-header">
+  <h3>Cluster 2: Data Source / Integration Pages (Programmatic SEO)</h3>
+  <p>Every ad platform Clarisights connects to = one page. High-intent, platform-specific.</p>
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Keyword</th><th>Volume</th><th>CPC</th><th>Competition</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>youtube ads reporting</td><td>320</td><td>&mdash;</td><td>LOW</td><td>Highest volume platform term</td></tr>
+<tr><td>facebook ads reporting tool</td><td>210</td><td>$11</td><td>LOW</td><td>Strong, declining from peak</td></tr>
+<tr><td>google ads reporting tool</td><td>210</td><td>$39</td><td>LOW</td><td>Very high CPC = commercial intent</td></tr>
+<tr><td>meta ads reporting</td><td>90</td><td>$16</td><td>MEDIUM</td><td>Growing</td></tr>
+<tr><td>amazon ads reporting</td><td>50</td><td>$8</td><td>LOW</td><td>Stable</td></tr>
+<tr><td>apple search ads reporting</td><td>40</td><td>&mdash;</td><td>LOW</td><td>Spiky</td></tr>
+<tr><td>DV360 reporting</td><td>20</td><td>$74</td><td>LOW</td><td>Extremely high CPC = enterprise</td></tr>
+<tr><td>snapchat ads analytics</td><td>10</td><td>&mdash;</td><td>&mdash;</td><td>Low but covers the platform</td></tr>
+<tr><td>linkedin ads reporting tool</td><td>10</td><td>$9</td><td>LOW</td><td>B2B angle</td></tr>
+<tr><td>twitter ads analytics</td><td>10</td><td>&mdash;</td><td>LOW</td><td>Low volume</td></tr>
+</tbody>
+</table></div>
+
+<div class="callout callout-green"><strong>Strategic angle:</strong> Programmatic page template: "How to Report on [Platform] Ads Across Channels." 15-20 pages, each covering platform-specific metrics, cross-channel reporting challenges, and how Clarisights unifies it. Unique angle: NOT just "how to use [platform]" but "how to combine [platform] data with other channels." Combined addressable volume: ~1,000+/mo.</div>
+
+<!-- Cluster 3 -->
+<div class="cluster-header">
+  <h3>Cluster 3: Attribution &amp; Measurement</h3>
+  <p>High CPC = high commercial intent. This is where budget decisions are made.</p>
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Keyword</th><th>Volume</th><th>CPC</th><th>Competition</th><th>Intent</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>marketing attribution software</td><td>390</td><td>$64</td><td>MEDIUM</td><td>Commercial</td><td>Growing. Position carefully &mdash; Jan says "we don't do measurement"</td></tr>
+<tr><td>cross channel attribution</td><td>170</td><td>&mdash;</td><td>LOW</td><td>Info/Comm.</td><td>Declining but relevant</td></tr>
+<tr><td>multi-touch attribution tool</td><td>140</td><td>$75</td><td>MEDIUM</td><td>Commercial</td><td>Extremely high CPC</td></tr>
+<tr><td>incrementality testing marketing</td><td>50</td><td>$67</td><td>MEDIUM</td><td>Commercial</td><td>Growing trend</td></tr>
+<tr><td>marketing mix modeling</td><td>3,600</td><td>$45</td><td>LOW (KD 22)</td><td>Commercial</td><td>Massive, beatable from V1</td></tr>
+<tr><td>SKAdNetwork reporting</td><td>10</td><td>&mdash;</td><td>LOW</td><td>Info</td><td>Philip's SKAN article territory</td></tr>
+</tbody>
+</table></div>
+
+<div class="callout callout-warn"><strong>Positioning constraint:</strong> Jan pushed back on "measurement" positioning. Content should frame Clarisights as the REPORTING layer that sits ON TOP of attribution data (from AppsFlyer, Adjust, etc.), not as an attribution tool itself.</div>
+
+<!-- Cluster 4 -->
+<div class="cluster-header">
+  <h3>Cluster 4: Marketing Reporting &amp; Dashboards</h3>
+  <p>Core category. This is where Clarisights lives.</p>
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Keyword</th><th>Volume</th><th>CPC</th><th>Competition</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>marketing analytics</td><td>3,600</td><td>$17</td><td>KD 19</td><td>Core pillar &mdash; Supermetrics at #4, beatable</td></tr>
+<tr><td>marketing dashboard</td><td>1,000</td><td>$52</td><td>KD 24</td><td>Template/example content</td></tr>
+<tr><td>marketing data visualization</td><td>170</td><td>$11</td><td>LOW</td><td>Declining but relevant</td></tr>
+<tr><td>marketing reporting automation</td><td>70</td><td>$15</td><td>LOW</td><td>Declining sharply</td></tr>
+<tr><td>automated marketing reports</td><td>70</td><td>&mdash;</td><td>LOW</td><td>Same cluster</td></tr>
+<tr><td>performance marketing tools</td><td>90</td><td>$12</td><td>LOW</td><td>Declining</td></tr>
+<tr><td>omnichannel marketing analytics</td><td>50</td><td>&mdash;</td><td>LOW</td><td>Declining</td></tr>
+<tr><td><strong>cross channel reporting</strong></td><td><strong>20</strong></td><td>&mdash;</td><td>LOW</td><td><strong>Growing 100% YoY! Category creation term.</strong></td></tr>
+<tr><td>cross channel marketing reporting</td><td>10</td><td>$42</td><td>LOW</td><td>Very high CPC for 10 vol</td></tr>
+</tbody>
+</table></div>
+
+<div class="callout callout-green"><strong>Key insight:</strong> "Cross-channel reporting" is growing 100% YoY despite low volume. This means the CATEGORY is emerging. First mover advantage. Own this term now. The $42 CPC at 10 volume signals extremely high buyer intent.</div>
+
+<!-- Cluster 5 -->
+<div class="cluster-header">
+  <h3>Cluster 5: BOFU / Comparison / Alternative Keywords</h3>
+  <p>From V1 research (still valid). Highest conversion potential.</p>
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Keyword</th><th>Volume</th><th>CPC</th><th>Difficulty</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>supermetrics alternative</td><td>260</td><td>$88</td><td>KD 1</td><td>BOFU gold &mdash; easiest win</td></tr>
+<tr><td>alternative to supermetrics</td><td>140</td><td>&mdash;</td><td>KD ~1</td><td>Same cluster</td></tr>
+<tr><td>supermetrics free alternative</td><td>70</td><td>&mdash;</td><td>KD ~5</td><td>Budget buyers</td></tr>
+<tr><td>salesforce marketing cloud alternative</td><td>70</td><td>$51</td><td>KD ~10</td><td>Already ranking #36</td></tr>
+<tr><td>datorama alternative</td><td>30</td><td>&mdash;</td><td>KD ~5</td><td>Already ranking #8</td></tr>
+<tr><td>funnel.io alternative</td><td>10</td><td>&mdash;</td><td>KD ~5</td><td>Time-sensitive &mdash; Funnel crisis</td></tr>
+<tr><td>marketing analytics platform comparison</td><td>~50</td><td>varies</td><td>&mdash;</td><td>Category roundup</td></tr>
+</tbody>
+</table></div>
+
+<div class="callout callout-green"><strong>Strategic angle:</strong> BOFU comparison pages are the highest-ROI content. "Supermetrics alternative" at KD 1 with $88 CPC is free money. Funnel.io displacement content is time-sensitive &mdash; Funnel is in active crisis (reliability issues, price hikes, Reddit complaints). Content must intercept refugees NOW.</div>
+
+<!-- Cluster 6 -->
+<div class="cluster-header">
+  <h3>Cluster 6: Data Literacy for Marketers</h3>
+  <p>Lower volume but high strategic value. Positions Clarisights as the educator.</p>
+</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Keyword</th><th>Volume</th><th>CPC</th><th>Competition</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>what is marketing analytics</td><td>~500</td><td>varies</td><td>&mdash;</td><td>Definitional &mdash; own it</td></tr>
+<tr><td>marketing analytics examples</td><td>~200</td><td>varies</td><td>&mdash;</td><td>Practical application</td></tr>
+<tr><td>marketing analytics course</td><td>~1,000</td><td>varies</td><td>&mdash;</td><td>Educational intent &mdash; may not convert</td></tr>
+<tr><td>marketing data analyst</td><td>~500</td><td>varies</td><td>&mdash;</td><td>Career-focused</td></tr>
+<tr><td>how to measure marketing performance</td><td>~200</td><td>varies</td><td>&mdash;</td><td>Practical &mdash; high value</td></tr>
+</tbody>
+</table></div>
+
+<div class="callout"><strong>Strategic angle:</strong> NOT "what is CPM" glossary pages (that's Improvado's commodity play). Instead: "How performance marketing teams actually measure X" &mdash; practitioner voice, cross-channel specific, tied to real workflows. The V2 approach makes this content specific enough to convert, not just rank.</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 3: CREATIVE ANALYTICS LANDSCAPE -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab-landscape">
+
+<h2>Creative Analytics Landscape</h2>
+<p>Research across 6 vectors and ~15 searches, mapping every player, content ranking, and whitespace opportunity in the creative analytics market. This informs how Clarisights talks about creative capabilities without overstepping product reality.</p>
+
+<h3>Market Map: 3 Categories of Players</h3>
+
+<!-- Category A -->
+<div class="map-cat map-cat-a">
+  <div class="map-cat-header">Category A: Pure Creative Analytics (Analyze what's working)</div>
+  <div class="table-wrap" style="margin-top:0;border-radius:0 0 6px 6px"><table>
+  <thead><tr><th>Tool</th><th>Focus</th><th>Target</th><th>Pricing</th><th>Key Differentiator</th></tr></thead>
+  <tbody>
+  <tr><td><strong>Motion</strong></td><td>Creative perf. analytics (Meta, TikTok, YouTube, LinkedIn)</td><td>Perf. marketing, DTC</td><td>$99-$349+/mo</td><td>Visual-first reports, AI auto-tagging. Publishes "Creative Benchmarks" annually.</td></tr>
+  <tr><td><strong>Superads</strong></td><td>Multi-channel creative reporting</td><td>Agencies, small-mid</td><td>$49/mo</td><td>AI-powered creative breakdowns without naming conventions. Most affordable.</td></tr>
+  <tr><td><strong>Alison.ai</strong></td><td>Creative intelligence hub (video-heavy)</td><td>Mobile gaming, apps, agencies</td><td>Enterprise</td><td>Tags 250K+ creative elements. AI-Agent assistant. 11+ platforms.</td></tr>
+  <tr><td><strong>Replai</strong></td><td>Video creative intelligence</td><td>App publishers, gaming</td><td>Unknown (Sequoia-backed)</td><td>Computer-vision AI for frame-by-frame video analysis.</td></tr>
+  <tr><td><strong>Segwise</strong></td><td>AI ad creative analysis</td><td>Mobile gaming studios</td><td>Unknown</td><td>Multimodal AI tagging. Strong SEO play with multiple listicles.</td></tr>
+  <tr><td><strong>AdSkate</strong></td><td>AI creative analysis</td><td>Perf. marketers</td><td>Unknown</td><td>Element-level creative analysis.</td></tr>
+  </tbody>
+  </table></div>
+</div>
+
+<!-- Category B -->
+<div class="map-cat map-cat-b">
+  <div class="map-cat-header">Category B: Creative Analytics + Production (Analyze AND make)</div>
+  <div class="table-wrap" style="margin-top:0;border-radius:0 0 6px 6px"><table>
+  <thead><tr><th>Tool</th><th>Focus</th><th>Target</th><th>Pricing</th><th>Key Differentiator</th></tr></thead>
+  <tbody>
+  <tr><td><strong>Smartly.io</strong></td><td>End-to-end ad platform</td><td>Enterprise, agencies</td><td>Enterprise</td><td>Creative automation + media buying combined. DCO engine.</td></tr>
+  <tr><td><strong>Pencil (Brandtech)</strong></td><td>AI ad generation + scoring</td><td>Enterprise marketing</td><td>Free trial, $14+/mo</td><td>"Pencil Score" &mdash; predictive performance trained on billions in ad spend.</td></tr>
+  <tr><td><strong>AdCreative.ai</strong></td><td>AI ad generation + scoring</td><td>SMBs, perf. marketers</td><td>$39-$139/mo</td><td>Volume play: tons of variations with predictive conversion scores.</td></tr>
+  <tr><td><strong>Uplifted</strong></td><td>Creative library + analytics</td><td>Perf. creative teams</td><td>Free tier</td><td>Unifies library, analytics, collaboration. Element-level AI tagging.</td></tr>
+  <tr><td><strong>Marpipe</strong></td><td>Multivariate creative testing</td><td>Perf. marketers</td><td>Custom</td><td>Automated multivariate testing at scale.</td></tr>
+  </tbody>
+  </table></div>
+</div>
+
+<!-- Category C -->
+<div class="map-cat map-cat-c">
+  <div class="map-cat-header">Category C: Cross-Channel Reporting Platforms (creative analytics as a feature)</div>
+  <div class="table-wrap" style="margin-top:0;border-radius:0 0 6px 6px"><table>
+  <thead><tr><th>Tool</th><th>Focus</th><th>Target</th><th>Pricing</th><th>Key Differentiator</th></tr></thead>
+  <tbody>
+  <tr><td><strong>Clarisights</strong></td><td>Marketing insights hub + creative optimization</td><td>Enterprise</td><td>Enterprise</td><td>300+ data sources. Creative-level drill-down, previews, grouping. No-code.</td></tr>
+  <tr><td><strong>Improvado</strong></td><td>Marketing data platform</td><td>Enterprise</td><td>Enterprise</td><td>500+ connectors. Ranks for "creative analytics" guide. SEO-first.</td></tr>
+  <tr><td><strong>Triple Whale</strong></td><td>DTC attribution + analytics</td><td>Shopify/DTC ($5M-$50M)</td><td>Mid-market</td><td>First-party pixel. E-commerce focused.</td></tr>
+  <tr><td><strong>Northbeam</strong></td><td>Multi-touch attribution</td><td>Large DTC ($250K+/mo)</td><td>Enterprise</td><td>Individual ad-level attribution. Daily data.</td></tr>
+  <tr><td><strong>Adriel</strong></td><td>AdOps + creative intelligence</td><td>SMBs, agencies</td><td>AppSumo-level</td><td>650+ integrations. Keywords, images, colors, emojis analysis.</td></tr>
+  <tr><td><strong>Funnel.io</strong></td><td>Marketing data hub</td><td>Mid-market to enterprise</td><td>Mid-market</td><td>500+ sources. ETL + data modeling. Strong "ad fatigue" content.</td></tr>
+  <tr><td><strong>AgencyAnalytics</strong></td><td>Agency reporting</td><td>Agencies</td><td>Agency</td><td>40+ integrations, white-label dashboards.</td></tr>
+  </tbody>
+  </table></div>
+</div>
+
+<h3>Who Ranks for Key Terms</h3>
+
+<h4>"Creative analytics tools" SERP</h4>
+<ol>
+  <li><strong>Segwise</strong> &mdash; 3+ listicles targeting this exact term. SEO-first strategy.</li>
+  <li><strong>Improvado</strong> &mdash; "Creative Analytics: A Complete Guide" ranks high. Comprehensive pillar.</li>
+  <li><strong>Superads</strong> &mdash; "9 Game-Changing Tools Creative Strategists Are Using in 2026."</li>
+  <li><strong>Starti.ai</strong> &mdash; "Creative Performance Metrics: Ultimate Guide."</li>
+  <li><strong>Darkroom Agency</strong> &mdash; "AI Tools for Ad Creative Analysis: Top 10 for 2026."</li>
+</ol>
+<div class="callout callout-warn"><strong>Clarisights gap:</strong> Has an ebook and use-case page but does NOT rank in top results for "creative analytics tools" or "creative analytics guide." Improvado and Segwise own this SERP.</div>
+
+<h4>"Creative fatigue marketing" SERP</h4>
+<p>Amazon Advertising ranks #1. Search Engine Land, Singular, Funnel.io all rank. Clarisights has a blog post on creative fatigue but does NOT appear in the top 10.</p>
+
+<h4>"Ad creative testing at scale" SERP</h4>
+<p>Motion completely dominates this space with their guide, benchmarks report, and blog content. Clarisights does NOT appear in any results.</p>
+
+<hr>
+
+<h3>The Gap: "Cross-Channel Creative Performance" Is Unowned</h3>
+
+<div class="callout callout-green">
+<strong>Biggest content opportunity found.</strong> The intersection of "cross-channel" + "creative performance" is essentially unowned territory. Search results are either about cross-channel analytics broadly OR creative analytics specifically, but NOT the intersection. Nobody owns this term. Clarisights's core capability &mdash; seeing creative-level performance across ALL channels in one view &mdash; maps perfectly here.
+</div>
+
+<p><strong>Who currently ranks for "cross-channel creative performance":</strong></p>
+<ol>
+  <li>AgencyAnalytics &mdash; cross-channel marketing reporting (agency-focused)</li>
+  <li>Improvado &mdash; cross-channel analytics guide (generic)</li>
+  <li>Cometly &mdash; tool roundups (broad)</li>
+  <li>Amazon Ads &mdash; platform authority</li>
+</ol>
+<p>None address the specific intersection. The white space is real.</p>
+
+<hr>
+
+<h3>Philip's Warning: Creative Analytics Positioning Constraint</h3>
+
+<div class="callout callout-warn">
+<strong>"We are not setting ourselves up for a great first impression if we overly emphasize creative analytics."</strong> &mdash; Philip (Clarisights team)
+</div>
+
+<p>The product gaps that competitors fill include:</p>
+<ul>
+  <li><strong>Motion</strong> &mdash; visual creative reports, AI auto-tagging, benchmarks</li>
+  <li><strong>Alison.ai</strong> &mdash; element-level analysis, competitive intelligence, AI assistant</li>
+  <li><strong>Smartly.io</strong> &mdash; creative production + optimization loop</li>
+</ul>
+<p>Workflow gaps likely include: automated creative tagging, predictive creative scoring, creative-to-insight recommendations, and competitive creative intelligence. These are features pure creative analytics tools offer that a reporting platform doesn't.</p>
+
+<div class="callout"><strong>Content strategy implication:</strong> Clarisights should NOT try to out-content Motion on creative testing or Improvado on data integration. Instead: own "cross-channel creative performance" (uncontested intersection), own "enterprise creative analytics" (underserved buyer segment), and bridge data integration + creative intelligence in content &mdash; a claim only Clarisights can credibly make.</div>
+
+<h3>Key Data Points for Content</h3>
+<ul>
+  <li>61% of consumers actively avoid brands showing repeat ads</li>
+  <li>70% have unsubscribed from brands in last 3 months due to creative fatigue</li>
+  <li>What "once lasted weeks now burns out in days" &mdash; accelerating fatigue cycle</li>
+  <li>UGC-based ads get 4x higher CTR and 50% lower CPC vs professional ads</li>
+  <li>Creative is now the #1 factor in ad success (targeting mostly automated by platforms)</li>
+  <li>Meta's Andromeda algorithm: success depends on high volumes of diverse creative, not targeting</li>
+  <li>65.7% of marketing professionals cite data integration as their biggest MarTech challenge</li>
+  <li>GA4 added AI-powered cross-channel budgeting (Jan 2025) &mdash; Google moving into Clarisights territory</li>
+</ul>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 4: PROGRAMMATIC SEO -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab-programmatic">
+
+<h2>Programmatic SEO Blueprint</h2>
+<p>4 page templates covering 38-53 pages total. Each template follows a cross-channel angle &mdash; the unique wedge V1 missed entirely.</p>
+
+<!-- Template 1 -->
+<h3>Template 1: Data Source Pages <span class="badge badge-green">15-20 pages</span></h3>
+<h4>Format: "How to Report on [Platform] Ads Across Channels"</h4>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Page</th><th>Primary Keyword</th><th>Volume</th><th>CPC</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Meta Ads</td><td>facebook ads reporting tool</td><td>210</td><td>$11</td><td>Highest volume platform</td></tr>
+<tr><td>Google Ads</td><td>google ads reporting tool</td><td>210</td><td>$39</td><td>Highest CPC platform</td></tr>
+<tr><td>YouTube Ads</td><td>youtube ads reporting</td><td>320</td><td>&mdash;</td><td>Highest volume overall</td></tr>
+<tr><td>TikTok Ads</td><td>tiktok ads reporting</td><td>est. 50-100</td><td>&mdash;</td><td>Growing platform</td></tr>
+<tr><td>Amazon Ads</td><td>amazon ads reporting</td><td>50</td><td>$8</td><td>E-com vertical</td></tr>
+<tr><td>Apple Search Ads</td><td>apple search ads reporting</td><td>40</td><td>&mdash;</td><td>App vertical</td></tr>
+<tr><td>DV360</td><td>DV360 reporting</td><td>20</td><td>$74</td><td>Enterprise (highest CPC)</td></tr>
+<tr><td>LinkedIn Ads</td><td>linkedin ads reporting tool</td><td>10</td><td>$9</td><td>B2B angle</td></tr>
+<tr><td>Snapchat Ads</td><td>snapchat ads analytics</td><td>10</td><td>&mdash;</td><td>Coverage play</td></tr>
+<tr><td>Pinterest Ads</td><td>pinterest ads reporting</td><td>est. 10-20</td><td>&mdash;</td><td>Retail/DTC</td></tr>
+<tr><td>Microsoft Ads</td><td>microsoft ads reporting</td><td>est. 10-20</td><td>&mdash;</td><td>B2B/enterprise</td></tr>
+<tr><td>Reddit Ads</td><td>reddit ads analytics</td><td>est. 10</td><td>&mdash;</td><td>Emerging platform</td></tr>
+<tr><td>Programmatic (DSPs)</td><td>programmatic display reporting</td><td>est. 20-30</td><td>&mdash;</td><td>Enterprise</td></tr>
+<tr><td>Affiliate Channels</td><td>affiliate marketing reporting</td><td>est. 30-50</td><td>&mdash;</td><td>E-com</td></tr>
+<tr><td>Twitter/X Ads</td><td>twitter ads analytics</td><td>10</td><td>&mdash;</td><td>Coverage play</td></tr>
+</tbody>
+</table></div>
+
+<div class="callout callout-green"><strong>Combined addressable volume:</strong> ~1,000+/mo. Each page covers platform-specific metrics, cross-channel challenges, and unified reporting approach. Unique angle: NOT "how to use [platform]" but "how to combine [platform] data with other channels." Internal linking to main "cross-channel reporting" pillar.</div>
+
+<!-- Template 2 -->
+<h3>Template 2: Vertical Reporting Pages <span class="badge badge-blue">5-8 pages</span></h3>
+<h4>Format: "How [Vertical] Teams Do Cross-Channel Reporting"</h4>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Vertical</th><th>ICP Match</th><th>Customer Evidence</th><th>Content Angle</th></tr></thead>
+<tbody>
+<tr><td>E-commerce / DTC</td><td>67% of ICP</td><td>On Running, Deichmann, AboutYou</td><td>Meta + Google + TikTok + Pinterest + affiliate unification</td></tr>
+<tr><td>Delivery / Food-tech</td><td>Strong</td><td>Delivery Hero (Hungerstation, Woowa Bros), Wolt</td><td>Multi-market, multi-brand reporting across local channels</td></tr>
+<tr><td>Gaming</td><td>Growing</td><td>Product Madness, Lion Studios</td><td>SKAN + creative performance + UA across networks</td></tr>
+<tr><td>Fintech</td><td>Strong</td><td>Taxfix, Scalable Capital, Trade Republic</td><td>Compliance-sensitive reporting, Snowflake integration</td></tr>
+<tr><td>Retail</td><td>Good</td><td>Deichmann</td><td>Online + offline channel unification</td></tr>
+<tr><td>Travel</td><td>Moderate</td><td>&mdash;</td><td>Seasonal campaigns, multi-market complexity</td></tr>
+<tr><td>SaaS</td><td>Moderate</td><td>&mdash;</td><td>Long sales cycles, content + paid attribution</td></tr>
+</tbody>
+</table></div>
+
+<p>Low individual search volume but extremely high intent. Based on actual customer patterns from the intelligence system.</p>
+
+<!-- Template 3 -->
+<h3>Template 3: "[Metric] Across Channels" Pages <span class="badge badge-blue">10-15 pages</span></h3>
+<h4>Format: "How [Metric] Differs Across Meta, Google, TikTok"</h4>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Metric Page</th><th>Cross-Channel Angle</th><th>V1 vs V2 Difference</th></tr></thead>
+<tbody>
+<tr><td>ROAS across channels</td><td>How ROAS calculation differs across platforms (attribution windows, conversion counting)</td><td>V1: "What is ROAS" glossary. V2: cross-channel comparison.</td></tr>
+<tr><td>CPA across channels</td><td>Why CPA from Meta and CPA from Google are not the same number</td><td>V1: generic "CPA guide." V2: platform-specific discrepancies.</td></tr>
+<tr><td>CTR benchmarks by channel</td><td>CTR norms differ 10x between channels &mdash; what "good" means varies</td><td>V1: single benchmark. V2: per-channel benchmarks.</td></tr>
+<tr><td>Conversion tracking across channels</td><td>Platform pixels, SKAN, server-side tracking &mdash; how data quality varies</td><td>V1: not covered. V2: technical depth.</td></tr>
+<tr><td>CPM across channels</td><td>Why paying $2 CPM on one channel and $15 on another can both be efficient</td><td>V1: "What is CPM" glossary. V2: cross-channel economics.</td></tr>
+<tr><td>Attribution windows by platform</td><td>1-day click, 7-day click, 28-day view &mdash; how windows distort cross-channel comparison</td><td>V1: not covered. V2: practitioner guide.</td></tr>
+<tr><td>Ad spend pacing across channels</td><td>Why budget pacing logic differs and how to normalize it</td><td>V1: not covered. V2: workflow content.</td></tr>
+</tbody>
+</table></div>
+
+<div class="callout"><strong>Key V2 shift:</strong> NOT generic "what is X" &mdash; but "how X differs across Meta, Google, TikTok." The cross-channel angle is Clarisights' unique wedge and what makes these pages defensible against Improvado's commodity glossary play.</div>
+
+<!-- Template 4 -->
+<h3>Template 4: Comparison / Alternative Pages <span class="badge badge-amber">8-10 pages</span></h3>
+<h4>Format: "[Competitor] Alternative" and "Clarisights vs [Competitor]"</h4>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Page</th><th>Primary Keyword</th><th>Volume</th><th>CPC</th><th>KD</th><th>Priority</th></tr></thead>
+<tbody>
+<tr><td>Supermetrics Alternatives</td><td>supermetrics alternative</td><td>260</td><td>$88</td><td>1</td><td><span class="priority-p0">P0</span></td></tr>
+<tr><td>Clarisights vs Funnel.io</td><td>funnel.io alternative</td><td>10</td><td>&mdash;</td><td>~5</td><td><span class="priority-p0">P0</span> (time-sensitive)</td></tr>
+<tr><td>Clarisights vs Looker Studio</td><td>looker studio alternative marketing</td><td>est. 50+</td><td>&mdash;</td><td>&mdash;</td><td><span class="priority-p0">P0</span></td></tr>
+<tr><td>Clarisights vs GA4</td><td>GA4 alternative marketing reporting</td><td>est. 50+</td><td>&mdash;</td><td>&mdash;</td><td><span class="priority-p1">P1</span></td></tr>
+<tr><td>Datorama Alternatives</td><td>datorama alternative</td><td>30</td><td>&mdash;</td><td>~5</td><td><span class="priority-p1">P1</span></td></tr>
+<tr><td>Salesforce MC Alternatives</td><td>salesforce marketing cloud alternative</td><td>70</td><td>$51</td><td>~10</td><td><span class="priority-p1">P1</span></td></tr>
+<tr><td>Clarisights vs Improvado</td><td>improvado alternative</td><td>est. 20+</td><td>&mdash;</td><td>&mdash;</td><td><span class="priority-p1">P1</span></td></tr>
+<tr><td>Clarisights vs Adverity</td><td>adverity alternative</td><td>est. 10+</td><td>&mdash;</td><td>&mdash;</td><td><span class="priority-p2">P2</span></td></tr>
+<tr><td>Best Marketing Analytics Platforms 2026</td><td>best marketing analytics platform</td><td>~50</td><td>varies</td><td>&mdash;</td><td><span class="priority-p1">P1</span></td></tr>
+</tbody>
+</table></div>
+
+<div class="callout callout-green"><strong>Combined addressable volume:</strong> ~700+/mo with extremely high CPC. These are the highest-conversion pages in the entire strategy. "Supermetrics alternative" at KD 1 is the single easiest SEO win available to Clarisights.</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 5: POSITIONING CONSTRAINTS -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab-constraints">
+
+<h2>Positioning Constraints</h2>
+<p>8 hard rules for all Clarisights content, derived from product-content synthesis across 16 product-gap analyses, 10 customer intelligence files, and explicit feedback from Philip, Jan, Avi, Anshul, and Arun.</p>
+
+<h3>DO NOT (Rules 1-5)</h3>
+<p>These constraints protect against overpromising on capabilities the product can't deliver today.</p>
+
+<div class="constraint">
+  <span class="rule-num">1</span>
+  <div><strong>DO NOT lead with creative analytics.</strong> Philip's warning: "We are not setting ourselves up for a great first impression if we overly emphasize creative analytics." Can't show FB + Google creative performance side by side. Being used as a sales hook but product disappoints. Alison.ai is the specialized competitor (used by Zalando). Use creative analytics as a secondary capability only.</div>
+</div>
+
+<div class="constraint">
+  <span class="rule-num">2</span>
+  <div><strong>DO NOT promise self-serve.</strong> Avi's assessment: "Any user working on Clarisights is guaranteed to need support to be able to achieve anything meaningful." Every customer needs hand-holding. Position as "managed analytics" or "supported analytics" if anything. Cursor/Faire loss proves truly self-serve analytics wins some segments.</div>
+</div>
+
+<div class="constraint">
+  <span class="rule-num">3</span>
+  <div><strong>DO NOT promise real-time data.</strong> Architecture doesn't support it. Enpal wants intra-day, Welltech wants hourly. Mozek V3 migration needed. "Near real-time" or "daily sync" is honest. Don't use "real-time" in any content.</div>
+</div>
+
+<div class="constraint">
+  <span class="rule-num">4</span>
+  <div><strong>DO NOT position as measurement/attribution.</strong> Jan's pushback: "long uphill battle to explain we don't do Measurement." Clear category: cross-channel marketing reporting and analytics. Frame Clarisights as the REPORTING layer that sits ON TOP of attribution data (from AppsFlyer, Adjust, etc.).</div>
+</div>
+
+<div class="constraint">
+  <span class="rule-num">5</span>
+  <div><strong>DO NOT target analytics teams.</strong> They'll self-serve with Cursor/Looker. Faire replaced Clarisights with Cursor. Lion Studios went to Segwise's self-serve tool. Target marketing leaders and performance marketing managers &mdash; the people who can't code and need governance, not the analysts who will build their own.</div>
+</div>
+
+<h3>DO (Rules 6-8)</h3>
+<p>These are the pillars every piece of content should reinforce.</p>
+
+<div class="constraint constraint-do">
+  <span class="rule-num">6</span>
+  <div><strong>DO lead with the reporting layer.</strong> This is the moat (Anshul's framing). Funnel does ETL. Fivetran does ETL. Looker does BI. GA4 does web analytics. Clarisights does marketing reporting. Nobody else does cross-channel marketing reporting natively for marketing teams. Every content piece should reinforce this category positioning.</div>
+</div>
+
+<div class="constraint constraint-do">
+  <span class="rule-num">7</span>
+  <div><strong>DO lead with cross-channel aggregation.</strong> 15+ channels, one view, custom dimensions. Wolt runs Funnel + Looker + AppsFlyer. Superbet has 5 teams across 3 markets. The pain of multi-tool stacks is the core JTBD. Content should always reference specific channel counts, team sizes, and spend levels.</div>
+</div>
+
+<div class="constraint constraint-do">
+  <span class="rule-num">8</span>
+  <div><strong>DO use practitioner voice.</strong> Philip's SKAN article is the template. Expert-authored, specific, no fluff. Not "Complete Guide to X" generic content. Not marketing-speak. The voice of someone who has actually pulled data from 15 ad platforms and knows why the numbers don't match.</div>
+</div>
+
+<hr>
+
+<h3>How Competitors See Clarisights</h3>
+<p>From SegmentStream and Spectacle HQ competitive analyses:</p>
+
+<div class="callout callout-green"><strong>Strength:</strong> "Pulls data from 300+ sources, automatically joins and normalizes it down to creative level, and lets marketers build custom dashboards without waiting for the data team."</div>
+
+<div class="callout callout-warn"><strong>Weakness:</strong> "It is a reporting layer, not a measurement platform." "There are no automated recommendations, no budget optimization, no action triggers &mdash; the platform shows you what happened."</div>
+
+<p>This is exactly why the positioning constraints matter. The content strategy must lean into the reporting-layer strength, not fight against it. "Shows you what happened across all your channels" is the value proposition.</p>
+
+<h3>Customer Pain Points That Power Content</h3>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Theme</th><th>Pain Point</th><th>Evidence</th><th>Content Angle</th></tr></thead>
+<tbody>
+<tr><td><strong>Data Trust</strong></td><td>"I can't trust the numbers"</td><td>Uber churned. Three.e stopped using dashboard. Taxfix pilot covers only 20%. Every customer questions numbers (Avi).</td><td>Own the conversation about why marketing data is inherently hard to trust. Thought leadership.</td></tr>
+<tr><td><strong>Multi-Tool Stack</strong></td><td>"We're stitching 3-5 tools"</td><td>Wolt (Funnel+Looker+AF). Superbet (5 teams, 3 markets). On Running (Looker benchmark).</td><td>Specific, experience-based pieces about multi-tool pain. Tied to real channel counts and spend levels.</td></tr>
+<tr><td><strong>Purchase Justification</strong></td><td>"Justify this to leadership"</td><td>AboutYou/Cindy: 3 management questions. Taxfix CMO: "no Sales BS." Xero: usage dashboard for renewal.</td><td>Sales enablement disguised as thought leadership. Comparison guides, ROI frameworks.</td></tr>
+<tr><td><strong>DIY Threat</strong></td><td>"AI coding tools might replace you"</td><td>Faire used Cursor. Segwise won Lion Studios. Analytics teams self-serve with AI.</td><td>"Why building your own marketing analytics is a trap." Target marketing leaders, not analysts.</td></tr>
+<tr><td><strong>AI Expectations</strong></td><td>"Everyone else has AI features"</td><td>Majority of calls include AI ask (Sylvia). AboutYou needs AI on vendor checklist. Adverity launched chatbot.</td><td>Practical AI, not hype. Budget pacing alerts as lead use case.</td></tr>
+</tbody>
+</table></div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 6: 30-DAY CALENDAR -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab-calendar">
+
+<h2>30-Day Content Calendar</h2>
+<p>25 items, April 1-30, 2026. Every topic traces to a real customer problem, competitive gap, or market signal. No generic "complete guides." No thin TOFU content. Practitioner-voiced, customer-insight-led.</p>
+
+<div class="callout callout-green"><strong>Production model:</strong> 25 items / 30 days. 8 are P0 (ship first two weeks), 13 are P1 (weeks 2-4), 4 are P2 (publish when product ships or in May). Calendar includes blog posts, comparison pages, thought leadership, tactical guides, and templates.</div>
+
+<h3>Priority Summary</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Priority</th><th>Count</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><span class="priority-p0">P0</span></td><td>8</td><td>Ship first two weeks. Time-sensitive (Funnel displacement) or foundational (core positioning).</td></tr>
+<tr><td><span class="priority-p1">P1</span></td><td>13</td><td>Weeks 2-4. Build depth across all themes.</td></tr>
+<tr><td><span class="priority-p2">P2</span></td><td>4</td><td>Publish when product ships (AI features) or in May.</td></tr>
+</tbody>
+</table></div>
+
+<h3>Full Calendar</h3>
+
+<div class="table-wrap"><table>
+<thead><tr><th style="min-width:30px">#</th><th style="min-width:250px">Title</th><th>Theme</th><th>Persona</th><th>Funnel</th><th>Priority</th><th>Customer Insight Source</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Why Marketing Teams Are Leaving Funnel.io in 2026</td><td>Funnel Displacement</td><td>Head of Perf. Marketing</td><td>MOFU</td><td><span class="priority-p0">P0</span></td><td>Reddit complaints, Slack chatter, US agency $8K/mo switch, Adidas data team</td></tr>
+<tr><td>2</td><td>Funnel.io to Clarisights: What Actually Changes in Your Workflow</td><td>Funnel Displacement</td><td>Marketing Ops Manager</td><td>BOFU</td><td><span class="priority-p0">P0</span></td><td>Wolt (Funnel+Looker+AF stack), Jan's closed-loss re-engagement, Joao's campaign</td></tr>
+<tr><td>3</td><td>ETL Is Not Reporting: Why Your Data Hub Still Needs a Reporting Layer</td><td>Funnel Displacement</td><td>VP Marketing / CMO</td><td>TOFU</td><td><span class="priority-p1">P1</span></td><td>Anshul's reporting-layer-as-moat framing, Wolt fragmented stack, Taxfix Snowflake</td></tr>
+<tr><td>4</td><td>What Breaks When You Report Across 15+ Ad Channels</td><td>Multi-Tool Problem</td><td>Head of Perf. Marketing</td><td>TOFU</td><td><span class="priority-p0">P0</span></td><td>Superbet (5 teams, 3 markets), On Running (Looker benchmark), Wolt (3-tool stack)</td></tr>
+<tr><td>5</td><td>How E-Com Teams With 500K+/mo Spend Do Cross-Channel Reporting</td><td>Multi-Tool Problem</td><td>Perf. Marketing Mgr (e-com)</td><td>MOFU</td><td><span class="priority-p0">P0</span></td><td>67% of ICP is e-com. On Running, Deichmann, AboutYou patterns</td></tr>
+<tr><td>6</td><td>UTM Naming Conventions for Multi-Team, Multi-Market Reporting</td><td>Multi-Tool Problem</td><td>Marketing Ops Manager</td><td>MOFU</td><td><span class="priority-p1">P1</span></td><td>Superbet (inconsistent naming), Xero (DV360 naming changes)</td></tr>
+<tr><td>7</td><td>Clarisights vs. Looker Studio for Marketing Reporting: An Honest Comparison</td><td>Multi-Tool Problem</td><td>CMO / VP Marketing</td><td>BOFU</td><td><span class="priority-p0">P0</span></td><td>Taxfix CMO "no Sales BS" request, On Running citing Looker, Wolt using Looker</td></tr>
+<tr><td>8</td><td>Why Marketing Teams Are Connecting Their Warehouse to Clarisights</td><td>Warehouse-Native</td><td>Head of Mktg Analytics</td><td>MOFU</td><td><span class="priority-p1">P1</span></td><td>Taxfix (Snowflake rushed for pilot), warehouse as growing pipeline requirement</td></tr>
+<tr><td>9</td><td>Reporting ON Your Warehouse vs. Another ETL INTO Your Warehouse</td><td>Warehouse-Native</td><td>VP Data / Mktg Analytics Lead</td><td>TOFU</td><td><span class="priority-p1">P1</span></td><td>Anshul's reporting-layer framing, Taxfix Snowflake, Funnel-as-ETL positioning</td></tr>
+<tr><td>10</td><td>Why Marketing Data Is Hard to Trust (And What the Best Teams Do About It)</td><td>Data Trust</td><td>Head of Perf. Marketing</td><td>TOFU</td><td><span class="priority-p0">P0</span></td><td>Avi: "every customer questions numbers," Uber churn, Three.e dashboard abandonment</td></tr>
+<tr><td>11</td><td>The Silent Data Outage: When Your Analytics Fails and Nobody Tells You</td><td>Data Trust</td><td>Marketing Ops Manager</td><td>MOFU</td><td><span class="priority-p1">P1</span></td><td>Three.e (GA4 outage killed trust), Customlytics (departed), On Running (Slack alerts)</td></tr>
+<tr><td>12</td><td>How to Audit Cross-Channel Data Before You Make Budget Decisions</td><td>Data Trust</td><td>Perf. Marketing Mgr</td><td>MOFU</td><td><span class="priority-p1">P1</span></td><td>Taxfix data discrepancies, Superbet naming issues, universal data trust complaint</td></tr>
+<tr><td>13</td><td>Your Analytics Team Built a Dashboard in Cursor. Here's Why That's a Problem.</td><td>DIY Analytics Trap</td><td>VP Marketing / CMO</td><td>TOFU</td><td><span class="priority-p0">P0</span></td><td>Faire lost to Cursor/DIY, Lion Studios to Segwise, Avi's self-serve assessment</td></tr>
+<tr><td>14</td><td>Build vs. Buy for Marketing Analytics: The Maintenance Cost Nobody Talks About</td><td>DIY Analytics Trap</td><td>VP Marketing / CFO</td><td>MOFU</td><td><span class="priority-p1">P1</span></td><td>Faire "not commercially justifiable," Cursor/AI coding disruption signal</td></tr>
+<tr><td>15</td><td>What AI Actually Means for Marketing Analytics (Spoiler: Not a Chatbot)</td><td>AI (Practical)</td><td>Head of Perf. Marketing</td><td>TOFU</td><td><span class="priority-p1">P1</span></td><td>Sylvia: majority of calls include AI ask. Adverity chatbot. Philip: budget pacing = "most merit"</td></tr>
+<tr><td>16</td><td>AI Budget Pacing Alerts: How Teams Could Stop Overspending Across 15 Channels</td><td>AI (Practical)</td><td>Perf. Marketing Mgr</td><td>MOFU</td><td><span class="priority-p2">P2</span></td><td>Taxfix budget pacing alert request, Philip's "most merit" assessment</td></tr>
+<tr><td>17</td><td>How to Evaluate a Marketing Analytics Platform: The 3 Questions Your CFO Will Ask</td><td>Enterprise Eval.</td><td>VP Marketing (biz case)</td><td>BOFU</td><td><span class="priority-p0">P0</span></td><td>Cindy/AboutYou buying questions, Taxfix CMO eval, enterprise procurement patterns</td></tr>
+<tr><td>18</td><td>Clarisights vs. GA4 for Cross-Channel Marketing Reporting</td><td>Enterprise Eval.</td><td>CMO / Head of Digital</td><td>BOFU</td><td><span class="priority-p1">P1</span></td><td>Taxfix CMO comparison request, GA4 transition pain, Three.e GA4 outage</td></tr>
+<tr><td>19</td><td>What Does It Actually Take to Implement Cross-Channel Marketing Reporting?</td><td>Enterprise Eval.</td><td>Marketing Ops / VP Mktg</td><td>BOFU</td><td><span class="priority-p1">P1</span></td><td>Superbet complex onboarding, UMG multi-territory, Avi's self-serve assessment</td></tr>
+<tr><td>20</td><td>Cross-Channel Reporting for DTC Brands Spending 500K+/mo on Ads</td><td>Vertical (E-com)</td><td>Head of Perf. Mktg (DTC)</td><td>MOFU</td><td><span class="priority-p1">P1</span></td><td>On Running, Deichmann, AboutYou. 67% e-com ICP.</td></tr>
+<tr><td>21</td><td>How Delivery/Food-Tech Companies Consolidate Marketing Reporting Across Markets</td><td>Vertical (Delivery)</td><td>Head of Perf. Mktg (delivery)</td><td>MOFU</td><td><span class="priority-p2">P2</span></td><td>Delivery Hero (Hungerstation, Woowa Bros), Wolt (channel silos)</td></tr>
+<tr><td>22</td><td>How to Set Up Custom Dimensions That Work Across 10+ Ad Channels</td><td>Practitioner</td><td>Perf. Mktg Mgr / Mktg Ops</td><td>MOFU</td><td><span class="priority-p1">P1</span></td><td>UMG (multi-territory dims), Superbet (cross-team alignment), stale dims gap</td></tr>
+<tr><td>23</td><td>SKAN, Privacy, and the Future of Mobile Marketing Measurement</td><td>Practitioner</td><td>Mobile Mktg Manager</td><td>TOFU</td><td><span class="priority-p2">P2</span></td><td>Philip's SKAN article as proven template, Product Madness needs</td></tr>
+<tr><td>24</td><td>What Happens to Your Reporting When You Add a 12th Ad Channel</td><td>Practitioner</td><td>Head of Perf. Marketing</td><td>TOFU</td><td><span class="priority-p1">P1</span></td><td>On Running (15+ channels), Superbet (multi-channel), Wolt (channel silos)</td></tr>
+<tr><td>25</td><td>Supermetrics Alternatives: What Marketing Teams Actually Switch To</td><td>BOFU Capture</td><td>Perf. Mktg Mgr</td><td>BOFU</td><td><span class="priority-p0">P0</span></td><td>KD 1, $88 CPC. Easiest SEO win. Supermetrics alternative = 260/mo.</td></tr>
+</tbody>
+</table></div>
+
+<h3>Distribution Strategy</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Channel</th><th>Purpose</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td><strong>LinkedIn</strong></td><td>Primary distribution</td><td>No links in main posts. Repurpose blog content into native text posts. Carousel format for frameworks.</td></tr>
+<tr><td><strong>Reddit</strong></td><td>Proven inbound channel</td><td>Forbes and KC Chiefs came from Reddit. Funnel displacement content (#1-3) distributed via r/marketing, r/PPC, r/analytics.</td></tr>
+<tr><td><strong>Blog</strong></td><td>SEO + reference</td><td>Long-form, specific, practitioner-voiced. Minimum 2,000 words for ranking pieces.</td></tr>
+<tr><td><strong>Comparison pages</strong></td><td>Evergreen BOFU</td><td>#7, #18, #25 &mdash; updated quarterly, optimized for "[tool] vs [tool]" searches.</td></tr>
+<tr><td><strong>Guides / PDFs</strong></td><td>BOFU enablement</td><td>#17, #19 &mdash; designed to be shared internally by champions with buying committees.</td></tr>
+</tbody>
+</table></div>
+
+<h3>Theme Coverage</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Theme</th><th>Items</th><th>Why It Matters</th></tr></thead>
+<tbody>
+<tr><td>Funnel.io Displacement</td><td>#1, #2, #3</td><td>Time-limited window. Funnel refugees going to Supermetrics, not Clarisights. Intercept now.</td></tr>
+<tr><td>Multi-Tool Reporting Problem</td><td>#4, #5, #6, #7</td><td>Core JTBD. Every ICP customer (500K+/mo, 5+ channels) lives this daily.</td></tr>
+<tr><td>Warehouse-Native Analytics</td><td>#8, #9</td><td>Whitespace. Nobody owns "report ON your warehouse" positioning.</td></tr>
+<tr><td>Data Trust &amp; Quality</td><td>#10, #11, #12</td><td>Biggest product gap = biggest content opportunity. Own the honesty.</td></tr>
+<tr><td>DIY Analytics Trap</td><td>#13, #14</td><td>Existential threat. No competitor addresses it. First mover advantage.</td></tr>
+<tr><td>AI (Practical)</td><td>#15, #16</td><td>Market expectation. Position against Adverity hype with practical use cases.</td></tr>
+<tr><td>Enterprise Evaluation</td><td>#17, #18, #19</td><td>Sales enablement. Content that does selling when reps aren't in the room.</td></tr>
+<tr><td>Vertical-Specific</td><td>#20, #21</td><td>67% of ICP is e-commerce. Vertical content = precision targeting.</td></tr>
+<tr><td>Practitioner Deep Dives</td><td>#22, #23, #24</td><td>Philip's SKAN article is the proven template. Expert-voiced, specific, no fluff.</td></tr>
+<tr><td>BOFU Capture</td><td>#25</td><td>Supermetrics alternative at KD 1 is free money.</td></tr>
+</tbody>
+</table></div>
+
+</div>
+
+</div><!-- /.content -->
+
+<div class="footer">
+  V2 &middot; Powered by 92-entity intelligence system &middot; March 23, 2026
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>

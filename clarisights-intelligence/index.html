@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Clarisights — Customer Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+.header{max-width:960px;margin:0 auto;padding:60px 24px 40px}
+.header h1{font-size:28px;font-weight:700;color:#1a1a2e;margin-bottom:6px}
+.header .subtitle{font-size:14px;color:#6b7280;font-weight:400}
+.summary{max-width:960px;margin:0 auto;padding:0 24px 32px}
+.summary p{font-size:15px;color:#374151;margin-bottom:16px;max-width:800px}
+.summary .highlight{background:#f0f4ff;border-left:3px solid #4361ee;padding:12px 16px;border-radius:0 6px 6px 0;margin-bottom:16px;font-size:14px}
+.summary .highlight strong{color:#1a1a2e}
+.tab-bar-wrapper{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid #e5e7eb;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.tab-bar{max-width:960px;margin:0 auto;padding:0 24px;display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{padding:14px 18px;font-size:13px;font-weight:500;color:#6b7280;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:color .15s,border-color .15s;font-family:inherit}
+.tab-btn:hover{color:#1a1a2e}
+.tab-btn.active{color:#4361ee;border-bottom-color:#4361ee;font-weight:600}
+.content{max-width:960px;margin:0 auto;padding:32px 24px 80px}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+h2{font-size:22px;font-weight:700;color:#1a1a2e;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e5e7eb}
+h2:first-child{margin-top:0}
+h3{font-size:17px;font-weight:600;color:#1a1a2e;margin:28px 0 12px}
+h4{font-size:15px;font-weight:600;color:#374151;margin:20px 0 8px}
+p{font-size:14px;margin-bottom:12px;color:#374151}
+ul,ol{font-size:14px;margin:0 0 16px 20px;color:#374151}
+li{margin-bottom:6px}
+li strong{color:#1a1a2e}
+strong{color:#1a1a2e}
+.callout{background:#f0f4ff;border-left:3px solid #4361ee;padding:12px 16px;border-radius:0 6px 6px 0;margin:16px 0;font-size:14px}
+.callout-warn{background:#fef3c7;border-left-color:#f59e0b}
+.callout-green{background:#ecfdf5;border-left-color:#10b981}
+.table-wrap{overflow-x:auto;margin:16px 0 24px;border:1px solid #e5e7eb;border-radius:6px}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:500px}
+thead{background:#f8f9fb}
+th{text-align:left;padding:10px 14px;font-weight:600;color:#1a1a2e;border-bottom:1px solid #e5e7eb;white-space:nowrap}
+td{padding:9px 14px;border-bottom:1px solid #f3f4f6;color:#374151;vertical-align:top}
+tbody tr:nth-child(even){background:#fafbfc}
+tbody tr:hover{background:#f0f4ff}
+.badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px}
+.badge-green{background:#ecfdf5;color:#059669}
+.badge-blue{background:#eff6ff;color:#2563eb}
+.badge-amber{background:#fef3c7;color:#d97706}
+.badge-red{background:#fef2f2;color:#dc2626}
+.badge-gray{background:#f3f4f6;color:#6b7280}
+.badge-purple{background:#f5f3ff;color:#7c3aed}
+.tier-header{background:#f8f9fb;font-weight:700;font-size:13px;color:#1a1a2e}
+.tier-header td{padding:12px 14px;border-bottom:2px solid #e5e7eb}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin:24px 0}
+.stat-card{background:#f8f9fb;border:1px solid #e5e7eb;border-radius:8px;padding:16px 20px}
+.stat-card .num{font-size:28px;font-weight:700;color:#1a1a2e}
+.stat-card .label{font-size:13px;color:#6b7280;margin-top:4px}
+.source-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0}
+.source-card{border:1px solid #e5e7eb;border-radius:6px;padding:12px 16px}
+.source-card .src-name{font-size:14px;font-weight:600;color:#1a1a2e}
+.source-card .src-status{font-size:12px;margin-top:4px}
+.section-note{font-size:13px;color:#9ca3af;font-style:italic;margin-bottom:16px}
+.quote-text{font-size:13px;line-height:1.5;max-width:400px}
+.footer{max-width:960px;margin:0 auto;padding:40px 24px;border-top:1px solid #e5e7eb;font-size:13px;color:#9ca3af;text-align:center}
+@media(max-width:640px){
+  .header{padding:40px 16px 24px}
+  .header h1{font-size:22px}
+  .summary,.content{padding-left:16px;padding-right:16px}
+  .tab-btn{padding:12px 14px;font-size:12px}
+  h2{font-size:18px}
+  h3{font-size:15px}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Clarisights — Customer Intelligence</h1>
+  <p class="subtitle">Prepared by Recurr Studio &middot; March 2026</p>
+</div>
+
+<div class="tab-bar-wrapper">
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="overview">Overview</button>
+    <button class="tab-btn" data-tab="customers">Customers</button>
+    <button class="tab-btn" data-tab="competitors">Competitors</button>
+    <button class="tab-btn" data-tab="product-gaps">Product Gaps</button>
+    <button class="tab-btn" data-tab="partnerships">Partnerships</button>
+    <button class="tab-btn" data-tab="signals">Signals</button>
+    <button class="tab-btn" data-tab="win-loss">Win/Loss Patterns</button>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- TAB: OVERVIEW -->
+<div class="tab-panel active" id="tab-overview">
+
+<h2>Intelligence Summary</h2>
+<p>This document contains structured intelligence gathered from Clarisights internal communications and documentation. The data covers customer health, competitive landscape, product gaps, partnerships, and market signals extracted from 530+ messages across 10 Zulip channels and 4 customer cohort reports.</p>
+
+<div class="stat-grid">
+  <div class="stat-card"><div class="num">41</div><div class="label">Customers</div></div>
+  <div class="stat-card"><div class="num">19</div><div class="label">Competitors</div></div>
+  <div class="stat-card"><div class="num">16</div><div class="label">Product Gaps</div></div>
+  <div class="stat-card"><div class="num">6</div><div class="label">Partnerships</div></div>
+  <div class="stat-card"><div class="num">10</div><div class="label">Signals</div></div>
+  <div class="stat-card"><div class="num">92</div><div class="label">Total Entities</div></div>
+</div>
+
+<h3>Customer Breakdown by Tier</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Tier</th><th>Count</th><th>Active</th><th>At-Risk</th><th>Churning</th><th>Lost</th><th>Pilot</th><th>Prospect</th><th>Nurturing</th></tr></thead>
+<tbody>
+<tr><td><strong>Tier 1</strong></td><td>8</td><td>5</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+<tr><td><strong>Tier 2</strong></td><td>7</td><td>5</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td><strong>Tier 3</strong></td><td>26</td><td>1</td><td>0</td><td>0</td><td>3</td><td>3</td><td>17</td><td>2</td></tr>
+<tr style="font-weight:600;background:#f0f4ff"><td><strong>Total</strong></td><td>41</td><td>11</td><td>2</td><td>1</td><td>3</td><td>3</td><td>18</td><td>2</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Product Gap Severity</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Severity</th><th>Count</th></tr></thead>
+<tbody>
+<tr><td><span class="badge badge-red">critical</span></td><td>4</td></tr>
+<tr><td><span class="badge badge-amber">high</span></td><td>7</td></tr>
+<tr><td><span class="badge badge-blue">medium</span></td><td>5</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Sources</h3>
+<div class="source-grid">
+  <div class="source-card">
+    <div class="src-name">Zulip</div>
+    <div class="src-status"><span class="badge badge-green">complete</span> 530+ messages, 10 channels, 4 cohort reports</div>
+  </div>
+  <div class="source-card">
+    <div class="src-name">Google Drive</div>
+    <div class="src-status"><span class="badge badge-amber">partial</span> Customer docs identified, not fully processed</div>
+  </div>
+  <div class="source-card">
+    <div class="src-name">HubSpot</div>
+    <div class="src-status"><span class="badge badge-gray">pending</span> CRM pipeline data not yet accessed</div>
+  </div>
+  <div class="source-card">
+    <div class="src-name">Gong</div>
+    <div class="src-status"><span class="badge badge-gray">pending</span> Call recordings not yet accessed</div>
+  </div>
+</div>
+
+</div>
+
+<!-- TAB: CUSTOMERS -->
+<div class="tab-panel" id="tab-customers">
+
+<h2>All Customers (41)</h2>
+<p class="section-note">Sorted by tier, then alphabetically within each tier.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Name</th><th>Industry</th><th>Geo</th><th>Tier</th><th>Status</th><th>Risk</th></tr></thead>
+<tbody>
+
+<tr class="tier-header"><td colspan="6">Tier 1 (8 accounts)</td></tr>
+<tr><td><strong>Adidas</strong></td><td>Sportswear</td><td>Global</td><td>1</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Bitpanda</strong></td><td>Crypto/Fintech</td><td>Europe</td><td>1</td><td><span class="badge badge-green">active</span></td><td><span class="badge badge-green">low</span></td></tr>
+<tr><td><strong>Delivery Hero</strong></td><td>Food Delivery</td><td>Global (incl. Korea)</td><td>1</td><td><span class="badge badge-green">active</span></td><td><span class="badge badge-green">low</span></td></tr>
+<tr><td><strong>Enpal</strong></td><td>Solar/Energy</td><td>Germany</td><td>1</td><td><span class="badge badge-amber">at-risk</span></td><td><span class="badge badge-red">high</span></td></tr>
+<tr><td><strong>On Running</strong></td><td>Sportswear/DTC</td><td>Global</td><td>1</td><td><span class="badge badge-green">active</span></td><td><span class="badge badge-green">low</span></td></tr>
+<tr><td><strong>Superbet</strong></td><td>iGaming/Betting</td><td>Romania, Poland, Brazil</td><td>1</td><td><span class="badge badge-green">active</span></td><td><span class="badge badge-amber">medium</span></td></tr>
+<tr><td><strong>Universal Music Group</strong></td><td>Entertainment/Music</td><td>US, AUS, JP, UK, DE</td><td>1</td><td><span class="badge badge-green">active</span></td><td><span class="badge badge-green">low</span></td></tr>
+<tr><td><strong>Xero</strong></td><td>Accounting SaaS</td><td>Global</td><td>1</td><td><span class="badge badge-green">active</span></td><td><span class="badge badge-amber">medium</span></td></tr>
+
+<tr class="tier-header"><td colspan="6">Tier 2 (7 accounts)</td></tr>
+<tr><td><strong>About You</strong></td><td>Fashion/E-commerce</td><td>Germany</td><td>2</td><td><span class="badge badge-green">active</span></td><td><span class="badge badge-green">low</span></td></tr>
+<tr><td><strong>Deichmann</strong></td><td>Retail/Fashion</td><td>Germany/Europe</td><td>2</td><td><span class="badge badge-green">active</span></td><td><span class="badge badge-amber">medium</span></td></tr>
+<tr><td><strong>Parship / Lovoo</strong></td><td>Dating</td><td>Germany</td><td>2</td><td><span class="badge badge-green">active</span></td><td><span class="badge badge-amber">medium</span></td></tr>
+<tr><td><strong>Three.e</strong></td><td>Performance Marketing Agency</td><td>Germany</td><td>2</td><td><span class="badge badge-red">churning</span></td><td><span class="badge badge-red">high</span></td></tr>
+<tr><td><strong>Udemy</strong></td><td>EdTech</td><td>US</td><td>2</td><td><span class="badge badge-green">active</span></td><td><span class="badge badge-amber">medium</span></td></tr>
+<tr><td><strong>Unobravo</strong></td><td>Mental Health</td><td>Italy</td><td>2</td><td><span class="badge badge-green">active</span></td><td><span class="badge badge-green">low</span></td></tr>
+<tr><td><strong>Welltech</strong></td><td>Health/Fitness</td><td>Global</td><td>2</td><td><span class="badge badge-amber">at-risk</span></td><td><span class="badge badge-red">high</span></td></tr>
+
+<tr class="tier-header"><td colspan="6">Tier 3 (26 accounts)</td></tr>
+<tr><td><strong>Audible</strong></td><td>Audio/Entertainment</td><td>Global</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Blacklane</strong></td><td>Mobility</td><td>Germany</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Careem</strong></td><td>Ride-hailing/Super App</td><td>Middle East</td><td>3</td><td><span class="badge badge-green">active</span></td><td><span class="badge badge-amber">medium</span></td></tr>
+<tr><td><strong>Customlytics</strong></td><td>Mobile Marketing Agency</td><td>Germany</td><td>3</td><td><span class="badge badge-red">lost</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Deutsche Bahn</strong></td><td>Transportation</td><td>Germany</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Douglas</strong></td><td>Retail/Beauty</td><td>Germany</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Faire</strong></td><td>Wholesale Marketplace</td><td>US</td><td>3</td><td><span class="badge badge-red">lost</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Forbes</strong></td><td>Media</td><td>US</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Fressnapf</strong></td><td>Retail/Pet</td><td>Germany</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Lion Studios</strong></td><td>Gaming</td><td>Global</td><td>3</td><td><span class="badge badge-red">lost</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Lotto24 / Zeal Networks</strong></td><td>iGaming</td><td>Germany</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Mastercard</strong></td><td>Financial Services</td><td>DACH (Global)</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>NFL - Kansas City Chiefs</strong></td><td>Sports</td><td>US</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Product Madness</strong></td><td>Gaming</td><td>Global</td><td>3</td><td><span class="badge badge-purple">pilot</span></td><td><span class="badge badge-red">high</span></td></tr>
+<tr><td><strong>Publicis / Lufthansa</strong></td><td>Agency + Aviation</td><td>Germany</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Scalable Capital</strong></td><td>Fintech</td><td>Germany</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Schwarz Gruppe / Lidl</strong></td><td>Retail/Grocery</td><td>Germany</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Seven.One (Pro7)</strong></td><td>Media</td><td>Germany</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Swappie</strong></td><td>Recommerce</td><td>Finland</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>T-Mobile US</strong></td><td>Telecom</td><td>US</td><td>3</td><td><span class="badge badge-purple">pilot</span></td><td><span class="badge badge-amber">medium</span></td></tr>
+<tr><td><strong>Taxfix</strong></td><td>Fintech/Tax</td><td>Germany</td><td>3</td><td><span class="badge badge-purple">pilot</span></td><td><span class="badge badge-red">high</span></td></tr>
+<tr><td><strong>Telefonica</strong></td><td>Telecom</td><td>Germany</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Trade Republic</strong></td><td>Fintech/Neobank</td><td>Germany</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-gray">none</span></td></tr>
+<tr><td><strong>Wolt</strong></td><td>Delivery</td><td>Europe</td><td>3</td><td><span class="badge badge-blue">nurturing</span></td><td><span class="badge badge-amber">medium</span></td></tr>
+<tr><td><strong>Woowa Bros (Delivery Hero)</strong></td><td>Food Delivery</td><td>Korea</td><td>3</td><td><span class="badge badge-gray">prospect</span></td><td><span class="badge badge-amber">medium</span></td></tr>
+<tr><td><strong>Zalando</strong></td><td>Fashion/E-commerce</td><td>Germany</td><td>3</td><td><span class="badge badge-blue">nurturing</span></td><td><span class="badge badge-amber">medium</span></td></tr>
+
+</tbody>
+</table>
+</div>
+
+</div>
+
+<!-- TAB: COMPETITORS -->
+<div class="tab-panel" id="tab-competitors">
+
+<h2>All Competitors (19)</h2>
+<p class="section-note">Sorted by threat level.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Name</th><th>Category</th><th>Threat Level</th><th>Displacement Status</th></tr></thead>
+<tbody>
+<tr><td><strong>Improvado</strong></td><td>Marketing analytics / Data aggregation</td><td><span class="badge badge-red">high</span></td><td><span class="badge badge-gray">niche</span></td></tr>
+<tr><td><strong>Looker / GA4 (Google)</strong></td><td>BI / Web analytics</td><td><span class="badge badge-red">high</span></td><td><span class="badge badge-gray">niche</span></td></tr>
+<tr><td><strong>Segwise</strong></td><td>Mobile app analytics / AI-powered campaign intelligence</td><td><span class="badge badge-red">high</span></td><td><span class="badge badge-amber">emerging-threat</span></td></tr>
+<tr><td><strong>Adverity</strong></td><td>Marketing data intelligence / ETL</td><td><span class="badge badge-amber">medium</span></td><td><span class="badge badge-amber">emerging-threat</span></td></tr>
+<tr><td><strong>Alison.ai</strong></td><td>Creative intelligence / AI-powered creative analytics</td><td><span class="badge badge-amber">medium</span></td><td><span class="badge badge-gray">niche</span></td></tr>
+<tr><td><strong>Cursor (AI Coding)</strong></td><td>AI-powered coding / DIY analytics</td><td><span class="badge badge-amber">medium</span></td><td><span class="badge badge-amber">emerging-threat</span></td></tr>
+<tr><td><strong>Kawa Analytics</strong></td><td>Marketing analytics</td><td><span class="badge badge-amber">medium</span></td><td><span class="badge badge-amber">emerging-threat</span></td></tr>
+<tr><td><strong>Minubo</strong></td><td>Commerce analytics / BI for e-commerce</td><td><span class="badge badge-amber">medium</span></td><td><span class="badge badge-amber">emerging-threat</span></td></tr>
+<tr><td><strong>Supermetrics</strong></td><td>Marketing data pipeline / Connector tool</td><td><span class="badge badge-amber">medium</span></td><td><span class="badge badge-gray">niche</span></td></tr>
+<tr><td><strong>Tableau</strong></td><td>Business intelligence / Data visualization</td><td><span class="badge badge-amber">medium</span></td><td><span class="badge badge-green">active-opportunity</span></td></tr>
+<tr><td><strong>Adjust</strong></td><td>Mobile measurement / Attribution (MMP)</td><td><span class="badge badge-green">low</span></td><td><span class="badge badge-gray">niche</span></td></tr>
+<tr><td><strong>DOMO</strong></td><td>Business intelligence / Cloud BI</td><td><span class="badge badge-green">low</span></td><td><span class="badge badge-green">active-opportunity</span></td></tr>
+<tr><td><strong>Fivetran</strong></td><td>Data integration / ELT pipeline</td><td><span class="badge badge-green">low</span></td><td><span class="badge badge-gray">niche</span></td></tr>
+<tr><td><strong>Mapp</strong></td><td>Marketing engagement / Customer analytics</td><td><span class="badge badge-green">low</span></td><td><span class="badge badge-gray">unknown</span></td></tr>
+<tr><td><strong>SegmentStream</strong></td><td>Conversion modeling / Marketing analytics</td><td><span class="badge badge-green">low</span></td><td><span class="badge badge-gray">niche</span></td></tr>
+<tr><td><strong>TapClicks</strong></td><td>Marketing analytics / Reporting</td><td><span class="badge badge-green">low</span></td><td><span class="badge badge-gray">niche</span></td></tr>
+<tr><td><strong>Windsor.ai</strong></td><td>Marketing attribution / Analytics</td><td><span class="badge badge-green">low</span></td><td><span class="badge badge-gray">niche</span></td></tr>
+<tr><td><strong>Datorama (Salesforce)</strong></td><td>Marketing analytics / Salesforce ecosystem</td><td><span class="badge badge-gray">declining</span></td><td><span class="badge badge-green">active-opportunity</span></td></tr>
+<tr><td><strong>Funnel.io</strong></td><td>Marketing data hub / ETL</td><td><span class="badge badge-gray">declining</span></td><td><span class="badge badge-green">active-opportunity</span></td></tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+<!-- TAB: PRODUCT GAPS -->
+<div class="tab-panel" id="tab-product-gaps">
+
+<h2>All Product Gaps (16)</h2>
+<p class="section-note">Sorted by severity.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Tag</th><th>Severity</th><th>Status</th><th>Customers Affected</th></tr></thead>
+<tbody>
+<tr><td><strong>data-freshness</strong></td><td><span class="badge badge-red">critical</span></td><td><span class="badge badge-blue">planned</span></td><td>2</td></tr>
+<tr><td><strong>data-groups-acl</strong></td><td><span class="badge badge-red">critical</span></td><td><span class="badge badge-purple">requested</span></td><td>3</td></tr>
+<tr><td><strong>data-trust</strong></td><td><span class="badge badge-red">critical</span></td><td><span class="badge badge-blue">planned</span></td><td>5+ (universal)</td></tr>
+<tr><td><strong>stale-dimensions</strong></td><td><span class="badge badge-red">critical</span></td><td><span class="badge badge-blue">planned</span></td><td>2+ (universal)</td></tr>
+<tr><td><strong>cohort-analysis</strong></td><td><span class="badge badge-amber">high</span></td><td><span class="badge badge-gray">unknown</span></td><td>1+</td></tr>
+<tr><td><strong>creative-analytics</strong></td><td><span class="badge badge-amber">high</span></td><td><span class="badge badge-green">shipping</span></td><td>4</td></tr>
+<tr><td><strong>date-picker</strong></td><td><span class="badge badge-amber">high</span></td><td><span class="badge badge-gray">unknown</span></td><td>1+</td></tr>
+<tr><td><strong>export-to-sheets</strong></td><td><span class="badge badge-amber">high</span></td><td><span class="badge badge-blue">planned</span></td><td>1+</td></tr>
+<tr><td><strong>login-flow</strong></td><td><span class="badge badge-amber">high</span></td><td><span class="badge badge-green">shipping</span></td><td>all customers</td></tr>
+<tr><td><strong>naming-conventions</strong></td><td><span class="badge badge-amber">high</span></td><td><span class="badge badge-gray">unknown</span></td><td>2</td></tr>
+<tr><td><strong>user-failure-alerts</strong></td><td><span class="badge badge-amber">high</span></td><td><span class="badge badge-gray">unknown</span></td><td>1+ (universal)</td></tr>
+<tr><td><strong>ai-nl-querying</strong></td><td><span class="badge badge-amber">medium</span></td><td><span class="badge badge-blue">planned</span></td><td>4+</td></tr>
+<tr><td><strong>appsflyer-native</strong></td><td><span class="badge badge-amber">medium</span></td><td><span class="badge badge-blue">planned</span></td><td>2</td></tr>
+<tr><td><strong>korean-ad-channels</strong></td><td><span class="badge badge-amber">medium</span></td><td><span class="badge badge-purple">requested</span></td><td>1</td></tr>
+<tr><td><strong>snowflake-integration</strong></td><td><span class="badge badge-amber">medium</span></td><td><span class="badge badge-green">shipped</span></td><td>1+</td></tr>
+<tr><td><strong>usage-dashboard</strong></td><td><span class="badge badge-amber">medium</span></td><td><span class="badge badge-gray">unknown</span></td><td>1+</td></tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+<!-- TAB: PARTNERSHIPS -->
+<div class="tab-panel" id="tab-partnerships">
+
+<h2>All Partnerships (6)</h2>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Name</th><th>Status</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>AppsFlyer</strong></td><td><span class="badge badge-green">active</span></td><td>Integration</td><td>SDR referrals + joint dinners + strategic integration alignment for gaming/app verticals</td></tr>
+<tr><td><strong>Exactag</strong></td><td><span class="badge badge-green">active</span></td><td>Co-marketing</td><td>Joint analytics meetup series across Germany (Munich, Hamburg, Dusseldorf). Generated pipeline with Douglas, Fressnapf, Telefonica, Deutsche Bahn, Lidl.</td></tr>
+<tr><td><strong>Mastercard</strong></td><td><span class="badge badge-purple">strategic</span></td><td>Strategic</td><td>Mastercard Marketing Services. Mixed Media Optimizer demo received. Potential reseller model + finance/fintech network access.</td></tr>
+<tr><td><strong>Mapp</strong></td><td><span class="badge badge-blue">exploratory</span></td><td>Co-marketing</td><td>UK market entry lever. Mapp = engagement/email, Clarisights = paid media reporting. 6 ICP overlaps identified.</td></tr>
+<tr><td><strong>Customlytics</strong></td><td><span class="badge badge-red">churning</span></td><td>Referral</td><td>Was free platform access for customer intros. Cut loose due to reliability complaints from new CEO Laura. Introduced Audible.</td></tr>
+<tr><td><strong>Three.e</strong></td><td><span class="badge badge-red">churning</span></td><td>Co-marketing</td><td>Was customer + event speaker. Churning at June renewal. Goldner (only client on CS) switching to Minubo.</td></tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+<!-- TAB: SIGNALS -->
+<div class="tab-panel" id="tab-signals">
+
+<h2>All Signals (10)</h2>
+<p class="section-note">Key quotes, observations, and events extracted from internal communications.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:85px">Date</th><th style="width:65px">Type</th><th style="width:100px">Speaker</th><th style="width:65px">Severity</th><th>Content</th></tr></thead>
+<tbody>
+<tr>
+  <td>2022</td>
+  <td><span class="badge badge-gray">event</span></td>
+  <td>&mdash;</td>
+  <td><span class="badge badge-red">critical</span></td>
+  <td class="quote-text">Uber SEM team churned after a month-long data fix. Enterprise logo loss due to data trust failure.</td>
+</tr>
+<tr>
+  <td>Nov 2025</td>
+  <td><span class="badge badge-blue">quote</span></td>
+  <td>Avisek Rath</td>
+  <td><span class="badge badge-red">critical</span></td>
+  <td class="quote-text">"In the current state of the product, customers cannot do everything by themselves nor have visibility into everything they need to know. Any user working on Clarisights is guaranteed to need support to be able to achieve anything meaningful."</td>
+</tr>
+<tr>
+  <td>Dec 2025</td>
+  <td><span class="badge badge-gray">event</span></td>
+  <td>&mdash;</td>
+  <td><span class="badge badge-red">critical</span></td>
+  <td class="quote-text">Faire lost to Cursor / DIY analytics. Champion (Lacey) used Cursor for analytics. "Not commercially justifiable. Not now, not never."</td>
+</tr>
+<tr>
+  <td>Mar 2026</td>
+  <td><span class="badge badge-blue">quote</span></td>
+  <td>Sylvia Kerscher</td>
+  <td><span class="badge badge-red">critical</span></td>
+  <td class="quote-text">"Currently the mood towards Clarisights within the team is very bad." &mdash; On Three.e. GA4 data outage broke trust. Only client (Goldner) switching to Minubo. Will cancel at June renewal.</td>
+</tr>
+<tr>
+  <td>Mar 2026</td>
+  <td><span class="badge badge-blue">quote</span></td>
+  <td>Philip Ziegler</td>
+  <td><span class="badge badge-amber">high</span></td>
+  <td class="quote-text">"I would be careful with how much we rely on [creative analytics] angle for the next few months. Our product is falling short on critical workflows. We are not setting ourselves up for a great first impression if we overly emphasize creative analytics."</td>
+</tr>
+<tr>
+  <td>Mar 2026</td>
+  <td><span class="badge badge-gray">event</span></td>
+  <td>Joao Sousa</td>
+  <td><span class="badge badge-amber">high</span></td>
+  <td class="quote-text">"Funnel is messing up big time... it's a good time to re-engage closed loss deals." Funnel.io experiencing reliability issues and price hikes. Users complaining on Reddit, Slack. US agency paying $8K/mo switched to Supermetrics.</td>
+</tr>
+<tr>
+  <td>Mar 2026</td>
+  <td><span class="badge badge-blue">quote</span></td>
+  <td>Jan Rixgens</td>
+  <td><span class="badge badge-amber">high</span></td>
+  <td class="quote-text">"My problem with 'Measurement Meetup' is the long uphill battle to explain that we *don't* do Measurement." &mdash; Category confusion between reporting/analytics and measurement/attribution.</td>
+</tr>
+<tr>
+  <td>Mar 2026</td>
+  <td><span class="badge badge-blue">observation</span></td>
+  <td>Joao Sousa</td>
+  <td><span class="badge badge-amber">high</span></td>
+  <td class="quote-text">Cindy (About You): Management always asks 3 questions: (1) Why now? (2) Can existing tools do this? (3) What's required to set up/maintain? Also: AI tools are marked as company priority.</td>
+</tr>
+<tr>
+  <td>Mar 2026</td>
+  <td><span class="badge badge-blue">observation</span></td>
+  <td>Sylvia Kerscher</td>
+  <td><span class="badge badge-amber">high</span></td>
+  <td class="quote-text">"In majority of the calls there is an ask for [conversational AI], especially as many companies have AI initiatives." Douglas wants AI-driven insights. Taxfix wants AI budget pacing alerts. Daniel Distler wants a chatbot.</td>
+</tr>
+<tr>
+  <td>Mar 2026</td>
+  <td><span class="badge badge-blue">quote</span></td>
+  <td>Sylvia Kerscher</td>
+  <td><span class="badge badge-amber">medium</span></td>
+  <td class="quote-text">"He is Dutch and would appreciate no 'Sales BS'." &mdash; On Taxfix CMO requesting honest Clarisights vs Looker vs GA4 comparison.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+<!-- TAB: WIN/LOSS PATTERNS -->
+<div class="tab-panel" id="tab-win-loss">
+
+<h2>Win/Loss Patterns</h2>
+<p class="section-note">All data sourced from individual entity files. Observations are factual patterns present in the data.</p>
+
+<h3>Active Account Characteristics</h3>
+<p>11 customers are currently active. Observed commonalities from entity data:</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Attribute</th><th>Observed Pattern</th></tr></thead>
+<tbody>
+<tr><td><strong>Industry</strong></td><td>Fashion/E-commerce (About You, Deichmann), Fintech (Bitpanda), Food Delivery (Delivery Hero, Careem), Sportswear (On Running), Entertainment (UMG), iGaming (Superbet), EdTech (Udemy), Mental Health (Unobravo), Dating (Parship/Lovoo), Accounting (Xero)</td></tr>
+<tr><td><strong>Geo</strong></td><td>9 of 11 active accounts have a European presence. 6 are Germany-based or Germany-primary. 2 are US-based (Udemy, Xero).</td></tr>
+<tr><td><strong>Multi-territory</strong></td><td>4 of 11 active accounts operate across multiple markets (UMG: 5 territories, Delivery Hero: global incl. Korea, On Running: global, Superbet: 3 markets)</td></tr>
+<tr><td><strong>Expansion behavior</strong></td><td>Active accounts are adding data sources (Bitpanda: +AppSamurai, +Xandr), new territories (UMG: JP from DOMO), or new teams (Parship: TMG apps migrating)</td></tr>
+<tr><td><strong>Revenue model</strong></td><td>Bitpanda: EUR 76K base + EUR 3,600/source/yr. Unobravo: EUR 5K&rarr;5.6K&rarr;6.5K/mo (gradual increases at renewal)</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>At-Risk Account Characteristics</h3>
+<p>2 customers are at-risk (Enpal, Welltech). 1 is churning (Three.e).</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Account</th><th>Tier</th><th>Cited Issues</th></tr></thead>
+<tbody>
+<tr><td><strong>Enpal</strong></td><td>1</td><td>Complicated setup with pending changes not properly handed over. Wants intra-day data refresh (current: daily). Creative analytics oversold vs. product reality. Key stakeholder "pretty pissed."</td></tr>
+<tr><td><strong>Welltech</strong></td><td>2</td><td>Has opt-out clause expiring Mar 31. Wants hourly data syncs. Project Neo timelines shared loosely. Account flagged as "unclear state."</td></tr>
+<tr><td><strong>Three.e</strong></td><td>2</td><td>GA4 data outage broke trust. Numbers did not match. Stopped using dashboard. Managing Madeleine on Excel. Only client (Goldner) switching to Minubo. Will cancel at June renewal.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Lost Account Details</h3>
+<p>3 customers are lost (Faire, Lion Studios, Customlytics).</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Account</th><th>Industry</th><th>Geo</th><th>Reason Cited</th><th>Lost To</th></tr></thead>
+<tbody>
+<tr><td><strong>Faire</strong></td><td>Wholesale Marketplace</td><td>US</td><td>Champion used Cursor (AI coding tool) to build own analytics. "Not commercially justifiable. Not now, not never."</td><td>Cursor / DIY analytics</td></tr>
+<tr><td><strong>Lion Studios</strong></td><td>Gaming</td><td>Global</td><td>4 months invested. Competitor fulfilled all P0 criteria without requiring a contract. Product fell short on creative analytics workflows for gaming.</td><td>Segwise</td></tr>
+<tr><td><strong>Customlytics</strong></td><td>Mobile Marketing Agency</td><td>Germany</td><td>Free access partnership. New CEO raised reliability complaints: frequent outages, no proactive comms, data import lagging, MMP data off. Cut loose rather than provide dedicated CS for free.</td><td>N/A (partnership terminated)</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Pilot Accounts at Risk</h3>
+<p>3 accounts are in pilot stage. 2 are high-risk.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Account</th><th>Industry</th><th>Risk</th><th>Status Detail</th></tr></thead>
+<tbody>
+<tr><td><strong>Taxfix</strong></td><td>Fintech/Tax</td><td><span class="badge badge-red">high</span></td><td>Extended pilot covering only 20% of steering needs. Data discrepancy is primary blocker. Snowflake integration rushed for this pilot. Competing against Looker + GA4.</td></tr>
+<tr><td><strong>Product Madness</strong></td><td>Gaming</td><td><span class="badge badge-red">high</span></td><td>Complex SKAN + cohort analysis pilot. Decision maker re-engaged after disengagement. "Unclear state" per CS Lead.</td></tr>
+<tr><td><strong>T-Mobile US</strong></td><td>Telecom</td><td><span class="badge badge-amber">medium</span></td><td>Data QA in progress. Decision pending with Evan/Allison.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Champion Departure Instances</h3>
+<p>Champion departures cited in entity files:</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Account</th><th>Champion</th><th>Impact</th></tr></thead>
+<tbody>
+<tr><td><strong>Wolt</strong></td><td>Jay (left)</td><td>Deal stalled at nurturing stage. No replacement contact engaged.</td></tr>
+<tr><td><strong>Zalando</strong></td><td>Saleel (left)</td><td>$250K HubSpot deal flagged as stale. Waiting for Attila to connect replacement.</td></tr>
+<tr><td><strong>Deichmann</strong></td><td>Thomas (leaving)</td><td>Team intro done with 6 replacement contacts (Roman, Sandra, Mara, Robin, Alina, Isabelle).</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Cited Reasons for Losses / Churn</h3>
+<ul>
+<li><strong>Data trust / reliability:</strong> Uber (2022 churn), Three.e (churning), Customlytics (lost), Enpal (at-risk), Taxfix (pilot stalling)</li>
+<li><strong>DIY analytics via AI tools:</strong> Faire (lost to Cursor)</li>
+<li><strong>Faster competitor on niche features:</strong> Lion Studios (lost to Segwise on creative analytics P0s)</li>
+<li><strong>Side-effect displacement:</strong> Three.e's client Goldner switching to Minubo (marketing dashboard as side effect of data setup)</li>
+<li><strong>Price sensitivity:</strong> Parship/Lovoo champion "afraid to defend price increase to parent company"</li>
+<li><strong>Product self-serve gap:</strong> CS Lead stated "any user is guaranteed to need support to achieve anything meaningful"</li>
+</ul>
+
+<h3>Cited Reasons for Wins / Expansion</h3>
+<ul>
+<li><strong>Cross-channel aggregation:</strong> Core value proposition across active accounts (Wolt's pain explicitly documented as "channel silos, cross-channel visibility")</li>
+<li><strong>Multi-territory deployment:</strong> UMG expanding across 5 territories, DH expanding to Korea via Woowa Bros</li>
+<li><strong>Per-source pricing expansion:</strong> Bitpanda EUR 3,600/source/yr model driving organic expansion</li>
+<li><strong>Renewal with price increases:</strong> Unobravo EUR 5K&rarr;5.6K&rarr;6.5K/mo across successive renewals</li>
+<li><strong>Champion as referral engine:</strong> Unobravo (Filippo), Three.e (Lotto24 referral via Depot user), Customlytics (Audible intro)</li>
+<li><strong>Competitor displacement:</strong> UMG JP migrating from DOMO, Superbet replacing Tableau, Funnel.io users actively seeking alternatives</li>
+<li><strong>Exactag event pipeline:</strong> Joint events generated meetings with Douglas, Fressnapf, Telefonica, Deutsche Bahn, Schwarz Gruppe/Lidl</li>
+</ul>
+
+</div>
+
+</div><!-- /content -->
+
+<div class="footer">
+  Intelligence System &middot; 92 entities &middot; Last updated March 23, 2026
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
