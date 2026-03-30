@@ -6,7 +6,6 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#E5E8E8">
   <title>Recurr Studio — Annual Operating Plan FY26-27</title>
-  <meta name="description" content="Recurr Studio Annual Operating Plan for FY26-27. A communication design company.">
   <link rel="stylesheet" href="/recurr-system/style.css">
   <style>
     .slide {
@@ -17,7 +16,6 @@
       padding: var(--space-2xl) var(--margin);
       max-width: 1400px;
       margin: 0 auto;
-      position: relative;
     }
     .slide-half {
       min-height: 60vh;
@@ -123,21 +121,6 @@
     }
     .deck-table td:first-child { color: var(--ink); font-weight: 600; }
     .deck-table tr:last-child td { border-bottom: 2px solid var(--ink); }
-    .highlight-block {
-      background: var(--whiteboard);
-      border-left: 3px solid var(--red);
-      padding: var(--space-s);
-      margin: var(--space-s) 0;
-      border-radius: 0 4px 4px 0;
-    }
-    .highlight-block p {
-      font-family: var(--serif);
-      font-size: var(--fs-body-lg);
-      color: var(--ink);
-      font-style: italic;
-      line-height: 1.55;
-      margin: 0;
-    }
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -176,14 +159,10 @@
       gap: 8px;
     }
     .progress-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+      width: 6px; height: 6px; border-radius: 50%;
       background: var(--faint);
       transition: all 0.3s var(--ease);
-      cursor: pointer;
-      border: none;
-      padding: 0;
+      cursor: pointer; border: none; padding: 0;
     }
     .progress-dot.active { background: var(--ink); transform: scale(1.5); }
     @media (max-width: 768px) { .progress-nav { display: none; } }
@@ -194,9 +173,7 @@
       max-width: 1400px;
     }
     .deck-list {
-      list-style: none;
-      padding: 0;
-      margin: var(--space-xs) 0;
+      list-style: none; padding: 0; margin: var(--space-xs) 0;
     }
     .deck-list li {
       font-family: var(--serif);
@@ -208,105 +185,80 @@
       margin-bottom: 0.4em;
     }
     .deck-list li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.55em;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--faint);
+      content: ''; position: absolute; left: 0; top: 0.55em;
+      width: 6px; height: 6px; border-radius: 50%; background: var(--faint);
     }
     .deck-list li strong { color: var(--ink); }
-    .risk-grid {
+
+    /* Kanban board */
+    .kanban {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-s);
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-xs);
       margin: var(--space-m) 0;
     }
-    .risk-card {
+    .kanban-card {
       background: var(--whiteboard);
       border: 1px solid var(--border-color);
       border-radius: 4px;
-      padding: clamp(1rem, 0.8rem + 0.6vw, 1.5rem);
+      padding: clamp(0.8rem, 0.6rem + 0.5vw, 1.2rem);
+      border-top: 3px solid var(--faint);
     }
-    .risk-card-title {
+    .kanban-card[data-arm="agency"] { border-top-color: var(--red); }
+    .kanban-card[data-arm="studio"] { border-top-color: var(--blue); }
+    .kanban-card[data-arm="vayam"] { border-top-color: var(--green); }
+    .kanban-card[data-arm="press"] { border-top-color: var(--yellow); }
+    .kanban-tag {
       font-family: var(--mono);
-      font-size: var(--fs-label);
+      font-size: clamp(0.5rem, 0.45rem + 0.1vw, 0.6rem);
       font-weight: 700;
-      color: var(--red);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 0.4em;
-    }
-    .risk-card p {
-      font-family: var(--serif);
-      font-size: var(--fs-small);
-      color: var(--graphite);
-      line-height: 1.55;
-      margin: 0;
-    }
-    .risk-card .mitigation {
-      font-family: var(--serif);
-      font-size: var(--fs-small);
-      color: var(--ink);
-      font-weight: 600;
-      margin-top: 0.5em;
-    }
-    /* KPI card */
-    .kpi-card {
-      background: var(--whiteboard);
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      padding: clamp(1rem, 0.8rem + 0.6vw, 1.5rem);
-    }
-    .kpi-card .kpi-metric {
-      font-family: var(--mono);
-      font-size: var(--fs-label);
-      font-weight: 700;
-      color: var(--pencil);
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       margin-bottom: 0.3em;
     }
-    .kpi-card .kpi-target {
+    .kanban-card[data-arm="agency"] .kanban-tag { color: var(--red); }
+    .kanban-card[data-arm="studio"] .kanban-tag { color: var(--blue); }
+    .kanban-card[data-arm="vayam"] .kanban-tag { color: var(--green); }
+    .kanban-card[data-arm="press"] .kanban-tag { color: var(--yellow); }
+    .kanban-title {
       font-family: var(--serif);
-      font-size: var(--fs-h2);
+      font-size: var(--fs-body);
       font-weight: 700;
       color: var(--ink);
-      line-height: 1.1;
+      line-height: 1.2;
+      margin-bottom: 0.3em;
     }
-    .kpi-card p {
+    .kanban-desc {
       font-family: var(--serif);
       font-size: var(--fs-small);
       color: var(--graphite);
-      line-height: 1.55;
+      line-height: 1.45;
+    }
+    .kanban-quarter {
+      font-family: var(--mono);
+      font-size: clamp(0.5rem, 0.45rem + 0.1vw, 0.55rem);
+      color: var(--faint);
       margin-top: 0.5em;
     }
-    /* Timeline */
-    .timeline-item {
+
+    /* Timeline compact */
+    .timeline-row {
       display: grid;
-      grid-template-columns: 80px 1fr;
-      gap: var(--space-s);
+      grid-template-columns: 60px 1fr;
+      gap: var(--space-xs);
       padding: var(--space-xs) 0;
       border-bottom: 1px solid var(--border-faint);
     }
-    .timeline-item:last-child { border-bottom: none; }
-    .timeline-quarter {
-      font-family: var(--mono);
-      font-size: var(--fs-label);
-      font-weight: 700;
-      color: var(--ink);
-      letter-spacing: 0.1em;
-      padding-top: 0.3em;
+    .timeline-row:last-child { border-bottom: none; }
+    .timeline-q {
+      font-family: var(--mono); font-size: var(--fs-label);
+      font-weight: 700; color: var(--ink); letter-spacing: 0.1em; padding-top: 0.2em;
     }
-    .timeline-content {
-      font-family: var(--serif);
-      font-size: var(--fs-body);
-      color: var(--graphite);
-      line-height: 1.55;
+    .timeline-text {
+      font-family: var(--serif); font-size: var(--fs-body);
+      color: var(--graphite); line-height: 1.55;
     }
-    .timeline-content strong { color: var(--ink); }
+    .timeline-text strong { color: var(--ink); }
   </style>
 </head>
 <body>
@@ -314,7 +266,6 @@
 <canvas class="dot-grid-canvas" id="dot-grid"></canvas>
 <nav class="progress-nav" id="progress-nav"></nav>
 
-<!-- Nav -->
 <nav>
   <div class="nav-inner">
     <a href="/recurr-co/" class="nav-logo">recurr</a>
@@ -325,7 +276,7 @@
   </div>
 </nav>
 
-<!-- ==================== SLIDE 01: TITLE ==================== -->
+<!-- ==================== 01: TITLE ==================== -->
 <section class="slide" data-slide data-reveal>
   <div class="slide-number">Recurr Studio Pvt Ltd</div>
   <h2>Annual Operating Plan<br>FY26-27</h2>
@@ -336,463 +287,209 @@
 
 <hr class="slide-sep">
 
-<!-- ==================== SLIDE 02: IDENTITY ==================== -->
+<!-- ==================== 02: IDENTITY ==================== -->
 <section class="slide" data-slide data-reveal>
   <div class="slide-number">01 &mdash; Identity</div>
   <h2>A communication<br>design company.</h2>
   <div class="slide-body">
-    <p>Recurr designs communication. We combine marketing, design, copywriting, and technology to build things that grow businesses &mdash; whether those businesses are ours or our clients'.</p>
-    <p>We do this through <strong>three arms</strong> &mdash; an agency that serves clients, a studio that builds platforms, and a media vertical that covers frontier sectors. Each arm has its own logic. Together, they compound.</p>
+    <p>Recurr builds niche businesses by combining media with technology and the internet. We find traditional services with real demand, wrap them in media and software, and turn them into businesses that scale differently than anything in their industry.</p>
   </div>
 </section>
 
 <hr class="slide-sep">
 
-<!-- ==================== SLIDE 03: THREE ARMS ==================== -->
+<!-- ==================== 03: THE STORY ==================== -->
 <section class="slide" data-slide data-reveal>
-  <div class="slide-number">02 &mdash; Structure</div>
+  <div class="slide-number">02 &mdash; The Story So Far</div>
+  <h2>0 &rarr; 2.5 Cr.<br>50%+ margins.<br>Two years.</h2>
+  <div class="slide-body" style="margin-top:var(--space-s);">
+    <p>That was five years ago. We proved we could build, sell, and deliver. Now it's time to go from <strong>1 to 10</strong> &mdash; with more strength, more clarity, and the infrastructure to compound.</p>
+  </div>
+</section>
+
+<hr class="slide-sep">
+
+<!-- ==================== 04: THREE ARMS ==================== -->
+<section class="slide" data-slide data-reveal>
+  <div class="slide-number">03 &mdash; Structure</div>
   <h2>Three arms.</h2>
   <div class="three-col">
     <div class="stat-card" data-reveal>
       <div class="stat-value" style="font-size:var(--fs-h2);">Agency</div>
       <div class="stat-label">B2B Services</div>
-      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);margin-top:0.6em;line-height:1.5;">
-        Communication design applied to client businesses. Marketing, content, positioning, pipeline building. GST-invoiced B2B work.
-      </p>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);margin-top:0.6em;line-height:1.5;">Our core competency. Communication design applied to client businesses. This is what we do today &mdash; B2B sales, positioning, content, pipeline building.</p>
     </div>
     <div class="stat-card" data-reveal>
       <div class="stat-value" style="font-size:var(--fs-h2);">Studio</div>
-      <div class="stat-label">Platforms &amp; Products</div>
-      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);margin-top:0.6em;line-height:1.5;">
-        Platforms built and operated by Recurr. Each wraps a traditional service with technology and media, creating new revenue models. Commission-driven economics.
-      </p>
+      <div class="stat-label">Platforms</div>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);margin-top:0.6em;line-height:1.5;">Media applied to existing services. Each platform wraps a traditional service with technology and a media layer, creating new revenue models. Commission-driven, not fee-driven.</p>
     </div>
     <div class="stat-card" data-reveal>
       <div class="stat-value" style="font-size:var(--fs-h2);">Vayam</div>
-      <div class="stat-label">Frontier Media</div>
-      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);margin-top:0.6em;line-height:1.5;">
-        A long-term strategic bet. Media vertical covering the intersection of economy, policy, and frontier technology in India. Zero revenue expectations in Year 1.
-      </p>
-    </div>
-  </div>
-  <div class="flywheel-ascii">recurr
-├── Agency    → Serves clients. Scales with team and pipeline.
-├── Studio    → Builds platforms. Scales with technology and partnerships.
-└── Vayam     → Builds authority. Scales with time and depth.</div>
-</section>
-
-<hr class="slide-sep">
-
-<!-- ==================== SLIDE 04: PRESS ==================== -->
-<section class="slide-half" data-slide data-reveal>
-  <div class="slide-number">02 &mdash; recurr.co</div>
-  <h2>Press is the<br>content engine.</h2>
-  <div class="slide-body">
-    <p>recurr.co publishes regularly across <strong>tech, design, growth, and brands.</strong> This is Recurr's content marketing program &mdash; the blog, the resources, the editorial layer that builds authority and drives inbound for the Agency.</p>
-    <p>175 articles from the SaaStitute archive form the cold-start base. New content is broader than B2B SaaS &mdash; anything at the intersection of communication and design is fair game.</p>
-  </div>
-  <div class="flywheel-ascii">recurr.co
-├── /          Homepage. Who we are. What we do.
-├── /press     Editorial. Tech, design, growth, brands.
-└── /studio    Platforms, ventures, events. What we build.</div>
-</section>
-
-<hr class="slide-sep">
-
-<!-- ==================== SLIDE 05: RETRO ==================== -->
-<section class="slide-half" data-slide data-reveal>
-  <div class="slide-number">03 &mdash; FY25-26 Retrospective</div>
-  <h2>What we built.<br>What we didn't.</h2>
-  <div class="two-col">
-    <div>
-      <h3 style="color:var(--green);">Built</h3>
-      <ul class="deck-list">
-        <li><strong>Infrastructure.</strong> Workspace, tools, project management (Outwork), design system, full technical stack.</li>
-        <li><strong>Brand identity.</strong> recurr.co live with 7 pages on V5 design system.</li>
-        <li><strong>Editorial architecture.</strong> S3 vision defined. 175 articles extracted and ready for processing.</li>
-        <li><strong>Service clarity.</strong> Communication design &mdash; positioning, content, media. Two capabilities, clearly defined.</li>
-        <li><strong>First design partnership.</strong> Major B2B SaaS client. Intelligence sprint in progress.</li>
-        <li><strong>Team.</strong> Clear ownership across agency, creative, and operations.</li>
-      </ul>
-    </div>
-    <div>
-      <h3 style="color:var(--red);">Didn't</h3>
-      <ul class="deck-list">
-        <li><strong>Consistent revenue.</strong> Client work was sporadic. Engagements started and dropped without follow-on.</li>
-        <li><strong>Consistent publishing.</strong> Zero published content on recurr.co. The content engine never turned on.</li>
-        <li><strong>Pipeline.</strong> No productised lead generation. Leads came from network only.</li>
-        <li><strong>Platform builds.</strong> Frameworks defined but not shipped. No platform reached market.</li>
-      </ul>
+      <div class="stat-label">B2G &amp; Public Sector</div>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);margin-top:0.6em;line-height:1.5;">Our entry into governance, social impact, and the public sector. A long-term strategic bet that lays the foundation for an entirely new vertical in India.</p>
     </div>
   </div>
 </section>
 
 <hr class="slide-sep">
 
-<!-- ==================== SLIDE 06: HONEST ASSESSMENT ==================== -->
+<!-- ==================== 05: AGENCY ==================== -->
 <section class="slide" data-slide data-reveal>
-  <div class="slide-number">03 &mdash; Continued</div>
-  <h2>The honest<br>assessment.</h2>
-  <div class="slide-body">
-    <p>At its peak, Recurr was doing &#8377;2.5 Cr in annual revenue. FY25-26 was a rebuild year &mdash; new infrastructure, new positioning, new team structure. The foundation is solid. Nothing was shipped on top of it.</p>
-    <p>Year 3 changes that. The infrastructure is ready. The positioning is clear. The structure is defined. Now we build, ship, and sell.</p>
-  </div>
-</section>
-
-<hr class="slide-sep">
-
-<!-- ==================== SLIDE 07: AGENCY ==================== -->
-<section class="slide" data-slide data-reveal>
-  <div class="slide-number">04A &mdash; Agency</div>
+  <div class="slide-number">03A &mdash; Agency</div>
   <h2>Agency.</h2>
   <div class="slide-body">
-    <p>Communication design applied to client businesses. Every client gets an account manager, a delivery team, and a performance review cycle. This is Recurr's core DNA &mdash; <strong>scaling the agency is not a problem.</strong></p>
-  </div>
-  <div class="two-col" style="margin-top:var(--space-s);">
-    <div>
-      <h3>Q1 Active Projects</h3>
-      <ul class="deck-list">
-        <li><strong>Design partnership.</strong> Major B2B SaaS client. Positioning, intelligence, content strategy. Full-force engagement.</li>
-        <li><strong>Timber platform.</strong> Building applied industries and architect pipeline for the plywood trading business.</li>
-        <li><strong>SaaS SEO.</strong> New inbound client. ~$1,000/month retainer.</li>
-        <li><strong>Canteen support.</strong> Agency work supporting the Studio platform build.</li>
-        <li><strong>Other clients</strong> fit here as they come &mdash; the agency is a wrapper for the work we already do.</li>
-      </ul>
-    </div>
-    <div>
-      <h3>How it works</h3>
-      <ul class="deck-list">
-        <li>One account manager per client. Default point of contact for everything.</li>
-        <li>Delivery supported by the creative bench and founder as needed.</li>
-        <li>Performance tracked against KPIs, not hours. Regular review cadence.</li>
-        <li>Scale the team and resources around demand. Add account managers and creative capacity as the pipeline grows.</li>
-      </ul>
-    </div>
+    <p>Communication design for businesses. Positioning, content, pipeline, marketing systems. We've done this for B2B software, consumer brands, and industrial businesses. The Agency is the revenue engine &mdash; it scales with team and pipeline, and it funds everything else.</p>
+    <p>Every client gets an account manager. Delivery is backed by the creative bench. Performance is tracked and reviewed regularly. New clients fit in as they come &mdash; scaling the agency is not a problem, it's our DNA.</p>
+    <p>Content marketing for Recurr lives at <strong>press.recurr.co</strong> &mdash; publishing across tech, design, growth, and brands. This is the Agency's inbound pipeline.</p>
   </div>
 </section>
 
 <hr class="slide-sep">
 
-<!-- ==================== SLIDE 08: STUDIO ==================== -->
+<!-- ==================== 06: STUDIO ==================== -->
 <section class="slide" data-slide data-reveal>
-  <div class="slide-number">04B &mdash; Studio</div>
+  <div class="slide-number">03B &mdash; Studio</div>
   <h2>Studio.</h2>
   <div class="slide-body">
-    <p>Platforms built and operated by Recurr. The philosophy: <strong>wrap a traditional service with technology and media, then find new ways to generate revenue and scale.</strong> Revenue is predominantly commission-based &mdash; share of revenue, not flat fees.</p>
+    <p>Every Studio platform follows the same logic: find a traditional service with real demand, wrap it in technology and media, and build a business that earns commission on transactions instead of charging flat fees. The service already exists. We redesign how it reaches people.</p>
   </div>
-</section>
-
-<hr class="slide-sep">
-
-<!-- ==================== SLIDE 09: STUDIO PROJECTS ==================== -->
-<section class="slide-half" data-slide data-reveal>
-  <div class="slide-number">04B &mdash; Studio Portfolio</div>
-  <h2>Five platforms.</h2>
-  <div class="stat-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+  <div class="stat-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top:var(--space-s);">
     <div class="stat-card" data-reveal>
-      <div class="stat-label" style="color:var(--red);">Canteen &mdash; P0</div>
-      <p style="font-family:var(--serif);font-size:var(--fs-body);color:var(--graphite);margin-top:0.5em;line-height:1.55;">A marketplace that allows businesses to order from hyperlocal curated vendors in a structured manner. Meals, chai, fresh fruit, cereals, office events. The anchor vendor is an existing cloud kitchen operation &mdash; but the marketplace is open.</p>
-      <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);margin-top:0.5em;">Q1 LAUNCH</p>
+      <div class="stat-label" style="color:var(--blue);">Canteen</div>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);margin-top:0.4em;line-height:1.5;">Marketplace for businesses to order from hyperlocal curated vendors. Meals, chai, fruit, cereals, office events. Open marketplace, not a single vendor.</p>
+      <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--red);margin-top:0.4em;">P0 &middot; Q1 LAUNCH</p>
     </div>
     <div class="stat-card" data-reveal>
       <div class="stat-label" style="color:var(--blue);">JH10</div>
-      <p style="font-family:var(--serif);font-size:var(--fs-body);color:var(--graphite);margin-top:0.5em;line-height:1.55;">Benefits platform for self-employed India. Freelancers and professionals earning &#8377;20L+ annually need GST compliance, financial planning, and coverage that employed people take for granted. Recurr builds the media and marketing funnel. Delivery handled by accounting firm partners.</p>
-      <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);margin-top:0.5em;">BUILD PHASE Q1 &middot; TARGET LAUNCH Q2</p>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);margin-top:0.4em;line-height:1.5;">Benefits platform for self-employed India. Compliance, financial planning, and coverage for professionals earning &#8377;20L+ annually. Recurr builds the funnel. Accounting firm partners deliver.</p>
+      <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);margin-top:0.4em;">BUILD Q1 &middot; LAUNCH Q2</p>
     </div>
     <div class="stat-card" data-reveal>
-      <div class="stat-label" style="color:var(--green);">BLR &mdash; blr.store</div>
-      <p style="font-family:var(--serif);font-size:var(--fs-body);color:var(--graphite);margin-top:0.5em;line-height:1.55;">Curated, asset-less ecommerce store and retail therapy magazine. India's premium consumer product media. Print media campaigns (coffee table books) run as seasonal projects within the store.</p>
-      <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);margin-top:0.5em;">Q2 LAUNCH</p>
+      <div class="stat-label" style="color:var(--blue);">BLR</div>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);margin-top:0.4em;line-height:1.5;">Curated, asset-less ecommerce store and retail therapy magazine. Print media campaigns (coffee table books) run as projects within the store.</p>
+      <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);margin-top:0.4em;">Q2</p>
     </div>
     <div class="stat-card" data-reveal>
-      <div class="stat-label" style="color:var(--yellow);">Waterpost</div>
-      <p style="font-family:var(--serif);font-size:var(--fs-body);color:var(--graphite);margin-top:0.5em;line-height:1.55;">Water bottles as marketing real estate. Monthly limited-edition custom bottles published and distributed across BLR. An ecommerce store with partnership-driven revenue.</p>
-      <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);margin-top:0.5em;">Q2</p>
+      <div class="stat-label" style="color:var(--blue);">Waterpost</div>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);margin-top:0.4em;line-height:1.5;">Water bottles as marketing real estate. Monthly limited-edition runs, ecommerce store, partnership revenue.</p>
+      <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);margin-top:0.4em;">Q2</p>
     </div>
     <div class="stat-card" data-reveal>
-      <div class="stat-label" style="color:var(--ink);">MerchMag</div>
-      <p style="font-family:var(--serif);font-size:var(--fs-body);color:var(--graphite);margin-top:0.5em;line-height:1.55;">Merchandise design and store software. Helping marketing teams use merchandise as a growth tactic. Monthly limited-edition swag on an ecommerce platform. Partnership revenue.</p>
-      <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);margin-top:0.5em;">Q2</p>
+      <div class="stat-label" style="color:var(--blue);">MerchMag</div>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);margin-top:0.4em;line-height:1.5;">Merchandise stores as a marketing tactic. Design + store software for marketing teams. Monthly drops, partnership revenue.</p>
+      <p style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);margin-top:0.4em;">Q2</p>
     </div>
   </div>
 </section>
 
 <hr class="slide-sep">
 
-<!-- ==================== SLIDE 10: STUDIO PHILOSOPHY ==================== -->
-<section class="slide-half" data-slide data-reveal>
-  <div class="slide-number">04B &mdash; Studio Model</div>
-  <h2>The model.</h2>
-  <div class="slide-body">
-    <p>Every Studio platform follows the same playbook:</p>
-  </div>
-  <div class="flywheel-ascii" style="margin-top:var(--space-xs);">
-  Traditional service (food ordering, compliance, merchandise)
-       ↓
-  Wrap it with technology (marketplace, portal, ecommerce)
-       ↓
-  Layer media on top (content, campaigns, editorial)
-       ↓
-  Revenue = commission on transactions, not flat fees
-       ↓
-  Scale with partnerships, not headcount</div>
-  <div class="slide-body" style="margin-top:var(--space-m);">
-    <p>The agency supports every Studio platform with marketing and pipeline work. Studio builds generate assets (content, case studies, data) that feed back into the agency's portfolio and recurr.co/press. <strong>The three arms are not silos &mdash; they feed each other.</strong></p>
-  </div>
-</section>
-
-<hr class="slide-sep">
-
-<!-- ==================== SLIDE 11: VAYAM ==================== -->
+<!-- ==================== 07: VAYAM ==================== -->
 <section class="slide" data-slide data-reveal>
-  <div class="slide-number">04C &mdash; Vayam</div>
+  <div class="slide-number">03C &mdash; Vayam</div>
   <h2>Vayam.</h2>
   <div class="slide-body">
-    <p>A media vertical covering the intersection of <strong>economy, policy, and frontier technology</strong> in India. Minerals, mining, defence, energy, critical infrastructure, quantum, AI &mdash; the economic layers that power the country but are barely covered.</p>
-    <p>This is a long-term strategic bet with zero revenue expectations in Year 1. The ambition is to become the most recognisable part of Recurr over the next five years &mdash; and to eventually serve as a bridge to governance and policy communication.</p>
-    <p><strong>Q1 goal:</strong> Go non-zero. Slow and small is fine. First publication out. Prove the format works.</p>
-  </div>
-  <div class="two-col" style="margin-top:var(--space-m);">
-    <div>
-      <h3>Why this exists</h3>
-      <ul class="deck-list">
-        <li>Frontier sectors have few players, all capital-rich, all bad at marketing.</li>
-        <li>Thought leadership is the primary marketing channel in these sectors.</li>
-        <li>Extremely high ACV. Less competitive. Policy-sensitive.</li>
-        <li>Visual explainers that make difficult concepts accessible to India's consumers.</li>
-      </ul>
-    </div>
-    <div>
-      <h3>First project: Anthracite</h3>
-      <ul class="deck-list">
-        <li>Book: 15 essays across 4 themes.</li>
-        <li>Content-first: each essay is a standalone article. All 15 together form the book.</li>
-        <li>Theme II (The Critical Minerals Pivot) in production.</li>
-        <li>Establishes Vayam's editorial voice and production pipeline.</li>
-      </ul>
-    </div>
+    <p>Recurr has worked with B2B software companies and consumer brands. We have never seriously ventured into <strong>governance, social impact, and the public sector in India</strong> &mdash; despite planning to for years. Vayam changes that.</p>
+    <p>Vayam is a media vertical covering the intersection of economy, policy, and frontier technology &mdash; minerals, mining, defence, energy, critical infrastructure. The economic layers that power the country but are barely covered. These are sectors with few players, all capital-rich, all in need of communication design, and all driven by thought leadership and media relationships.</p>
+    <p>Functionally, Vayam builds <strong>press and media relations capability</strong> &mdash; newspapers, television, policy publications. The kind of media strength that Recurr has never had to build for software clients. This is where we learn to operate at that level.</p>
+    <p>As we cross five years and qualify for government procurement (GeM), Vayam represents the foundation of an entire <strong>B2G and public sector vertical.</strong> The first project (Anthracite &mdash; a book on India's mineral sovereignty) is in production. Zero revenue expectations in Year 1. This is a five-year bet.</p>
   </div>
 </section>
 
 <hr class="slide-sep">
 
-<!-- ==================== SLIDE 12: CREATIVE BENCH ==================== -->
-<section class="slide-half" data-slide data-reveal>
-  <div class="slide-number">05 &mdash; Delivery</div>
-  <h2>The creative bench.</h2>
-  <div class="slide-body">
-    <p>Recurr's delivery engine is a small, high-agency creative team. The bench supports all three arms &mdash; Agency clients, Studio platforms, and Vayam editorial. Delivery is led directly by the founder.</p>
-    <p>The bench manages the work &mdash; scheduling, coordination, execution. Creative direction and quality control come from the top. The team doesn't replace the founder's craft. It <strong>amplifies</strong> it.</p>
-  </div>
-  <div class="highlight-block" style="margin-top:var(--space-m); max-width:var(--content-w);">
-    <p>We scale by adding capacity to the bench, not by adding management layers. The creative bench is a feature, not a bottleneck.</p>
-  </div>
-</section>
-
-<hr class="slide-sep">
-
-<!-- ==================== SLIDE 13: KPIs ==================== -->
+<!-- ==================== 08: Q1 KANBAN ==================== -->
 <section class="slide" data-slide data-reveal>
-  <div class="slide-number">06 &mdash; Performance</div>
-  <h2>KPIs.</h2>
-  <div class="three-col">
-    <div>
-      <h3>Agency</h3>
-      <div class="kpi-card" style="margin-top:var(--space-xs);">
-        <div class="kpi-metric">Active clients</div>
-        <div class="kpi-target">4+ by Q1 exit</div>
-        <p>Design partnership, timber, SaaS SEO, canteen support. Add as pipeline grows.</p>
-      </div>
-      <div class="kpi-card" style="margin-top:var(--space-xs);">
-        <div class="kpi-metric">Publishing cadence</div>
-        <div class="kpi-target">2/week on recurr.co</div>
-        <p>Content engine must turn on. This is the agency's inbound pipeline.</p>
-      </div>
-      <div class="kpi-card" style="margin-top:var(--space-xs);">
-        <div class="kpi-metric">Client retention</div>
-        <div class="kpi-target">100% in Q1</div>
-        <p>No churn. Every engagement renews or expands.</p>
-      </div>
-    </div>
-    <div>
-      <h3>Studio</h3>
-      <div class="kpi-card" style="margin-top:var(--space-xs);">
-        <div class="kpi-metric">Canteen</div>
-        <div class="kpi-target">Live with vendors</div>
-        <p>Platform shipped. Vendor onboarding underway. First orders flowing.</p>
-      </div>
-      <div class="kpi-card" style="margin-top:var(--space-xs);">
-        <div class="kpi-metric">JH10</div>
-        <div class="kpi-target">Build complete</div>
-        <p>Landing page, signup funnel, content strategy defined. Ready for Q2 launch.</p>
-      </div>
-      <div class="kpi-card" style="margin-top:var(--space-xs);">
-        <div class="kpi-metric">BLR, Waterpost, MerchMag</div>
-        <div class="kpi-target">Scoped for Q2</div>
-        <p>Strategy, wireframes, and build plans ready by end of Q1.</p>
-      </div>
-    </div>
-    <div>
-      <h3>Vayam</h3>
-      <div class="kpi-card" style="margin-top:var(--space-xs);">
-        <div class="kpi-metric">First publication</div>
-        <div class="kpi-target">Shipped in Q1</div>
-        <p>Anthracite chapter or standalone piece. Prove the format. Go non-zero.</p>
-      </div>
-      <div class="kpi-card" style="margin-top:var(--space-xs);">
-        <div class="kpi-metric">Editorial pipeline</div>
-        <div class="kpi-target">3+ pieces queued</div>
-        <p>A backlog that sustains publishing into Q2.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="slide-sep">
-
-<!-- ==================== SLIDE 14: REVENUE ==================== -->
-<section class="slide-half" data-slide data-reveal>
-  <div class="slide-number">06 &mdash; Revenue</div>
-  <h2>&#8377;10 Cr portfolio target.</h2>
-  <div class="slide-body">
-    <p>Across all three arms. The split between Agency, Studio, and Vayam will emerge as the year progresses. The goal is to reach <strong>&#8377;10L monthly revenue</strong> as the first milestone, then scale from there.</p>
-  </div>
-  <table class="deck-table" style="max-width:600px; margin-top:var(--space-s);">
-    <thead><tr><th>Arm</th><th>Revenue Model</th><th>Year 1 Expectation</th></tr></thead>
-    <tbody>
-      <tr><td>Agency</td><td>Retainers + project fees</td><td>Primary revenue driver</td></tr>
-      <tr><td>Studio</td><td>Commission on transactions + partnerships</td><td>Build phase &rarr; revenue in H2</td></tr>
-      <tr><td>Vayam</td><td>Sponsorships + media partnerships (future)</td><td>Zero revenue. Strategic investment.</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<hr class="slide-sep">
-
-<!-- ==================== SLIDE 15: Q1 PRIORITIES ==================== -->
-<section class="slide" data-slide data-reveal>
-  <div class="slide-number">07 &mdash; Q1 Priorities</div>
+  <div class="slide-number">04 &mdash; Q1 Plan</div>
   <h2>April &mdash; June 2026.</h2>
-  <div class="three-col">
-    <div class="stat-card" data-reveal>
-      <div class="stat-label" style="color:var(--red);">Agency</div>
-      <ul class="deck-list" style="margin-top:0.5em;">
-        <li>Design partnership at full force</li>
-        <li>TNT pipeline live (applied industries + architects)</li>
-        <li>SaaS SEO client onboarded</li>
-        <li>Canteen marketing support</li>
-        <li>recurr.co/press publishing 2x/week</li>
-      </ul>
+  <div class="kanban">
+    <div class="kanban-card" data-arm="agency" data-reveal>
+      <div class="kanban-tag">Agency</div>
+      <div class="kanban-title">Design Partnership</div>
+      <div class="kanban-desc">Full-force engagement. Positioning, intelligence, content strategy.</div>
+      <div class="kanban-quarter">ACTIVE</div>
     </div>
-    <div class="stat-card" data-reveal>
-      <div class="stat-label" style="color:var(--blue);">Studio</div>
-      <ul class="deck-list" style="margin-top:0.5em;">
-        <li><strong>Canteen MVP shipped</strong> &mdash; marketplace live, vendors onboarded, first orders</li>
-        <li>JH10 build phase &mdash; landing page, funnel, content strategy</li>
-        <li>BLR, Waterpost, MerchMag scoped and planned for Q2</li>
-      </ul>
+    <div class="kanban-card" data-arm="agency" data-reveal>
+      <div class="kanban-tag">Agency</div>
+      <div class="kanban-title">Timber Pipeline</div>
+      <div class="kanban-desc">Applied industries + architect pipeline for the plywood business.</div>
+      <div class="kanban-quarter">Q1</div>
     </div>
-    <div class="stat-card" data-reveal>
-      <div class="stat-label" style="color:var(--green);">Vayam</div>
-      <ul class="deck-list" style="margin-top:0.5em;">
-        <li>First publication out</li>
-        <li>Editorial pipeline with 3+ pieces queued</li>
-        <li>Format validated</li>
-      </ul>
+    <div class="kanban-card" data-arm="agency" data-reveal>
+      <div class="kanban-tag">Agency</div>
+      <div class="kanban-title">SaaS SEO Client</div>
+      <div class="kanban-desc">New inbound. ~$1,000/month retainer.</div>
+      <div class="kanban-quarter">Q1</div>
+    </div>
+    <div class="kanban-card" data-arm="agency" data-reveal>
+      <div class="kanban-tag">Agency</div>
+      <div class="kanban-title">Canteen Marketing</div>
+      <div class="kanban-desc">Agency support for the Studio platform launch.</div>
+      <div class="kanban-quarter">Q1</div>
+    </div>
+    <div class="kanban-card" data-arm="studio" data-reveal>
+      <div class="kanban-tag">Studio</div>
+      <div class="kanban-title">Canteen MVP</div>
+      <div class="kanban-desc">Marketplace live. Vendors onboarded. First orders flowing.</div>
+      <div class="kanban-quarter">P0 &middot; Q1</div>
+    </div>
+    <div class="kanban-card" data-arm="studio" data-reveal>
+      <div class="kanban-tag">Studio</div>
+      <div class="kanban-title">JH10 Build</div>
+      <div class="kanban-desc">Landing page, signup funnel, content strategy. Ready for Q2 launch.</div>
+      <div class="kanban-quarter">BUILD &middot; Q1</div>
+    </div>
+    <div class="kanban-card" data-arm="studio" data-reveal>
+      <div class="kanban-tag">Studio</div>
+      <div class="kanban-title">BLR / Waterpost / MerchMag</div>
+      <div class="kanban-desc">Scoped and planned. Strategy and wireframes ready.</div>
+      <div class="kanban-quarter">SCOPE &middot; Q2 LAUNCH</div>
+    </div>
+    <div class="kanban-card" data-arm="vayam" data-reveal>
+      <div class="kanban-tag">Vayam</div>
+      <div class="kanban-title">First Publication</div>
+      <div class="kanban-desc">Anthracite chapter or standalone piece. Prove the format.</div>
+      <div class="kanban-quarter">Q1</div>
+    </div>
+    <div class="kanban-card" data-arm="press" data-reveal>
+      <div class="kanban-tag">Press</div>
+      <div class="kanban-title">Content Engine On</div>
+      <div class="kanban-desc">press.recurr.co publishing 2x/week. 175 articles as cold start.</div>
+      <div class="kanban-quarter">Q1</div>
     </div>
   </div>
 </section>
 
 <hr class="slide-sep">
 
-<!-- ==================== SLIDE 16: TIMELINE ==================== -->
+<!-- ==================== 09: TIMELINE ==================== -->
 <section class="slide-half" data-slide data-reveal>
-  <div class="slide-number">08 &mdash; Timeline</div>
-  <h2>The year ahead.</h2>
+  <div class="slide-number">05 &mdash; The Year</div>
+  <h2>FY26-27.</h2>
   <div style="max-width:var(--content-w);">
-    <div class="timeline-item">
-      <div class="timeline-quarter">Q1</div>
-      <div class="timeline-content"><strong>Ship and stabilise.</strong> Agency clients running. Canteen live. JH10 in build. Vayam's first publication. Press starts publishing. Creative bench at full capacity.</div>
+    <div class="timeline-row">
+      <div class="timeline-q">Q1</div>
+      <div class="timeline-text"><strong>Ship and stabilise.</strong> Agency clients running. Canteen live. JH10 in build. Vayam non-zero. Press publishing.</div>
     </div>
-    <div class="timeline-item">
-      <div class="timeline-quarter">Q2</div>
-      <div class="timeline-content"><strong>Expand the portfolio.</strong> JH10 launches. BLR Store goes live. Waterpost and MerchMag ship. Agency pipeline growing from inbound (press + referrals). Vayam publishing regularly.</div>
+    <div class="timeline-row">
+      <div class="timeline-q">Q2</div>
+      <div class="timeline-text"><strong>Expand.</strong> JH10 launches. BLR, Waterpost, MerchMag ship. Agency pipeline growing from inbound. Vayam publishing regularly.</div>
     </div>
-    <div class="timeline-item">
-      <div class="timeline-quarter">Q3</div>
-      <div class="timeline-content"><strong>Scale what works.</strong> Studio platforms generating revenue. Agency at 6-8 active clients. Double down on what's working. Kill what isn't. Vayam exploring partnerships.</div>
+    <div class="timeline-row">
+      <div class="timeline-q">Q3</div>
+      <div class="timeline-text"><strong>Scale what works.</strong> Studio platforms earning. Agency at 6-8 clients. Double down on winners. Kill what doesn't work.</div>
     </div>
-    <div class="timeline-item">
-      <div class="timeline-quarter">Q4</div>
-      <div class="timeline-content"><strong>Compound.</strong> Studio commission revenue compounding. Agency fully inbound-driven. Vayam establishing industry presence. Portfolio approaching &#8377;10 Cr run rate.</div>
-    </div>
-  </div>
-</section>
-
-<hr class="slide-sep">
-
-<!-- ==================== SLIDE 17: RISKS ==================== -->
-<section class="slide-half" data-slide data-reveal>
-  <div class="slide-number">09 &mdash; Risks</div>
-  <h2>What could go wrong.</h2>
-  <div class="risk-grid">
-    <div class="risk-card" data-reveal>
-      <div class="risk-card-title">Spreading too thin</div>
-      <p>Three arms, five Studio platforms, multiple Agency clients. Small team.</p>
-      <p class="mitigation">Sequence ruthlessly. Canteen is P0. JH10 is build-only. BLR/Waterpost/MerchMag are Q2. Don't start everything at once.</p>
-    </div>
-    <div class="risk-card" data-reveal>
-      <div class="risk-card-title">Press doesn't publish</div>
-      <p>The content engine never turns on. Agency has no inbound pipeline.</p>
-      <p class="mitigation">175 articles are the cold start. 2/week minimum. AI-assisted production. This is non-negotiable.</p>
-    </div>
-    <div class="risk-card" data-reveal>
-      <div class="risk-card-title">Studio platforms don't find PMF</div>
-      <p>Canteen, JH10, or others fail to get traction.</p>
-      <p class="mitigation">Commission model means low fixed cost. Fail fast, learn, pivot. Agency revenue covers the base.</p>
-    </div>
-    <div class="risk-card" data-reveal>
-      <div class="risk-card-title">Agency stays network-dependent</div>
-      <p>Inbound doesn't materialise. Leads come from founder's network only.</p>
-      <p class="mitigation">Press + recurr.co must be live and publishing by April. LinkedIn activation. Build the machine, don't rely on relationships.</p>
-    </div>
-    <div class="risk-card" data-reveal>
-      <div class="risk-card-title">Key person dependency</div>
-      <p>Founder is creative director, chief editor, Studio lead, and MOO strategist.</p>
-      <p class="mitigation">The creative bench amplifies, it doesn't replace. Accept this as a feature in Year 1. Build capacity for Year 2.</p>
+    <div class="timeline-row">
+      <div class="timeline-q">Q4</div>
+      <div class="timeline-text"><strong>Compound.</strong> Studio commissions compounding. Agency fully inbound-driven. Vayam building industry presence.</div>
     </div>
   </div>
 </section>
 
 <hr class="slide-sep">
 
-<!-- ==================== SLIDE 18: PRINCIPLES ==================== -->
-<section class="slide" data-slide data-reveal>
-  <div class="slide-number">10 &mdash; Principles</div>
-  <h2>How we operate.</h2>
-  <div class="stat-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
-    <div class="stat-card" data-reveal>
-      <div class="stat-label" style="color:var(--red);">Every rupee has a thesis</div>
-      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);margin-top:0.5em;line-height:1.55;">No spend without a clear expected outcome. Always know what success looks like before committing capital.</p>
-    </div>
-    <div class="stat-card" data-reveal>
-      <div class="stat-label" style="color:var(--blue);">Practice what we preach</div>
-      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);margin-top:0.5em;line-height:1.55;">recurr.co is Client Zero. Our own content engine must work before we sell it to others.</p>
-    </div>
-    <div class="stat-card" data-reveal>
-      <div class="stat-label" style="color:var(--green);">Service wrapped in tech</div>
-      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);margin-top:0.5em;line-height:1.55;">Studio platforms are not software products. They are traditional services redesigned with technology and media as the delivery layer.</p>
-    </div>
-    <div class="stat-card" data-reveal>
-      <div class="stat-label" style="color:var(--yellow);">Sequence, don't parallelise</div>
-      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);margin-top:0.5em;line-height:1.55;">Ship one thing well before starting the next. Canteen first. Then JH10. Then BLR. Discipline over ambition.</p>
-    </div>
-  </div>
-</section>
-
-<hr class="slide-sep">
-
-<!-- ==================== SLIDE 19: CLOSING ==================== -->
+<!-- ==================== 10: CLOSING ==================== -->
 <section class="slide" data-slide data-reveal>
   <h2 style="font-size:var(--fs-mega);line-height:0.95;">A communication<br>design company.</h2>
   <div class="slide-body" style="margin-top:var(--space-m);">
@@ -813,9 +510,7 @@
       var dot = document.createElement('button');
       dot.className = 'progress-dot';
       dot.title = 'Slide ' + (i + 1);
-      dot.addEventListener('click', function() {
-        s.scrollIntoView({ behavior: 'smooth' });
-      });
+      dot.addEventListener('click', function() { s.scrollIntoView({ behavior: 'smooth' }); });
       nav.appendChild(dot);
     });
     var dots = nav.querySelectorAll('.progress-dot');
