@@ -1,110 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#E5E8E8">
   <title>Signal to Conversation — Recurr × Krisatwork</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/recurr-system/style.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* ── Deck-specific overrides ── */
 
-    :root {
-      --bg:      #EAEAE6;
-      --ink:     #1A1A1A;
-      --muted:   #666;
-      --faint:   #999;
-      --border:  #D2D2CE;
-      --card-bg: #F2F2EE;
-      --red:     #C0362B;
-      --blue:    #2B5B8A;
-      --green:   #2E6A50;
-      --yellow:  #C49A14;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
-      line-height: 1.5;
-    }
-
-    /* ── dot grid shared ── */
     .slide {
       position: relative;
       min-height: 100vh;
-      padding: 52px 72px 64px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-    }
-    .slide::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(circle, #BBBBB5 1px, transparent 1px);
-      background-size: 22px 22px;
-      opacity: 0.4;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .slide-inner {
-      position: relative;
-      z-index: 1;
-      flex: 1;
+      padding: var(--space-2xl) var(--margin) var(--space-xl);
+      max-width: 1400px;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
     }
 
-    /* ── nav ── */
-    .nav {
+    .slide + .slide { border-top: 1px dashed var(--border-color); }
+
+    .slide-nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 60px;
+      margin-bottom: var(--space-l);
     }
-    .logo {
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 600;
-      font-size: 17px;
-      letter-spacing: -0.3px;
+    .slide-logo {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 0.9rem + 0.4vw, 1.3rem);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.03em;
     }
     .slide-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      color: var(--faint);
-      letter-spacing: 0.04em;
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      letter-spacing: 0.05em;
     }
 
-    /* ── tags / pills ── */
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      color: var(--ink);
-      margin-bottom: 26px;
-    }
+    /* ── pills ── */
+    .pill-row { display: flex; gap: var(--space-xs); margin-bottom: var(--space-s); flex-wrap: wrap; }
     .pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-color);
       border-radius: 100px;
-      padding: 5px 13px;
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
+      padding: 4px 14px;
+      font-family: var(--mono);
+      font-size: var(--fs-label);
       text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--muted);
+      letter-spacing: 0.08em;
+      color: var(--pencil);
     }
     .pill.active { border-color: var(--ink); color: var(--ink); }
-    .pill-row { display: flex; gap: 10px; margin-bottom: 36px; flex-wrap: wrap; }
 
     .dot {
       width: 8px; height: 8px;
@@ -116,102 +69,105 @@
     .dot-blue   { background: var(--blue); }
     .dot-green  { background: var(--green); }
     .dot-yellow { background: var(--yellow); }
-    .dot-dark   { background: var(--ink); }
+    .dot-ink    { background: var(--ink); }
     .dot-live   { background: var(--red); animation: pulse 1.6s infinite; }
 
     @keyframes pulse {
       0%,100% { opacity:1; } 50% { opacity:0.25; }
     }
 
-    /* ── typography ── */
-    h1 {
-      font-family: 'DM Serif Display', serif;
-      font-weight: 400;
-      font-size: clamp(44px, 5vw, 70px);
-      line-height: 1.08;
-      max-width: 800px;
-      margin-bottom: 22px;
+    /* ── slide typography ── */
+    .slide h1 {
+      font-family: var(--serif);
+      font-size: var(--fs-mega);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      max-width: 18ch;
+      margin-bottom: var(--space-s);
     }
-    h2 {
-      font-family: 'DM Serif Display', serif;
-      font-weight: 400;
-      font-size: clamp(32px, 3.5vw, 50px);
-      line-height: 1.12;
-      margin-bottom: 18px;
+    .slide h2 {
+      font-family: var(--serif);
+      font-size: var(--fs-display);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: var(--space-s);
     }
     .deck-sub {
-      font-size: 15px;
-      font-weight: 300;
+      font-family: var(--serif);
+      font-size: var(--fs-body-lg);
       font-style: italic;
-      color: var(--muted);
-      max-width: 580px;
-      line-height: 1.65;
-      margin-bottom: 44px;
+      color: var(--graphite);
+      max-width: 38ch;
+      line-height: 1.55;
+      margin-bottom: var(--space-m);
     }
 
-    /* ══════════════════════════════════════
-       SLIDE 1 — signal overview cards
-    ══════════════════════════════════════ */
+    /* ══ SLIDE 1 — signal cards ══ */
     .signal-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      gap: var(--space-s);
       margin-top: auto;
-      padding-top: 32px;
+      padding-top: var(--space-m);
     }
     .signal-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 5px;
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      padding: clamp(1.2rem, 1rem + 0.8vw, 1.8rem);
+      gap: var(--space-xs);
+      position: relative;
     }
     .signal-card .card-tag {
       display: flex;
       align-items: center;
-      gap: 7px;
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: var(--faint);
-      padding: 16px 20px 0;
+      letter-spacing: 0.12em;
+      color: var(--pencil);
     }
     .signal-card h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 18px;
-      font-weight: 400;
-      padding: 10px 20px 8px;
-      line-height: 1.2;
+      font-family: var(--serif);
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
     }
-    .signal-card p {
-      font-size: 12.5px;
-      color: var(--muted);
-      line-height: 1.6;
+    .signal-card .quote {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      line-height: 1.55;
       font-style: italic;
-      padding: 0 20px 14px;
       flex: 1;
     }
     .signal-card .source {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
-      color: var(--faint);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 0 20px 18px;
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      letter-spacing: 0.05em;
+      margin-top: auto;
     }
 
-    /* ══════════════════════════════════════
-       SLIDE 2 — screenshot evidence
-    ══════════════════════════════════════ */
+    /* ══ SLIDE 2 — screenshot evidence ══ */
     .evidence-intro {
-      max-width: 640px;
-      margin-bottom: 36px;
+      max-width: var(--content-w);
+      margin-bottom: var(--space-m);
     }
     .evidence-intro p {
-      font-size: 14px;
-      color: var(--muted);
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      color: var(--graphite);
       font-style: italic;
       line-height: 1.65;
     }
@@ -219,7 +175,7 @@
     .screenshot-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+      gap: var(--space-s);
     }
     .screenshot-col {
       display: flex;
@@ -230,21 +186,20 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 10px;
+      margin-bottom: var(--space-xs);
     }
     .screenshot-header span {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
+      font-family: var(--mono);
+      font-size: var(--fs-label);
       text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: var(--faint);
+      letter-spacing: 0.08em;
+      color: var(--pencil);
     }
     .screenshot-frame {
-      border: 1px solid var(--border);
-      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
       overflow: hidden;
-      background: #fff;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      background: var(--notebook);
     }
     .screenshot-frame img {
       width: 100%;
@@ -256,204 +211,212 @@
     .screenshot-frame.short img { max-height: 220px; }
 
     .screenshot-caption {
-      padding: 12px 14px;
-      border-top: 1px solid var(--border);
-      background: var(--card-bg);
+      padding: var(--space-xs);
+      border-top: 1px dashed var(--border-faint);
+      background: var(--whiteboard);
     }
     .screenshot-caption p {
-      font-size: 12px;
-      color: var(--muted);
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
       line-height: 1.55;
     }
     .screenshot-caption .cap-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--faint);
+      letter-spacing: 0.08em;
+      color: var(--pencil);
       margin-bottom: 4px;
     }
 
-    /* stacked pair */
     .screenshot-pair {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: var(--space-xs);
     }
 
-    /* ══════════════════════════════════════
-       SLIDE 3 — approach steps
-    ══════════════════════════════════════ */
+    /* ══ SLIDE 3 — approach steps ══ */
     .steps {
       display: flex;
       flex-direction: column;
-      max-width: 720px;
-      margin-top: 8px;
+      max-width: var(--wide-w);
+      margin-top: var(--space-xs);
     }
     .step {
       display: flex;
-      gap: 36px;
+      gap: var(--space-m);
       align-items: flex-start;
-      padding: 28px 0;
-      border-bottom: 1px solid var(--border);
+      padding: var(--space-s) 0;
+      border-bottom: 1px dashed var(--border-color);
     }
     .step:last-child { border-bottom: none; }
     .step-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      color: var(--faint);
-      padding-top: 5px;
-      min-width: 22px;
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      padding-top: 6px;
+      min-width: 24px;
+      letter-spacing: 0.05em;
     }
     .step h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 23px;
-      font-weight: 400;
-      margin-bottom: 8px;
+      font-family: var(--serif);
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
     }
     .step p {
-      font-size: 14px;
-      color: var(--muted);
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      color: var(--graphite);
       line-height: 1.65;
     }
 
-    /* ══════════════════════════════════════
-       SLIDE 4 — outcomes
-    ══════════════════════════════════════ */
+    /* ══ SLIDE 4 — outcomes ══ */
     .outcomes-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      margin-top: 36px;
+      gap: var(--space-s);
+      margin-top: var(--space-m);
     }
     .outcome-dark {
       background: var(--ink);
-      color: #E8E8E4;
-      padding: 38px 34px;
-      border-radius: 5px;
+      color: #E8ECEC;
+      padding: clamp(1.5rem, 1.2rem + 1vw, 2.5rem);
+      border-radius: 4px;
     }
+    [data-theme="dark"] .outcome-dark { background: #111414; }
     .outcome-light {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      padding: 38px 34px;
-      border-radius: 5px;
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      padding: clamp(1.5rem, 1.2rem + 1vw, 2.5rem);
+      border-radius: 4px;
     }
     .outcome-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.09em;
-      margin-bottom: 14px;
+      letter-spacing: 0.12em;
+      margin-bottom: var(--space-xs);
     }
-    .outcome-dark .outcome-label  { color: #666; }
-    .outcome-light .outcome-label { color: var(--faint); }
+    .outcome-dark .outcome-label  { color: #5A6060; }
+    .outcome-light .outcome-label { color: var(--pencil); }
     .outcome-dark h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 25px;
-      font-weight: 400;
-      line-height: 1.25;
-      margin-bottom: 12px;
+      font-family: var(--serif);
+      font-size: var(--fs-h2);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-xs);
     }
     .outcome-light h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 25px;
-      font-weight: 400;
-      line-height: 1.25;
+      font-family: var(--serif);
+      font-size: var(--fs-h2);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
       color: var(--ink);
-      margin-bottom: 12px;
+      margin-bottom: var(--space-xs);
     }
-    .outcome-dark p  { font-size: 13px; color: #999; line-height: 1.65; }
-    .outcome-light p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+    .outcome-dark p  { font-family: var(--serif); font-size: var(--fs-small); color: #8A9292; line-height: 1.65; }
+    .outcome-light p { font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); line-height: 1.65; }
     .dark-list {
       list-style: none;
-      margin-top: 18px;
+      margin-top: var(--space-xs);
     }
     .dark-list li {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 13px;
-      color: #AAA;
-      padding: 9px 0;
-      border-bottom: 1px solid #2E2E2E;
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: #A8AEAD;
+      padding: 8px 0;
+      border-bottom: 1px solid #2E3434;
     }
     .dark-list li:last-child { border-bottom: none; }
     .segment-list {
       list-style: none;
-      margin-top: 18px;
+      margin-top: var(--space-xs);
     }
     .segment-list li {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 13px;
-      color: var(--muted);
-      padding: 9px 0;
-      border-bottom: 1px solid var(--border);
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--border-faint);
     }
     .segment-list li:last-child { border-bottom: none; }
     .outcome-footnote {
-      font-size: 11px;
+      font-family: var(--serif);
+      font-size: var(--fs-small);
       font-style: italic;
-      color: var(--faint);
-      margin-top: 14px;
+      color: var(--pencil);
+      margin-top: var(--space-xs);
     }
 
-    /* ══════════════════════════════════════
-       SLIDE 5 — plan / timeline
-    ══════════════════════════════════════ */
+    /* ══ SLIDE 5 — plan / timeline ══ */
     .quote-block {
-      border-left: 2px solid var(--ink);
-      padding: 12px 22px;
-      margin: 28px 0 20px;
-      max-width: 680px;
+      border-left: 3px solid var(--ink);
+      padding: var(--space-xs) var(--space-s);
+      margin: var(--space-s) 0 var(--space-s);
+      max-width: var(--content-w);
     }
     .quote-block blockquote {
-      font-family: 'DM Serif Display', serif;
-      font-size: 20px;
-      font-weight: 400;
+      font-family: var(--serif);
+      font-size: var(--fs-h3);
+      font-weight: 700;
       font-style: italic;
-      line-height: 1.5;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
     }
     .quote-block cite {
       display: block;
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
+      font-family: var(--mono);
+      font-size: var(--fs-label);
       text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--faint);
+      letter-spacing: 0.08em;
+      color: var(--pencil);
       margin-top: 8px;
       font-style: normal;
     }
     .timeline {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      border: 1px solid var(--border);
-      border-radius: 5px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
       overflow: hidden;
-      margin-top: 20px;
+      margin-top: var(--space-s);
     }
     .month {
-      padding: 28px 24px;
-      border-right: 1px solid var(--border);
+      padding: clamp(1.2rem, 1rem + 0.8vw, 1.8rem);
+      border-right: 1px dashed var(--border-color);
     }
     .month:last-child { border-right: none; }
     .month-label {
       display: flex;
       align-items: center;
       gap: 7px;
-      font-family: 'Space Mono', monospace;
-      font-size: 9px;
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: var(--faint);
-      margin-bottom: 10px;
+      letter-spacing: 0.1em;
+      color: var(--pencil);
+      margin-bottom: var(--space-xs);
     }
     .month h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 20px;
-      font-weight: 400;
-      margin-bottom: 14px;
+      font-family: var(--serif);
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+      letter-spacing: -0.02em;
     }
     .month ul {
       list-style: none;
@@ -461,12 +424,13 @@
       flex-direction: column;
     }
     .month ul li {
-      font-size: 13px;
-      color: var(--muted);
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
       line-height: 1.55;
-      padding: 7px 0 7px 16px;
+      padding: 6px 0 6px 16px;
       position: relative;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px dashed var(--border-faint);
     }
     .month ul li:last-child { border-bottom: none; }
     .month ul li::before {
@@ -474,6 +438,7 @@
       position: absolute;
       left: 0;
       color: var(--faint);
+      font-family: var(--mono);
     }
 
     /* ── footer ── */
@@ -481,36 +446,47 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      margin-top: 36px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
+      margin-top: var(--space-m);
+      padding-top: var(--space-s);
+      border-top: 1px dashed var(--border-color);
     }
     .footer-note {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      color: var(--faint);
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
       text-transform: uppercase;
       letter-spacing: 0.06em;
+    }
+
+    /* ── responsive ── */
+    @media (max-width: 768px) {
+      .signal-row { grid-template-columns: 1fr; }
+      .screenshot-grid { grid-template-columns: 1fr; }
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .timeline { grid-template-columns: 1fr; }
+      .month { border-right: none; border-bottom: 1px dashed var(--border-color); }
+      .month:last-child { border-bottom: none; }
+      .step { gap: var(--space-s); }
     }
   </style>
 </head>
 <body>
 
+<canvas class="dot-grid-canvas" id="dot-grid"></canvas>
 
 <!-- ═══════════════════════════════════════════════════
      SLIDE 1 — The Opportunity
 ═══════════════════════════════════════════════════ -->
 <section class="slide">
-  <div class="slide-inner">
-    <nav class="nav">
-      <span class="logo">recurr</span>
+    <nav class="slide-nav">
+      <span class="slide-logo">recurr</span>
       <span class="slide-num">01 / 05</span>
     </nav>
 
     <div class="pill-row">
       <div class="pill active"><span class="dot dot-live"></span> GTM</div>
       <div class="pill"><span class="dot dot-blue"></span> Krisatwork</div>
-      <div class="pill"><span class="dot dot-dark"></span> 3-Month Brief</div>
+      <div class="pill"><span class="dot dot-ink"></span> 3-Month Brief</div>
     </div>
 
     <h1>Your ICP is already in the conversation. You're not.</h1>
@@ -525,23 +501,22 @@
       <div class="signal-card">
         <div class="card-tag"><span class="dot dot-red"></span> Activity Level</div>
         <h3>The Admin Trap</h3>
-        <p>"I bounce between 15 tabs. By the time I've contacted 10 people, I've done 3 hours of admin and zero selling. I wasn't an AE — I was a data entry clerk with a quota."</p>
+        <p class="quote">"I bounce between 15 tabs. By the time I've contacted 10 people, I've done 3 hours of admin and zero selling. I wasn't an AE — I was a data entry clerk with a quota."</p>
         <div class="source">Nurudin Mudhir · Account Executive</div>
       </div>
       <div class="signal-card">
         <div class="card-tag"><span class="dot dot-blue"></span> Use Case Level</div>
         <h3>The Meeting Blind Spot</h3>
-        <p>"I botched a discovery call with a CMO. I had done the research. He had no idea. His response: 'You asked for this call — why don't you just tell me what you do.'"</p>
+        <p class="quote">"I botched a discovery call with a CMO. I had done the research. He had no idea. His response: 'You asked for this call — why don't you just tell me what you do.'"</p>
         <div class="source">Kyle Asay · VP Global Growth Sales, LaunchDarkly</div>
       </div>
       <div class="signal-card">
         <div class="card-tag"><span class="dot dot-green"></span> Strategic Level</div>
         <h3>The Pipeline Fiction</h3>
-        <p>"Research shows only 30% of a salesperson's time is actually spent selling. For a 5-person team at $150K per rep — $525,000 is going to things that aren't selling."</p>
+        <p class="quote">"Research shows only 30% of a salesperson's time is actually spent selling. For a 5-person team at $150K per rep — $525,000 is going to things that aren't selling."</p>
         <div class="source">Josh Riessen · B2B Revenue Leader</div>
       </div>
     </div>
-  </div>
 </section>
 
 
@@ -549,13 +524,12 @@
      SLIDE 2 — The Signals (screenshots)
 ═══════════════════════════════════════════════════ -->
 <section class="slide">
-  <div class="slide-inner">
-    <nav class="nav">
-      <span class="logo">recurr</span>
+    <nav class="slide-nav">
+      <span class="slide-logo">recurr</span>
       <span class="slide-num">02 / 05</span>
     </nav>
 
-    <div class="tag"><span class="dot dot-live"></span> Live Signals</div>
+    <div class="section-label dot-red">Live Signals</div>
 
     <h2>What we found. This week.</h2>
 
@@ -631,7 +605,6 @@
       </div>
 
     </div>
-  </div>
 </section>
 
 
@@ -639,13 +612,12 @@
      SLIDE 3 — The Approach
 ═══════════════════════════════════════════════════ -->
 <section class="slide">
-  <div class="slide-inner">
-    <nav class="nav">
-      <span class="logo">recurr</span>
+    <nav class="slide-nav">
+      <span class="slide-logo">recurr</span>
       <span class="slide-num">03 / 05</span>
     </nav>
 
-    <div class="tag"><span class="dot dot-dark"></span> The Approach</div>
+    <div class="section-label dot-ink">The Approach</div>
 
     <h2>From signal to conversation.<br>Recurr runs it end to end.</h2>
 
@@ -677,7 +649,6 @@
         </div>
       </div>
     </div>
-  </div>
 </section>
 
 
@@ -685,13 +656,12 @@
      SLIDE 4 — What You Get
 ═══════════════════════════════════════════════════ -->
 <section class="slide">
-  <div class="slide-inner">
-    <nav class="nav">
-      <span class="logo">recurr</span>
+    <nav class="slide-nav">
+      <span class="slide-logo">recurr</span>
       <span class="slide-num">04 / 05</span>
     </nav>
 
-    <div class="tag"><span class="dot dot-green"></span> Outcomes</div>
+    <div class="section-label dot-green">Outcomes</div>
 
     <h2>What 3 months delivers.</h2>
 
@@ -719,7 +689,6 @@
         <p class="outcome-footnote">Foundation for future campaigns, sales prioritisation, and messaging validation.</p>
       </div>
     </div>
-  </div>
 </section>
 
 
@@ -727,13 +696,12 @@
      SLIDE 5 — The Plan
 ═══════════════════════════════════════════════════ -->
 <section class="slide">
-  <div class="slide-inner">
-    <nav class="nav">
-      <span class="logo">recurr</span>
+    <nav class="slide-nav">
+      <span class="slide-logo">recurr</span>
       <span class="slide-num">05 / 05</span>
     </nav>
 
-    <div class="tag"><span class="dot dot-yellow"></span> Plan</div>
+    <div class="section-label dot-yellow">Plan</div>
 
     <h2>3 months. Clear milestones.</h2>
 
@@ -742,7 +710,7 @@
       <cite>— Ananta Joshi, CPO, Krisatwork</cite>
     </div>
 
-    <p style="font-size:14px; color:var(--muted); font-style:italic; margin-bottom:20px; max-width:600px; line-height:1.65;">
+    <p class="deck-sub" style="margin-bottom:var(--space-s);">
       The ICP is already choosing sides. Krisatwork has the positioning, the proof, and annual
       contracts to back it up. This programme closes the gap between having the right message
       and being in the right rooms.
@@ -785,9 +753,8 @@
       <span class="footer-note">Recurr Studio · Bengaluru</span>
       <span class="footer-note">Prepared for Rakhi · Krisatwork · March 2026</span>
     </div>
-  </div>
 </section>
 
-
+<script src="/recurr-system/engine.js"></script>
 </body>
 </html>
