@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#E5E8E8">
+  <title>GEO Program — Recurr × Krisatwork</title>
+  <link rel="stylesheet" href="/recurr-system/style.css">
+  <style>
+    /* ── GEO report overrides ── */
+
+    .report-section {
+      padding: var(--space-2xl) var(--margin);
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .report-section + .report-section { border-top: 1px dashed var(--border-color); }
+
+    .report-inner { max-width: var(--wide-w); }
+
+    .report-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-l);
+    }
+    .report-logo {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 0.9rem + 0.4vw, 1.3rem);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+    }
+    .report-label {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .report-section h1 {
+      font-family: var(--serif);
+      font-size: var(--fs-h1);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      max-width: 22ch;
+      margin-bottom: var(--space-s);
+    }
+    .report-section h2 {
+      font-family: var(--serif);
+      font-size: var(--fs-h2);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-s);
+    }
+    .report-section h3 {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--pencil);
+      margin-bottom: var(--space-xs);
+    }
+
+    .lead {
+      font-family: var(--serif);
+      font-size: var(--fs-body-lg);
+      line-height: 1.55;
+      color: var(--graphite);
+      max-width: 40ch;
+      margin-bottom: var(--space-m);
+    }
+
+    /* tags */
+    .tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 3px;
+      margin-bottom: var(--space-s);
+    }
+    .tag-red    { background: rgba(224,62,54,0.12); color: var(--red); }
+    .tag-blue   { background: rgba(43,108,176,0.12); color: var(--blue); }
+    .tag-green  { background: rgba(61,140,110,0.12); color: var(--green); }
+    .tag-yellow { background: var(--yellow-hl); color: #8A7A1A; }
+    .tag-orange { background: rgba(184,92,0,0.12); color: #B85C00; }
+    .tag-ink    { background: rgba(42,42,42,0.1); color: var(--ink); }
+    [data-theme="dark"] .tag-yellow { color: var(--yellow); }
+
+    /* cards */
+    .rcard {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.2rem, 1rem + 0.8vw, 1.8rem);
+      margin-bottom: var(--space-xs);
+    }
+    .rcard-title {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .rcard p {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      line-height: 1.6;
+    }
+
+    /* grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-s);
+      margin-bottom: var(--space-m);
+    }
+
+    /* tables */
+    .geo-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: var(--space-m);
+      font-size: var(--fs-small);
+    }
+    .geo-table thead th {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--pencil);
+      text-align: left;
+      padding: var(--space-xs);
+      border-bottom: 1px solid var(--border-color);
+      background: var(--whiteboard);
+    }
+    .geo-table tbody td {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      padding: var(--space-xs);
+      border-bottom: 1px solid var(--border-faint);
+      color: var(--ink);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .geo-table tbody tr:nth-child(even) { background: var(--notebook); }
+
+    /* pills */
+    .pill {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .pill-red    { background: rgba(224,62,54,0.12); color: var(--red); }
+    .pill-green  { background: rgba(61,140,110,0.12); color: var(--green); }
+    .pill-yellow { background: var(--yellow-hl); color: #8A7A1A; }
+    .pill-blue   { background: rgba(43,108,176,0.12); color: var(--blue); }
+    .pill-ink    { background: rgba(42,42,42,0.1); color: var(--graphite); }
+
+    /* stats */
+    .stat-row {
+      display: flex;
+      gap: var(--space-m);
+      margin-bottom: var(--space-m);
+      flex-wrap: wrap;
+    }
+    .stat-num {
+      font-family: var(--serif);
+      font-size: var(--fs-display);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-num.red   { color: var(--red); }
+    .stat-num.green { color: var(--green); }
+    .stat-num.blue  { color: var(--blue); }
+    .stat-label {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      max-width: 180px;
+      line-height: 1.4;
+    }
+
+    /* dark callout */
+    .geo-callout {
+      background: var(--ink);
+      color: #E8ECEC;
+      border-radius: 4px;
+      padding: clamp(1.5rem, 1.2rem + 1vw, 2.2rem);
+      margin: var(--space-m) 0;
+    }
+    [data-theme="dark"] .geo-callout { background: #111414; }
+    .geo-callout .geo-callout-label {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #5A6060;
+      margin-bottom: var(--space-xs);
+    }
+    .geo-callout p {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      line-height: 1.6;
+      max-width: 42ch;
+    }
+
+    /* prompt list */
+    .prompt-list {
+      list-style: none;
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: var(--space-s);
+    }
+    .prompt-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: var(--space-xs) clamp(0.8rem, 0.6rem + 0.5vw, 1.2rem);
+      border-bottom: 1px solid var(--border-faint);
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+    }
+    .prompt-list li:last-child { border-bottom: none; }
+    .prompt-num {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      min-width: 22px;
+      padding-top: 2px;
+    }
+    .prompt-text { flex: 1; line-height: 1.5; color: var(--ink); }
+    .prompt-visibility {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      min-width: 50px;
+      text-align: right;
+      padding-top: 2px;
+    }
+
+    /* gap cards */
+    .gap-card {
+      border-left: 3px solid var(--red);
+      background: var(--whiteboard);
+      padding: clamp(1rem, 0.8rem + 0.6vw, 1.5rem);
+      margin-bottom: var(--space-xs);
+      border-radius: 0 4px 4px 0;
+    }
+    .gap-card-title {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .gap-card p {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      line-height: 1.6;
+    }
+    .who-wins {
+      margin-top: 8px;
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    /* phase blocks */
+    .phase-block {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.2rem, 1rem + 0.8vw, 1.8rem);
+      margin-bottom: var(--space-s);
+    }
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-xs);
+      flex-wrap: wrap;
+    }
+    .phase-title {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      font-weight: 700;
+    }
+    .phase-subtitle {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      margin-left: auto;
+    }
+    .phase-items {
+      list-style: none;
+      padding-left: 0;
+    }
+    .phase-items li {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      padding: 6px 0;
+      border-bottom: 1px dashed var(--border-faint);
+      line-height: 1.6;
+    }
+    .phase-items li:last-child { border-bottom: none; }
+    .phase-items li strong { color: var(--ink); }
+
+    .target-url {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--blue);
+      background: rgba(43,108,176,0.1);
+      padding: 2px 6px;
+      border-radius: 3px;
+      word-break: break-all;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px dashed var(--border-color);
+      margin: var(--space-m) 0;
+    }
+
+    .footer-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: var(--space-s);
+      border-top: 1px dashed var(--border-color);
+      margin-top: var(--space-xs);
+    }
+    .footer-bar span {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      letter-spacing: 0.05em;
+    }
+
+    /* responsive */
+    @media (max-width: 768px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .stat-row { gap: var(--space-s); }
+      .phase-header { flex-direction: column; align-items: flex-start; }
+      .phase-subtitle { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas class="dot-grid-canvas" id="dot-grid"></canvas>
+
+<!-- ─── COVER ─── -->
+<section class="report-section">
+  <div class="report-inner">
+    <div class="report-nav">
+      <span class="report-logo">recurr</span>
+      <span class="report-label">GEO Program · April 2026</span>
+    </div>
+    <span class="tag tag-blue">Generative Engine Optimisation</span>
+    <h1>Krisatwork is invisible where buyers are forming beliefs.</h1>
+    <p class="lead">
+      This is not an SEO problem. Before a VP Sales picks up the phone,
+      an LLM has already assembled a verdict about which tools to consider.
+      Krisatwork is not in that verdict — for any of the prompts that matter.
+    </p>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-num red">0%</div>
+        <div class="stat-label">LLM visibility across all 15 audit prompts</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num red">0</div>
+        <div class="stat-label">Mentions in 10+ active roundup articles in category</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num red">0</div>
+        <div class="stat-label">Presence on G2, Capterra, or any comparison page</div>
+      </div>
+    </div>
+    <div class="geo-callout">
+      <div class="geo-callout-label">The core problem</div>
+      <p>
+        Krisatwork raised $3M on the "SaaS fatigue / unified AI companion" story.
+        That is a differentiated position. But there is no content in the world
+        — owned or third-party — that captures that moment when a buyer asks an LLM
+        about it. The evidence environment is empty.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHAT WE KNOW ─── -->
+<section class="report-section">
+  <div class="report-inner">
+    <div class="report-nav">
+      <span class="report-logo">recurr</span>
+      <span class="report-label">What we know about Krisatwork</span>
+    </div>
+    <span class="tag tag-ink">Set before touching any LLM</span>
+    <h2>What we know about Krisatwork before running the audit.</h2>
+
+    <div class="grid-2">
+      <div class="rcard">
+        <div class="rcard-title">ICP — one sentence</div>
+        <p>VP Sales and Sales Leaders at mid-market B2B SaaS companies (50–500 employees) who are losing selling time to SaaS sprawl — too many disconnected tools, too much manual admin, reps not spending time on revenue.</p>
+      </div>
+      <div class="rcard">
+        <div class="rcard-title">Product category</div>
+        <p>AI work companion for GTM teams. Closest buyer search terms: "AI sales assistant," "AI sales companion," "AI tool to reduce sales admin," "unified sales platform."</p>
+      </div>
+      <div class="rcard">
+        <div class="rcard-title">Top 3 competitors they lose deals to</div>
+        <p>
+          <strong>Gong</strong> — conversation intelligence, dominant brand<br/>
+          <strong>AskElephant</strong> — owns "reduce CRM admin" cluster in LLMs<br/>
+          <strong>Outreach</strong> — sales engagement incumbent<br/>
+          <em style="color:var(--pencil); font-size:var(--fs-small);">Secondary: Sybill, Zams, Avoma, Clari, Fireflies.ai</em>
+        </p>
+      </div>
+      <div class="rcard">
+        <div class="rcard-title">Current content footprint</div>
+        <p>
+          4 blog posts (Sept–Oct 2025, none since — 5+ months of decay)<br/>
+          No comparison pages. No alternatives pages. No use-case pages.<br/>
+          No G2 profile. No Capterra listing. No Product Hunt page.<br/>
+          <span style="color:var(--red); font-weight:700;">Critical: Canonical URL points to localhost:3000</span>
+        </p>
+      </div>
+    </div>
+
+    <hr class="divider"/>
+
+    <h3>Company signal worth noting</h3>
+    <div class="rcard">
+      <div class="rcard-title">$3M seed round closed Feb 2026 — InfoEdge Ventures</div>
+      <p>
+        Positioning from the round: "unified system of work and insights for GTM teams — solving SaaS fatigue via agentic architecture." This is covered in BriefGlance (Feb 24, 2026) and syndicated to Tracxn and FounderLodge.
+        That is 3 third-party mentions total. One is meaningful (BriefGlance). The others are directories, not sources LLMs cite for tool recommendations.
+        <br/><br/>
+        The funding narrative is strong. It is not being amplified. No follow-on coverage, no customer story, no derivative content that LLMs can pull from.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROMPT SET ─── -->
+<section class="report-section">
+  <div class="report-inner">
+    <div class="report-nav">
+      <span class="report-logo">recurr</span>
+      <span class="report-label">How your buyers search</span>
+    </div>
+    <span class="tag tag-ink">15 prompts. 3 groups. Buying language only.</span>
+    <h2>What Krisatwork's ICP actually types into ChatGPT.</h2>
+    <p class="lead">Only prompts where naming a specific tool is a natural response. Category jargon removed. Problem framing prioritised.</p>
+
+    <h3>Group A — Category Prompts (direct intent)</h3>
+    <ul class="prompt-list">
+      <li><span class="prompt-num">A1</span><span class="prompt-text">best AI sales assistant for B2B SaaS teams</span><span class="prompt-visibility"><span class="pill pill-red">0%</span></span></li>
+      <li><span class="prompt-num">A2</span><span class="prompt-text">best AI sales assistant software 2026</span><span class="prompt-visibility"><span class="pill pill-red">0%</span></span></li>
+      <li><span class="prompt-num">A3</span><span class="prompt-text">AI work companion for sales and revenue teams</span><span class="prompt-visibility"><span class="pill pill-red">0%</span></span></li>
+      <li><span class="prompt-num">A4</span><span class="prompt-text">unified AI platform to replace multiple sales tools</span><span class="prompt-visibility"><span class="pill pill-red">0%</span></span></li>
+      <li><span class="prompt-num">A5</span><span class="prompt-text">AI tool to consolidate sales stack and reduce SaaS sprawl</span><span class="prompt-visibility"><span class="pill pill-red">0%</span></span></li>
+    </ul>
+
+    <h3>Group B — Problem Prompts (highest intent, most under-served)</h3>
+    <ul class="prompt-list">
+      <li><span class="prompt-num">B1</span><span class="prompt-text">how to reduce CRM data entry for sales reps</span><span class="prompt-visibility"><span class="pill pill-red">0%</span></span></li>
+      <li><span class="prompt-num">B2</span><span class="prompt-text">tools to help sales reps spend more time selling</span><span class="prompt-visibility"><span class="pill pill-red">0%</span></span></li>
+      <li><span class="prompt-num">B3</span><span class="prompt-text">why are my sales reps spending 70% of time on non-selling tasks</span><span class="prompt-visibility"><span class="pill pill-red">0%</span></span></li>
+      <li><span class="prompt-num">B4</span><span class="prompt-text">AI tool to automate meeting notes and CRM updates after sales calls</span><span class="prompt-visibility"><span class="pill pill-red">0%</span></span></li>
+      <li><span class="prompt-num">B5</span><span class="prompt-text">how to reduce SaaS fatigue for revenue teams</span><span class="prompt-visibility"><span class="pill pill-red">0%</span></span></li>
+      <li><span class="prompt-num">B6</span><span class="prompt-text">AI platform for sales and customer success that replaces multiple tools</span><span class="prompt-visibility"><span class="pill pill-red">0%</span></span></li>
+    </ul>
+
+    <h3>Group C — Competitive Prompts (decision-stage)</h3>
+    <ul class="prompt-list">
+      <li><span class="prompt-num">C1</span><span class="prompt-text">Gong alternatives for smaller B2B SaaS teams</span><span class="prompt-visibility"><span class="pill pill-red">0%</span></span></li>
+      <li><span class="prompt-num">C2</span><span class="prompt-text">alternatives to Outreach for AI sales assistance</span><span class="prompt-visibility"><span class="pill pill-red">0%</span></span></li>
+      <li><span class="prompt-num">C3</span><span class="prompt-text">AskElephant vs alternatives for reducing sales admin</span><span class="prompt-visibility"><span class="pill pill-red">0%</span></span></li>
+      <li><span class="prompt-num">C4</span><span class="prompt-text">AI sales companion vs AI sales assistant — what is the difference</span><span class="prompt-visibility"><span class="pill pill-red">0%</span></span></li>
+    </ul>
+
+    <p style="font-family:var(--mono); font-size:var(--fs-label); color:var(--pencil); letter-spacing:0.03em;">
+      Visibility assessed via audit of top-cited roundup pages and third-party sources across ChatGPT, Perplexity, and Google AI Overviews (March 2026).
+    </p>
+  </div>
+</section>
+
+<!-- ─── AUDIT RESULTS ─── -->
+<section class="report-section">
+  <div class="report-inner">
+    <div class="report-nav">
+      <span class="report-logo">recurr</span>
+      <span class="report-label">Where Krisatwork stands today</span>
+    </div>
+    <span class="tag tag-red">Krisatwork visibility: 0 / 15 prompts</span>
+    <h2>What the model finds — and what it recommends instead.</h2>
+
+    <p class="lead">
+      Across all 15 audit prompts, Krisatwork does not appear. These are the tools the model surfaces instead, and from which pages.
+    </p>
+
+    <h3>Competitor visibility by prompt group</h3>
+    <table class="geo-table">
+      <thead>
+        <tr>
+          <th>Prompt type</th>
+          <th>Who the model recommends</th>
+          <th>Krisatwork</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Best AI sales assistant (A1, A2)</strong></td>
+          <td>Gong, Outreach, Sybill, Clari, Avoma, 11x, Nooks, Apollo</td>
+          <td><span class="pill pill-red">Absent</span></td>
+        </tr>
+        <tr>
+          <td><strong>Reduce CRM data entry (B1, B4)</strong></td>
+          <td>AskElephant (dominant), Avoma, Fireflies.ai, Gong</td>
+          <td><span class="pill pill-red">Absent</span></td>
+        </tr>
+        <tr>
+          <td><strong>Sales admin automation (B2, B3)</strong></td>
+          <td>Zams (dominant), Salesforce Einstein, Gong, Outreach</td>
+          <td><span class="pill pill-red">Absent</span></td>
+        </tr>
+        <tr>
+          <td><strong>SaaS fatigue / consolidate tools (A4, B5)</strong></td>
+          <td>No dominant player. <em>Open territory.</em></td>
+          <td><span class="pill pill-red">Absent</span></td>
+        </tr>
+        <tr>
+          <td><strong>Gong / Outreach alternatives (C1, C2)</strong></td>
+          <td>Sybill, Read.ai, Clari, Avoma, Chorus</td>
+          <td><span class="pill pill-red">Absent</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Third-party pages LLMs are pulling from in this category</h3>
+    <p style="font-family:var(--serif); font-size:var(--fs-small); color:var(--graphite); margin-bottom:var(--space-xs);">
+      These are the URLs that appear in citations when the model answers category prompts. This is Krisatwork's outreach target list.
+    </p>
+    <table class="geo-table">
+      <thead>
+        <tr>
+          <th>Domain</th>
+          <th>Page type</th>
+          <th>Krisatwork on it?</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="target-url">goconsensus.com/blog/best-ai-sales-assistant-software</span></td>
+          <td>14-tool roundup · Mar 2026</td>
+          <td><span class="pill pill-red">No</span></td>
+          <td><span class="pill pill-blue">High</span></td>
+        </tr>
+        <tr>
+          <td><span class="target-url">guideflow.com/blog/best-ai-sales-assistant-software</span></td>
+          <td>11-tool roundup · Mar 2026</td>
+          <td><span class="pill pill-red">No</span></td>
+          <td><span class="pill pill-blue">High</span></td>
+        </tr>
+        <tr>
+          <td><span class="target-url">pipeline.zoominfo.com/sales/ai-sales-assistants</span></td>
+          <td>Top 10 comparison · Jan/Mar 2026</td>
+          <td><span class="pill pill-red">No</span></td>
+          <td><span class="pill pill-blue">High</span></td>
+        </tr>
+        <tr>
+          <td><span class="target-url">11x.ai/blog/7-best-ai-sales-assistant-software-tools-for-2026</span></td>
+          <td>Competitor roundup · Mar 2026</td>
+          <td><span class="pill pill-red">No</span></td>
+          <td><span class="pill pill-blue">High</span></td>
+        </tr>
+        <tr>
+          <td><span class="target-url">cirrusinsight.com/blog/ai-sales-assistants</span></td>
+          <td>11-tool guide · Nov 2025</td>
+          <td><span class="pill pill-red">No</span></td>
+          <td><span class="pill pill-yellow">Medium</span></td>
+        </tr>
+        <tr>
+          <td><span class="target-url">nooks.ai/blog-posts/ai-sales-assistant-comparison-chart-top-5-picks-in-2026</span></td>
+          <td>Top 5 comparison · Feb 2026</td>
+          <td><span class="pill pill-red">No</span></td>
+          <td><span class="pill pill-yellow">Medium</span></td>
+        </tr>
+        <tr>
+          <td><span class="target-url">askelephant.ai/blog/ai-tools-that-cut-crm-data-entry</span></td>
+          <td>CRM admin reduction guide · Mar 2026</td>
+          <td><span class="pill pill-red">No</span></td>
+          <td><span class="pill pill-yellow">Medium</span></td>
+        </tr>
+        <tr>
+          <td><span class="target-url">zams.com/blog/how-to-reduce-sales-admin-tasks-using-ai</span></td>
+          <td>Sales admin automation · Oct 2025</td>
+          <td><span class="pill pill-red">No</span></td>
+          <td><span class="pill pill-yellow">Medium</span></td>
+        </tr>
+        <tr>
+          <td><span class="target-url">sybill.ai/blogs/best-sales-engagement-tools</span></td>
+          <td>Competitor's own roundup · Mar 2026</td>
+          <td><span class="pill pill-red">No</span></td>
+          <td><span class="pill pill-ink">Low</span></td>
+        </tr>
+        <tr>
+          <td><span class="target-url">g2.com / capterra.com</span></td>
+          <td>Review platforms — no Krisatwork profile exists</td>
+          <td><span class="pill pill-red">No</span></td>
+          <td><span class="pill pill-blue">High</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ─── GAP DIAGNOSIS ─── -->
+<section class="report-section">
+  <div class="report-inner">
+    <div class="report-nav">
+      <span class="report-logo">recurr</span>
+      <span class="report-label">Why the gap exists</span>
+    </div>
+    <span class="tag tag-red">Why the gap exists</span>
+    <h2>Three gaps. One is structural. Two are fixable fast.</h2>
+
+    <div class="gap-card">
+      <div class="gap-card-title">Gap 1 — No third-party evidence</div>
+      <p>97.8% of LLM citations come from domains Krisatwork doesn't own. There are currently zero relevant mentions of Krisatwork on any page an LLM cites for AI sales assistant prompts. The BriefGlance funding article exists — but funding news does not answer "which tool should I use." It is not being cited for any buying intent prompt.</p>
+      <div class="who-wins">Why it matters: The model has nothing to draw from except Krisatwork's own site — which barely registers because it ranks for zero keywords.</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-card-title">Gap 2 — No review platform presence</div>
+      <p>No G2 profile. No Capterra listing. No Product Hunt page. These are anchor points LLMs trust heavily for tool comparisons and "best X" queries. Competitors with even 5–10 G2 reviews appear consistently. Krisatwork has no entry point here.</p>
+      <div class="who-wins">Who wins because of this: AskElephant (G2 presence + 200+ HubSpot Marketplace installs cited), Gong, Outreach, Sybill.</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-card-title">Gap 3 — Decaying owned content + technical blocker</div>
+      <p>4 blog posts, last published Sept–Oct 2025. That is 5–6 months of decay — past the threshold where content starts losing LLM relevance. The localhost canonical issue means Google cannot properly index even what exists. And there are no comparison pages, alternatives pages, or use-case pages — the formats LLMs pull from most reliably.</p>
+      <div class="who-wins">The model interprets content neglect as a signal that the brand doesn't care about accuracy. That is precisely what it's trying to surface.</div>
+    </div>
+
+    <hr class="divider"/>
+
+    <h3>The one open opportunity — act on it now</h3>
+    <div class="geo-callout">
+      <div class="geo-callout-label">Untapped territory</div>
+      <p>
+        "AI tool to consolidate sales stack and reduce SaaS fatigue" — this prompt cluster has no dominant player. Gong doesn't own it. AskElephant doesn't own it. Outreach doesn't own it. It maps directly to Krisatwork's $3M raise narrative and core positioning. No content exists anywhere to capture this moment. The window to be first is open right now.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BUSINESS TRANSLATION ─── -->
+<section class="report-section">
+  <div class="report-inner">
+    <div class="report-nav">
+      <span class="report-logo">recurr</span>
+      <span class="report-label">What this costs in pipeline terms</span>
+    </div>
+    <span class="tag tag-orange">In sales terms, not SEO terms</span>
+    <h2>What this gap is costing — before the first sales call happens.</h2>
+
+    <div class="grid-2">
+      <div class="rcard">
+        <div class="rcard-title">The pre-call moment that's already decided</div>
+        <p>A VP Sales at a 200-person SaaS company asks ChatGPT: "What AI tool can help my reps spend less time on CRM admin?" They get AskElephant and Zams — with specific comparison tables, pricing, and CRM integration details. Krisatwork is not in that answer. By the time they fill out the demo form, a preference has already formed.</p>
+      </div>
+      <div class="rcard">
+        <div class="rcard-title">The competitor that's winning the verdict</div>
+        <p>AskElephant has built a content architecture specifically designed to own "reduce CRM admin" in LLMs — comparison tables, integration-specific guides, named competitors, fresh content (Mar 2026). They are cited in multiple roundups. Krisatwork's positioning is stronger. AskElephant's evidence environment is larger.</p>
+      </div>
+    </div>
+
+    <h3>The highest-risk prompt</h3>
+    <div class="gap-card" style="border-left-color: #B85C00;">
+      <div class="gap-card-title">"Best AI sales assistant for B2B SaaS teams" — A1</div>
+      <p>
+        This is the most common pre-purchase query in the category. 10+ roundup articles published in 2026 answer this prompt. Gong, Outreach, Sybill, and 7–12 others are consistently named. Krisatwork appears in none of them.
+        <br/><br/>
+        This is not a niche query. Every revenue leader evaluating an AI sales tool runs some version of this search. The evidence gap here is directly correlated to pipeline quality.
+      </p>
+      <div class="who-wins" style="color:#B85C00;">If Krisatwork is in 30% of answers to this prompt within 90 days, that trust arrives before the first sales interaction. That changes deal velocity.</div>
+    </div>
+
+    <hr class="divider"/>
+
+    <h3>Decision frame</h3>
+    <p style="font-family:var(--serif); font-size:var(--fs-body); line-height:1.65; max-width:42ch; color:var(--graphite);">
+      Krisatwork's buyers are consulting LLMs before they contact sales. The data confirms this is happening in the category. Right now, every one of those conversations ends with a competitor recommendation. The question is not whether this gap exists. It does. The question is whether it is worth closing before the competitor evidence environment compounds further.
+    </p>
+  </div>
+</section>
+
+<!-- ─── 90-DAY BUILD PLAN ─── -->
+<section class="report-section">
+  <div class="report-inner">
+    <div class="report-nav">
+      <span class="report-logo">recurr</span>
+      <span class="report-label">The 90-day program</span>
+    </div>
+    <span class="tag tag-green">The program</span>
+    <h2>Build the evidence environment in three months.</h2>
+    <p class="lead">Two parallel tracks: third-party placement (the pages LLMs already trust) and owned content (the pages LLMs will start trusting). Both compound together.</p>
+
+    <div class="phase-block">
+      <div class="phase-header">
+        <span class="phase-title">Month 1 (April) — Fix + Foundation</span>
+        <span class="phase-subtitle">Technical, directory, baseline</span>
+      </div>
+      <ul class="phase-items">
+        <li><strong>Fix canonical URL</strong> — Remove localhost:3000 canonical, set to krisatwork.com. Submit sitemap. Verify indexing in GSC. This is the single highest-leverage technical fix.</li>
+        <li><strong>G2 profile live</strong> — Create profile. Accurate description, all product categories selected, pricing range, 3–5 initial reviews from existing customers. G2 is cited in nearly every LLM roundup response.</li>
+        <li><strong>Capterra + Software Advice listing</strong> — Same profile data as G2. These cluster together in LLM citations.</li>
+        <li><strong>Product Hunt launch brief</strong> — Prepare the launch page, tagline, and hunter outreach. Do not launch until Month 2 content is live (LLMs should find something when they follow the link).</li>
+        <li><strong>Baseline audit run</strong> — Run all 15 prompts manually across ChatGPT, Perplexity, and Gemini. Record: Krisatwork mentioned (Y/N), which competitors appear, which third-party URLs are cited. This is the Week 1 baseline.</li>
+        <li><strong>Content brief × 4 articles</strong> — Write briefs for the four highest-priority pieces (see content plan below). Briefs ready by end of Month 1.</li>
+      </ul>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-header">
+        <span class="phase-title">Month 2 (May) — Content + Third-Party Placement</span>
+        <span class="phase-subtitle">Publish, place, pitch</span>
+      </div>
+      <ul class="phase-items">
+        <li><strong>Publish Article 1:</strong> "Why your sales reps spend 70% of their time on non-selling work — and what to do about it." Target: B3 prompt cluster. AEO structure: clear definition, comparison table, FAQ block, author attribution. Fresh content as of May 2026.</li>
+        <li><strong>Publish Article 2:</strong> "AI sales companion vs AI sales assistant — what's the difference and which one solves the real problem." Target: C4 prompt. This is the framing article that defines Krisatwork's differentiated category and owns the positioning.</li>
+        <li><strong>Publish Article 3:</strong> "How to reduce SaaS fatigue for revenue teams — and why a unified AI companion beats adding another point solution." Target: B5, A4, A5 prompts. <em>This is the open territory prompt cluster. No one owns it. Move fast.</em></li>
+        <li><strong>Publish Article 4:</strong> "Krisatwork vs Gong — which one is right for your team?" Comparison page. Target: C1 prompt. Honest framing (Gong = coaching analytics, Krisatwork = unified companion). LLMs pull heavily from comparison pages.</li>
+        <li><strong>Roundup outreach — 3 targets:</strong> Pitch goconsensus.com, guideflow.com, and cirrusinsight.com for inclusion in their AI sales assistant roundups. Provide a 100-word product summary, screenshot, and pricing for their editorial team. These three pages are being cited actively.</li>
+        <li><strong>Product Hunt launch</strong> — Launch with warm upvote pool. Aim for Top 5 of day. Product Hunt pages are crawled and cited by LLMs for "new AI tools" and category searches.</li>
+        <li><strong>Mid-month audit check</strong> — Rerun 5 highest-priority prompts (A1, A2, B1, B2, B5). Record any movement. Adjust outreach priorities if needed.</li>
+      </ul>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-header">
+        <span class="phase-title">Month 3 (June) — Authority + Compound</span>
+        <span class="phase-subtitle">Reviews, more placements, monitoring cadence live</span>
+      </div>
+      <ul class="phase-items">
+        <li><strong>G2 reviews campaign</strong> — 10+ verified reviews from customers. Work with the Krisatwork CS team. G2 profile with 10+ reviews ranks higher in LLM category responses than one with 0–3. Reviews also surface specific use cases the model can cite.</li>
+        <li><strong>Publish Article 5:</strong> "How Krisatwork helped [Customer] reduce sales admin by X% and close deals faster." A structured case study — specific numbers, named customer (if approved), before/after workflow. LLMs cite case studies for commercial intent prompts.</li>
+        <li><strong>Publish Article 6:</strong> "Best AI sales assistant alternatives to Gong for mid-market teams." Alternatives page. Target: C1, C2 prompts. Feature Krisatwork prominently. Also covers Sybill, Read.ai, Avoma — balanced framing so it earns third-party trust.</li>
+        <li><strong>Second-tier roundup outreach — 3 more targets:</strong> 11x.ai blog, nooks.ai blog, and one independent newsletter (Sales Hacker / RevGenius). These have high LLM citation frequency in the category.</li>
+        <li><strong>HubSpot / Salesforce marketplace listing</strong> — If not live, create. AskElephant explicitly cites "200+ HubSpot Marketplace installs" — that is a trust signal LLMs pick up from third-party coverage. Marketplace listings also generate backlinks and citation mentions.</li>
+        <li><strong>Full monthly audit report</strong> — Run all 15 prompts across ChatGPT, Perplexity, Gemini. Compare to Week 1 baseline. Measure: prompts where Krisatwork appears (target: 4–6 of 15), sentiment (recommended vs mentioned), which third-party pages are now cited.</li>
+        <li><strong>Month 4–6 content brief + third-party roadmap</strong> — Plan the next cycle based on what moved and what didn't.</li>
+      </ul>
+    </div>
+
+    <hr class="divider"/>
+
+    <h3>Content architecture — AEO structure for every article</h3>
+    <p style="font-family:var(--serif); font-size:var(--fs-small); color:var(--graphite); margin-bottom:var(--space-xs);">Every piece built to this spec so LLMs can extract and cite confidently.</p>
+    <div class="grid-2">
+      <div class="rcard">
+        <div class="rcard-title">Required elements</div>
+        <p>
+          Clear entity definition in first 150 words<br/>
+          Comparison table with competitors<br/>
+          FAQ block (3–5 Q&As, answers in 2–3 sentences)<br/>
+          Author page with credentials linked<br/>
+          Schema markup (Article, FAQPage, Product)<br/>
+          Publication + last-updated date visible<br/>
+          Internal links to all other GEO content pieces
+        </p>
+      </div>
+      <div class="rcard">
+        <div class="rcard-title">Refresh schedule</div>
+        <p>
+          Every article reviewed and updated at 90-day mark.<br/>
+          Trigger for early refresh: if article drops out of LLM citation after appearing, or if a competitor publishes fresher content on the same topic.<br/>
+          B2B blog content has a ~5 month shelf life before LLM decay begins. Build the refresh into the program, not as an afterthought.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MONITORING ─── -->
+<section class="report-section">
+  <div class="report-inner">
+    <div class="report-nav">
+      <span class="report-logo">recurr</span>
+      <span class="report-label">How we track progress</span>
+    </div>
+    <span class="tag tag-blue">What to track and how often</span>
+    <h2>Monitoring cadence and what success looks like at 90 days.</h2>
+
+    <h3>Weekly — prompt set run</h3>
+    <p style="font-family:var(--serif); font-size:var(--fs-small); color:var(--graphite); margin-bottom:var(--space-s);">Run all 15 prompts across ChatGPT and Perplexity. Record in a shared sheet: mentioned (Y/N), position in response, framing (recommended / mentioned as alternative / absent), third-party URLs cited.</p>
+
+    <h3>Monthly — full report</h3>
+    <table class="geo-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Week 1 baseline</th>
+          <th>Month 1 target</th>
+          <th>Month 3 target</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>LLM visibility (prompts where Krisatwork appears / 15)</td>
+          <td>0 / 15</td>
+          <td>0–1 / 15</td>
+          <td><strong>4–6 / 15</strong></td>
+        </tr>
+        <tr>
+          <td>Third-party pages citing Krisatwork</td>
+          <td>0</td>
+          <td>2–3 (G2, directory)</td>
+          <td><strong>6–8 (roundups + directories)</strong></td>
+        </tr>
+        <tr>
+          <td>G2 reviews</td>
+          <td>0</td>
+          <td>Profile live</td>
+          <td><strong>10+</strong></td>
+        </tr>
+        <tr>
+          <td>Roundup inclusions</td>
+          <td>0</td>
+          <td>0</td>
+          <td><strong>3–4 active roundups</strong></td>
+        </tr>
+        <tr>
+          <td>Own-site citable pages</td>
+          <td>4</td>
+          <td>4</td>
+          <td><strong>10+ (6 new articles)</strong></td>
+        </tr>
+        <tr>
+          <td>Prompt accuracy (is what LLM says about Krisatwork correct?)</td>
+          <td>N/A (not mentioned)</td>
+          <td>Verify when it appears</td>
+          <td><strong>100% accurate descriptions</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>How reporting works</h3>
+    <div class="rcard">
+      <div class="rcard-title">Monthly report delivered to your team</div>
+      <p>
+        Each month you receive a single report showing: which prompts Krisatwork now appears in, how competitors are framed alongside you, which third-party pages are citing you, and what moves next. No jargon. One clear view of where you stand and what changed.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<section class="report-section" style="border-top: 1px dashed var(--border-color);">
+  <div class="report-inner">
+    <div class="footer-bar">
+      <span>Recurr × Krisatwork — GEO Program · Confidential · April 2026</span>
+      <span>Sujith Ayyappan · sujith@recurr.co</span>
+    </div>
+  </div>
+</section>
+
+<script src="/recurr-system/engine.js"></script>
+</body>
+</html>
