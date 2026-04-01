@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#E5E8E8">
+  <title>The Open Standard for Paid Marketing Data — Clarisights Content Program</title>
+  <meta name="description" content="A three-layer content program to establish Clarisights as the definitive authority on paid marketing data literacy.">
+  <link rel="stylesheet" href="/recurr-system/style.css">
+  <style>
+    /* Page-specific overrides */
+    .program-badge {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pencil);
+      margin-bottom: var(--space-xs);
+    }
+    .hero-sub { max-width: 48ch; }
+
+    /* Layer cards */
+    .layer-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.8rem, 1.5rem + 1.2vw, 2.8rem);
+      margin-bottom: var(--space-s);
+      position: relative;
+    }
+    .layer-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 4px;
+      border-radius: 4px 0 0 4px;
+    }
+    .layer-card.l1::before { background: var(--red); }
+    .layer-card.l2::before { background: var(--blue); }
+    .layer-card.l3::before { background: var(--yellow); }
+
+    .layer-header {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-s);
+      margin-bottom: var(--space-xs);
+      flex-wrap: wrap;
+    }
+    .layer-number {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .l1 .layer-number { background: #E03E3618; color: var(--red); }
+    .l2 .layer-number { background: #2B6CB018; color: var(--blue); }
+    .l3 .layer-number { background: rgba(212,184,44,0.18); color: #8A7A1A; }
+    [data-theme="dark"] .l3 .layer-number { color: var(--yellow); }
+
+    .layer-title {
+      font-family: var(--serif);
+      font-size: var(--fs-h2);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .layer-timeline {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      letter-spacing: 0.05em;
+      margin-left: auto;
+    }
+    .layer-desc {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      color: var(--graphite);
+      line-height: 1.65;
+      max-width: 72ch;
+      margin-bottom: var(--space-s);
+    }
+
+    /* Content type pills */
+    .type-row {
+      display: flex;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-s);
+    }
+    .type-pill {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      background: var(--notebook);
+      color: var(--ink);
+      border: 1px solid var(--border-faint);
+    }
+
+    /* Deliverables list */
+    .deliverables {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-xs);
+    }
+    .deliverable {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--ink);
+      padding: var(--space-xs) 0;
+      border-bottom: 1px dashed var(--border-faint);
+      display: flex;
+      align-items: baseline;
+      gap: 0.6em;
+    }
+    .deliverable::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 0.35em;
+    }
+    .l1 .deliverable::before { background: var(--red); }
+    .l2 .deliverable::before { background: var(--blue); }
+    .l3 .deliverable::before { background: var(--yellow); }
+
+    /* Scale numbers */
+    .scale-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: var(--space-xs);
+      margin-top: var(--space-s);
+    }
+    .scale-item {
+      background: var(--notebook);
+      border-radius: 4px;
+      padding: var(--space-xs) var(--space-s);
+      text-align: center;
+    }
+    .scale-num {
+      font-family: var(--mono);
+      font-size: var(--fs-h2);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+    .scale-label {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* Taxonomy diagram */
+    .taxonomy-block {
+      background: var(--ink);
+      border-radius: 4px;
+      padding: var(--space-m);
+      margin: var(--space-s) 0;
+      font-family: var(--mono);
+      font-size: clamp(0.65rem, 0.55rem + 0.3vw, 0.85rem);
+      line-height: 1.6;
+      color: #C8CECC;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    [data-theme="dark"] .taxonomy-block { background: #111414; border: 1px solid var(--border-color); }
+
+    /* Industry grid */
+    .industry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-xs);
+    }
+    .industry-card {
+      background: var(--notebook);
+      border: 1px solid var(--border-faint);
+      border-radius: 4px;
+      padding: var(--space-s);
+    }
+    .industry-name {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .industry-why {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      line-height: 1.55;
+    }
+    .industry-tag {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--blue);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-top: 6px;
+      display: inline-block;
+    }
+
+    /* Week-by-week timeline */
+    .timeline {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0;
+      margin-top: var(--space-s);
+    }
+    .timeline-week {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--pencil);
+      padding: var(--space-xs) var(--space-s) var(--space-xs) 0;
+      border-right: 2px solid var(--border-color);
+      text-align: right;
+      white-space: nowrap;
+    }
+    .timeline-content {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--ink);
+      line-height: 1.6;
+      padding: var(--space-xs) 0 var(--space-xs) var(--space-s);
+      border-bottom: 1px dashed var(--border-faint);
+    }
+    .timeline-content strong {
+      font-weight: 700;
+    }
+
+    /* Flywheel */
+    .flywheel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-s);
+      flex-wrap: wrap;
+      padding: var(--space-m) 0;
+    }
+    .flywheel-node {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: var(--space-xs) var(--space-s);
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      font-weight: 700;
+      color: var(--ink);
+      text-align: center;
+      min-width: 140px;
+    }
+    .flywheel-arrow {
+      font-family: var(--mono);
+      font-size: var(--fs-body-lg);
+      color: var(--faint);
+    }
+
+    /* Principles list */
+    .principle {
+      padding: var(--space-s) 0;
+      border-bottom: 1px dashed var(--border-faint);
+    }
+    .principle:first-child { border-top: 1px dashed var(--border-faint); }
+    .principle-title {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .principle-desc {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      line-height: 1.6;
+      max-width: 64ch;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .layer-header { flex-direction: column; gap: 4px; }
+      .layer-timeline { margin-left: 0; }
+      .deliverables { grid-template-columns: 1fr; }
+      .scale-grid { grid-template-columns: repeat(2, 1fr); }
+      .flywheel-arrow { transform: rotate(90deg); }
+      .flywheel { flex-direction: column; }
+      .timeline { grid-template-columns: 1fr; }
+      .timeline-week { border-right: none; border-bottom: 2px solid var(--border-color); text-align: left; padding: var(--space-xs) 0 4px 0; }
+      .timeline-content { padding: 0 0 var(--space-xs) 0; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas class="dot-grid-canvas" id="dot-grid"></canvas>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="/recurr-co/" class="nav-logo">recurr</a>
+    <div class="nav-right">
+      <span class="nav-clock" id="clock"></span>
+      <a href="/clarisights-intelligence/">intelligence</a>
+      <a href="/clarisights-seo-v2/">seo</a>
+      <a href="/clarisights-data-literacy/" class="nav-active">data literacy</a>
+      <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode" aria-label="Toggle dark mode">&#9684;</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="program-badge">Clarisights Content Program</div>
+  <h1 id="hero-h1">The Open Standard for Paid Marketing Data.</h1>
+  <div class="hero-bottom">
+    <p class="hero-sub">A definitive content program to establish Clarisights as the authority on marketing data literacy, nomenclature, and cross-channel reporting.</p>
+    <pre class="hero-ascii" id="hero-ascii">
+ ┌───────────────────────────┐
+ │                           │
+ │   L1  Reference     APR   │
+ │   L2  Playbooks     MAY   │
+ │   L3  Authority     JUN   │
+ │                           │
+ │   12 weeks. 3 layers.     │
+ │   One standard.           │
+ │                           │
+ └───────────────────────────┘
+    </pre>
+  </div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- Thesis -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-red">The Thesis</div>
+  <p class="section-desc" style="max-width:72ch;">
+    No one owns the standard for paid marketing data. Marketers managing $500K+/month across five or more channels are making up naming conventions, reinventing report structures, and silently losing trust in their own numbers. Every company solves this from scratch. Every agency has a different system. There is no shared language.
+  </p>
+  <p class="section-desc" style="max-width:72ch;">
+    Clarisights sees more cross-platform data than almost anyone. The nomenclature issues, the transformation failures, the "why don't my numbers match" conversations that happen in every onboarding, every QBR, every renewal risk call. This is institutional knowledge that has never been externalized.
+  </p>
+  <p class="section-desc" style="max-width:72ch; font-weight:700; color:var(--ink);">
+    This program turns that knowledge into the industry's reference material. Three layers, twelve weeks, one standard.
+  </p>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- Program Architecture -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-ink">Program Architecture</div>
+  <p class="section-desc">Each layer is a four-week project. Each layer feeds the next. Together, they build a compounding content engine.</p>
+
+  <div class="flywheel" data-reveal>
+    <div class="flywheel-node" style="border-color:var(--red);">Layer 1<br><span style="font-weight:400;font-size:var(--fs-small);">Captures traffic</span></div>
+    <span class="flywheel-arrow">&rarr;</span>
+    <div class="flywheel-node" style="border-color:var(--blue);">Layer 2<br><span style="font-weight:400;font-size:var(--fs-small);">Builds trust</span></div>
+    <span class="flywheel-arrow">&rarr;</span>
+    <div class="flywheel-node" style="border-color:var(--yellow);">Layer 3<br><span style="font-weight:400;font-size:var(--fs-small);">Drives pipeline</span></div>
+    <span class="flywheel-arrow">&rarr;</span>
+    <div class="flywheel-node" style="border-color:var(--green);">New insights<br><span style="font-weight:400;font-size:var(--fs-small);">Feed back to L1</span></div>
+  </div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- ========== LAYER 1 ========== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-red">Layer 1 &mdash; April 2026</div>
+
+  <div class="layer-card l1" data-reveal>
+    <div class="layer-header">
+      <span class="layer-number">L1 &middot; The Reference</span>
+      <span class="layer-title">The Paid Marketing Data Encyclopedia</span>
+      <span class="layer-timeline">4 weeks &middot; Programmatic SEO</span>
+    </div>
+    <p class="layer-desc">
+      One interconnected knowledge base. The Investopedia of paid marketing data. Not three separate projects &mdash; one graph. Every page is a node. Nodes link to each other. A marketer lands on any entry and can navigate the entire knowledge system. This is the SEO foundation everything else builds on.
+    </p>
+
+    <div class="type-row">
+      <span class="type-pill">Glossary</span>
+      <span class="type-pill">Metrics</span>
+      <span class="type-pill">Platforms</span>
+    </div>
+
+    <div class="taxonomy-block">clarisights.com/learn/
+  /glossary/[term]/                    150-200 terms
+      what-is-roas/
+      what-is-mer/
+      incrementality/
+      marketing-mix-modeling/
+      ...
+
+  /metrics/[platform]/[metric]/        100-150 pages
+      google-ads/roas/
+      meta-ads/cpa/
+      tiktok-ads/cpm/
+      dv360/viewable-impressions/
+      ...
+
+  /platforms/[platform]/               10-15 pages
+      google-ads/
+      meta-ads/
+      tiktok-ads/
+      snapchat-ads/
+      linkedin-ads/
+      dv360/
+      apple-search-ads/
+      amazon-ads/
+      pinterest-ads/
+      twitter-ads/</div>
+
+    <p class="layer-desc" style="margin-top:var(--space-s);font-weight:700;color:var(--ink);">
+      Three content types. One system.
+    </p>
+
+    <div class="deliverables">
+      <div>
+        <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:8px;">Glossary</p>
+        <div class="deliverable">Term definition with formula and worked example</div>
+        <div class="deliverable">Cross-platform gotchas (where same term means different things)</div>
+        <div class="deliverable">"How [platform] calculates this" for each major platform</div>
+        <div class="deliverable">Related terms graph for internal linking</div>
+        <div class="deliverable">Common mistakes and misconceptions</div>
+      </div>
+      <div>
+        <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:8px;">Metrics</p>
+        <div class="deliverable">Platform-specific definition and calculation method</div>
+        <div class="deliverable">What the raw API returns (field names, data types)</div>
+        <div class="deliverable">Transformation notes: cleaning, normalization, edge cases</div>
+        <div class="deliverable">How this metric differs from the "same" metric on other platforms</div>
+        <div class="deliverable">Naming in raw data vs naming in reporting</div>
+      </div>
+      <div>
+        <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:8px;">Platforms</p>
+        <div class="deliverable">Complete data model: dimensions, metrics, breakdowns</div>
+        <div class="deliverable">API naming conventions and field taxonomy</div>
+        <div class="deliverable">Common transformation requirements</div>
+        <div class="deliverable">Known data quirks and reliability notes</div>
+        <div class="deliverable">Platform-specific nomenclature guide</div>
+      </div>
+    </div>
+
+    <div class="scale-grid" data-reveal>
+      <div class="scale-item">
+        <div class="scale-num">150-200</div>
+        <div class="scale-label">Glossary Terms</div>
+      </div>
+      <div class="scale-item">
+        <div class="scale-num">100-150</div>
+        <div class="scale-label">Metric Pages</div>
+      </div>
+      <div class="scale-item">
+        <div class="scale-num">10-15</div>
+        <div class="scale-label">Platform Guides</div>
+      </div>
+      <div class="scale-item">
+        <div class="scale-num">260-365</div>
+        <div class="scale-label">Total pSEO Pages</div>
+      </div>
+    </div>
+
+    <div class="callout callout-yellow" style="margin-top:var(--space-s);">
+      <div class="callout-label">Why this is the moat</div>
+      Anyone can write 200 glossary definitions. Nobody has built the connected graph that goes from term &rarr; platform-specific calculation &rarr; full data model &rarr; raw API field names. The interlinking makes this THE resource, not A resource. And the nomenclature depth &mdash; showing actual field names from the API, actual transformation issues from CS conversations &mdash; is something only Clarisights can write.
+    </div>
+
+    <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pencil);margin-top:var(--space-m);margin-bottom:8px;">April Build Plan</p>
+    <div class="timeline">
+      <div class="timeline-week">Week 1</div>
+      <div class="timeline-content"><strong>Research + taxonomy.</strong> Zulip deep mine for nomenclature issues. DataForSEO keyword validation for all terms. Competitive audit (Funnel, Supermetrics, Improvado glossaries). Build the master term list. Design page templates.</div>
+      <div class="timeline-week">Week 2</div>
+      <div class="timeline-content"><strong>Glossary v1.</strong> Ship first 50 glossary terms. Prioritized by search volume + Clarisights product relevance. Internal links wired. Platform cross-references on each page.</div>
+      <div class="timeline-week">Week 3</div>
+      <div class="timeline-content"><strong>Metrics + platforms.</strong> Ship 30 metric pages (top platform-metric combinations). Ship first 5 platform guides (Google, Meta, TikTok, DV360, LinkedIn). Wire the three content types together.</div>
+      <div class="timeline-week">Week 4</div>
+      <div class="timeline-content"><strong>Scale + refine.</strong> Glossary to 100+ terms. Metric pages to 60+. Remaining platform guides. QA interlinking. Analytics instrumentation. Measure baseline traffic.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- ========== LAYER 2 ========== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-blue">Layer 2 &mdash; May 2026</div>
+
+  <div class="layer-card l2" data-reveal>
+    <div class="layer-header">
+      <span class="layer-number">L2 &middot; Industry Playbooks</span>
+      <span class="layer-title">Data Literacy by Vertical</span>
+      <span class="layer-timeline">4 weeks &middot; Utility content</span>
+    </div>
+    <p class="layer-desc">
+      Buyers self-identify by industry, not by platform. "I'm an eCommerce marketer" &mdash; not "I'm a Google Ads user." Layer 2 organizes everything &mdash; reports, naming, KPIs, data setup &mdash; through the lens of the industry. Each vertical gets a complete playbook grounded in how real teams at that scale actually work.
+    </p>
+
+    <div class="type-row">
+      <span class="type-pill">Reporting Templates</span>
+      <span class="type-pill">Naming Standards</span>
+      <span class="type-pill">KPI Frameworks</span>
+      <span class="type-pill">Data Setup Guides</span>
+      <span class="type-pill">Common Mistakes</span>
+    </div>
+
+    <div class="taxonomy-block">clarisights.com/industries/[vertical]/
+  /ecommerce/
+      /reporting/             "The eCommerce Weekly Paid Report"
+      /naming/                "Campaign Naming for eCommerce Teams"
+      /kpis/                  "eCommerce Paid Marketing KPI Framework"
+      /data-setup/            "Setting Up Your eCommerce Data Stack"
+      /templates/             Downloadable report templates
+
+  /gaming/
+  /fintech/
+  /travel/
+  /retail/
+  /energy/</div>
+
+    <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pencil);margin-top:var(--space-s);margin-bottom:var(--space-s);">Target Industries</p>
+
+    <div class="industry-grid" data-reveal>
+      <div class="industry-card">
+        <div class="industry-name">eCommerce</div>
+        <div class="industry-why">67% of Clarisights ICP. Deepest CS intel. Delivery Hero, AboutYou, Deichmann, Westwing, Fressnapf.</div>
+        <span class="industry-tag">Priority 1 &mdash; Launch vertical</span>
+      </div>
+      <div class="industry-card">
+        <div class="industry-name">Gaming &amp; Mobile Apps</div>
+        <div class="industry-why">High-spend, complex attribution (SKAN, privacy). Lion Studios, Product Madness, Lovoo.</div>
+        <span class="industry-tag">Priority 2</span>
+      </div>
+      <div class="industry-card">
+        <div class="industry-name">Fintech</div>
+        <div class="industry-why">Growing vertical, complex compliance, high ACV. Trade Republic, Mastercard.</div>
+        <span class="industry-tag">Priority 3</span>
+      </div>
+      <div class="industry-card">
+        <div class="industry-name">Travel &amp; Mobility</div>
+        <div class="industry-why">Seasonal complexity, big ad spend, dynamic pricing. Blacklane, Careem.</div>
+        <span class="industry-tag">Priority 4</span>
+      </div>
+      <div class="industry-card">
+        <div class="industry-name">Retail</div>
+        <div class="industry-why">Physical + digital overlap. Omnichannel attribution. Deichmann, Fressnapf.</div>
+        <span class="industry-tag">Priority 5</span>
+      </div>
+      <div class="industry-card">
+        <div class="industry-name">Energy &amp; Subscription</div>
+        <div class="industry-why">Emerging vertical, LTV-focused. Enpal.</div>
+        <span class="industry-tag">Priority 6</span>
+      </div>
+    </div>
+
+    <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pencil);margin-top:var(--space-m);margin-bottom:8px;">What each playbook contains</p>
+
+    <div class="deliverables">
+      <div>
+        <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;">KPI Framework</p>
+        <div class="deliverable">Which metrics matter for this industry and why</div>
+        <div class="deliverable">KPI hierarchy: board &rarr; CMO &rarr; channel manager</div>
+        <div class="deliverable">Benchmarks and what "good" looks like at scale</div>
+      </div>
+      <div>
+        <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;">Naming Standard</p>
+        <div class="deliverable">Campaign naming convention with real syntax examples</div>
+        <div class="deliverable">UTM taxonomy that scales to multi-market operations</div>
+        <div class="deliverable">How to enforce naming across teams and agencies</div>
+      </div>
+      <div>
+        <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;">Reporting Templates</p>
+        <div class="deliverable">Weekly performance report (channel manager view)</div>
+        <div class="deliverable">Monthly CMO dashboard (executive view)</div>
+        <div class="deliverable">Quarterly board report (investor view)</div>
+        <div class="deliverable">Downloadable templates</div>
+      </div>
+      <div>
+        <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;">Data Setup Guide</p>
+        <div class="deliverable">Which platforms to connect and in what order</div>
+        <div class="deliverable">What dimensions to track from day one</div>
+        <div class="deliverable">Transformations to apply before reporting</div>
+        <div class="deliverable">Common mistakes specific to this industry</div>
+      </div>
+    </div>
+
+    <div class="callout callout-blue" style="margin-top:var(--space-s);">
+      <div class="callout-label">Why industry-led, not platform-led</div>
+      Generic "Google Ads naming guide" content is commoditized. "How eCommerce teams running &euro;500K+/month across five channels structure their campaign naming" requires the kind of knowledge that lives in Clarisights CS conversations, onboarding calls, and QBR decks. This is defensible because it's grounded in real enterprise data operations, not platform documentation anyone can rewrite.
+    </div>
+
+    <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pencil);margin-top:var(--space-m);margin-bottom:8px;">May Build Plan</p>
+    <div class="timeline">
+      <div class="timeline-week">Week 1</div>
+      <div class="timeline-content"><strong>eCommerce deep dive.</strong> Mine Zulip + CS intel for eCommerce-specific naming issues, report structures, KPI conversations. Interview 2-3 CSMs (Sufyaan, Avi) on what eCommerce customers struggle with. Build the eCommerce playbook outline.</div>
+      <div class="timeline-week">Week 2</div>
+      <div class="timeline-content"><strong>eCommerce playbook ships.</strong> All five sections live. Naming convention guide with real syntax. Report templates (weekly, monthly, quarterly). KPI framework with benchmarks. Data setup guide. Downloadable assets.</div>
+      <div class="timeline-week">Week 3</div>
+      <div class="timeline-content"><strong>Gaming &amp; Fintech playbooks.</strong> Same structure, different content. Gaming: SKAN, privacy-first attribution, mobile-specific naming. Fintech: compliance constraints, LTV modeling, multi-product reporting.</div>
+      <div class="timeline-week">Week 4</div>
+      <div class="timeline-content"><strong>Travel + Retail + polish.</strong> Ship remaining playbooks. Cross-link all playbooks to Layer 1 reference material. Build industry selector landing page. Analytics + conversion tracking.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- ========== LAYER 3 ========== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-yellow">Layer 3 &mdash; June 2026</div>
+
+  <div class="layer-card l3" data-reveal>
+    <div class="layer-header">
+      <span class="layer-number">L3 &middot; Authority</span>
+      <span class="layer-title">The Standard Itself</span>
+      <span class="layer-timeline">4 weeks &middot; Editorial</span>
+    </div>
+    <p class="layer-desc">
+      Not programmatic. Not SEO-first. This is content created for reputation, not traffic. Distributed through email, social, events, and partnerships. This is where Clarisights stops documenting the standard and starts <em>being</em> the standard.
+    </p>
+
+    <div class="type-row">
+      <span class="type-pill">Training Webinars</span>
+      <span class="type-pill">Inside the Data Team</span>
+      <span class="type-pill">The Data Standards Project</span>
+      <span class="type-pill">Tips &amp; Tricks</span>
+    </div>
+
+    <div class="deliverables" style="grid-template-columns: 1fr 1fr;">
+      <div>
+        <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#8A7A1A;margin-bottom:8px;">"Inside the Data Team" Series</p>
+        <div class="deliverable">Deep profiles of how top paid marketing teams structure their data</div>
+        <div class="deliverable">Real naming conventions, real dashboards, real reporting cadence</div>
+        <div class="deliverable">Not case studies &mdash; editorial that teaches regardless of tool</div>
+        <div class="deliverable">Source: CS relationships + customer interviews (DH, AboutYou, Trade Republic)</div>
+        <div class="deliverable">Cadence: Monthly</div>
+      </div>
+      <div>
+        <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#8A7A1A;margin-bottom:8px;">Training Webinars</p>
+        <div class="deliverable">"Data Naming Masterclass" &mdash; Philip or Bhupali teaching naming conventions</div>
+        <div class="deliverable">"Building Your Cross-Channel Report from Scratch" &mdash; live in Clarisights</div>
+        <div class="deliverable">"The Data Audit: How to Find What's Broken" &mdash; CS playbook externalized</div>
+        <div class="deliverable">Industry-specific: "eCommerce Data Setup in 60 Minutes"</div>
+        <div class="deliverable">Cadence: Bi-weekly &rarr; weekly as library grows</div>
+      </div>
+      <div>
+        <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#8A7A1A;margin-bottom:8px;">The Data Standards Project</p>
+        <div class="deliverable">An open, living standard for paid marketing data nomenclature</div>
+        <div class="deliverable">Campaign naming conventions &mdash; cross-platform</div>
+        <div class="deliverable">UTM taxonomy &mdash; the definitive version</div>
+        <div class="deliverable">Metric definitions that resolve cross-platform ambiguity</div>
+        <div class="deliverable">Transformation rules as documented specifications</div>
+        <div class="deliverable">Goal: "We follow the Clarisights naming standard"</div>
+      </div>
+      <div>
+        <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#8A7A1A;margin-bottom:8px;">Tips &amp; Tricks</p>
+        <div class="deliverable">Short-form, tactical, shareable</div>
+        <div class="deliverable">"The one naming mistake that breaks 90% of cross-channel reports"</div>
+        <div class="deliverable">"Why your Meta CPA doesn't match your Google CPA"</div>
+        <div class="deliverable">"The 3-field UTM taxonomy that scales to 50 markets"</div>
+        <div class="deliverable">Distributed via LinkedIn, email newsletter</div>
+        <div class="deliverable">Cadence: Weekly</div>
+      </div>
+    </div>
+
+    <div class="callout callout-yellow" style="margin-top:var(--space-s);">
+      <div class="callout-label">The big swing</div>
+      Nobody owns the standard for paid marketing data nomenclature today. Marketers make it up. Agencies have their own system. Every company reinvents from scratch. Clarisights can own this because they see more cross-platform data than anyone. The Data Standards Project is the content equivalent of publishing an RFC. When people say "we follow the Clarisights standard," the brand moat is built.
+    </div>
+
+    <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pencil);margin-top:var(--space-m);margin-bottom:8px;">June Build Plan</p>
+    <div class="timeline">
+      <div class="timeline-week">Week 1</div>
+      <div class="timeline-content"><strong>Data Standards Project v1.</strong> Draft the core standard: campaign naming, UTM taxonomy, metric definitions. Internal review with Philip, Bhupali, and CS team. This is the intellectual foundation everything else in L3 rests on.</div>
+      <div class="timeline-week">Week 2</div>
+      <div class="timeline-content"><strong>First webinar + first "Inside the Data Team."</strong> Webinar: "Data Naming Masterclass" with internal expert. Editorial: Profile one enterprise customer's data operations. Launch the Tips &amp; Tricks weekly series.</div>
+      <div class="timeline-week">Week 3</div>
+      <div class="timeline-content"><strong>Scale editorial.</strong> Second webinar (industry-specific). Second editorial piece. Data Standards Project published as a living page. Tips &amp; Tricks hitting weekly cadence. Newsletter setup.</div>
+      <div class="timeline-week">Week 4</div>
+      <div class="timeline-content"><strong>Compound.</strong> Third webinar. Webinar recordings &rarr; content library. Wire L3 content to L2 playbooks and L1 reference. Build the full content calendar for Q3. Measure: traffic, engagement, pipeline attribution.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- ========== WHY CLARISIGHTS ========== -->
+<section class="ascii-full full-bleed" data-reveal>
+  <div class="ascii-inner">
+    <div class="section-label" style="color:#E8ECEC;">Why Only Clarisights Can Build This</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--space-m);margin-top:var(--space-s);">
+      <div>
+        <p style="font-family:var(--serif);font-size:var(--fs-body);font-weight:700;color:#E8ECEC;margin-bottom:8px;">The nomenclature is institutional knowledge.</p>
+        <p style="font-family:var(--serif);font-size:var(--fs-small);color:#8A9292;line-height:1.6;">Every CS conversation about "why don't my numbers match" is a content opportunity nobody else has. Every onboarding where a customer's naming convention breaks their reporting is a playbook entry. This knowledge exists inside Clarisights today &mdash; it just hasn't been externalized.</p>
+      </div>
+      <div>
+        <p style="font-family:var(--serif);font-size:var(--fs-body);font-weight:700;color:#E8ECEC;margin-bottom:8px;">Multi-channel is the product story.</p>
+        <p style="font-family:var(--serif);font-size:var(--fs-small);color:#8A9292;line-height:1.6;">Clarisights exists because managing data across 5+ channels is hard. The nomenclature and transformation content IS the product narrative. "Here's how to name things so your cross-channel reporting actually works" naturally leads to "here's the tool that makes it possible."</p>
+      </div>
+      <div>
+        <p style="font-family:var(--serif);font-size:var(--fs-body);font-weight:700;color:#E8ECEC;margin-bottom:8px;">Enterprise customers are the case study goldmine.</p>
+        <p style="font-family:var(--serif);font-size:var(--fs-small);color:#8A9292;line-height:1.6;">Delivery Hero, Trade Republic, Deichmann, AboutYou &mdash; these are real teams with real reporting practices. "How DH structures their naming conventions" is content nobody else can write. The authority comes from proximity to the world's most sophisticated paid marketing operations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DATA SOURCES ========== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-green">Intelligence Sources</div>
+  <p class="section-desc">Every piece of content in this program is grounded in real data, not hypotheticals.</p>
+
+  <div class="deliverables" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+    <div>
+      <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px;">Internal</p>
+      <div class="deliverable">Zulip CS conversations (nomenclature, transformations, "numbers don't match")</div>
+      <div class="deliverable">Customer onboarding playbooks</div>
+      <div class="deliverable">QBR decks and renewal risk conversations</div>
+      <div class="deliverable">Product documentation and platform specs</div>
+      <div class="deliverable">HubSpot deal intelligence (win/loss patterns)</div>
+    </div>
+    <div>
+      <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px;">SEO &amp; Competitive</p>
+      <div class="deliverable">DataForSEO: keyword validation for all glossary terms, metrics, industries</div>
+      <div class="deliverable">Competitive audit: Funnel, Supermetrics, Improvado, Triple Whale content</div>
+      <div class="deliverable">SERP analysis: what ranks today, where the gaps are</div>
+    </div>
+    <div>
+      <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px;">Research</p>
+      <div class="deliverable">Exa: deep web research on data literacy content landscape</div>
+      <div class="deliverable">Firehose: real-time monitoring of marketing analytics discourse</div>
+      <div class="deliverable">Platform documentation: Google, Meta, TikTok, DV360, LinkedIn APIs</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- ========== GUIDING PRINCIPLES ========== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-ink">Guiding Principles</div>
+
+  <div class="principle" data-reveal>
+    <div class="principle-title">Specificity over scale.</div>
+    <div class="principle-desc">No "Top 10 Marketing KPIs" listicles. Every page answers a specific question a specific marketer has at a specific moment. "What does ROAS mean in DV360 and why is it different from Google Ads ROAS?" That level of specificity.</div>
+  </div>
+  <div class="principle" data-reveal>
+    <div class="principle-title">Nomenclature is not a footnote.</div>
+    <div class="principle-desc">Data naming, field taxonomy, API conventions &mdash; this is the core differentiator. Most content programs treat this as boring reference material. We treat it as the central thesis: if your naming is broken, your data is broken, and no tool can save you.</div>
+  </div>
+  <div class="principle" data-reveal>
+    <div class="principle-title">Teach the craft, not the tool.</div>
+    <div class="principle-desc">Every piece of content should be useful even if the reader never uses Clarisights. That's what builds trust. The product sells itself when the reader realizes the standard they just learned is built into the platform.</div>
+  </div>
+  <div class="principle" data-reveal>
+    <div class="principle-title">Grounded in real operations, not theory.</div>
+    <div class="principle-desc">Every naming convention, every report template, every KPI framework comes from real enterprise teams running real money through real platforms. CS conversations, not marketing brainstorms, are the source material.</div>
+  </div>
+  <div class="principle" data-reveal>
+    <div class="principle-title">The graph, not the page.</div>
+    <div class="principle-desc">Individual pages capture traffic. The interconnected graph builds authority. Every Layer 1 page links to Layer 2 context. Every Layer 2 playbook references Layer 1 definitions. Every Layer 3 piece drives back to both. The system compounds.</div>
+  </div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- ========== STATUS ========== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-red">Program Status</div>
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Timeline</th>
+          <th>Type</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:700;">L1 &mdash; The Reference</td>
+          <td class="num">April 2026</td>
+          <td>Programmatic SEO</td>
+          <td><span class="status-badge status-draft">Planning</span></td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">L2 &mdash; Industry Playbooks</td>
+          <td class="num">May 2026</td>
+          <td>Utility Content</td>
+          <td><span class="status-badge status-draft">Queued</span></td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">L3 &mdash; Authority</td>
+          <td class="num">June 2026</td>
+          <td>Editorial</td>
+          <td><span class="status-badge status-draft">Queued</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-entity">Recurr Studio &times; Clarisights</p>
+      <p class="footer-loc">Confidential &middot; April 2026</p>
+    </div>
+    <div class="footer-links">
+      <a href="/clarisights-intelligence/">intelligence</a>
+      <a href="/clarisights-seo-v2/">seo strategy</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/recurr-system/engine.js"></script>
+</body>
+</html>
