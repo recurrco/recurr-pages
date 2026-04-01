@@ -1,945 +1,916 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clarisights Integrations — Programmatic SEO Page Templates</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#E5E8E8">
+  <title>Data &amp; Integrations &mdash; Clarisights Content Program</title>
+  <meta name="description" content="A programmatic SEO project to build integration pages for every data source, destination, and connector Clarisights supports. Report-first, not pipe-first.">
+  <link rel="stylesheet" href="/recurr-system/style.css">
   <style>
-    :root {
-      --blue: #2563eb;
-      --blue-light: #dbeafe;
-      --blue-dark: #1d4ed8;
-      --dark: #111827;
-      --g900: #1f2937;
-      --g700: #374151;
-      --g500: #6b7280;
-      --g400: #9ca3af;
-      --g300: #d1d5db;
-      --g200: #e5e7eb;
-      --g100: #f3f4f6;
-      --g50: #f9fafb;
-      --white: #fff;
-      --green: #059669;
-      --red: #dc2626;
-      --amber: #d97706;
-      --r: 12px;
+    /* Page-specific overrides */
+    .program-badge {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pencil);
+      margin-bottom: var(--space-xs);
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',sans-serif; color:var(--g900); line-height:1.6; background:var(--white); }
+    .hero-sub { max-width: 52ch; }
 
-    /* Nav */
-    .nav { position:sticky; top:0; z-index:100; background:var(--white); border-bottom:1px solid var(--g200); padding:0 2rem; }
-    .nav-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:56px; }
-    .nav-logo { font-size:1.15rem; font-weight:700; color:var(--dark); text-decoration:none; }
-    .nav-logo span { color:var(--blue); }
-    .nav-tabs { display:flex; gap:0; }
-    .nav-tab { padding:16px 16px; text-decoration:none; color:var(--g500); font-size:0.8rem; font-weight:500; border-bottom:2px solid transparent; }
-    .nav-tab:hover { color:var(--dark); }
-    .nav-tab.active { color:var(--blue); border-bottom-color:var(--blue); }
-    .nav-cta { background:var(--blue); color:white; padding:7px 18px; border-radius:7px; text-decoration:none; font-size:0.8rem; font-weight:600; }
+    /* Layer cards */
+    .layer-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.8rem, 1.5rem + 1.2vw, 2.8rem);
+      margin-bottom: var(--space-s);
+      position: relative;
+    }
+    .layer-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 4px;
+      border-radius: 4px 0 0 4px;
+    }
+    .layer-card.l-red::before { background: var(--red); }
+    .layer-card.l-blue::before { background: var(--blue); }
+    .layer-card.l-yellow::before { background: var(--yellow); }
 
-    /* Template Switcher */
-    .switcher { background:var(--g50); border-bottom:1px solid var(--g200); padding:10px 2rem; }
-    .switcher-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-    .switcher label { font-size:0.75rem; font-weight:600; color:var(--g500); text-transform:uppercase; letter-spacing:0.05em; }
-    .sw-btn { padding:5px 14px; border:1px solid var(--g300); border-radius:6px; background:white; font-size:0.78rem; font-weight:500; color:var(--g700); cursor:pointer; }
-    .sw-btn:hover { border-color:var(--blue); color:var(--blue); }
-    .sw-btn.active { background:var(--blue); color:white; border-color:var(--blue); }
+    .layer-header {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-s);
+      margin-bottom: var(--space-xs);
+      flex-wrap: wrap;
+    }
+    .layer-number {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .l-red .layer-number { background: #E03E3618; color: var(--red); }
+    .l-blue .layer-number { background: #2B6CB018; color: var(--blue); }
+    .l-yellow .layer-number { background: rgba(212,184,44,0.18); color: #8A7A1A; }
+    [data-theme="dark"] .l-yellow .layer-number { color: var(--yellow); }
 
-    /* Shared */
-    .c { max-width:1200px; margin:0 auto; padding:0 2rem; }
-    .sec { padding:3.5rem 0; }
-    .sec-alt { background:var(--g50); }
-    .sec-dark { background:var(--dark); color:white; }
-    .badge { display:inline-block; padding:3px 10px; border-radius:16px; font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; }
-    .badge-blue { background:var(--blue-light); color:var(--blue); }
-    .badge-green { background:#d1fae5; color:var(--green); }
-    .badge-amber { background:#fef3c7; color:var(--amber); }
-    .btn { display:inline-flex; align-items:center; gap:6px; padding:10px 22px; border-radius:7px; text-decoration:none; font-weight:600; font-size:0.88rem; }
-    .btn-p { background:var(--blue); color:white; }
-    .btn-p:hover { background:var(--blue-dark); }
-    .btn-s { border:1px solid var(--blue); color:var(--blue); background:transparent; }
-    .btn-ghost { border:1px solid var(--g300); color:var(--g700); background:transparent; font-size:0.8rem; padding:8px 16px; }
-    h2 { font-size:1.5rem; font-weight:700; color:var(--dark); margin-bottom:0.4rem; }
-    .sub { color:var(--g500); font-size:0.95rem; margin-bottom:1.5rem; }
-    .tag { display:inline-block; padding:5px 12px; background:var(--g50); border:1px solid var(--g200); border-radius:5px; font-size:0.8rem; margin:0 5px 6px 0; color:var(--g700); }
+    .layer-title {
+      font-family: var(--serif);
+      font-size: var(--fs-h2);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .layer-url {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      letter-spacing: 0.05em;
+      margin-left: auto;
+    }
+    .layer-desc {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      color: var(--graphite);
+      line-height: 1.65;
+      max-width: 72ch;
+      margin-bottom: var(--space-s);
+    }
 
-    /* Template pages */
-    .tpl { display:none; }
-    .tpl.active { display:block; }
+    /* Content type pills */
+    .type-row {
+      display: flex;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-s);
+    }
+    .type-pill {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      background: var(--notebook);
+      color: var(--ink);
+      border: 1px solid var(--border-faint);
+    }
+    .type-pill.pill-red { background: #E03E3612; color: var(--red); border-color: #E03E3630; }
+    .type-pill.pill-blue { background: #2B6CB012; color: var(--blue); border-color: #2B6CB030; }
+    .type-pill.pill-yellow { background: rgba(212,184,44,0.12); color: #8A7A1A; border-color: rgba(212,184,44,0.3); }
+    [data-theme="dark"] .type-pill.pill-yellow { color: var(--yellow); }
 
-    /* Hero */
-    .hero { padding:3rem 0 2.5rem; }
-    .hero-grid { display:grid; grid-template-columns:1.2fr 0.8fr; gap:2.5rem; align-items:center; }
-    .hero-badges { display:flex; gap:8px; margin-bottom:0.75rem; }
-    .hero h1 { font-size:2.1rem; font-weight:800; line-height:1.15; margin-bottom:0.75rem; }
-    .hero-sub { font-size:1rem; color:var(--g500); line-height:1.7; margin-bottom:1.25rem; }
-    .hero-ctas { display:flex; gap:10px; margin-bottom:1.5rem; }
-    .hero-trust { font-size:0.75rem; color:var(--g500); }
-    .hero-trust strong { color:var(--g700); }
-    .hero-visual { background:var(--g50); border:1px solid var(--g200); border-radius:var(--r); padding:2rem; display:flex; align-items:center; justify-content:center; min-height:260px; }
+    /* Deliverables list */
+    .deliverables {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-xs);
+    }
+    .deliverable {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--ink);
+      padding: var(--space-xs) 0;
+      border-bottom: 1px dashed var(--border-faint);
+      display: flex;
+      align-items: baseline;
+      gap: 0.6em;
+    }
+    .deliverable::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 0.35em;
+    }
+    .l-red .deliverable::before { background: var(--red); }
+    .l-blue .deliverable::before { background: var(--blue); }
+    .l-yellow .deliverable::before { background: var(--yellow); }
 
-    /* Logos */
-    .logo-box { width:80px; height:80px; border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:2rem; font-weight:800; color:white; }
-    .logo-sm { width:48px; height:48px; border-radius:12px; font-size:1.2rem; }
-    .fb { background:#1877f2; }
-    .gads { background:#4285f4; }
-    .tiktok { background:#000; }
-    .ig { background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
-    .snap { background:#fffc00; color:#000; }
-    .li { background:#0077b5; }
-    .ga { background:#e37400; }
-    .looker { background:#4285f4; }
-    .sheets { background:#0f9d58; }
-    .bq { background:#4285f4; }
-    .snow { background:#29b5e8; }
-    .pbi { background:#f2c811; color:#000; }
+    /* Scale numbers */
+    .scale-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: var(--space-xs);
+      margin-top: var(--space-s);
+    }
+    .scale-item {
+      background: var(--notebook);
+      border-radius: 4px;
+      padding: var(--space-xs) var(--space-s);
+      text-align: center;
+    }
+    .scale-num {
+      font-family: var(--mono);
+      font-size: var(--fs-h2);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+    .scale-label {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
 
-    /* Connector hero */
-    .conn-visual { display:flex; align-items:center; gap:1.5rem; }
-    .conn-arrow { font-size:1.5rem; color:var(--blue); }
+    /* Taxonomy diagram */
+    .taxonomy-block {
+      background: var(--ink);
+      border-radius: 4px;
+      padding: var(--space-m);
+      margin: var(--space-s) 0;
+      font-family: var(--mono);
+      font-size: clamp(0.65rem, 0.55rem + 0.3vw, 0.85rem);
+      line-height: 1.6;
+      color: #C8CECC;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    [data-theme="dark"] .taxonomy-block { background: #111414; border: 1px solid var(--border-color); }
 
-    /* Report Gallery */
-    .report-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:1.25rem; }
-    .report-card { padding:1.5rem; border:1px solid var(--g200); border-radius:var(--r); background:var(--white); position:relative; overflow:hidden; }
-    .report-card::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; background:var(--blue); }
-    .report-card h3 { font-size:0.95rem; font-weight:600; margin-bottom:0.4rem; padding-left:12px; }
-    .report-card p { font-size:0.82rem; color:var(--g500); line-height:1.6; padding-left:12px; }
-    .report-keywords { padding-left:12px; margin-top:0.5rem; }
-    .report-keywords span { font-size:0.7rem; padding:2px 8px; background:var(--blue-light); color:var(--blue); border-radius:3px; margin-right:4px; }
+    /* Flywheel */
+    .flywheel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-s);
+      flex-wrap: wrap;
+      padding: var(--space-m) 0;
+    }
+    .flywheel-node {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: var(--space-xs) var(--space-s);
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      font-weight: 700;
+      color: var(--ink);
+      text-align: center;
+      min-width: 140px;
+    }
+    .flywheel-arrow {
+      font-family: var(--mono);
+      font-size: var(--fs-body-lg);
+      color: var(--faint);
+    }
 
-    /* Pairing */
-    .pairing-visual { display:flex; align-items:center; gap:1rem; flex-wrap:wrap; margin-bottom:1.25rem; }
-    .pairing-plus { font-size:1.25rem; color:var(--g400); }
+    /* Relationship block */
+    .rel-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: var(--space-s);
+      align-items: start;
+      margin: var(--space-s) 0;
+    }
+    .rel-box {
+      background: var(--notebook);
+      border: 1px solid var(--border-faint);
+      border-radius: 4px;
+      padding: var(--space-s);
+    }
+    .rel-box-title {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .rel-box-desc {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      line-height: 1.55;
+    }
+    .rel-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding-top: var(--space-m);
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      text-align: center;
+    }
 
-    /* Industry Tabs */
-    .ind-tabs { display:flex; gap:0; margin-bottom:1.25rem; border-bottom:2px solid var(--g200); }
-    .ind-tab { padding:8px 16px; font-size:0.82rem; font-weight:500; color:var(--g500); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; }
-    .ind-tab.active { color:var(--blue); border-bottom-color:var(--blue); }
-    .ind-panel { display:none; }
-    .ind-panel.active { display:block; }
-    .ind-content { display:grid; grid-template-columns:2fr 1fr; gap:2rem; align-items:start; }
-    .ind-content p { font-size:0.9rem; color:var(--g700); line-height:1.7; }
-    .ind-sidebar { background:var(--g50); border:1px solid var(--g200); border-radius:var(--r); padding:1.25rem; }
-    .ind-sidebar h4 { font-size:0.75rem; color:var(--g500); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:0.5rem; }
-    .ind-sidebar .tag { font-size:0.72rem; }
+    /* Numbered items */
+    .num-list {
+      counter-reset: numlist;
+      list-style: none;
+      padding: 0;
+    }
+    .num-list li {
+      counter-increment: numlist;
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      color: var(--ink);
+      line-height: 1.65;
+      padding: var(--space-xs) 0;
+      border-bottom: 1px dashed var(--border-faint);
+      display: flex;
+      gap: 1em;
+    }
+    .num-list li::before {
+      content: counter(numlist);
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      color: var(--pencil);
+      min-width: 1.8em;
+      flex-shrink: 0;
+      padding-top: 0.15em;
+    }
 
-    /* Comparison */
-    .cmp-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
-    .cmp-card { padding:1.5rem; border-radius:var(--r); }
-    .cmp-card.bad { background:#fef2f2; border:1px solid #fecaca; }
-    .cmp-card.good { background:#f0fdf4; border:1px solid #bbf7d0; }
-    .cmp-card h4 { font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:0.6rem; }
-    .cmp-card.bad h4 { color:var(--red); }
-    .cmp-card.good h4 { color:var(--green); }
-    .cmp-card ul { list-style:none; }
-    .cmp-card li { padding:0.3rem 0; font-size:0.85rem; color:var(--g700); }
-    .cmp-card.bad li::before { content:"\2717"; margin-right:8px; color:var(--red); }
-    .cmp-card.good li::before { content:"\2713"; margin-right:8px; color:var(--green); }
+    /* Highlight rows in data table */
+    .data-table tr.highlight td {
+      background: #2B6CB00A;
+    }
+    .data-table tr.highlight-amber td {
+      background: rgba(212,184,44,0.06);
+    }
 
-    /* Displacement Callout */
-    .displace { margin-top:1.5rem; padding:1.25rem; background:#fefce8; border:1px solid #fde68a; border-radius:var(--r); display:flex; gap:1rem; align-items:start; }
-    .displace-icon { width:40px; height:40px; background:#fef3c7; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
-    .displace h4 { font-size:0.9rem; font-weight:600; color:#78350f; margin-bottom:0.25rem; }
-    .displace p { font-size:0.82rem; color:#92400e; line-height:1.6; }
-
-    /* Cards Grid */
-    .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:1rem; }
-    .card { padding:1rem; background:var(--white); border:1px solid var(--g200); border-radius:var(--r); text-decoration:none; color:var(--dark); display:flex; align-items:center; gap:0.75rem; transition:all 0.15s; }
-    .card:hover { border-color:var(--blue); box-shadow:0 2px 8px rgba(37,99,235,0.08); }
-    .card h4 { font-size:0.85rem; font-weight:600; }
-    .card p { font-size:0.7rem; color:var(--g500); }
-
-    /* 3-step */
-    .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
-    .step { text-align:center; }
-    .step-num { width:40px; height:40px; border-radius:50%; background:var(--blue); color:white; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 0.75rem; }
-    .step h3 { font-size:0.9rem; font-weight:600; margin-bottom:0.3rem; }
-    .step p { font-size:0.8rem; color:var(--g500); }
-
-    /* FAQ */
-    .faq-list { max-width:750px; }
-    .faq-item { border-bottom:1px solid var(--g200); }
-    .faq-q { width:100%; background:none; border:none; padding:1rem 0; font-size:0.9rem; font-weight:600; color:var(--dark); text-align:left; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
-    .faq-q::after { content:"+"; font-size:1.1rem; color:var(--g400); }
-    .faq-q.open::after { content:"\2212"; }
-    .faq-a { display:none; padding:0 0 1rem; font-size:0.85rem; color:var(--g500); line-height:1.7; }
-    .faq-a.open { display:block; }
-
-    /* CTA */
-    .cta-bar { text-align:center; padding:3.5rem 2rem; }
-    .cta-bar h2 { margin-bottom:0.5rem; }
-    .cta-bar p { color:var(--g500); margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto; }
-    .sec-dark .cta-bar h2 { color:white; }
-    .sec-dark .cta-bar p { color:var(--g400); }
-
-    /* Specific report preview */
-    .report-preview { background:var(--g50); border:1px solid var(--g200); border-radius:var(--r); padding:2rem; margin-top:1.5rem; }
-    .report-preview h3 { font-size:1rem; font-weight:600; margin-bottom:1rem; }
-    .report-preview-table { width:100%; border-collapse:collapse; font-size:0.8rem; }
-    .report-preview-table th { text-align:left; padding:8px 12px; background:var(--g100); color:var(--g500); font-weight:600; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em; }
-    .report-preview-table td { padding:8px 12px; border-bottom:1px solid var(--g100); }
-    .report-preview-table tr:last-child td { border-bottom:none; font-weight:600; }
-
-    /* Annotation */
-    .anno { font-size:0.7rem; color:var(--g400); font-style:italic; margin-top:0.5rem; }
-    .component-label { display:inline-block; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--blue); background:var(--blue-light); padding:2px 8px; border-radius:3px; margin-bottom:0.75rem; }
-
-    /* Overview */
-    .overview-hero { padding:3rem 0 1rem; }
-    .overview-hero h1 { font-size:1.8rem; font-weight:800; margin-bottom:0.5rem; }
-    .mono { font-family:'SF Mono','Fira Code',monospace; font-size:0.8rem; }
-
-    @media(max-width:768px) {
-      .hero-grid,.cmp-grid,.report-grid,.ind-content,.steps { grid-template-columns:1fr; }
-      .hero h1 { font-size:1.6rem; }
-      .nav-tabs { display:none; }
+    /* Responsive */
+    @media (max-width: 640px) {
+      .layer-header { flex-direction: column; gap: 4px; }
+      .layer-url { margin-left: 0; }
+      .deliverables { grid-template-columns: 1fr; }
+      .scale-grid { grid-template-columns: repeat(2, 1fr); }
+      .flywheel-arrow { transform: rotate(90deg); }
+      .flywheel { flex-direction: column; }
+      .rel-grid { grid-template-columns: 1fr; }
+      .rel-connector { flex-direction: row; padding-top: 0; }
     }
   </style>
 </head>
 <body>
 
-<nav class="nav">
+<canvas class="dot-grid-canvas" id="dot-grid"></canvas>
+
+<!-- Nav -->
+<nav>
   <div class="nav-inner">
-    <a href="#" class="nav-logo">clari<span>sights</span></a>
-    <div class="nav-tabs">
-      <a href="#" class="nav-tab">Product</a>
-      <a href="#" class="nav-tab active">Integrations</a>
-      <a href="#" class="nav-tab">Resources</a>
-      <a href="#" class="nav-tab">Pricing</a>
+    <a href="/recurr-co/" class="nav-logo">recurr</a>
+    <div class="nav-right">
+      <span class="nav-clock" id="clock"></span>
+      <a href="/clarisights-intelligence/">intelligence</a>
+      <a href="/clarisights-seo-v2/">seo</a>
+      <a href="/clarisights-data-literacy/">data literacy</a>
+      <a href="/clarisights-integrations-pseo/" class="nav-active">data &amp; integrations</a>
+      <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode" aria-label="Toggle dark mode">&#9684;</button>
     </div>
-    <a href="#" class="nav-cta">Get a Demo</a>
   </div>
 </nav>
 
-<div class="switcher">
-  <div class="switcher-inner">
-    <label>Template:</label>
-    <button class="sw-btn active" onclick="show('overview',this)">Overview</button>
-    <button class="sw-btn" onclick="show('source',this)">A: Data Source</button>
-    <button class="sw-btn" onclick="show('dest',this)">B: Destination</button>
-    <button class="sw-btn" onclick="show('conn',this)">C: Connector</button>
+<!-- Hero -->
+<section class="hero">
+  <div class="program-badge">Clarisights Content Program</div>
+  <h1 id="hero-h1">Data &amp; Integrations.</h1>
+  <div class="hero-bottom">
+    <p class="hero-sub">A programmatic SEO project to build integration pages for every data source, destination, and connector Clarisights supports. Report-first, not pipe-first.</p>
+    <pre class="hero-ascii" id="hero-ascii">
+ &#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
+ &#9474;                                   &#9474;
+ &#9474;   A  Data Sources       ~300      &#9474;
+ &#9474;   B  Destinations       ~20       &#9474;
+ &#9474;   C  Connectors         50-100    &#9474;
+ &#9474;                                   &#9474;
+ &#9474;   370+ pages. 3 types.            &#9474;
+ &#9474;   One integration engine.         &#9474;
+ &#9474;                                   &#9474;
+ &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;
+    </pre>
   </div>
-</div>
+</section>
 
-<!-- ==================== OVERVIEW ==================== -->
-<div id="pg-overview" class="tpl active">
-<div class="c overview-hero">
-  <span class="badge badge-blue">Programmatic SEO</span>
-  <h1 style="margin-top:0.5rem;">Clarisights Integrations Pages</h1>
-  <p style="color:var(--g500); max-width:700px;">Report-first, not pipe-first. Built on customer intelligence, keyword research, and competitive displacement data.</p>
+<hr class="divider" style="margin:0 auto;max-width:1400px">
 
-  <div style="margin:1.5rem 0; padding:1rem 1.25rem; background:#fefce8; border:1px solid #fde68a; border-radius:8px; font-size:0.82rem; color:#92400e;">
-    <strong>How this is different from Funnel:</strong> Funnel's integration pages are generic ETL pages &mdash; "we connect to X, here are the fields." Our pages show <strong>what reports you can build</strong>, <strong>which industries use this source</strong>, and <strong>why Clarisights beats the native dashboard + competitors</strong>. Every component is sourced from customer intelligence (Zulip, HubSpot, CS demos).
-  </div>
-</div>
+<!-- How This Stream Fits -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-ink">How This Stream Fits</div>
+  <p class="section-desc" style="max-width:72ch;">
+    Two programmatic SEO streams, one content system. Data Literacy educates. Data &amp; Integrations converts. Together they build a compound search engine that captures every stage of the buyer journey.
+  </p>
 
-<div class="c sec" style="padding-top:0.5rem;">
-  <h2>10 Components Per Source Page</h2>
-  <p class="sub">Click "A: Data Source" to see these in action.</p>
-  <table style="width:100%; border-collapse:collapse; font-size:0.82rem;">
-    <thead><tr style="border-bottom:2px solid var(--g200);">
-      <th style="text-align:left; padding:10px 12px; color:var(--g500);">#</th>
-      <th style="text-align:left; padding:10px 12px; color:var(--g500);">Component</th>
-      <th style="text-align:left; padding:10px 12px; color:var(--g500);">Intel Source</th>
-      <th style="text-align:left; padding:10px 12px; color:var(--g500);">Why Better Than Funnel</th>
-    </tr></thead>
-    <tbody>
-      <tr style="border-bottom:1px solid var(--g100);"><td style="padding:10px 12px; font-weight:600;">1</td><td style="padding:10px 12px;">Hero (report-first)</td><td style="padding:10px 12px;">Brand positioning</td><td style="padding:10px 12px;">"Build reports" not "Connect data"</td></tr>
-      <tr style="border-bottom:1px solid var(--g100);background:var(--blue-light);"><td style="padding:10px 12px; font-weight:600;">2</td><td style="padding:10px 12px; font-weight:600;">Report Gallery</td><td style="padding:10px 12px;">Welltech demo playbook, CS team</td><td style="padding:10px 12px;">Shows WHAT you build. Funnel shows "supported fields."</td></tr>
-      <tr style="border-bottom:1px solid var(--g100);background:var(--blue-light);"><td style="padding:10px 12px; font-weight:600;">3</td><td style="padding:10px 12px; font-weight:600;">Cross-Channel Pairings</td><td style="padding:10px 12px;">Customer combos (DH, On Running, Superbet)</td><td style="padding:10px 12px;">Shows what sources combine. Funnel is single-source only.</td></tr>
-      <tr style="border-bottom:1px solid var(--g100);background:var(--blue-light);"><td style="padding:10px 12px; font-weight:600;">4</td><td style="padding:10px 12px; font-weight:600;">Industry Use Cases</td><td style="padding:10px 12px;">ICP = 67% e-com. Customer profiles.</td><td style="padding:10px 12px;">E-com, gaming, DTC tabs. Funnel is generic.</td></tr>
-      <tr style="border-bottom:1px solid var(--g100);background:#fef3c7;"><td style="padding:10px 12px; font-weight:600;">5</td><td style="padding:10px 12px; font-weight:600;">Competitive Displacement</td><td style="padding:10px 12px;">Funnel crisis, Datorama hate, Taxfix CMO ask</td><td style="padding:10px 12px;">Active "switching from Funnel?" CTA on every page.</td></tr>
-      <tr style="border-bottom:1px solid var(--g100);"><td style="padding:10px 12px; font-weight:600;">6</td><td style="padding:10px 12px;">Metrics + Dimensions</td><td style="padding:10px 12px;">API documentation</td><td style="padding:10px 12px;">Table stakes. Positioned AFTER value sections.</td></tr>
-      <tr style="border-bottom:1px solid var(--g100);"><td style="padding:10px 12px; font-weight:600;">7</td><td style="padding:10px 12px;">Destinations Grid</td><td style="padding:10px 12px;">Destination taxonomy</td><td style="padding:10px 12px;">Links to connector pages</td></tr>
-      <tr style="border-bottom:1px solid var(--g100);"><td style="padding:10px 12px; font-weight:600;">8</td><td style="padding:10px 12px;">Related Sources</td><td style="padding:10px 12px;">Real customer pairings</td><td style="padding:10px 12px;">Not "same category" &mdash; actual combos</td></tr>
-      <tr style="border-bottom:1px solid var(--g100);background:var(--blue-light);"><td style="padding:10px 12px; font-weight:600;">9</td><td style="padding:10px 12px; font-weight:600;">Intelligence-Informed FAQ</td><td style="padding:10px 12px;">Jo&atilde;o's buying Qs, Cindy/AY objections</td><td style="padding:10px 12px;">Real sales questions, not generic FAQ</td></tr>
-      <tr><td style="padding:10px 12px; font-weight:600;">10</td><td style="padding:10px 12px;">CTA Bar</td><td style="padding:10px 12px;">&mdash;</td><td style="padding:10px 12px;">Includes displacement CTA</td></tr>
-    </tbody>
-  </table>
-  <p class="anno">Blue rows = components that don't exist on Funnel's pages. Amber = competitive angle Funnel can't match.</p>
-</div>
-
-<div class="c sec" style="padding-top:0;">
-  <h2>Scope</h2>
-  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin-top:1rem;">
-    <div style="padding:1.25rem; border:2px solid var(--g200); border-radius:var(--r);">
-      <div style="font-size:2rem; font-weight:800; color:var(--blue);">~300</div>
-      <div style="font-size:0.85rem; font-weight:600; margin-bottom:0.25rem;">Data Source Pages</div>
-      <div style="font-size:0.78rem; color:var(--g500);">ALL integrations. P0 (20) hand-enriched. Rest templated.</div>
+  <div class="rel-grid" data-reveal>
+    <div class="rel-box">
+      <div class="rel-box-title" style="color:var(--red);">Data Literacy</div>
+      <div class="rel-box-desc">
+        <strong>/learn/</strong> &mdash; educational, nomenclature, authority<br>
+        Glossary terms, metric definitions, platform guides, industry playbooks<br>
+        <span style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">260-365 pages</span>
+      </div>
     </div>
-    <div style="padding:1.25rem; border:2px solid var(--g200); border-radius:var(--r);">
-      <div style="font-size:2rem; font-weight:800; color:var(--blue);">~20</div>
-      <div style="font-size:0.85rem; font-weight:600; margin-bottom:0.25rem;">Destination Pages</div>
-      <div style="font-size:0.78rem; color:var(--g500);">ALL export targets. Each with dashboard/report gallery.</div>
+    <div class="rel-connector">
+      &larr;&rarr;
+      <span style="font-size:var(--fs-label);">cross-link</span>
     </div>
-    <div style="padding:1.25rem; border:2px solid var(--g200); border-radius:var(--r);">
-      <div style="font-size:2rem; font-weight:800; color:var(--blue);">50-100</div>
-      <div style="font-size:0.85rem; font-weight:600; margin-bottom:0.25rem;">Connector Pages</div>
-      <div style="font-size:0.78rem; color:var(--g500);">SELECTIVE. Only validated search volume or high commercial intent.</div>
+    <div class="rel-box">
+      <div class="rel-box-title" style="color:var(--blue);">Data &amp; Integrations</div>
+      <div class="rel-box-desc">
+        <strong>/data-source/</strong>, <strong>/data-destination/</strong>, <strong>/connect/</strong> &mdash; commercial, conversion<br>
+        Integration pages, destination pages, connector pages<br>
+        <span style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">370+ pages</span>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="c sec" style="padding-top:0;">
-  <h2>Keyword Strategy Embedded in Pages</h2>
-  <p class="sub">Each component targets specific keyword clusters from our research.</p>
-  <table style="width:100%; border-collapse:collapse; font-size:0.82rem;">
-    <thead><tr style="border-bottom:2px solid var(--g200);">
-      <th style="text-align:left; padding:8px 12px; color:var(--g500);">Keyword Cluster</th>
-      <th style="text-align:left; padding:8px 12px; color:var(--g500);">Volume</th>
-      <th style="text-align:left; padding:8px 12px; color:var(--g500);">Lives In Component</th>
-    </tr></thead>
-    <tbody>
-      <tr style="border-bottom:1px solid var(--g100);"><td style="padding:8px 12px;">{source} reporting / dashboard</td><td style="padding:8px 12px;">Varies (high)</td><td style="padding:8px 12px;">Hero + Report Gallery</td></tr>
-      <tr style="border-bottom:1px solid var(--g100);"><td style="padding:8px 12px;">cross-channel reporting / analytics</td><td style="padding:8px 12px;">15,000+</td><td style="padding:8px 12px;">Cross-Channel Pairings</td></tr>
-      <tr style="border-bottom:1px solid var(--g100);"><td style="padding:8px 12px;">creative analytics / creative fatigue</td><td style="padding:8px 12px;">500+</td><td style="padding:8px 12px;">Report Gallery (creative report card)</td></tr>
-      <tr style="border-bottom:1px solid var(--g100);"><td style="padding:8px 12px;">marketing dashboard examples</td><td style="padding:8px 12px;">135,000</td><td style="padding:8px 12px;">Destination pages (dashboard gallery)</td></tr>
-      <tr style="border-bottom:1px solid var(--g100);"><td style="padding:8px 12px;">supermetrics/funnel/datorama alternative</td><td style="padding:8px 12px;">740+</td><td style="padding:8px 12px;">Competitive Displacement</td></tr>
-      <tr style="border-bottom:1px solid var(--g100);"><td style="padding:8px 12px;">ad spend optimization / budget pacing</td><td style="padding:8px 12px;">200+</td><td style="padding:8px 12px;">Report Gallery (budget card)</td></tr>
-      <tr><td style="padding:8px 12px;">marketing mix modeling</td><td style="padding:8px 12px;">4,000+</td><td style="padding:8px 12px;">Industry Use Cases (enterprise tab)</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<!-- Pages Needed But Not Built Yet -->
-<div class="c sec" style="padding-top:0; padding-bottom:3rem;">
-  <h2>Supporting Pages Needed (Not Part of This Project)</h2>
-  <p class="sub">These pages don't exist on clarisights.com today. The integration pages will link to them, so they need to be built in parallel or shortly after.</p>
-
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-top:1rem;">
-
-    <div style="padding:1.25rem; border:2px solid #fecaca; border-radius:var(--r); background:#fef2f2;">
-      <div style="display:flex; align-items:center; gap:8px; margin-bottom:0.5rem;">
-        <span class="badge" style="background:#fecaca; color:var(--red);">Missing &mdash; High Priority</span>
-      </div>
-      <h3 style="font-size:0.95rem; font-weight:600; margin-bottom:0.75rem;">Comparison / "vs" Pages</h3>
-      <ul style="font-size:0.82rem; color:var(--g700); line-height:1.8; padding-left:1.25rem;">
-        <li><strong>Clarisights vs Funnel.io</strong> &mdash; competitive displacement is active, no page to send prospects to</li>
-        <li><strong>Clarisights vs Supermetrics</strong> &mdash; 260 vol/mo, $88 CPC, KD=1. Highest ROI page we can build.</li>
-        <li><strong>Clarisights vs Datorama</strong> &mdash; already ranking #8, just needs a real page</li>
-        <li><strong>Clarisights vs Looker + GA4</strong> &mdash; Taxfix CMO literally asked for "honest comparison, no sales BS"</li>
-        <li><strong>Clarisights vs Improvado</strong> &mdash; SEO gorilla (11K keywords), need to own the comparison SERP</li>
-      </ul>
-      <p style="font-size:0.75rem; color:var(--g500); margin-top:0.5rem;">Every integration page's "Competitive Displacement" section links to these. Without them, the CTA goes nowhere.</p>
-    </div>
-
-    <div style="padding:1.25rem; border:2px solid #fecaca; border-radius:var(--r); background:#fef2f2;">
-      <div style="display:flex; align-items:center; gap:8px; margin-bottom:0.5rem;">
-        <span class="badge" style="background:#fecaca; color:var(--red);">Missing &mdash; High Priority</span>
-      </div>
-      <h3 style="font-size:0.95rem; font-weight:600; margin-bottom:0.75rem;">Demo / Conversion Pages</h3>
-      <ul style="font-size:0.82rem; color:var(--g700); line-height:1.8; padding-left:1.25rem;">
-        <li><strong>Demo request page</strong> &mdash; every CTA on every integration page points here</li>
-        <li><strong>Pricing page</strong> &mdash; prospects will want pricing after seeing integration pages</li>
-        <li><strong>"Switching from [X]" landing page</strong> &mdash; dedicated page for Funnel/Supermetrics refugees</li>
-        <li><strong>Product tour / video</strong> &mdash; for prospects not ready for a demo call</li>
-      </ul>
-      <p style="font-size:0.75rem; color:var(--g500); margin-top:0.5rem;">Integration pages drive demand. These pages convert it. Without them, traffic doesn't become pipeline.</p>
-    </div>
-
-    <div style="padding:1.25rem; border:2px solid #fde68a; border-radius:var(--r); background:#fefce8;">
-      <div style="display:flex; align-items:center; gap:8px; margin-bottom:0.5rem;">
-        <span class="badge" style="background:#fde68a; color:var(--amber);">Missing &mdash; Build Later</span>
-      </div>
-      <h3 style="font-size:0.95rem; font-weight:600; margin-bottom:0.75rem;">Category & Use Case Pages</h3>
-      <ul style="font-size:0.82rem; color:var(--g700); line-height:1.8; padding-left:1.25rem;">
-        <li><strong>/use-cases/e-commerce/</strong> &mdash; how e-com teams use Clarisights (67% of ICP)</li>
-        <li><strong>/use-cases/gaming/</strong> &mdash; gaming/app vertical (Product Madness, Lion Studios)</li>
-        <li><strong>/use-cases/agencies/</strong> &mdash; multi-client reporting (Three.e, Publicis)</li>
-        <li><strong>/integrations/social-advertising/</strong> &mdash; category page for Social sources</li>
-        <li><strong>/integrations/attribution/</strong> &mdash; category page for MMP/Attribution sources</li>
-      </ul>
-      <p style="font-size:0.75rem; color:var(--g500); margin-top:0.5rem;">Industry tabs on integration pages tease these. Building them deepens topical authority and captures industry-specific keywords.</p>
-    </div>
-
-    <div style="padding:1.25rem; border:2px solid #fde68a; border-radius:var(--r); background:#fefce8;">
-      <div style="display:flex; align-items:center; gap:8px; margin-bottom:0.5rem;">
-        <span class="badge" style="background:#fde68a; color:var(--amber);">Missing &mdash; Build Later</span>
-      </div>
-      <h3 style="font-size:0.95rem; font-weight:600; margin-bottom:0.75rem;">Content Hub / Glossary Pages</h3>
-      <ul style="font-size:0.82rem; color:var(--g700); line-height:1.8; padding-left:1.25rem;">
-        <li><strong>/glossary/roas/</strong> &mdash; "What is ROAS" (2,900 vol). Report Gallery links here.</li>
-        <li><strong>/glossary/cpm/</strong> &mdash; "What is CPM" (5,400 vol). Metric tags in pages link here.</li>
-        <li><strong>/guides/track-roas-across-channels/</strong> &mdash; cross-channel guide, links from pairing sections</li>
-        <li><strong>/benchmarks/roas/</strong> &mdash; "ROAS Benchmarks by Industry" links from report gallery</li>
-      </ul>
-      <p style="font-size:0.75rem; color:var(--g500); margin-top:0.5rem;">These are a separate programmatic SEO project (120-180 pages). Integration pages should be designed to link into them once built.</p>
-    </div>
-
+  <div class="callout callout-blue" style="margin-top:var(--space-s);">
+    <div class="callout-label">How they cross-link</div>
+    Integration page metric tags link to <strong>/learn/glossary/</strong> definitions. Industry use-case tabs link to <strong>/industries/</strong> playbooks. Platform details link to <strong>/learn/platforms/</strong> guides. Neither stream competes with the other &mdash; one educates, one converts. Together they create a topical authority moat that no competitor has.
   </div>
-</div>
-</div>
+</section>
 
-<!-- ==================== DATA SOURCE PAGE ==================== -->
-<div id="pg-source" class="tpl">
+<hr class="divider" style="margin:0 auto;max-width:1400px">
 
-<!-- C1: Hero -->
-<div class="hero">
-  <div class="c">
-    <div class="component-label">Component 1: Hero (report-first)</div>
-    <div class="hero-grid">
+<!-- Three Page Types -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-red">Three Page Types</div>
+  <p class="section-desc">Each page type serves a different intent. Sources capture the biggest keyword volume. Destinations target dashboard seekers. Connectors catch the long tail.</p>
+
+  <!-- Type A: Data Source Pages -->
+  <div class="layer-card l-red" data-reveal>
+    <div class="layer-header">
+      <span class="layer-number">Type A &middot; Data Source</span>
+      <span class="layer-title">Integration Pages</span>
+      <span class="layer-url">/data-source/{slug}/ &middot; ~300 pages</span>
+    </div>
+    <p class="layer-desc">
+      Every integration Clarisights supports gets a page. Not a "we connect to X" spec sheet &mdash; a report-first page that shows what you can <em>build</em> with this data source. 10 components per page, each sourced from customer intelligence.
+    </p>
+
+    <div class="type-row">
+      <span class="type-pill pill-red">Report Gallery</span>
+      <span class="type-pill pill-red">Cross-Channel Pairings</span>
+      <span class="type-pill pill-red">Industry Use Cases</span>
+      <span class="type-pill pill-red">Competitive Displacement</span>
+      <span class="type-pill pill-red">Intel-Informed FAQ</span>
+    </div>
+
+    <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:8px;">10 Components Per Page</p>
+    <div class="deliverables">
       <div>
-        <div class="hero-badges"><span class="badge badge-blue">Social Advertising</span><span class="badge badge-green">Live</span></div>
-        <h1>Build cross-channel reports with your Facebook Ads data</h1>
-        <p class="hero-sub">See your Meta campaigns alongside Google Ads, TikTok, Snapchat, and 300+ other sources. One unified view of spend, ROAS, and creative performance — not another silo.</p>
-        <div class="hero-ctas">
-          <a href="#" class="btn btn-p">Get a Demo</a>
-          <a href="#" class="btn btn-s">See All Integrations</a>
-        </div>
-        <p class="hero-trust"><strong>300+ integrations</strong> &middot; Used by Delivery Hero, On Running, Deichmann, Forbes, and 100+ performance teams</p>
-      </div>
-      <div class="hero-visual">
-        <div class="logo-box fb" style="width:100px;height:100px;font-size:2.5rem;">f</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- C2: Report Gallery -->
-<div class="sec">
-  <div class="c">
-    <div class="component-label">Component 2: Report Gallery</div>
-    <h2>Reports you can build with Facebook Ads in Clarisights</h2>
-    <p class="sub">Real report types that performance teams build every day. Not just "supported fields."</p>
-
-    <div class="report-grid">
-      <div class="report-card">
-        <h3>Cross-Channel Performance Overview</h3>
-        <p>Compare ROAS, CPA, and spend across Facebook, Google Ads, and TikTok in a single dashboard. Your Weekly Business Review, automated and live.</p>
-        <div class="report-keywords"><span>cross-channel ROAS</span><span>marketing dashboard</span><span>WBR</span></div>
-      </div>
-      <div class="report-card">
-        <h3>Creative Performance Analysis</h3>
-        <p>Track which ad creatives perform best across Meta placements. Compare creative fatigue signals across all paid channels. One view of all creative performance.</p>
-        <div class="report-keywords"><span>creative analytics</span><span>creative fatigue</span><span>ad performance</span></div>
-      </div>
-      <div class="report-card">
-        <h3>Budget Pacing & Spend Allocation</h3>
-        <p>Monitor Facebook Ads spend pacing against targets. See total marketing spend allocation across channels. Catch overspend before it happens.</p>
-        <div class="report-keywords"><span>ad spend optimization</span><span>budget pacing</span></div>
-      </div>
-      <div class="report-card">
-        <h3>SEM + Paid Social Combo Report</h3>
-        <p>Combine Facebook Ads (paid social) with Google Ads (SEM) and SEO data. See how paid and organic work together — one of Clarisights' most requested report types.</p>
-        <div class="report-keywords"><span>SEM reporting</span><span>paid social dashboard</span></div>
-      </div>
-    </div>
-
-    <div style="margin-top:1.5rem; padding:1.25rem; background:var(--blue-light); border-radius:var(--r); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
-      <div>
-        <div style="font-size:0.95rem; font-weight:600; color:var(--dark);">Want to see these reports with your own data?</div>
-        <div style="font-size:0.82rem; color:var(--g500);">Connect Facebook Ads in under 10 minutes. No engineering required.</div>
-      </div>
-      <a href="#" class="btn btn-p">Get a Demo &rarr;</a>
-    </div>
-    <p class="anno">Source: Welltech demo playbook (CS team gold standard) + customer use cases from On Running, Deichmann, Unobravo</p>
-  </div>
-</div>
-
-<!-- C3: Cross-Channel Pairings -->
-<div class="sec sec-alt">
-  <div class="c">
-    <div class="component-label">Component 3: Cross-Channel Pairings</div>
-    <h2>Better together: Facebook Ads + your other channels</h2>
-    <p class="sub">Your Meta data means more when you see it alongside everything else you run.</p>
-
-    <div class="pairing-visual">
-      <div class="logo-box logo-sm fb">f</div>
-      <span class="pairing-plus">+</span>
-      <div class="logo-box logo-sm gads">G</div>
-      <span class="pairing-plus">+</span>
-      <div class="logo-box logo-sm tiktok">T</div>
-      <span class="pairing-plus">+</span>
-      <div class="logo-box logo-sm snap">S</div>
-      <span class="pairing-plus">+</span>
-      <div class="logo-box logo-sm ga">A</div>
-      <span class="pairing-plus">+ 300 more</span>
-    </div>
-
-    <p style="font-size:0.9rem; color:var(--g700); line-height:1.7; max-width:700px;">Most performance teams run Facebook alongside Google Ads and TikTok. But "ROAS" means different things on each platform — Meta counts view-through conversions that Google doesn't, attribution windows vary, currency handling differs.</p>
-    <br>
-    <p style="font-size:0.9rem; color:var(--g700); line-height:1.7; max-width:700px;">Clarisights normalizes all of it. One definition of ROAS, one attribution model, one currency. So when you compare Facebook vs Google performance, you're comparing the same thing.</p>
-
-    <div style="margin-top:1.5rem; display:flex; gap:10px; flex-wrap:wrap;">
-      <a href="#" class="btn btn-p">See it in action &rarr;</a>
-      <a href="#" class="btn btn-ghost">How cross-channel normalization works</a>
-    </div>
-    <p class="anno">Source: Customer intel — Delivery Hero runs Meta + AppsFlyer + DV360. On Running runs all major paid channels. Superbet runs 5 channel teams simultaneously.</p>
-  </div>
-</div>
-
-<!-- C4: Industry Use Cases -->
-<div class="sec">
-  <div class="c">
-    <div class="component-label">Component 4: Industry Use Cases</div>
-    <h2>How teams use Facebook Ads in Clarisights</h2>
-
-    <div class="ind-tabs">
-      <div class="ind-tab active" onclick="showInd(0,this)">E-commerce & DTC</div>
-      <div class="ind-tab" onclick="showInd(1,this)">Gaming & Apps</div>
-      <div class="ind-tab" onclick="showInd(2,this)">Enterprise & Agency</div>
-    </div>
-
-    <div class="ind-panel active" id="ind-0">
-      <div class="ind-content">
-        <div>
-          <p>E-commerce teams use Facebook Ads as their primary acquisition channel. In Clarisights, they combine Meta spend data with Shopify revenue and Google Analytics sessions to see <strong>true blended ROAS</strong> — not just platform-reported ROAS that double-counts conversions.</p>
-          <br>
-          <p>Common reports: cross-channel spend dashboard, ROAS by product category, creative performance by placement, budget pacing against monthly targets. Teams like <strong>Deichmann</strong> and <strong>About You</strong> run these reports across multiple markets from a single Clarisights workspace.</p>
-        </div>
-        <div class="ind-sidebar">
-          <h4>Common source combo</h4>
-          <span class="tag">Facebook Ads</span><span class="tag">Google Ads</span><span class="tag">Google Analytics</span><span class="tag">Shopify</span><span class="tag">Criteo</span>
-          <h4 style="margin-top:0.75rem;">Key reports</h4>
-          <span class="tag">Blended ROAS</span><span class="tag">Category spend</span><span class="tag">Creative fatigue</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="ind-panel" id="ind-1">
-      <div class="ind-content">
-        <div>
-          <p>Mobile gaming teams combine Facebook Ads data with MMP data from <strong>AppsFlyer</strong> or <strong>Adjust</strong> and SKAN attribution in Clarisights. The goal: one unified view of user acquisition cost and LTV across all install sources.</p>
-          <br>
-          <p>Facebook is often the largest UA spend channel for gaming companies. But with iOS privacy changes (SKAN), platform-reported numbers are increasingly unreliable. Clarisights lets teams like <strong>Product Madness</strong> model cohort data alongside platform metrics.</p>
-        </div>
-        <div class="ind-sidebar">
-          <h4>Common source combo</h4>
-          <span class="tag">Facebook Ads</span><span class="tag">AppsFlyer</span><span class="tag">Adjust</span><span class="tag">Unity Ads</span><span class="tag">Google Ads</span>
-          <h4 style="margin-top:0.75rem;">Key reports</h4>
-          <span class="tag">UA cost by source</span><span class="tag">SKAN analysis</span><span class="tag">Cohort LTV</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="ind-panel" id="ind-2">
-      <div class="ind-content">
-        <div>
-          <p>Enterprise brands like <strong>Delivery Hero</strong> and agencies like <strong>Three.e</strong> use Clarisights to manage Facebook Ads data across multiple brands, markets, and teams. Data groups and ACLs control who sees what — the German team sees DACH data, the Korean team sees APAC.</p>
-          <br>
-          <p>Agencies use Clarisights to replace 15 different dashboard tools with one platform. The core ask: automated weekly reports combining all client ad platforms into a single stakeholder view.</p>
-        </div>
-        <div class="ind-sidebar">
-          <h4>Common source combo</h4>
-          <span class="tag">Facebook Ads</span><span class="tag">DV360</span><span class="tag">Google Ads</span><span class="tag">Taboola</span><span class="tag">LinkedIn Ads</span>
-          <h4 style="margin-top:0.75rem;">Key reports</h4>
-          <span class="tag">Multi-market overview</span><span class="tag">Client WBR</span><span class="tag">Channel split</span>
-        </div>
-      </div>
-    </div>
-    <div style="margin-top:1.5rem; padding:1.25rem; background:var(--blue-light); border-radius:var(--r); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
-      <div>
-        <div style="font-size:0.95rem; font-weight:600; color:var(--dark);">See how teams in your industry use Clarisights</div>
-        <div style="font-size:0.82rem; color:var(--g500);">Get a personalized demo with reports built for your vertical.</div>
-      </div>
-      <a href="#" class="btn btn-p">Book a Demo &rarr;</a>
-    </div>
-    <p class="anno">Source: Customer profiles — Delivery Hero (Tier 1, global), On Running (DTC), Product Madness (gaming), Superbet (iGaming), Deichmann (retail). ICP = 67% e-commerce.</p>
-  </div>
-</div>
-
-<!-- C5: Competitive Displacement -->
-<div class="sec sec-alt">
-  <div class="c">
-    <div class="component-label">Component 5: Competitive Displacement</div>
-    <h2>Beyond Facebook's native dashboard</h2>
-    <p class="sub">Why performance teams move from platform dashboards and ETL tools to Clarisights.</p>
-
-    <div class="cmp-grid">
-      <div class="cmp-card bad">
-        <h4>Native Facebook + spreadsheets</h4>
-        <ul>
-          <li>Facebook ROAS in Meta, Google ROAS in Google — never comparable</li>
-          <li>Monday morning CSV exports and manual pivot tables</li>
-          <li>Different attribution windows make numbers meaningless</li>
-          <li>No single view of "how is marketing performing?"</li>
-          <li>Hours lost every week reconciling data across platforms</li>
-        </ul>
-      </div>
-      <div class="cmp-card good">
-        <h4>Clarisights</h4>
-        <ul>
-          <li>Facebook + Google + TikTok in one normalized view</li>
-          <li>Automated reports delivered to Slack, email, or any BI tool</li>
-          <li>Same ROAS definition across every platform</li>
-          <li>One dashboard for the CMO, one for the media buyer</li>
-          <li>Real-time data, zero manual work, zero spreadsheets</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="displace">
-      <div class="displace-icon">&#8644;</div>
-      <div>
-        <h4>Switching from Funnel, Supermetrics, or Datorama?</h4>
-        <p>Clarisights isn't just an ETL pipe that moves data from A to B. You get a full reporting layer on top — cross-channel dashboards, automated reports, normalized metrics, creative analytics. No more exporting to spreadsheets to make the data useful. <a href="#" style="color:var(--amber); font-weight:600;">See how we compare &rarr;</a></p>
-      </div>
-    </div>
-    <p class="anno">Source: Funnel.io in crisis (price hikes + reliability). Jo&atilde;o running active Reddit/Slack displacement campaign. Taxfix CMO asked for "honest Clarisights vs Looker vs GA4 comparison, no sales BS."</p>
-  </div>
-</div>
-
-<!-- C6: Metrics + Dimensions -->
-<div class="sec">
-  <div class="c">
-    <div class="component-label">Component 6: Metrics + Dimensions</div>
-    <h2>What data Clarisights pulls from Facebook Ads</h2>
-    <p class="sub">All campaign metrics and dimensions, synced automatically.</p>
-
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
-      <div>
-        <h3 style="font-size:0.85rem; font-weight:600; color:var(--g500); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:0.75rem; padding-bottom:0.4rem; border-bottom:2px solid var(--blue-light);">Metrics</h3>
-        <span class="tag">Impressions</span><span class="tag">Clicks</span><span class="tag">Spend</span><span class="tag">ROAS</span><span class="tag">CPM</span><span class="tag">CPC</span><span class="tag">CTR</span><span class="tag">Conversions</span><span class="tag">Reach</span><span class="tag">Frequency</span><span class="tag">Video Views</span><span class="tag">ThruPlays</span><span class="tag">Cost Per Result</span><span class="tag">Link Clicks</span>
+        <div class="deliverable">Hero &mdash; report-first positioning, not "connect your data"</div>
+        <div class="deliverable">Report Gallery &mdash; real report types from CS playbooks</div>
+        <div class="deliverable">Cross-Channel Pairings &mdash; what other sources combine with this one</div>
+        <div class="deliverable">Industry Use Cases &mdash; eCommerce, gaming, enterprise tabs</div>
+        <div class="deliverable">Competitive Displacement &mdash; "switching from Funnel?" CTA</div>
       </div>
       <div>
-        <h3 style="font-size:0.85rem; font-weight:600; color:var(--g500); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:0.75rem; padding-bottom:0.4rem; border-bottom:2px solid var(--blue-light);">Dimensions</h3>
-        <span class="tag">Campaign</span><span class="tag">Ad Set</span><span class="tag">Ad</span><span class="tag">Age</span><span class="tag">Gender</span><span class="tag">Placement</span><span class="tag">Country</span><span class="tag">Device</span><span class="tag">Platform</span><span class="tag">Objective</span><span class="tag">Creative</span>
+        <div class="deliverable">Metrics + Dimensions &mdash; full data model, positioned after value</div>
+        <div class="deliverable">Destinations Grid &mdash; where to export this data</div>
+        <div class="deliverable">Related Sources &mdash; real customer pairings, not "same category"</div>
+        <div class="deliverable">Intelligence-Informed FAQ &mdash; real sales questions, not generic</div>
+        <div class="deliverable">CTA Bar &mdash; demo request + displacement CTA</div>
       </div>
     </div>
 
-    <div style="margin-top:1.25rem; padding:0.75rem 1rem; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; font-size:0.82rem; color:var(--green); display:flex; align-items:center; gap:8px;">
-      <span style="font-size:1rem;">&#10003;</span> Data syncs automatically &mdash; near real-time (hourly refresh)
-    </div>
-
-    <div style="margin-top:1.25rem; display:flex; gap:10px;">
-      <a href="#" class="btn btn-s" style="font-size:0.82rem; padding:8px 18px;">View full API documentation &rarr;</a>
+    <div class="callout callout-yellow" style="margin-top:var(--space-s);">
+      <div class="callout-label">Why this is different from Funnel</div>
+      Funnel's integration pages show supported fields and a connector spec sheet. Our pages show what reports you can build, which industries use this source, and why Clarisights beats the native dashboard and competitors. Every component is sourced from customer intelligence &mdash; Zulip, HubSpot, CS demos.
     </div>
   </div>
-</div>
 
-<!-- C7: Destinations Grid -->
-<div class="sec sec-alt">
-  <div class="c">
-    <div class="component-label">Component 7: Destinations Grid</div>
-    <h2>Export your Facebook Ads data to</h2>
-    <p class="sub">Send unified data to the tools your team already uses.</p>
-    <div class="cards">
-      <a href="#" class="card"><div class="logo-box logo-sm looker">L</div><div><h4>Looker Studio</h4><p>BI & Dashboards</p></div></a>
-      <a href="#" class="card"><div class="logo-box logo-sm sheets">S</div><div><h4>Google Sheets</h4><p>Spreadsheets</p></div></a>
-      <a href="#" class="card"><div class="logo-box logo-sm bq">B</div><div><h4>BigQuery</h4><p>Data Warehouse</p></div></a>
-      <a href="#" class="card"><div class="logo-box logo-sm snow">S</div><div><h4>Snowflake</h4><p>Data Warehouse</p></div></a>
-      <a href="#" class="card"><div class="logo-box logo-sm pbi">P</div><div><h4>Power BI</h4><p>BI & Dashboards</p></div></a>
+  <!-- Type B: Destination Pages -->
+  <div class="layer-card l-blue" data-reveal>
+    <div class="layer-header">
+      <span class="layer-number">Type B &middot; Destination</span>
+      <span class="layer-title">Dashboard &amp; Export Pages</span>
+      <span class="layer-url">/data-destination/{slug}/ &middot; 15-25 pages</span>
+    </div>
+    <p class="layer-desc">
+      Every export target gets a page: Looker Studio, BigQuery, Snowflake, Google Sheets, Power BI, Tableau, and more. The core value prop: "15 connectors vs 1 feed." One unified, normalized data connection replaces a mess of individual connectors.
+    </p>
+
+    <div class="type-row">
+      <span class="type-pill pill-blue">Dashboard Gallery</span>
+      <span class="type-pill pill-blue">15 vs 1 Comparison</span>
+      <span class="type-pill pill-blue">Source Grid</span>
+      <span class="type-pill pill-blue">Report Templates</span>
+    </div>
+
+    <p class="layer-desc">
+      Targets the massive "marketing dashboard examples" cluster at <strong>135K volume/month</strong>. Each page shows real dashboard templates and sample report data for that specific destination tool.
+    </p>
+  </div>
+
+  <!-- Type C: Connector Pages -->
+  <div class="layer-card l-yellow" data-reveal>
+    <div class="layer-header">
+      <span class="layer-number">Type C &middot; Connector</span>
+      <span class="layer-title">Source-to-Destination Pages</span>
+      <span class="layer-url">/connect/{source}-to-{destination}/ &middot; 50-100 pages</span>
+    </div>
+    <p class="layer-desc">
+      Specific A&rarr;B combination pages. "Facebook Ads to Looker Studio," "Google Ads to BigQuery," "TikTok Ads to Snowflake." Each page includes a specific report template for this exact combo. Selective &mdash; only validated combinations make the cut.
+    </p>
+
+    <div class="type-row">
+      <span class="type-pill pill-yellow">Combo Report Template</span>
+      <span class="type-pill pill-yellow">Setup Guide</span>
+      <span class="type-pill pill-yellow">Use Case</span>
+    </div>
+
+    <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pencil);margin-top:var(--space-xs);margin-bottom:4px;">Selection Criteria</p>
+    <p class="layer-desc" style="margin-bottom:0;">
+      Search volume &gt; 50/mo, OR high CPC (&gt;$5), OR top customer combo from HubSpot/Zulip data. Not every permutation gets built &mdash; only those with validated demand or high commercial intent.
+    </p>
+  </div>
+
+  <div class="scale-grid" data-reveal>
+    <div class="scale-item">
+      <div class="scale-num">~300</div>
+      <div class="scale-label">Source Pages</div>
+    </div>
+    <div class="scale-item">
+      <div class="scale-num">15-25</div>
+      <div class="scale-label">Destination Pages</div>
+    </div>
+    <div class="scale-item">
+      <div class="scale-num">50-100</div>
+      <div class="scale-label">Connector Pages</div>
+    </div>
+    <div class="scale-item">
+      <div class="scale-num">370+</div>
+      <div class="scale-label">Total pSEO Pages</div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- C8: Related Sources -->
-<div class="sec">
-  <div class="c">
-    <div class="component-label">Component 8: Related Sources (real pairings, not just "same category")</div>
-    <h2>Sources that work well with Facebook Ads</h2>
-    <p class="sub">What teams actually combine with Meta data &mdash; based on real customer setups.</p>
-    <div class="cards">
-      <a href="#" class="card"><div class="logo-box logo-sm gads">G</div><div><h4>Google Ads</h4><p>Search Advertising</p></div></a>
-      <a href="#" class="card"><div class="logo-box logo-sm tiktok">T</div><div><h4>TikTok Ads</h4><p>Social Advertising</p></div></a>
-      <a href="#" class="card"><div class="logo-box logo-sm ga">A</div><div><h4>Google Analytics</h4><p>Web Analytics</p></div></a>
-      <a href="#" class="card"><div class="logo-box logo-sm snap">S</div><div><h4>Snapchat Ads</h4><p>Social Advertising</p></div></a>
-      <a href="#" class="card"><div class="logo-box logo-sm li">L</div><div><h4>LinkedIn Ads</h4><p>Social Advertising</p></div></a>
-    </div>
-  </div>
-</div>
+<hr class="divider" style="margin:0 auto;max-width:1400px">
 
-<!-- C9: FAQ -->
-<div class="sec sec-alt">
-  <div class="c">
-    <div class="component-label">Component 9: Intelligence-Informed FAQ</div>
-    <h2>Frequently asked questions</h2>
-    <div class="faq-list" style="margin-top:1rem;">
-      <div class="faq-item">
-        <button class="faq-q" onclick="tfaq(this)">What Facebook Ads data can I pull into Clarisights?</button>
-        <div class="faq-a">Clarisights connects to the Facebook Marketing API to pull all campaign, ad set, and ad-level metrics — spend, impressions, clicks, conversions, ROAS, CPM, CPC, CTR, video views, and more. You also get full breakdowns by age, gender, placement, device, country, and creative. Data syncs hourly without any manual work.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="tfaq(this)">Can I combine Facebook Ads data with other platforms?</button>
-        <div class="faq-a">Yes — that's the core value. Clarisights normalizes metrics across 300+ sources so "ROAS" means the same thing whether it comes from Meta, Google, or TikTok. You get a unified view of spend, performance, and creative across every channel you run. No more spreadsheets to reconcile different platforms.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="tfaq(this)">Why not just use Facebook's native Ads Manager reporting?</button>
-        <div class="faq-a">Facebook's native dashboard only shows you Meta data. If you run Google Ads, TikTok, Snapchat, or any other channel alongside Facebook, you can't compare performance across them. Clarisights gives you one dashboard where all your channels are side by side with normalized metrics — so you can actually answer "where should I put my next dollar?"</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="tfaq(this)">What does it take to set up?</button>
-        <div class="faq-a">Under 10 minutes. Connect your Facebook Ads account via OAuth (one click), Clarisights syncs your data automatically, and you can start building reports immediately. No engineering resources needed, no API keys to manage, no maintenance. This is one of the three questions enterprise buying committees always ask — and the answer is "your team can do it this afternoon."</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="tfaq(this)">I'm using Funnel or Supermetrics today — how is Clarisights different?</button>
-        <div class="faq-a">Funnel and Supermetrics are ETL tools — they move data from point A to point B. Clarisights gives you the pipe AND the reporting layer. You get cross-channel dashboards, automated reports, normalized metrics, and creative analytics built in — no need to export to a BI tool and build everything from scratch. Many teams switch to Clarisights specifically because they outgrow the "just pipe the data" approach.</div>
-      </div>
-    </div>
-    <p class="anno">Source: FAQ questions derived from Jo&atilde;o's intel (Cindy/About You: management asks "Why now? Can existing tools do this? What's setup?"), Taxfix CMO's comparison request, and Jo&atilde;o's Funnel displacement campaign.</p>
-  </div>
-</div>
+<!-- URL Architecture -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-blue">URL Architecture</div>
+  <p class="section-desc">Clean, predictable URL structure. Each page type lives in its own namespace. Internal linking wires them together.</p>
 
-<!-- C10: CTA -->
-<div class="sec sec-dark">
-  <div class="cta-bar">
-    <div class="component-label" style="color:var(--blue-light);">Component 10: CTA Bar</div>
-    <h2>See your Facebook Ads data alongside everything else</h2>
-    <p>Connect Facebook Ads to 300+ other marketing channels. Build cross-channel reports in minutes, not days.</p>
-    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-      <a href="#" class="btn btn-p">Book a Demo &rarr;</a>
-      <a href="#" class="btn btn-ghost" style="color:var(--g400); border-color:var(--g500);">Switching from Funnel? Talk to us</a>
-    </div>
-  </div>
-</div>
-</div>
+  <div class="taxonomy-block">clarisights.com/
+  /data-source/                                ~300 pages
+      facebook-ads/
+      google-ads/
+      tiktok-ads/
+      snapchat-ads/
+      linkedin-ads/
+      dv360/
+      apple-search-ads/
+      amazon-ads/
+      pinterest-ads/
+      twitter-ads/
+      appsflyer/
+      adjust/
+      ...
 
-<!-- ==================== DESTINATION PAGE ==================== -->
-<div id="pg-dest" class="tpl">
+  /data-destination/                           15-25 pages
+      looker-studio/
+      bigquery/
+      snowflake/
+      google-sheets/
+      power-bi/
+      tableau/
+      redshift/
+      s3/
+      email/
+      slack/
+      ...
 
-<div class="hero">
-  <div class="c">
-    <div class="component-label">Destination Page Template</div>
-    <div class="hero-grid">
-      <div>
-        <div class="hero-badges"><span class="badge badge-blue">BI & Dashboards</span><span class="badge badge-green">Live</span></div>
-        <h1>Build marketing dashboards in Looker Studio with unified data</h1>
-        <p class="hero-sub">Export your entire marketing data stack to Looker Studio through one connection. Not 15 individual connectors — one unified, normalized data feed.</p>
-        <div class="hero-ctas"><a href="#" class="btn btn-p">Get a Demo</a><a href="#" class="btn btn-s">See All Destinations</a></div>
-      </div>
-      <div class="hero-visual"><div class="logo-box looker" style="width:100px;height:100px;font-size:2.5rem;">L</div></div>
-    </div>
-  </div>
-</div>
+  /connect/{source}-to-{destination}/          50-100 pages
+      facebook-ads-to-looker-studio/
+      google-ads-to-bigquery/
+      tiktok-ads-to-snowflake/
+      facebook-ads-to-google-sheets/
+      linkedin-ads-to-power-bi/
+      ...</div>
+</section>
 
-<!-- Report/Dashboard Gallery -->
-<div class="sec">
-  <div class="c">
-    <div class="component-label">Dashboard Gallery (targets "marketing dashboard examples" — 135K vol)</div>
-    <h2>Dashboards you can build in Looker Studio with Clarisights</h2>
-    <p class="sub">Pre-built templates for common marketing reporting needs.</p>
+<hr class="divider" style="margin:0 auto;max-width:1400px">
 
-    <div class="report-grid">
-      <div class="report-card"><h3>Executive Marketing Overview</h3><p>Total spend, ROAS, conversions, and channel mix across all paid channels. Updated hourly. One link for the CMO.</p><div class="report-keywords"><span>marketing dashboard</span><span>CMO dashboard</span></div></div>
-      <div class="report-card"><h3>Channel Deep Dive</h3><p>Per-channel performance with drill-down to campaign and ad set level. Compare Facebook vs Google vs TikTok with normalized metrics.</p><div class="report-keywords"><span>channel performance report</span><span>cross channel analytics</span></div></div>
-      <div class="report-card"><h3>Weekly Business Review (WBR)</h3><p>Automated weekly report with WoW and MoM comparisons. The exact report format top performance teams use.</p><div class="report-keywords"><span>weekly business review marketing</span><span>WBR template</span></div></div>
-      <div class="report-card"><h3>Creative Performance Report</h3><p>Which creatives convert best across which channels. Identify creative fatigue before it tanks your ROAS.</p><div class="report-keywords"><span>creative analytics dashboard</span><span>ad creative report</span></div></div>
-    </div>
+<!-- Category Taxonomy -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-green">Category Taxonomy</div>
+  <p class="section-desc">Filter categories for sources and destinations. Each source and destination page is tagged with its category for faceted navigation and internal linking.</p>
 
-    <!-- Sample report preview -->
-    <div class="report-preview">
-      <h3>Sample: Cross-Channel Overview (what the data looks like in Looker Studio)</h3>
-      <table class="report-preview-table">
-        <thead><tr><th>Channel</th><th>Spend</th><th>Impressions</th><th>Clicks</th><th>Conversions</th><th>ROAS</th><th>CPA</th></tr></thead>
-        <tbody>
-          <tr><td>Facebook Ads</td><td>$45,200</td><td>2.1M</td><td>42,100</td><td>1,890</td><td>3.2x</td><td>$23.92</td></tr>
-          <tr><td>Google Ads</td><td>$38,600</td><td>890K</td><td>31,200</td><td>2,100</td><td>4.1x</td><td>$18.38</td></tr>
-          <tr><td>TikTok Ads</td><td>$12,400</td><td>3.4M</td><td>18,900</td><td>620</td><td>2.8x</td><td>$20.00</td></tr>
-          <tr><td>Snapchat Ads</td><td>$8,100</td><td>1.8M</td><td>9,200</td><td>310</td><td>2.1x</td><td>$26.13</td></tr>
-          <tr><td style="font-weight:700;">Total</td><td>$104,300</td><td>8.2M</td><td>101,400</td><td>4,920</td><td>3.4x</td><td>$21.20</td></tr>
-        </tbody>
-      </table>
-      <p class="anno">Illustrative data. In Clarisights, all metrics are normalized — same attribution model, same conversion counting, same currency.</p>
-    </div>
-
-    <div style="margin-top:1.5rem; padding:1.25rem; background:var(--blue-light); border-radius:var(--r); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
-      <div>
-        <div style="font-size:0.95rem; font-weight:600; color:var(--dark);">Want dashboards like these with your data?</div>
-        <div style="font-size:0.82rem; color:var(--g500);">See a live demo with your channels, your metrics, your Looker Studio.</div>
-      </div>
-      <a href="#" class="btn btn-p">Get a Demo &rarr;</a>
-    </div>
-  </div>
-</div>
-
-<!-- The Problem -->
-<div class="sec sec-alt">
-  <div class="c">
-    <h2>Why export from Clarisights to Looker Studio?</h2>
-    <div class="cmp-grid" style="margin-top:1.5rem;">
-      <div class="cmp-card bad">
-        <h4>15 Individual Connectors</h4>
-        <ul>
-          <li>Each ad platform needs its own Looker Studio connector</li>
-          <li>Different data schemas — you spend hours blending manually</li>
-          <li>Connectors break silently. Dashboards show stale data.</li>
-          <li>No cross-channel metrics without custom SQL or calculated fields</li>
-          <li>$200-500/mo in connector fees (Supermetrics, etc.)</li>
-        </ul>
-      </div>
-      <div class="cmp-card good">
-        <h4>One Clarisights Feed</h4>
-        <ul>
-          <li>One data source in Looker Studio — all channels unified</li>
-          <li>Pre-normalized data. "ROAS" means the same thing everywhere.</li>
-          <li>Monitored and maintained. You get alerted if data is stale.</li>
-          <li>Cross-channel metrics calculated automatically</li>
-          <li>Reporting layer included — not just a pipe</li>
-        </ul>
+  <div class="deliverables" style="margin-top:var(--space-s);">
+    <div>
+      <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:8px;">Source Categories</p>
+      <div class="type-row">
+        <span class="type-pill">Social Advertising</span>
+        <span class="type-pill">Search Advertising</span>
+        <span class="type-pill">Programmatic / DSP</span>
+        <span class="type-pill">Attribution / MMP</span>
+        <span class="type-pill">Web Analytics</span>
+        <span class="type-pill">Commerce / eCommerce</span>
+        <span class="type-pill">CRM / Sales</span>
+        <span class="type-pill">Email / Marketing Automation</span>
+        <span class="type-pill">TV / OTT / Audio</span>
+        <span class="type-pill">Organic Social</span>
       </div>
     </div>
-    <div class="displace">
-      <div class="displace-icon">&#8644;</div>
-      <div>
-        <h4>Currently using Supermetrics or Funnel to feed Looker Studio?</h4>
-        <p>Those tools move data. Clarisights normalizes, enriches, and reports on it. Switch once, never build another blending formula again. <a href="#" style="color:var(--amber); font-weight:600;">See how we compare &rarr;</a></p>
-      </div>
-    </div>
-
-    <div style="margin-top:1.5rem; display:flex; gap:10px; flex-wrap:wrap;">
-      <a href="#" class="btn btn-p">Get a Demo &rarr;</a>
-      <a href="#" class="btn btn-ghost">Switching from another tool? Talk to us</a>
-    </div>
-  </div>
-</div>
-
-<!-- Sources Grid -->
-<div class="sec">
-  <div class="c">
-    <h2>Connect these sources to Looker Studio through Clarisights</h2>
-    <p class="sub">Your most popular ad platforms, unified and dashboard-ready.</p>
-    <div class="cards">
-      <a href="#" class="card"><div class="logo-box logo-sm fb">f</div><div><h4>Facebook Ads &rarr; Looker Studio</h4><p>Social</p></div></a>
-      <a href="#" class="card"><div class="logo-box logo-sm gads">G</div><div><h4>Google Ads &rarr; Looker Studio</h4><p>Search</p></div></a>
-      <a href="#" class="card"><div class="logo-box logo-sm tiktok">T</div><div><h4>TikTok Ads &rarr; Looker Studio</h4><p>Social</p></div></a>
-      <a href="#" class="card"><div class="logo-box logo-sm li">L</div><div><h4>LinkedIn Ads &rarr; Looker Studio</h4><p>Social</p></div></a>
-      <a href="#" class="card"><div class="logo-box logo-sm ga">A</div><div><h4>Google Analytics &rarr; Looker Studio</h4><p>Analytics</p></div></a>
-    </div>
-  </div>
-</div>
-
-<!-- FAQ + CTA -->
-<div class="sec sec-alt">
-  <div class="c">
-    <h2>Frequently asked questions</h2>
-    <div class="faq-list" style="margin-top:1rem;">
-      <div class="faq-item"><button class="faq-q" onclick="tfaq(this)">Do I still need individual Looker Studio connectors?</button><div class="faq-a">No. Clarisights replaces all of them. One unified data feed instead of 15 separate connectors to manage, debug, and pay for.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="tfaq(this)">How does the data get into Looker Studio?</button><div class="faq-a">Clarisights provides a native Looker Studio connector. Add it as a data source, and your unified marketing data appears ready to use in any chart, table, or dashboard.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="tfaq(this)">Is the data always fresh?</button><div class="faq-a">Yes. Clarisights syncs from all sources hourly. Your Looker Studio dashboards pull the latest data every time they load.</div></div>
-    </div>
-  </div>
-</div>
-<div class="sec sec-dark"><div class="cta-bar"><h2>Build better marketing dashboards in Looker Studio</h2><p>300+ sources, one unified data feed. No more connector management.</p><a href="#" class="btn btn-p">Book a Demo &rarr;</a></div></div>
-</div>
-
-<!-- ==================== CONNECTOR PAGE ==================== -->
-<div id="pg-conn" class="tpl">
-
-<div class="hero">
-  <div class="c">
-    <div class="component-label">Connector Page Template</div>
-    <div class="hero-grid">
-      <div>
-        <div class="hero-badges"><span class="badge badge-blue">Connector</span></div>
-        <h1>Connect Facebook Ads to Looker Studio</h1>
-        <p class="hero-sub">Build automated Looker Studio dashboards with your Facebook Ads data — alongside Google, TikTok, and 300+ other channels. No manual exports, no individual connectors.</p>
-        <div class="hero-ctas"><a href="#" class="btn btn-p">Get a Demo</a></div>
-        <p class="hero-trust"><strong>300+ sources → any destination</strong> &middot; Used by Delivery Hero, On Running, Forbes</p>
-      </div>
-      <div class="hero-visual">
-        <div class="conn-visual">
-          <div class="logo-box logo-sm fb" style="width:64px;height:64px;font-size:1.6rem;">f</div>
-          <span class="conn-arrow">&rarr;</span>
-          <div style="width:36px;height:36px;border-radius:50%;background:var(--blue-light);display:flex;align-items:center;justify-content:center;font-size:0.9rem;color:var(--blue);font-weight:700;">C</div>
-          <span class="conn-arrow">&rarr;</span>
-          <div class="logo-box logo-sm looker" style="width:64px;height:64px;font-size:1.6rem;">L</div>
-        </div>
+    <div>
+      <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;">Destination Categories</p>
+      <div class="type-row">
+        <span class="type-pill">BI &amp; Dashboards</span>
+        <span class="type-pill">Data Warehouses</span>
+        <span class="type-pill">Spreadsheets</span>
+        <span class="type-pill">Cloud Storage</span>
+        <span class="type-pill">Messaging / Alerts</span>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- Specific Report for This Combo -->
-<div class="sec">
-  <div class="c">
-    <div class="component-label">The Specific Report (unique to this combo)</div>
-    <h2>The report you'll build: Cross-Channel Paid Social Dashboard</h2>
-    <p class="sub">The most common reason teams connect Facebook Ads to Looker Studio through Clarisights.</p>
+<hr class="divider" style="margin:0 auto;max-width:1400px">
 
-    <p style="font-size:0.9rem; color:var(--g700); line-height:1.7; max-width:700px;">E-commerce teams sending $100K+/month on Facebook Ads need more than Meta's native Ads Manager. They need a Looker Studio dashboard that shows Facebook alongside Google Ads, TikTok, and Snapchat — with one definition of ROAS, one currency, and one attribution model.</p>
+<!-- Keyword Strategy -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-red">Keyword Strategy</div>
+  <p class="section-desc">Each component on the integration pages targets a specific keyword cluster. This is how search volume maps to page components.</p>
 
-    <div class="report-preview">
-      <h3>What the dashboard looks like</h3>
-      <table class="report-preview-table">
-        <thead><tr><th>Channel</th><th>Spend</th><th>Conv.</th><th>ROAS</th><th>CPA</th><th>vs Last Week</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Facebook Ads</strong></td><td>$45,200</td><td>1,890</td><td>3.2x</td><td>$23.92</td><td style="color:var(--green);">+8%</td></tr>
-          <tr><td>Google Ads</td><td>$38,600</td><td>2,100</td><td>4.1x</td><td>$18.38</td><td style="color:var(--green);">+3%</td></tr>
-          <tr><td>TikTok Ads</td><td>$12,400</td><td>620</td><td>2.8x</td><td>$20.00</td><td style="color:var(--red);">-5%</td></tr>
-        </tbody>
-      </table>
-      <p class="anno">Illustrative. All metrics normalized by Clarisights before reaching Looker Studio.</p>
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Keyword Cluster</th>
+          <th class="num">Volume</th>
+          <th>Lives In Component</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{source} reporting / dashboard</td>
+          <td class="num">Varies (high)</td>
+          <td>Hero + Report Gallery</td>
+        </tr>
+        <tr>
+          <td>cross-channel reporting / analytics</td>
+          <td class="num">15,000+</td>
+          <td>Cross-Channel Pairings</td>
+        </tr>
+        <tr>
+          <td>marketing dashboard examples</td>
+          <td class="num">135,000</td>
+          <td>Destination pages (dashboard gallery)</td>
+        </tr>
+        <tr>
+          <td>creative analytics / creative fatigue</td>
+          <td class="num">500+</td>
+          <td>Report Gallery (creative report card)</td>
+        </tr>
+        <tr>
+          <td>supermetrics / funnel / datorama alternative</td>
+          <td class="num">740+</td>
+          <td>Competitive Displacement</td>
+        </tr>
+        <tr>
+          <td>ad spend optimization / budget pacing</td>
+          <td class="num">200+</td>
+          <td>Report Gallery (budget card)</td>
+        </tr>
+        <tr>
+          <td>marketing mix modeling</td>
+          <td class="num">4,000+</td>
+          <td>Industry Use Cases (enterprise tab)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- 10 Components Deep Dive -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-blue">10 Components Deep Dive</div>
+  <p class="section-desc">Every data source page includes these 10 components. Blue-highlighted rows are components that don't exist on any competitor's integration pages. Amber highlights our competitive displacement angle.</p>
+
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th style="width:2.5em;">#</th>
+          <th>Component</th>
+          <th>Intel Source</th>
+          <th>Why Better Than Funnel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">1</td>
+          <td>Hero (report-first)</td>
+          <td>Brand positioning</td>
+          <td>"Build reports" not "Connect data"</td>
+        </tr>
+        <tr class="highlight">
+          <td class="num">2</td>
+          <td style="font-weight:700;">Report Gallery</td>
+          <td>Welltech demo playbook, CS team</td>
+          <td>Shows WHAT you build. Funnel shows "supported fields."</td>
+        </tr>
+        <tr class="highlight">
+          <td class="num">3</td>
+          <td style="font-weight:700;">Cross-Channel Pairings</td>
+          <td>Customer combos (DH, On Running, Superbet)</td>
+          <td>Shows what sources combine. Funnel is single-source only.</td>
+        </tr>
+        <tr class="highlight">
+          <td class="num">4</td>
+          <td style="font-weight:700;">Industry Use Cases</td>
+          <td>ICP = 67% eCommerce. Customer profiles.</td>
+          <td>eCommerce, gaming, DTC tabs. Funnel is generic.</td>
+        </tr>
+        <tr class="highlight-amber">
+          <td class="num">5</td>
+          <td style="font-weight:700;">Competitive Displacement</td>
+          <td>Funnel crisis, Datorama hate, Taxfix CMO ask</td>
+          <td>Active "switching from Funnel?" CTA on every page.</td>
+        </tr>
+        <tr>
+          <td class="num">6</td>
+          <td>Metrics + Dimensions</td>
+          <td>API documentation</td>
+          <td>Table stakes. Positioned AFTER value sections.</td>
+        </tr>
+        <tr>
+          <td class="num">7</td>
+          <td>Destinations Grid</td>
+          <td>Destination taxonomy</td>
+          <td>Links to connector pages</td>
+        </tr>
+        <tr>
+          <td class="num">8</td>
+          <td>Related Sources</td>
+          <td>Real customer pairings</td>
+          <td>Not "same category" &mdash; actual combos</td>
+        </tr>
+        <tr class="highlight">
+          <td class="num">9</td>
+          <td style="font-weight:700;">Intelligence-Informed FAQ</td>
+          <td>Jo&atilde;o's buying Qs, Cindy/AY objections</td>
+          <td>Real sales questions, not generic FAQ</td>
+        </tr>
+        <tr>
+          <td class="num">10</td>
+          <td>CTA Bar</td>
+          <td>&mdash;</td>
+          <td>Includes displacement CTA</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--pencil);margin-top:var(--space-xs);">Blue rows = components that don't exist on Funnel's pages. Amber = competitive angle Funnel can't match.</p>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- Supporting Pages Needed -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-yellow">Supporting Pages Needed</div>
+  <p class="section-desc">These pages don't exist on clarisights.com today. The integration pages link to them, so they need to be built in parallel or shortly after.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--space-s);margin-top:var(--space-s);">
+
+    <div class="callout callout-red">
+      <div class="callout-label">Missing &mdash; High Priority</div>
+      <p style="font-family:var(--serif);font-size:var(--fs-body);font-weight:700;color:var(--ink);margin-bottom:8px;">Comparison / "vs" Pages</p>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.6;">
+        <strong>Clarisights vs Funnel.io</strong> &mdash; competitive displacement is active, no page to send prospects to<br>
+        <strong>Clarisights vs Supermetrics</strong> &mdash; 260 vol/mo, $88 CPC, KD=1. Highest ROI page we can build.<br>
+        <strong>Clarisights vs Datorama</strong> &mdash; already ranking #8, just needs a real page<br>
+        <strong>Clarisights vs Looker + GA4</strong> &mdash; Taxfix CMO asked for "honest comparison, no sales BS"<br>
+        <strong>Clarisights vs Improvado</strong> &mdash; SEO gorilla (11K keywords), need to own the comparison SERP
+      </p>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--pencil);margin-top:8px;">Every integration page's "Competitive Displacement" section links to these. Without them, the CTA goes nowhere.</p>
     </div>
 
-    <div style="margin-top:1.5rem; padding:1.25rem; background:var(--blue-light); border-radius:var(--r); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
-      <div>
-        <div style="font-size:0.95rem; font-weight:600; color:var(--dark);">Build this dashboard with your own Facebook Ads data</div>
-        <div style="font-size:0.82rem; color:var(--g500);">Connect in under 10 minutes. See your data in Looker Studio today.</div>
-      </div>
-      <a href="#" class="btn btn-p">Get a Demo &rarr;</a>
+    <div class="callout callout-red">
+      <div class="callout-label">Missing &mdash; High Priority</div>
+      <p style="font-family:var(--serif);font-size:var(--fs-body);font-weight:700;color:var(--ink);margin-bottom:8px;">Demo / Conversion Pages</p>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.6;">
+        <strong>Demo request page</strong> &mdash; every CTA on every integration page points here<br>
+        <strong>Pricing page</strong> &mdash; prospects will want pricing after seeing integration pages<br>
+        <strong>"Switching from [X]" landing page</strong> &mdash; for Funnel/Supermetrics refugees<br>
+        <strong>Product tour / video</strong> &mdash; for prospects not ready for a demo call
+      </p>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--pencil);margin-top:8px;">Integration pages drive demand. These pages convert it. Without them, traffic doesn't become pipeline.</p>
+    </div>
+
+    <div class="callout callout-yellow">
+      <div class="callout-label">Build Later</div>
+      <p style="font-family:var(--serif);font-size:var(--fs-body);font-weight:700;color:var(--ink);margin-bottom:8px;">Category &amp; Use Case Pages</p>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.6;">
+        <strong>/use-cases/e-commerce/</strong> &mdash; how eCommerce teams use Clarisights (67% of ICP)<br>
+        <strong>/use-cases/gaming/</strong> &mdash; gaming/app vertical (Product Madness, Lion Studios)<br>
+        <strong>/use-cases/agencies/</strong> &mdash; multi-client reporting (Three.e, Publicis)<br>
+        <strong>/integrations/social-advertising/</strong> &mdash; category landing page<br>
+        <strong>/integrations/attribution/</strong> &mdash; category landing page
+      </p>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--pencil);margin-top:8px;">Industry tabs on integration pages tease these. Building them deepens topical authority and captures industry-specific keywords.</p>
+    </div>
+
+    <div class="callout callout-yellow">
+      <div class="callout-label">Build Later</div>
+      <p style="font-family:var(--serif);font-size:var(--fs-body);font-weight:700;color:var(--ink);margin-bottom:8px;">Content Hub / Glossary Pages</p>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.6;">
+        <strong>/glossary/roas/</strong> &mdash; "What is ROAS" (2,900 vol). Report Gallery links here.<br>
+        <strong>/glossary/cpm/</strong> &mdash; "What is CPM" (5,400 vol). Metric tags link here.<br>
+        <strong>/guides/track-roas-across-channels/</strong> &mdash; cross-channel guide<br>
+        <strong>/benchmarks/roas/</strong> &mdash; "ROAS Benchmarks by Industry"
+      </p>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--pencil);margin-top:8px;">These are a separate pSEO project (the Data Literacy stream). Integration pages should link into them once built.</p>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- Build Priority -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-red">Build Priority</div>
+  <p class="section-desc">Phase 1 focuses on the 20 highest-value sources + 5 destinations. P0 pages get hand-enriched content from customer intelligence. Everything else is templated.</p>
+
+  <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:8px;margin-top:var(--space-s);">P0 Sources (20)</p>
+  <div class="type-row">
+    <span class="type-pill pill-red">Facebook Ads</span>
+    <span class="type-pill pill-red">Google Ads</span>
+    <span class="type-pill pill-red">TikTok Ads</span>
+    <span class="type-pill pill-red">Snapchat Ads</span>
+    <span class="type-pill pill-red">LinkedIn Ads</span>
+    <span class="type-pill pill-red">DV360</span>
+    <span class="type-pill pill-red">Apple Search Ads</span>
+    <span class="type-pill pill-red">Amazon Ads</span>
+    <span class="type-pill pill-red">Pinterest Ads</span>
+    <span class="type-pill pill-red">Twitter Ads</span>
+    <span class="type-pill pill-red">Google Analytics</span>
+    <span class="type-pill pill-red">AppsFlyer</span>
+    <span class="type-pill pill-red">Adjust</span>
+    <span class="type-pill pill-red">Criteo</span>
+    <span class="type-pill pill-red">Taboola</span>
+    <span class="type-pill pill-red">Outbrain</span>
+    <span class="type-pill pill-red">Shopify</span>
+    <span class="type-pill pill-red">HubSpot</span>
+    <span class="type-pill pill-red">Salesforce</span>
+    <span class="type-pill pill-red">Adobe Analytics</span>
+  </div>
+
+  <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;margin-top:var(--space-s);">P0 Destinations (5)</p>
+  <div class="type-row">
+    <span class="type-pill pill-blue">Looker Studio</span>
+    <span class="type-pill pill-blue">BigQuery</span>
+    <span class="type-pill pill-blue">Google Sheets</span>
+    <span class="type-pill pill-blue">Snowflake</span>
+    <span class="type-pill pill-blue">Power BI</span>
+  </div>
+
+  <div class="scale-grid" data-reveal>
+    <div class="scale-item">
+      <div class="scale-num">20</div>
+      <div class="scale-label">P0 Source Pages</div>
+    </div>
+    <div class="scale-item">
+      <div class="scale-num">5</div>
+      <div class="scale-label">P0 Destination Pages</div>
+    </div>
+    <div class="scale-item">
+      <div class="scale-num">~100</div>
+      <div class="scale-label">P0 Connector Pages</div>
+    </div>
+    <div class="scale-item">
+      <div class="scale-num">125+</div>
+      <div class="scale-label">Phase 1 Total</div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- How It Works -->
-<div class="sec sec-alt">
-  <div class="c">
-    <h2>How it works</h2>
-    <p class="sub">Three steps. Under 10 minutes.</p>
-    <div class="steps">
-      <div class="step"><div class="step-num">1</div><h3>Connect Facebook Ads</h3><p>OAuth login — one click. No API keys, no engineering.</p></div>
-      <div class="step"><div class="step-num">2</div><h3>Clarisights normalizes</h3><p>Your Facebook data is synced, normalized, and combined with your other sources hourly.</p></div>
-      <div class="step"><div class="step-num">3</div><h3>Export to Looker Studio</h3><p>Add Clarisights as a Looker Studio data source. Build dashboards with unified data immediately.</p></div>
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- Cross-Link Strategy -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-green">Cross-Link Strategy</div>
+  <p class="section-desc">The integration pages don't exist in isolation. They're nodes in a content graph that drives prospects from education to conversion.</p>
+
+  <div class="flywheel" data-reveal>
+    <div class="flywheel-node" style="border-color:var(--red);">Integration Pages<br><span style="font-weight:400;font-size:var(--fs-small);">/data-source/</span></div>
+    <span class="flywheel-arrow">&rarr;</span>
+    <div class="flywheel-node" style="border-color:var(--blue);">/learn/ Glossary<br><span style="font-weight:400;font-size:var(--fs-small);">metric definitions</span></div>
+    <span class="flywheel-arrow">&rarr;</span>
+    <div class="flywheel-node" style="border-color:var(--yellow);">/industries/ Playbooks<br><span style="font-weight:400;font-size:var(--fs-small);">vertical guides</span></div>
+    <span class="flywheel-arrow">&rarr;</span>
+    <div class="flywheel-node" style="border-color:var(--green);">Demo Request<br><span style="font-weight:400;font-size:var(--fs-small);">pipeline</span></div>
+  </div>
+
+  <div class="taxonomy-block">Cross-Link Map
+
+  /data-source/facebook-ads/
+      Report Gallery metric tags      &rarr;  /learn/glossary/roas/
+      Industry Use Cases tabs          &rarr;  /industries/ecommerce/
+      Cross-Channel Pairings           &rarr;  /data-source/google-ads/
+      Destinations Grid                &rarr;  /data-destination/looker-studio/
+      Competitive Displacement CTA     &rarr;  /vs/clarisights-vs-funnel/
+      CTA Bar                          &rarr;  /demo/
+
+  /data-destination/looker-studio/
+      Source Grid                      &rarr;  /data-source/{slug}/
+      Dashboard Gallery                &rarr;  /learn/metrics/{platform}/
+      "15 vs 1" section                &rarr;  /vs/clarisights-vs-supermetrics/
+
+  /connect/facebook-ads-to-looker-studio/
+      Report Template metric tags      &rarr;  /learn/glossary/{term}/
+      Source link                      &rarr;  /data-source/facebook-ads/
+      Destination link                 &rarr;  /data-destination/looker-studio/</div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- What The Team Needs -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-ink">What The Team Needs to Provide</div>
+  <p class="section-desc">For Recurr to build these pages at the quality described above, the Clarisights team needs to supply the following.</p>
+
+  <ol class="num-list">
+    <li><strong>Full integration list with categories.</strong> Every source and destination Clarisights supports, tagged by category (Social Advertising, Search, Attribution, etc.). This becomes the master list for all ~300 source pages.</li>
+    <li><strong>Top 20 source prioritization.</strong> Confirm which 20 integrations are P0 based on customer usage, sales pipeline data, and strategic importance.</li>
+    <li><strong>Report types per source.</strong> For each P0 source, which report types do customers actually build? CS team and demo playbooks are the primary source here.</li>
+    <li><strong>Customer source combinations.</strong> Which sources do real customers use together? This feeds the Cross-Channel Pairings component. HubSpot deal data + CS knowledge.</li>
+    <li><strong>Metrics and dimensions per source.</strong> What data does Clarisights pull from each source? API-level detail for P0 sources.</li>
+    <li><strong>Industry-source mapping.</strong> Which industries use which sources most? Needed for the Industry Use Cases tabs.</li>
+    <li><strong>Competitive intelligence access.</strong> Continued access to Zulip, HubSpot deal data, CS demo playbooks, and customer feedback. This is what makes every component intelligence-informed rather than generic.</li>
+    <li><strong>Destination capabilities.</strong> For each destination, what export options exist? Schema, format, refresh frequency, setup requirements.</li>
+    <li><strong>Brand assets.</strong> Integration logos, Clarisights brand guidelines for page design, approved customer logos for social proof.</li>
+    <li><strong>Comparison page approval.</strong> Sign-off on competitive claims for vs pages (Funnel, Supermetrics, Datorama, Improvado). Legal review if needed.</li>
+  </ol>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-entity">Recurr Studio &times; Clarisights</p>
+      <p class="footer-loc">Confidential &middot; April 2026</p>
     </div>
-    <div style="text-align:center; margin-top:2rem;">
-      <a href="#" class="btn btn-p">Start connecting &rarr;</a>
+    <div class="footer-links">
+      <a href="/clarisights-intelligence/">intelligence</a>
+      <a href="/clarisights-seo-v2/">seo strategy</a>
+      <a href="/clarisights-data-literacy/">data literacy</a>
     </div>
   </div>
-</div>
+</footer>
 
-<!-- Industry Angle -->
-<div class="sec">
-  <div class="c">
-    <h2>Who uses Facebook Ads &rarr; Looker Studio?</h2>
-    <p style="font-size:0.9rem; color:var(--g700); line-height:1.7; max-width:700px; margin-bottom:1.25rem;"><strong>E-commerce performance teams</strong> are the most common users of this combination. They run Facebook as their primary acquisition channel and need Looker Studio dashboards for weekly stakeholder reporting — combining Meta spend with Shopify revenue and Google Analytics sessions.</p>
-    <p style="font-size:0.9rem; color:var(--g700); line-height:1.7; max-width:700px; margin-bottom:1.25rem;"><strong>Agencies</strong> use this to build per-client dashboards. One Clarisights workspace per client, each feeding a branded Looker Studio report. Automated delivery, zero manual work.</p>
-    <a href="#" class="btn btn-s" style="font-size:0.82rem; padding:8px 18px;">See how e-commerce teams use Clarisights &rarr;</a>
-  </div>
-</div>
-
-<!-- Not Just Facebook -->
-<div class="sec sec-alt">
-  <div class="c">
-    <h2>Not just Facebook — combine with 300+ sources</h2>
-    <p class="sub">Other sources you can add to this Looker Studio dashboard.</p>
-    <div class="cards">
-      <a href="#" class="card"><div class="logo-box logo-sm gads">G</div><div><h4>Google Ads &rarr; Looker Studio</h4><p>Search</p></div></a>
-      <a href="#" class="card"><div class="logo-box logo-sm tiktok">T</div><div><h4>TikTok Ads &rarr; Looker Studio</h4><p>Social</p></div></a>
-      <a href="#" class="card"><div class="logo-box logo-sm li">L</div><div><h4>LinkedIn Ads &rarr; Looker Studio</h4><p>Social</p></div></a>
-      <a href="#" class="card"><div class="logo-box logo-sm ga">A</div><div><h4>Google Analytics &rarr; Looker Studio</h4><p>Analytics</p></div></a>
-    </div>
-  </div>
-</div>
-
-<!-- FAQ -->
-<div class="sec">
-  <div class="c">
-    <h2>Frequently asked questions</h2>
-    <div class="faq-list" style="margin-top:1rem;">
-      <div class="faq-item"><button class="faq-q" onclick="tfaq(this)">Can I connect Facebook Ads to Looker Studio directly?</button><div class="faq-a">You can, using third-party connectors (Supermetrics, etc.). But you'll only see Facebook data in isolation. Clarisights normalizes your Meta data alongside all your other channels, so your Looker Studio dashboard shows the real picture — cross-channel ROAS, unified CPA, total spend — not just one platform's silo.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="tfaq(this)">What does setup take?</button><div class="faq-a">Under 10 minutes. Connect Facebook Ads to Clarisights (one-click OAuth), wait for initial sync (3-10 min), add Clarisights as a Looker Studio data source. You'll have a working dashboard in a single sitting — no engineering required.</div></div>
-    </div>
-  </div>
-</div>
-<div class="sec sec-dark"><div class="cta-bar"><h2>Connect Facebook Ads to Looker Studio in minutes</h2><p>Unified data, normalized metrics, automated dashboards. Stop managing 15 connectors.</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;"><a href="#" class="btn btn-p">Book a Demo &rarr;</a><a href="#" class="btn btn-ghost" style="color:var(--g400);border-color:var(--g500);">Switching from Funnel? Talk to us</a></div></div></div>
-</div>
-
-<script>
-function show(id,btn){
-  document.querySelectorAll('.tpl').forEach(p=>p.classList.remove('active'));
-  document.getElementById('pg-'+id).classList.add('active');
-  document.querySelectorAll('.sw-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function tfaq(b){b.classList.toggle('open');b.nextElementSibling.classList.toggle('open');}
-function showInd(i,tab){
-  document.querySelectorAll('.ind-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.ind-tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('ind-'+i).classList.add('active');
-  tab.classList.add('active');
-}
-</script>
+<script src="/recurr-system/engine.js"></script>
 </body>
 </html>
