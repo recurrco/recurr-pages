@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Search + AI Visibility Program — Recurr × Krisatwork</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #EAEAE6;
+      --ink:     #1A1A1A;
+      --muted:   #666;
+      --faint:   #999;
+      --border:  #D2D2CE;
+      --card-bg: #F2F2EE;
+      --red:     #C0362B;
+      --blue:    #2B5B8A;
+      --green:   #2E6A50;
+      --yellow:  #C49A14;
+      --orange:  #B85C00;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ── section / dot grid ── */
+    .section {
+      position: relative;
+      padding: 64px 72px 72px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, #BBBBB5 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .section-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+    }
+
+    /* ── nav ── */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 52px;
+    }
+    .logo {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: -0.3px;
+    }
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--faint);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── typography ── */
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 42px;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+      max-width: 720px;
+    }
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 30px;
+      line-height: 1.15;
+      letter-spacing: -0.3px;
+      margin-bottom: 16px;
+    }
+    h3 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .lead {
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--muted);
+      max-width: 640px;
+      margin-bottom: 40px;
+    }
+    p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+    /* ── tags / pills ── */
+    .tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+    .tag-ink    { background: #D8D8D4; color: var(--ink); }
+    .tag-blue   { background: #D4E2EF; color: var(--blue); }
+    .tag-green  { background: #D1E8DC; color: var(--green); }
+    .tag-yellow { background: #F5EAC8; color: var(--yellow); }
+    .tag-red    { background: #F5D5D2; color: var(--red); }
+    .tag-orange { background: #F5E2CC; color: var(--orange); }
+
+    .pill {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .pill-blue   { background: #D4E2EF; color: var(--blue); }
+    .pill-green  { background: #D1E8DC; color: var(--green); }
+    .pill-ink    { background: #D8D8D4; color: #444; }
+    .pill-yellow { background: #F5EAC8; color: var(--yellow); }
+    .pill-orange { background: #F5E2CC; color: var(--orange); }
+
+    /* ── cards ── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .card p { font-size: 14px; line-height: 1.55; }
+
+    /* ── grids ── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    /* ── divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+
+    /* ── Page 1 specific ── */
+    .status-row {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .status-card {
+      flex: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 22px;
+    }
+    .status-card.dark {
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+    .status-card.dark .status-label { color: #888; }
+    .status-card.dark .status-value { color: #E8E8E4; }
+    .status-card.dark p { color: #999; }
+    .status-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 8px;
+    }
+    .status-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 32px;
+      line-height: 1;
+      margin-bottom: 8px;
+      color: var(--red);
+    }
+
+    .opportunity-block {
+      border-left: 3px solid var(--green);
+      background: var(--card-bg);
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      border-radius: 0 6px 6px 0;
+    }
+    .opportunity-block .opp-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .opportunity-block p { font-size: 13.5px; }
+    .opportunity-block .opp-flag {
+      display: inline-block;
+      margin-top: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--green);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Page 2 specific ── */
+    .two-track {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .track-col {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px 26px;
+    }
+    .track-col-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 6px;
+    }
+    .track-col-title {
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--ink);
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cluster {
+      margin-bottom: 18px;
+    }
+    .cluster-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 6px;
+    }
+    .kw-list {
+      list-style: none;
+    }
+    .kw-list li {
+      font-size: 13.5px;
+      color: var(--ink);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .kw-list li:last-child { border-bottom: none; }
+    .kw-text { flex: 1; font-style: italic; }
+
+    .prompt-list {
+      list-style: none;
+    }
+    .prompt-list li {
+      display: flex;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13.5px;
+      align-items: flex-start;
+    }
+    .prompt-list li:last-child { border-bottom: none; }
+    .prompt-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--faint);
+      min-width: 22px;
+      padding-top: 3px;
+    }
+    .prompt-text { flex: 1; color: var(--ink); line-height: 1.45; font-style: italic; }
+
+    .focus-note {
+      background: var(--ink);
+      color: #E8E8E4;
+      border-radius: 6px;
+      padding: 16px 20px;
+      font-size: 13px;
+      line-height: 1.55;
+      margin-top: 8px;
+    }
+    .focus-note strong { color: #fff; }
+
+    /* ── Page 3 specific ── */
+    .phase-block {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin-bottom: 16px;
+    }
+    .phase-block.active {
+      border-color: var(--ink);
+    }
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .phase-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--faint);
+      min-width: 28px;
+    }
+    .phase-title {
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .phase-subtitle {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--faint);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-left: auto;
+    }
+    .activity-list {
+      list-style: none;
+    }
+    .activity-list li {
+      font-size: 13.5px;
+      color: var(--muted);
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+      line-height: 1.45;
+    }
+    .activity-list li:last-child { border-bottom: none; }
+    .activity-check {
+      color: var(--green);
+      font-size: 12px;
+      padding-top: 2px;
+      flex-shrink: 0;
+    }
+    .activity-list strong { color: var(--ink); font-weight: 600; }
+
+    .note-bar {
+      background: #F5EAC8;
+      border-left: 3px solid var(--yellow);
+      padding: 14px 18px;
+      border-radius: 0 6px 6px 0;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    /* ── Page 4 specific ── */
+    .outcome-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 22px 26px;
+      margin-bottom: 14px;
+    }
+    .outcome-card.dark {
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+    .outcome-card.dark .outcome-label { color: #888; }
+    .outcome-card.dark .outcome-title { color: #E8E8E4; }
+    .outcome-card.dark p { color: #999; }
+    .outcome-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 8px;
+    }
+    .outcome-title {
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .check-list {
+      list-style: none;
+      margin-top: 10px;
+    }
+    .check-list li {
+      font-size: 13.5px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      gap: 10px;
+      line-height: 1.45;
+    }
+    .check-list li:last-child { border-bottom: none; }
+    .check-list.light li { border-bottom-color: var(--border); }
+    .check-icon { color: var(--green); flex-shrink: 0; font-size: 13px; }
+    .check-icon.white { color: #8BC4A8; }
+    .check-list .check-text { color: #ccc; }
+    .check-list.light .check-text { color: var(--muted); }
+
+    /* ── Page 5 specific ── */
+    .role-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    .role-block {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 22px 24px;
+    }
+    .role-block-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--ink);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .role-item {
+      font-size: 13.5px;
+      color: var(--muted);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+      line-height: 1.45;
+    }
+    .role-item:last-child { border-bottom: none; }
+    .role-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--border);
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .cadence-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .cadence-item {
+      flex: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+    .cadence-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--faint);
+      margin-bottom: 6px;
+    }
+    .cadence-value {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    .closing-bar {
+      background: var(--ink);
+      border-radius: 8px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      margin-top: 32px;
+    }
+    .closing-bar p {
+      color: #999;
+      font-size: 13px;
+      line-height: 1.55;
+      max-width: 440px;
+      font-style: italic;
+    }
+    .contact-block { flex-shrink: 0; text-align: right; }
+    .contact-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: #E8E8E4;
+    }
+    .contact-sub {
+      font-size: 13px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .footnote {
+      font-size: 12px;
+      color: var(--faint);
+      line-height: 1.55;
+      margin-top: 20px;
+    }
+
+    .deck-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .footer-note {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--faint);
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      .section { padding: 40px 24px 48px; }
+      h1 { font-size: 30px; }
+      h2 { font-size: 24px; }
+      .status-row, .two-track, .outcome-grid, .role-grid { grid-template-columns: 1fr; }
+      .cadence-row { flex-direction: column; }
+      .closing-bar { flex-direction: column; text-align: left; }
+      .contact-block { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+
+<!-- ═══════════════════════════════════════════════════
+     PAGE 1 — The Opportunity
+═══════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-inner">
+
+    <nav class="nav">
+      <span class="logo">recurr</span>
+      <span class="section-label">01 / 05 · Search + AI Visibility · Krisatwork</span>
+    </nav>
+
+    <span class="tag tag-ink">The Opportunity</span>
+
+    <h1>Your buyers are already looking. The question is who they find.</h1>
+
+    <p class="lead">Enterprise sales leaders — Krisatwork's exact ICP — are searching in Google and asking ChatGPT, Gemini, and Claude which tools to use. Right now, Krisatwork doesn't appear in either place.</p>
+
+    <div class="status-row">
+      <div class="status-card">
+        <div class="status-label">Google · Organic presence</div>
+        <div class="status-value">~2</div>
+        <p>Keywords the site ranks for in the US. The site has a technical issue that prevents Google from properly indexing it. It's fixable — and fixing it is the first action we take.</p>
+      </div>
+      <div class="status-card">
+        <div class="status-label">India market · Organic presence</div>
+        <div class="status-value">0</div>
+        <p>No visibility in the home market. Same root cause. Once fixed, content starts working immediately.</p>
+      </div>
+      <div class="status-card dark">
+        <div class="status-label">AI answers · Citation presence</div>
+        <div class="status-value">0</div>
+        <p>Krisatwork does not appear when buyers ask ChatGPT, Gemini, or Claude about AI sales tools. Competitors do. This is the gap the program closes.</p>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <h3>Emerging territory — where competitors haven't moved yet</h3>
+    <p style="margin-bottom: 20px; font-size: 14px;">The established categories — "AI sales assistant," "meeting transcription," "sales coaching" — are crowded. What's forming now, and still largely unclaimed, is a different set of conversations. These are the ones we go after first.</p>
+
+    <div class="opportunity-block">
+      <div class="opp-title">Sales rep time reclamation</div>
+      <p>Sales leaders are asking: "Why are my reps spending most of their time on admin and not selling?" This is a management and operations search — not a product search. Competitors are speaking to individual reps. Nobody is speaking to the VP or RevOps leader trying to solve this at a team level. This is open territory.</p>
+      <span class="opp-flag">↳ No dominant content player here yet</span>
+    </div>
+
+    <div class="opportunity-block">
+      <div class="opp-title">Tool consolidation — the SaaS fatigue narrative</div>
+      <p>Teams are drowning in point solutions. There is a growing search behaviour around "how to reduce the number of tools my sales team uses" and "unified AI for sales teams." Gong, Sybill, and Read.ai are all point solutions — they add to the problem. Krisatwork, as a unified companion, is positioned to own this narrative. No one is writing for it yet.</p>
+      <span class="opp-flag">↳ Krisatwork's positioning advantage — unclaimed in search and AI answers</span>
+    </div>
+
+    <div class="opportunity-block">
+      <div class="opp-title">Pre-meeting prep intelligence</div>
+      <p>The post-call space (transcription, summaries, coaching) is saturated. Pre-call — how to walk into a meeting prepared, with the right context, and ready to have a real conversation — is almost unaddressed in content. The buyer behaviour is forming: sales professionals are starting to ask AI how to prepare for specific calls. Krisatwork can own this frame before competitors notice it.</p>
+      <span class="opp-flag">↳ Competitor focus is post-call. Pre-call is open.</span>
+    </div>
+
+    <div class="opportunity-block">
+      <div class="opp-title">AI-first sales workflow design</div>
+      <p>A newer search behaviour: revenue leaders asking how to redesign their team's workflows around AI — not bolt it on. "How to build an AI-native sales process" has almost no dedicated content from product companies. The content that exists is generic and ChatGPT-written. Krisatwork has the product depth to own this conversation with authority.</p>
+      <span class="opp-flag">↳ Strategic-level search, decision-maker audience, early-stage content landscape</span>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     PAGE 2 — What We're Going After
+═══════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-inner">
+
+    <nav class="nav">
+      <span class="logo">recurr</span>
+      <span class="section-label">02 / 05 · Search + AI Visibility · Krisatwork</span>
+    </nav>
+
+    <span class="tag tag-ink">Focus Areas</span>
+
+    <h2>The topics, searches, and questions we focus on — for 3 months.</h2>
+    <p class="lead" style="margin-bottom: 32px;">We work two channels in parallel: search (Google) and AI (ChatGPT, Gemini, Claude). The topics overlap — content built for one channel feeds the other.</p>
+
+    <div class="two-track">
+
+      <!-- SEO column -->
+      <div class="track-col">
+        <div class="track-col-label">Track 1</div>
+        <div class="track-col-title">Search topics — Google</div>
+
+        <div class="cluster" style="margin-bottom: 22px;">
+          <div class="cluster-label">Month 1–2 focus · Problem-aware searches</div>
+          <ul class="kw-list">
+            <li><span class="kw-text">"how to reduce sales rep admin work"</span><span class="pill pill-green">Low competition</span></li>
+            <li><span class="kw-text">"automate sales admin tasks"</span><span class="pill pill-green">Low competition</span></li>
+            <li><span class="kw-text">"why are my sales reps not selling enough"</span><span class="pill pill-green">Low competition</span></li>
+            <li><span class="kw-text">"how to reduce CRM admin time"</span><span class="pill pill-green">Low competition</span></li>
+            <li><span class="kw-text">"AI-first sales workflow"</span><span class="pill pill-yellow">Emerging</span></li>
+          </ul>
+        </div>
+
+        <div class="cluster" style="margin-bottom: 22px;">
+          <div class="cluster-label">Month 2–3 · Category searches</div>
+          <ul class="kw-list">
+            <li><span class="kw-text">"AI sales assistant software"</span><span class="pill pill-blue">Mid competition</span></li>
+            <li><span class="kw-text">"AI sales agent"</span><span class="pill pill-blue">Mid competition</span></li>
+            <li><span class="kw-text">"unified AI tool for sales teams"</span><span class="pill pill-yellow">Emerging</span></li>
+            <li><span class="kw-text">"pre-call AI assistant for sales"</span><span class="pill pill-yellow">Emerging</span></li>
+          </ul>
+        </div>
+
+        <div class="cluster">
+          <div class="cluster-label">Month 3 · Comparison searches</div>
+          <ul class="kw-list">
+            <li><span class="kw-text">"Krisatwork vs Gong"</span><span class="pill pill-ink">Decision stage</span></li>
+            <li><span class="kw-text">"best AI sales tool alternative to Gong"</span><span class="pill pill-ink">Decision stage</span></li>
+            <li><span class="kw-text">"Gong alternatives for mid-market teams"</span><span class="pill pill-ink">Decision stage</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- GEO column -->
+      <div class="track-col">
+        <div class="track-col-label">Track 2</div>
+        <div class="track-col-title">AI prompts — ChatGPT, Gemini, Claude</div>
+
+        <div class="cluster" style="margin-bottom: 22px;">
+          <div class="cluster-label">Category prompts — buyers exploring options</div>
+          <ul class="prompt-list">
+            <li><span class="prompt-num">A1</span><span class="prompt-text">"What are the best AI tools for enterprise sales teams?"</span></li>
+            <li><span class="prompt-num">A2</span><span class="prompt-text">"What AI sales assistant works with HubSpot and Salesforce?"</span></li>
+            <li><span class="prompt-num">A3</span><span class="prompt-text">"Which AI tool helps sales reps spend more time selling?"</span></li>
+          </ul>
+        </div>
+
+        <div class="cluster" style="margin-bottom: 22px;">
+          <div class="cluster-label">Problem prompts — highest intent, open territory</div>
+          <ul class="prompt-list">
+            <li><span class="prompt-num">B1</span><span class="prompt-text">"Why are my sales reps spending so much time on admin?"</span></li>
+            <li><span class="prompt-num">B2</span><span class="prompt-text">"How do I reduce the number of tools my sales team uses?"</span></li>
+            <li><span class="prompt-num">B3</span><span class="prompt-text">"How can I give my reps more time to actually sell?"</span></li>
+            <li><span class="prompt-num">B4</span><span class="prompt-text">"How to use AI for sales call preparation?"</span></li>
+            <li><span class="prompt-num">B5</span><span class="prompt-text">"How to build an AI-first sales process for my team?"</span></li>
+          </ul>
+        </div>
+
+        <div class="cluster">
+          <div class="cluster-label">Comparison prompts — decision stage</div>
+          <ul class="prompt-list">
+            <li><span class="prompt-num">C1</span><span class="prompt-text">"What is a good alternative to Gong for mid-market?"</span></li>
+            <li><span class="prompt-num">C2</span><span class="prompt-text">"Krisatwork vs Gong — which one is right for my team?"</span></li>
+            <li><span class="prompt-num">C3</span><span class="prompt-text">"Best AI sales tool for a 10-person revenue team?"</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="focus-note">
+      <strong>Why the problem prompts first.</strong> Category and comparison searches are already contested. The problem prompts — B1 through B5 — are the highest-intent searches in the category, and almost no company has written content for them. We start here because the barrier to appearing is lowest and the buyer is most qualified.
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     PAGE 3 — What We'll Do
+═══════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-inner">
+
+    <nav class="nav">
+      <span class="logo">recurr</span>
+      <span class="section-label">03 / 05 · Search + AI Visibility · Krisatwork</span>
+    </nav>
+
+    <span class="tag tag-ink">The Plan</span>
+
+    <h2>3 months. Each with a clear output.</h2>
+    <p style="font-size: 15px; color: var(--muted); margin-bottom: 32px; max-width: 600px;">Month 1 fixes what's broken and maps the terrain. Month 2 builds content. Month 3 earns authority and expands AI presence.</p>
+
+    <!-- Month 1 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <span class="phase-num">01</span>
+        <span class="phase-title">Month 1 — Fix &amp; Map</span>
+        <span class="phase-subtitle">Foundation</span>
+      </div>
+      <ul class="activity-list">
+        <li><span class="activity-check">✓</span><span><strong>Fix the technical blocker</strong> — The site currently can't be properly indexed by Google. We fix this in week one. Everything else builds on this.</span></li>
+        <li><span class="activity-check">✓</span><span><strong>Set up Google Search Console</strong> — Submit the sitemap, verify indexing, establish the baseline. This becomes our reporting dashboard for the program.</span></li>
+        <li><span class="activity-check">✓</span><span><strong>Full keyword and prompt map</strong> — Final list of all target search topics and AI prompts, prioritised by effort and opportunity. This is the content roadmap for months 2 and 3.</span></li>
+        <li><span class="activity-check">✓</span><span><strong>G2 and Capterra profiles</strong> — Create verified listings. AI tools (ChatGPT, Gemini) pull heavily from G2 when recommending products. No profile means no citation.</span></li>
+        <li><span class="activity-check">✓</span><span><strong>Baseline audit</strong> — Run all 15 target prompts manually across ChatGPT, Gemini, and Perplexity. Record what appears and what doesn't. This is the Week 1 starting point we measure against.</span></li>
+        <li><span class="activity-check">✓</span><span><strong>Content briefs × 4 articles</strong> — Detailed briefs for the first four pieces. Each brief maps the search topic, the AI prompt it answers, and the exact structure the content needs to follow.</span></li>
+      </ul>
+    </div>
+
+    <!-- Month 2 -->
+    <div class="phase-block active">
+      <div class="phase-header">
+        <span class="phase-num">02</span>
+        <span class="phase-title">Month 2 — Build &amp; Place</span>
+        <span class="phase-subtitle">Content</span>
+      </div>
+      <ul class="activity-list">
+        <li><span class="activity-check">✓</span><span><strong>Publish 4 articles</strong> — Targeting problem-aware searches and problem prompts (B1–B5). Written to rank in Google and to be cited in AI answers. These are not generic blog posts.</span></li>
+        <li><span class="activity-check">✓</span><span><strong>Optimise existing pages</strong> — Title tags, headings, meta descriptions on all live pages. Small changes with disproportionate impact once the site is indexed.</span></li>
+        <li><span class="activity-check">✓</span><span><strong>Roundup outreach — first wave</strong> — Reach out to 3 high-authority "best AI sales tool" articles (e.g. Zapier, Lindy) to have Krisatwork added. These are the pages AI tools cite most. Being listed here directly improves AI citation presence. Note: placement on high-authority third-party sites may carry an additional cost depending on the domain.</span></li>
+        <li><span class="activity-check">✓</span><span><strong>Product Hunt launch</strong> — Prepare and launch. AI tools crawl Product Hunt for new product entries. A strong launch day creates a citation-worthy page.</span></li>
+        <li><span class="activity-check">✓</span><span><strong>First AI prompt check</strong> — Rerun the 15 prompts. Compare to baseline. Report what moved and what didn't. Adjust the plan if needed.</span></li>
+      </ul>
+    </div>
+
+    <!-- Month 3 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <span class="phase-num">03</span>
+        <span class="phase-title">Month 3 — Earn Authority</span>
+        <span class="phase-subtitle">Compounding</span>
+      </div>
+      <ul class="activity-list">
+        <li><span class="activity-check">✓</span><span><strong>2 more articles</strong> — Category and comparison content. "Krisatwork vs Gong" comparison. One piece on tool consolidation for revenue teams. These target mid-funnel and decision-stage searches.</span></li>
+        <li><span class="activity-check">✓</span><span><strong>G2 reviews campaign</strong> — Work with the Krisatwork customer team to collect 10+ verified reviews. G2 profiles with 10 or more reviews are cited significantly more often in AI answers than empty ones.</span></li>
+        <li><span class="activity-check">✓</span><span><strong>Roundup outreach — second wave</strong> — 3 additional targets: sales-focused blogs and newsletters with strong AI citation footprint (Sales Hacker, RevGenius, nooks.ai). Note: placement cost may apply on select sites.</span></li>
+        <li><span class="activity-check">✓</span><span><strong>HubSpot / Salesforce marketplace listing</strong> — If not already live. Marketplace pages generate citations and trust signals in AI answers. Competitors use these actively.</span></li>
+        <li><span class="activity-check">✓</span><span><strong>Full 90-day report</strong> — All 15 prompts re-audited. Keyword rankings reviewed. Comparison against Week 1 baseline. What improved, what needs more time, and what we do next.</span></li>
+        <li><span class="activity-check">✓</span><span><strong>Month 4–6 brief</strong> — Based on what worked, we prepare the roadmap for the next cycle before this one ends.</span></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     PAGE 4 — What Good Looks Like at 90 Days
+═══════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-inner">
+
+    <nav class="nav">
+      <span class="logo">recurr</span>
+      <span class="section-label">04 / 05 · Search + AI Visibility · Krisatwork</span>
+    </nav>
+
+    <span class="tag tag-ink">Outcomes</span>
+
+    <h2>What good looks like at 90 days.</h2>
+    <p style="font-size: 15px; color: var(--muted); margin-bottom: 32px; max-width: 600px;">These are directional. The goal of month 3 is to have a clear before-and-after story across all five areas — and a foundation that keeps compounding after the program ends.</p>
+
+    <!-- Top full-width card -->
+    <div class="outcome-card dark" style="margin-bottom: 20px;">
+      <div class="outcome-label">The overall shift</div>
+      <div class="outcome-title">Krisatwork moves from invisible to present — in Google and in AI answers.</div>
+      <ul class="check-list" style="margin-top: 12px;">
+        <li><span class="check-icon white">✓</span><span class="check-text">The site is fully indexed. Every page Google can see, Google can rank.</span></li>
+        <li><span class="check-icon white">✓</span><span class="check-text">Krisatwork appears in search results for the problem-aware topics your ICP searches first.</span></li>
+        <li><span class="check-icon white">✓</span><span class="check-text">Krisatwork's name comes up when buyers ask AI tools about solutions in this category.</span></li>
+        <li><span class="check-icon white">✓</span><span class="check-text">Krisatwork owns the emerging narratives — rep productivity, tool consolidation, pre-call prep — before competitors move in.</span></li>
+      </ul>
+    </div>
+
+    <div class="outcome-grid">
+
+      <div class="outcome-card">
+        <div class="outcome-label">Google visibility</div>
+        <div class="outcome-title">Rankings on topics that matter</div>
+        <ul class="check-list light">
+          <li><span class="check-icon">✓</span><span class="check-text">Ranking for problem-aware and emerging search topics — the ones with low competition and high buyer intent.</span></li>
+          <li><span class="check-icon">✓</span><span class="check-text">Site appearing in Featured Snippets or AI Overviews for at least one or two target topics.</span></li>
+        </ul>
+      </div>
+
+      <div class="outcome-card">
+        <div class="outcome-label">AI answer presence</div>
+        <div class="outcome-title">Named in ChatGPT, Gemini, and Claude</div>
+        <ul class="check-list light">
+          <li><span class="check-icon">✓</span><span class="check-text">Krisatwork starts appearing in AI answers across target prompts — particularly problem prompts where there's no incumbent yet.</span></li>
+          <li><span class="check-icon">✓</span><span class="check-text">Cited from at least one or two third-party sources (G2, roundup articles) that AI tools trust.</span></li>
+        </ul>
+      </div>
+
+      <div class="outcome-card">
+        <div class="outcome-label">Third-party footprint</div>
+        <div class="outcome-title">Listed where buyers look</div>
+        <ul class="check-list light">
+          <li><span class="check-icon">✓</span><span class="check-text">G2 profile live, with verified reviews from existing customers.</span></li>
+          <li><span class="check-icon">✓</span><span class="check-text">Listed in two or three roundup articles that dominate search results for the category.</span></li>
+          <li><span class="check-icon">✓</span><span class="check-text">Product Hunt listing live and indexed.</span></li>
+        </ul>
+      </div>
+
+      <div class="outcome-card">
+        <div class="outcome-label">Content assets</div>
+        <div class="outcome-title">Six to eight pieces your team owns permanently</div>
+        <ul class="check-list light">
+          <li><span class="check-icon">✓</span><span class="check-text">Problem-aware, category, and comparison articles — built to rank and to be cited by AI.</span></li>
+          <li><span class="check-icon">✓</span><span class="check-text">Content built around the emerging narratives competitors haven't moved on — first-mover advantage.</span></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="note-bar">
+      <strong>What this program builds long-term:</strong> Search and AI visibility compound. Articles published in month 2 keep ranking. G2 reviews keep accumulating. Roundup mentions stay live. The work done in 3 months doesn't stop when the contract does — it's the base layer for everything that follows.
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     PAGE 5 — How We Work Together
+═══════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-inner">
+
+    <nav class="nav">
+      <span class="logo">recurr</span>
+      <span class="section-label">05 / 05 · Search + AI Visibility · Krisatwork</span>
+    </nav>
+
+    <span class="tag tag-ink">Working Model</span>
+
+    <h2>How we work together.</h2>
+    <p style="font-size: 15px; color: var(--muted); margin-bottom: 32px; max-width: 600px;">Recurr leads the strategy and execution. Krisatwork provides product context and customer access. The division is clean — minimal lift from your team, maximum output from ours.</p>
+
+    <div class="role-grid">
+      <div class="role-block">
+        <div class="role-block-title">Recurr does</div>
+        <div class="role-item"><span class="role-dot"></span><span>All strategy, content, and technical work</span></div>
+        <div class="role-item"><span class="role-dot"></span><span>Keyword research and prompt mapping</span></div>
+        <div class="role-item"><span class="role-dot"></span><span>Content writing, editing, and publishing (with your team's approval)</span></div>
+        <div class="role-item"><span class="role-dot"></span><span>Outreach to third-party roundup sites</span></div>
+        <div class="role-item"><span class="role-dot"></span><span>G2, Capterra, Product Hunt setup and coordination</span></div>
+        <div class="role-item"><span class="role-dot"></span><span>Monthly reports and bi-weekly check-ins</span></div>
+        <div class="role-item"><span class="role-dot"></span><span>AI prompt monitoring — monthly audit across all 15 prompts</span></div>
+      </div>
+      <div class="role-block">
+        <div class="role-block-title">Krisatwork provides</div>
+        <div class="role-item"><span class="role-dot"></span><span>Access to the website CMS or dev team for technical fixes</span></div>
+        <div class="role-item"><span class="role-dot"></span><span>Product and positioning input for content accuracy (one review round per article)</span></div>
+        <div class="role-item"><span class="role-dot"></span><span>Customer contacts for G2 reviews</span></div>
+        <div class="role-item"><span class="role-dot"></span><span>Approval on content before it goes live</span></div>
+        <div class="role-item"><span class="role-dot"></span><span>Existing brand and messaging guidelines</span></div>
+      </div>
+    </div>
+
+    <h3>Cadence</h3>
+    <div class="cadence-row">
+      <div class="cadence-item">
+        <div class="cadence-label">Reporting</div>
+        <div class="cadence-value">Monthly report</div>
+      </div>
+      <div class="cadence-item">
+        <div class="cadence-label">Check-in</div>
+        <div class="cadence-value">Bi-weekly call</div>
+      </div>
+      <div class="cadence-item">
+        <div class="cadence-label">Content review</div>
+        <div class="cadence-value">One round per piece</div>
+      </div>
+      <div class="cadence-item">
+        <div class="cadence-label">AI prompt audit</div>
+        <div class="cadence-value">Monthly · 15 prompts</div>
+      </div>
+    </div>
+
+    <p class="footnote">
+      <strong>Note on third-party placements:</strong> Outreach to roundup articles and editorial sites is included in the program. Where a high-authority site requires a paid placement or sponsored listing fee — based on their domain authority and editorial policy — this will be discussed and approved with Krisatwork before any cost is incurred. Not all sites charge. Those that do will be evaluated on the strength of the citation opportunity.
+    </p>
+
+    <div class="closing-bar">
+      <p>"The window to be a first-mover in AI answers for the AI sales tools category is still open. The teams that publish now are the ones AI cites six months from now."</p>
+      <div class="contact-block">
+        <div class="contact-name">Sujith Ayyappan</div>
+        <div class="contact-sub">Recurr Studio · sujith@recurr.co</div>
+      </div>
+    </div>
+
+    <div class="deck-footer">
+      <span class="footer-note">Recurr × Krisatwork — Search + AI Visibility Program</span>
+      <span class="footer-note">Confidential · April 2026</span>
+    </div>
+
+  </div>
+</section>
+
+
+</body>
+</html>
