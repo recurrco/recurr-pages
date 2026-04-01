@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#E5E8E8">
+  <title>Clarisights — GTM Hub</title>
+  <meta name="description" content="Central hub for Clarisights GTM intelligence, research, and content programs.">
+  <link rel="stylesheet" href="/recurr-system/style.css">
+  <style>
+    .hub-badge {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pencil);
+      margin-bottom: var(--space-xs);
+    }
+
+    /* Source tables */
+    .source-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-s);
+    }
+    @media (max-width: 700px) { .source-grid { grid-template-columns: 1fr; } }
+
+    .source-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: var(--space-s);
+    }
+    .source-card-title {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-xs);
+    }
+    .source-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 6px 0;
+      border-bottom: 1px dashed var(--border-faint);
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+    }
+    .source-row:last-child { border-bottom: none; }
+    .source-name { color: var(--ink); font-weight: 600; }
+    .source-what { color: var(--graphite); flex: 1; margin: 0 var(--space-xs); }
+    .source-status {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+    .s-live { color: var(--green); }
+    .s-queued { color: var(--pencil); }
+    .s-active { color: var(--blue); }
+
+    /* Entity diagram */
+    .entity-diagram {
+      background: var(--ink);
+      border-radius: 4px;
+      padding: var(--space-m);
+      margin: var(--space-s) 0;
+      font-family: var(--mono);
+      font-size: clamp(0.65rem, 0.55rem + 0.3vw, 0.85rem);
+      line-height: 1.6;
+      color: #C8CECC;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    [data-theme="dark"] .entity-diagram { background: #111414; border: 1px solid var(--border-color); }
+
+    /* Entity cards */
+    .entity-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-s);
+    }
+    @media (max-width: 700px) { .entity-grid { grid-template-columns: 1fr; } }
+    .entity-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: var(--space-s);
+    }
+    .entity-card-title {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .entity-card-desc {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      line-height: 1.55;
+    }
+    .entity-count {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      margin-top: 8px;
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+    .ec-red { background: #E03E3618; color: var(--red); }
+    .ec-blue { background: #2B6CB018; color: var(--blue); }
+    .ec-green { background: #3D8C6E18; color: var(--green); }
+
+    /* Research table */
+    .research-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: var(--space-s);
+      padding: var(--space-xs) 0;
+      border-bottom: 1px dashed var(--border-faint);
+      align-items: baseline;
+    }
+    .research-row:first-of-type { border-top: 1px dashed var(--border-faint); }
+    .research-title {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .research-finding {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      line-height: 1.5;
+      margin-top: 2px;
+    }
+    .research-date {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      white-space: nowrap;
+    }
+    .research-link a {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      white-space: nowrap;
+    }
+    @media (max-width: 640px) {
+      .research-row { grid-template-columns: 1fr; }
+    }
+
+    /* Program cards */
+    .program-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-s);
+    }
+    .program-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.5rem, 1.2rem + 1vw, 2.4rem);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.35s var(--ease);
+      position: relative;
+    }
+    @media (hover:hover) { .program-card:hover { background: var(--notebook); } }
+    .program-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 4px;
+      border-radius: 4px 0 0 4px;
+    }
+    .program-card.pc-red::before { background: var(--red); }
+    .program-card.pc-blue::before { background: var(--blue); }
+    .program-card.pc-yellow::before { background: var(--yellow); }
+    .program-card.pc-green::before { background: var(--green); }
+
+    .program-label {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 3px;
+      display: inline-block;
+      width: fit-content;
+    }
+    .pl-red { background: #E03E3618; color: var(--red); }
+    .pl-blue { background: #2B6CB018; color: var(--blue); }
+    .pl-yellow { background: rgba(212,184,44,0.18); color: #8A7A1A; }
+    [data-theme="dark"] .pl-yellow { color: var(--yellow); }
+    .pl-green { background: #3D8C6E18; color: var(--green); }
+
+    .program-title {
+      font-family: var(--serif);
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .program-qna {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      line-height: 1.6;
+    }
+    .program-qna strong {
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .program-meta {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border-faint);
+    }
+
+    /* Knowledge note */
+    .knowledge-note {
+      background: rgba(212,184,44,0.07);
+      border: 1px dashed var(--yellow);
+      border-radius: 6px;
+      padding: var(--space-s);
+      margin-top: var(--space-s);
+    }
+    .knowledge-note-title {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #8A7A1A;
+      margin-bottom: 6px;
+    }
+    [data-theme="dark"] .knowledge-note-title { color: var(--yellow); }
+    .knowledge-note p {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<canvas class="dot-grid-canvas" id="dot-grid"></canvas>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="/clarisights/" class="nav-logo">clarisights</a>
+    <div class="nav-right">
+      <span class="nav-clock" id="clock"></span>
+      <a href="/clarisights/" class="nav-active">hub</a>
+      <a href="/clarisights-intelligence/">intelligence</a>
+      <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode" aria-label="Toggle dark mode">&#9684;</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" style="min-height:60vh;">
+  <div class="hub-badge">GTM Hub</div>
+  <h1 id="hero-h1">Clarisights Growth Engine.</h1>
+  <div class="hero-bottom">
+    <p class="hero-sub">A living system for intelligence, research, and content programs that drive inbound growth and market authority.</p>
+    <pre class="hero-ascii" id="hero-ascii">
+ ┌────────────────────────────┐
+ │                            │
+ │  1. Intelligence System    │
+ │  2. Research & Audits      │
+ │  3. Content Programs       │
+ │                            │
+ │  One system.               │
+ │  Continuously updated.     │
+ │                            │
+ └────────────────────────────┘
+    </pre>
+  </div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- ===================================================================
+     SECTION 1: INTELLIGENCE SYSTEM
+     =================================================================== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-red">1. Intelligence System</div>
+  <p class="section-desc" style="max-width:72ch;">
+    A central intelligence repository that powers everything &mdash; content programs, positioning, sales enablement, product marketing. Not a one-time audit. A living system that pulls from internal and external sources, translates raw data into structured entities, and gets fresher with every update.
+  </p>
+
+  <div class="source-grid" data-reveal>
+    <div class="source-card">
+      <div class="source-card-title" style="color:var(--red);">Internal Sources</div>
+      <div class="source-row">
+        <span class="source-name">Zulip</span>
+        <span class="source-what">CS conversations, customer pain points, product feedback, data issues</span>
+        <span class="source-status s-live">Live &middot; Apr 1</span>
+      </div>
+      <div class="source-row">
+        <span class="source-name">HubSpot</span>
+        <span class="source-what">Pipeline, deals, contacts, win/loss patterns, revenue data</span>
+        <span class="source-status s-live">Live &middot; Mar 23</span>
+      </div>
+      <div class="source-row">
+        <span class="source-name">Gong</span>
+        <span class="source-what">Call recordings, customer voice, objection patterns, buying signals</span>
+        <span class="source-status s-queued">Queued</span>
+      </div>
+      <div class="source-row">
+        <span class="source-name">Notion</span>
+        <span class="source-what">Product docs, internal knowledge base, team wiki</span>
+        <span class="source-status s-live">Manual &middot; Mar</span>
+      </div>
+      <div class="source-row">
+        <span class="source-name">Pitch</span>
+        <span class="source-what">Sales decks, QBR presentations, gap analysis slides</span>
+        <span class="source-status s-queued">Queued</span>
+      </div>
+    </div>
+    <div class="source-card">
+      <div class="source-card-title" style="color:var(--blue);">External Sources</div>
+      <div class="source-row">
+        <span class="source-name">DataForSEO</span>
+        <span class="source-what">Keyword demand, SERP landscape, search volume validation</span>
+        <span class="source-status s-active">Active</span>
+      </div>
+      <div class="source-row">
+        <span class="source-name">Exa</span>
+        <span class="source-what">Deep web research, competitor content audits, market analysis</span>
+        <span class="source-status s-active">Active</span>
+      </div>
+      <div class="source-row">
+        <span class="source-name">Firehose</span>
+        <span class="source-what">Real-time web monitoring of marketing analytics discourse</span>
+        <span class="source-status s-active">Available</span>
+      </div>
+      <div class="source-row">
+        <span class="source-name">Platform Docs</span>
+        <span class="source-what">Google, Meta, TikTok, DV360, LinkedIn API documentation</span>
+        <span class="source-status s-active">Manual</span>
+      </div>
+      <div class="source-row">
+        <span class="source-name">Reddit / Communities</span>
+        <span class="source-what">Market sentiment, competitor discussions, buyer pain points</span>
+        <span class="source-status s-active">Active</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Entity System -->
+  <p style="font-family:var(--mono);font-size:var(--fs-label);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pencil);margin-top:var(--space-m);margin-bottom:var(--space-xs);">The Entity System</p>
+  <p class="section-desc">Raw data from all sources is translated into three structured entity buckets. Each entity is a living profile that gets richer as new sources come online.</p>
+
+  <div class="entity-diagram">Raw Sources (Zulip, HubSpot, Gong, Web Research, Platform Docs)
+       │
+       ▼
+  ┌─────────────────────────────────────────────────────┐
+  │                  ENTITY SYSTEM                       │
+  │                                                      │
+  │  ┌──────────────┐  ┌──────────────┐  ┌────────────┐ │
+  │  │   PRODUCT    │  │ COMPETITION  │  │ ECOSYSTEM  │ │
+  │  │              │  │              │  │            │ │
+  │  │ Capabilities │  │ Competitors  │  │ Customers  │ │
+  │  │ Gaps         │  │ Positioning  │  │ Partners   │ │
+  │  │ Roadmap      │  │ Win/Loss     │  │ Allies     │ │
+  │  │ Limitations  │  │ Battle cards │  │ Integr.    │ │
+  │  │ New features │  │ SERP overlap │  │ Agencies   │ │
+  │  │              │  │              │  │ Events     │ │
+  │  └──────────────┘  └──────────────┘  └────────────┘ │
+  │                                                      │
+  └──────────────────────────────────────────────────────┘
+       │
+       ▼
+  Outputs: Content programs, positioning, sales collateral, product marketing</div>
+
+  <div class="entity-grid" data-reveal>
+    <div class="entity-card">
+      <div class="entity-card-title">Product</div>
+      <div class="entity-card-desc">What the platform does, what's missing, what's shipping. Capabilities, feature gaps, roadmap items, platform limitations, and customer-reported product issues. The foundation for positioning and messaging.</div>
+      <span class="entity-count ec-red">16 product gaps &middot; 10 signals</span>
+    </div>
+    <div class="entity-card">
+      <div class="entity-card-title">Competition</div>
+      <div class="entity-card-desc">Who competes with Clarisights, how we win and lose, and where to position. Competitor profiles, win/loss patterns, SERP competitive landscape, battle card inputs, and displacement opportunities.</div>
+      <span class="entity-count ec-blue">19 competitors mapped</span>
+    </div>
+    <div class="entity-card">
+      <div class="entity-card-title">Ecosystem</div>
+      <div class="entity-card-desc">Everyone in the market &mdash; customers, integration partners, technology allies, agencies, and event networks. Includes allies (integration partners, co-marketing) and adjacent players. The relationship map of the entire market.</div>
+      <span class="entity-count ec-green">41 customers &middot; 6 partnerships</span>
+    </div>
+  </div>
+
+  <div class="knowledge-note" data-reveal>
+    <div class="knowledge-note-title">Where does the knowledge live?</div>
+    <p>The full intelligence repository is maintained as a living system with structured entity files, raw source extracts, and middleware workspaces. The <a href="/clarisights-intelligence/">Intelligence Dashboard</a> surfaces the current state across all entities. As new sources come online (Gong, Pitch, additional Zulip channels), the entity system grows richer without restructuring.</p>
+  </div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- ===================================================================
+     SECTION 2: RESEARCH & AUDITS
+     =================================================================== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-blue">2. Research &amp; Audits</div>
+  <p class="section-desc" style="max-width:72ch;">
+    Point-in-time research that informed our content program decisions. Keyword validation, competitive landscape, market analysis, and internal data mining. Each study produced specific findings that shaped what we build and in what order.
+  </p>
+
+  <div data-reveal>
+    <div class="research-row">
+      <div>
+        <div class="research-title">SEO &amp; Keyword Landscape</div>
+        <div class="research-finding">6 keyword clusters identified. Core metrics cluster (ROAS, CPA, CTR) = millions of monthly searches with low competition. Long-tail, specific terms validated over generic head terms.</div>
+      </div>
+      <div class="research-date">Mar 2026</div>
+      <div class="research-link"><a href="/clarisights-seo-v2/">detail &rarr;</a></div>
+    </div>
+
+    <div class="research-row">
+      <div>
+        <div class="research-title">Data Literacy Search Demand Validation</div>
+        <div class="research-finding">ROAS = 3.35M searches/month. Easiest wins: MER (KD 1), Incrementality (KD 3), MMM (KD 17). Industry-specific keywords have near-zero volume &mdash; confirmed utility content over SEO for vertical playbooks. High CPC signals on CPA ($138), Incrementality ($66), MMM ($50).</div>
+      </div>
+      <div class="research-date">Apr 1, 2026</div>
+      <div class="research-link"></div>
+    </div>
+
+    <div class="research-row">
+      <div>
+        <div class="research-title">Competitive Content Audit</div>
+        <div class="research-finding">8 competitors audited (Funnel, Supermetrics, Improvado, Triple Whale, Adverity, Measured, Singular, AppsFlyer). Nobody owns the standard for paid marketing data nomenclature. Improvado strongest on content. AppsFlyer best glossary model (mobile only). Interactive naming convention builder = open opportunity.</div>
+      </div>
+      <div class="research-date">Apr 1, 2026</div>
+      <div class="research-link"><a href="/clarisights-data-literacy-audit/">detail &rarr;</a></div>
+    </div>
+
+    <div class="research-row">
+      <div>
+        <div class="research-title">Zulip Data &amp; Nomenclature Mining</div>
+        <div class="research-finding">80+ messages across 11 customers. 30+ glossary terms from real CS conversations. 5 recurring data failure patterns: naming death spiral, numbers-don't-match loop, cross-platform join problem, onboarding overwhelm, data freshness gap. Platform gotchas documented for TikTok, Adjust, DV360, Roku.</div>
+      </div>
+      <div class="research-date">Apr 1, 2026</div>
+      <div class="research-link"></div>
+    </div>
+
+    <div class="research-row">
+      <div>
+        <div class="research-title">Creative Analytics Landscape</div>
+        <div class="research-finding">Market crowded, positioning risk if led with creative analytics. Clarisights' moat is cross-channel data unification and reporting, not creative performance analysis.</div>
+      </div>
+      <div class="research-date">Mar 2026</div>
+      <div class="research-link"></div>
+    </div>
+
+    <div class="research-row">
+      <div>
+        <div class="research-title">Website &amp; Content Benchmark</div>
+        <div class="research-finding">Current clarisights.com audit, content inventory, site architecture analysis, Notion-based limitations assessment.</div>
+      </div>
+      <div class="research-date">&mdash;</div>
+      <div class="research-link"><span style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">queued</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- ===================================================================
+     SECTION 3: PROGRAMS
+     =================================================================== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-green">3. Programs</div>
+  <p class="section-desc" style="max-width:72ch;">
+    Every growth initiative is designed as a program &mdash; a defined workstream with a clear rationale, expected output, and target outcome. Programs can be inbound (content, SEO), outbound (sales enablement, outreach), or strategic (positioning, partnerships). Each program has its own page with the full plan.
+  </p>
+
+  <div class="program-grid" data-reveal>
+
+    <!-- Program A: Data Literacy -->
+    <a href="/clarisights-data-literacy/" class="program-card pc-red">
+      <span class="program-label pl-red">Program A &middot; Inbound</span>
+      <div class="program-title">The Open Standard for Paid Marketing Data</div>
+      <div class="program-qna">
+        <p><strong>Why:</strong> Nobody owns the standard for marketing data nomenclature. Clarisights sees more cross-platform data than anyone. This is the authority play &mdash; glossary, metrics, platform guides, naming conventions, industry playbooks, and training.</p>
+        <p style="margin-top:8px;"><strong>Output:</strong> 260-365 pSEO reference pages (Layer 1), industry playbooks for eCommerce, Gaming, Fintech, Travel, Retail (Layer 2), training webinars and editorial series (Layer 3).</p>
+        <p style="margin-top:8px;"><strong>Outcome:</strong> Organic traffic foundation. Data literacy authority. Pipeline from engaged, educated audience. "We follow the Clarisights standard."</p>
+      </div>
+      <div class="program-meta">L1 April &middot; L2 May &middot; L3 June &nbsp;&nbsp; <span style="color:var(--red);">Research complete &mdash; build next</span></div>
+    </a>
+
+    <!-- Program B: Integrations -->
+    <a href="/clarisights-integrations-pseo/" class="program-card pc-blue">
+      <span class="program-label pl-blue">Program B &middot; Inbound</span>
+      <div class="program-title">Data &amp; Integrations</div>
+      <div class="program-qna">
+        <p><strong>Why:</strong> Every buyer searches for their specific platforms. "Clarisights + Google Ads" or "marketing analytics for TikTok." These are high-intent commercial queries that signal active evaluation.</p>
+        <p style="margin-top:8px;"><strong>Output:</strong> 370+ integration pages &mdash; data sources, destinations, connectors. Each page is report-first (what you can build with this data) rather than feature-first.</p>
+        <p style="margin-top:8px;"><strong>Outcome:</strong> Commercial traffic capture. Integration-aware leads. Competitive displacement (especially Funnel.io during their pricing crisis).</p>
+      </div>
+      <div class="program-meta">Timeline TBD &nbsp;&nbsp; <span style="color:var(--blue);">Planning</span></div>
+    </a>
+
+    <!-- Future Programs -->
+    <div class="program-card pc-yellow" style="opacity:0.6;cursor:default;">
+      <span class="program-label pl-yellow">Future Programs</span>
+      <div class="program-title">Coming Next</div>
+      <div class="program-qna">
+        <p>Additional programs will be added as they are defined. Each follows the same structure: why, what output, what outcome. Possible future programs include:</p>
+        <p style="margin-top:8px; color:var(--pencil);">&bull; Sales Enablement (battle cards, objection handling, comparison pages)<br>
+        &bull; Outbound (target account content, ABM sequences, event collateral)<br>
+        &bull; Product Launch (new version messaging, migration guides, customer comms)<br>
+        &bull; Community (data standards project, webinar series, partner content)</p>
+      </div>
+      <div class="program-meta">To be defined</div>
+    </div>
+
+  </div>
+
+  <div class="callout callout-yellow" style="margin-top:var(--space-m);" data-reveal>
+    <div class="callout-label">How programs connect</div>
+    Programs A and B are the two inbound content streams. Data Literacy (<code>/learn/</code>) builds educational authority &mdash; glossary, metrics, naming conventions. Integrations (<code>/data-source/</code>) captures commercial intent &mdash; platform-specific buyer queries. They cross-link, not compete. A glossary page for "ROAS" links to the Google Ads integration page showing what ROAS data is available. An integration page for Meta Ads links to the glossary definitions of Meta-specific metrics.
+  </div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- ========== STATUS ========== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-ink">Current Status</div>
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Workstream</th>
+          <th>Status</th>
+          <th>Last Updated</th>
+          <th>Next Step</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:700;">Intelligence System</td>
+          <td><span class="status-badge status-live">Active</span></td>
+          <td class="num">Apr 1, 2026</td>
+          <td>Connect Gong. Mine remaining Zulip channels. Refresh HubSpot.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">Research &amp; Audits</td>
+          <td><span class="status-badge status-live">3 of 6 complete</span></td>
+          <td class="num">Apr 1, 2026</td>
+          <td>Website benchmark audit. Integration keyword validation.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">Program A: Data Literacy</td>
+          <td><span class="status-badge status-draft">Research done</span></td>
+          <td class="num">Apr 1, 2026</td>
+          <td>L1 build: first 50 glossary terms + 30 metric pages.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">Program B: Integrations</td>
+          <td><span class="status-badge status-draft">Planning</span></td>
+          <td class="num">Apr 1, 2026</td>
+          <td>Get full integration list. Validate connector keywords.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-entity">Clarisights GTM</p>
+      <p class="footer-loc">Confidential &middot; April 2026</p>
+    </div>
+    <div class="footer-links">
+      <a href="/clarisights-intelligence/">intelligence</a>
+      <a href="/clarisights-data-literacy/">data literacy</a>
+      <a href="/clarisights-integrations-pseo/">integrations</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/recurr-system/engine.js"></script>
+</body>
+</html>
