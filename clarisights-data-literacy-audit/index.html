@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#E5E8E8">
+  <title>Competitive Content Audit — The Open Standard for Paid Marketing Data</title>
+  <meta name="description" content="Competitive content audit for Clarisights Open Standard program. Analysis of 8 competitors across glossary, data literacy, templates, and naming convention content.">
+  <link rel="stylesheet" href="/recurr-system/style.css">
+  <style>
+    .audit-badge {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pencil);
+      margin-bottom: var(--space-xs);
+    }
+
+    .competitor-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.5rem, 1.2rem + 1vw, 2.4rem);
+      margin-bottom: var(--space-s);
+    }
+    .competitor-card h3 {
+      margin-top: 0;
+      font-size: var(--fs-h4);
+    }
+    .competitor-card .tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2em 0.6em;
+      border-radius: 2px;
+      margin-right: 0.4em;
+      margin-bottom: 0.3em;
+    }
+    .tag-green { background: #d4edda; color: #155724; }
+    .tag-yellow { background: #fff3cd; color: #856404; }
+    .tag-red { background: #f8d7da; color: #721c24; }
+    .tag-blue { background: #d1ecf1; color: #0c5460; }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.6rem;
+      margin: 1rem 0;
+    }
+    .score-item {
+      text-align: center;
+      padding: 0.6rem;
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+    }
+    .score-item .score {
+      font-family: var(--mono);
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+    .score-item .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--pencil);
+    }
+
+    .gap-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin: 1.2rem 0;
+    }
+    .gap-table th, .gap-table td {
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .gap-table th {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--pencil);
+      background: var(--whiteboard);
+    }
+    .gap-table tr:hover { background: var(--whiteboard); }
+
+    .heat-cell {
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-align: center;
+    }
+    .heat-none { color: #aaa; }
+    .heat-weak { color: #856404; }
+    .heat-good { color: #155724; }
+    .heat-strong { color: #0c5460; font-weight: 700; }
+
+    .rec-card {
+      background: var(--whiteboard);
+      border-left: 3px solid var(--ink);
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 0.8rem;
+    }
+    .rec-card .priority {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .p-high { color: #721c24; }
+    .p-med { color: #856404; }
+    .p-low { color: #0c5460; }
+
+    .serp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      margin: 1rem 0;
+    }
+    .serp-table th, .serp-table td {
+      padding: 0.5rem 0.7rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .serp-table th {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--pencil);
+      background: var(--whiteboard);
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 2px solid var(--ink);
+      margin: var(--space-m) 0;
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      font-family: var(--mono);
+      font-size: 0.84rem;
+    }
+    .toc-list li {
+      padding: 0.3em 0;
+    }
+    .toc-list a {
+      text-decoration: none;
+      color: var(--ink);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .toc-list a:hover {
+      border-bottom-color: var(--ink);
+    }
+
+    .summary-box {
+      background: var(--ink);
+      color: var(--paper);
+      padding: clamp(1.5rem, 1.2rem + 1vw, 2.4rem);
+      border-radius: 4px;
+      margin: var(--space-s) 0;
+    }
+    .summary-box h3 { color: var(--paper); margin-top: 0; }
+    .summary-box strong { color: #fff; }
+  </style>
+</head>
+<body>
+  <main class="content-width" style="padding: var(--space-m) var(--space-s);">
+
+    <!-- Header -->
+    <div class="audit-badge">Clarisights / Open Standard / Intelligence</div>
+    <h1>Competitive Content Audit</h1>
+    <p style="max-width: 56ch; color: var(--pencil);">
+      Analysis of 8 competitors' content assets across glossary, data literacy, templates, naming conventions, and industry-specific content. Research conducted April 1, 2026.
+    </p>
+
+    <!-- TOC -->
+    <nav style="margin: var(--space-s) 0;">
+      <ul class="toc-list">
+        <li>01 &mdash; <a href="#executive-summary">Executive Summary</a></li>
+        <li>02 &mdash; <a href="#competitor-audits">Competitor-by-Competitor Audits</a></li>
+        <li>03 &mdash; <a href="#heatmap">Content Coverage Heatmap</a></li>
+        <li>04 &mdash; <a href="#serp">SERP Landscape &mdash; Who Ranks</a></li>
+        <li>05 &mdash; <a href="#gaps">Content Gap Analysis</a></li>
+        <li>06 &mdash; <a href="#recommendations">Recommendations &mdash; What to Build First</a></li>
+      </ul>
+    </nav>
+
+    <hr class="section-divider">
+
+    <!-- ========================================= -->
+    <!-- SECTION 1: EXECUTIVE SUMMARY -->
+    <!-- ========================================= -->
+    <section id="executive-summary">
+      <h2>01 &mdash; Executive Summary</h2>
+
+      <div class="summary-box">
+        <h3>The Big Finding</h3>
+        <p><strong>Nobody owns "The Standard" for paid marketing data.</strong> Despite billions spent on marketing analytics tools, no competitor has built a comprehensive, open, platform-neutral data literacy resource. The territory is wide open.</p>
+      </div>
+
+      <p>Key patterns across all 8 competitors:</p>
+      <ul>
+        <li><strong>Glossaries exist but are shallow.</strong> Most are SEO plays with 1-2 paragraph definitions. None provide cross-platform metric comparisons (e.g., "here's how Facebook, Google, and TikTok each define a 'conversion').</li>
+        <li><strong>Naming conventions are covered by only 3 of 8 competitors</strong> (Improvado, Adverity, Supermetrics). Even those are blog posts, not interactive tools or enforced standards.</li>
+        <li><strong>Data normalization/harmonization is Improvado's strongest territory.</strong> They have 5+ deep articles on this exact topic. Everyone else is surface-level.</li>
+        <li><strong>Templates are Supermetrics' moat.</strong> They have the largest template gallery (90+ templates across Looker Studio, Sheets, Excel, Power BI, BigQuery). Funnel.io is second with ~7 Looker Studio templates.</li>
+        <li><strong>Industry-specific content is Improvado's play.</strong> Dedicated industry pages for Retail, Fintech, etc. with vertical-specific KPI guides. Nobody else goes vertical.</li>
+        <li><strong>No one has a "metric comparison engine"</strong> showing how the same metric is defined across different ad platforms. This is the single biggest gap.</li>
+        <li><strong>Mobile attribution players (AppsFlyer, Singular) have the best glossaries</strong> but only cover mobile. Paid media broadly has no equivalent.</li>
+      </ul>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ========================================= -->
+    <!-- SECTION 2: COMPETITOR AUDITS -->
+    <!-- ========================================= -->
+    <section id="competitor-audits">
+      <h2>02 &mdash; Competitor-by-Competitor Audits</h2>
+
+      <!-- FUNNEL.IO -->
+      <div class="competitor-card">
+        <h3>1. Funnel.io</h3>
+        <p style="color: var(--pencil); font-size: 0.88rem;">ETL/data hub for marketers &bull; funnel.io</p>
+
+        <div class="score-grid">
+          <div class="score-item"><div class="score">3/5</div><div class="label">Glossary</div></div>
+          <div class="score-item"><div class="score">4/5</div><div class="label">Blog</div></div>
+          <div class="score-item"><div class="score">3/5</div><div class="label">Templates</div></div>
+          <div class="score-item"><div class="score">1/5</div><div class="label">Data Literacy</div></div>
+          <div class="score-item"><div class="score">0/5</div><div class="label">Industry</div></div>
+        </div>
+
+        <p><strong>Glossary:</strong> Individual blog posts per term (CLV, CPA, CPM, PPC, MTA, etc.) under <code>funnel.io/blog/glossary-*</code> and <code>funnel.io/funnel-tips/*</code>. Each term gets a ~800-1200 word article with definition, formula, and context. Quality is good but it's spread across blog posts, not a centralized glossary page. Estimated 20-30 terms. Not comprehensive enough to be a reference destination.</p>
+
+        <p><strong>Blog/Resources:</strong> Strong content hub covering data transformation (complete guide + examples), marketing reporting (tips + templates guide), agency reporting tools, and reporting best practices. Content is well-written and updated through March 2026. Focus is on data operations for marketers, not metric definitions.</p>
+
+        <p><strong>Templates:</strong> 7 free Looker Studio templates (Facebook Ads, GA4, Google Ads, Shopify, YouTube, SEO, cross-channel). Also ecommerce-specific Data Studio templates. All require Funnel as data source. One product-level Data Studio report template built into the platform.</p>
+
+        <p><strong>Naming Conventions:</strong> No dedicated naming convention content. Mentions naming conventions in passing within data transformation content.</p>
+
+        <p><strong>Data Transformation:</strong> Best-in-class content on data transformation specifically. Complete guide (March 2026), data transformation examples with marketing data, comparison of transformation tools. Their CTO published a technical piece on their data platform architecture. This is their editorial moat.</p>
+
+        <p><strong>Gap Assessment:</strong> <span class="tag tag-red">No centralized glossary</span> <span class="tag tag-red">No naming convention guide</span> <span class="tag tag-red">No industry pages</span> <span class="tag tag-yellow">Templates locked to product</span></p>
+      </div>
+
+      <!-- SUPERMETRICS -->
+      <div class="competitor-card">
+        <h3>2. Supermetrics</h3>
+        <p style="color: var(--pencil); font-size: 0.88rem;">Data connector for reporting tools &bull; supermetrics.com</p>
+
+        <div class="score-grid">
+          <div class="score-item"><div class="score">1/5</div><div class="label">Glossary</div></div>
+          <div class="score-item"><div class="score">5/5</div><div class="label">Blog</div></div>
+          <div class="score-item"><div class="score">5/5</div><div class="label">Templates</div></div>
+          <div class="score-item"><div class="score">2/5</div><div class="label">Data Literacy</div></div>
+          <div class="score-item"><div class="score">1/5</div><div class="label">Industry</div></div>
+        </div>
+
+        <p><strong>Glossary:</strong> No dedicated glossary section. Metric definitions are embedded within blog posts (performance marketing analytics, digital marketing analytics, marketing measurement guide). No centralized reference.</p>
+
+        <p><strong>Blog/Resources:</strong> Massive, mature blog. Multiple categories: Marketing Analytics, Measurement, Campaign Monitoring. Deep guides on performance marketing analytics, growth marketing analytics, campaign analysis. Content is educational and well-structured. Active community with tips and tricks. They also have a podcast (The Marketing Intelligence Show).</p>
+
+        <p><strong>Templates:</strong> <span class="tag tag-green">INDUSTRY LEADER</span> The largest template gallery among all competitors. 90+ templates across Looker Studio (53+), Google Sheets (35+), Power BI (3+), Excel, and BigQuery. Organized by reporting tool AND by channel (Facebook, Instagram, Google Ads, LinkedIn, TikTok, Shopify, etc.) AND by use case (web analytics, ecommerce, paid media). Includes a paid channel mix reporting template for Excel. Templates are product-locked but freely accessible.</p>
+
+        <p><strong>Naming Conventions:</strong> Published one strong blog post: "Campaign naming conventions: The key to cleaner and reliable reporting" (Nov 2024). Includes a template. Single article, not a system.</p>
+
+        <p><strong>Data Quality:</strong> Article on marketing data quality monitoring (Sep 2025). Covers how to detect and fix data inconsistencies. Practical but product-focused.</p>
+
+        <p><strong>Gap Assessment:</strong> <span class="tag tag-red">No glossary</span> <span class="tag tag-yellow">Naming conventions = 1 blog post</span> <span class="tag tag-red">No data normalization content</span> <span class="tag tag-red">No industry verticals</span></p>
+      </div>
+
+      <!-- IMPROVADO -->
+      <div class="competitor-card">
+        <h3>3. Improvado</h3>
+        <p style="color: var(--pencil); font-size: 0.88rem;">Marketing analytics platform &bull; improvado.io</p>
+
+        <div class="score-grid">
+          <div class="score-item"><div class="score">4/5</div><div class="label">Glossary</div></div>
+          <div class="score-item"><div class="score">5/5</div><div class="label">Blog</div></div>
+          <div class="score-item"><div class="score">3/5</div><div class="label">Templates</div></div>
+          <div class="score-item"><div class="score">5/5</div><div class="label">Data Literacy</div></div>
+          <div class="score-item"><div class="score">4/5</div><div class="label">Industry</div></div>
+        </div>
+
+        <p><strong>Glossary:</strong> <span class="tag tag-green">STRONGEST COMPETITOR</span> Has a product feature called "Data Dictionary" that lets users upload their own glossary into the platform. Also has public docs covering "Available Report Types" as a data dictionary. Their blog post on "Metrics Layer" positions them as defining the single source of truth for KPI definitions. This is the closest to what Clarisights is building.</p>
+
+        <p><strong>Blog/Resources:</strong> Extremely prolific. Deep guides on: marketing taxonomy (definitive guide), data harmonization (ultimate guide for 2026), data standardization (complete guide), data normalization (complete guide for 2026), data transformation (what it is + 12 best solutions), marketing data cleansing, cluster analysis, data visualization. Updated frequently (Jan-Mar 2026 dates on key articles). This is their content moat.</p>
+
+        <p><strong>Naming Conventions:</strong> <span class="tag tag-green">MOST COMPREHENSIVE</span> Three-pronged approach: (1) Blog post "Marketing Campaign Naming Conventions: Best Practices & Examples [2026]" (Feb 2026, ranks well), (2) Product docs on "Naming Convention" feature, (3) How-to guide on applying naming conventions in Improvado transformations. They also have a product feature for automated naming convention enforcement.</p>
+
+        <p><strong>Data Transformation/Normalization:</strong> <span class="tag tag-green">OWNS THIS TERRITORY</span> Five+ major articles: data normalization guide, data transformation guide, data harmonization guide, data standardization guide, 12 best transformation solutions comparison. They've effectively built the content moat around marketing data operations.</p>
+
+        <p><strong>Industry Content:</strong> Dedicated industry pages: "Improvado for Retail" with vertical-specific outcomes. Blog posts on retail KPIs, retail analytics, fintech marketing strategies, ecommerce trends. Goes deeper than any other competitor on vertical plays.</p>
+
+        <p><strong>Templates:</strong> 25+ marketing dashboard examples and templates guide. Less than Supermetrics but more contextualized with strategic guidance.</p>
+
+        <p><strong>Gap Assessment:</strong> <span class="tag tag-yellow">Glossary is product-embedded, not public resource</span> <span class="tag tag-yellow">No cross-platform metric comparison</span> <span class="tag tag-red">No open/neutral standard positioning</span></p>
+      </div>
+
+      <!-- TRIPLE WHALE -->
+      <div class="competitor-card">
+        <h3>4. Triple Whale</h3>
+        <p style="color: var(--pencil); font-size: 0.88rem;">eCommerce analytics &bull; triplewhale.com</p>
+
+        <div class="score-grid">
+          <div class="score-item"><div class="score">4/5</div><div class="label">Glossary</div></div>
+          <div class="score-item"><div class="score">4/5</div><div class="label">Blog</div></div>
+          <div class="score-item"><div class="score">1/5</div><div class="label">Templates</div></div>
+          <div class="score-item"><div class="score">2/5</div><div class="label">Data Literacy</div></div>
+          <div class="score-item"><div class="score">3/5</div><div class="label">Industry</div></div>
+        </div>
+
+        <p><strong>Glossary:</strong> <span class="tag tag-blue">NOTABLE</span> Dedicated glossary page at <code>triplewhale.com/glossary</code> with A-Z navigation. Covers ecommerce-specific terms: abandoned cart recovery, AOV, ROAS, MER, etc. Definitions are concise (1-3 sentences each). eCommerce-focused, not general paid media. Estimated 50-80 terms.</p>
+
+        <p><strong>Blog/Resources:</strong> Strong ecommerce analytics content. Key pieces: "Guide to Ecommerce Metrics" (what to track and why), "Definitive Guide to Ecommerce Analytics," "Ecommerce Benchmarks 2025" with industry data, Facebook Ad Analytics guide, MER (Marketing Efficiency Ratio) deep dive, attribution models guide, marketing mix modeling guide. Organized by category: Ecommerce Metrics, Ad Platforms, Attribution, etc.</p>
+
+        <p><strong>Industry Content:</strong> Entirely eCommerce/DTC focused. Their niche IS the industry vertical. Ecommerce benchmarks with real data is valuable differentiation.</p>
+
+        <p><strong>Naming Conventions / Data Literacy:</strong> No content on naming conventions, data normalization, or data transformation. Their audience is DTC brands, not data teams.</p>
+
+        <p><strong>Gap Assessment:</strong> <span class="tag tag-yellow">Glossary limited to ecommerce</span> <span class="tag tag-red">No data operations content</span> <span class="tag tag-red">No naming conventions</span> <span class="tag tag-red">No templates</span></p>
+      </div>
+
+      <!-- ADVERITY -->
+      <div class="competitor-card">
+        <h3>5. Adverity</h3>
+        <p style="color: var(--pencil); font-size: 0.88rem;">Marketing analytics platform &bull; adverity.com</p>
+
+        <div class="score-grid">
+          <div class="score-item"><div class="score">3/5</div><div class="label">Glossary</div></div>
+          <div class="score-item"><div class="score">3/5</div><div class="label">Blog</div></div>
+          <div class="score-item"><div class="score">1/5</div><div class="label">Templates</div></div>
+          <div class="score-item"><div class="score">4/5</div><div class="label">Data Literacy</div></div>
+          <div class="score-item"><div class="score">1/5</div><div class="label">Industry</div></div>
+        </div>
+
+        <p><strong>Glossary:</strong> Dedicated "Marketing Data Glossary" page at <code>adverity.com/resources/marketing-data-glossary</code>. Covers CPL vs CPA differences, data warehouse vs data lake, and general marketing analytics jargon. Separate product "Glossary" in their documentation (docs.adverity.com/getting-started/glossary). Also has a product feature called "Data Dictionary" for organizing metrics and dimensions.</p>
+
+        <p><strong>Naming Conventions:</strong> <span class="tag tag-green">STRONG PLAY</span> Three blog posts: (1) "Why Your Marketing Will Thrive with the Right Naming Conventions," (2) "Marketing Campaign Naming Conventions Best Practices," (3) "Getting Naming Conventions Right, with the Help of AI." Plus a product documentation page on naming convention best practices. They also built an AI-powered naming convention feature into their product ("Smart Naming Conventions"). This is a genuine product + content strategy.</p>
+
+        <p><strong>Data Foundations:</strong> Published a substantial resource page: "Data Foundations: The Essentials for Modern Marketing" (June 2025). Covers data accuracy (marketer's guide), data mapping, AI-ready marketing data best practices. Positioning around "data foundations" is closest to a "standard" but doesn't claim that territory explicitly.</p>
+
+        <p><strong>Gap Assessment:</strong> <span class="tag tag-yellow">Glossary is generic, not deep</span> <span class="tag tag-red">No templates</span> <span class="tag tag-red">No industry verticals</span> <span class="tag tag-yellow">Product features ahead of content</span></p>
+      </div>
+
+      <!-- MEASURED -->
+      <div class="competitor-card">
+        <h3>6. Measured</h3>
+        <p style="color: var(--pencil); font-size: 0.88rem;">Incrementality measurement &bull; measured.com</p>
+
+        <div class="score-grid">
+          <div class="score-item"><div class="score">2/5</div><div class="label">Glossary</div></div>
+          <div class="score-item"><div class="score">4/5</div><div class="label">Blog</div></div>
+          <div class="score-item"><div class="score">1/5</div><div class="label">Templates</div></div>
+          <div class="score-item"><div class="score">3/5</div><div class="label">Data Literacy</div></div>
+          <div class="score-item"><div class="score">0/5</div><div class="label">Industry</div></div>
+        </div>
+
+        <p><strong>Glossary:</strong> No formal glossary. Instead, they have a deep FAQ section that defines key terms in context: incrementality, incrementality testing, attribution vs incrementality, MMM vs incrementality, A/B testing vs incrementality testing. Each FAQ is a substantial article (1000-2000 words) written by named executives (VP Solutions Architect, Chief Strategy Officer). Quality is high but scope is narrow &mdash; only incrementality-adjacent terms.</p>
+
+        <p><strong>Resources:</strong> "Learning Center" with curated resources. "The Essential Incrementality Playbook" is a gated guide. Multiple video explainers. Blog covers incrementality measurement, optimization, in-house testing pros/cons. Strong thought leadership from named authors.</p>
+
+        <p><strong>Standard Positioning:</strong> Gets closest to "owning a concept" with incrementality. Their tagline: "Incrementality is more than a metric. It's a mindset." They've essentially defined the incrementality category for marketers.</p>
+
+        <p><strong>Gap Assessment:</strong> <span class="tag tag-red">No general glossary</span> <span class="tag tag-red">Narrow scope (only incrementality)</span> <span class="tag tag-red">No naming conventions</span> <span class="tag tag-red">No templates</span></p>
+      </div>
+
+      <!-- SINGULAR -->
+      <div class="competitor-card">
+        <h3>7. Singular</h3>
+        <p style="color: var(--pencil); font-size: 0.88rem;">Mobile attribution + analytics &bull; singular.net</p>
+
+        <div class="score-grid">
+          <div class="score-item"><div class="score">4/5</div><div class="label">Glossary</div></div>
+          <div class="score-item"><div class="score">3/5</div><div class="label">Blog</div></div>
+          <div class="score-item"><div class="score">0/5</div><div class="label">Templates</div></div>
+          <div class="score-item"><div class="score">2/5</div><div class="label">Data Literacy</div></div>
+          <div class="score-item"><div class="score">0/5</div><div class="label">Industry</div></div>
+        </div>
+
+        <p><strong>Glossary:</strong> <span class="tag tag-blue">WELL-STRUCTURED</span> Two glossaries: (1) Public marketing glossary at <code>singular.net/glossary/</code> with A-Z navigation covering mobile attribution and analytics terminology. Individual term pages with definition, context, and embedded YouTube videos. (2) Technical glossary in Help Center (<code>support.singular.net</code>) with product-specific definitions. Terms include: attribution model, attribution window, click-through attribution, fractional attribution, multi-touch attribution, multi-channel attribution, probabilistic attribution. Estimated 30-50 terms, all mobile/attribution focused.</p>
+
+        <p><strong>Blog/Resources:</strong> Mobile-first content. State of Mobile Marketing reports (quarterly). Webinars on iOS scaling, creative optimization. Less volume than Improvado or Supermetrics.</p>
+
+        <p><strong>Gap Assessment:</strong> <span class="tag tag-yellow">Glossary is mobile-only</span> <span class="tag tag-red">No paid media broadly</span> <span class="tag tag-red">No naming conventions</span> <span class="tag tag-red">No templates</span> <span class="tag tag-red">No data operations</span></p>
+      </div>
+
+      <!-- APPSFLYER -->
+      <div class="competitor-card">
+        <h3>8. AppsFlyer</h3>
+        <p style="color: var(--pencil); font-size: 0.88rem;">Mobile attribution platform &bull; appsflyer.com</p>
+
+        <div class="score-grid">
+          <div class="score-item"><div class="score">5/5</div><div class="label">Glossary</div></div>
+          <div class="score-item"><div class="score">4/5</div><div class="label">Blog</div></div>
+          <div class="score-item"><div class="score">2/5</div><div class="label">Templates</div></div>
+          <div class="score-item"><div class="score">3/5</div><div class="label">Data Literacy</div></div>
+          <div class="score-item"><div class="score">2/5</div><div class="label">Industry</div></div>
+        </div>
+
+        <p><strong>Glossary:</strong> <span class="tag tag-green">BEST IN CLASS (for mobile)</span> Two resources: (1) Interactive glossary lobby at <code>appsflyer.com/glossary/</code> with A-Z navigation. Each term gets a dedicated page with full explanation, visuals, and related terms. Covers: mobile attribution, data-driven attribution, last-click attribution, linear attribution, web attribution, CTR, ad inventory, owned media, and many more. (2) "Mobile Marketing Dictionary" &mdash; a downloadable PDF with 100+ clear definitions. This is the gold standard for how a vendor can build a comprehensive glossary, but it's limited to mobile marketing.</p>
+
+        <p><strong>Blog/Resources:</strong> Deep attribution content: "Marketing Attribution Guide for 2025" is comprehensive. Measurement & analytics category in blog. Well-organized by topic: attribution, ad fraud, measurement, mobile growth.</p>
+
+        <p><strong>Templates:</strong> The downloadable "Mobile Marketing Dictionary" PDF is essentially a template/reference doc. No report templates or dashboard templates.</p>
+
+        <p><strong>Gap Assessment:</strong> <span class="tag tag-yellow">Glossary is mobile-only</span> <span class="tag tag-red">No paid media broadly</span> <span class="tag tag-red">No naming conventions</span> <span class="tag tag-red">No data transformation content</span> <span class="tag tag-red">No cross-platform comparison</span></p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ========================================= -->
+    <!-- SECTION 3: HEATMAP -->
+    <!-- ========================================= -->
+    <section id="heatmap">
+      <h2>03 &mdash; Content Coverage Heatmap</h2>
+      <p style="color: var(--pencil);">What each competitor has across the 6 content dimensions of The Open Standard.</p>
+
+      <div style="overflow-x: auto;">
+        <table class="gap-table">
+          <thead>
+            <tr>
+              <th>Competitor</th>
+              <th>Glossary</th>
+              <th>Naming Conv.</th>
+              <th>Data Norm.</th>
+              <th>Templates</th>
+              <th>Industry</th>
+              <th>"Standard"</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Funnel.io</strong></td>
+              <td class="heat-cell heat-weak">Blog posts</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-good">Strong guides</td>
+              <td class="heat-cell heat-weak">7 Looker</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+            </tr>
+            <tr>
+              <td><strong>Supermetrics</strong></td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-weak">1 blog post</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-strong">90+ templates</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+            </tr>
+            <tr>
+              <td><strong>Improvado</strong></td>
+              <td class="heat-cell heat-good">Product DD</td>
+              <td class="heat-cell heat-strong">3 articles + product</td>
+              <td class="heat-cell heat-strong">5+ deep guides</td>
+              <td class="heat-cell heat-weak">25+ dashboards</td>
+              <td class="heat-cell heat-good">Retail, Fintech</td>
+              <td class="heat-cell heat-weak">Metrics Layer</td>
+            </tr>
+            <tr>
+              <td><strong>Triple Whale</strong></td>
+              <td class="heat-cell heat-good">Dedicated page</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-good">eCommerce only</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+            </tr>
+            <tr>
+              <td><strong>Adverity</strong></td>
+              <td class="heat-cell heat-weak">Generic page</td>
+              <td class="heat-cell heat-good">3 articles + AI product</td>
+              <td class="heat-cell heat-weak">1 data mapping post</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-weak">Data Foundations</td>
+            </tr>
+            <tr>
+              <td><strong>Measured</strong></td>
+              <td class="heat-cell heat-weak">FAQ-based</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-weak">Incrementality mindset</td>
+            </tr>
+            <tr>
+              <td><strong>Singular</strong></td>
+              <td class="heat-cell heat-good">A-Z + videos</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+            </tr>
+            <tr>
+              <td><strong>AppsFlyer</strong></td>
+              <td class="heat-cell heat-strong">100+ terms + PDF</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+              <td class="heat-cell heat-weak">PDF dictionary</td>
+              <td class="heat-cell heat-weak">Mobile only</td>
+              <td class="heat-cell heat-none">&mdash;</td>
+            </tr>
+            <tr style="background: var(--whiteboard); font-weight: 600;">
+              <td>Clarisights (target)</td>
+              <td class="heat-cell heat-strong">200+ terms cross-platform</td>
+              <td class="heat-cell heat-strong">Interactive guides</td>
+              <td class="heat-cell heat-strong">Platform-specific guides</td>
+              <td class="heat-cell heat-good">Open templates</td>
+              <td class="heat-cell heat-strong">By vertical</td>
+              <td class="heat-cell heat-strong">THE Standard</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ========================================= -->
+    <!-- SECTION 4: SERP LANDSCAPE -->
+    <!-- ========================================= -->
+    <section id="serp">
+      <h2>04 &mdash; SERP Landscape &mdash; Who Ranks for Key Terms</h2>
+      <p style="color: var(--pencil);">Based on Exa search results (proxy for Google ranking signals). Who shows up and what kind of content wins.</p>
+
+      <table class="serp-table">
+        <thead>
+          <tr>
+            <th>Query</th>
+            <th>Who Ranks (Top Results)</th>
+            <th>Competitor Presence</th>
+            <th>Opportunity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>"marketing analytics glossary"</td>
+            <td>Inovaticus (300+ terms), Dotdigital, Responsory, SEO Agency Boston, Finsbury Media</td>
+            <td><strong>None of the 8 competitors rank.</strong></td>
+            <td><span class="tag tag-green">WIDE OPEN</span></td>
+          </tr>
+          <tr>
+            <td>"paid media glossary"</td>
+            <td>Foremostmedia, VXTX, Loganix (200+ PPC terms), Act-On (73 terms), Online Labs (150+ Google Ads)</td>
+            <td><strong>None of the 8 competitors rank.</strong></td>
+            <td><span class="tag tag-green">WIDE OPEN</span></td>
+          </tr>
+          <tr>
+            <td>"campaign naming convention guide"</td>
+            <td>CampaignTrackly, <strong>Improvado</strong> (#2), Trackingplan, <strong>Supermetrics</strong> (#4), Segwise, <strong>Adverity</strong> (#6)</td>
+            <td>3 of 8 competitors rank. CampaignTrackly (specialist tool) is #1.</td>
+            <td><span class="tag tag-yellow">COMPETITIVE</span></td>
+          </tr>
+          <tr>
+            <td>"marketing data normalization"</td>
+            <td><strong>Improvado</strong> (#1, #2, #3 positions), Appstractor, FasterCapital</td>
+            <td>Improvado dominates. No other competitor present.</td>
+            <td><span class="tag tag-red">IMPROVADO OWNED</span></td>
+          </tr>
+          <tr>
+            <td>"marketing data transformation"</td>
+            <td><strong>Improvado</strong> (#1, #2), Matillion, Numerous.ai, Whatagraph</td>
+            <td>Improvado dominates again.</td>
+            <td><span class="tag tag-red">IMPROVADO OWNED</span></td>
+          </tr>
+          <tr>
+            <td>"marketing report template"</td>
+            <td>MetricNexus, Porter Metrics, Databox, <strong>Supermetrics</strong>, Windsor.ai, Smartsheet, DashThis</td>
+            <td>Supermetrics has presence but isn't #1. Niche tools dominate.</td>
+            <td><span class="tag tag-yellow">CROWDED</span></td>
+          </tr>
+          <tr>
+            <td>"open standard marketing data"</td>
+            <td>IAB Tech Lab (OM SDK, ADMaP, ECAPI), IAB/MRC Retail Media Guidelines</td>
+            <td><strong>None of the 8 competitors.</strong> Only industry bodies (IAB).</td>
+            <td><span class="tag tag-green">BLUE OCEAN</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="summary-box" style="margin-top: var(--space-s);">
+        <h3>SERP Insight</h3>
+        <p>The most valuable keywords &mdash; "marketing analytics glossary" and "paid media glossary" &mdash; are dominated by small agencies and niche content sites. <strong>None of the 8 major competitors rank for these terms.</strong> This is a massive content gap in the market. A well-structured, comprehensive glossary from Clarisights would likely rank quickly given the weak competition and Clarisights' domain authority.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ========================================= -->
+    <!-- SECTION 5: CONTENT GAPS -->
+    <!-- ========================================= -->
+    <section id="gaps">
+      <h2>05 &mdash; Content Gap Analysis</h2>
+      <p style="color: var(--pencil);">What NOBODY is doing well, organized by opportunity size.</p>
+
+      <div class="competitor-card">
+        <h3>Gap 1: Cross-Platform Metric Definitions</h3>
+        <p><span class="tag tag-green">NOBODY HAS THIS</span></p>
+        <p>No competitor has a resource that shows: "Here's how Facebook defines a 'conversion' vs how Google defines it vs how TikTok defines it." Every existing glossary defines terms in isolation. Paid marketers working across 5-10 platforms desperately need this. This is the single most differentiated thing Clarisights can build.</p>
+        <p><strong>What to build:</strong> A metric comparison engine. For each metric (CPC, CPM, CPA, ROAS, conversion, impression, etc.), show the exact definition from each major platform, highlight differences, and explain normalization logic.</p>
+      </div>
+
+      <div class="competitor-card">
+        <h3>Gap 2: Platform-Neutral Data Standard</h3>
+        <p><span class="tag tag-green">NOBODY HAS THIS</span></p>
+        <p>No one has positioned their content as "the open standard" for marketing data. IAB has technical measurement standards (OM SDK, ADMaP, ECAPI) but these are for ad tech infrastructure, not for marketers. The space between "IAB technical specs" and "vendor blog posts" is completely empty. This is where "The Open Standard for Paid Marketing Data" lives.</p>
+        <p><strong>What to build:</strong> A formal, versioned, open-access standard document that defines how paid marketing data should be structured, named, and normalized. Think of it as OpenAPI spec, but for marketing data.</p>
+      </div>
+
+      <div class="competitor-card">
+        <h3>Gap 3: Interactive Naming Convention Builder</h3>
+        <p><span class="tag tag-yellow">BLOG POSTS EXIST, NO TOOL</span></p>
+        <p>Improvado, Adverity, and Supermetrics have blog posts about naming conventions. Adverity has a product feature. But nobody has a free, open, interactive tool that helps you BUILD your naming convention. CampaignTrackly is the closest (it's their whole product), but it's a paid SaaS tool, not a free resource.</p>
+        <p><strong>What to build:</strong> An open naming convention builder: pick your platforms, choose your taxonomy elements (geo, channel, campaign type, audience, creative variant), get a generated convention with examples. Downloadable as a Google Sheet or CSV template.</p>
+      </div>
+
+      <div class="competitor-card">
+        <h3>Gap 4: Industry/Vertical Playbooks for Data</h3>
+        <p><span class="tag tag-yellow">IMPROVADO HAS PARTIAL</span></p>
+        <p>Improvado has industry pages (Retail, Fintech) and vertical KPI guides. But these are about marketing strategy, not about data. Nobody has: "Here's the data model for an eCommerce paid media operation" or "Here's how a SaaS company should structure their marketing data." The gap is data architecture by vertical, not marketing tips by vertical.</p>
+        <p><strong>What to build:</strong> Industry playbooks focused on data: which metrics matter per vertical, how to structure naming conventions per industry, which platform integrations are critical, sample dashboards by vertical.</p>
+      </div>
+
+      <div class="competitor-card">
+        <h3>Gap 5: "What Changed" Platform Update Tracker</h3>
+        <p><span class="tag tag-green">NOBODY HAS THIS</span></p>
+        <p>Ad platforms constantly change their APIs, metrics, and attribution models. Nobody maintains a running changelog of platform data changes that affect marketers. Google deprecating a metric, Meta changing attribution windows, TikTok adding new dimensions &mdash; marketers find out when dashboards break.</p>
+        <p><strong>What to build:</strong> A living changelog: "Platform Data Changes That Affect Your Reporting." Updated weekly/monthly. Would become a must-bookmark for every data-driven marketer.</p>
+      </div>
+
+      <div class="competitor-card">
+        <h3>Gap 6: Comprehensive Paid Media Glossary (non-mobile)</h3>
+        <p><span class="tag tag-green">NOBODY HAS THIS FOR PAID MEDIA</span></p>
+        <p>AppsFlyer has 100+ mobile terms. Singular has 30-50 mobile terms. For non-mobile paid media (Google Ads, Meta, LinkedIn, TikTok, programmatic, retail media), the best glossaries come from small agencies (Inovaticus with 300+ terms, Loganix with 200+ PPC terms). No major analytics platform has built a comprehensive, authoritative, well-designed paid media glossary.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ========================================= -->
+    <!-- SECTION 6: RECOMMENDATIONS -->
+    <!-- ========================================= -->
+    <section id="recommendations">
+      <h2>06 &mdash; Recommendations &mdash; What to Build First</h2>
+      <p style="color: var(--pencil);">Prioritized by competitive gap size, SEO opportunity, and alignment with Clarisights positioning.</p>
+
+      <div class="rec-card">
+        <div class="priority p-high">P0 &mdash; BUILD FIRST (Month 1)</div>
+        <h3>The Paid Marketing Data Glossary</h3>
+        <p>200+ terms. Cross-platform definitions showing how each ad platform defines the same metric differently. A-Z navigation, search, individual term pages for SEO. Include: formulas, examples, platform-specific notes, and "common mistakes." This alone would rank for "marketing analytics glossary," "paid media glossary," and dozens of long-tail terms that currently have zero strong competition.</p>
+        <p><strong>Why first:</strong> No competitor ranks for glossary terms. AppsFlyer's mobile glossary proves the model works. The cross-platform comparison angle is completely unique and directly tied to Clarisights' product value.</p>
+        <p><strong>Reference models:</strong> AppsFlyer glossary (best structure), Triple Whale glossary (good A-Z UX), Singular glossary (video integration).</p>
+      </div>
+
+      <div class="rec-card">
+        <div class="priority p-high">P0 &mdash; BUILD FIRST (Month 1)</div>
+        <h3>Campaign Naming Convention Guide + Interactive Builder</h3>
+        <p>A comprehensive guide that goes beyond "best practices" (what Improvado and Adverity already have) to an interactive tool. Let marketers select their platforms, pick taxonomy elements, and generate a naming convention. Include downloadable templates. This would immediately outclass the existing blog posts from competitors.</p>
+        <p><strong>Why first:</strong> 3 competitors already rank for this. CampaignTrackly is the only "tool" and it's paid. A free, open tool from Clarisights would generate massive leads and establish the "standard" positioning immediately.</p>
+      </div>
+
+      <div class="rec-card">
+        <div class="priority p-med">P1 &mdash; BUILD SECOND (Month 2)</div>
+        <h3>Platform Data Guides (one per ad platform)</h3>
+        <p>For each major platform (Google Ads, Meta/Facebook, TikTok, LinkedIn, Snapchat, Pinterest, programmatic/DV360, Amazon Ads, Apple Search Ads), create a comprehensive guide covering: available metrics and their exact definitions, API data model, common data quality issues, normalization recommendations, naming convention templates. These become the canonical reference for each platform's data.</p>
+        <p><strong>Why second:</strong> Nobody has platform-specific data guides. Closest is Supermetrics' platform-specific templates, but those are reports, not data documentation. This is the "standard" made practical.</p>
+      </div>
+
+      <div class="rec-card">
+        <div class="priority p-med">P1 &mdash; BUILD SECOND (Month 2)</div>
+        <h3>Data Normalization Playbook</h3>
+        <p>A practical guide to normalizing marketing data across platforms. Cover: currency normalization, timezone alignment, metric harmonization (clicks, conversions, impressions), campaign structure mapping. Include decision trees and code examples. Directly compete with Improvado's 5+ articles but consolidate into one definitive resource.</p>
+        <p><strong>Why second:</strong> Improvado owns this SERP. But their content is spread across 5+ articles. A single, definitive, better-designed resource could take the #1 position, especially if it includes interactive elements and downloadable templates.</p>
+      </div>
+
+      <div class="rec-card">
+        <div class="priority p-low">P2 &mdash; BUILD THIRD (Month 3)</div>
+        <h3>Industry Playbooks (eCommerce first, then SaaS)</h3>
+        <p>Data-focused industry guides. Start with eCommerce (compete with Triple Whale's content but focus on data infrastructure, not metrics). Then SaaS. Cover: recommended data model, key metrics by vertical, naming convention templates, sample dashboards, platform priorities, and benchmarks.</p>
+      </div>
+
+      <div class="rec-card">
+        <div class="priority p-low">P2 &mdash; BUILD THIRD (Month 3+)</div>
+        <h3>Platform Change Tracker</h3>
+        <p>Living document tracking ad platform data changes. Updated weekly. Low effort to maintain, high bookmark value. Could become a newsletter. No competitor does this &mdash; it's pure blue ocean content.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- FOOTER -->
+    <footer style="margin-top: var(--space-m); padding-bottom: var(--space-m); color: var(--pencil); font-size: 0.78rem;">
+      <p>Prepared by Recurr Studio for Clarisights &bull; April 1, 2026</p>
+      <p>Research conducted via Exa web intelligence. Rankings are directional (search result ordering), not confirmed Google SERP positions.</p>
+      <p>Sources crawled: funnel.io, supermetrics.com, improvado.io, triplewhale.com, adverity.com, measured.com, singular.net, appsflyer.com</p>
+    </footer>
+
+  </main>
+  <script src="/recurr-system/engine.js"></script>
+</body>
+</html>
