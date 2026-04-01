@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clarisights Integrations — Programmatic SEO Templates</title>
+  <style>
+    :root {
+      --cs-blue: #1a56db;
+      --cs-dark: #111827;
+      --cs-gray-900: #1f2937;
+      --cs-gray-700: #374151;
+      --cs-gray-500: #6b7280;
+      --cs-gray-300: #d1d5db;
+      --cs-gray-100: #f3f4f6;
+      --cs-gray-50: #f9fafb;
+      --cs-white: #ffffff;
+      --cs-accent: #2563eb;
+      --cs-accent-light: #dbeafe;
+      --cs-green: #059669;
+      --cs-orange: #d97706;
+      --radius: 12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+      color: var(--cs-gray-900);
+      line-height: 1.6;
+      background: var(--cs-white);
+    }
+
+    /* === NAV === */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--cs-white);
+      border-bottom: 1px solid var(--cs-gray-300);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-size: 1.25rem; font-weight: 700; color: var(--cs-dark);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--cs-accent); }
+    .nav-tabs {
+      display: flex; gap: 0;
+    }
+    .nav-tab {
+      padding: 20px 20px;
+      text-decoration: none;
+      color: var(--cs-gray-500);
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .nav-tab:hover { color: var(--cs-dark); }
+    .nav-tab.active {
+      color: var(--cs-accent);
+      border-bottom-color: var(--cs-accent);
+    }
+    .nav-cta {
+      background: var(--cs-accent);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    /* === TEMPLATE SWITCHER === */
+    .template-switcher {
+      background: var(--cs-gray-50);
+      border-bottom: 1px solid var(--cs-gray-300);
+      padding: 1rem 2rem;
+    }
+    .template-switcher-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .template-switcher label {
+      font-size: 0.8rem; font-weight: 600; color: var(--cs-gray-500);
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .template-btn {
+      padding: 6px 16px;
+      border: 1px solid var(--cs-gray-300);
+      border-radius: 6px;
+      background: white;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--cs-gray-700);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .template-btn:hover { border-color: var(--cs-accent); color: var(--cs-accent); }
+    .template-btn.active {
+      background: var(--cs-accent);
+      color: white;
+      border-color: var(--cs-accent);
+    }
+
+    /* === SHARED === */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .section { padding: 4rem 0; }
+    .section-alt { background: var(--cs-gray-50); }
+    .section-dark { background: var(--cs-dark); color: white; }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-blue { background: var(--cs-accent-light); color: var(--cs-accent); }
+    .badge-green { background: #d1fae5; color: var(--cs-green); }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--cs-accent);
+      color: white;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #1d4ed8; }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent;
+      color: var(--cs-accent);
+      padding: 12px 28px;
+      border-radius: 8px;
+      border: 1px solid var(--cs-accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--cs-dark);
+      margin-bottom: 0.5rem;
+    }
+    .section-subtitle {
+      color: var(--cs-gray-500);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+    }
+
+    /* === TEMPLATE PAGES === */
+    .template-page { display: none; }
+    .template-page.active { display: block; }
+
+    /* === HERO === */
+    .hero {
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid var(--cs-gray-100);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .hero-badge-row {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--cs-dark);
+      margin-bottom: 1rem;
+    }
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--cs-gray-500);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .hero-ctas {
+      display: flex; gap: 12px; margin-bottom: 2rem;
+    }
+    .hero-trust {
+      font-size: 0.8rem;
+      color: var(--cs-gray-500);
+    }
+    .hero-trust strong { color: var(--cs-gray-700); }
+
+    .hero-visual {
+      background: var(--cs-gray-50);
+      border: 1px solid var(--cs-gray-300);
+      border-radius: var(--radius);
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+    }
+    .platform-logo {
+      width: 120px; height: 120px;
+      border-radius: 24px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; font-weight: 800;
+      color: white;
+    }
+    .platform-logo.fb { background: #1877f2; }
+    .platform-logo.looker { background: #4285f4; }
+    .platform-logo.ga { background: #e37400; }
+
+    /* === CONNECTOR HERO (arrow between two logos) === */
+    .connector-hero-visual {
+      display: flex; align-items: center; justify-content: center; gap: 2rem;
+    }
+    .connector-arrow {
+      font-size: 2rem; color: var(--cs-accent); font-weight: 300;
+    }
+    .connector-logo {
+      width: 80px; height: 80px;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; font-weight: 800; color: white;
+    }
+
+    /* === METRICS GRID === */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .metrics-col h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--cs-gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--cs-accent-light);
+    }
+    .metric-tag {
+      display: inline-block;
+      padding: 6px 14px;
+      background: var(--cs-gray-50);
+      border: 1px solid var(--cs-gray-300);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      margin: 0 6px 8px 0;
+      color: var(--cs-gray-700);
+    }
+    .sync-note {
+      margin-top: 1.5rem;
+      padding: 1rem 1.25rem;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--cs-green);
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    /* === ADVANTAGE SECTION === */
+    .advantage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .advantage-card {
+      padding: 2rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--cs-gray-300);
+    }
+    .advantage-card.before {
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+    .advantage-card.after {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+    .advantage-card h4 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+    .advantage-card.before h4 { color: #dc2626; }
+    .advantage-card.after h4 { color: var(--cs-green); }
+    .advantage-card ul {
+      list-style: none; padding: 0;
+    }
+    .advantage-card li {
+      padding: 0.4rem 0;
+      font-size: 0.9rem;
+      color: var(--cs-gray-700);
+    }
+    .advantage-card li::before {
+      margin-right: 8px;
+    }
+    .advantage-card.before li::before { content: "\2717"; color: #dc2626; }
+    .advantage-card.after li::before { content: "\2713"; color: var(--cs-green); }
+
+    /* === USE CASE CARDS === */
+    .usecase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .usecase-card {
+      padding: 1.5rem;
+      background: var(--cs-white);
+      border: 1px solid var(--cs-gray-300);
+      border-radius: var(--radius);
+    }
+    .usecase-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: var(--cs-accent-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .usecase-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .usecase-card p {
+      font-size: 0.875rem;
+      color: var(--cs-gray-500);
+      line-height: 1.6;
+    }
+
+    /* === DESTINATION / SOURCE GRID === */
+    .dest-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .dest-card {
+      padding: 1.25rem;
+      background: var(--cs-white);
+      border: 1px solid var(--cs-gray-300);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--cs-dark);
+      transition: all 0.2s;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .dest-card:hover {
+      border-color: var(--cs-accent);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+    }
+    .dest-card-logo {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 700; color: white;
+      flex-shrink: 0;
+    }
+    .dest-card-info h4 { font-size: 0.9rem; font-weight: 600; }
+    .dest-card-info p { font-size: 0.75rem; color: var(--cs-gray-500); }
+
+    /* === FAQ === */
+    .faq-list { max-width: 800px; }
+    .faq-item {
+      border-bottom: 1px solid var(--cs-gray-300);
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.25rem 0;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--cs-dark);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-question::after {
+      content: "+";
+      font-size: 1.25rem;
+      color: var(--cs-gray-500);
+      transition: transform 0.2s;
+    }
+    .faq-question.open::after {
+      content: "\2212";
+    }
+    .faq-answer {
+      display: none;
+      padding: 0 0 1.25rem;
+      font-size: 0.9rem;
+      color: var(--cs-gray-500);
+      line-height: 1.7;
+    }
+    .faq-answer.open { display: block; }
+
+    /* === CTA BAR === */
+    .cta-bar {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    .cta-bar h2 { margin-bottom: 1rem; }
+    .cta-bar p {
+      color: var(--cs-gray-500);
+      margin-bottom: 2rem;
+      max-width: 500px;
+      margin-left: auto; margin-right: auto;
+    }
+    .section-dark .cta-bar h2 { color: white; }
+    .section-dark .cta-bar p { color: #9ca3af; }
+
+    /* === 3-STEP === */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .step-card { text-align: center; }
+    .step-number {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--cs-accent);
+      color: white;
+      font-size: 1.25rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .step-card h3 {
+      font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;
+    }
+    .step-card p {
+      font-size: 0.85rem; color: var(--cs-gray-500);
+    }
+
+    /* === SCHEMA INFO BANNER === */
+    .schema-banner {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 1rem 1.5rem;
+      margin: 2rem auto;
+      max-width: 1200px;
+      font-size: 0.85rem;
+      color: #92400e;
+    }
+    .schema-banner strong { color: #78350f; }
+
+    /* === PAGE INDEX === */
+    .page-index {
+      padding: 3rem 0;
+    }
+    .index-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .index-card {
+      border: 2px solid var(--cs-gray-300);
+      border-radius: var(--radius);
+      padding: 2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .index-card:hover {
+      border-color: var(--cs-accent);
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.12);
+    }
+    .index-card.active {
+      border-color: var(--cs-accent);
+      background: var(--cs-accent-light);
+    }
+    .index-card h3 {
+      font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;
+    }
+    .index-card p {
+      font-size: 0.85rem; color: var(--cs-gray-500);
+    }
+    .index-card .url-pattern {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--cs-accent);
+      margin-top: 0.75rem;
+      padding: 4px 8px;
+      background: white;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: 1fr; }
+      .advantage-grid { grid-template-columns: 1fr; }
+      .usecase-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .index-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.75rem; }
+      .nav-tabs { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV (simulating Clarisights nav) -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">clari<span>sights</span></a>
+      <div class="nav-tabs">
+        <a href="#" class="nav-tab">Product</a>
+        <a href="#" class="nav-tab active">Integrations</a>
+        <a href="#" class="nav-tab">Resources</a>
+        <a href="#" class="nav-tab">Pricing</a>
+      </div>
+      <a href="#" class="nav-cta">Get a Demo</a>
+    </div>
+  </nav>
+
+  <!-- TEMPLATE SWITCHER -->
+  <div class="template-switcher">
+    <div class="template-switcher-inner">
+      <label>Template Preview:</label>
+      <button class="template-btn active" onclick="showTemplate('overview')">Overview</button>
+      <button class="template-btn" onclick="showTemplate('source')">Data Source Page</button>
+      <button class="template-btn" onclick="showTemplate('destination')">Destination Page</button>
+      <button class="template-btn" onclick="showTemplate('connector')">Connector Page</button>
+    </div>
+  </div>
+
+  <!-- ============================= -->
+  <!-- OVERVIEW PAGE -->
+  <!-- ============================= -->
+  <div id="page-overview" class="template-page active">
+    <div class="container">
+      <div class="page-index" style="padding-top: 3rem;">
+        <span class="badge badge-blue">Programmatic SEO Project</span>
+        <h1 style="font-size: 2rem; font-weight: 800; margin-top: 0.75rem; margin-bottom: 0.5rem;">Clarisights Integrations — Page Templates</h1>
+        <p style="color: var(--cs-gray-500); max-width: 700px; margin-bottom: 1rem;">
+          Three page types, one data schema, 800-2,300 pages. Each template below is a working layout ready for review.
+        </p>
+
+        <div class="schema-banner">
+          <strong>For the team:</strong> Click each template to see the full page layout. These are the exact structures we'll use to generate pages programmatically. Variable fields shown in <code style="background:#fef3c7;padding:2px 6px;border-radius:3px;">{curly braces}</code> are populated from the spreadsheet.
+        </div>
+
+        <div class="index-grid">
+          <div class="index-card" onclick="showTemplate('source')">
+            <h3>Template A: Data Source</h3>
+            <p>Individual page for each platform Clarisights pulls data FROM. ~300 pages.</p>
+            <span class="url-pattern">/data-source/{slug}/</span>
+          </div>
+          <div class="index-card" onclick="showTemplate('destination')">
+            <h3>Template B: Destination</h3>
+            <p>Individual page for each place data can be sent TO. ~15-25 pages.</p>
+            <span class="url-pattern">/data-destination/{slug}/</span>
+          </div>
+          <div class="index-card" onclick="showTemplate('connector')">
+            <h3>Template C: Connector</h3>
+            <p>Source-to-destination combinations. "Connect X to Y." ~500-2,000 pages.</p>
+            <span class="url-pattern">/connect/{source}-to-{destination}/</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCHEMA SUMMARY -->
+      <div class="section" style="padding-top: 2rem;">
+        <h2>Data Schema</h2>
+        <p class="section-subtitle">Three sheets in one Google Sheet power all pages.</p>
+
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--cs-gray-300);">
+                <th style="text-align:left; padding: 12px 16px; color: var(--cs-gray-500); font-weight: 600;">Sheet</th>
+                <th style="text-align:left; padding: 12px 16px; color: var(--cs-gray-500); font-weight: 600;">Key Columns</th>
+                <th style="text-align:left; padding: 12px 16px; color: var(--cs-gray-500); font-weight: 600;">Est. Rows</th>
+                <th style="text-align:left; padding: 12px 16px; color: var(--cs-gray-500); font-weight: 600;">Generates</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--cs-gray-100);">
+                <td style="padding: 12px 16px; font-weight: 600;">Sources</td>
+                <td style="padding: 12px 16px;">name, slug, category, description, metrics, dimensions, use_cases, advantages, FAQs</td>
+                <td style="padding: 12px 16px;">300+</td>
+                <td style="padding: 12px 16px;">Data Source pages</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--cs-gray-100);">
+                <td style="padding: 12px 16px; font-weight: 600;">Destinations</td>
+                <td style="padding: 12px 16px;">name, slug, category, description, what_you_can_do, popular_sources, FAQs</td>
+                <td style="padding: 12px 16px;">15-25</td>
+                <td style="padding: 12px 16px;">Destination pages</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--cs-gray-100);">
+                <td style="padding: 12px 16px; font-weight: 600;">Connectors</td>
+                <td style="padding: 12px 16px;">source_slug, destination_slug, h1, why_connect, what_data_flows, 3-step how, FAQs</td>
+                <td style="padding: 12px 16px;">500-2,000</td>
+                <td style="padding: 12px 16px;">Connector pages</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- URL ARCHITECTURE -->
+      <div class="section" style="padding-top: 1rem;">
+        <h2>URL Architecture</h2>
+        <p class="section-subtitle">Clean, predictable, SEO-friendly.</p>
+
+        <div style="background: var(--cs-gray-50); border: 1px solid var(--cs-gray-300); border-radius: var(--radius); padding: 1.5rem; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem; line-height: 2.2;">
+          <div style="color: var(--cs-gray-500);"># Rollup pages</div>
+          <div>/integrations/ <span style="color:var(--cs-gray-500)">..................</span> All integrations</div>
+          <div>/integrations/data-sources <span style="color:var(--cs-gray-500)">........</span> All sources by category</div>
+          <div>/integrations/data-destinations <span style="color:var(--cs-gray-500)">....</span> All destinations by category</div>
+          <br>
+          <div style="color: var(--cs-gray-500);"># Individual pages (from spreadsheet)</div>
+          <div>/data-source/<span style="color:var(--cs-accent)">{slug}</span>/ <span style="color:var(--cs-gray-500)">................</span> e.g. /data-source/facebook-ads/</div>
+          <div>/data-destination/<span style="color:var(--cs-accent)">{slug}</span>/ <span style="color:var(--cs-gray-500)">..........</span> e.g. /data-destination/looker-studio/</div>
+          <div>/connect/<span style="color:var(--cs-accent)">{source}</span>-to-<span style="color:var(--cs-accent)">{destination}</span>/ <span style="color:var(--cs-gray-500)">.</span> e.g. /connect/facebook-ads-to-looker-studio/</div>
+        </div>
+      </div>
+
+      <!-- INTERNAL LINKING -->
+      <div class="section" style="padding-top: 1rem;">
+        <h2>Internal Linking Map</h2>
+        <p class="section-subtitle">Every page links to related pages, creating a dense web.</p>
+
+        <div style="background: var(--cs-gray-50); border: 1px solid var(--cs-gray-300); border-radius: var(--radius); padding: 2rem; font-size: 0.85rem; line-height: 1.8;">
+          <div style="text-align:center; margin-bottom: 1.5rem;">
+            <span style="background: var(--cs-accent); color:white; padding: 8px 16px; border-radius: 6px; font-weight: 600;">/integrations/</span>
+          </div>
+          <div style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 1rem;">
+            <div style="text-align:center;">
+              <div style="color: var(--cs-gray-500); font-size: 0.75rem; margin-bottom: 4px;">filters to</div>
+              <span style="background: #dbeafe; padding: 6px 12px; border-radius: 6px; font-weight: 600; color: var(--cs-accent);">/integrations/data-sources</span>
+            </div>
+            <div style="text-align:center;">
+              <div style="color: var(--cs-gray-500); font-size: 0.75rem; margin-bottom: 4px;">filters to</div>
+              <span style="background: #dbeafe; padding: 6px 12px; border-radius: 6px; font-weight: 600; color: var(--cs-accent);">/integrations/data-destinations</span>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 1rem;">
+            <div style="text-align:center;">
+              <div style="color: var(--cs-gray-500); font-size: 0.75rem; margin-bottom: 4px;">links to each</div>
+              <span style="background: #fef3c7; padding: 6px 12px; border-radius: 6px; font-weight: 600; color: #92400e;">/data-source/{slug}/</span>
+            </div>
+            <div style="text-align:center;">
+              <div style="color: var(--cs-gray-500); font-size: 0.75rem; margin-bottom: 4px;">links to each</div>
+              <span style="background: #fef3c7; padding: 6px 12px; border-radius: 6px; font-weight: 600; color: #92400e;">/data-destination/{slug}/</span>
+            </div>
+          </div>
+          <div style="text-align:center;">
+            <div style="color: var(--cs-gray-500); font-size: 0.75rem; margin-bottom: 4px;">both link to</div>
+            <span style="background: #d1fae5; padding: 6px 12px; border-radius: 6px; font-weight: 600; color: var(--cs-green);">/connect/{source}-to-{destination}/</span>
+          </div>
+          <div style="text-align:center; margin-top: 1rem;">
+            <div style="color: var(--cs-gray-500); font-size: 0.75rem; margin-bottom: 4px;">all pages link to</div>
+            <span style="background: #ede9fe; padding: 6px 12px; border-radius: 6px; font-weight: 600; color: #7c3aed;">Blog posts + Glossary (M5) + Demo CTA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BUILD PRIORITY -->
+      <div class="section" style="padding-top: 1rem; padding-bottom: 4rem;">
+        <h2>Phase 1 Build Priority</h2>
+        <p class="section-subtitle">Start with the 20 highest-volume sources + 5 destinations = 100 connector pages.</p>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+          <div>
+            <h3 style="font-size: 0.9rem; font-weight: 600; color: var(--cs-gray-500); margin-bottom: 1rem;">P0 Sources (20)</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+              <span class="metric-tag">Facebook Ads</span>
+              <span class="metric-tag">Google Ads</span>
+              <span class="metric-tag">TikTok Ads</span>
+              <span class="metric-tag">Instagram Ads</span>
+              <span class="metric-tag">Google Analytics</span>
+              <span class="metric-tag">LinkedIn Ads</span>
+              <span class="metric-tag">Snapchat Ads</span>
+              <span class="metric-tag">Pinterest Ads</span>
+              <span class="metric-tag">Twitter/X Ads</span>
+              <span class="metric-tag">DV360</span>
+              <span class="metric-tag">Google Campaign Manager</span>
+              <span class="metric-tag">The Trade Desk</span>
+              <span class="metric-tag">AppsFlyer</span>
+              <span class="metric-tag">Adjust</span>
+              <span class="metric-tag">Shopify</span>
+              <span class="metric-tag">Amazon Ads</span>
+              <span class="metric-tag">Microsoft Ads</span>
+              <span class="metric-tag">Taboola</span>
+              <span class="metric-tag">Outbrain</span>
+              <span class="metric-tag">Criteo</span>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-size: 0.9rem; font-weight: 600; color: var(--cs-gray-500); margin-bottom: 1rem;">P0 Destinations (5)</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+              <span class="metric-tag">Looker Studio</span>
+              <span class="metric-tag">Google Sheets</span>
+              <span class="metric-tag">BigQuery</span>
+              <span class="metric-tag">Snowflake</span>
+              <span class="metric-tag">Power BI / Excel</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top: 1.5rem; padding: 1rem; background: var(--cs-accent-light); border-radius: 8px; font-size: 0.85rem; color: var(--cs-accent);">
+          <strong>Phase 1 output:</strong> 20 source pages + 5 destination pages + 100 connector pages = <strong>125 pages</strong>. Validate keyword volumes with DataForSEO before building connector pages.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= -->
+  <!-- TEMPLATE A: DATA SOURCE PAGE -->
+  <!-- ============================= -->
+  <div id="page-source" class="template-page">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <div class="hero-badge-row">
+              <span class="badge badge-blue">Social Advertising</span>
+              <span class="badge badge-green">Live</span>
+            </div>
+            <h1>Facebook Ads Integration</h1>
+            <p class="hero-subtitle">
+              Pull your Facebook Ads data into Clarisights and see it alongside 300+ other marketing channels. One unified view of your Meta campaigns, spend, and performance.
+            </p>
+            <div class="hero-ctas">
+              <a href="#" class="btn-primary">Get a Demo</a>
+              <a href="#" class="btn-secondary">See All Integrations</a>
+            </div>
+            <p class="hero-trust"><strong>300+ integrations</strong> &middot; Trusted by Delivery Hero, On Running, Forbes, and 100+ brands</p>
+          </div>
+          <div class="hero-visual">
+            <div class="platform-logo fb">f</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 1: What You Get -->
+    <div class="section">
+      <div class="container">
+        <h2>What Facebook Ads data does Clarisights pull?</h2>
+        <p class="section-subtitle">All your campaign metrics and dimensions, synced automatically.</p>
+
+        <div class="metrics-grid">
+          <div class="metrics-col">
+            <h3>Key Metrics</h3>
+            <span class="metric-tag">Impressions</span>
+            <span class="metric-tag">Clicks</span>
+            <span class="metric-tag">Spend</span>
+            <span class="metric-tag">ROAS</span>
+            <span class="metric-tag">CPM</span>
+            <span class="metric-tag">CPC</span>
+            <span class="metric-tag">CTR</span>
+            <span class="metric-tag">Conversions</span>
+            <span class="metric-tag">Reach</span>
+            <span class="metric-tag">Frequency</span>
+            <span class="metric-tag">Video Views</span>
+            <span class="metric-tag">Cost Per Result</span>
+          </div>
+          <div class="metrics-col">
+            <h3>Key Dimensions</h3>
+            <span class="metric-tag">Campaign</span>
+            <span class="metric-tag">Ad Set</span>
+            <span class="metric-tag">Ad</span>
+            <span class="metric-tag">Age</span>
+            <span class="metric-tag">Gender</span>
+            <span class="metric-tag">Placement</span>
+            <span class="metric-tag">Country</span>
+            <span class="metric-tag">Device</span>
+            <span class="metric-tag">Platform</span>
+            <span class="metric-tag">Objective</span>
+          </div>
+        </div>
+
+        <div class="sync-note">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="8" fill="#059669"/><path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Data syncs automatically &mdash; near real-time (hourly refresh)
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Why It's Better -->
+    <div class="section section-alt">
+      <div class="container">
+        <h2>Your Facebook Ads data, in context</h2>
+        <p class="section-subtitle">
+          Native Meta dashboards show you Facebook in isolation. Clarisights shows you Facebook alongside every other channel you run.
+        </p>
+
+        <div class="advantage-grid">
+          <div class="advantage-card before">
+            <h4>Without Clarisights</h4>
+            <ul>
+              <li>Facebook ROAS in Meta, Google ROAS in Google Ads, TikTok in TikTok</li>
+              <li>Manual exports to spreadsheets every Monday morning</li>
+              <li>Different attribution windows make numbers incomparable</li>
+              <li>No single view of total marketing performance</li>
+              <li>Hours lost reconciling data across platforms</li>
+            </ul>
+          </div>
+          <div class="advantage-card after">
+            <h4>With Clarisights</h4>
+            <ul>
+              <li>Facebook + Google + TikTok ROAS in one unified view</li>
+              <li>Automated reports delivered to your inbox and Slack</li>
+              <li>Normalized metrics so you compare apples to apples</li>
+              <li>One dashboard for the CMO, one for the media buyer</li>
+              <li>Real-time data, zero manual work</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Use Cases -->
+    <div class="section">
+      <div class="container">
+        <h2>What teams do with Facebook Ads in Clarisights</h2>
+        <p class="section-subtitle">Three ways performance teams use this integration.</p>
+
+        <div class="usecase-grid">
+          <div class="usecase-card">
+            <div class="usecase-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <h3>Unified ROAS View</h3>
+            <p>See Facebook Ads spend and ROAS alongside Google, TikTok, and Snapchat in a single dashboard. Compare performance without switching between platforms.</p>
+          </div>
+          <div class="usecase-card">
+            <div class="usecase-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M12 20V10M6 20V4M18 20v-6"/></svg>
+            </div>
+            <h3>Cross-Channel Creative Analysis</h3>
+            <p>Track which creatives perform best across Meta placements and compare creative performance across all your paid channels from one screen.</p>
+          </div>
+          <div class="usecase-card">
+            <div class="usecase-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+            </div>
+            <h3>Automated Stakeholder Reports</h3>
+            <p>Generate weekly executive reports that combine Meta campaign data with web analytics and CRM data. Delivered automatically — no manual work.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Where Your Data Can Go -->
+    <div class="section section-alt">
+      <div class="container">
+        <h2>Export your Facebook Ads data anywhere</h2>
+        <p class="section-subtitle">Send your unified data to the tools your team already uses.</p>
+
+        <div class="dest-grid">
+          <a href="#" class="dest-card" onclick="showTemplate('connector'); return false;">
+            <div class="dest-card-logo" style="background: #4285f4;">L</div>
+            <div class="dest-card-info">
+              <h4>Looker Studio</h4>
+              <p>BI & Dashboards</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #0f9d58;">S</div>
+            <div class="dest-card-info">
+              <h4>Google Sheets</h4>
+              <p>Spreadsheets</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #4285f4;">B</div>
+            <div class="dest-card-info">
+              <h4>Google BigQuery</h4>
+              <p>Warehouse & Storage</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #29b5e8;">S</div>
+            <div class="dest-card-info">
+              <h4>Snowflake</h4>
+              <p>Warehouse & Storage</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #f2c811;">P</div>
+            <div class="dest-card-info">
+              <h4>Power BI</h4>
+              <p>BI & Dashboards</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 5: Related Sources -->
+    <div class="section">
+      <div class="container">
+        <h2>Other Social Advertising integrations</h2>
+        <p class="section-subtitle">Connect all your social ad platforms in one place.</p>
+
+        <div class="dest-grid">
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #e1306c;">I</div>
+            <div class="dest-card-info">
+              <h4>Instagram Ads</h4>
+              <p>Social Advertising</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #000;">T</div>
+            <div class="dest-card-info">
+              <h4>TikTok Ads</h4>
+              <p>Social Advertising</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #0077b5;">L</div>
+            <div class="dest-card-info">
+              <h4>LinkedIn Ads</h4>
+              <p>Social Advertising</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #fffc00; color: #000;">S</div>
+            <div class="dest-card-info">
+              <h4>Snapchat Ads</h4>
+              <p>Social Advertising</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #e60023;">P</div>
+            <div class="dest-card-info">
+              <h4>Pinterest Ads</h4>
+              <p>Social Advertising</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 6: FAQ -->
+    <div class="section section-alt">
+      <div class="container">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list" style="margin-top: 1.5rem;">
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">What Facebook Ads data can I pull into Clarisights?</button>
+            <div class="faq-answer">Clarisights connects to the Facebook Ads API to pull all your campaign, ad set, and ad-level metrics including spend, impressions, clicks, conversions, ROAS, CPM, CPC, CTR, video views, and more. You also get full dimensional breakdowns by age, gender, placement, device, country, and campaign objective.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">How often does Clarisights sync Facebook Ads data?</button>
+            <div class="faq-answer">Data syncs automatically on an hourly basis. You always see near real-time data without any manual exports or uploads. Historical data is also available for trend analysis and period comparisons.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">Can I combine Facebook Ads data with other platforms in Clarisights?</button>
+            <div class="faq-answer">Yes — that's exactly what Clarisights is built for. You can combine your Facebook Ads data with 300+ other sources including Google Ads, TikTok, LinkedIn, Snapchat, Google Analytics, and more. Clarisights normalizes metrics across platforms so you get a true unified view of your marketing performance.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">How is Clarisights different from using Facebook's native reporting?</button>
+            <div class="faq-answer">Facebook's native dashboards only show you Meta data. Clarisights pulls your Facebook data alongside all your other marketing channels, normalizes the metrics, and gives you a single view of truth. You can compare Facebook ROAS against Google Ads ROAS, see total spend across all platforms, and generate automated reports — all without switching between tools or manually exporting data.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="section section-dark">
+      <div class="cta-bar">
+        <h2>See your Facebook Ads data in Clarisights</h2>
+        <p>Connect Facebook Ads alongside 300+ other marketing channels. Get a unified view of your performance in minutes.</p>
+        <a href="#" class="btn-primary">Book a Demo &rarr;</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================= -->
+  <!-- TEMPLATE B: DESTINATION PAGE -->
+  <!-- ============================= -->
+  <div id="page-destination" class="template-page">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <div class="hero-badge-row">
+              <span class="badge badge-blue">BI & Dashboards</span>
+              <span class="badge badge-green">Live</span>
+            </div>
+            <h1>Export to Looker Studio</h1>
+            <p class="hero-subtitle">
+              Send your unified marketing data from Clarisights to Looker Studio. Build automated dashboards with data from 300+ sources — no individual connectors needed.
+            </p>
+            <div class="hero-ctas">
+              <a href="#" class="btn-primary">Get a Demo</a>
+              <a href="#" class="btn-secondary">See All Destinations</a>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="platform-logo looker">L</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Why Clarisights + Looker Studio -->
+    <div class="section">
+      <div class="container">
+        <h2>Looker Studio + Clarisights</h2>
+        <p class="section-subtitle">The fastest way to build marketing dashboards with unified data.</p>
+
+        <div style="max-width: 700px; color: var(--cs-gray-700); line-height: 1.8; font-size: 0.95rem;">
+          <p>Looker Studio (formerly Google Data Studio) is Google's free dashboard and reporting tool. Most marketing teams use it — but building dashboards with data from 10+ ad platforms means managing 10+ individual connectors, each with different data formats and refresh schedules.</p>
+          <br>
+          <p>Clarisights solves this. Instead of connecting each platform individually to Looker Studio, you connect everything to Clarisights first. Clarisights normalizes, deduplicates, and enriches your data — then exports a single, clean data feed to Looker Studio.</p>
+        </div>
+
+        <div class="advantage-grid" style="margin-top: 2rem;">
+          <div class="advantage-card before">
+            <h4>Direct Connectors (The Hard Way)</h4>
+            <ul>
+              <li>15 separate Looker Studio connectors to manage</li>
+              <li>Each connector has different data schemas</li>
+              <li>Manual data blending to compare across platforms</li>
+              <li>Connectors break silently — stale dashboards</li>
+              <li>No cross-channel metrics without custom SQL</li>
+            </ul>
+          </div>
+          <div class="advantage-card after">
+            <h4>Through Clarisights (The Smart Way)</h4>
+            <ul>
+              <li>One data feed into Looker Studio</li>
+              <li>Pre-normalized, pre-blended data</li>
+              <li>Cross-channel metrics calculated for you</li>
+              <li>Monitored and maintained — no silent failures</li>
+              <li>Ready-to-use dashboard templates</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Use Cases -->
+    <div class="section section-alt">
+      <div class="container">
+        <h2>What you can build in Looker Studio with Clarisights data</h2>
+        <div class="usecase-grid" style="margin-top: 2rem;">
+          <div class="usecase-card">
+            <div class="usecase-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <h3>Executive Marketing Dashboard</h3>
+            <p>A single Looker Studio dashboard showing total spend, ROAS, and conversions across all channels. Updated hourly, shared with the CMO.</p>
+          </div>
+          <div class="usecase-card">
+            <div class="usecase-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M12 20V10M6 20V4M18 20v-6"/></svg>
+            </div>
+            <h3>Channel Performance Reports</h3>
+            <p>Drill-down reports by channel, campaign, and creative. Compare Facebook vs Google vs TikTok side by side with normalized metrics.</p>
+          </div>
+          <div class="usecase-card">
+            <div class="usecase-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <h3>Automated Client Reporting</h3>
+            <p>For agencies: generate per-client Looker Studio reports with all their ad platform data in one place. Scheduled delivery, zero manual work.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Popular Sources -->
+    <div class="section">
+      <div class="container">
+        <h2>Connect these sources to Looker Studio</h2>
+        <p class="section-subtitle">Your most popular ad platforms, unified and ready for dashboards.</p>
+
+        <div class="dest-grid">
+          <a href="#" class="dest-card" onclick="showTemplate('connector'); return false;">
+            <div class="dest-card-logo fb">f</div>
+            <div class="dest-card-info">
+              <h4>Facebook Ads</h4>
+              <p>Social Advertising</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #4285f4;">G</div>
+            <div class="dest-card-info">
+              <h4>Google Ads</h4>
+              <p>Search Advertising</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #000;">T</div>
+            <div class="dest-card-info">
+              <h4>TikTok Ads</h4>
+              <p>Social Advertising</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #0077b5;">L</div>
+            <div class="dest-card-info">
+              <h4>LinkedIn Ads</h4>
+              <p>Social Advertising</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #e37400;">A</div>
+            <div class="dest-card-info">
+              <h4>Google Analytics</h4>
+              <p>Web Analytics</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section section-alt">
+      <div class="container">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list" style="margin-top: 1.5rem;">
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">Do I still need individual Looker Studio connectors?</button>
+            <div class="faq-answer">No. Clarisights replaces the need for individual platform connectors. Instead of managing 15+ separate data connections, you get one unified data feed from Clarisights into Looker Studio — with all your marketing data already normalized and blended.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">How does the data get into Looker Studio?</button>
+            <div class="faq-answer">Clarisights provides a native Looker Studio connector. Once connected, your unified marketing data appears as a data source in Looker Studio. You can use it like any other data source to build charts, tables, and dashboards.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">Is the data in Looker Studio always up to date?</button>
+            <div class="faq-answer">Yes. Clarisights syncs data from all your sources hourly. When you view your Looker Studio dashboard, it pulls the latest data from Clarisights automatically. No manual refreshes needed.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="section section-dark">
+      <div class="cta-bar">
+        <h2>Build better Looker Studio dashboards</h2>
+        <p>Unified marketing data from 300+ sources, ready for your dashboards. No more connector management.</p>
+        <a href="#" class="btn-primary">Book a Demo &rarr;</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================= -->
+  <!-- TEMPLATE C: CONNECTOR PAGE -->
+  <!-- ============================= -->
+  <div id="page-connector" class="template-page">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <div class="hero-badge-row">
+              <span class="badge badge-blue">Connector</span>
+            </div>
+            <h1>Connect Facebook Ads to Looker Studio</h1>
+            <p class="hero-subtitle">
+              Build automated Looker Studio dashboards with your Facebook Ads data — alongside every other marketing channel you run. No manual exports, no individual connectors.
+            </p>
+            <div class="hero-ctas">
+              <a href="#" class="btn-primary">Get a Demo</a>
+            </div>
+            <p class="hero-trust"><strong>300+ integrations</strong> &middot; Trusted by Delivery Hero, On Running, Forbes, and 100+ brands</p>
+          </div>
+          <div class="hero-visual">
+            <div class="connector-hero-visual">
+              <div class="connector-logo fb">f</div>
+              <span class="connector-arrow">&rarr;</span>
+              <div style="width:40px; height:40px; border-radius:50%; background: var(--cs-accent-light); display:flex; align-items:center; justify-content:center;">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#2563eb" stroke-width="2"><path d="M5 10h10M10 5l5 5-5 5"/></svg>
+              </div>
+              <span class="connector-arrow">&rarr;</span>
+              <div class="connector-logo looker">L</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Why Connect -->
+    <div class="section">
+      <div class="container">
+        <h2>Why connect Facebook Ads to Looker Studio through Clarisights?</h2>
+        <div style="max-width: 700px; color: var(--cs-gray-700); line-height: 1.8; font-size: 0.95rem;">
+          <p>Most teams that run Facebook Ads also run Google Ads, TikTok, LinkedIn, and more. Building a Looker Studio dashboard means managing a separate connector for each platform — each with different schemas, refresh rates, and failure modes.</p>
+          <br>
+          <p>With Clarisights, you connect all your ad platforms once. Clarisights normalizes the data so "impressions" means the same thing whether it comes from Meta, Google, or TikTok. Then you export one clean, unified data feed to Looker Studio.</p>
+          <br>
+          <p>The result: dashboards that actually tell the full story, built in minutes instead of days.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="section section-alt">
+      <div class="container">
+        <h2>How it works</h2>
+        <p class="section-subtitle">Three steps. Under 10 minutes.</p>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Connect Facebook Ads</h3>
+            <p>Log into Clarisights and connect your Facebook Ads account. One-click OAuth — no API keys or manual setup.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Data syncs automatically</h3>
+            <p>Clarisights pulls your Facebook Ads data, normalizes it alongside your other sources, and keeps it fresh hourly.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Export to Looker Studio</h3>
+            <p>Connect Clarisights as a data source in Looker Studio. Your unified marketing data flows into your dashboards automatically.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What Data Flows -->
+    <div class="section">
+      <div class="container">
+        <h2>What Facebook Ads data lands in Looker Studio</h2>
+        <p class="section-subtitle">All your metrics and dimensions, normalized and ready for dashboards.</p>
+
+        <div class="metrics-grid">
+          <div class="metrics-col">
+            <h3>Metrics</h3>
+            <span class="metric-tag">Spend</span>
+            <span class="metric-tag">Impressions</span>
+            <span class="metric-tag">Clicks</span>
+            <span class="metric-tag">ROAS</span>
+            <span class="metric-tag">Conversions</span>
+            <span class="metric-tag">CPM</span>
+            <span class="metric-tag">CPC</span>
+            <span class="metric-tag">CTR</span>
+            <span class="metric-tag">Reach</span>
+            <span class="metric-tag">Video Views</span>
+          </div>
+          <div class="metrics-col">
+            <h3>Dimensions</h3>
+            <span class="metric-tag">Campaign Name</span>
+            <span class="metric-tag">Ad Set Name</span>
+            <span class="metric-tag">Ad Name</span>
+            <span class="metric-tag">Age</span>
+            <span class="metric-tag">Gender</span>
+            <span class="metric-tag">Country</span>
+            <span class="metric-tag">Device</span>
+            <span class="metric-tag">Placement</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Not Just Facebook -->
+    <div class="section section-alt">
+      <div class="container">
+        <h2>Looker Studio works with 300+ sources in Clarisights</h2>
+        <p class="section-subtitle">Combine your Facebook Ads data with everything else you run.</p>
+
+        <div class="dest-grid">
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #4285f4;">G</div>
+            <div class="dest-card-info">
+              <h4>Google Ads &rarr; Looker Studio</h4>
+              <p>Search Advertising</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #000;">T</div>
+            <div class="dest-card-info">
+              <h4>TikTok Ads &rarr; Looker Studio</h4>
+              <p>Social Advertising</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #0077b5;">L</div>
+            <div class="dest-card-info">
+              <h4>LinkedIn Ads &rarr; Looker Studio</h4>
+              <p>Social Advertising</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #e37400;">A</div>
+            <div class="dest-card-info">
+              <h4>Google Analytics &rarr; Looker Studio</h4>
+              <p>Web Analytics</p>
+            </div>
+          </a>
+          <a href="#" class="dest-card">
+            <div class="dest-card-logo" style="background: #fffc00; color:#000;">S</div>
+            <div class="dest-card-info">
+              <h4>Snapchat Ads &rarr; Looker Studio</h4>
+              <p>Social Advertising</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section">
+      <div class="container">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list" style="margin-top: 1.5rem;">
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">Can I connect Facebook Ads directly to Looker Studio without Clarisights?</button>
+            <div class="faq-answer">You can, using third-party Looker Studio connectors. But you'll only see Facebook data in isolation. Clarisights normalizes your Facebook Ads data alongside all your other marketing channels, so your Looker Studio dashboards show the full picture — not just one platform's silo.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">How long does setup take?</button>
+            <div class="faq-answer">Under 10 minutes. Connect your Facebook Ads account to Clarisights (one-click OAuth), wait for the initial data sync (3-10 minutes depending on data volume), then add Clarisights as a data source in Looker Studio. You'll have data flowing within a single sitting.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="section section-dark">
+      <div class="cta-bar">
+        <h2>Connect Facebook Ads to Looker Studio in minutes</h2>
+        <p>Unified marketing data, ready for your dashboards. No more managing individual connectors.</p>
+        <a href="#" class="btn-primary">Book a Demo &rarr;</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function showTemplate(name) {
+      // Hide all pages
+      document.querySelectorAll('.template-page').forEach(p => p.classList.remove('active'));
+      // Show selected
+      document.getElementById('page-' + name).classList.add('active');
+      // Update buttons
+      document.querySelectorAll('.template-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      // Update index cards
+      document.querySelectorAll('.index-card').forEach(c => c.classList.remove('active'));
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleFaq(btn) {
+      btn.classList.toggle('open');
+      const answer = btn.nextElementSibling;
+      answer.classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
