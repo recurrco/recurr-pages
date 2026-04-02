@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#E5E8E8">
+  <title>Competitive Displacement &mdash; Clarisights GTM</title>
+  <meta name="description" content="Intelligence-powered competitive displacement pages for Funnel.io, Supermetrics, Datorama, and Improvado.">
+  <link rel="stylesheet" href="/recurr-system/style.css">
+  <style>
+    .program-badge {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pencil);
+      margin-bottom: var(--space-xs);
+    }
+
+    /* Tab navigation */
+    .comp-tabs {
+      display: flex;
+      gap: 2px;
+      border-bottom: 2px solid var(--border-color);
+      margin-bottom: var(--space-m);
+      overflow-x: auto;
+    }
+    .comp-tab {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--pencil);
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .comp-tab:hover { color: var(--ink); }
+    .comp-tab.active { color: var(--ink); border-bottom-color: var(--red); }
+    .comp-tab.coming-soon { opacity: 0.4; cursor: default; }
+
+    /* Tab content */
+    .comp-content { display: none; }
+    .comp-content.active { display: block; }
+
+    /* Priority badges */
+    .priority-badge {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+    .pb-p0 { background: #E03E3618; color: var(--red); }
+    .pb-p1 { background: #2B6CB018; color: var(--blue); }
+
+    /* Section cards */
+    .vs-section {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.5rem, 1.2rem + 1vw, 2.4rem);
+      margin-bottom: var(--space-s);
+    }
+    .vs-section-num {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--pencil);
+      margin-bottom: 6px;
+    }
+    .vs-section-title {
+      font-family: var(--serif);
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-xs);
+    }
+    .vs-section p, .vs-section li {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      color: var(--graphite);
+      line-height: 1.65;
+    }
+    .vs-section ul {
+      padding-left: 1.2em;
+      margin: var(--space-xs) 0;
+    }
+    .vs-section li {
+      margin-bottom: 6px;
+    }
+    .vs-section strong { color: var(--ink); }
+
+    /* Quote block */
+    .intel-quote {
+      border-left: 3px solid var(--red);
+      padding: var(--space-xs) var(--space-s);
+      margin: var(--space-xs) 0;
+      background: rgba(224,62,54,0.04);
+      border-radius: 0 4px 4px 0;
+    }
+    .intel-quote p {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      color: var(--ink);
+      font-style: italic;
+      line-height: 1.55;
+    }
+    .intel-quote .source {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      font-style: normal;
+      margin-top: 4px;
+    }
+
+    /* Comparison grid */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-s);
+      margin: var(--space-xs) 0;
+    }
+    @media (max-width: 640px) { .compare-grid { grid-template-columns: 1fr; } }
+    .compare-col {
+      background: var(--notebook);
+      border: 1px solid var(--border-faint);
+      border-radius: 4px;
+      padding: var(--space-s);
+    }
+    .compare-col-title {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .cc-red { color: var(--red); }
+    .cc-green { color: var(--green); }
+
+    /* FAQ items */
+    .faq-item {
+      border-bottom: 1px dashed var(--border-faint);
+      padding: var(--space-xs) 0;
+    }
+    .faq-q {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .faq-a {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      color: var(--graphite);
+      line-height: 1.6;
+    }
+
+    /* SEO data table */
+    .seo-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      gap: var(--space-xs);
+      padding: 6px 0;
+      border-bottom: 1px dashed var(--border-faint);
+      align-items: baseline;
+    }
+    .seo-row:first-of-type { border-top: 1px dashed var(--border-faint); }
+    @media (max-width: 640px) { .seo-row { grid-template-columns: 1fr auto; } .seo-row .hide-mobile { display: none; } }
+
+    /* Status line */
+    .status-line {
+      display: flex;
+      gap: var(--space-s);
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: var(--space-s);
+    }
+
+    /* Coming soon overlay */
+    .coming-soon-content {
+      text-align: center;
+      padding: var(--space-xl) var(--space-m);
+    }
+    .coming-soon-content h2 {
+      font-family: var(--serif);
+      font-size: var(--fs-h2);
+      color: var(--pencil);
+      margin-bottom: var(--space-xs);
+    }
+    .coming-soon-content p {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      color: var(--graphite);
+      max-width: 52ch;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<canvas class="dot-grid-canvas" id="dot-grid"></canvas>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="/clarisights/" class="nav-logo">clarisights</a>
+    <div class="nav-right">
+      <span class="nav-clock" id="clock"></span>
+      <a href="/clarisights/">hub</a>
+      <a href="/clarisights-vs/" class="nav-active">vs</a>
+      <a href="/clarisights-intelligence/">intelligence</a>
+      <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode" aria-label="Toggle dark mode">&#9684;</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" style="min-height:50vh;">
+  <div class="program-badge">Program C &middot; Sales Enablement</div>
+  <h1 id="hero-h1">Competitive Displacement.</h1>
+  <div class="hero-bottom">
+    <p class="hero-sub">Intelligence-powered pages for the four competitors that matter most. Each tells a different story because each competitor has a different weakness.</p>
+  </div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- Tabs -->
+<section class="section-wide" data-reveal>
+
+  <div class="comp-tabs" id="comp-tabs">
+    <button class="comp-tab active" data-tab="funnel">Funnel.io <span class="priority-badge pb-p0" style="margin-left:6px;">P0</span></button>
+    <button class="comp-tab coming-soon" data-tab="supermetrics">Supermetrics <span class="priority-badge pb-p0" style="margin-left:6px;">P0</span></button>
+    <button class="comp-tab coming-soon" data-tab="datorama">Datorama <span class="priority-badge pb-p1" style="margin-left:6px;">P1</span></button>
+    <button class="comp-tab coming-soon" data-tab="improvado">Improvado <span class="priority-badge pb-p1" style="margin-left:6px;">P1</span></button>
+  </div>
+
+  <!-- ============================================================
+       FUNNEL.IO — THE MIGRATION PAGE
+       ============================================================ -->
+  <div class="comp-content active" id="tab-funnel">
+
+    <div class="status-line">
+      <span class="priority-badge pb-p0">P0 &mdash; Ship This Week</span>
+      <span style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">Page type: Crisis Response Guide</span>
+      <span style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">Angle: &ldquo;The Migration Page&rdquo;</span>
+    </div>
+
+    <p style="font-family:var(--serif);font-size:var(--fs-body-lg);color:var(--ink);line-height:1.6;max-width:72ch;margin-bottom:var(--space-m);">
+      <strong>The story:</strong> Your marketing data hub stopped being reliable. Here&rsquo;s what to do about it. <em>Not a feature comparison. A crisis response guide for teams that need to move.</em>
+    </p>
+
+    <!-- Section 1 -->
+    <div class="vs-section" data-reveal>
+      <div class="vs-section-num">Section 1</div>
+      <div class="vs-section-title">What&rsquo;s Happening at Funnel.io Right Now</div>
+      <p>Funnel.io is experiencing simultaneous reliability issues and price hikes &mdash; a combination that&rsquo;s pushing enterprise customers to evaluate alternatives for the first time. This isn&rsquo;t speculation. It&rsquo;s visible across multiple channels:</p>
+      <ul>
+        <li><strong>Data volume failures:</strong> Enterprise teams are reporting that Funnel struggles with the data volumes required by large, multi-market advertisers. An enterprise data team at a global delivery company acknowledged this directly in a strategy meeting.</li>
+        <li><strong>Price hikes:</strong> Enterprise accounts paying $6&ndash;8K/month are seeing significant renewals increases, pushing the cost-benefit calculus into re-evaluation territory.</li>
+        <li><strong>Community sentiment shift:</strong> Marketing analytics communities on Reddit (r/PPC, r/analytics), the MDM Slack, and Measured community show a pattern of Funnel frustration threads that didn&rsquo;t exist 12 months ago.</li>
+        <li><strong>Silent migration:</strong> Some Funnel customers are switching to Supermetrics &mdash; downgrading from a data hub to a connector tool because they&rsquo;re optimizing for cost, not capability.</li>
+      </ul>
+      <div class="intel-quote">
+        <p>&ldquo;It&rsquo;s a good time to re-engage closed-loss deals.&rdquo;</p>
+        <div class="source">Market signal &mdash; sales team observation, March 2026</div>
+      </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="vs-section" data-reveal>
+      <div class="vs-section-num">Section 2</div>
+      <div class="vs-section-title">Why Switching to Another Data Hub Won&rsquo;t Fix It</div>
+      <p>Here&rsquo;s the uncomfortable truth: <strong>the problem isn&rsquo;t your pipe. The problem is you still need a reporting layer after the data moves.</strong></p>
+      <p>Funnel.io is an ETL tool. It moves data from ad platforms into your warehouse or BI tool. So does Fivetran. So does Supermetrics. Replacing one ETL with another ETL means you still need Looker, Tableau, or spreadsheets to actually build reports. You still need a data team to maintain queries. You still need someone to normalize metrics across platforms.</p>
+
+      <div class="compare-grid">
+        <div class="compare-col">
+          <div class="compare-col-title cc-red">ETL / Data Hub (Funnel, Fivetran, Supermetrics)</div>
+          <ul style="padding-left:1.2em;margin:0;">
+            <li style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.55;margin-bottom:4px;">Moves data from A to B</li>
+            <li style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.55;margin-bottom:4px;">You still need a BI tool on top</li>
+            <li style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.55;margin-bottom:4px;">Data arrives raw &mdash; different schemas per platform</li>
+            <li style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.55;margin-bottom:4px;">Your team normalizes, maintains, and debugs</li>
+            <li style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.55;margin-bottom:4px;">Cross-channel views require SQL or spreadsheet formulas</li>
+          </ul>
+        </div>
+        <div class="compare-col">
+          <div class="compare-col-title cc-green">Reporting Layer (Clarisights)</div>
+          <ul style="padding-left:1.2em;margin:0;">
+            <li style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.55;margin-bottom:4px;">Connects, normalizes, <em>and reports</em> on marketing data</li>
+            <li style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.55;margin-bottom:4px;">No BI tool needed for marketing reporting</li>
+            <li style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.55;margin-bottom:4px;">Data arrives normalized &mdash; same schema across all sources</li>
+            <li style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.55;margin-bottom:4px;">Clarisights maintains connectors and handles API changes</li>
+            <li style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.55;margin-bottom:4px;">Cross-channel views are built-in, no SQL required</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="intel-quote">
+        <p>&ldquo;The reporting layer is the moat. ETL is commodity infrastructure.&rdquo;</p>
+        <div class="source">Product leadership framing</div>
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="vs-section" data-reveal>
+      <div class="vs-section-num">Section 3</div>
+      <div class="vs-section-title">What Actually Changes When You Switch to a Reporting Layer</div>
+      <p>A European delivery company was running Funnel + Looker + AppsFlyer &mdash; three tools to achieve what a single reporting layer handles. Their pain points are common across Funnel customers we&rsquo;ve spoken with:</p>
+      <ul>
+        <li><strong>Channel silos persisted</strong> even after Funnel connected the data. The data arrived in Looker, but cross-channel views still required custom SQL that only one analyst could maintain.</li>
+        <li><strong>Ad-hoc data requests consumed analyst time.</strong> &ldquo;Can you pull Meta vs Google ROAS for Germany last month?&rdquo; was a 2-hour task, not a dashboard filter.</li>
+        <li><strong>Cross-channel visibility remained limited</strong> because Funnel moved raw data &mdash; different naming conventions, different metric definitions per platform &mdash; and nobody had time to build the normalization layer in Looker.</li>
+      </ul>
+      <p style="margin-top:var(--space-xs);"><strong>With a reporting layer:</strong></p>
+      <ul>
+        <li>Cross-channel views exist by default. Meta vs Google vs TikTok ROAS is a filter, not a project.</li>
+        <li>Custom dimensions (territory, brand, campaign type) are mapped once across all platforms.</li>
+        <li>Marketing managers self-serve their own reports without SQL or data team dependency.</li>
+        <li>Budget pacing, anomaly alerts, and automated reporting are built into the platform.</li>
+      </ul>
+      <p style="margin-top:var(--space-xs);"><strong>What maps:</strong> Every connector Funnel has, Clarisights likely has. 300+ integrations covering all major ad platforms, analytics tools, CRMs, and data warehouses.</p>
+      <p><strong>What you lose:</strong> Nothing. Funnel was plumbing. The reporting layer does the plumbing <em>and</em> the reporting.</p>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="vs-section" data-reveal>
+      <div class="vs-section-num">Section 4</div>
+      <div class="vs-section-title">How Hard Is the Switch, Really?</div>
+      <p>Honest answer: it depends on your complexity. We&rsquo;ve onboarded teams across the spectrum:</p>
+      <ul>
+        <li><strong>Simple (2&ndash;4 weeks):</strong> Single market, 5&ndash;8 channels, one team. Connect data sources, map dimensions, configure reports. The Customer Success team handles configuration alongside your marketing ops lead.</li>
+        <li><strong>Complex (4&ndash;8 weeks):</strong> Multi-market, 15+ channels, multiple teams with different naming conventions. The main work is dimension alignment &mdash; getting everyone to agree on what &ldquo;Campaign Type: Brand&rdquo; means across markets. Clarisights CS has done this for companies operating across 50+ markets.</li>
+      </ul>
+      <p style="margin-top:var(--space-xs);">The three questions every management team asks (based on real buying patterns we&rsquo;ve observed):</p>
+      <div class="faq-item">
+        <div class="faq-q">&ldquo;Why now?&rdquo;</div>
+        <div class="faq-a">Because your current tool is experiencing reliability and pricing issues. And because your team is spending more time maintaining the reporting stack than actually reporting. The migration window is open now &mdash; your next Funnel renewal is the deadline.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">&ldquo;Can our existing tools do this?&rdquo;</div>
+        <div class="faq-a">GA4 is web analytics, not cross-channel ad reporting. Looker requires SQL and a data team to build views. Spreadsheets break at scale. None of these aggregate, normalize, and report on marketing data across 15+ channels out of the box.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">&ldquo;What&rsquo;s required to set up and maintain?&rdquo;</div>
+        <div class="faq-a">One marketing ops lead working with the Clarisights CS team. No engineering resources needed. Dimension mapping and report configuration happen during onboarding. Maintenance is handled by Clarisights &mdash; when APIs change, your reports don&rsquo;t break.</div>
+      </div>
+    </div>
+
+    <!-- Section 5 -->
+    <div class="vs-section" data-reveal>
+      <div class="vs-section-num">Section 5</div>
+      <div class="vs-section-title">Questions Your Team Will Ask</div>
+      <div class="faq-item">
+        <div class="faq-q">&ldquo;Can we just use Supermetrics instead?&rdquo;</div>
+        <div class="faq-a">Supermetrics is a connector &mdash; it pulls data into spreadsheets and BI tools. It&rsquo;s the same category as Funnel (ETL), not the same category as Clarisights (reporting layer). Switching from Funnel to Supermetrics means you&rsquo;ve replaced the pipe but still don&rsquo;t have the reporting. You&rsquo;re still building cross-channel views in spreadsheets every week.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">&ldquo;What about data trust? How do I know the numbers are right?&rdquo;</div>
+        <div class="faq-a">Honest answer: data trust is an industry-wide challenge, not a vendor-specific one. Platform APIs change attribution windows, metric definitions, and data availability without notice. Clarisights invests in data observability &mdash; monitoring for discrepancies, alerting on anomalies, and documenting known platform-specific gotchas. We learned from hard experience that proactive data quality communication is non-negotiable.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">&ldquo;Is Clarisights self-serve or do we need support?&rdquo;</div>
+        <div class="faq-a">Both. Marketing managers build and customize reports self-serve. But initial setup, dimension mapping, and complex configurations are supported by a dedicated Customer Success team. This isn&rsquo;t a tool you configure alone and get abandoned. Some of our longest-tenured customers (since 2018) still have regular CS cadences because cross-channel reporting evolves as your marketing evolves.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">&ldquo;What if we need data in our warehouse too?&rdquo;</div>
+        <div class="faq-a">Clarisights exports normalized data to BigQuery, Snowflake, Redshift, and Google Sheets. You get the reporting layer AND the data in your warehouse. It&rsquo;s not either/or.</div>
+      </div>
+    </div>
+
+    <!-- SEO Targeting -->
+    <div class="vs-section" data-reveal>
+      <div class="vs-section-num">SEO Targeting</div>
+      <div class="vs-section-title">Keyword Strategy for This Page</div>
+      <div class="seo-row">
+        <span style="font-family:var(--serif);font-size:var(--fs-small);font-weight:700;color:var(--ink);">funnel.io alternative</span>
+        <span class="hide-mobile" style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">~20/mo</span>
+        <span class="hide-mobile" style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">KD ~5</span>
+        <span style="font-family:var(--mono);font-size:var(--fs-label);color:var(--red);">Primary</span>
+      </div>
+      <div class="seo-row">
+        <span style="font-family:var(--serif);font-size:var(--fs-small);font-weight:700;color:var(--ink);">clarisights vs funnel.io</span>
+        <span class="hide-mobile" style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">0</span>
+        <span class="hide-mobile" style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">KD 0</span>
+        <span style="font-family:var(--mono);font-size:var(--fs-label);color:var(--red);">Primary</span>
+      </div>
+      <div class="seo-row">
+        <span style="font-family:var(--serif);font-size:var(--fs-small);font-weight:700;color:var(--ink);">funnel.io pricing</span>
+        <span class="hide-mobile" style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">~100/mo</span>
+        <span class="hide-mobile" style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">KD ~15</span>
+        <span style="font-family:var(--mono);font-size:var(--fs-label);color:var(--blue);">Secondary</span>
+      </div>
+      <div class="seo-row">
+        <span style="font-family:var(--serif);font-size:var(--fs-small);font-weight:700;color:var(--ink);">funnel.io review 2026</span>
+        <span class="hide-mobile" style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">~50/mo</span>
+        <span class="hide-mobile" style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">KD ~10</span>
+        <span style="font-family:var(--mono);font-size:var(--fs-label);color:var(--blue);">Secondary</span>
+      </div>
+      <div class="seo-row">
+        <span style="font-family:var(--serif);font-size:var(--fs-small);font-weight:700;color:var(--ink);">marketing data hub</span>
+        <span class="hide-mobile" style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">~100/mo</span>
+        <span class="hide-mobile" style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">KD 5</span>
+        <span style="font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">Category</span>
+      </div>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:var(--graphite);line-height:1.5;margin-top:var(--space-xs);">Low volume but extremely high intent. Every search for &ldquo;funnel.io alternative&rdquo; is someone ready to evaluate. The real distribution is sales team + Reddit + Slack communities.</p>
+    </div>
+
+    <!-- Distribution -->
+    <div class="vs-section" data-reveal>
+      <div class="vs-section-num">Distribution Plan</div>
+      <div class="vs-section-title">How This Page Gets Used</div>
+      <ul>
+        <li><strong>Sales team (primary):</strong> Re-engage closed-loss Funnel deals. Every AE sends this when a prospect mentions Funnel in their current stack.</li>
+        <li><strong>Reddit:</strong> Problem-first threads in r/PPC and r/analytics. &ldquo;Anyone else having issues with Funnel.io reliability?&rdquo; with genuine response linking to this guide.</li>
+        <li><strong>Slack communities:</strong> MDM Slack, Measured community. Share as a helpful resource, not a pitch.</li>
+        <li><strong>LinkedIn:</strong> Thought leadership about &ldquo;Why ETL isn&rsquo;t reporting&rdquo; without naming Funnel directly. No links in main post. Category education.</li>
+        <li><strong>SEO:</strong> Target funnel.io alternative and related keywords. Low volume, easy to rank.</li>
+      </ul>
+    </div>
+
+    <!-- Research Needed -->
+    <div class="vs-section" data-reveal style="border-color:var(--yellow);">
+      <div class="vs-section-num" style="color:var(--yellow);">Research Still Needed</div>
+      <div class="vs-section-title">Before Publishing</div>
+      <ul>
+        <li><strong>Reddit mining:</strong> Search r/PPC, r/analytics, r/digital_marketing for &ldquo;Funnel.io&rdquo; complaints (2025&ndash;2026). Capture specific grievances &mdash; pricing, data gaps, connector failures.</li>
+        <li><strong>G2 reviews:</strong> Filter Funnel.io 1&ndash;2 star reviews in last 12 months. Look for: pricing complaints, data reliability mentions, &ldquo;switching from Funnel&rdquo; language.</li>
+        <li><strong>MDM Slack &amp; Measured community:</strong> Get anonymized quotes of Funnel complaints.</li>
+        <li><strong>Google SERP audit:</strong> Search &ldquo;funnel.io alternative&rdquo; and &ldquo;funnel.io review 2026&rdquo; &mdash; who ranks today? What quality? Can we beat it immediately?</li>
+        <li><strong>Fivetran pricing data:</strong> Validate publicly available price hike data to strengthen the &ldquo;ETL market is repricing&rdquo; narrative.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       SUPERMETRICS — COMING SOON
+       ============================================================ -->
+  <div class="comp-content" id="tab-supermetrics">
+    <div class="coming-soon-content">
+      <h2>Supermetrics &mdash; The Value Arbitrage Page</h2>
+      <p><strong>Angle:</strong> &ldquo;You&rsquo;re paying for a connector when you need an operating system.&rdquo;</p>
+      <p style="margin-top:var(--space-xs);">Highest-value BOFU keyword: &ldquo;supermetrics alternative&rdquo; = 400/mo, $88 CPC, KD 1. Page structured as a value-gap analysis showing what buyers are paying for vs what they need. Honest qualification section builds trust.</p>
+      <p style="margin-top:var(--space-xs);font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">Building next &middot; ETA: Week of Apr 7</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       DATORAMA — COMING SOON
+       ============================================================ -->
+  <div class="comp-content" id="tab-datorama">
+    <div class="coming-soon-content">
+      <h2>Datorama &mdash; The Escape Plan</h2>
+      <p><strong>Angle:</strong> &ldquo;You didn&rsquo;t choose Datorama. Your Salesforce contract did. Here&rsquo;s how to get your reporting back.&rdquo;</p>
+      <p style="margin-top:var(--space-xs);">Already rank #8 for &ldquo;datorama alternatives&rdquo; and #36 for &ldquo;salesforce marketing cloud alternative&rdquo; ($51 CPC). Page structured as an escape guide from vendor lock-in. Champion enablement section designed to be copy-pasted into internal memos.</p>
+      <p style="margin-top:var(--space-xs);font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">Building &middot; ETA: Week of Apr 14</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       IMPROVADO — COMING SOON
+       ============================================================ -->
+  <div class="comp-content" id="tab-improvado">
+    <div class="coming-soon-content">
+      <h2>Improvado &mdash; The Depth Page</h2>
+      <p><strong>Angle:</strong> &ldquo;Improvado writes about marketing analytics. Clarisights does marketing analytics.&rdquo;</p>
+      <p style="margin-top:var(--space-xs);">Improvado has 11,771 keywords ($936K traffic value) but zero presence in actual sales deals. Page structured as a practitioner&rsquo;s evaluation with scenario walkthroughs. Can&rsquo;t out-volume them &mdash; must out-depth them.</p>
+      <p style="margin-top:var(--space-xs);font-family:var(--mono);font-size:var(--fs-label);color:var(--pencil);">Building &middot; ETA: Week of Apr 21</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-entity">Clarisights GTM</p>
+      <p class="footer-loc">Confidential &middot; April 2026</p>
+    </div>
+    <div class="footer-links">
+      <a href="/clarisights/">hub</a>
+      <a href="/clarisights-intelligence/">intelligence</a>
+      <a href="/clarisights-data-literacy/">data literacy</a>
+      <a href="/clarisights-integrations-pseo/">integrations</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/recurr-system/engine.js"></script>
+<script>
+  // Tab switching
+  document.querySelectorAll('.comp-tab:not(.coming-soon)').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.comp-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.comp-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
