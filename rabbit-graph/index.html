@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Rabbit Graph System — Architecture</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-2: #1c2128;
+      --border: #30363d;
+      --ink: #e6edf3;
+      --muted: #8b949e;
+      --faint: #484f58;
+      --accent: #58a6ff;
+      --green: #3fb950;
+      --yellow: #d29922;
+      --red: #f85149;
+      --purple: #bc8cff;
+      --orange: #d18616;
+      --cyan: #39d353;
+      --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+      --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --serif: 'New York', Georgia, Charter, serif;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: rgba(88,166,255,0.25); }
+
+    /* ---- LAYOUT ---- */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+    .wide { max-width: 1080px; }
+
+    section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    section:last-of-type { border-bottom: none; }
+
+    /* ---- TYPOGRAPHY ---- */
+    h1 {
+      font-family: var(--mono);
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-family: var(--mono);
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 24px;
+      color: var(--accent);
+    }
+    h3 {
+      font-family: var(--mono);
+      font-size: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    p { margin-bottom: 16px; color: var(--muted); font-size: 15px; }
+    p.lead { font-size: 18px; color: var(--ink); line-height: 1.6; }
+    strong { color: var(--ink); font-weight: 600; }
+
+    /* ---- CODE/ASCII BLOCKS ---- */
+    pre {
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.6;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      overflow-x: auto;
+      margin: 24px 0;
+      color: var(--ink);
+    }
+    code {
+      font-family: var(--mono);
+      font-size: 13px;
+      background: var(--surface);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--accent);
+    }
+
+    /* ---- HERO ---- */
+    .hero {
+      padding: 100px 0 80px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 24px;
+    }
+    .hero h1 { margin-bottom: 20px; }
+    .hero p.lead {
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      text-align: center;
+    }
+    .hero-stat .num {
+      font-family: var(--mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+    }
+    .hero-stat .label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+
+    /* ---- CARDS ---- */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .card-icon {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+    .card h4 {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+    .card p { font-size: 13px; margin-bottom: 0; }
+    .card .tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-top: 12px;
+    }
+    .tag-phase1 { background: rgba(63,185,80,0.15); color: var(--green); }
+    .tag-phase2 { background: rgba(88,166,255,0.15); color: var(--accent); }
+    .tag-phase3 { background: rgba(188,140,255,0.15); color: var(--purple); }
+    .tag-phase4 { background: rgba(209,134,22,0.15); color: var(--orange); }
+
+    /* ---- TABLES ---- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+    }
+    th {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--faint);
+      text-align: left;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+    }
+    td:first-child { color: var(--ink); font-weight: 500; }
+
+    /* ---- FLOW DIAGRAM ---- */
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      margin: 32px 0;
+    }
+    .flow-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      text-align: center;
+      min-width: 120px;
+    }
+    .flow-box .label {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .flow-box .sub {
+      font-size: 11px;
+      color: var(--faint);
+      margin-top: 4px;
+    }
+    .flow-arrow {
+      font-family: var(--mono);
+      font-size: 20px;
+      color: var(--faint);
+      padding: 0 8px;
+    }
+
+    /* ---- SCORING VIZ ---- */
+    .score-layers {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .score-layer {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+    }
+    .score-layer .weight {
+      font-family: var(--mono);
+      font-size: 32px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .score-layer .name {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .score-layer .desc {
+      font-size: 12px;
+      color: var(--faint);
+    }
+    .score-blend {
+      text-align: center;
+      margin: 24px 0;
+    }
+    .score-blend .arrow {
+      font-family: var(--mono);
+      font-size: 24px;
+      color: var(--faint);
+      display: block;
+      margin: 16px 0;
+    }
+    .score-result {
+      display: inline-block;
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      padding: 16px 32px;
+      font-family: var(--mono);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* ---- TIMELINE ---- */
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin: 32px 0;
+    }
+    .timeline-item {
+      padding: 24px 16px;
+      border-left: 2px solid var(--border);
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -6px;
+      top: 28px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .timeline-item .phase {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .timeline-item .title {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .timeline-item .desc {
+      font-size: 12px;
+      color: var(--faint);
+      line-height: 1.5;
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 768px) {
+      .score-layers { grid-template-columns: 1fr; }
+      .timeline { grid-template-columns: 1fr; }
+      .hero-stats { gap: 24px; }
+      pre { font-size: 11px; padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================== HERO ==================== -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-label">Recurr / Rabbit Engine</div>
+    <h1>The Rabbit Graph System</h1>
+    <p class="lead">A multi-relational internet graph that maps, scores, and versions a client's competitive web landscape. The intelligence engine behind Recurr's B2B growth service.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num">5</span><span class="label">Edge Types</span></div>
+      <div class="hero-stat"><span class="num">3</span><span class="label">Scoring Layers</span></div>
+      <div class="hero-stat"><span class="num">4</span><span class="label">Build Phases</span></div>
+      <div class="hero-stat"><span class="num">6</span><span class="label">Algorithms</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== THE PROBLEM ==================== -->
+<section>
+  <div class="container">
+    <h2>// The Problem</h2>
+    <p class="lead">The internet is a spatial field of buyer destinations. B2B content marketing operates blind because no tool models it as a connected system.</p>
+    <p>Existing SEO tools give dashboard reports. Ahrefs shows backlinks. Semrush shows keyword gaps. But none build a <strong>persistent, versioned, multi-signal graph</strong> of how URLs relate to each other across hyperlinks, search results, AI citations, and brand mentions.</p>
+    <p><strong>Rabbit maps the terrain first. Then turns it into work.</strong></p>
+  </div>
+</section>
+
+<!-- ==================== GRAPH MODEL ==================== -->
+<section>
+  <div class="container wide">
+    <h2>// The Graph Model</h2>
+    <h3>Three Entity Types, Five Edge Types</h3>
+    <p>Every client's internet is a unique directed multigraph. Same internet, different shapes.</p>
+
+<pre>
+                          THE RABBIT INTERNET GRAPH
+
+    +-----------+        +-----------+        +-----------+
+    | PROPERTY  |        |   NODE    |        |   TOPIC   |
+    | (domain)  |&lt;-------| (URL)     |-------&gt;| (buyer    |
+    |           | lives  |           | belongs|  convo)   |
+    | g2.com    |  on    | /compare/ |   to   | "funnel   |
+    | DA: 92    |        | status:   |        |  alts"    |
+    | party: 2P |        |  contested|        | ring: core|
+    +-----------+        +-----+-----+        +-----------+
+                               |
+                    depends_on  |  5 EDGE TYPES connect nodes:
+                               |
+                    +-----------+-----------+
+                    |                       |
+               hyperlink             SERP co-occurrence
+               (directed)              (undirected)
+               A links to B          A and B rank for
+               DA-weighted           the same queries
+                    |                       |
+               co-citation           LLM citation
+               (undirected)           (directed)
+               A and B linked        A and B cited in
+               from same 3P          same AI response
+                    |                       |
+               entity co-occurrence
+               (undirected)
+               A and B's brands
+               mentioned together
+</pre>
+
+    <h3>Edge Type Details</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">&#128279;</div>
+        <h4>Hyperlinks</h4>
+        <p>URL A links to URL B. Weighted by source DA, link position, anchor text quality, topic match. The commodity edge &mdash; table stakes.</p>
+        <p><strong>Source:</strong> DataForSEO Backlinks API</p>
+        <span class="tag tag-phase1">Phase 1</span>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128269;</div>
+        <h4>SERP Co-occurrence</h4>
+        <p>A and B rank for the same search queries. TF-IDF bipartite projection from SERP data. <strong>Rabbit's novel edge type</strong> &mdash; nobody else builds this.</p>
+        <p><strong>Source:</strong> DataForSEO SERP/Labs API</p>
+        <span class="tag tag-phase1">Phase 1</span>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128214;</div>
+        <h4>Co-citation</h4>
+        <p>A and B are both linked from the same third-party page. The internet discusses them together &mdash; even if they never link to each other.</p>
+        <p><strong>Source:</strong> DataForSEO Backlinks Intersection</p>
+        <span class="tag tag-phase2">Phase 2</span>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#129302;</div>
+        <h4>LLM Citation</h4>
+        <p>A and B cited in the same AI response (ChatGPT, Perplexity, Gemini). 48% of AI citations come from outside organic top 10.</p>
+        <p><strong>Source:</strong> Sellm API (6 platforms)</p>
+        <span class="tag tag-phase3">Phase 3</span>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128172;</div>
+        <h4>Entity Co-occurrence</h4>
+        <p>A and B's brands mentioned in the same articles, posts, reviews. PMI-normalized, sentiment-aware.</p>
+        <p><strong>Source:</strong> DataForSEO + Exa + Firehose</p>
+        <span class="tag tag-phase4">Phase 4</span>
+      </div>
+    </div>
+
+    <h3>Composite Edge Weight</h3>
+<pre>
+  R(url_A, url_B) = 0.40 x SERP_co-occurrence     // strongest competitive signal
+                  + 0.25 x co_citation              // established web relationships
+                  + 0.20 x LLM_citation             // emerging AI signal
+                  + 0.15 x entity_co-occurrence      // broad brand perception
+
+  Weights configurable per client in Config &gt; Settings.
+</pre>
+  </div>
+</section>
+
+<!-- ==================== SERP CO-OCCURRENCE ==================== -->
+<section>
+  <div class="container wide">
+    <h2>// SERP Co-occurrence: The Novel Edge</h2>
+    <p class="lead">Two URLs that rank for the same search query are in a competitive relationship &mdash; even if they never link to each other. This is Rabbit's most unique insight.</p>
+
+<pre>
+  HOW IT WORKS: Bipartite Projection
+
+  STEP 1: Collect SERP data          STEP 2: Build bipartite graph
+  (DataForSEO)                       (URLs x Queries)
+
+  Query: "funnel.io alternatives"     Query A ---- url_1 (pos 1)
+    #1  clarisights.com/blog          Query A ---- url_2 (pos 3)
+    #3  g2.com/compare/...            Query A ---- url_3 (pos 7)
+    #7  funnel.io/vs-clarisights      Query B ---- url_2 (pos 2)
+                                      Query B ---- url_4 (pos 4)
+  Query: "marketing analytics tools"
+    #2  g2.com/compare/...            STEP 3: Project to URL-URL graph
+    #4  capterra.com/marketing/...
+    #9  clarisights.com/blog          url_1 ===== url_2   (strong: shared
+                                      url_1 ----- url_3    niche query)
+                                      url_2 ----- url_4   (weaker: shared
+                                                            broad query)
+
+  FORMULA:
+  w(A, B) = SUM over shared queries q:
+    rank_score(A,q) x rank_score(B,q) / log(1 + URLs_ranking_for_q)
+
+  where rank_score(url, q) = 1 / log(1 + rank_position)
+
+  WHY THIS WORKS:
+  - Niche queries (3 competitors) &gt;&gt; broad queries (50 competitors)
+  - Page 1 co-occurrence &gt;&gt; page 3 co-occurrence
+  - Newman collaboration weighting prevents dominant query bias
+</pre>
+  </div>
+</section>
+
+<!-- ==================== SCORING ==================== -->
+<section>
+  <div class="container">
+    <h2>// Authority & Scoring</h2>
+    <p class="lead">No single signal determines node importance. Three independent layers, each correcting the others' blind spots.</p>
+    <p>Google's 2024 API leak confirmed: <code>pagerank_ns</code> (seed distance), <code>siteAuthority</code> (composite), and NavBoost (user behavior) all coexist. Rabbit mirrors this with a blended model.</p>
+
+    <div class="score-layers">
+      <div class="score-layer">
+        <span class="weight" style="color: var(--accent);">35%</span>
+        <div class="name">Graph Authority</div>
+        <div class="desc">Seed distance + betweenness centrality + edge density + DA</div>
+      </div>
+      <div class="score-layer">
+        <span class="weight" style="color: var(--green);">35%</span>
+        <div class="name">Engagement</div>
+        <div class="desc">GSC clicks + position + GA sessions + bounce rate + referral traffic</div>
+      </div>
+      <div class="score-layer">
+        <span class="weight" style="color: var(--purple);">30%</span>
+        <div class="name">Content Quality</div>
+        <div class="desc">Depth + freshness + citation density + entity coverage + GEO citability</div>
+      </div>
+    </div>
+
+    <div class="score-blend">
+      <span class="arrow">&darr;&darr;&darr;</span>
+      <div class="score-result">node_importance = blended score</div>
+      <span class="arrow">&darr;</span>
+    </div>
+
+<pre>
+  PRIORITY FORMULA (what Sujith works on):
+
+  priority = node_importance
+           x ring_multiplier        // Core=3, Category=2, Universe=1
+           x activation_gap         // how far from desired status
+           x (1 + cascade_bonus)    // betweenness: unlocks paths?
+           x effort_discount        // Low=1.0, Medium=0.7, High=0.4
+           x recency_boost          // recently changed = temp boost
+</pre>
+  </div>
+</section>
+
+<!-- ==================== WEEKLY CYCLE ==================== -->
+<section>
+  <div class="container wide">
+    <h2>// The Weekly Cycle</h2>
+    <p>Version = Sprint = Weekly release. The graph ships like software.</p>
+
+<pre>
+  FRIDAY                    MONDAY                   THROUGH WEEK              FRIDAY
+  Sprint Close              Sprint Start             Execution                 Repeat
+  ____________              ____________             ____________              ____________
+ |            |            |            |           |            |            |            |
+ | Ship       |    --&gt;     | Engine      |   --&gt;    | Team       |    --&gt;     | Ship       |
+ | Version    |            | suggests    |          | executes   |            | Version    |
+ |            |            | sprint      |          | cards:     |            |            |
+ | - snapshot |            |             |          | To Do &gt;    |            | - snapshot |
+ | - diff     |            | Sujith      |          | Doing &gt;    |            | - diff     |
+ | - scores   |            | adjusts +   |          | Done       |            | - scores   |
+ | - report   |            | starts      |          |            |            | - report   |
+ | - backlog  |            |             |          | Streams    |            | - backlog  |
+ |   refresh  |            |             |          | record     |            |   refresh  |
+ |____________|            |____________|           | changes    |            |____________|
+                                                    |____________|
+
+  WHAT "SHIP VERSION" DOES:
+
+  1. Freeze graph snapshot (all nodes, edges, scores)
+  2. Rebuild SERP co-occurrence edges (bipartite projection)
+  3. Run algorithms (seed-distance, betweenness, Louvain)
+  4. Compute priority scores
+  5. Generate version diff (vs. previous)
+  6. Pull performance data (GA/GSC/HubSpot)
+  7. Send automated weekly report
+  8. Refresh backlog
+  9. Stream counter resets
+</pre>
+  </div>
+</section>
+
+<!-- ==================== ARCHITECTURE ==================== -->
+<section>
+  <div class="container wide">
+    <h2>// System Architecture</h2>
+
+<pre>
+  +========================+     +========================+     +========================+
+  |    POSTGRESQL          |     |    GRAPHOLOGY          |     |    CYTOSCAPE.JS        |
+  |    (Supabase)          |     |    (Server-Side)       |     |    (Client)            |
+  |                        |     |                        |     |                        |
+  |  graph_nodes      -----+---&gt;|  Load into             +---&gt;|  Render interactive    |
+  |  graph_edges           |     |  MultiDiGraph          |     |  graph visualization   |
+  |  graph_versions        |     |                        |     |                        |
+  |  graph_stream_events   |     |  Run algorithms:       |     |  Filter by:            |
+  |                        |     |  - Dijkstra (seeds)    |     |  - edge type           |
+  |  CRUD operations       |     |  - Betweenness         |     |  - activation status   |
+  |  Simple queries (SQL)  |     |  - Louvain             |     |  - ring / topic        |
+  |  WITH RECURSIVE        |     |  - Bipartite proj      |     |  - competitor          |
+  |  (dependency chains)   |     |                        |     |                        |
+  |                        |     |  Priority scoring      |     |  5 layouts:            |
+  |  Version snapshots     |     |  Win rate calc         |     |  - force (explore)     |
+  |  (JSONB)               |     |  Version diffing       |     |  - dagre (journeys)    |
+  |                        |     |                        |     |  - concentric (rings)  |
+  +===========+============+     +============+===========+     |  - grid (competitors)  |
+              ^                               ^                 |  - breadthfirst        |
+              | write                         | compute         +========================+
+              |                               |                          ^ render
+              +-------------------------------+--------------------------+
+                            Next.js API routes orchestrate all three
+</pre>
+
+    <h3>Tech Stack</h3>
+    <table>
+      <tr><th>Layer</th><th>Technology</th><th>Why</th></tr>
+      <tr><td>Database</td><td>Supabase PostgreSQL</td><td>Already in stack. Relational tables + JSONB snapshots.</td></tr>
+      <tr><td>Graph compute</td><td>graphology (npm)</td><td>TypeScript-native. Multigraph + PageRank + Louvain built in.</td></tr>
+      <tr><td>Visualization</td><td>Cytoscape.js</td><td>Multi-edge rendering, interactive filtering, 15+ layouts.</td></tr>
+      <tr><td>Framework</td><td>Next.js + React + TypeScript</td><td>Standard Recurr stack.</td></tr>
+      <tr><td>Data APIs</td><td>DataForSEO, Sellm, Exa, Firehose</td><td>SERP, backlinks, LLM citations, web monitoring.</td></tr>
+      <tr><td>Hosting</td><td>Railway</td><td>Timeout-free workers for graph computation.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ==================== EDGE DECAY ==================== -->
+<section>
+  <div class="container">
+    <h2>// Temporal Model</h2>
+    <p>Every edge type decays at a different rate. Hyperlinks are permanent. LLM citations are volatile.</p>
+
+    <table>
+      <tr><th>Edge Type</th><th>Half-Life</th><th>Rationale</th></tr>
+      <tr><td>Hyperlinks</td><td>~4 years</td><td>Links rarely disappear</td></tr>
+      <tr><td>Co-citation</td><td>~230 days</td><td>Editorial links are sticky</td></tr>
+      <tr><td>Entity co-occurrence</td><td>~100 days</td><td>Brand perception evolves</td></tr>
+      <tr><td>SERP co-occurrence</td><td>~70 days</td><td>Rankings shift quarterly</td></tr>
+      <tr><td>LLM citations</td><td>~14 days</td><td>LLM outputs change with retraining</td></tr>
+    </table>
+
+<pre>
+  weight(t) = base_weight x e^(-lambda x days_since_verified)
+
+  Hyperlinks:        lambda = 0.0005   |||||||||||||||||||||||||||||||||||||| slow decay
+  Co-citation:       lambda = 0.003    ||||||||||||||||||||||..............
+  Entity co-occur:   lambda = 0.007    ||||||||||||||.........................
+  SERP co-occur:     lambda = 0.01     ||||||||||..............................
+  LLM citations:     lambda = 0.05     |||.....................................  fast decay
+</pre>
+  </div>
+</section>
+
+<!-- ==================== IMPLEMENTATION PHASES ==================== -->
+<section>
+  <div class="container wide">
+    <h2>// Implementation Phases</h2>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="phase">Phase 1 &mdash; Weeks 1-4</div>
+        <div class="title">Foundation</div>
+        <div class="desc">
+          Hyperlinks + SERP co-occurrence<br>
+          PostgreSQL schema<br>
+          Bipartite projection pipeline<br>
+          Seed-distance + priority scoring<br>
+          Version snapshots<br>
+          Basic Cytoscape.js viz<br>
+          <strong>Client Zero: Clarisights</strong>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="phase">Phase 2 &mdash; Weeks 5-8</div>
+        <div class="title">Intelligence</div>
+        <div class="desc">
+          + Co-citation edges<br>
+          Community detection<br>
+          Topic validation<br>
+          All 5 Explorer lenses<br>
+          Workstream integration<br>
+          Outwork (Plane) sync
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="phase">Phase 3 &mdash; Weeks 9-12</div>
+        <div class="title">GEO Layer</div>
+        <div class="desc">
+          + LLM citation edges<br>
+          Sellm API integration<br>
+          GA/GSC engagement scores<br>
+          Three-layer authority model<br>
+          Automated weekly reports<br>
+          Client portal
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="phase">Phase 4 &mdash; Weeks 13-16</div>
+        <div class="title">Full Intelligence</div>
+        <div class="desc">
+          + Entity co-occurrence<br>
+          Firehose real-time monitoring<br>
+          Shapeless software (AI layer)<br>
+          Feedback system<br>
+          Slack integration<br>
+          Full Config tab
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WHAT'S UNIQUE ==================== -->
+<section>
+  <div class="container wide">
+    <h2>// What Makes It Unique</h2>
+    <p class="lead">No existing tool builds a persistent, versioned, multi-signal URL-URL graph.</p>
+
+    <table>
+      <tr><th>Tool</th><th>What It Does</th><th>What It Misses</th></tr>
+      <tr><td>Ahrefs / Semrush</td><td>Dashboard reports on keyword overlap</td><td>No graph, no versioning, no URL-level edges</td></tr>
+      <tr><td>InfraNodus</td><td>Keyword-keyword text graph</td><td>Not URL-URL, no persistence, no versioning</td></tr>
+      <tr><td>DataForSEO</td><td>Raw API data (SERPs, backlinks)</td><td>No graph construction, no algorithms</td></tr>
+      <tr><td>Sellm / GetCited</td><td>LLM citation tracking</td><td>Dashboard only, not connected to competitive graph</td></tr>
+      <tr><td>Neo4j / NetworkX</td><td>Graph infrastructure</td><td>No SEO-specific edge construction or domain model</td></tr>
+      <tr><td style="color: var(--accent); font-weight: 700;">Rabbit</td><td style="color: var(--accent);">Multi-relational internet graph + weekly versioning + blended scoring + workstream</td><td style="color: var(--accent);">The methodology is the moat</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<section style="border-bottom: none; padding: 40px 0;">
+  <div class="container" style="text-align: center;">
+    <p style="color: var(--faint); font-family: var(--mono); font-size: 12px;">
+      Rabbit Graph System &mdash; Recurr Studio &mdash; April 2026<br>
+      Architecture: rabbit-graph-system-architecture.md<br>
+      PRD: rabbit-graph-system-prd.md<br>
+      Research: 6 streams, 7 documents, 15 Google patents, 6 academic papers
+    </p>
+  </div>
+</section>
+
+</body>
+</html>
