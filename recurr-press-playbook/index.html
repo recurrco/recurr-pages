@@ -104,6 +104,82 @@
     .layer-build h4 { color: #7c3aed; }
     .layer-aggregation h4 { color: var(--pencil); }
 
+    /* -- Tabs -- */
+    .tabs-container {
+      margin: var(--space-m) 0;
+    }
+    .tab-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      border-bottom: 2px solid var(--border-color);
+      margin-bottom: 0;
+    }
+    .tab-btn {
+      font-family: var(--mono);
+      font-size: var(--fs-small);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.2rem;
+      background: none;
+      border: none;
+      color: var(--pencil);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn:hover { color: var(--ink); }
+    .tab-btn.active {
+      color: var(--ink);
+      border-bottom-color: var(--ink);
+    }
+    .tab-panel {
+      display: none;
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      padding: clamp(1.5rem, 1.2rem + 0.8vw, 2.5rem);
+    }
+    .tab-panel.active { display: block; }
+    .tab-panel h4 {
+      font-family: var(--serif);
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+    }
+    .tab-panel p {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      color: var(--graphite);
+      line-height: 1.65;
+      margin-bottom: 0.75rem;
+    }
+    .tab-panel p:last-child { margin-bottom: 0; }
+    .tab-panel strong { color: var(--ink); }
+    .tab-panel .ch-handle {
+      font-family: var(--mono);
+      font-size: var(--fs-small);
+      letter-spacing: 0.06em;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+    .tab-panel .ch-tag {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      border: 1px solid var(--border-faint);
+      color: var(--pencil);
+    }
+
     /* -- Production table -- */
     .prod-table {
       width: 100%;
@@ -130,85 +206,25 @@
     }
     .prod-table td:first-child { color: var(--ink); font-weight: 600; }
     .prod-table tr:last-child td { border-bottom: none; }
+    .prod-table .who-pratik { color: var(--blue); font-weight: 600; }
+    .prod-table .who-team { color: var(--pencil); }
 
-    /* -- Channel cards -- */
-    .channel-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: var(--space-s);
+    /* -- Masonry editorial guidelines -- */
+    .masonry-grid {
+      columns: 2;
+      column-gap: var(--space-s);
       margin: var(--space-m) 0;
     }
-    .channel-card {
-      background: var(--whiteboard);
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      padding: clamp(1.2rem, 1rem + 0.5vw, 1.8rem);
-    }
-    .channel-card .ch-name {
-      font-family: var(--mono);
-      font-size: var(--fs-small);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 0.4rem;
-    }
-    .channel-card .ch-handle {
-      font-family: var(--serif);
-      font-size: var(--fs-h3);
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 0.5rem;
-    }
-    .channel-card .ch-desc {
-      font-family: var(--serif);
-      font-size: var(--fs-body);
-      color: var(--graphite);
-      line-height: 1.5;
-    }
-    .channel-card .ch-tag {
-      display: inline-block;
-      margin-top: 0.75rem;
-      font-family: var(--mono);
-      font-size: var(--fs-label);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.5rem;
-      border-radius: 2px;
-      border: 1px solid var(--border-faint);
-      color: var(--pencil);
-    }
-
-    /* -- Flow diagram -- */
-    .flow-box {
-      background: var(--whiteboard);
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      padding: clamp(2rem, 1.5rem + 1vw, 3rem);
-      margin: var(--space-m) 0;
-      font-family: var(--mono);
-      font-size: var(--fs-body);
-      color: var(--graphite);
-      line-height: 2;
-      white-space: pre-line;
-      max-width: var(--wide-w);
-    }
-    .flow-box strong { color: var(--ink); }
-
-    /* -- Rhythm section -- */
-    .rhythm-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-s);
-      margin: var(--space-m) 0;
-    }
-    @media (max-width: 680px) { .rhythm-grid { grid-template-columns: 1fr; } }
-    .rhythm-card {
+    @media (max-width: 680px) { .masonry-grid { columns: 1; } }
+    .masonry-card {
+      break-inside: avoid;
       background: var(--whiteboard);
       border: 1px solid var(--border-color);
       border-radius: 4px;
       padding: clamp(1.5rem, 1.2rem + 0.5vw, 2rem);
+      margin-bottom: var(--space-s);
     }
-    .rhythm-card h4 {
+    .masonry-card h4 {
       font-family: var(--mono);
       font-size: var(--fs-small);
       letter-spacing: 0.1em;
@@ -216,11 +232,20 @@
       color: var(--blue);
       margin-bottom: 0.75rem;
     }
-    .rhythm-card ul {
+    .masonry-card p {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      color: var(--graphite);
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+    .masonry-card p:last-child { margin-bottom: 0; }
+    .masonry-card strong { color: var(--ink); }
+    .masonry-card ul {
       list-style: none;
       padding: 0;
     }
-    .rhythm-card li {
+    .masonry-card li {
       font-family: var(--serif);
       font-size: var(--fs-body);
       color: var(--graphite);
@@ -228,16 +253,16 @@
       padding: 0.3rem 0;
       border-bottom: 1px solid var(--border-faint);
     }
-    .rhythm-card li:last-child { border-bottom: none; }
-    .rhythm-card li strong { color: var(--ink); }
+    .masonry-card li:last-child { border-bottom: none; }
+    .masonry-card li strong { color: var(--ink); }
 
-    /* -- State flow -- */
+    /* -- States flow -- */
     .states-flow {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
       align-items: center;
-      margin: var(--space-m) 0;
+      margin: var(--space-xs) 0 var(--space-s);
     }
     .state-pill {
       font-family: var(--mono);
@@ -310,35 +335,6 @@
       line-height: 1.55;
     }
 
-    /* -- Decision log -- */
-    .decisions {
-      margin: var(--space-m) 0;
-      counter-reset: decision;
-    }
-    .decision-item {
-      counter-increment: decision;
-      padding: var(--space-xs) 0;
-      border-bottom: 1px solid var(--border-faint);
-      display: flex;
-      gap: 1rem;
-      align-items: baseline;
-    }
-    .decision-item::before {
-      content: counter(decision, decimal-leading-zero);
-      font-family: var(--mono);
-      font-size: var(--fs-small);
-      color: var(--faint);
-      flex-shrink: 0;
-      width: 2rem;
-    }
-    .decision-item p {
-      font-family: var(--serif);
-      font-size: var(--fs-body);
-      color: var(--graphite);
-      line-height: 1.55;
-    }
-    .decision-item strong { color: var(--ink); }
-
     hr.section-break {
       border: none;
       border-top: 1px solid var(--border-color);
@@ -360,6 +356,19 @@
     .tag-editorial { border-color: var(--blue); color: var(--blue); }
     .tag-build { border-color: #7c3aed; color: #7c3aed; }
     .tag-agg { border-color: var(--pencil); color: var(--pencil); }
+
+    /* -- Footer -- */
+    .playbook-footer {
+      padding: var(--space-xl) var(--margin);
+      max-width: 1400px;
+      margin: 0 auto;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+    }
+    .playbook-footer svg {
+      height: 20px;
+      opacity: 0.35;
+    }
   </style>
 </head>
 <body style="background: var(--gray-paper); color: var(--ink);">
@@ -370,7 +379,7 @@
     <h2>Editorial Playbook</h2>
     <div class="slide-body">
       <p>The operating system for Recurr's content marketing engine. Three layers. Five channels. One theme per month. Effective <strong>May 1, 2026</strong>.</p>
-      <p style="color: var(--pencil); font-size: var(--fs-body);">Internal document. Last updated April 5, 2026.</p>
+      <p style="color: var(--pencil); font-size: var(--fs-body);">Internal document. Last updated April 6, 2026.</p>
     </div>
   </section>
 
@@ -391,9 +400,9 @@
   <!-- ====== THREE LAYERS ====== -->
   <section class="slide-half">
     <div class="slide-number">02 — Three Acquisition Layers</div>
-    <h2>Editorial + Build + Aggregation</h2>
+    <h2>Editorial + Builds + Aggregation</h2>
     <div class="slide-body">
-      <p>Every piece of content we produce falls into one of three layers. Each has different effort, speed, and compounding characteristics.</p>
+      <p>Every piece of content we produce falls into one of three layers. Each has different effort, speed, and compounding characteristics. The goal across all three: <strong>acquisition</strong>.</p>
     </div>
     <div class="layer-grid">
       <div class="layer-card layer-editorial">
@@ -402,9 +411,9 @@
         <p>Essays, research posts, co-authored pieces, podcast, newsletter. High effort, slow to build, but creates lasting authority. This is where credibility lives.</p>
       </div>
       <div class="layer-card layer-build">
-        <h4>Layer 2 — Build</h4>
-        <div class="layer-title">Programmatic. Scalable.</div>
-        <p>pSEO projects, directories, tools, trackers, research databases, interactive experiences. Medium effort, many pages per project. Each one ranks + demonstrates capability + generates leads.</p>
+        <h4>Layer 2 — Builds</h4>
+        <div class="layer-title">Programmatic. Interactive. Scalable.</div>
+        <p>What Pratik and Claude make together for scale and interaction. Calculators, quizzes, automated audits, interactive tools, directories, research databases, skills. Artifacts that rank, demonstrate capability, and generate leads. Each build is an acquisition engine in itself. These also serve as a living repository for the <strong>@recurrco Twitter aggregation layer</strong> &mdash; the data and intelligence these builds collect feeds the daily signal stream.</p>
       </div>
       <div class="layer-card layer-aggregation">
         <h4>Layer 3 — Aggregation</h4>
@@ -416,18 +425,97 @@
 
   <hr class="section-break">
 
-  <!-- ====== PRODUCTION CALENDAR ====== -->
+  <!-- ====== WHERE CONTENT LIVES (tabbed) ====== -->
   <section class="slide-half">
-    <div class="slide-number">03 — Weekly Production</div>
+    <div class="slide-number">03 — Distribution Architecture</div>
+    <h2>Where content lives</h2>
+    <div class="slide-body">
+      <p>We're building a <strong>channel-first distribution play</strong>. Instead of creating content and then figuring out where to put it, we've picked the channels that matter most and built native strategies for each. Every channel has a distinct role, a distinct format, and a distinct reason it exists in our system. The website ties everything together as the master index.</p>
+    </div>
+    <div class="tabs-container">
+      <div class="tab-nav">
+        <button class="tab-btn active" data-tab="tab-website">Website</button>
+        <button class="tab-btn" data-tab="tab-youtube">YouTube</button>
+        <button class="tab-btn" data-tab="tab-twitter">Twitter</button>
+        <button class="tab-btn" data-tab="tab-substack">Substack</button>
+        <button class="tab-btn" data-tab="tab-reddit">Reddit</button>
+        <button class="tab-btn" data-tab="tab-linkedin">LinkedIn</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-website">
+        <h4>The master content index</h4>
+        <span class="ch-handle">recurr.co/press</span>
+        <p>Everything we ever publish &mdash; every essay, every research post, every build project, every podcast episode, every newsletter issue &mdash; is linked from the website. This is the single source of truth for all Recurr Press output. If it doesn't exist on recurr.co, it doesn't exist.</p>
+        <p>The website is not just a blog. It's the <strong>content index</strong>: a structured, searchable, ever-growing library of our thinking. Every channel we operate feeds back here. Podcast episodes get show notes pages. Newsletter editions get web mirrors. Build projects live here natively. Twitter signals accumulate into a living database page.</p>
+        <p>This is also where SEO compounds. Every piece of editorial, every programmatic build, every aggregated signal &mdash; they all create pages that rank. The website is the gravity well that pulls everything together.</p>
+        <span class="ch-tag">Primary &mdash; Home Base</span>
+      </div>
+
+      <div class="tab-panel" id="tab-youtube">
+        <h4>Video-first podcast</h4>
+        <span class="ch-handle">YouTube Channel</span>
+        <p>YouTube is our dedicated channel for the podcast &mdash; video-first, long-form conversations with operators, founders, and practitioners. One guest per week, 30-45 minutes, always recorded on video.</p>
+        <p><strong>Why YouTube specifically:</strong> It's the only platform where long-form video content compounds over time. A podcast episode uploaded today gets discovered by new viewers months and years later through search and recommendations. Unlike audio-only podcasts that live behind app walls, YouTube episodes are indexable, embeddable, and shareable.</p>
+        <p><strong>Distribution-first strategy:</strong> Every guest we invite has a built-in audience. When they share the episode, they bring their network to our channel. We're not building an audience from zero &mdash; we're borrowing distribution from every guest, every week.</p>
+        <p>Episodes are mirrored as show notes pages on the website with key takeaways, timestamps, and related reading.</p>
+        <span class="ch-tag">Weekly &mdash; Podcast</span>
+      </div>
+
+      <div class="tab-panel" id="tab-twitter">
+        <h4>The aggregation machine</h4>
+        <span class="ch-handle">@recurrco</span>
+        <p>Twitter is where our <strong>Signal Engine</strong> lives &mdash; the automated aggregation layer that runs daily. We ingest signals from across the web (RSS feeds, Twitter lists, newsletters, Hacker News, Product Hunt, funding databases, Google Alerts), tag them by topic and entity, score for relevance and novelty, and publish 3-10 signals per day with a one-line take.</p>
+        <p><strong>Why Twitter for aggregation:</strong> Twitter's interest-graph beats geography. LinkedIn shows your content to people nearby. Twitter shows it to people who care about the same things. For a B2B marketing and design company, this is a massive advantage. We reach the right people regardless of where they sit.</p>
+        <p>The builds from Layer 2 &mdash; our calculators, audit tools, directories, research databases &mdash; also serve as <strong>the repository that feeds this channel</strong>. The data and intelligence these artifacts collect becomes raw material for daily signals. The build layer and the aggregation layer are connected: builds collect, Twitter distributes.</p>
+        <p><strong>The virtuous loop:</strong> Signal Engine collects daily &rarr; Twitter publishes fragments (acquisition) &rarr; Website accumulates the database (authority + SEO) &rarr; Database informs editorial (essay topics) &rarr; Editorial drives inbound (clients).</p>
+        <span class="ch-tag">Automated &mdash; Daily Signals</span>
+      </div>
+
+      <div class="tab-panel" id="tab-substack">
+        <h4>Weekly newsletter</h4>
+        <span class="ch-handle">Substack</span>
+        <p>The newsletter is our <strong>retention channel</strong>. While every other channel is about acquisition &mdash; finding new people and bringing them in &mdash; the newsletter keeps the people who already care close. One drop per week, directly in their inbox.</p>
+        <p><strong>What it is:</strong> Mental models for venture businesses. Not tactical "5 tips for better email subject lines" content. This is about how to think about marketing, design, building, and growing ventures. Frameworks that stick. The kind of writing people forward to their co-founders.</p>
+        <p><strong>Why Substack:</strong> It has a built-in discovery network. New subscribers find you through recommendations from other Substack writers. It's also the cleanest reading experience for long-form writing &mdash; no ads, no algorithmic feed, just the essay in their inbox. And the archive becomes a searchable library on Substack's domain, adding another SEO surface.</p>
+        <span class="ch-tag">Weekly &mdash; Retention</span>
+      </div>
+
+      <div class="tab-panel" id="tab-reddit">
+        <h4>Team-driven engagement</h4>
+        <span class="ch-handle">Team handles (personal accounts)</span>
+        <p>Reddit is our <strong>research and distribution channel</strong>, operated through team members' personal accounts. We don't have a Recurr subreddit. We never will. The strategy is to embed in existing communities where our audience already lives &mdash; marketing subreddits, SaaS communities, startup forums, design discussions.</p>
+        <p><strong>Why personal handles:</strong> Reddit is anti-brand. Corporate accounts get downvoted. Personal accounts that contribute genuine value get upvoted. Our team members engage as practitioners sharing real experience, not as a company pushing content. This is identical to the LinkedIn principle &mdash; people trust people, not logos &mdash; but on Reddit, this rule is enforced by the community itself.</p>
+        <p><strong>How it works:</strong> Each week, the team engages in subreddits aligned to the monthly theme. Answer questions. Share frameworks. Link to relevant Recurr Press pieces only when genuinely useful. Reddit engagement is both research (we learn what people actually struggle with) and distribution (well-received answers drive traffic back to the website).</p>
+        <span class="ch-tag">Team Effort &mdash; Research + Distribution</span>
+      </div>
+
+      <div class="tab-panel" id="tab-linkedin">
+        <h4>Why we're not investing here</h4>
+        <span class="ch-handle">Personal profiles only</span>
+        <p>LinkedIn is deliberately <strong>not a focus channel</strong> for Recurr Press. Here's why.</p>
+        <p><strong>Geography-bound algorithm:</strong> LinkedIn's feed algorithm is geography-first. It shows your content to people in your city, your connections, your industry cluster. For a company building a global interest-graph play (via Twitter and SEO), this is a fundamental mismatch. LinkedIn reach is local; our audience is global.</p>
+        <p><strong>Company pages are dead:</strong> LinkedIn company pages get a fraction of the reach that personal profiles do. The platform has systematically deprioritized company content in favor of individual posts. Fighting this is a losing battle.</p>
+        <p><strong>What we do instead:</strong> Team members repurpose Press content on their personal profiles. Pratik, Sujith, Ankita &mdash; each person shares relevant pieces through their own lens, in their own voice. This is the same principle as Reddit: <strong>people trust people, not logos.</strong> Personal handles are the best marketing tools on both platforms.</p>
+        <p>The Recurr company page gets low-effort maintenance. Cover photo, about section, occasional share. That's it. The real LinkedIn strategy is the team's individual presence.</p>
+        <span class="ch-tag">Organic &mdash; Personal Handles</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-break">
+
+  <!-- ====== WEEKLY PRODUCTION ====== -->
+  <section class="slide-half">
+    <div class="slide-number">04 — Weekly Production</div>
     <h2>What we ship every week</h2>
     <div class="slide-body">
-      <p>Starting May 1. Every week, this is the minimum output. All content aligns to the monthly theme.</p>
+      <p>Starting May 1. Every week, this is the minimum output. All content aligns to the monthly theme. Sorted by owner.</p>
     </div>
     <table class="prod-table">
       <thead>
         <tr>
-          <th>Stream</th>
           <th>Who</th>
+          <th>Stream</th>
           <th>Frequency</th>
           <th>Channel</th>
           <th>Layer</th>
@@ -435,64 +523,64 @@
       </thead>
       <tbody>
         <tr>
+          <td class="who-pratik">Pratik</td>
           <td>Essay</td>
-          <td>Pratik</td>
           <td>1/week</td>
           <td>Website</td>
           <td><span class="tag-inline tag-editorial">Editorial</span></td>
         </tr>
         <tr>
-          <td>Co-authored piece</td>
-          <td>Pratik + guest</td>
-          <td>1/week</td>
-          <td>Website</td>
-          <td><span class="tag-inline tag-editorial">Editorial</span></td>
-        </tr>
-        <tr>
-          <td>Research posts</td>
-          <td>Sujith</td>
-          <td>2/week</td>
-          <td>Website</td>
-          <td><span class="tag-inline tag-editorial">Editorial</span></td>
-        </tr>
-        <tr>
+          <td class="who-pratik">Pratik</td>
           <td>Podcast</td>
-          <td>Pratik hosts</td>
           <td>1/week</td>
           <td>YouTube</td>
           <td><span class="tag-inline tag-editorial">Editorial</span></td>
         </tr>
         <tr>
+          <td class="who-pratik">Pratik</td>
           <td>Newsletter</td>
-          <td>Pratik</td>
           <td>1/week</td>
           <td>Substack</td>
           <td><span class="tag-inline tag-editorial">Editorial</span></td>
         </tr>
         <tr>
+          <td class="who-team">Team</td>
+          <td>Co-authored piece</td>
+          <td>1/week</td>
+          <td>Website</td>
+          <td><span class="tag-inline tag-editorial">Editorial</span></td>
+        </tr>
+        <tr>
+          <td class="who-team">Team</td>
+          <td>Research posts</td>
+          <td>2/week</td>
+          <td>Website</td>
+          <td><span class="tag-inline tag-editorial">Editorial</span></td>
+        </tr>
+        <tr>
+          <td class="who-team">Team</td>
           <td>Build project</td>
-          <td>Pratik + Claude</td>
           <td>1 new/month</td>
           <td>Website</td>
           <td><span class="tag-inline tag-build">Build</span></td>
         </tr>
         <tr>
+          <td class="who-team">Team</td>
           <td>Research artifact</td>
-          <td>Pratik + Claude</td>
           <td>1 new/month</td>
           <td>Website</td>
           <td><span class="tag-inline tag-build">Build</span></td>
         </tr>
         <tr>
+          <td class="who-team">Team</td>
           <td>Signal Engine</td>
-          <td>Automated</td>
           <td>3-10/day</td>
           <td>Twitter</td>
           <td><span class="tag-inline tag-agg">Aggregation</span></td>
         </tr>
         <tr>
+          <td class="who-team">Team</td>
           <td>Reddit engagement</td>
-          <td>Team</td>
           <td>Weekly</td>
           <td>Reddit</td>
           <td><span class="tag-inline tag-agg">Aggregation</span></td>
@@ -506,88 +594,15 @@
 
   <hr class="section-break">
 
-  <!-- ====== DISTRIBUTION CHANNELS ====== -->
+  <!-- ====== EDITORIAL GUIDELINES (masonry) ====== -->
   <section class="slide-half">
-    <div class="slide-number">04 — Distribution Channels</div>
-    <h2>Where content lives</h2>
-    <div class="channel-grid">
-      <div class="channel-card">
-        <div class="ch-name">Website</div>
-        <div class="ch-handle">recurr.co/press</div>
-        <div class="ch-desc">Essays, co-authored pieces, research posts, build projects. Payload CMS. The home base.</div>
-        <span class="ch-tag">Primary</span>
-      </div>
-      <div class="channel-card">
-        <div class="ch-name">Twitter</div>
-        <div class="ch-handle">@recurrco</div>
-        <div class="ch-desc">Automated Signal Engine. 3-10 signals/day. Funding, positioning moves, launches, trend signals. Interest-graph beats geography.</div>
-        <span class="ch-tag">Automated</span>
-      </div>
-      <div class="channel-card">
-        <div class="ch-name">YouTube</div>
-        <div class="ch-handle">Podcast</div>
-        <div class="ch-desc">Video-first podcast. 1 guest/week, 30-45 min. Distribution through guest sharing.</div>
-        <span class="ch-tag">Weekly</span>
-      </div>
-      <div class="channel-card">
-        <div class="ch-name">Substack</div>
-        <div class="ch-handle">Newsletter</div>
-        <div class="ch-desc">Weekly digest. Mental models for venture businesses. Not tactical content. Retention channel.</div>
-        <span class="ch-tag">Weekly</span>
-      </div>
-      <div class="channel-card">
-        <div class="ch-name">Reddit</div>
-        <div class="ch-handle">Team handles</div>
-        <div class="ch-desc">Theme-directed engagement in existing subreddits. Research + distribution. Not our subreddit.</div>
-        <span class="ch-tag">Team effort</span>
-      </div>
-      <div class="channel-card">
-        <div class="ch-name">LinkedIn</div>
-        <div class="ch-handle">Personal profiles</div>
-        <div class="ch-desc">Repurpose Press content. Personal profiles only, not company page. Geography limits reach.</div>
-        <span class="ch-tag">Organic</span>
-      </div>
-    </div>
-  </section>
+    <div class="slide-number">05 — Editorial Guidelines</div>
+    <h2>How we operate,<br>how we sound</h2>
+    <div class="masonry-grid">
 
-  <hr class="section-break">
-
-  <!-- ====== SIGNAL ENGINE ====== -->
-  <section class="slide-half">
-    <div class="slide-number">05 — Signal Engine</div>
-    <h2>The aggregation machine</h2>
-    <div class="slide-body">
-      <p>Autonomous content collection, scoring, and publishing. Human review for catastrophe prevention only.</p>
-    </div>
-    <div class="flow-box"><strong>INGEST</strong> (autonomous, daily)
-Sources: RSS, Twitter lists, newsletters, HN, Product Hunt, funding databases, Google Alerts
-Tag by topic + entity (company, person, category)
-Score: relevance x novelty
-
-<strong>QUEUE</strong> (Pratik batch-approves)
-Scan, kill anything off, approve batch
-
-<strong>OUTPUT 1: Twitter @recurrco</strong>
-Daily signals. 3-10 per day. Signal + one-line take.
-
-<strong>OUTPUT 2: Website accumulation page</strong>
-Living database. Trends over time. Company movements. Category shifts.
-Like a stock exchange for B2B marketing/SaaS moves.
-Gets more valuable every day. Compounds. SEO magnet.</div>
-    <div class="slide-body" style="margin-top: var(--space-s);">
-      <p><strong>The virtuous loop:</strong> Signal Engine collects daily. Twitter publishes fragments (acquisition). Website accumulates the database (authority + SEO). Database informs editorial (essay topics). Editorial drives inbound (clients).</p>
-    </div>
-  </section>
-
-  <hr class="section-break">
-
-  <!-- ====== MONTHLY + WEEKLY RHYTHM ====== -->
-  <section class="slide-half">
-    <div class="slide-number">06 — Operating Rhythm</div>
-    <h2>Monthly themes,<br>weekly sprints</h2>
-    <div class="rhythm-grid">
-      <div class="rhythm-card">
-        <h4>Monthly Cycle</h4>
+      <div class="masonry-card">
+        <h4>Operating Rhythm</h4>
+        <p><strong>Monthly themes, weekly sprints.</strong></p>
         <ul>
           <li><strong>Pratik picks theme</strong> for next month</li>
           <li>Theme broken into 4 weekly sub-themes</li>
@@ -599,7 +614,37 @@ Gets more valuable every day. Compounds. SEO magnet.</div>
           <li><strong>Theme set by 15th</strong> of prior month</li>
         </ul>
       </div>
-      <div class="rhythm-card">
+
+      <div class="masonry-card">
+        <h4>Voice</h4>
+        <p><strong>Opinionated, not neutral.</strong> We take positions. We name uncomfortable truths.</p>
+        <p><strong>Framework-first.</strong> Every piece leaves the reader with a mental model they can use.</p>
+        <p><strong>Practitioner tone.</strong> Written by people who do the work, not people who observe it.</p>
+        <p><strong>Generous.</strong> Give away the thinking. Don't gatekeep.</p>
+        <p><strong>No jargon performance.</strong> Plain language about hard ideas.</p>
+      </div>
+
+      <div class="masonry-card">
+        <h4>Content Lifecycle</h4>
+        <div class="states-flow">
+          <span class="state-pill">Backlog</span>
+          <span class="state-arrow">&rarr;</span>
+          <span class="state-pill">Todo</span>
+          <span class="state-arrow">&rarr;</span>
+          <span class="state-pill active">In Progress</span>
+          <span class="state-arrow">&rarr;</span>
+          <span class="state-pill">In Review</span>
+          <span class="state-arrow">&rarr;</span>
+          <span class="state-pill">Approved</span>
+          <span class="state-arrow">&rarr;</span>
+          <span class="state-pill" style="background: var(--green); color: var(--notebook); border-color: var(--green);">Done</span>
+        </div>
+        <p><strong>Pratik is Editor-in-Chief.</strong> Nothing publishes without his approval.</p>
+        <p><strong>Review SLA:</strong> Draft in review 2 days before publish date.</p>
+        <p><strong>Tracked in Outwork</strong> (outwork.recurr.co). Weekly cycles. Channel modules.</p>
+      </div>
+
+      <div class="masonry-card">
         <h4>Weekly Sprint</h4>
         <ul>
           <li><strong>Monday:</strong> Sprint planning. Review items, confirm owners, flag gaps.</li>
@@ -608,62 +653,29 @@ Gets more valuable every day. Compounds. SEO magnet.</div>
           <li><strong>Review SLA:</strong> -2 days from publish date</li>
         </ul>
       </div>
-    </div>
-  </section>
 
-  <hr class="section-break">
+      <div class="masonry-card">
+        <h4>Authorship</h4>
+        <p><strong>Named individuals,</strong> multiple per piece. "Pratik and Sujith" style, not "Recurr."</p>
+        <p><strong>Research pieces:</strong> "Recurr" team byline.</p>
+        <p><strong>Claude as credited co-author.</strong> We don't hide it.</p>
+        <p><strong>Guest operators as authors.</strong> Influential people with built-in distribution. When someone co-authors, they share on social. Free distribution.</p>
+        <p><strong>Author section is a first-class design element,</strong> not a footnote. Each author's personal property (Twitter, LinkedIn) is a marketing asset.</p>
+      </div>
 
-  <!-- ====== WORKFLOW STATES ====== -->
-  <section class="slide-half">
-    <div class="slide-number">07 — Content Lifecycle</div>
-    <h2>From idea to live</h2>
-    <div class="states-flow">
-      <span class="state-pill">Backlog</span>
-      <span class="state-arrow">&rarr;</span>
-      <span class="state-pill">Todo</span>
-      <span class="state-arrow">&rarr;</span>
-      <span class="state-pill active">In Progress</span>
-      <span class="state-arrow">&rarr;</span>
-      <span class="state-pill">In Review</span>
-      <span class="state-arrow">&rarr;</span>
-      <span class="state-pill">Approved</span>
-      <span class="state-arrow">&rarr;</span>
-      <span class="state-pill" style="background: var(--green); color: var(--notebook); border-color: var(--green);">Done</span>
-    </div>
-    <div class="slide-body">
-      <p><strong>Pratik is Editor-in-Chief.</strong> Nothing publishes without his approval. Every piece moves through review before going live.</p>
-      <p><strong>Review SLA:</strong> Draft must be in review 2 days before publish date. If publishing Friday, review by Wednesday.</p>
-      <p><strong>Tracked in Outwork</strong> (outwork.recurr.co). Project: Recurr Press. Weekly cycles. Channel modules.</p>
-    </div>
-  </section>
+      <div class="masonry-card">
+        <h4>Decisions Locked</h4>
+        <ul>
+          <li><strong>Monthly themes drive all content.</strong> Pratik picks. Team aligns.</li>
+          <li><strong>Two external faces per week.</strong> Podcast + co-authored piece.</li>
+          <li><strong>Twitter = automated Signal Engine.</strong> Interest-graph beats geography.</li>
+          <li><strong>Reddit = team research + distribution.</strong> Never build a subreddit.</li>
+          <li><strong>LinkedIn = personal profiles only.</strong> Company page is low-effort.</li>
+          <li><strong>No case narratives.</strong> Show thinking, not client work.</li>
+          <li><strong>Pillars are internal compass.</strong> Not public categories. Formalize after 50 articles.</li>
+        </ul>
+      </div>
 
-  <hr class="section-break">
-
-  <!-- ====== VOICE ====== -->
-  <section class="slide-half">
-    <div class="slide-number">08 — Voice</div>
-    <h2>How we sound</h2>
-    <div class="slide-body">
-      <p><strong>Opinionated, not neutral.</strong> We take positions. We name uncomfortable truths.</p>
-      <p><strong>Framework-first.</strong> Every piece leaves the reader with a mental model they can use.</p>
-      <p><strong>Practitioner tone.</strong> Written by people who do the work, not people who observe it.</p>
-      <p><strong>Generous.</strong> Give away the thinking. Don't gatekeep.</p>
-      <p><strong>No jargon performance.</strong> Plain language about hard ideas.</p>
-    </div>
-  </section>
-
-  <hr class="section-break">
-
-  <!-- ====== AUTHORSHIP ====== -->
-  <section class="slide-half">
-    <div class="slide-number">09 — Authorship</div>
-    <h2>Named people,<br>not a logo</h2>
-    <div class="slide-body">
-      <p><strong>Named individuals,</strong> multiple per piece. "Pratik and Sujith" style, not "Recurr."</p>
-      <p><strong>Research pieces:</strong> "Recurr" team byline.</p>
-      <p><strong>Claude as credited co-author.</strong> We don't hide it.</p>
-      <p><strong>Guest operators as authors.</strong> Influential people with built-in distribution. When someone co-authors, they share on social. Free distribution.</p>
-      <p><strong>Author section is a first-class design element,</strong> not a footnote. Each author's personal property (Twitter, LinkedIn) is a marketing asset. The press distributes through people, not just the website.</p>
     </div>
   </section>
 
@@ -671,7 +683,7 @@ Gets more valuable every day. Compounds. SEO magnet.</div>
 
   <!-- ====== APRIL COLD START ====== -->
   <section class="slide-half">
-    <div class="slide-number">10 — April Cold Start</div>
+    <div class="slide-number">06 — April Cold Start</div>
     <h2>Getting to May 1</h2>
     <div class="slide-body">
       <p>April is not full cadence. It's solving the cold start problem: ship something in every stream, build systems, be ready for May.</p>
@@ -700,28 +712,25 @@ Gets more valuable every day. Compounds. SEO magnet.</div>
     </div>
   </section>
 
-  <hr class="section-break">
+  <!-- ====== FOOTER ====== -->
+  <footer class="playbook-footer">
+    <svg viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="0" y="18" font-family="monospace" font-size="16" font-weight="700" fill="currentColor" letter-spacing="0.05em">recurr</text>
+    </svg>
+  </footer>
 
-  <!-- ====== KEY DECISIONS ====== -->
-  <section class="slide-half" style="padding-bottom: var(--space-2xl);">
-    <div class="slide-number">11 — Decisions Locked</div>
-    <h2>What we've decided</h2>
-    <div class="decisions">
-      <div class="decision-item"><p><strong>Pratik is Editor-in-Chief.</strong> Last mile on everything published.</p></div>
-      <div class="decision-item"><p><strong>Monthly themes drive all content.</strong> Pratik picks. Team aligns. Everything points in one direction.</p></div>
-      <div class="decision-item"><p><strong>Two external faces per week.</strong> Podcast (video) + co-authored written piece. Always separate formats.</p></div>
-      <div class="decision-item"><p><strong>Twitter @recurrco = automated Signal Engine.</strong> Interest-graph beats geography. Massive advantage over LinkedIn.</p></div>
-      <div class="decision-item"><p><strong>Reddit = team research + distribution.</strong> Embed in existing communities. Never build a subreddit.</p></div>
-      <div class="decision-item"><p><strong>LinkedIn = personal profiles only.</strong> Company page is low-effort maintenance.</p></div>
-      <div class="decision-item"><p><strong>Press is content marketing, not a business unit.</strong> It serves the Agency's inbound pipeline.</p></div>
-      <div class="decision-item"><p><strong>No case narratives.</strong> Show thinking, not client work.</p></div>
-      <div class="decision-item"><p><strong>Pillars are internal compass.</strong> Not public-facing categories. Will formalize after 50 articles.</p></div>
-      <div class="decision-item"><p><strong>Claude is credited as co-author.</strong> We don't hide it.</p></div>
-      <div class="decision-item"><p><strong>Review SLA = -2 days from publish.</strong> No exceptions.</p></div>
-      <div class="decision-item"><p><strong>All tracking on Outwork.</strong> Weekly cycles. Channel modules. Format + Skill + Layer labels.</p></div>
-    </div>
-  </section>
-
+  <script>
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+        btn.closest('.tabs-container').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.closest('.tabs-container').querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(target).classList.add('active');
+      });
+    });
+  </script>
   <script src="/recurr-system/engine.js"></script>
 </body>
 </html>
