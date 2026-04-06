@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Button Builder — Roadmap | Recurr</title>
+  <link rel="stylesheet" href="../recurr-system/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --fg: #e8e8e8;
+      --mid: #60646c;
+      --green: #00ff41;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --border: #1e1e1e;
+      --surface: #111111;
+      --surface-hover: #1a1a1a;
+      --mono: 'JetBrains Mono', monospace;
+      --serif: 'IBM Plex Serif', Georgia, serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--mono);
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+    }
+
+    /* Header */
+    .header {
+      margin-bottom: 64px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .header h1 {
+      font-family: var(--serif);
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .header .subtitle {
+      font-size: 13px;
+      color: var(--mid);
+      letter-spacing: 0.02em;
+    }
+    .header .updated {
+      font-size: 11px;
+      color: var(--mid);
+      margin-top: 12px;
+      opacity: 0.6;
+    }
+
+    /* Stat Cards */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 64px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 24px;
+      position: relative;
+    }
+    .stat-card .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--mid);
+      margin-bottom: 8px;
+    }
+    .stat-card .value {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+    }
+    .stat-card .detail {
+      font-size: 11px;
+      color: var(--mid);
+      margin-top: 8px;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 56px;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-header h2 {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .section-header .badge {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 8px;
+      border: 1px solid;
+    }
+    .badge-done { color: var(--green); border-color: var(--green); }
+    .badge-active { color: var(--amber); border-color: var(--amber); }
+    .badge-next { color: var(--mid); border-color: var(--mid); }
+    .badge-future { color: #4a4a4a; border-color: #4a4a4a; }
+
+    /* Checklist */
+    .checklist {
+      list-style: none;
+    }
+    .checklist li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 13px;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .check {
+      color: var(--green);
+      flex-shrink: 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .check-text { color: var(--fg); opacity: 0.85; }
+    .check-date {
+      color: var(--mid);
+      font-size: 11px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    /* Kanban */
+    .kanban {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .kanban-col {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      min-height: 200px;
+    }
+    .kanban-col-header {
+      padding: 12px 16px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .kanban-col-header .count {
+      font-size: 10px;
+      opacity: 0.5;
+    }
+    .col-todo .kanban-col-header { color: var(--mid); }
+    .col-progress .kanban-col-header { color: var(--amber); }
+    .col-done .kanban-col-header { color: var(--green); }
+
+    .kanban-card {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      transition: background 0.1s;
+    }
+    .kanban-card:hover { background: var(--surface-hover); }
+    .kanban-card:last-child { border-bottom: none; }
+    .kanban-card .card-title {
+      font-weight: 500;
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+    .kanban-card .card-desc {
+      color: var(--mid);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+    .kanban-card .card-priority {
+      display: inline-block;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 1px 5px;
+      border: 1px solid;
+      margin-top: 6px;
+    }
+    .priority-high { color: var(--red); border-color: var(--red); }
+    .priority-medium { color: var(--amber); border-color: var(--amber); }
+    .priority-low { color: var(--mid); border-color: var(--mid); }
+
+    /* Phase Items */
+    .phase-items {
+      display: grid;
+      gap: 12px;
+    }
+    .phase-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: background 0.1s;
+    }
+    .phase-item:hover { background: var(--surface-hover); }
+    .phase-item .item-num {
+      color: var(--mid);
+      font-size: 11px;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+    .phase-item .item-title {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .phase-item .item-desc {
+      font-size: 11px;
+      color: var(--mid);
+      line-height: 1.5;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 32px;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -28px;
+      top: 4px;
+      width: 9px;
+      height: 9px;
+      border: 2px solid;
+      background: var(--bg);
+    }
+    .dot-active { border-color: var(--amber); }
+    .dot-future { border-color: var(--mid); }
+    .timeline-quarter {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--mid);
+      margin-bottom: 4px;
+    }
+    .timeline-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .timeline-desc {
+      font-size: 12px;
+      color: var(--mid);
+      line-height: 1.5;
+    }
+
+    /* Tool Stack Table */
+    .stack-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .stack-table th {
+      text-align: left;
+      padding: 10px 16px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--mid);
+      border-bottom: 1px solid var(--border);
+      font-weight: 500;
+    }
+    .stack-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .stack-table tr:hover td { background: var(--surface); }
+    .status-live { color: var(--green); }
+    .status-pending { color: var(--amber); }
+    .status-not { color: var(--mid); }
+
+    /* Footer */
+    .footer {
+      margin-top: 64px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--mid);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .stats { grid-template-columns: 1fr; }
+      .kanban { grid-template-columns: 1fr; }
+      .stat-card .value { font-size: 28px; }
+      .header h1 { font-size: 24px; }
+      .footer { flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>Button Builder &mdash; Roadmap</h1>
+      <div class="subtitle">Recurr's web production system. emdash + Cloudflare.</div>
+      <div class="updated">Last updated: April 6, 2026</div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-card">
+        <div class="label">Sites Live</div>
+        <div class="value">2</div>
+        <div class="detail">recurr.co + ministryofoats.com</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Components Built</div>
+        <div class="value">20</div>
+        <div class="detail">12 V6 (Recurr) + 8 MOO</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Stack Cost</div>
+        <div class="value">~$10<span style="font-size:16px;color:var(--mid)">/mo</span></div>
+        <div class="detail">Down from $60+/mo (Railway)</div>
+      </div>
+    </div>
+
+    <!-- Phase 0: Shipped -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Phase 0: Learning</h2>
+        <span class="badge badge-done">Complete</span>
+      </div>
+      <ul class="checklist">
+        <li><span class="check">&check;</span><span class="check-text">emdash evaluation + first deploy (recurr.co)</span><span class="check-date">Apr 5</span></li>
+        <li><span class="check">&check;</span><span class="check-text">Second production deploy (ministryofoats.com)</span><span class="check-date">Apr 6</span></li>
+        <li><span class="check">&check;</span><span class="check-text">GTM + Cloudflare Web Analytics on both sites</span><span class="check-date">Apr 5-6</span></li>
+        <li><span class="check">&check;</span><span class="check-text">Cookie consent + Google Consent Mode v2</span><span class="check-date">Apr 5-6</span></li>
+        <li><span class="check">&check;</span><span class="check-text">V6 design system &mdash; 12 Astro components + tokens (recurr.co)</span><span class="check-date">Apr 6</span></li>
+        <li><span class="check">&check;</span><span class="check-text">MOO design system &mdash; 8 components + brand page (ministryofoats.com)</span><span class="check-date">Apr 6</span></li>
+        <li><span class="check">&check;</span><span class="check-text">emdash CLI auth + passkey authentication on both sites</span><span class="check-date">Apr 6</span></li>
+        <li><span class="check">&check;</span><span class="check-text">Button Builder architecture doc + 2 operational retros written</span><span class="check-date">Apr 5-6</span></li>
+        <li><span class="check">&check;</span><span class="check-text">emdash playbook for recurr.co (authoritative build guide)</span><span class="check-date">Apr 5</span></li>
+        <li><span class="check">&check;</span><span class="check-text">Forge role defined and partially operational (~60%)</span><span class="check-date">Apr 6</span></li>
+      </ul>
+    </div>
+
+    <!-- Phase 1: Tooling & Infrastructure -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Phase 1: Tooling &amp; Infrastructure</h2>
+        <span class="badge badge-active">Active Sprint</span>
+      </div>
+      <div class="kanban">
+        <div class="kanban-col col-todo">
+          <div class="kanban-col-header">Todo <span class="count">6</span></div>
+          <div class="kanban-card">
+            <div class="card-title">Cloudflare MCP Servers</div>
+            <div class="card-desc">Code Mode, Docs, Bindings, Observability, Builds. Full programmatic API control.</div>
+            <span class="card-priority priority-high">High</span>
+          </div>
+          <div class="kanban-card">
+            <div class="card-title">Cold Start Fix</div>
+            <div class="card-desc">1-3s cold start on recurr.co (4.7MB bundle). Cron warmup, code splitting, edge cache.</div>
+            <span class="card-priority priority-high">High</span>
+          </div>
+          <div class="kanban-card">
+            <div class="card-title">Browser Automation (PinchTab)</div>
+            <div class="card-desc">Visual verification after every deploy. 800 tokens/page vs 10K+. Screenshot standard.</div>
+            <span class="card-priority priority-high">High</span>
+          </div>
+          <div class="kanban-card">
+            <div class="card-title">Doc Freshness Procedure</div>
+            <div class="card-desc">Before any CF/emdash op, fetch current docs via MCP or llms.txt.</div>
+            <span class="card-priority priority-high">High</span>
+          </div>
+          <div class="kanban-card">
+            <div class="card-title">GSC + GA Analytics Pipeline</div>
+            <div class="card-desc">Verify analytics-mcp + gsc MCP. Pull live traffic/search data into reporting.</div>
+            <span class="card-priority priority-medium">Medium</span>
+          </div>
+          <div class="kanban-card">
+            <div class="card-title">Repo Monitoring Agent</div>
+            <div class="card-desc">Scheduled weekly digest: emdash-cms/emdash, cloudflare/*, withastro/astro. Commits, releases, features.</div>
+            <span class="card-priority priority-medium">Medium</span>
+          </div>
+        </div>
+        <div class="kanban-col col-progress">
+          <div class="kanban-col-header">In Progress <span class="count">0</span></div>
+          <div class="kanban-card" style="opacity:0.3;text-align:center;padding:40px 16px;">
+            <div class="card-desc">Nothing in progress yet</div>
+          </div>
+        </div>
+        <div class="kanban-col col-done">
+          <div class="kanban-col-header">Done <span class="count">0</span></div>
+          <div class="kanban-card" style="opacity:0.3;text-align:center;padding:40px 16px;">
+            <div class="card-desc">&mdash;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 2: Template & Standards -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Phase 2: Template &amp; Standards</h2>
+        <span class="badge badge-next">Next</span>
+      </div>
+      <div class="phase-items">
+        <div class="phase-item">
+          <span class="item-num">01</span>
+          <div>
+            <div class="item-title">emdash Starter Template</div>
+            <div class="item-desc">wrangler.jsonc template, shared Astro blocks, design tokens pre-wired, spin-up checklist (D1, R2, KV, DNS, SSL). Based on recurr.co + MOO learnings.</div>
+          </div>
+        </div>
+        <div class="phase-item">
+          <span class="item-num">02</span>
+          <div>
+            <div class="item-title">Default Template Pages</div>
+            <div class="item-desc">Every site ships with /components (living style guide) + /reporting (GSC+GA dashboard). Hidden from nav/sitemap. Standard Button Builder practice.</div>
+          </div>
+        </div>
+        <div class="phase-item">
+          <span class="item-num">03</span>
+          <div>
+            <div class="item-title">Integrate emdash Agent Skills</div>
+            <div class="item-desc">7 skills from emdash repo: building-emdash-site, emdash-cli, creating-plugins. Audit quality, adapt to our standards.</div>
+          </div>
+        </div>
+        <div class="phase-item">
+          <span class="item-num">04</span>
+          <div>
+            <div class="item-title">Evaluate External Cloudflare Skills</div>
+            <div class="item-desc">jezweb/claude-skills (cloudflare-worker-builder, d1-drizzle-schema), VoltAgent, SpillwaveSolutions. Cherry-pick, don't bulk-import.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 3: Studio Capabilities -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Phase 3: Studio Capabilities</h2>
+        <span class="badge badge-next">Next</span>
+      </div>
+      <div class="phase-items">
+        <div class="phase-item">
+          <span class="item-num">01</span>
+          <div>
+            <div class="item-title">First ASCII Animation</div>
+            <div class="item-desc">Ship one real animation on recurr.co. Recurr's signature visual language &mdash; must be exceptional, not decorative.</div>
+          </div>
+        </div>
+        <div class="phase-item">
+          <span class="item-num">02</span>
+          <div>
+            <div class="item-title">GSAP Scroll Animations</div>
+            <div class="item-desc">Scroll-triggered interactions on marketing pages. Performant, purposeful, not ornamental.</div>
+          </div>
+        </div>
+        <div class="phase-item">
+          <span class="item-num">03</span>
+          <div>
+            <div class="item-title">Media Hierarchy Enforcement</div>
+            <div class="item-desc">Video > Animation > Interactive > Static > Text. Push every page toward the top of the hierarchy.</div>
+          </div>
+        </div>
+        <div class="phase-item">
+          <span class="item-num">04</span>
+          <div>
+            <div class="item-title">Design Reference Page System</div>
+            <div class="item-desc">Per-project HTML brand guidelines page. Always-on reference for every Button Builder site.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platform Evolution Timeline -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Platform Evolution</h2>
+        <span class="badge badge-future">FY27</span>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot dot-active"></div>
+          <div class="timeline-quarter">Q1 FY27 &mdash; Apr&ndash;Jun 2026</div>
+          <div class="timeline-title">Tooling + Template + 2 Sites Live</div>
+          <div class="timeline-desc">Cloudflare MCP connected. Cold starts fixed. Starter template extracted. PinchTab visual verification standard. Repo monitoring running.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dot-future"></div>
+          <div class="timeline-quarter">Q2 FY27 &mdash; Jul&ndash;Sep 2026</div>
+          <div class="timeline-title">Studio + blr.store + Migration Eval</div>
+          <div class="timeline-desc">Studio capabilities live (ASCII, GSAP). blr.store launched on emdash. Evaluate Railway &rarr; Cloudflare migration for Next.js apps (Hyperdrive).</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dot-future"></div>
+          <div class="timeline-quarter">Q3 FY27 &mdash; Oct&ndash;Dec 2026</div>
+          <div class="timeline-title">vayam.in + Client Sites + CF AI</div>
+          <div class="timeline-desc">vayam.in launched. Client sites on emdash template. Cloudflare AI tooling evaluation (AI Search, Workers AI, Vectorize).</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dot-future"></div>
+          <div class="timeline-quarter">Q4 FY27 &mdash; Jan&ndash;Mar 2027</div>
+          <div class="timeline-title">Full Production System</div>
+          <div class="timeline-desc">All properties on Cloudflare. Railway fully phased out. Button Builder is a repeatable, fast, instrumented production system.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tool Stack -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Tool Stack</h2>
+      </div>
+      <table class="stack-table">
+        <thead>
+          <tr><th>Layer</th><th>Tool</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>CMS</td><td>emdash v0.1.0</td><td class="status-live">&check; Live (2 sites)</td></tr>
+          <tr><td>Platform</td><td>Cloudflare Workers</td><td class="status-live">&check; Live</td></tr>
+          <tr><td>Database</td><td>Cloudflare D1</td><td class="status-live">&check; Live</td></tr>
+          <tr><td>Storage</td><td>Cloudflare R2</td><td class="status-live">&check; Live</td></tr>
+          <tr><td>DNS / SSL</td><td>Cloudflare</td><td class="status-live">&check; Live</td></tr>
+          <tr><td>Tracking</td><td>GTM + CF Analytics</td><td class="status-live">&check; Live</td></tr>
+          <tr><td>MCP</td><td>Cloudflare (5 servers)</td><td class="status-pending">&cir; Pending</td></tr>
+          <tr><td>Browser</td><td>PinchTab</td><td class="status-pending">&cir; Pending</td></tr>
+          <tr><td>Analytics</td><td>GSC + GA pipeline</td><td class="status-pending">&cir; Pending</td></tr>
+          <tr><td>Monitoring</td><td>GitHub repo watcher</td><td class="status-pending">&cir; Pending</td></tr>
+          <tr><td>Animation</td><td>ASCII + GSAP + Lottie</td><td class="status-not">&square; Not started</td></tr>
+          <tr><td>Design</td><td>Figma + Paper.design</td><td class="status-not">&square; Evaluating</td></tr>
+          <tr><td>Video</td><td>Remotion</td><td class="status-not">&square; Not started</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <span>Button Builder &mdash; Recurr Studio</span>
+      <span>Updated April 6, 2026</span>
+    </div>
+
+  </div>
+</body>
+</html>
