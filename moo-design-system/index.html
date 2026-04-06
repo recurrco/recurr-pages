@@ -26,8 +26,8 @@
   --moo-blue-deep: #3D5AFE;    /* Electric Blue — hero sections */
   --moo-black: #1A1A1A;
   --moo-white: #FFFFFF;
-  --moo-oat: #EDE4D3;           /* Warm oat beige — editorial surfaces */
-  --moo-oat-light: #F6F1E8;     /* Lighter oat — reading bg */
+  --moo-oat: #F0DFC8;           /* Warm oat beige — nudged toward coral/barista warmth */
+  --moo-oat-light: #F5ECDF;     /* Lighter oat — reading bg */
   --moo-gray: #F5F5F5;
 
   /* ── Typography ── */
@@ -69,6 +69,15 @@ body {
 }
 
 ::selection { background: var(--moo-yellow); color: var(--moo-black); }
+
+/* Surface-specific text selection colors */
+.section--dark ::selection, .char-section ::selection, .surface--dark ::selection,
+[style*="background: var(--moo-black)"] ::selection { background: var(--moo-yellow); color: var(--moo-black); }
+
+.grid-bg ::selection, .section--blue ::selection, .voice--blue ::selection,
+.surface--blue ::selection { background: var(--moo-white); color: var(--moo-blue); }
+
+.surface--oat ::selection, .voice--oat ::selection { background: var(--moo-red); color: var(--moo-white); }
 
 a { color: inherit; text-decoration: none; }
 
@@ -240,7 +249,8 @@ a { color: inherit; text-decoration: none; }
   width: clamp(180px, 20vw, 280px);
   margin: 0 auto var(--sp-m);
   animation: pop-in 0.6s var(--ease-bounce) both;
-  filter: brightness(0) invert(1);
+  /* Logo has white outline + dark fill — works on dark/blue backgrounds as-is */
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
 }
 
 .hero-title {
@@ -485,6 +495,7 @@ a { color: inherit; text-decoration: none; }
 .surface-card p { font-size: var(--fs-ui); opacity: 0.5; margin-top: 4px; }
 
 .surface--oat { background: var(--moo-oat); color: var(--moo-black); border: 2px solid rgba(26,26,26,0.06); }
+.surface--oat::before { background-image: linear-gradient(rgba(26,26,26,0.06) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(26,26,26,0.06) 1.5px, transparent 1.5px); background-size: 48px 48px; }
 .surface--dark { background: var(--moo-black); color: var(--moo-white); }
 .surface--dark::before { background-image: linear-gradient(rgba(255,255,255,0.05) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(255,255,255,0.05) 1.5px, transparent 1.5px); background-size: 48px 48px; }
 .surface--blue { background: var(--moo-blue); color: var(--moo-white); }
@@ -620,6 +631,9 @@ a { color: inherit; text-decoration: none; }
 
 .card-body {
   padding: var(--sp-s);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .card-tag {
@@ -635,7 +649,6 @@ a { color: inherit; text-decoration: none; }
   font-size: var(--fs-h3);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  margin: 4px 0;
 }
 
 .card-desc {
@@ -879,7 +892,7 @@ a { color: inherit; text-decoration: none; }
       <div class="palette-swatch" style="background: var(--moo-yellow);"><span style="color: var(--moo-black);">Yellow</span><small style="color: var(--moo-black);">#FFD500</small></div>
       <div class="palette-swatch" style="background: var(--moo-red);"><span style="color: var(--moo-white);">Red</span><small style="color: var(--moo-white);">#FF3D47</small></div>
       <div class="palette-swatch" style="background: var(--moo-blue);"><span style="color: var(--moo-white);">Royal Blue</span><small style="color: var(--moo-white);">#4361EE</small></div>
-      <div class="palette-swatch" style="background: var(--moo-oat);"><span style="color: var(--moo-black);">Oat Beige</span><small style="color: var(--moo-black);">#EDE4D3</small></div>
+      <div class="palette-swatch" style="background: var(--moo-oat);"><span style="color: var(--moo-black);">Oat Beige</span><small style="color: var(--moo-black);">#F0DFC8</small></div>
       <div class="palette-swatch" style="background: var(--moo-black);"><span style="color: var(--moo-white);">Black</span><small style="color: var(--moo-white);">#1A1A1A</small></div>
     </div>
 
