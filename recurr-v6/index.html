@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recurr V6 — Design System Moodboard</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   RECURR V6 DESIGN SYSTEM
+   "Technical publishing meets terminal aesthetics"
+   ═══════════════════════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* ── Palette: Two colors. That's it. ── */
+  --fg: #1a1a1a;
+  --bg: #fafafa;
+  --fg-50: rgba(26, 26, 26, 0.50);
+  --fg-25: rgba(26, 26, 26, 0.25);
+  --fg-15: rgba(26, 26, 26, 0.15);
+  --fg-08: rgba(26, 26, 26, 0.08);
+  --fg-04: rgba(26, 26, 26, 0.04);
+
+  /* ── Terminal accent (neon on dark contexts) ── */
+  --neon-green: #39ff14;
+  --neon-amber: #ffbf00;
+  --neon-cyan: #00ffff;
+  --neon-dim-green: #2d8a1a;
+  --neon-dim-amber: #8a6b0a;
+
+  /* ── Typography ── */
+  --mono: "SF Mono", ui-monospace, Menlo, Consolas, "Liberation Mono", monospace;
+  --serif: "New York", Georgia, Charter, "Bitstream Charter", Cambria, serif;
+
+  /* ── Type Scale (fluid) ── */
+  --fs-display: clamp(3rem, 2rem + 5vw, 7rem);
+  --fs-h1: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+  --fs-h2: clamp(1.5rem, 1.2rem + 1.2vw, 2.2rem);
+  --fs-h3: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
+  --fs-body: clamp(1.05rem, 1rem + 0.2vw, 1.2rem);
+  --fs-ui: clamp(0.8rem, 0.75rem + 0.15vw, 0.9rem);
+  --fs-label: clamp(0.65rem, 0.6rem + 0.1vw, 0.72rem);
+
+  /* ── Spacing (fluid) ── */
+  --sp-xs: clamp(0.5rem, 0.4rem + 0.3vw, 0.75rem);
+  --sp-s: clamp(0.75rem, 0.6rem + 0.5vw, 1.25rem);
+  --sp-m: clamp(1.5rem, 1rem + 1.5vw, 3rem);
+  --sp-l: clamp(3rem, 2rem + 3vw, 6rem);
+  --sp-xl: clamp(5rem, 3rem + 5vw, 10rem);
+
+  /* ── Motion ── */
+  --ease-snap: cubic-bezier(0, 0, 0.2, 1);
+  --speed-fast: 100ms;
+  --speed-med: 150ms;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--mono);
+  font-size: var(--fs-ui);
+  line-height: 1.6;
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--fg-25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--fg-50); }
+
+a { color: inherit; }
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════════════════════════════ */
+
+.container {
+  width: 100%;
+  max-width: min(1400px, 90vw);
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 1rem + 1vw, 2.5rem);
+}
+
+.section {
+  padding: var(--sp-xl) 0;
+  border-bottom: 1px solid var(--fg-08);
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-50);
+  margin-bottom: var(--sp-m);
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--sp-s);
+}
+
+.section-desc {
+  font-family: var(--mono);
+  font-size: var(--fs-ui);
+  color: var(--fg-50);
+  max-width: 60ch;
+  line-height: 1.7;
+  margin-bottom: var(--sp-l);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOLD 0: COVER — ASCII HERO + FLICKERING GRID
+   ═══════════════════════════════════════════════════════════════ */
+
+.cover {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.cover canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cover-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: var(--sp-l);
+}
+
+.cover-logo {
+  font-family: var(--serif);
+  font-size: clamp(4rem, 3rem + 6vw, 10rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  margin-bottom: var(--sp-s);
+}
+
+.cover-tagline {
+  font-family: var(--mono);
+  font-size: var(--fs-ui);
+  color: rgba(250, 250, 250, 0.5);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cover-version {
+  position: absolute;
+  bottom: var(--sp-m);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  color: var(--neon-green);
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cover-version .pulse {
+  width: 6px;
+  height: 6px;
+  background: var(--neon-green);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOLD 1: PALETTE
+   ═══════════════════════════════════════════════════════════════ */
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--sp-s);
+}
+
+.swatch {
+  aspect-ratio: 1.4;
+  padding: var(--sp-s);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border: 1px solid var(--fg-15);
+  transition: background var(--speed-fast) var(--ease-snap), color var(--speed-fast) var(--ease-snap);
+}
+
+.swatch:hover {
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}
+
+.swatch-name { font-weight: 700; font-size: var(--fs-label); text-transform: uppercase; letter-spacing: 0.1em; }
+.swatch-value { font-size: var(--fs-label); opacity: 0.5; margin-top: 0.25rem; }
+
+.swatch--dark { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.swatch--dark:hover { background: var(--bg); color: var(--fg); border-color: var(--fg-15); }
+
+.swatch--muted { background: var(--bg); color: var(--fg-50); }
+.swatch--faint { background: var(--fg-08); }
+
+/* Terminal accents */
+.neon-row {
+  display: flex;
+  gap: var(--sp-xs);
+  margin-top: var(--sp-m);
+}
+
+.neon-chip {
+  padding: 0.4rem 1rem;
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+
+.neon-chip--green { background: #0a1a06; color: var(--neon-green); border-color: var(--neon-green); }
+.neon-chip--amber { background: #1a1506; color: var(--neon-amber); border-color: var(--neon-amber); }
+.neon-chip--cyan { background: #061a1a; color: var(--neon-cyan); border-color: var(--neon-cyan); }
+
+/* ═══════════════════════════════════════════════════════════════
+   FOLD 2: TYPOGRAPHY
+   ═══════════════════════════════════════════════════════════════ */
+
+.type-specimen {
+  margin-bottom: var(--sp-l);
+}
+
+.type-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--sp-m);
+  align-items: baseline;
+  padding: var(--sp-s) 0;
+  border-bottom: 1px dashed var(--fg-08);
+}
+
+.type-meta {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  color: var(--fg-50);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.type-display {
+  font-family: var(--serif);
+  font-size: var(--fs-display);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.type-h1 {
+  font-family: var(--serif);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.type-h2 {
+  font-family: var(--serif);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.type-h3 {
+  font-family: var(--serif);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.type-body {
+  font-family: var(--serif);
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  max-width: 680px;
+}
+
+.type-ui {
+  font-family: var(--mono);
+  font-size: var(--fs-ui);
+  letter-spacing: 0.02em;
+}
+
+.type-label-demo {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-50);
+}
+
+/* ── The rule: Mono = interface. Serif = content. ── */
+.type-rule {
+  background: var(--fg);
+  color: var(--bg);
+  padding: var(--sp-m);
+  font-family: var(--mono);
+  font-size: var(--fs-ui);
+  line-height: 1.8;
+  margin-top: var(--sp-l);
+}
+
+.type-rule strong {
+  color: var(--neon-green);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOLD 3: COMPONENTS — CARDS
+   ═══════════════════════════════════════════════════════════════ */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1px;
+  background: var(--fg-15);
+}
+
+.card {
+  background: var(--bg);
+  padding: var(--sp-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xs);
+  transition: background var(--speed-fast) var(--ease-snap), color var(--speed-fast) var(--ease-snap);
+  cursor: default;
+}
+
+.card:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.card:hover .card-meta { color: rgba(250, 250, 250, 0.5); }
+.card:hover .card-pillar-dot { background: var(--neon-green); }
+
+.card-pillar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-pillar-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--fg);
+  transition: background var(--speed-fast) var(--ease-snap);
+}
+
+.card-pillar-label {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.card-title {
+  font-family: var(--serif);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.card-excerpt {
+  font-family: var(--serif);
+  font-size: var(--fs-ui);
+  color: var(--fg-50);
+  line-height: 1.6;
+  transition: color var(--speed-fast) var(--ease-snap);
+}
+
+.card:hover .card-excerpt { color: rgba(250, 250, 250, 0.6); }
+
+.card-meta {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  color: var(--fg-50);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: auto;
+  padding-top: var(--sp-s);
+  transition: color var(--speed-fast) var(--ease-snap);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOLD 4: TABLE — MUSIC-VIDEOS STYLE
+   ═══════════════════════════════════════════════════════════════ */
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table thead th {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg-50);
+  text-align: left;
+  padding: var(--sp-xs) 0;
+  border-bottom: 2px solid var(--fg);
+}
+
+.data-table tbody tr {
+  border-top: 1px solid var(--fg-08);
+  transition: background var(--speed-fast) var(--ease-snap), color var(--speed-fast) var(--ease-snap);
+  cursor: default;
+}
+
+.data-table tbody tr:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.data-table tbody td {
+  padding: var(--sp-xs) var(--sp-xs) var(--sp-xs) 0;
+  font-size: var(--fs-ui);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
+}
+
+.data-table .col-title {
+  font-family: var(--serif);
+  font-weight: 700;
+}
+
+.data-table .col-meta {
+  font-family: var(--mono);
+  color: var(--fg-50);
+}
+
+.data-table tbody tr:hover .col-meta {
+  color: rgba(250, 250, 250, 0.5);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOLD 5: ARTICLE READING EXPERIENCE
+   ═══════════════════════════════════════════════════════════════ */
+
+.reading-demo {
+  position: relative;
+  background: var(--bg);
+}
+
+.reading-column {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: var(--sp-l) clamp(1.25rem, 1rem + 1vw, 2.5rem);
+}
+
+.reading-column .article-header {
+  margin-bottom: var(--sp-l);
+}
+
+.reading-column .article-pillar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: var(--sp-s);
+}
+
+.reading-column .article-pillar-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--fg);
+}
+
+.reading-column .article-pillar-label {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--fg-50);
+}
+
+.reading-column .article-title {
+  font-family: var(--serif);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--sp-s);
+}
+
+.reading-column .article-byline {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  color: var(--fg-50);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: flex;
+  gap: var(--sp-m);
+}
+
+.reading-column .article-body {
+  font-family: var(--serif);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  color: var(--fg);
+}
+
+.reading-column .article-body p {
+  margin-bottom: 1.5em;
+}
+
+.reading-column .article-body p:first-of-type::first-letter {
+  font-size: 3.2em;
+  float: left;
+  line-height: 0.8;
+  margin-right: 0.08em;
+  margin-top: 0.05em;
+  font-weight: 700;
+}
+
+.reading-column .article-body blockquote {
+  border-left: 2px solid var(--fg);
+  padding-left: var(--sp-m);
+  margin: var(--sp-m) 0;
+  font-style: italic;
+  font-size: var(--fs-h3);
+  line-height: 1.5;
+  color: var(--fg);
+}
+
+.reading-column .article-body h2 {
+  font-family: var(--serif);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: var(--sp-l) 0 var(--sp-s);
+}
+
+.reading-column .article-body .fn {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  color: var(--fg-50);
+  vertical-align: super;
+  text-decoration: none;
+  margin-left: 0.1em;
+}
+
+/* Full-bleed image inside reading column */
+.reading-column .full-bleed {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-top: var(--sp-m);
+  margin-bottom: var(--sp-m);
+  background: var(--fg-04);
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  color: var(--fg-25);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+/* ── Dot grid background for reading (paper feel) ── */
+.reading-bg {
+  background-image: radial-gradient(circle, var(--fg-08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOLD 6: NAVIGATION — FLOATING BOTTOM PILL
+   ═══════════════════════════════════════════════════════════════ */
+
+.nav-demo-container {
+  position: relative;
+  height: 500px;
+  background: var(--fg-04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-image: radial-gradient(circle, var(--fg-08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.nav-demo-label {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  color: var(--fg-25);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.floating-nav {
+  position: absolute;
+  bottom: var(--sp-m);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--fg);
+  padding: 4px;
+  border-radius: 999px;
+}
+
+.floating-nav a {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(250, 250, 250, 0.5);
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: color var(--speed-fast) var(--ease-snap), background var(--speed-fast) var(--ease-snap);
+  white-space: nowrap;
+}
+
+.floating-nav a:hover {
+  color: var(--bg);
+}
+
+.floating-nav a.active {
+  background: rgba(250, 250, 250, 0.12);
+  color: var(--bg);
+}
+
+.floating-nav .nav-logo {
+  font-family: var(--serif);
+  font-size: var(--fs-ui);
+  font-weight: 700;
+  color: var(--bg);
+  padding: 0.5rem 1rem;
+  letter-spacing: -0.02em;
+}
+
+.floating-nav .nav-time {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  color: var(--neon-green);
+  padding: 0.5rem 1rem;
+  letter-spacing: 0.05em;
+  min-width: 5.5em;
+  text-align: right;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOLD 7: INTERACTIONS — HOVER INVERT DEMO
+   ═══════════════════════════════════════════════════════════════ */
+
+.interaction-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-m);
+}
+
+.demo-box {
+  padding: var(--sp-l) var(--sp-m);
+  border: 1px solid var(--fg-15);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-s);
+}
+
+.demo-box-title {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--fg-50);
+}
+
+/* Link styles */
+.link-dashed {
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--fg-25);
+  transition: text-decoration-color var(--speed-fast) var(--ease-snap);
+}
+
+.link-dashed:hover {
+  text-decoration-color: var(--fg);
+}
+
+/* Button */
+.btn {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.6rem 1.5rem;
+  border: 1px solid var(--fg);
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  transition: background var(--speed-fast) var(--ease-snap), color var(--speed-fast) var(--ease-snap);
+}
+
+.btn:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.btn--pill { border-radius: 999px; }
+
+.btn--invert {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.btn--invert:hover {
+  background: transparent;
+  color: var(--fg);
+}
+
+/* Callout */
+.callout {
+  padding: var(--sp-m);
+  border-left: 2px solid var(--fg);
+  background: var(--fg-04);
+  font-family: var(--mono);
+  font-size: var(--fs-ui);
+  line-height: 1.7;
+}
+
+.callout--terminal {
+  background: var(--fg);
+  color: var(--neon-green);
+  border-left: 2px solid var(--neon-green);
+  font-family: var(--mono);
+}
+
+/* Badge/Pill */
+.badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--fg-25);
+}
+
+.badge--filled {
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOLD 8: ASCII ART SECTION — BRAILLE WAVE DEMO
+   ═══════════════════════════════════════════════════════════════ */
+
+.ascii-section {
+  position: relative;
+  background: var(--fg);
+  color: var(--bg);
+  overflow: hidden;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+}
+
+.ascii-section canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ascii-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.ascii-description {
+  font-family: var(--mono);
+  font-size: var(--fs-ui);
+  color: rgba(250, 250, 250, 0.5);
+  max-width: 50ch;
+  line-height: 1.7;
+  margin-top: var(--sp-s);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOLD 9: HOMEPAGE PREVIEW — HOW IT ALL COMES TOGETHER
+   ═══════════════════════════════════════════════════════════════ */
+
+.preview-frame {
+  border: 1px solid var(--fg-15);
+  overflow: hidden;
+}
+
+.preview-hero {
+  background: var(--fg);
+  color: var(--bg);
+  padding: var(--sp-xl) var(--sp-m);
+  text-align: center;
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.preview-hero canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.preview-hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.preview-hero-title {
+  font-family: var(--serif);
+  font-size: var(--fs-display);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin-bottom: var(--sp-s);
+}
+
+.preview-hero-sub {
+  font-family: var(--mono);
+  font-size: var(--fs-ui);
+  color: rgba(250, 250, 250, 0.4);
+  letter-spacing: 0.04em;
+}
+
+.preview-arms {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--fg-15);
+}
+
+.preview-arm {
+  background: var(--bg);
+  padding: var(--sp-l) var(--sp-m);
+  transition: background var(--speed-fast) var(--ease-snap), color var(--speed-fast) var(--ease-snap);
+  cursor: default;
+}
+
+.preview-arm:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.preview-arm:hover .preview-arm-desc { color: rgba(250, 250, 250, 0.5); }
+.preview-arm:hover .preview-arm-num { color: var(--neon-green); }
+
+.preview-arm-num {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  color: var(--fg-25);
+  letter-spacing: 0.1em;
+  margin-bottom: var(--sp-s);
+  transition: color var(--speed-fast) var(--ease-snap);
+}
+
+.preview-arm-title {
+  font-family: var(--serif);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  margin-bottom: var(--sp-xs);
+}
+
+.preview-arm-desc {
+  font-family: var(--mono);
+  font-size: var(--fs-ui);
+  color: var(--fg-50);
+  line-height: 1.6;
+  transition: color var(--speed-fast) var(--ease-snap);
+}
+
+/* Statement band */
+.preview-statement {
+  padding: var(--sp-xl) var(--sp-m);
+  text-align: center;
+}
+
+.preview-statement-text {
+  font-family: var(--serif);
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════════ */
+
+.moodboard-footer {
+  padding: var(--sp-l) 0;
+  text-align: center;
+}
+
+.moodboard-footer p {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  color: var(--fg-25);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .type-row { grid-template-columns: 1fr; gap: var(--sp-xs); }
+  .interaction-grid { grid-template-columns: 1fr; }
+  .preview-arms { grid-template-columns: 1fr; }
+  .card-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOLD 0: COVER
+     ═══════════════════════════════════════════════════════════════ -->
+
+<section class="cover" id="cover">
+  <canvas id="flickerCanvas"></canvas>
+  <div class="cover-content">
+    <div class="cover-logo">recurr</div>
+    <div class="cover-tagline">Design System V6 &mdash; Moodboard</div>
+  </div>
+  <div class="cover-version">
+    <span class="pulse"></span>
+    SYSTEM.ACTIVE &mdash; V6.0.0 &mdash; APR 2026
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOLD 1: PALETTE
+     ═══════════════════════════════════════════════════════════════ -->
+
+<section class="section" id="palette">
+  <div class="container">
+    <div class="section-label">01 / Palette</div>
+    <div class="section-title">Two colors. Terminal accents for dark contexts only.</div>
+    <div class="section-desc">
+      The palette is monochrome. Near-black on near-white. Period. Color only appears
+      as terminal neon in inverted (dark) contexts — status indicators, active states,
+      code blocks. Never on white backgrounds.
+    </div>
+
+    <div class="palette-grid">
+      <div class="swatch swatch--dark">
+        <div class="swatch-name">--fg</div>
+        <div class="swatch-value">#1a1a1a</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-name">--bg</div>
+        <div class="swatch-value">#fafafa</div>
+      </div>
+      <div class="swatch swatch--muted">
+        <div class="swatch-name">--fg @ 50%</div>
+        <div class="swatch-value">Secondary text</div>
+      </div>
+      <div class="swatch swatch--faint">
+        <div class="swatch-name">--fg @ 8%</div>
+        <div class="swatch-value">Borders, grids</div>
+      </div>
+      <div class="swatch" style="background: var(--fg-04);">
+        <div class="swatch-name">--fg @ 4%</div>
+        <div class="swatch-value">Hover fills</div>
+      </div>
+    </div>
+
+    <div class="neon-row">
+      <div class="neon-chip neon-chip--green">Active</div>
+      <div class="neon-chip neon-chip--amber">Warning</div>
+      <div class="neon-chip neon-chip--cyan">Info</div>
+    </div>
+    <div style="margin-top: var(--sp-xs); font-size: var(--fs-label); color: var(--fg-25); text-transform: uppercase; letter-spacing: 0.1em;">
+      Terminal accents &mdash; dark contexts only. Never on white.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOLD 2: TYPOGRAPHY
+     ═══════════════════════════════════════════════════════════════ -->
+
+<section class="section" id="typography">
+  <div class="container">
+    <div class="section-label">02 / Typography</div>
+    <div class="section-title">Mono = interface. Serif = content.</div>
+    <div class="section-desc">
+      Two stacks, hard split. Mono for everything structural (nav, labels, metadata,
+      tables, buttons, footer). Serif for everything editorial (headlines, body text,
+      blockquotes). No sans-serif. No middle ground.
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-row">
+        <div class="type-meta">Display</div>
+        <div class="type-display">recurr</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">H1</div>
+        <div class="type-h1">Research, essays and field notes for B2B teams.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">H2</div>
+        <div class="type-h2">The intelligence layer behind every growth decision</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">H3</div>
+        <div class="type-h3">Why most B2B content fails before it starts</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">Body</div>
+        <div class="type-body">The best B2B content doesn't explain what a product does. It reframes how the reader thinks about their problem. This is the difference between content marketing and thought leadership — one describes features, the other shifts mental models.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">UI Mono</div>
+        <div class="type-ui">Positioning &middot; Category Design &middot; GTM &middot; Content &amp; Distribution</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">Label</div>
+        <div class="type-label-demo">Pratik Mishra &mdash; Apr 6, 2026 &mdash; 8 min read</div>
+      </div>
+    </div>
+
+    <div class="type-rule">
+      <strong>RULE:</strong> If it tells you WHERE you are or WHAT something is &rarr; mono.<br>
+      <strong>RULE:</strong> If it tells you WHAT to think about &rarr; serif.<br>
+      <strong>RULE:</strong> No exceptions. No sans-serif. Ever.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOLD 3: ARTICLE CARDS
+     ═══════════════════════════════════════════════════════════════ -->
+
+<section class="section" id="cards">
+  <div class="container">
+    <div class="section-label">03 / Article Cards</div>
+    <div class="section-title">Hover inverts. Fast. 100ms.</div>
+    <div class="section-desc">
+      Inspired by music-videos.lsvs.cloud. On hover, background fills black, text flips
+      white, pillar dot goes neon green. No shadows, no lifts, no scale transforms.
+      Just a clean binary flip.
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-pillar">
+          <div class="card-pillar-dot"></div>
+          <div class="card-pillar-label">Positioning</div>
+        </div>
+        <div class="card-title">Why Category Design Is the Only GTM Strategy That Compounds</div>
+        <div class="card-excerpt">Most startups compete on features. The ones that win compete on framing. Here's the difference, and why it matters more in 2026 than ever.</div>
+        <div class="card-meta">Pratik Mishra &mdash; Apr 3, 2026</div>
+      </div>
+      <div class="card">
+        <div class="card-pillar">
+          <div class="card-pillar-dot"></div>
+          <div class="card-pillar-label">AI &amp; the New Stack</div>
+        </div>
+        <div class="card-title">The Freemium Trap: What AI-Native Products Get Wrong About Pricing</div>
+        <div class="card-excerpt">Everyone offers a free tier. Almost nobody designs the upgrade trigger. A framework for freemium that actually converts.</div>
+        <div class="card-meta">Sujith &mdash; Apr 5, 2026</div>
+      </div>
+      <div class="card">
+        <div class="card-pillar">
+          <div class="card-pillar-dot"></div>
+          <div class="card-pillar-label">Content &amp; Distribution</div>
+        </div>
+        <div class="card-title">Content Moats Are Dead. Content Engines Are Everything.</div>
+        <div class="card-excerpt">Your blog isn't a moat. Your editorial operation — the machine that turns insights into distribution — is. How to build one.</div>
+        <div class="card-meta">Ankita &mdash; Apr 4, 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOLD 4: DATA TABLE
+     ═══════════════════════════════════════════════════════════════ -->
+
+<section class="section" id="table">
+  <div class="container">
+    <div class="section-label">04 / Data Table</div>
+    <div class="section-title">Tables as first-class citizens.</div>
+    <div class="section-desc">
+      Inspired by music-videos.lsvs.cloud. Row hover inverts entire row. Mono for metadata,
+      serif for titles. 2px top border for header. Truncation with ellipsis.
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Pillar</th>
+          <th>Author</th>
+          <th>Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-title">How AI Will Change the SEO Stack</td>
+          <td class="col-meta">AI &amp; the New Stack</td>
+          <td class="col-meta">Sujith</td>
+          <td class="col-meta">Apr 7</td>
+          <td><span class="badge badge--filled">Live</span></td>
+        </tr>
+        <tr>
+          <td class="col-title">Top 50 B2B Websites: What They Get Right</td>
+          <td class="col-meta">SaaS Intelligence</td>
+          <td class="col-meta">Nagendra</td>
+          <td class="col-meta">Apr 10</td>
+          <td><span class="badge">Draft</span></td>
+        </tr>
+        <tr>
+          <td class="col-title">The Death of the Marketing Qualified Lead</td>
+          <td class="col-meta">GTM</td>
+          <td class="col-meta">Pratik Mishra</td>
+          <td class="col-meta">Apr 12</td>
+          <td><span class="badge">Brief</span></td>
+        </tr>
+        <tr>
+          <td class="col-title">Why Nobody Reads Your Product Blog</td>
+          <td class="col-meta">Content</td>
+          <td class="col-meta">Ankita</td>
+          <td class="col-meta">Apr 14</td>
+          <td><span class="badge">Draft</span></td>
+        </tr>
+        <tr>
+          <td class="col-title">Positioning Isn't Messaging: A Primer</td>
+          <td class="col-meta">Positioning</td>
+          <td class="col-meta">Pratik Mishra</td>
+          <td class="col-meta">Apr 8</td>
+          <td><span class="badge badge--filled">Live</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOLD 5: READING EXPERIENCE
+     ═══════════════════════════════════════════════════════════════ -->
+
+<section class="section reading-bg" id="reading">
+  <div class="container">
+    <div class="section-label">05 / Press &mdash; Reading Experience</div>
+    <div class="section-title">Readability as a first-class feature.</div>
+    <div class="section-desc">
+      680px centered column. Dot-grid paper background. Serif body at readable size.
+      Drop cap on first paragraph. Full-bleed images that break out of the reading column.
+      Like the Economist meets a research journal.
+    </div>
+  </div>
+
+  <div class="reading-demo">
+    <div class="reading-column">
+      <div class="article-header">
+        <div class="article-pillar">
+          <div class="article-pillar-dot"></div>
+          <div class="article-pillar-label">Positioning &amp; Category Design</div>
+        </div>
+        <h1 class="article-title">Why Category Design Is the Only GTM Strategy That Compounds</h1>
+        <div class="article-byline">
+          <span>Pratik Mishra</span>
+          <span>Apr 3, 2026</span>
+          <span>8 min read</span>
+        </div>
+      </div>
+
+      <div class="full-bleed">[ Featured image &mdash; full viewport width ]</div>
+
+      <div class="article-body">
+        <p>Most startups compete on features. They build comparison tables, highlight integrations, and race to match whatever the market leader shipped last quarter. This is not a strategy. This is a treadmill. The companies that win — the ones that build durable, compounding advantages — do something fundamentally different. They don't compete in existing categories. They create new ones.</p>
+
+        <h2>The Problem with Feature Competition</h2>
+
+        <p>When you compete on features, you're playing a game designed by your competitors. Every feature you add is a response to their roadmap, not your customer's needs. The inevitable result is convergence — every product in the category starts to look the same, and the winner is whoever spends the most on sales.<a class="fn" href="#">1</a></p>
+
+        <blockquote>The goal of category design is not to be better. It is to be different in a way that makes "better" irrelevant.</blockquote>
+
+        <p>Category design flips this dynamic. Instead of competing on features within an existing frame, you redefine the frame itself. You change what "good" means. You shift the evaluation criteria so that your product is the only one that fits.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOLD 6: FLOATING BOTTOM NAV
+     ═══════════════════════════════════════════════════════════════ -->
+
+<section class="section" id="nav">
+  <div class="container">
+    <div class="section-label">06 / Navigation</div>
+    <div class="section-title">Floating bottom pill. Always present.</div>
+    <div class="section-desc">
+      No top bar. The nav lives at the bottom of the viewport as a dark floating pill.
+      Logo on the left, pages in the center, live clock on the right.
+      Inspired by macOS dock pattern. Dark background so it floats above any page color.
+    </div>
+  </div>
+
+  <div class="nav-demo-container">
+    <div class="nav-demo-label">Page content lives here</div>
+    <nav class="floating-nav" id="demoNav">
+      <span class="nav-logo">r</span>
+      <a href="#" class="active">Press</a>
+      <a href="#">Studio</a>
+      <a href="#">Contact</a>
+      <span class="nav-time" id="navClock">--:--</span>
+    </nav>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOLD 7: INTERACTIONS
+     ═══════════════════════════════════════════════════════════════ -->
+
+<section class="section" id="interactions">
+  <div class="container">
+    <div class="section-label">07 / Interactions</div>
+    <div class="section-title">Fast. Electric. Binary.</div>
+    <div class="section-desc">
+      Everything is 100ms. Hover inverts. No easing drama. No parallax.
+      The site should feel like a terminal — instant response, zero lag.
+    </div>
+
+    <div class="interaction-grid">
+      <div class="demo-box">
+        <div class="demo-box-title">Links</div>
+        <p style="font-family: var(--serif); font-size: var(--fs-body); line-height: 1.7;">
+          Links use <a href="#" class="link-dashed">dashed underlines</a> that
+          solidify on hover. No color change. Same ink. The underline does the work.
+          <a href="#" class="link-dashed">Another example link</a> for reference.
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <div class="demo-box-title">Buttons</div>
+        <div style="display: flex; gap: var(--sp-s); flex-wrap: wrap; align-items: center;">
+          <button class="btn">Default</button>
+          <button class="btn btn--pill">Pill</button>
+          <button class="btn btn--invert">Inverted</button>
+          <button class="btn btn--pill btn--invert">Subscribe</button>
+        </div>
+      </div>
+
+      <div class="demo-box">
+        <div class="demo-box-title">Callouts</div>
+        <div class="callout">
+          <strong>Note:</strong> This is a standard callout. Left border, subtle background.
+          Used for editorial asides and important notes in articles.
+        </div>
+        <div class="callout callout--terminal" style="margin-top: var(--sp-s);">
+          $ deploying to production...<br>
+          &gt; build complete in 1.2s<br>
+          &gt; 3 pages, 0 errors
+        </div>
+      </div>
+
+      <div class="demo-box">
+        <div class="demo-box-title">Badges</div>
+        <div style="display: flex; gap: var(--sp-xs); flex-wrap: wrap;">
+          <span class="badge">Draft</span>
+          <span class="badge badge--filled">Live</span>
+          <span class="badge">Positioning</span>
+          <span class="badge">GTM</span>
+          <span class="badge badge--filled">Featured</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOLD 8: ASCII BRAILLE WAVE
+     ═══════════════════════════════════════════════════════════════ -->
+
+<section class="ascii-section" id="ascii">
+  <canvas id="brailleCanvas"></canvas>
+  <div class="container">
+    <div class="section-label" style="color: rgba(250,250,250,0.3);">08 / ASCII Layer</div>
+    <div class="section-title">Move your mouse. Click anywhere.</div>
+    <div class="ascii-description">
+      Braille character density mapping. 400+ Unicode braille characters create smooth visual
+      gradients driven by wave interference. Mouse position creates a local wave. Clicks spawn
+      expanding ripples. This is the homepage background — alive, reactive, technical.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOLD 9: HOMEPAGE PREVIEW
+     ═══════════════════════════════════════════════════════════════ -->
+
+<section class="section" id="preview" style="border-bottom: none;">
+  <div class="container">
+    <div class="section-label">09 / Homepage Preview</div>
+    <div class="section-title">How it all comes together.</div>
+    <div class="section-desc">
+      Dark hero with flickering grid + ASCII. Three arms with hover invert.
+      Statement band. Latest press articles. Floating bottom nav throughout.
+    </div>
+
+    <div class="preview-frame">
+      <!-- Hero -->
+      <div class="preview-hero">
+        <canvas id="previewFlicker"></canvas>
+        <div class="preview-hero-content">
+          <div class="preview-hero-title">recurr</div>
+          <div class="preview-hero-sub">A communication design company &mdash; Bengaluru, India</div>
+        </div>
+      </div>
+
+      <!-- Arms -->
+      <div class="preview-arms">
+        <div class="preview-arm">
+          <div class="preview-arm-num">001</div>
+          <div class="preview-arm-title">Studio</div>
+          <div class="preview-arm-desc">Positioning and content for B2B startups. We build the intelligence layer, then the content engine on top of it.</div>
+        </div>
+        <div class="preview-arm">
+          <div class="preview-arm-num">002</div>
+          <div class="preview-arm-title">Press</div>
+          <div class="preview-arm-desc">Research, essays and field notes for B2B teams. Six editorial pillars covering positioning, GTM, content, PLG, SaaS intelligence, and AI.</div>
+        </div>
+        <div class="preview-arm">
+          <div class="preview-arm-num">003</div>
+          <div class="preview-arm-title">Ventures</div>
+          <div class="preview-arm-desc">We build niche businesses by combining media with technology. BLR Store, Vayam, Ministry of Oats.</div>
+        </div>
+      </div>
+
+      <!-- Statement -->
+      <div class="preview-statement">
+        <div class="preview-statement-text">We build niche businesses by combining media with technology.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div class="moodboard-footer">
+  <p>Recurr V6 Design System &mdash; Moodboard &mdash; Apr 2026</p>
+  <p style="margin-top: var(--sp-xs);">Built with Claude Code &mdash; recurr.co</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCRIPTS
+     ═══════════════════════════════════════════════════════════════ -->
+
+<script>
+// ── FLICKERING GRID (cover + homepage preview) ──
+function initFlickerGrid(canvasId, opts = {}) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const squareSize = opts.squareSize || 3;
+  const gap = opts.gap || 5;
+  const maxOpacity = opts.maxOpacity || 0.15;
+  const flickerChance = opts.flickerChance || 0.03;
+  const color = opts.color || [250, 250, 250];
+
+  let grid = null;
+  let cols = 0, rows = 0;
+  let animId;
+  let lastTime = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = rect.height + 'px';
+    ctx.scale(dpr, dpr);
+
+    cols = Math.ceil(rect.width / (squareSize + gap));
+    rows = Math.ceil(rect.height / (squareSize + gap));
+    grid = new Float32Array(cols * rows);
+    for (let i = 0; i < grid.length; i++) {
+      grid[i] = Math.random() * maxOpacity;
+    }
+  }
+
+  function draw(time) {
+    const delta = time - lastTime;
+    lastTime = time;
+    const rect = canvas.parentElement.getBoundingClientRect();
+
+    ctx.clearRect(0, 0, rect.width, rect.height);
+
+    for (let i = 0; i < grid.length; i++) {
+      if (Math.random() < flickerChance * (delta / 16)) {
+        grid[i] = Math.random() * maxOpacity;
+      }
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+      const x = col * (squareSize + gap);
+      const y = row * (squareSize + gap);
+      ctx.fillStyle = `rgba(${color[0]},${color[1]},${color[2]},${grid[i]})`;
+      ctx.fillRect(x, y, squareSize, squareSize);
+    }
+
+    animId = requestAnimationFrame(draw);
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      if (!animId) { lastTime = performance.now(); animId = requestAnimationFrame(draw); }
+    } else {
+      cancelAnimationFrame(animId);
+      animId = null;
+    }
+  });
+
+  resize();
+  observer.observe(canvas.parentElement);
+  window.addEventListener('resize', resize);
+}
+
+// ── BRAILLE WAVE CANVAS ──
+function initBrailleWave(canvasId) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+
+  // Braille chars sorted by visual density
+  const CHARS = ' ⠁⠂⠃⠄⠅⠆⠇⠈⠉⠊⠋⠌⠍⠎⠏⠐⠑⠒⠓⠔⠕⠖⠗⠘⠙⠚⠛⠜⠝⠞⠟⠠⠡⠢⠣⠤⠥⠦⠧⠨⠩⠪⠫⠬⠭⠮⠯⠰⠱⠲⠳⠴⠵⠶⠷⠸⠹⠺⠻⠼⠽⠾⠿⡀⡁⡂⡃⡄⡅⡆⡇⡈⡉⡊⡋⡌⡍⡎⡏⡐⡑⡒⡓⡔⡕⡖⡗⡘⡙⡚⡛⡜⡝⡞⡟⡠⡡⡢⡣⡤⡥⡦⡧⡨⡩⡪⡫⡬⡭⡮⡯⡰⡱⡲⡳⡴⡵⡶⡷⡸⡹⡺⡻⡼⡽⡾⡿⢀⢁⢂⢃⢄⢅⢆⢇⢈⢉⢊⢋⢌⢍⢎⢏⢐⢑⢒⢓⢔⢕⢖⢗⢘⢙⢚⢛⢜⢝⢞⢟⢠⢡⢢⢣⢤⢥⢦⢧⢨⢩⢪⢫⢬⢭⢮⢯⢰⢱⢲⢳⢴⢵⢶⢷⢸⢹⢺⢻⢼⢽⢾⢿⣀⣁⣂⣃⣄⣅⣆⣇⣈⣉⣊⣋⣌⣍⣎⣏⣐⣑⣒⣓⣔⣕⣖⣗⣘⣙⣚⣛⣜⣝⣞⣟⣠⣡⣢⣣⣤⣥⣦⣧⣨⣩⣪⣫⣬⣭⣮⣯⣰⣱⣲⣳⣴⣵⣶⣷⣸⣹⣺⣻⣼⣽⣾⣿';
+
+  let mouse = { x: -1000, y: -1000 };
+  let ripples = [];
+  let waves = [];
+  let animId;
+  let lastTime = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = rect.height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  // Generate background waves
+  for (let i = 0; i < 4; i++) {
+    waves.push({
+      x: Math.random(),
+      y: Math.random(),
+      freq: 0.02 + Math.random() * 0.03,
+      speed: 0.5 + Math.random() * 1.5,
+      phase: Math.random() * Math.PI * 2,
+      amp: 0.3 + Math.random() * 0.4
+    });
+  }
+
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+
+  canvas.addEventListener('click', e => {
+    const rect = canvas.getBoundingClientRect();
+    ripples.push({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      birth: performance.now(),
+      life: 3000
+    });
+  });
+
+  canvas.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
+
+  function draw(time) {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const w = rect.width, h = rect.height;
+    const cellSize = 14;
+    const cols = Math.ceil(w / cellSize);
+    const rows = Math.ceil(h / cellSize);
+
+    ctx.fillStyle = '#1a1a1a';
+    ctx.fillRect(0, 0, w, h);
+    ctx.font = `${cellSize}px "SF Mono", ui-monospace, Menlo, monospace`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const t = time * 0.001;
+
+    // Remove expired ripples
+    ripples = ripples.filter(r => time - r.birth < r.life);
+
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const x = col * cellSize + cellSize / 2;
+        const y = row * cellSize + cellSize / 2;
+        let val = 0;
+
+        // Background waves
+        for (const w of waves) {
+          const dx = col / cols - w.x;
+          const dy = row / rows - w.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          val += Math.sin(dist * w.freq * 100 - t * w.speed + w.phase) * w.amp * (1 / (1 + dist * 3));
+        }
+
+        // Mouse wave
+        const mdx = x - mouse.x;
+        const mdy = y - mouse.y;
+        const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+        if (mDist < 200) {
+          val += Math.sin(mDist * 0.05 - t * 3) * 0.8 * (1 - mDist / 200);
+        }
+
+        // Ripple waves
+        for (const r of ripples) {
+          const rdx = x - r.x;
+          const rdy = y - r.y;
+          const rDist = Math.sqrt(rdx * rdx + rdy * rdy);
+          const age = (time - r.birth) / r.life;
+          const radius = age * 400;
+          const ringDist = Math.abs(rDist - radius);
+          if (ringDist < 60) {
+            val += Math.sin(ringDist * 0.15) * (1 - age) * 0.8 * (1 - ringDist / 60);
+          }
+        }
+
+        // Normalize and map to character
+        const norm = (Math.sin(val) + 1) / 2;
+        const charIdx = Math.floor(norm * (CHARS.length - 1));
+        const opacity = 0.15 + norm * 0.45;
+
+        ctx.fillStyle = `rgba(57, 255, 20, ${opacity})`;
+        ctx.fillText(CHARS[charIdx], x, y);
+      }
+    }
+
+    animId = requestAnimationFrame(draw);
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      canvas.style.pointerEvents = 'auto';
+      if (!animId) { lastTime = performance.now(); animId = requestAnimationFrame(draw); }
+    } else {
+      canvas.style.pointerEvents = 'none';
+      cancelAnimationFrame(animId);
+      animId = null;
+    }
+  });
+
+  resize();
+  observer.observe(canvas.parentElement);
+  window.addEventListener('resize', resize);
+}
+
+// ── CLOCK ──
+function initClock() {
+  const el = document.getElementById('navClock');
+  if (!el) return;
+  function tick() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    el.textContent = h + ':' + m + ':' + s;
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+// ── SCROLL REVEAL (fast, 150ms, translateY 8px) ──
+function initScrollReveal() {
+  const sections = document.querySelectorAll('.section');
+  sections.forEach(s => {
+    s.style.opacity = '0';
+    s.style.transform = 'translateY(8px)';
+    s.style.transition = `opacity 150ms cubic-bezier(0,0,0.2,1), transform 150ms cubic-bezier(0,0,0.2,1)`;
+  });
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  sections.forEach(s => obs.observe(s));
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', () => {
+  initFlickerGrid('flickerCanvas', { squareSize: 3, gap: 5, maxOpacity: 0.15, flickerChance: 0.03, color: [250, 250, 250] });
+  initFlickerGrid('previewFlicker', { squareSize: 2, gap: 4, maxOpacity: 0.12, flickerChance: 0.02, color: [250, 250, 250] });
+  initBrailleWave('brailleCanvas');
+  initClock();
+  initScrollReveal();
+});
+</script>
+
+</body>
+</html>
