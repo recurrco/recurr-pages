@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOO Design System — Ministry of Oats</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   MOO DESIGN SYSTEM
+   "Comic book energy meets clean food brand"
+   Never be boring. Have fun. Eat better.
+   ═══════════════════════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* ── Core Palette ── */
+  --moo-blue: #4747ED;
+  --moo-yellow: #FFD233;
+  --moo-red: #E5453C;
+  --moo-cream: #F5F0E7;
+  --moo-black: #111111;
+  --moo-dark: #1A1A1A;
+  --moo-white: #FFFFFF;
+
+  /* ── Extended Palette (Category Colors) ── */
+  --cat-overnight: #FFD233;
+  --cat-chia: #1A1A1A;
+  --cat-smoothie: #4747ED;
+  --cat-shakes: #E5453C;
+  --cat-desserts: #5FBFAD;
+  --cat-barista: #E8955A;
+  --cat-frozen: #4FC3F7;
+  --cat-fruit: #FF7F6B;
+
+  /* ── Surfaces ── */
+  --page-bg: #F5F0E7;
+  --surface-dark: #111111;
+  --surface-blue: #4747ED;
+  --surface-card: #FFFFFF;
+  --border: rgba(17, 17, 17, 0.10);
+  --border-dark: rgba(255, 255, 255, 0.10);
+
+  /* ── Typography ── */
+  --display: "SF Pro Display", system-ui, -apple-system, sans-serif;
+  --body: "SF Pro Text", system-ui, -apple-system, sans-serif;
+  --mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  /* ── Type Scale (fluid) ── */
+  --fs-mega: clamp(4rem, 3rem + 5vw, 8rem);
+  --fs-display: clamp(2.5rem, 1.8rem + 3.5vw, 5rem);
+  --fs-h1: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+  --fs-h2: clamp(1.5rem, 1.2rem + 1.2vw, 2.2rem);
+  --fs-h3: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
+  --fs-body: clamp(1rem, 0.95rem + 0.2vw, 1.15rem);
+  --fs-ui: clamp(0.8rem, 0.75rem + 0.15vw, 0.9rem);
+  --fs-label: clamp(0.65rem, 0.6rem + 0.1vw, 0.72rem);
+
+  /* ── Spacing ── */
+  --sp-xs: clamp(0.5rem, 0.4rem + 0.3vw, 0.75rem);
+  --sp-s: clamp(0.75rem, 0.6rem + 0.5vw, 1.25rem);
+  --sp-m: clamp(1.5rem, 1rem + 1.5vw, 3rem);
+  --sp-l: clamp(3rem, 2rem + 3vw, 6rem);
+  --sp-xl: clamp(5rem, 3rem + 5vw, 10rem);
+
+  /* ── Motion ── */
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-snap: cubic-bezier(0, 0, 0.2, 1);
+  --speed-fast: 120ms;
+  --speed-med: 200ms;
+
+  /* ── Radius ── */
+  --r-s: 6px;
+  --r-m: 12px;
+  --r-l: 20px;
+  --r-pill: 100px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--moo-black);
+  background: var(--page-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--moo-blue);
+  color: var(--moo-white);
+}
+
+a { color: inherit; }
+
+.container {
+  width: 100%;
+  max-width: min(1200px, 90vw);
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 1rem + 1vw, 2.5rem);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTIONS
+   ═══════════════════════════════════════════════════════════════ */
+
+.section {
+  padding: var(--sp-xl) 0;
+  border-bottom: 2px solid var(--border);
+}
+
+.section--dark {
+  background: var(--surface-dark);
+  color: var(--moo-white);
+  border-bottom-color: var(--border-dark);
+}
+
+.section--blue {
+  background: var(--surface-blue);
+  color: var(--moo-white);
+  border-bottom-color: rgba(255,255,255,0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Grid pattern overlay for blue sections */
+.section--blue::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.section--blue > * { position: relative; z-index: 1; }
+
+.section-label {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--moo-red);
+  margin-bottom: var(--sp-s);
+}
+
+.section--dark .section-label,
+.section--blue .section-label {
+  color: var(--moo-yellow);
+}
+
+.section-title {
+  font-family: var(--display);
+  font-size: var(--fs-h1);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--sp-s);
+}
+
+.section-desc {
+  font-size: var(--fs-h3);
+  color: rgba(17,17,17,0.6);
+  max-width: 55ch;
+  line-height: 1.5;
+}
+
+.section--dark .section-desc,
+.section--blue .section-desc {
+  color: rgba(255,255,255,0.65);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════════════════════ */
+
+.hero {
+  padding: var(--sp-xl) 0;
+  background: var(--moo-black);
+  color: var(--moo-white);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.hero > * { position: relative; z-index: 1; }
+
+.hero-label {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--moo-yellow);
+  margin-bottom: var(--sp-m);
+}
+
+.hero-title {
+  font-family: var(--display);
+  font-size: var(--fs-mega);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--sp-m);
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--moo-yellow);
+}
+
+.hero-sub {
+  font-size: var(--fs-h3);
+  color: rgba(255,255,255,0.5);
+  max-width: 45ch;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PALETTE
+   ═══════════════════════════════════════════════════════════════ */
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--sp-s);
+  margin-top: var(--sp-m);
+}
+
+.swatch {
+  aspect-ratio: 1;
+  border-radius: var(--r-m);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--sp-s);
+  transition: transform var(--speed-fast) var(--ease-bounce);
+  cursor: default;
+  border: 1px solid var(--border);
+}
+
+.swatch:hover {
+  transform: scale(1.03);
+}
+
+.swatch-name {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.swatch-hex {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  opacity: 0.7;
+}
+
+.swatch--light .swatch-name,
+.swatch--light .swatch-hex { color: var(--moo-black); }
+
+.swatch--dark .swatch-name,
+.swatch--dark .swatch-hex { color: var(--moo-white); }
+
+/* Category color strip */
+.cat-strip {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 3px;
+  margin-top: var(--sp-m);
+  border-radius: var(--r-m);
+  overflow: hidden;
+}
+
+.cat-strip-item {
+  padding: var(--sp-m) var(--sp-xs);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-xs);
+  min-height: 140px;
+  justify-content: center;
+}
+
+.cat-strip-name {
+  font-family: var(--display);
+  font-size: var(--fs-label);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  color: var(--moo-white);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TYPOGRAPHY SPECIMENS
+   ═══════════════════════════════════════════════════════════════ */
+
+.type-specimen {
+  margin-top: var(--sp-m);
+}
+
+.type-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: var(--sp-m);
+  align-items: baseline;
+  padding: var(--sp-s) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.type-meta {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  color: rgba(17,17,17,0.5);
+  letter-spacing: 0.05em;
+}
+
+.type-sample--mega {
+  font-family: var(--display);
+  font-size: var(--fs-mega);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.type-sample--display {
+  font-family: var(--display);
+  font-size: var(--fs-display);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+}
+
+.type-sample--h1 {
+  font-family: var(--display);
+  font-size: var(--fs-h1);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.type-sample--h2 {
+  font-family: var(--display);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.type-sample--body {
+  font-family: var(--body);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  max-width: 55ch;
+}
+
+.type-sample--ui {
+  font-family: var(--mono);
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.type-sample--italic {
+  font-style: italic;
+}
+
+.type-rule {
+  margin-top: var(--sp-m);
+  padding: var(--sp-s);
+  background: var(--surface-dark);
+  color: var(--moo-yellow);
+  border-radius: var(--r-s);
+  font-family: var(--mono);
+  font-size: var(--fs-ui);
+  line-height: 1.8;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════════════════════════════ */
+
+.comp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--sp-m);
+  margin-top: var(--sp-m);
+}
+
+/* Buttons */
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-s);
+  margin-top: var(--sp-m);
+}
+
+.btn {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: var(--fs-ui);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: 0.8em 2em;
+  border: none;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  transition: all var(--speed-fast) var(--ease-bounce);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.btn:hover { transform: scale(1.04); }
+.btn:active { transform: scale(0.97); }
+
+.btn--primary {
+  background: var(--moo-blue);
+  color: var(--moo-white);
+}
+.btn--primary:hover { background: #3939D4; }
+
+.btn--yellow {
+  background: var(--moo-yellow);
+  color: var(--moo-black);
+}
+.btn--yellow:hover { background: #EFCA2A; }
+
+.btn--red {
+  background: var(--moo-red);
+  color: var(--moo-white);
+}
+.btn--red:hover { background: #D03830; }
+
+.btn--dark {
+  background: var(--moo-black);
+  color: var(--moo-white);
+}
+.btn--dark:hover { background: #2A2A2A; }
+
+.btn--outline {
+  background: transparent;
+  color: var(--moo-black);
+  border: 2px solid var(--moo-black);
+}
+.btn--outline:hover {
+  background: var(--moo-black);
+  color: var(--moo-white);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--moo-blue);
+  padding: 0.5em 0;
+  border-radius: 0;
+  border-bottom: 2px dashed var(--moo-blue);
+}
+
+/* Cards */
+.card {
+  background: var(--surface-card);
+  border-radius: var(--r-m);
+  overflow: hidden;
+  transition: transform var(--speed-fast) var(--ease-bounce);
+  border: 1px solid var(--border);
+}
+
+.card:hover { transform: translateY(-4px); }
+
+.card-image {
+  aspect-ratio: 4/3;
+  background: var(--moo-blue);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Grid pattern inside card image placeholder */
+.card-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.card-image-text {
+  position: absolute;
+  bottom: var(--sp-s);
+  left: var(--sp-s);
+  font-family: var(--display);
+  font-size: var(--fs-h2);
+  font-weight: 900;
+  color: var(--moo-white);
+  font-style: italic;
+}
+
+.card-body {
+  padding: var(--sp-s);
+}
+
+.card-tag {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--moo-red);
+  margin-bottom: 0.3em;
+}
+
+.card-title {
+  font-family: var(--display);
+  font-size: var(--fs-h3);
+  font-weight: 800;
+  margin-bottom: 0.3em;
+}
+
+.card-desc {
+  font-size: var(--fs-ui);
+  color: rgba(17,17,17,0.6);
+  line-height: 1.5;
+}
+
+.card-meta {
+  display: flex;
+  gap: var(--sp-s);
+  margin-top: var(--sp-xs);
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  color: rgba(17,17,17,0.4);
+}
+
+/* Dark card variant */
+.card--dark {
+  background: var(--surface-dark);
+  color: var(--moo-white);
+  border-color: var(--border-dark);
+}
+
+.card--dark .card-image { background: var(--moo-red); }
+.card--dark .card-tag { color: var(--moo-yellow); }
+.card--dark .card-desc { color: rgba(255,255,255,0.5); }
+.card--dark .card-meta { color: rgba(255,255,255,0.3); }
+
+/* Badges */
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-xs);
+  margin-top: var(--sp-m);
+}
+
+.badge {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.4em 1em;
+  border-radius: var(--r-pill);
+  display: inline-block;
+}
+
+.badge--blue { background: var(--moo-blue); color: var(--moo-white); }
+.badge--yellow { background: var(--moo-yellow); color: var(--moo-black); }
+.badge--red { background: var(--moo-red); color: var(--moo-white); }
+.badge--dark { background: var(--moo-black); color: var(--moo-white); }
+.badge--outline { background: transparent; color: var(--moo-black); border: 1.5px solid var(--moo-black); }
+.badge--cream { background: var(--moo-cream); color: var(--moo-black); border: 1px solid var(--border); }
+
+/* Callout */
+.callout {
+  padding: var(--sp-s) var(--sp-m);
+  border-radius: var(--r-m);
+  margin-top: var(--sp-m);
+}
+
+.callout--blue {
+  background: rgba(71, 71, 237, 0.08);
+  border-left: 4px solid var(--moo-blue);
+}
+
+.callout--red {
+  background: rgba(229, 69, 60, 0.08);
+  border-left: 4px solid var(--moo-red);
+}
+
+.callout--yellow {
+  background: rgba(255, 210, 51, 0.15);
+  border-left: 4px solid var(--moo-yellow);
+}
+
+.callout-title {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: var(--fs-ui);
+  text-transform: uppercase;
+  margin-bottom: 0.3em;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SURFACE MODES
+   ═══════════════════════════════════════════════════════════════ */
+
+.surface-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-s);
+  margin-top: var(--sp-m);
+}
+
+.surface-sample {
+  aspect-ratio: 16/10;
+  border-radius: var(--r-m);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--sp-s);
+  position: relative;
+  overflow: hidden;
+}
+
+.surface-sample::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(128,128,128,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(128,128,128,0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.surface-sample > * { position: relative; z-index: 1; }
+
+.surface-sample h3 {
+  font-family: var(--display);
+  font-size: var(--fs-h3);
+  font-weight: 800;
+}
+
+.surface-sample p {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  opacity: 0.6;
+}
+
+.surface--cream { background: var(--moo-cream); color: var(--moo-black); border: 1px solid var(--border); }
+.surface--dark { background: var(--surface-dark); color: var(--moo-white); }
+.surface--blue { background: var(--surface-blue); color: var(--moo-white); }
+.surface--blue::before {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+}
+.surface--dark::before {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   INTERACTION DEMOS
+   ═══════════════════════════════════════════════════════════════ */
+
+.interaction-demo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-m);
+  margin-top: var(--sp-m);
+}
+
+.demo-box {
+  padding: var(--sp-m);
+  background: var(--surface-card);
+  border-radius: var(--r-m);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.demo-box h4 {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(17,17,17,0.4);
+  margin-bottom: var(--sp-s);
+}
+
+.hover-invert {
+  display: inline-block;
+  padding: var(--sp-s) var(--sp-m);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  background: var(--moo-black);
+  color: var(--moo-white);
+  border-radius: var(--r-s);
+  transition: all var(--speed-fast) var(--ease-snap);
+  cursor: pointer;
+}
+
+.hover-invert:hover {
+  background: var(--moo-yellow);
+  color: var(--moo-black);
+}
+
+.hover-bounce {
+  display: inline-block;
+  padding: var(--sp-s) var(--sp-m);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  background: var(--moo-blue);
+  color: var(--moo-white);
+  border-radius: var(--r-pill);
+  transition: transform var(--speed-fast) var(--ease-bounce);
+  cursor: pointer;
+}
+
+.hover-bounce:hover {
+  transform: scale(1.08);
+}
+
+.hover-slide {
+  display: inline-block;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  color: var(--moo-black);
+  position: relative;
+  cursor: pointer;
+  padding-bottom: 4px;
+}
+
+.hover-slide::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--moo-red);
+  transition: width var(--speed-med) var(--ease-snap);
+}
+
+.hover-slide:hover::after { width: 100%; }
+
+.hover-color {
+  display: inline-block;
+  padding: var(--sp-s) var(--sp-m);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  color: var(--moo-black);
+  border: 2px solid var(--moo-black);
+  border-radius: var(--r-m);
+  transition: all var(--speed-fast) var(--ease-snap);
+  cursor: pointer;
+}
+
+.hover-color:hover {
+  background: var(--moo-red);
+  color: var(--moo-white);
+  border-color: var(--moo-red);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VOICE + COPY EXAMPLES
+   ═══════════════════════════════════════════════════════════════ */
+
+.copy-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-m);
+  margin-top: var(--sp-m);
+}
+
+.copy-card {
+  padding: var(--sp-m);
+  border-radius: var(--r-m);
+  border: 1px solid var(--border);
+}
+
+.copy-card h4 {
+  font-family: var(--display);
+  font-size: var(--fs-h2);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: var(--sp-xs);
+}
+
+.copy-card p {
+  font-size: var(--fs-body);
+  color: rgba(17,17,17,0.6);
+  line-height: 1.5;
+}
+
+.copy-card--dark {
+  background: var(--surface-dark);
+  color: var(--moo-white);
+  border-color: var(--border-dark);
+}
+
+.copy-card--dark p { color: rgba(255,255,255,0.5); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .type-row { grid-template-columns: 1fr; gap: var(--sp-xs); }
+  .surface-grid { grid-template-columns: 1fr; }
+  .interaction-demo { grid-template-columns: 1fr; }
+  .copy-grid { grid-template-columns: 1fr; }
+  .cat-strip { grid-template-columns: repeat(4, 1fr); }
+  .cat-strip-name { writing-mode: horizontal-tb; transform: none; font-size: 0.55rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero">
+  <div class="container">
+    <p class="hero-label">Ministry of Oats &mdash; Design System</p>
+    <h1 class="hero-title">Never be<br/><em>boring.</em></h1>
+    <p class="hero-sub">Have fun. Eat better. The visual language for India's favourite oats brand.</p>
+  </div>
+</section>
+
+<!-- ═══════ DESIGN PRINCIPLES ═══════ -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">Principles</p>
+    <h2 class="section-title">What MOO looks like</h2>
+    <div class="copy-grid" style="margin-top: var(--sp-m);">
+      <div class="copy-card">
+        <h4>Comic book energy</h4>
+        <p>Bold type, bright pops, starburst moments. Everything feels like it's about to leap off the page. Not subtle. Not trying to be.</p>
+      </div>
+      <div class="copy-card">
+        <h4>Caricature-driven</h4>
+        <p>6 bunny characters own the categories. They're brand IP. They appear on packaging, social, kiosks, the website. Characters make MOO recognizable in a way no cloud kitchen has ever been.</p>
+      </div>
+      <div class="copy-card copy-card--dark">
+        <h4>Dark by default</h4>
+        <p>F&B on dark backgrounds. Lets food photography pop. The grid pattern on blue/dark surfaces is our texture — like graph paper, but confident.</p>
+      </div>
+      <div class="copy-card">
+        <h4>Multi-surface</h4>
+        <p>Three surface modes: cream (editorial, reading), dark (hero, impact), blue + grid (brand moments, social). Each serves a different emotional register.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PALETTE ═══════ -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">Palette</p>
+    <h2 class="section-title">Four colors. No negotiation.</h2>
+    <p class="section-desc">Blue is home. Yellow is energy. Red is action. Cream is comfort. Black holds them all together.</p>
+
+    <div class="palette-grid">
+      <div class="swatch swatch--dark" style="background: var(--moo-blue);">
+        <span class="swatch-name">MOO Blue</span>
+        <span class="swatch-hex">#4747ED</span>
+      </div>
+      <div class="swatch swatch--light" style="background: var(--moo-yellow);">
+        <span class="swatch-name">MOO Yellow</span>
+        <span class="swatch-hex">#FFD233</span>
+      </div>
+      <div class="swatch swatch--dark" style="background: var(--moo-red);">
+        <span class="swatch-name">MOO Red</span>
+        <span class="swatch-hex">#E5453C</span>
+      </div>
+      <div class="swatch swatch--light" style="background: var(--moo-cream);">
+        <span class="swatch-name">Cream</span>
+        <span class="swatch-hex">#F5F0E7</span>
+      </div>
+      <div class="swatch swatch--dark" style="background: var(--moo-black);">
+        <span class="swatch-name">Black</span>
+        <span class="swatch-hex">#111111</span>
+      </div>
+      <div class="swatch swatch--dark" style="background: var(--moo-white); border: 1px solid var(--border);">
+        <span class="swatch-name" style="color: var(--moo-black);">White</span>
+        <span class="swatch-hex" style="color: var(--moo-black);">#FFFFFF</span>
+      </div>
+    </div>
+
+    <p class="section-label" style="margin-top: var(--sp-l);">Category Colors</p>
+    <p class="section-desc">Each category has its own caricature and color. These live on category pages, cards, and social assets — never mixed into body content.</p>
+
+    <div class="cat-strip">
+      <div class="cat-strip-item" style="background: var(--cat-overnight);"><span class="cat-strip-name" style="color: var(--moo-black);">Overnight Oats</span></div>
+      <div class="cat-strip-item" style="background: var(--cat-chia);"><span class="cat-strip-name">Chia Pudding</span></div>
+      <div class="cat-strip-item" style="background: var(--cat-smoothie);"><span class="cat-strip-name">Smoothie Bowls</span></div>
+      <div class="cat-strip-item" style="background: var(--cat-shakes);"><span class="cat-strip-name">Smoothies</span></div>
+      <div class="cat-strip-item" style="background: var(--cat-desserts);"><span class="cat-strip-name">Desserts</span></div>
+      <div class="cat-strip-item" style="background: var(--cat-barista);"><span class="cat-strip-name">Barista</span></div>
+      <div class="cat-strip-item" style="background: var(--cat-frozen);"><span class="cat-strip-name">Frozen Garden</span></div>
+      <div class="cat-strip-item" style="background: var(--cat-fruit);"><span class="cat-strip-name">Fruit Salads</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SURFACES ═══════ -->
+<section class="section section--dark">
+  <div class="container">
+    <p class="section-label">Surfaces</p>
+    <h2 class="section-title" style="color: var(--moo-white);">Three modes. Three moods.</h2>
+    <p class="section-desc">Every page section lives on one of three surfaces. The grid pattern is the MOO texture — it appears on dark and blue surfaces only.</p>
+
+    <div class="surface-grid">
+      <div class="surface-sample surface--cream">
+        <h3>Cream</h3>
+        <p>Editorial, reading, recipes. Warm and inviting. Clean food energy.</p>
+      </div>
+      <div class="surface-sample surface--dark">
+        <h3>Dark</h3>
+        <p>Hero sections, impact moments. Grid overlay at 4% opacity.</p>
+      </div>
+      <div class="surface-sample surface--blue">
+        <h3>Blue + Grid</h3>
+        <p>Brand moments, social, CTAs. Grid overlay at 8% opacity. The signature MOO look.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ TYPOGRAPHY ═══════ -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">Typography</p>
+    <h2 class="section-title">Bold, heavy, unapologetic.</h2>
+    <p class="section-desc">Display font does the heavy lifting. Body stays clean. Mono handles metadata. Everything is system fonts — no web font loading.</p>
+
+    <div class="type-specimen">
+      <div class="type-row">
+        <div class="type-meta">MEGA<br/>Display / 900<br/>Hero headlines</div>
+        <div class="type-sample--mega">EAT<br/>BETTER.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">DISPLAY<br/>Display / 900<br/>Section headlines</div>
+        <div class="type-sample--display">Mornings, Simplified.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">DISPLAY ITALIC<br/>Display / 900<br/>Accent / emphasis</div>
+        <div class="type-sample--display type-sample--italic">Never be boring.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">H1<br/>Display / 800<br/>Page titles</div>
+        <div class="type-sample--h1">Spoonfuls of Vibes.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">H2<br/>Display / 700<br/>Card titles, sections</div>
+        <div class="type-sample--h2">In Oats We Trust. Deadlines? Not So Much.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">BODY<br/>Text / Regular<br/>Paragraphs, descriptions</div>
+        <div class="type-sample--body">Creamy oat bowls. Your new fridge MVP. No drama, just oats behaving. Sweet but not suspicious. Light, layered, chia with the magic of coconut.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">UI / LABEL<br/>Mono / 600<br/>Tags, metadata, nav</div>
+        <div class="type-sample--ui">Overnight Oats &nbsp;·&nbsp; 5 min prep &nbsp;·&nbsp; Easy &nbsp;·&nbsp; Serves 1</div>
+      </div>
+    </div>
+
+    <div class="type-rule">
+      <strong>Rule:</strong> Headlines = Display (weight 800-900). Body = Text (regular). Labels/nav/meta = Mono.<br/>
+      <strong>Rule:</strong> Italic display for brand voice moments ("Never be boring", "Have fun. Eat better.")<br/>
+      <strong>Rule:</strong> Cream labels in RED. Dark/Blue labels in YELLOW. Always mono, always uppercase.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ COMPONENTS ═══════ -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">Components</p>
+    <h2 class="section-title">The building blocks.</h2>
+
+    <!-- Buttons -->
+    <p class="section-label" style="margin-top: var(--sp-l);">Buttons</p>
+    <div class="btn-row">
+      <button class="btn btn--primary">Order Now</button>
+      <button class="btn btn--yellow">Explore Recipes</button>
+      <button class="btn btn--red">Feed Me Already</button>
+      <button class="btn btn--dark">Learn More</button>
+      <button class="btn btn--outline">View Menu</button>
+      <button class="btn btn--ghost">All recipes &rarr;</button>
+    </div>
+
+    <!-- Badges -->
+    <p class="section-label" style="margin-top: var(--sp-l);">Badges</p>
+    <div class="badge-row">
+      <span class="badge badge--blue">Overnight Oats</span>
+      <span class="badge badge--yellow">DIY Project</span>
+      <span class="badge badge--red">New</span>
+      <span class="badge badge--dark">Vegan</span>
+      <span class="badge badge--outline">5 min prep</span>
+      <span class="badge badge--cream">Easy</span>
+    </div>
+
+    <!-- Cards -->
+    <p class="section-label" style="margin-top: var(--sp-l);">Cards</p>
+    <div class="comp-grid">
+      <div class="card">
+        <div class="card-image">
+          <span class="card-image-text">Mango<br/>Oatmeal</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Overnight Oats</div>
+          <div class="card-title">Mango Oatmeal Bowl</div>
+          <div class="card-desc">Fresh mango, chia seeds, oat milk, and a drizzle of honey. Summer in a bowl.</div>
+          <div class="card-meta"><span>5 min</span><span>Easy</span><span>Serves 1</span></div>
+        </div>
+      </div>
+      <div class="card card--dark">
+        <div class="card-image">
+          <span class="card-image-text">Cookie<br/>Dough</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Smoothie Bowls</div>
+          <div class="card-title">Choco Chip Cookie Dough</div>
+          <div class="card-desc">Yes, it's healthy. No, it doesn't taste like it. That's the point.</div>
+          <div class="card-meta"><span>10 min</span><span>Medium</span><span>Serves 1</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image" style="background: var(--cat-barista);">
+          <span class="card-image-text">Cold<br/>Brew</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Barista</div>
+          <div class="card-title">Cold Brew Overnight Oats</div>
+          <div class="card-desc">Coffee meets oats. For the people who can't function before both.</div>
+          <div class="card-meta"><span>5 min + overnight</span><span>Easy</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Callouts -->
+    <p class="section-label" style="margin-top: var(--sp-l);">Callouts</p>
+    <div class="callout callout--blue">
+      <div class="callout-title">Pro tip</div>
+      <p>Add a pinch of salt to your overnight oats. It sounds wrong. It's not.</p>
+    </div>
+    <div class="callout callout--red">
+      <div class="callout-title">Don't do this</div>
+      <p>Don't microwave overnight oats. The whole point is they're cold. Respect the process.</p>
+    </div>
+    <div class="callout callout--yellow">
+      <div class="callout-title">Fun fact</div>
+      <p>We've served 1,00,000+ orders. All organic growth. Zero paid marketing. Just vibes and good oats.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ INTERACTIONS ═══════ -->
+<section class="section section--blue">
+  <div class="container">
+    <p class="section-label">Interactions</p>
+    <h2 class="section-title" style="color: var(--moo-white);">Bouncy, fast, fun.</h2>
+    <p class="section-desc">120ms transitions. Bounce easing for scale. Snap easing for color shifts. Everything should feel like it's having a good time.</p>
+
+    <div class="interaction-demo">
+      <div class="demo-box" style="background: var(--moo-cream);">
+        <h4>Hover: Invert to Yellow</h4>
+        <div class="hover-invert">Hover me</div>
+      </div>
+      <div class="demo-box" style="background: var(--moo-cream);">
+        <h4>Hover: Bounce Scale</h4>
+        <div class="hover-bounce">Hover me</div>
+      </div>
+      <div class="demo-box" style="background: var(--moo-cream);">
+        <h4>Hover: Slide Underline</h4>
+        <div class="hover-slide">Hover me</div>
+      </div>
+      <div class="demo-box" style="background: var(--moo-cream);">
+        <h4>Hover: Fill Color</h4>
+        <div class="hover-color">Hover me</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ BRAND VOICE ═══════ -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">Voice</p>
+    <h2 class="section-title">How MOO sounds.</h2>
+    <p class="section-desc">Direct. Cheeky. Self-aware. Never preachy about health. The food is good AND good for you — we don't lead with guilt.</p>
+
+    <div class="copy-grid">
+      <div class="copy-card">
+        <h4>This is for desk warriors, schemers, and oat-curious souls.</h4>
+        <p>Spoon it cold. Eat it fast or slow. Just don't share.</p>
+      </div>
+      <div class="copy-card copy-card--dark">
+        <h4>In oats we trust. Deadlines? Not so much.</h4>
+        <p>Creamy oat bowls. Your new fridge MVP. No drama, just oats behaving.</p>
+      </div>
+      <div class="copy-card">
+        <h4>Sweet, but not suspicious.</h4>
+        <p>Light, layered, chia with the magic of coconut. The dessert your gut actually likes.</p>
+      </div>
+      <div class="copy-card copy-card--dark">
+        <h4>One base. Endless possibilities.</h4>
+        <p>Do-it-yourself overnight oats. Mornings, simplified.</p>
+      </div>
+    </div>
+
+    <div class="type-rule" style="margin-top: var(--sp-m);">
+      <strong>DO:</strong> Be funny. Name the audience. Use "you" and "your". Short sentences. Bold claims.<br/>
+      <strong>DON'T:</strong> Lecture about nutrition. Say "healthy" without a punchline. Be boring. Ever.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ GRID PATTERN ═══════ -->
+<section class="section section--dark">
+  <div class="container">
+    <p class="section-label">Texture</p>
+    <h2 class="section-title" style="color: var(--moo-white);">The Grid.</h2>
+    <p class="section-desc">Thin lines, 40px spacing. White at 8% on blue, 4% on dark. Like graph paper from a design lab. It's on every MOO social post, every blue background, every dark hero. It's ours.</p>
+
+    <div class="type-rule" style="margin-top: var(--sp-m); background: var(--moo-blue);">
+      <strong>CSS:</strong><br/>
+      background-image:<br/>
+      &nbsp;&nbsp;linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),<br/>
+      &nbsp;&nbsp;linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);<br/>
+      background-size: 40px 40px;
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ RULES SUMMARY ═══════ -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">Rules</p>
+    <h2 class="section-title">The non-negotiables.</h2>
+
+    <div class="type-rule" style="background: var(--moo-cream); color: var(--moo-black); border: 1px solid var(--border);">
+      <strong>1.</strong> Blue (#4747ED) is the primary brand color. It's home. Every page has blue somewhere.<br/>
+      <strong>2.</strong> Yellow for energy (DIY, starbursts, labels on dark). Red for action (CTAs, alerts, "Feed Me Already").<br/>
+      <strong>3.</strong> Cream for editorial. Dark for hero. Blue+grid for brand moments.<br/>
+      <strong>4.</strong> Grid pattern on blue and dark surfaces. NEVER on cream.<br/>
+      <strong>5.</strong> Caricatures own the categories. One character per category. They don't mix.<br/>
+      <strong>6.</strong> Display font weight 800-900 for all headlines. Never light. Never thin.<br/>
+      <strong>7.</strong> Interactions bounce (ease-bounce). 120ms. Everything feels alive.<br/>
+      <strong>8.</strong> Food photography > illustrations > text. The food is the hero.<br/>
+      <strong>9.</strong> Every piece of copy passes the "Never Be Boring" filter. If it's boring, rewrite it.<br/>
+      <strong>10.</strong> Border-radius: pill (100px) for buttons/badges. Medium (12px) for cards. Small (6px) for callouts.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer style="padding: var(--sp-l) 0; text-align: center; border-top: 2px solid var(--border);">
+  <div class="container">
+    <p style="font-family: var(--display); font-size: var(--fs-h1); font-weight: 900; font-style: italic;">Have fun. Eat better.</p>
+    <p style="font-family: var(--mono); font-size: var(--fs-label); color: rgba(17,17,17,0.4); margin-top: var(--sp-s); letter-spacing: 0.1em; text-transform: uppercase;">Ministry of Oats &mdash; Outpost Kitchen Pvt Ltd &mdash; Bengaluru</p>
+  </div>
+</footer>
+
+</body>
+</html>
