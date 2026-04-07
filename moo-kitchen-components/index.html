@@ -836,6 +836,22 @@
       opacity: 0.6;
       text-decoration: line-through;
     }
+    .moo-cart-bar__savings {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--moo-yellow);
+      color: var(--moo-black);
+      font-family: var(--font-heading);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 14px;
+      border-radius: 100px;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(255,213,0,0.4);
+    }
 
     /* ============================================================
        COMPONENT: MooCategoryHeader
@@ -1059,16 +1075,17 @@
     }
 
     /* ============================================================
-       COMPONENT: MooTopBar (expanded — more breathing room)
-       Large on landing, shrinks on scroll
+       COMPONENT: MooTopBar
+       Expanded on landing — logo, partner, clock, profile
+       Compact on scroll — mascot, partner, clock
        ============================================================ */
     .moo-topbar {
       background: var(--moo-black);
       color: var(--moo-white);
-      padding: 20px 20px;
+      padding: 24px 20px 28px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 20px;
       position: relative;
     }
     .moo-topbar__row {
@@ -1076,65 +1093,19 @@
       align-items: center;
       justify-content: space-between;
     }
-    .moo-topbar__logo {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    .moo-topbar__logo img {
-      width: 24px;
-      height: 24px;
-      filter: invert(1);
-    }
     .moo-topbar__profile {
-      padding: 6px 14px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.1);
-      font-size: 13px;
-      font-weight: 600;
-      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 12px;
+      font-weight: 700;
       color: white;
       cursor: pointer;
-    }
-    .moo-topbar__cta {
-      width: 100%;
-      padding: 14px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.08);
-      color: var(--moo-white);
-      font-family: var(--font-body);
-      font-size: 14px;
-      font-weight: 500;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.1);
-      cursor: pointer;
-      transition: transform 120ms var(--bounce), background 150ms;
-    }
-    .moo-topbar__cta:hover { transform: scale(1.01); background: rgba(255,255,255,0.12); }
-    .moo-topbar__cta strong { color: var(--moo-yellow); font-weight: 700; }
-
-    /* Caricature avatar for compact mode */
-    .moo-topbar__caricature {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255,255,255,0.08);
-      border: 2px solid rgba(255,255,255,0.15);
-      animation: moo-float 4s ease-in-out infinite;
-    }
-    .moo-topbar__caricature img {
-      width: 28px;
-      height: 28px;
-      object-fit: contain;
     }
 
     /* Full logo for expanded mode */
@@ -1143,19 +1114,88 @@
       filter: invert(1);
     }
 
+    /* Partner + Clock row */
+    .moo-topbar__info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .moo-topbar__back {
+      color: rgba(255,255,255,0.4);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 0;
+      transition: color 150ms;
+    }
+    .moo-topbar__back:hover { color: rgba(255,255,255,0.8); }
+    .moo-topbar__partner {
+      font-size: 15px;
+      font-weight: 600;
+      flex: 1;
+    }
+
+    /* Scoreboard clock */
+    .moo-clock {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      font-family: var(--font-heading);
+      font-size: 18px;
+      letter-spacing: 0.02em;
+    }
+    .moo-clock__digit {
+      background: rgba(255,255,255,0.1);
+      padding: 4px 6px;
+      border-radius: 4px;
+      min-width: 22px;
+      text-align: center;
+      line-height: 1;
+    }
+    .moo-clock__colon {
+      opacity: 0.4;
+      font-size: 16px;
+      line-height: 1;
+    }
+    .moo-clock__period {
+      font-size: 10px;
+      opacity: 0.5;
+      margin-left: 4px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    /* Caricature for compact mode — no container, just the image */
+    .moo-topbar__mascot {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      animation: moo-float 4s ease-in-out infinite;
+    }
+    .moo-topbar__mascot img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
     /* Compact version (after scroll) */
     .moo-topbar--compact {
-      padding: 10px 20px;
+      padding: 12px 20px;
       flex-direction: row;
       align-items: center;
       gap: 12px;
     }
-    .moo-topbar--compact .moo-topbar__cta {
+    .moo-topbar--compact .moo-topbar__info {
       flex: 1;
-      padding: 10px;
-      font-size: 13px;
-      border-radius: 10px;
+      gap: 8px;
     }
+    .moo-topbar--compact .moo-topbar__partner {
+      font-size: 14px;
+    }
+    .moo-topbar--compact .moo-clock { font-size: 16px; }
+    .moo-topbar--compact .moo-clock__digit { padding: 3px 5px; min-width: 20px; }
 
     /* ============================================================
        SHOWCASE LAYOUT HELPERS
@@ -1600,11 +1640,12 @@
     <!-- ======== CART BAR ======== -->
     <div class="section">
       <div class="section-label">Cart Bar</div>
-      <div class="section-title">Fixed. Red. Bouncy.</div>
-      <div class="section-desc">Bottom-fixed checkout strip. Red background (action color). Shows item count and total.</div>
+      <div class="section-title">Fixed. Red. Savings on Top.</div>
+      <div class="section-desc">Bottom-fixed checkout strip. Discount info lives here — not in a separate banner. Yellow savings pill floats above the bar.</div>
 
-      <div style="max-width:360px;">
-        <div class="moo-cart-bar">
+      <div style="max-width:360px;padding-top:16px;">
+        <div class="moo-cart-bar" style="position:relative;">
+          <span class="moo-cart-bar__savings">You save ₹209 with 30% off</span>
           <div class="moo-cart-bar__left">
             <span class="moo-cart-bar__count">3</span>
             <span class="moo-cart-bar__label">Checkout</span>
@@ -1710,26 +1751,45 @@
       <div class="section-desc">Expanded on landing — logo, profile, delivery CTA with room to breathe. Shrinks to compact strip on scroll.</div>
 
       <div style="display:flex;gap:24px;flex-wrap:wrap;">
-        <!-- Expanded — full logo, breathing room -->
-        <div style="width:360px;">
-          <p style="font-size:11px;font-weight:600;color:var(--moo-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em;">Expanded (on landing)</p>
+        <!-- Expanded — full logo, spacious -->
+        <div style="width:380px;">
+          <p style="font-size:11px;font-weight:600;color:var(--moo-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em;">Expanded (on landing — breathing room)</p>
           <div class="moo-topbar">
             <div class="moo-topbar__row">
               <img src="https://ministryofoats.com/brand/moo-logo.png" class="moo-topbar__full-logo" alt="MOO">
-              <button class="moo-topbar__profile">Profile</button>
+              <button class="moo-topbar__profile">P</button>
             </div>
-            <button class="moo-topbar__cta">Deliver to Cult Fit &middot; <strong>6:30 PM</strong></button>
+            <div class="moo-topbar__info">
+              <button class="moo-topbar__back">&larr;</button>
+              <span class="moo-topbar__partner">Cult Fit</span>
+              <div class="moo-clock">
+                <span class="moo-clock__digit">6</span>
+                <span class="moo-clock__colon">:</span>
+                <span class="moo-clock__digit">3</span>
+                <span class="moo-clock__digit">0</span>
+                <span class="moo-clock__period">PM</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Compact — caricature replaces logo, subtle float animation -->
-        <div style="width:360px;">
-          <p style="font-size:11px;font-weight:600;color:var(--moo-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em;">Compact (after scroll — caricature replaces logo)</p>
+        <!-- Compact — mascot replaces logo, clean -->
+        <div style="width:380px;">
+          <p style="font-size:11px;font-weight:600;color:var(--moo-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em;">Compact (after scroll — mascot, no container)</p>
           <div class="moo-topbar moo-topbar--compact">
-            <div class="moo-topbar__caricature">
+            <div class="moo-topbar__mascot">
               <img src="https://ministryofoats.com/brand/bunny-overnight-oats.png" alt="MOO bunny">
             </div>
-            <button class="moo-topbar__cta">Cult Fit &middot; <strong>6:30 PM</strong></button>
+            <div class="moo-topbar__info">
+              <span class="moo-topbar__partner">Cult Fit</span>
+              <div class="moo-clock">
+                <span class="moo-clock__digit">6</span>
+                <span class="moo-clock__colon">:</span>
+                <span class="moo-clock__digit">3</span>
+                <span class="moo-clock__digit">0</span>
+                <span class="moo-clock__period">PM</span>
+              </div>
+            </div>
             <button class="moo-topbar__profile">P</button>
           </div>
         </div>
@@ -1793,12 +1853,14 @@
           </div>
         </div>
         <!-- Below hero -->
-        <div style="padding:28px 24px;text-align:center;">
+        <div style="padding:28px 24px;text-align:center;flex:1;">
           <div class="moo-heading moo-heading--h3" style="margin-bottom:12px;">How It Works</div>
-          <p style="font-size:13px;color:var(--moo-muted);line-height:1.6;">(value props, social proof, steps below)</p>
+          <p style="font-size:13px;color:var(--moo-muted);line-height:1.6;">(value props, social proof, steps)</p>
         </div>
-        <div style="padding:0 20px 28px;text-align:center;">
-          <p style="font-size:10px;color:var(--moo-muted);">Powered by Ministry of Oats &middot; Have fun. Eat better.</p>
+        <!-- Persistent bottom CTA -->
+        <div style="padding:0 20px 28px;position:sticky;bottom:0;background:linear-gradient(transparent,white 20%);">
+          <a class="moo-angled moo-angled--red" href="#" style="font-size:20px;padding:16px 0;display:block;text-align:center;text-decoration:none;width:100%;">Order Now</a>
+          <p style="font-size:10px;color:var(--moo-muted);text-align:center;margin-top:12px;">Powered by Ministry of Oats &middot; Have fun. Eat better.</p>
         </div>
       </div>
     </div>
@@ -1810,13 +1872,23 @@
       <div class="section-desc">Menu page assembled from components: discount banner, top picks, category headers, list items, FAB, cart bar.</div>
 
       <div class="phone-frame">
-        <!-- Expanded top bar -->
+        <!-- Expanded top bar — spacious, scoreboard clock, no discount -->
         <div class="moo-topbar">
           <div class="moo-topbar__row">
             <img src="https://ministryofoats.com/brand/moo-logo.png" class="moo-topbar__full-logo" alt="MOO">
             <button class="moo-topbar__profile">P</button>
           </div>
-          <button class="moo-topbar__cta">Deliver to Cult Fit &middot; <strong>6:45 AM</strong> &middot; <strong>30% OFF</strong></button>
+          <div class="moo-topbar__info">
+            <button class="moo-topbar__back">&larr;</button>
+            <span class="moo-topbar__partner">Cult Fit</span>
+            <div class="moo-clock">
+              <span class="moo-clock__digit">6</span>
+              <span class="moo-clock__colon">:</span>
+              <span class="moo-clock__digit">4</span>
+              <span class="moo-clock__digit">5</span>
+              <span class="moo-clock__period">AM</span>
+            </div>
+          </div>
         </div>
 
         <!-- Top Picks -->
@@ -1905,9 +1977,10 @@
           </div>
         </div>
 
-        <!-- Cart bar at bottom -->
-        <div style="padding:16px 16px 24px;background:linear-gradient(transparent,white 30%);">
-          <div class="moo-cart-bar">
+        <!-- Cart bar at bottom — savings badge replaces discount banner -->
+        <div style="padding:20px 16px 24px;background:linear-gradient(transparent,white 30%);">
+          <div class="moo-cart-bar" style="position:relative;">
+            <span class="moo-cart-bar__savings">You save ₹60 with 30% off</span>
             <div class="moo-cart-bar__left">
               <span class="moo-cart-bar__count">1</span>
               <span class="moo-cart-bar__label">Checkout</span>
