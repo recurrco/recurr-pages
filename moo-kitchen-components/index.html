@@ -1070,7 +1070,6 @@
       flex-direction: column;
       gap: 14px;
       position: relative;
-      border-radius: 0 0 16px 16px;
     }
     .moo-topbar__row {
       display: flex;
@@ -1106,17 +1105,43 @@
       width: 100%;
       padding: 14px;
       border-radius: 14px;
-      background: var(--moo-red);
-      color: var(--moo-black);
-      font-family: var(--font-heading);
-      font-size: 16px;
-      text-transform: uppercase;
+      background: rgba(255,255,255,0.08);
+      color: var(--moo-white);
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
       text-align: center;
-      border: none;
+      border: 1px solid rgba(255,255,255,0.1);
       cursor: pointer;
-      transition: transform 120ms var(--bounce);
+      transition: transform 120ms var(--bounce), background 150ms;
     }
-    .moo-topbar__cta:hover { transform: scale(1.02); }
+    .moo-topbar__cta:hover { transform: scale(1.01); background: rgba(255,255,255,0.12); }
+    .moo-topbar__cta strong { color: var(--moo-yellow); font-weight: 700; }
+
+    /* Caricature avatar for compact mode */
+    .moo-topbar__caricature {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.08);
+      border: 2px solid rgba(255,255,255,0.15);
+      animation: moo-float 4s ease-in-out infinite;
+    }
+    .moo-topbar__caricature img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+
+    /* Full logo for expanded mode */
+    .moo-topbar__full-logo {
+      height: 28px;
+      filter: invert(1);
+    }
 
     /* Compact version (after scroll) */
     .moo-topbar--compact {
@@ -1124,12 +1149,11 @@
       flex-direction: row;
       align-items: center;
       gap: 12px;
-      border-radius: 0;
     }
     .moo-topbar--compact .moo-topbar__cta {
       flex: 1;
       padding: 10px;
-      font-size: 14px;
+      font-size: 13px;
       border-radius: 10px;
     }
 
@@ -1686,29 +1710,27 @@
       <div class="section-desc">Expanded on landing — logo, profile, delivery CTA with room to breathe. Shrinks to compact strip on scroll.</div>
 
       <div style="display:flex;gap:24px;flex-wrap:wrap;">
-        <!-- Expanded -->
+        <!-- Expanded — full logo, breathing room -->
         <div style="width:360px;">
           <p style="font-size:11px;font-weight:600;color:var(--moo-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em;">Expanded (on landing)</p>
-          <div class="moo-topbar" style="border-radius:16px;">
+          <div class="moo-topbar">
             <div class="moo-topbar__row">
-              <div class="moo-topbar__logo">
-                <img src="https://ministryofoats.com/brand/moo-logo.png" alt="MOO">
-              </div>
+              <img src="https://ministryofoats.com/brand/moo-logo.png" class="moo-topbar__full-logo" alt="MOO">
               <button class="moo-topbar__profile">Profile</button>
             </div>
-            <button class="moo-topbar__cta">Deliver to Cultfit at 6:30 PM</button>
+            <button class="moo-topbar__cta">Deliver to Cult Fit &middot; <strong>6:30 PM</strong></button>
           </div>
         </div>
 
-        <!-- Compact -->
+        <!-- Compact — caricature replaces logo, subtle float animation -->
         <div style="width:360px;">
-          <p style="font-size:11px;font-weight:600;color:var(--moo-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em;">Compact (after scroll)</p>
-          <div class="moo-topbar moo-topbar--compact" style="border-radius:16px;">
-            <div class="moo-topbar__logo">
-              <img src="https://ministryofoats.com/brand/moo-logo.png" alt="MOO">
+          <p style="font-size:11px;font-weight:600;color:var(--moo-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em;">Compact (after scroll — caricature replaces logo)</p>
+          <div class="moo-topbar moo-topbar--compact">
+            <div class="moo-topbar__caricature">
+              <img src="https://ministryofoats.com/brand/bunny-overnight-oats.png" alt="MOO bunny">
             </div>
-            <button class="moo-topbar__cta">Deliver to Cultfit at 6:30 PM</button>
-            <button class="moo-topbar__profile">Profile</button>
+            <button class="moo-topbar__cta">Cult Fit &middot; <strong>6:30 PM</strong></button>
+            <button class="moo-topbar__profile">P</button>
           </div>
         </div>
       </div>
@@ -1791,12 +1813,10 @@
         <!-- Expanded top bar -->
         <div class="moo-topbar">
           <div class="moo-topbar__row">
-            <div class="moo-topbar__logo">
-              <img src="https://ministryofoats.com/brand/moo-logo.png" alt="MOO">
-            </div>
+            <img src="https://ministryofoats.com/brand/moo-logo.png" class="moo-topbar__full-logo" alt="MOO">
             <button class="moo-topbar__profile">P</button>
           </div>
-          <button class="moo-topbar__cta">Deliver to Cult Fit at 6:45 AM &middot; 30% OFF</button>
+          <button class="moo-topbar__cta">Deliver to Cult Fit &middot; <strong>6:45 AM</strong> &middot; <strong>30% OFF</strong></button>
         </div>
 
         <!-- Top Picks -->
