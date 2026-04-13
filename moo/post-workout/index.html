@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ministry Of Oats — Post-Workout Menu</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { background:#fff; color:#1c1c1c; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; text-decoration:none; }
+
+  .wrap { max-width:1040px; margin:0 auto; padding:28px 24px 120px; }
+
+  /* Header */
+  .top { display:flex; justify-content:space-between; align-items:flex-start; gap:24px; padding-bottom:18px; border-bottom:1px solid #f0f0f0; }
+  .top h1 { font-size:26px; font-weight:600; letter-spacing:-0.01em; }
+  .top .meta { margin-top:6px; font-size:13px; color:#696969; line-height:1.55; max-width:560px; }
+  .top .phone { margin-top:10px; font-size:13px; color:#cb202d; font-weight:500; }
+  .top .actions { display:flex; gap:10px; margin-top:12px; }
+  .top .btn { display:inline-flex; align-items:center; gap:6px; border:1px solid #e4e4e4; padding:6px 12px; border-radius:6px; font-size:12px; color:#363636; font-weight:500; }
+  .top .btn svg { width:12px; height:12px; }
+
+  .rating { display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0; }
+  .rating-pill { background:#267e3e; color:#fff; font-size:12px; font-weight:600; padding:4px 8px; border-radius:4px; display:flex; align-items:center; gap:4px; }
+  .rating-sub { font-size:11px; color:#8a8a8a; }
+  .rating-row { display:flex; align-items:center; gap:10px; font-size:11px; color:#696969; }
+  .dine-zero { display:flex; align-items:center; gap:4px; color:#8a8a8a; }
+  .dine-zero::before { content:""; width:6px; height:6px; border-radius:50%; background:#d9d9d9; }
+
+  /* Tabs */
+  .tabs { display:flex; gap:28px; margin-top:22px; border-bottom:1px solid #f0f0f0; }
+  .tab { padding:12px 0; font-size:14px; color:#696969; font-weight:500; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .tab.active { color:#cb202d; border-bottom-color:#cb202d; }
+
+  /* Layout */
+  .grid { display:grid; grid-template-columns:220px 1fr; gap:40px; margin-top:28px; }
+
+  /* Left rail */
+  .rail { position:sticky; top:20px; align-self:start; }
+  .rail-search { width:100%; padding:9px 12px; border:1px solid #ececec; border-radius:6px; font-size:13px; outline:none; margin-bottom:16px; }
+  .rail-search:focus { border-color:#cb202d; }
+  .rail ul { list-style:none; }
+  .rail li { padding:10px 14px 10px 16px; font-size:13.5px; color:#363636; cursor:pointer; border-left:3px solid transparent; display:flex; justify-content:space-between; align-items:center; }
+  .rail li.active { color:#cb202d; border-left-color:#cb202d; font-weight:500; background:#fff5f5; }
+  .rail li:hover:not(.active) { background:#fafafa; }
+  .rail li .count { color:#8a8a8a; font-size:12px; }
+
+  /* Menu */
+  .cat-header { padding:14px 0 10px; }
+  .cat-title { font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#8a8a8a; }
+  .cat-why { margin-top:10px; font-size:13px; color:#575757; line-height:1.55; max-width:680px; }
+  .cat-why strong { color:#1c1c1c; font-weight:600; }
+
+  .cat-section { padding-bottom:10px; border-bottom:1px solid #f5f5f5; margin-bottom:8px; }
+  .cat-section:last-child { border-bottom:none; }
+
+  .item { display:grid; grid-template-columns:1fr 128px; gap:28px; padding:22px 0; border-top:1px solid #f5f5f5; }
+  .cat-section .item:first-of-type { border-top:1px solid #f0f0f0; }
+
+  .veg { display:inline-flex; align-items:center; justify-content:center; width:13px; height:13px; border:1px solid #267e3e; margin-bottom:8px; }
+  .veg::after { content:""; width:6px; height:6px; background:#267e3e; border-radius:50%; }
+  .item h3 { font-size:15.5px; font-weight:500; color:#1c1c1c; margin-bottom:4px; letter-spacing:-0.005em; }
+  .item .price { font-size:13px; color:#363636; margin-bottom:8px; }
+  .item .desc { font-size:12.5px; color:#696969; line-height:1.55; max-width:520px; }
+  .item .desc .more { color:#363636; font-weight:500; cursor:pointer; }
+
+  .addons { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+  .addon { font-size:11px; padding:4px 9px; border:1px solid #ececec; border-radius:999px; color:#575757; background:#fff; display:inline-flex; align-items:center; gap:5px; }
+  .addon b { font-weight:500; color:#1c1c1c; }
+  .addon .plus { color:#cb202d; font-weight:600; }
+  .addon.label { border:none; padding:4px 0 4px 2px; color:#8a8a8a; font-size:10.5px; text-transform:uppercase; letter-spacing:0.08em; }
+
+  .thumb { width:128px; height:128px; border-radius:12px; background:linear-gradient(135deg,#fff5e6,#ffe8cc); position:relative; overflow:hidden; }
+  .thumb::after { content:""; position:absolute; inset:0; background:radial-gradient(circle at 35% 30%,rgba(255,255,255,0.6),transparent 50%); }
+  .thumb .add { position:absolute; bottom:-14px; left:50%; transform:translateX(-50%); background:#fff; color:#cb202d; border:1px solid #e4c4c6; padding:6px 22px; border-radius:6px; font-size:12px; font-weight:600; box-shadow:0 1px 2px rgba(0,0,0,0.04); }
+
+  /* Disclaimer */
+  .disclaimer { margin-top:48px; padding:18px 20px; background:#fafafa; border-radius:10px; font-size:11.5px; color:#8a8a8a; line-height:1.6; }
+  .disclaimer strong { color:#575757; }
+
+  @media (max-width:820px) {
+    .grid { grid-template-columns:1fr; }
+    .rail { position:static; }
+    .rail ul { display:flex; overflow-x:auto; gap:4px; }
+    .rail li { flex-shrink:0; border-left:none; border-bottom:3px solid transparent; white-space:nowrap; }
+    .rail li.active { border-left:none; border-bottom-color:#cb202d; background:transparent; }
+    .item { grid-template-columns:1fr 96px; gap:16px; }
+    .thumb { width:96px; height:96px; }
+    .top { flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="top">
+    <div>
+      <h1>Ministry Of Oats — Post-Workout</h1>
+      <div class="meta">The only post-workout menu in Bengaluru built around real recovery science. Protein shakes, oatmeal shakes, overnight oats, yoghurt bowls, and chia pudding — engineered for the 2 hours after you put the bar down.</div>
+      <div class="phone">HSR · Domlur · Whitefield  ·  +91 73739 89985</div>
+      <div class="actions">
+        <span class="btn">Direction</span>
+        <span class="btn">Share</span>
+      </div>
+    </div>
+    <div class="rating">
+      <div class="rating-pill">4.2 ★</div>
+      <div class="rating-sub">1,142 Delivery Ratings</div>
+      <div class="rating-row"><span class="dine-zero">0 Dining Ratings</span></div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab">Overview</div>
+    <div class="tab active">Order Online</div>
+  </div>
+
+  <div class="grid">
+
+    <!-- Left Rail -->
+    <aside class="rail">
+      <input class="rail-search" placeholder="Search for dishes">
+      <ul>
+        <li class="active"><span>Protein Shakes</span><span class="count">(4)</span></li>
+        <li><span>Oatmeal Shakes</span><span class="count">(4)</span></li>
+        <li><span>Overnight Oats</span><span class="count">(4)</span></li>
+        <li><span>Yoghurt Granola Bowls</span><span class="count">(4)</span></li>
+        <li><span>Chia Pudding</span><span class="count">(3)</span></li>
+      </ul>
+    </aside>
+
+    <!-- Menu -->
+    <main>
+
+      <!-- 1. Protein Shakes -->
+      <section class="cat-section">
+        <div class="cat-header">
+          <div class="cat-title">Protein Shakes (4)</div>
+          <p class="cat-why">Your favourite whey, plant, or isolate — blended clean with chilled water. Fast gastric emptying means amino acids hit your bloodstream within 30–40 minutes. <strong>20–40g of fast protein within two hours post-lift</strong> is what the International Society of Sports Nutrition actually recommends for muscle protein synthesis. Stack it with <strong>L-Citrulline (6–8g)</strong> to cut next-day soreness and improve blood flow, and <strong>Creatine Monohydrate (3–5g)</strong> — the most-studied sports supplement on earth — for strength and lean mass. We pour. You grow.</p>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Classic Whey Shake</h3>
+            <div class="price">₹249</div>
+            <div class="desc">Your choice of whey — Optimum Nutrition, MuscleBlaze, Isopure, or our house blend — shaken with chilled water and ice. Zero fluff, full 30g protein...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>L-Citrulline</b> 1 scoop <span class="plus">+₹49</span></span>
+              <span class="addon"><b>L-Citrulline</b> 2 scoops <span class="plus">+₹89</span></span>
+              <span class="addon"><b>Creatine</b> 1 scoop <span class="plus">+₹39</span></span>
+              <span class="addon"><b>Creatine</b> 2 scoops <span class="plus">+₹69</span></span>
+              <span class="addon"><b>Flavour</b> Choc/Vanilla/Strawberry</span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Plant Protein Shake</h3>
+            <div class="price">₹269</div>
+            <div class="desc">Pea + brown rice protein isolate blended with chilled water and ice. Complete amino profile, zero dairy, light on the gut after a brutal session...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>L-Citrulline</b> 1 scoop <span class="plus">+₹49</span></span>
+              <span class="addon"><b>L-Citrulline</b> 2 scoops <span class="plus">+₹89</span></span>
+              <span class="addon"><b>Creatine</b> 1 scoop <span class="plus">+₹39</span></span>
+              <span class="addon"><b>Creatine</b> 2 scoops <span class="plus">+₹69</span></span>
+              <span class="addon"><b>Flavour</b> Chocolate/Berry</span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>ISO Recovery Shake</h3>
+            <div class="price">₹299</div>
+            <div class="desc">Hydrolysed whey isolate — the fastest protein we stock. 27g protein, &lt;1g carbs, &lt;0.5g fat. For cutters and the 6am crowd who can't tolerate lactose...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>L-Citrulline</b> 1 scoop <span class="plus">+₹49</span></span>
+              <span class="addon"><b>L-Citrulline</b> 2 scoops <span class="plus">+₹89</span></span>
+              <span class="addon"><b>Creatine</b> 1 scoop <span class="plus">+₹39</span></span>
+              <span class="addon"><b>Creatine</b> 2 scoops <span class="plus">+₹69</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Mass Gainer Shake</h3>
+            <div class="price">₹289</div>
+            <div class="desc">Whey + maltodextrin + oats, water-blended. Fast carbs + fast protein = glycogen refill up to 2× faster than protein alone (Ivy, 2001). Hardgainers, this one's for you...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>L-Citrulline</b> 1 scoop <span class="plus">+₹49</span></span>
+              <span class="addon"><b>Creatine</b> 1 scoop <span class="plus">+₹39</span></span>
+              <span class="addon"><b>Creatine</b> 2 scoops <span class="plus">+₹69</span></span>
+              <span class="addon"><b>Extra scoop protein</b> <span class="plus">+₹59</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+      </section>
+
+      <!-- 2. Oatmeal Shakes -->
+      <section class="cat-section">
+        <div class="cat-header">
+          <div class="cat-title">Oatmeal Shakes (4)</div>
+          <p class="cat-why">Rolled oats cooked down, then blended with milk or oatmilk, flavour, and your protein. Dense, drinkable, and calorie-loaded. The cooked-oat carbs have a <strong>higher glycaemic index than whole oats</strong> — which is exactly what you want after a lift, because insulin spikes shuttle glucose and amino acids into tired muscle. Milk adds both casein (slow) and whey (fast) for a full 3–4 hour MPS window. Built for heavy training days, two-a-days, and anyone chasing a surplus.</p>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Classic Oatmeal Protein Shake</h3>
+            <div class="price">₹299</div>
+            <div class="desc">Cooked oats + milk + banana + honey + one scoop of whey, blended smooth. ~480 kcal, 28g protein. Tastes like breakfast, hits like lunch...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>Extra scoop protein</b> <span class="plus">+₹59</span></span>
+              <span class="addon"><b>Oatmilk swap</b> <span class="plus">+₹20</span></span>
+              <span class="addon"><b>Creatine</b> 1 scoop <span class="plus">+₹39</span></span>
+              <span class="addon"><b>L-Citrulline</b> 1 scoop <span class="plus">+₹49</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Chocolate Oatmeal Mass Shake</h3>
+            <div class="price">₹329</div>
+            <div class="desc">Oats + milk + cocoa + peanut butter + chocolate whey + dark chocolate chips. ~620 kcal, 32g protein. Our highest calorie drink. Bulk season, we see you...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>Extra scoop protein</b> <span class="plus">+₹59</span></span>
+              <span class="addon"><b>Oatmilk swap</b> <span class="plus">+₹20</span></span>
+              <span class="addon"><b>Creatine</b> 1 scoop <span class="plus">+₹39</span></span>
+              <span class="addon"><b>L-Citrulline</b> 1 scoop <span class="plus">+₹49</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Peanut Butter Banana Oatshake</h3>
+            <div class="price">₹319</div>
+            <div class="desc">Oats + milk + banana + natural peanut butter + vanilla whey. The classic bro shake, done properly. ~560 kcal, 30g protein...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>Extra scoop protein</b> <span class="plus">+₹59</span></span>
+              <span class="addon"><b>Oatmilk swap</b> <span class="plus">+₹20</span></span>
+              <span class="addon"><b>Creatine</b> 1 scoop <span class="plus">+₹39</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Mocha Oatmeal Recovery Shake</h3>
+            <div class="price">₹329</div>
+            <div class="desc">Cooked oats + cold brew espresso + milk + chocolate whey + a dash of cinnamon. Post-lift caffeine + carbs + protein — the holy trinity for your second workout of the day...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>Extra scoop protein</b> <span class="plus">+₹59</span></span>
+              <span class="addon"><b>Oatmilk swap</b> <span class="plus">+₹20</span></span>
+              <span class="addon"><b>Double espresso</b> <span class="plus">+₹30</span></span>
+              <span class="addon"><b>Creatine</b> 1 scoop <span class="plus">+₹39</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+      </section>
+
+      <!-- 3. Overnight Oats -->
+      <section class="cat-section">
+        <div class="cat-header">
+          <div class="cat-title">Overnight Oats (4)</div>
+          <p class="cat-why">Rolled oats soaked overnight in milk with chia and natural flavours. The long soak makes starches more digestible and the <strong>beta-glucan fibre in oats</strong> (EFSA-approved claim) supports sustained energy release — perfect if you train early and want a slow-drip fuel source through your morning. Add a scoop of protein and you have a 30g-protein breakfast that lives in your fridge until you need it. Pick snack for a between-meal top-up, meal for a full recovery breakfast.</p>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Berry Blast Overnight Oats</h3>
+            <div class="price">₹249</div>
+            <div class="desc">Creamy overnight oats made with milk and banana, topped with blueberries, strawberries and chia...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>Protein</b> 1 scoop <span class="plus">+₹59</span></span>
+              <span class="addon"><b>Size</b> Snack (default)</span>
+              <span class="addon"><b>Size</b> Meal <span class="plus">+₹60</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Chocolate Peanut Crunch Overnight Oats</h3>
+            <div class="price">₹275</div>
+            <div class="desc">Creamy overnight oats with milk, honey, rich cocoa, and peanut butter, topped with a handful of crunchy granola...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>Protein</b> 1 scoop <span class="plus">+₹59</span></span>
+              <span class="addon"><b>Size</b> Snack (default)</span>
+              <span class="addon"><b>Size</b> Meal <span class="plus">+₹60</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Mocha Melt Overnight Oats</h3>
+            <div class="price">₹175</div>
+            <div class="desc">Creamy overnight oats made with cocoa, coffee and chia seeds, topped with banana...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>Protein</b> 1 scoop <span class="plus">+₹59</span></span>
+              <span class="addon"><b>Size</b> Snack (default)</span>
+              <span class="addon"><b>Size</b> Meal <span class="plus">+₹60</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Classic Bircher Muesli</h3>
+            <div class="price">₹235</div>
+            <div class="desc">Creamy overnight oats made with Greek yoghurt, fresh apple and a hint of cinnamon...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>Protein</b> 1 scoop <span class="plus">+₹59</span></span>
+              <span class="addon"><b>Size</b> Snack (default)</span>
+              <span class="addon"><b>Size</b> Meal <span class="plus">+₹60</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+      </section>
+
+      <!-- 4. Yoghurt Granola Bowls -->
+      <section class="cat-section">
+        <div class="cat-header">
+          <div class="cat-title">Yoghurt Granola Bowls (4)</div>
+          <p class="cat-why">Thick Greek yoghurt packs <strong>15–20g of predominantly casein protein per cup</strong> — the slow-release protein your muscles feed on for hours after a lift. Live cultures support gut health, which matters because <strong>hard training transiently suppresses immunity</strong> (ISSN Probiotics Position Stand, 2019). Our house granola adds the quick carbs your glycogen is looking for, and it actually tastes like something you'd eat when you're not at the gym.</p>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Peanut Butter Apple Yoghurt Bowl</h3>
+            <div class="price">₹299</div>
+            <div class="desc">Greek yoghurt stirred with peanut butter, cinnamon, honey & overnight oats, topped with fresh apple...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>Protein</b> 1 scoop <span class="plus">+₹59</span></span>
+              <span class="addon"><b>Extra granola</b> <span class="plus">+₹29</span></span>
+              <span class="addon"><b>Honey</b> <span class="plus">+₹15</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Blueberry White Chocolate Yoghurt Bowl</h3>
+            <div class="price">₹299</div>
+            <div class="desc">Greek yoghurt stirred with blueberry, honey & overnight oats, topped with fresh blueberries and white chocolate shavings...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>Protein</b> 1 scoop <span class="plus">+₹59</span></span>
+              <span class="addon"><b>Extra granola</b> <span class="plus">+₹29</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Strawberry Caramel Yoghurt Bowl</h3>
+            <div class="price">₹299</div>
+            <div class="desc">Greek yoghurt stirred with caramel, honey & overnight oats, topped with strawberries and granola crumble...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>Protein</b> 1 scoop <span class="plus">+₹59</span></span>
+              <span class="addon"><b>Extra granola</b> <span class="plus">+₹29</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Tropical Mango Yoghurt Bowl</h3>
+            <div class="price">₹299</div>
+            <div class="desc">Greek yoghurt stirred with mango & overnight oats, topped with mango chunks, coconut, and seed crunch...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>Protein</b> 1 scoop <span class="plus">+₹59</span></span>
+              <span class="addon"><b>Extra granola</b> <span class="plus">+₹29</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+      </section>
+
+      <!-- 5. Chia Pudding -->
+      <section class="cat-section">
+        <div class="cat-header">
+          <div class="cat-title">Chia Pudding (3)</div>
+          <p class="cat-why">Chia is the quietest post-workout MVP on this menu. <strong>~5g of plant omega-3 (ALA) per tablespoon</strong>, complete protein, and soluble fibre that absorbs up to 10× its weight in water — meaning each bite helps rehydrate you. Lighter than oats, lower in calories, and ideal for rest days, second meals, or the warm-evening sessions when a shake feels like too much. Small. Healthy. Legitimate.</p>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Vanilla Berry Chia Pudding</h3>
+            <div class="price">₹229</div>
+            <div class="desc">Chia soaked overnight in vanilla-flavoured milk, topped with mixed berries and a drizzle of honey...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>Protein</b> 1 scoop <span class="plus">+₹49</span></span>
+              <span class="addon"><b>Extra chia</b> <span class="plus">+₹20</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Cocoa Almond Chia Pudding</h3>
+            <div class="price">₹239</div>
+            <div class="desc">Chia soaked in cocoa-almond milk, topped with toasted almond slivers and banana slices...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>Protein</b> 1 scoop <span class="plus">+₹49</span></span>
+              <span class="addon"><b>Extra chia</b> <span class="plus">+₹20</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+
+        <div class="item">
+          <div>
+            <div class="veg"></div>
+            <h3>Mango Coconut Chia Pudding</h3>
+            <div class="price">₹249</div>
+            <div class="desc">Chia soaked in coconut milk, layered with Alphonso mango pulp and toasted coconut flakes...<span class="more">read more</span></div>
+            <div class="addons">
+              <span class="addon label">Add</span>
+              <span class="addon"><b>Protein</b> 1 scoop <span class="plus">+₹49</span></span>
+              <span class="addon"><b>Extra chia</b> <span class="plus">+₹20</span></span>
+            </div>
+          </div>
+          <div class="thumb"><div class="add">ADD</div></div>
+        </div>
+      </section>
+
+      <div class="disclaimer">
+        <strong>Fine print.</strong> Nutrition claims on this page are drawn from peer-reviewed sources including ISSN position stands on protein, creatine, and probiotics; Ivy et al. (2001) on glycogen resynthesis; EFSA Article 13 health claim approvals for oat beta-glucan; and published meta-analyses on L-citrulline and delayed-onset muscle soreness. Macros are approximate and vary with add-ons. Supplements are not a substitute for a balanced diet. If you're pregnant, on medication, or managing a medical condition, check with your doctor before adding creatine or other ergogenic aids.
+      </div>
+
+    </main>
+  </div>
+</div>
+</body>
+</html>
