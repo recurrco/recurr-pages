@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Zieda · Audit A.2 — Web Properties · Recurr Content Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Space+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #EAEAE6; --ink: #1A1A1A; --muted: #666; --faint: #999;
+      --border: #D2D2CE; --card-bg: #F2F2EE;
+      --red: #C0362B; --blue: #2B5B8A; --green: #2E6A50;
+      --yellow: #C49A14; --orange: #B85C00;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; }
+
+    .section { position: relative; padding: 72px 72px 80px; border-bottom: 1px solid var(--border); }
+    .section::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, #BBBBB5 1px, transparent 1px); background-size: 22px 22px; opacity: 0.35; pointer-events: none; z-index: 0; }
+    .section-inner { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; }
+
+    .nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 36px; }
+    .logo { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: -0.3px; }
+    .logo a { color: var(--ink); text-decoration: none; }
+    .logo a:hover { color: var(--red); }
+    .section-label { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--faint); letter-spacing: 0.08em; text-transform: uppercase; }
+
+    .breadcrumb { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--faint); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 18px; }
+    .breadcrumb a { color: var(--faint); text-decoration: none; border-bottom: 1px dotted var(--faint); }
+    .breadcrumb a:hover { color: var(--red); border-color: var(--red); }
+
+    h1 { font-family: 'DM Serif Display', serif; font-size: 46px; line-height: 1.05; letter-spacing: -0.5px; margin-bottom: 24px; max-width: 800px; }
+    h2 { font-family: 'DM Serif Display', serif; font-size: 30px; line-height: 1.15; letter-spacing: -0.3px; margin-bottom: 18px; max-width: 780px; }
+    h3 { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+    h4 { font-family: 'DM Sans', sans-serif; font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+
+    .lead { font-size: 18px; line-height: 1.55; color: var(--muted); max-width: 720px; margin-bottom: 44px; }
+    p { color: var(--muted); font-size: 14.5px; line-height: 1.65; margin-bottom: 12px; }
+    p:last-child { margin-bottom: 0; }
+    strong { color: var(--ink); font-weight: 600; }
+    em { font-style: italic; }
+
+    .subsection { margin-bottom: 56px; }
+    .subsection-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px; }
+
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 24px 28px; margin-bottom: 14px; }
+    .card-title { font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 8px; }
+    .card p { font-size: 14px; line-height: 1.6; }
+
+    .pullquote { font-family: 'DM Serif Display', serif; font-size: 22px; line-height: 1.35; color: var(--ink); border-left: 3px solid var(--red); padding: 4px 0 4px 22px; margin: 28px 0; max-width: 720px; }
+    .pullquote.green { border-color: var(--green); }
+
+    .dark-bar { background: var(--ink); color: #E8E8E4; border-radius: 8px; padding: 22px 28px; margin: 24px 0; }
+    .dark-bar .label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #888; margin-bottom: 8px; }
+    .dark-bar p { color: #D8D8D4; font-size: 14.5px; line-height: 1.55; }
+    .dark-bar strong { color: #fff; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+
+    .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 22px 24px; }
+    .stat-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 10px; }
+    .stat-value { font-family: 'DM Serif Display', serif; font-size: 26px; line-height: 1; color: var(--ink); margin-bottom: 8px; }
+    .stat-value.red { color: var(--red); }
+    .stat-value.green { color: var(--green); }
+    .stat-card p { font-size: 13px; }
+
+    .bullets { list-style: none; margin: 14px 0 0; }
+    .bullets li { font-size: 14px; color: var(--muted); padding: 9px 0; border-bottom: 1px solid var(--border); display: flex; gap: 12px; line-height: 1.55; }
+    .bullets li:last-child { border-bottom: none; }
+    .bullet-dot { color: var(--faint); font-family: 'Space Mono', monospace; font-size: 11px; min-width: 22px; padding-top: 2px; }
+    .bullets strong { color: var(--ink); }
+
+    /* Site comparison table */
+    .site-table { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 18px 0; }
+    .site-row { display: grid; grid-template-columns: 200px 1fr 140px; border-bottom: 1px solid var(--border); }
+    .site-row:last-child { border-bottom: none; }
+    .site-row.head { background: #fff; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); }
+    .site-row > div { padding: 16px 22px; border-right: 1px solid var(--border); font-size: 14px; }
+    .site-row > div:last-child { border-right: none; }
+    .site-row .site-name { font-weight: 600; color: var(--ink); }
+    .site-row .site-name .site-domain { display: block; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--faint); margin-top: 4px; font-weight: 400; text-transform: none; }
+    .site-row .site-issue { color: var(--muted); }
+    .site-row .site-flag { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--red); text-transform: uppercase; letter-spacing: 0.05em; }
+    .site-row .site-flag.warn { color: var(--orange); }
+    .site-row .site-flag.ok { color: var(--green); }
+
+    /* Math */
+    .math-block { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 24px 28px; margin: 18px 0; font-family: 'Space Mono', monospace; font-size: 13px; line-height: 1.9; color: var(--ink); }
+    .math-block .math-row { display: flex; justify-content: space-between; }
+    .math-block .math-divider { border-top: 1px solid var(--border); margin: 8px 0; }
+    .math-block .math-total { font-weight: 700; color: var(--green); }
+
+    .closing { background: var(--ink); color: #E8E8E4; }
+    .closing::before { opacity: 0.15; }
+    .closing h2 { color: #fff; }
+    .closing .lead { color: #AAA; }
+    .closing .section-label { color: #888; }
+    .closing .logo, .closing .logo a { color: #fff; }
+    .closing strong { color: #fff; }
+    .closing p { color: #CCC; }
+    .closing .breadcrumb, .closing .breadcrumb a { color: #888; border-color: #888; }
+
+    @media (max-width: 800px) {
+      .section { padding: 48px 28px 56px; }
+      h1 { font-size: 32px; }
+      h2 { font-size: 24px; }
+      .lead { font-size: 16px; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .site-row { grid-template-columns: 1fr; }
+      .site-row > div { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="nav">
+      <div class="logo"><a href="/zieda-strategy/">recurr / zieda strategy</a></div>
+      <div class="section-label">Audit A.2 · April 2026</div>
+    </div>
+
+    <div class="breadcrumb"><a href="/zieda-strategy/">← back to strategic pitch</a></div>
+
+    <h1>Three websites is not three times the marketing. It's one-third of the marketing, paid for three times.</h1>
+    <p class="lead">A close-read of the three Zieda web properties — what each is, how they relate, where they conflict, and the actual cost of running them as separate brands. The conclusion is uncomfortable but unambiguous: consolidation is not a nice-to-have. It is the prerequisite for everything else.</p>
+  </div>
+</section>
+
+<!-- Site by site -->
+<section class="section">
+  <div class="section-inner">
+    <div class="subsection-label">01 · The three properties</div>
+    <h2>What's actually live, today.</h2>
+
+    <div class="site-table">
+      <div class="site-row head">
+        <div>Property</div>
+        <div>State of play</div>
+        <div>Health</div>
+      </div>
+      <div class="site-row">
+        <div class="site-name">Zieda Beauty Lounge<span class="site-domain">ziedabeautylounge.com</span></div>
+        <div class="site-issue">Original business (founded 2018). Booking on Zenoti webstore (zbl.zenoti.com). Has the strongest organic baseline of the three. Brand language is salon-first — feels like a 2020-era boutique salon site, not a 2026 luxury brand.</div>
+        <div class="site-flag warn">Outdated</div>
+      </div>
+      <div class="site-row">
+        <div class="site-name">Zieda's Aesthetic Clinic<span class="site-domain">ziedasclinic.com</span></div>
+        <div class="site-issue">The highest-revenue business of the group. Booking is on a <strong>bolt.host prototype URL</strong> — a vibe-coded MVP that should never have made it to production. Ships in 4 languages (English, Chinese, Russian, Arabic) with separate downloadable price lists. Already lists cosmetic dentistry as a service line — meaning ZDL is being absorbed visually but not structurally.</div>
+        <div class="site-flag">Critical</div>
+      </div>
+      <div class="site-row">
+        <div class="site-name">Zieda's Dental Clinic<span class="site-domain">ziedasdental.com</span></div>
+        <div class="site-issue">Closed 2021, relaunched 2024. Effectively zero organic traffic. Has its own Instagram handle (@ziedasclinic.dental). Bookings are phone-only. The WhatsApp button is dead. The site exists more as a placeholder than as a working acquisition channel.</div>
+        <div class="site-flag">Critical</div>
+      </div>
+    </div>
+
+    <p style="margin-top:18px">There is a fourth property to mention because it matters: the <strong>two physical villas</strong>. Villa 5 (clinic) and Villa 7 (salon) sit 30 steps apart on Jumeirah Beach Road, Jumeirah 1. The websites do not communicate this. A first-time visitor to ZBL has no reason to know ZAC exists, let alone exists across the road. The geography is a gift the marketing surface is wasting.</p>
+  </div>
+</section>
+
+<!-- Half-done consolidation -->
+<section class="section">
+  <div class="section-inner">
+    <div class="subsection-label">02 · The half-done consolidation</div>
+    <h2>The decision to merge has already been made — visually, but not structurally.</h2>
+
+    <p>The most telling artefact in the entire web audit is on the ZAC homepage. Cosmetic dentistry is already listed as a service line under the aesthetic clinic. That is a soft acknowledgment that <strong>the dental brand is being absorbed</strong> — without anyone having actually retired the dental site. So today, a customer searching for cosmetic dentistry in Dubai may land on either the ZAC site (which lists it) or the ZDL site (which is supposed to own it). There is no canonical answer to "where does dental live?"</p>
+
+    <p>This is what a half-done consolidation looks like. It is the worst of both worlds:</p>
+
+    <ul class="bullets">
+      <li><span class="bullet-dot">a)</span><span><strong>SEO is split.</strong> Two sites compete for the same dental queries, both lose. Google sees duplicate intent and demotes both.</span></li>
+      <li><span class="bullet-dot">b)</span><span><strong>Customers get confused.</strong> Two sites, two booking flows, two phone numbers, two design languages. The brand has two voices for one service.</span></li>
+      <li><span class="bullet-dot">c)</span><span><strong>The team has to maintain both.</strong> Twice the content updates, twice the bug-fix surface, twice the analytics setup — for a service line that can only sit in one place.</span></li>
+      <li><span class="bullet-dot">d)</span><span><strong>The "decision" never actually got made.</strong> Until ZDL is formally redirected into ZAC (or into the unified brand), the half-merge stays half-merged. Indecision is a decision.</span></li>
+    </ul>
+
+    <div class="dark-bar">
+      <div class="label">The pattern</div>
+      <p>Half-done consolidations are extremely common in growing service businesses. The reason is human, not technical: <strong>retiring a brand feels like retiring a child</strong>. The dental brand had a separate launch, a separate identity, a separate set of people who fought for it. Pulling the plug feels like loss. But the cost of <em>not</em> pulling the plug — measured in SEO splits, customer confusion, and ops drag — is much higher than the emotional cost of just doing it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- The compounding tax -->
+<section class="section">
+  <div class="section-inner">
+    <div class="subsection-label">03 · The compounding tax</div>
+    <h2>What three properties actually cost, beyond the obvious.</h2>
+
+    <p>The line-item cost of running three websites instead of one is not the real story. Hosting is cheap, design refreshes are once-every-few-years, content production is ~3x but plannable. The real tax is invisible and compounding — and it shows up in the four places below.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Tax 01 — Domain authority can't compound</div>
+        <p>SEO authority is not multiplicative across three weak domains; it is sub-additive. Three sites at DA 15 each are not "DA 45 of marketing power" — they are roughly DA 18 of effective authority, because backlinks, mentions, and content all dilute across the three. Consolidating into one DA 25–30 site is worth more than scaling three to DA 20.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Tax 02 — Paid CAC is roughly 3x</div>
+        <p>Every paid channel — Google, Meta, TikTok, Snapchat — is being asked to drive traffic to three separate landing pages. Quality scores are calculated per landing page, not per advertiser. Three weak pages = three lower quality scores = three higher CPCs. Same lead, three times the bid.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Tax 03 — Ops drag is roughly 3x</div>
+        <p>Three CMSes, three analytics setups, three SEO programs, three content calendars, three design systems. Even if each is "lightweight", the total cognitive load on a small team is enormous. This is the single biggest reason the team feels overwhelmed despite not actually shipping much.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Tax 04 — Brand authority leaks</div>
+        <p>Press wins (Emirates Woman, L'Officiel) link to one site or another, not to a unified property. Search results show fragmented brand presence. AI search engines (ChatGPT, Perplexity, Google AI Overviews) have no canonical entity to attribute to "Zieda" — so they hedge or mis-attribute or skip her entirely.</p>
+      </div>
+    </div>
+
+    <p class="pullquote">Three brands at one-third strength each is a worse position than one brand at full strength. Always. In every market. Without exception.</p>
+  </div>
+</section>
+
+<!-- The consolidation playbook -->
+<section class="section">
+  <div class="section-inner">
+    <div class="subsection-label">04 · The consolidation playbook</div>
+    <h2>How you actually merge three sites into one without losing anything.</h2>
+
+    <p>The fear with consolidation is always the same: <em>"will we lose our SEO if we move everything to one domain?"</em> The honest answer is <strong>no, if it's done correctly — and yes, traffic dips for 4–8 weeks before it recovers higher than before.</strong> This is well-trodden territory. The playbook below is the standard one, used in hundreds of similar migrations.</p>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">Step 1 · Pick the canonical domain</div>
+        <p>One domain becomes the unified property. Likely candidates: zieda.com / zieda.ae / ziedas.com — pending availability check. The chosen domain is the one that will hold all content and authority going forward.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Step 2 · Map every URL</div>
+        <p>Every page on ZBL, ZAC, ZDL gets mapped to its destination URL on the unified site. No URL is left without a target. This is the spreadsheet that protects all the existing SEO equity.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Step 3 · 301 redirects, page-by-page</div>
+        <p>Every old URL issues a permanent (301) redirect to its new home. <em>Not</em> a blanket redirect to homepage — page-by-page. This is the difference between a clean migration and an SEO disaster.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Step 4 · Unified IA + design</div>
+        <p>One sitemap. Lounge, clinic, dental as service categories under the parent brand — not as separate brands. One header, one footer, one design system. Booking flows live on the same surface.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Step 5 · Resubmit + monitor</div>
+        <p>New sitemap submitted to Google Search Console. Indexation watched daily for the first 4 weeks, weekly thereafter. Crawl errors fixed inside 48 hours. Rankings tracked against pre-migration baselines.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Step 6 · Press + backlink update</div>
+        <p>Major backlinks (Emirates Woman, L'Officiel, Gulf News, trade press) updated to point to the new canonical URLs. Profile pages on Google Business, Bing Places, Apple Maps, Zomato, etc. updated.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:32px">Realistic timeline + risk profile</h3>
+    <ul class="bullets">
+      <li><span class="bullet-dot">T+0</span><span><strong>Migration day.</strong> All redirects go live. The three old sites stop being separate properties.</span></li>
+      <li><span class="bullet-dot">T+2 weeks</span><span><strong>Indexation dip.</strong> Google re-crawls and re-indexes. Organic traffic typically dips 15–30% during this window. This is normal and expected.</span></li>
+      <li><span class="bullet-dot">T+6 weeks</span><span><strong>Recovery to baseline.</strong> Rankings and traffic return to pre-migration levels.</span></li>
+      <li><span class="bullet-dot">T+12 weeks</span><span><strong>Outperformance.</strong> The unified site begins outperforming the three separate sites combined, because authority is now compounding instead of dividing.</span></li>
+      <li><span class="bullet-dot">T+6 months</span><span><strong>Step change.</strong> The unified site is materially ahead of where the three sites would have been on their existing trajectory.</span></li>
+    </ul>
+
+    <div class="dark-bar">
+      <div class="label">A note on the bolt.host clinic booking</div>
+      <p>The most urgent fix is the ZAC booking surface. Running a high-revenue clinic's booking on a vibe-coded prototype URL is a meaningful operational risk — these prototype hosts have no SLA, no production guarantees, and no support. <strong>This needs to come off bolt.host as part of any migration, not after</strong>. The migration is the moment to put it on durable infrastructure.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Tech stack recommendation -->
+<section class="section">
+  <div class="section-inner">
+    <div class="subsection-label">05 · What we'd build it on</div>
+    <h2>The stack should be boring, fast, and outlive the agency.</h2>
+
+    <p>The wrong question is "which CMS is the prettiest." The right question is "what will Zieda's team be able to maintain in 18 months without the agency that built it?" The answer is some version of: <strong>a headless CMS that the team can use without writing code, on a host that doesn't go down, with content the team owns outright.</strong></p>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">CMS</div>
+        <p>Webflow, Framer, or Payload (self-hosted). All three let non-technical people publish content without breaking the design system. Decision depends on team comfort, budget, and how ambitious the editorial layer is. Strong default: <strong>Framer for editorial-heavy magazine model</strong>.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Hosting + CDN</div>
+        <p>Cloudflare or Vercel. Both are battle-tested, fast globally (which matters for a Middle East brand serving multilingual visitors), and cost-effective. Cloudflare also gives DDoS protection and bot management for free — non-trivial for a public-facing aesthetic brand.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Booking layer</div>
+        <p>Booking lives <em>on</em> the unified site, not as a redirect to Zenoti or Instapracto. Backed by API calls into Zenoti (salon) and Instapracto (clinic) once a slot is confirmed. The customer sees one booking experience; the team sees data flow into the right operational system.</p>
+      </div>
+    </div>
+
+    <p>None of this is novel. None of it is risky. None of it requires inventing anything. <strong>The technology is the easiest part of this audit.</strong> Everything in this section is solvable in 8–12 weeks of focused work, by a team that does this kind of work for a living. The reason it hasn't happened is not difficulty — it is the absence of someone whose job it is to make it happen.</p>
+  </div>
+</section>
+
+<!-- Closing -->
+<section class="section closing">
+  <div class="section-inner">
+    <div class="nav">
+      <div class="logo"><a href="/zieda-strategy/">recurr / zieda strategy</a></div>
+      <div class="section-label">A.2 · End</div>
+    </div>
+
+    <h2>One unified property is not a vanity move. It is the prerequisite for SEO, for paid efficiency, for brand coherence, for the personal brand strategy, and for almost everything in this audit.</h2>
+
+    <p style="color:#CCC; max-width:680px; margin-top:24px">Until this is fixed, every other recommendation in the audit is being held back by a tax that compounds week over week. <strong style="color:#fff">Consolidate the web first. Then everything else gets easier.</strong></p>
+
+    <div class="breadcrumb" style="margin-top:48px"><a href="/zieda-strategy/">← back to strategic pitch</a></div>
+  </div>
+</section>
+
+</body>
+</html>
