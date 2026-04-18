@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#FBFAF8">
+  <title>GEO Research — Exotel in the AI answer layer (April 2026)</title>
+  <meta name="description" content="Query-by-query SERP + LLM + backlink research for Exotel across the India CPaaS category. Raw data behind the Kyndrev × Recurr proposal.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FBFAF8;
+      --ink: #141414;
+      --ink-2: #3A3A3A;
+      --ink-3: #6E6E6E;
+      --ink-4: #A0A0A0;
+      --rule: #E8E3D8;
+      --rule-2: #D8D2C4;
+      --accent: #4338CA;
+      --accent-soft: #EEF2FF;
+      --win: #2E8B57;
+      --lose: #C0392B;
+      --warn: #B47821;
+      --card-bg: #FFFFFF;
+      --hi: #F5F3FF;
+      --content-w: 920px;
+      --margin: 40px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.65;
+      font-weight: 400;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .masthead {
+      border-bottom: 1px solid var(--rule);
+      padding: 18px var(--margin);
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-size: 13px; color: var(--ink-3);
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      background: rgba(251, 250, 248, 0.9);
+    }
+    .mh-logo { font-weight: 700; color: var(--ink); font-size: 14px; letter-spacing: -0.01em; }
+    .mh-back { color: var(--ink-3); }
+    .mh-back:hover { color: var(--accent); }
+
+    main {
+      max-width: var(--content-w);
+      margin: 0 auto;
+      padding: 72px var(--margin) 120px;
+    }
+    @media (max-width: 720px) { main { padding: 48px 20px 80px; } }
+
+    .hero { margin-bottom: 72px; }
+    .eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-size: 48px; line-height: 1.05; letter-spacing: -0.03em; font-weight: 700;
+      color: var(--ink); margin-bottom: 18px; text-wrap: balance;
+    }
+    @media (max-width: 720px) { .hero h1 { font-size: 34px; } }
+    .hero p.deck {
+      font-size: 18px; line-height: 1.55; color: var(--ink-2); max-width: 52ch;
+    }
+
+    .meta-row {
+      display: flex; gap: 24px; margin-top: 28px;
+      font-size: 12px; color: var(--ink-3);
+      padding-top: 20px; border-top: 1px solid var(--rule);
+    }
+    .meta-row span strong { color: var(--ink); font-weight: 600; }
+
+    section { margin-bottom: 72px; scroll-margin-top: 80px; }
+    section h2 {
+      font-size: 28px; line-height: 1.2; letter-spacing: -0.02em;
+      font-weight: 700; color: var(--ink); margin-bottom: 10px;
+    }
+    section h2 .sid {
+      display: inline-block; font-family: var(--mono); font-size: 13px;
+      color: var(--accent); margin-right: 10px; font-weight: 600;
+      vertical-align: middle;
+    }
+    section .sub {
+      font-size: 14px; color: var(--ink-3); margin-bottom: 24px; font-style: italic;
+    }
+    section h3 {
+      font-size: 18px; font-weight: 600; margin: 30px 0 12px;
+      letter-spacing: -0.01em;
+    }
+    section p { color: var(--ink-2); margin-bottom: 14px; }
+    section strong { color: var(--ink); font-weight: 600; }
+
+    /* Data table */
+    .data-table {
+      margin: 20px 0;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--card-bg);
+    }
+    .data-table table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th {
+      text-align: left;
+      background: var(--ink);
+      color: #FBFAF8;
+      padding: 12px 16px;
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--rule);
+      color: var(--ink-2);
+      vertical-align: middle;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td.num {
+      font-family: var(--mono); text-align: right;
+      color: var(--ink); font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    .data-table td.query, .data-table td.keyword {
+      font-style: italic; color: var(--ink); font-weight: 500;
+    }
+    .data-table td.rank.win  { color: var(--win); font-weight: 700; font-family: var(--mono); }
+    .data-table td.rank.lose { color: var(--lose); font-weight: 700; font-family: var(--mono); }
+    .data-table td.rank.warn { color: var(--warn); font-weight: 700; font-family: var(--mono); }
+    .data-table td.rank.none { color: var(--ink-4); font-family: var(--mono); }
+    .data-table tr.hl td { background: var(--hi); }
+    .data-table tr.hl td:first-child { color: var(--accent); font-weight: 600; }
+    .data-table tr.exotel-row td { background: #FFF3A3; }
+    .data-table tr.exotel-row td:first-child { font-weight: 700; }
+    .data-table .growth-pos { color: var(--win); font-weight: 600; }
+    .data-table .growth-neg { color: var(--lose); font-weight: 600; }
+    .data-table .bar {
+      display: inline-block; height: 8px; border-radius: 2px;
+      background: var(--accent); vertical-align: middle; margin-right: 6px;
+    }
+
+    /* SERP result list */
+    .serp {
+      margin: 16px 0 28px;
+      border: 1px solid var(--rule); border-radius: 4px;
+      background: var(--card-bg);
+    }
+    .serp .s-head {
+      padding: 14px 18px;
+      background: var(--ink); color: #FBFAF8;
+      display: flex; gap: 10px; align-items: baseline;
+    }
+    .serp .s-head .q-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.12em; color: #C4B5FD;
+    }
+    .serp .s-head .q { flex: 1; font-style: italic; font-weight: 500; }
+    .serp .s-head .q-geo {
+      font-size: 11px; color: #C4B5FD; font-family: var(--mono);
+    }
+    .serp ol { list-style: none; padding: 8px 18px; }
+    .serp li {
+      display: flex; gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 14px;
+    }
+    .serp li:last-child { border-bottom: none; }
+    .serp li .pos {
+      font-family: var(--mono); font-weight: 600;
+      color: var(--ink-3); font-size: 13px;
+      min-width: 26px;
+      font-variant-numeric: tabular-nums;
+    }
+    .serp li .dom { flex: 1; color: var(--ink); font-weight: 500; }
+    .serp li .dom em { font-style: italic; color: var(--ink-3); font-weight: 400; }
+    .serp li.exotel { background: #FFF3A3; margin: 0 -18px; padding-left: 18px; padding-right: 18px; }
+    .serp li.ozonetel .dom { color: var(--lose); }
+    .serp li.not-exotel .dom em { color: var(--lose); font-weight: 600; }
+    .serp .s-verdict {
+      padding: 12px 18px; background: var(--hi);
+      font-size: 13px; color: var(--ink-2); font-style: italic;
+      border-top: 1px solid var(--rule);
+    }
+    .serp .s-verdict.win { background: #E8F5E9; color: var(--win); }
+    .serp .s-verdict.lose { background: #FDECEA; color: var(--lose); }
+
+    /* Callout card */
+    .callout {
+      border-left: 3px solid var(--accent);
+      background: var(--hi);
+      padding: 20px 24px;
+      margin: 28px 0;
+      border-radius: 2px;
+    }
+    .callout .c-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+    }
+    .callout p { margin-bottom: 10px; color: var(--ink); font-size: 15px; }
+    .callout p:last-child { margin-bottom: 0; }
+
+    /* Bar chart row */
+    .bars { margin: 20px 0; }
+    .bar-row {
+      display: grid; grid-template-columns: 180px 1fr 80px;
+      align-items: center;
+      padding: 6px 0;
+      font-size: 13px;
+    }
+    .bar-row .bar-label { color: var(--ink-2); }
+    .bar-row.exotel .bar-label { color: var(--accent); font-weight: 700; }
+    .bar-row .bar-track {
+      height: 20px; background: #F0EDE4; border-radius: 2px; position: relative;
+    }
+    .bar-row .bar-fill {
+      height: 100%; background: var(--ink-3); border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+    .bar-row.exotel .bar-fill { background: var(--accent); }
+    .bar-row.top .bar-fill { background: var(--ink); }
+    .bar-row .bar-num {
+      font-family: var(--mono); font-variant-numeric: tabular-nums;
+      text-align: right; font-weight: 600; color: var(--ink);
+    }
+
+    /* Source bar */
+    .sources {
+      margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--rule);
+      font-size: 13px; color: var(--ink-3);
+    }
+    .sources h3 { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+    .sources ul { list-style: none; }
+    .sources li { padding: 4px 0; }
+
+    /* TOC pill */
+    .toc {
+      margin: 28px 0 48px; padding: 20px 24px;
+      background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px;
+    }
+    .toc-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink-4); margin-bottom: 14px;
+    }
+    .toc ol { counter-reset: toc; list-style: none; }
+    .toc li {
+      counter-increment: toc;
+      padding: 8px 0; border-top: 1px solid var(--rule);
+      display: flex; gap: 14px; align-items: baseline;
+      font-size: 14px;
+    }
+    .toc li:first-child { border-top: none; padding-top: 0; }
+    .toc li::before {
+      content: counter(toc, decimal-leading-zero);
+      font-family: var(--mono); font-size: 11px; color: var(--ink-4);
+      font-weight: 600;
+    }
+    .toc a { color: var(--ink); flex: 1; }
+    .toc a:hover { color: var(--accent); }
+
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 28px var(--margin);
+      font-size: 12px; color: var(--ink-4);
+      display: flex; justify-content: space-between; gap: 12px;
+    }
+    footer a { color: var(--ink-3); }
+  </style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="mh-logo">Recurr × Kyndrev · GEO Research for Exotel</div>
+  <a href="/exotel-proposal/" class="mh-back">← back to proposal</a>
+</header>
+
+<main>
+
+  <header class="hero">
+    <div class="eyebrow">Appendix A · Dedicated research page</div>
+    <h1>Exotel in the AI answer layer — a query-by-query audit.</h1>
+    <p class="deck">Everything behind the GEO scoreboard in the proposal. Seven buyer queries. Eighteen competitor domains. Twelve months of backlink telemetry. Exotel's present position in India SERP, Google AI Overview, and LLM citations — measured, not estimated.</p>
+    <div class="meta-row">
+      <span><strong>Geo:</strong> India (primary), UAE / KSA / APAC / Africa (secondary)</span>
+      <span><strong>Data pulled:</strong> April 2026</span>
+      <span><strong>Sources:</strong> DataForSEO Labs + Backlinks + AI Optimization API · Exa · manual SERP</span>
+    </div>
+  </header>
+
+  <div class="toc">
+    <div class="toc-label">Contents</div>
+    <ol>
+      <li><a href="#headline">The headline finding</a></li>
+      <li><a href="#serp">Query-by-query SERP audit (India)</a></li>
+      <li><a href="#llm">LLM citation volume (DataForSEO AI Optimization API)</a></li>
+      <li><a href="#authority">Backlink authority — the scoreboard</a></li>
+      <li><a href="#trajectory">Exotel's 12-month backlink trajectory</a></li>
+      <li><a href="#ozonetel">The Ozonetel race (the real mid-market fight)</a></li>
+      <li><a href="#market">The competitor map</a></li>
+      <li><a href="#g2">G2 review authority — where buyers validate</a></li>
+      <li><a href="#reads">What the data adds up to</a></li>
+    </ol>
+  </div>
+
+  <section id="headline">
+    <h2><span class="sid">§01</span> The headline finding</h2>
+    <div class="callout">
+      <div class="c-tag">One sentence</div>
+      <p>Exotel wins the two queries buyers used in 2022 and is invisible on the four queries buyers are asking today. The gap is not a 6–8 month forecast — it is the current state of India's SERP and LLM answer layer, and it compounds every week until a distribution engine is pointed at it.</p>
+    </div>
+    <p><strong>Three numbers that anchor the rest of this page:</strong></p>
+    <ul style="list-style:none;margin:14px 0">
+      <li style="padding:8px 0;border-top:1px solid var(--rule)"><strong>6.5×</strong> — Ozonetel's LLM-citation growth rate vs Exotel (+222% YoY vs +34% YoY).</li>
+      <li style="padding:8px 0;border-top:1px solid var(--rule)"><strong>-1,100</strong> — Referring main domains Exotel has lost over the last 12 months.</li>
+      <li style="padding:8px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)"><strong>7×</strong> — Ozonetel's G2 review volume vs Exotel (623 vs 89). The moat behind who LLMs quote.</li>
+    </ul>
+  </section>
+
+  <section id="serp">
+    <h2><span class="sid">§02</span> Query-by-query SERP audit <span style="font-size:13px;color:var(--ink-3);font-weight:400;font-style:italic">· India, April 2026</span></h2>
+    <p class="sub">Live Google India SERP via DataForSEO. Top 10 organic results per query. Yellow row = Exotel.</p>
+
+    <div class="serp">
+      <div class="s-head"><span class="q-label">Q1</span><span class="q">"cloud telephony india"</span><span class="q-geo">geo: IN · device: desktop</span></div>
+      <ol>
+        <li class="exotel"><span class="pos">#1</span><span class="dom"><strong>exotel.com</strong> <em>/products/cloud-telephony/ · 4.3★ (81 reviews)</em></span></li>
+        <li><span class="pos">#2</span><span class="dom">bonvoice.com <em>· listicle: "8 Best Cloud Telephony Providers in India (2026)"</em></span></li>
+        <li><span class="pos">#3</span><span class="dom">cloudtelephonyindia.com</span></li>
+        <li class="ozonetel"><span class="pos">#4</span><span class="dom">ozonetel.com <em>· "12 Best Cloud Telephony Providers in India"</em></span></li>
+        <li><span class="pos">#5</span><span class="dom">tatatelebusiness.com <em>· Smartflo Cloud Telephony</em></span></li>
+        <li><span class="pos">#7</span><span class="dom">kommuno.in</span></li>
+        <li><span class="pos">#8</span><span class="dom">frejun.com</span></li>
+        <li><span class="pos">#9</span><span class="dom">go2market.in</span></li>
+        <li><span class="pos">#10</span><span class="dom">airtel.in <em>/b2b/cloud-telephony</em></span></li>
+      </ol>
+      <div class="s-verdict win">✓ Exotel owns this query. Legacy terminology — LLM query volume for "cloud telephony" only 23/mo.</div>
+    </div>
+
+    <div class="serp">
+      <div class="s-head"><span class="q-label">Q2</span><span class="q">"ivr for business"</span><span class="q-geo">geo: IN · device: desktop</span></div>
+      <ol>
+        <li><span class="pos">AIO</span><span class="dom"><strong>Google AI Overview</strong> cites: <em>Exotel, RingCentral, MyOperator</em> as providers</span></li>
+        <li class="exotel"><span class="pos">#1</span><span class="dom"><strong>exotel.com</strong> <em>/products/smart-ivr/</em></span></li>
+        <li><span class="pos">#2</span><span class="dom">ringcentral.com</span></li>
+        <li><span class="pos">#3</span><span class="dom">ibm.com/think/topics/interactive-voice-response</span></li>
+        <li><span class="pos">#4</span><span class="dom">heyophone.com</span></li>
+        <li><span class="pos">#5</span><span class="dom">bonvoice.com</span></li>
+        <li><span class="pos">#6</span><span class="dom">bland.ai <em>— note: AI-voice-native brand ranking on India IVR query</em></span></li>
+        <li><span class="pos">#8</span><span class="dom">mcube.com</span></li>
+        <li><span class="pos">#9</span><span class="dom">myoperator.com</span></li>
+      </ol>
+      <div class="s-verdict win">✓ Template for what AI-search presence looks like: Exotel is directly cited by name inside Google's AI Overview for this query. Replicate this across 8 more topics.</div>
+    </div>
+
+    <div class="serp">
+      <div class="s-head"><span class="q-label">Q3</span><span class="q">"ai voice agent india"</span><span class="q-geo">geo: IN · device: desktop</span></div>
+      <ol>
+        <li><span class="pos">#1</span><span class="dom">bolna.ai <em>· India-native, vernacular, Hinglish-tuned</em></span></li>
+        <li><span class="pos">#2</span><span class="dom">gnani.ai <em>· India-native enterprise voice AI</em></span></li>
+        <li><span class="pos">#3</span><span class="dom">squadstack.ai <em>· "Top AI Voice Agent Companies in India 2026" — listicle + product</em></span></li>
+        <li><span class="pos">#4</span><span class="dom">reddit.com / r/n8n <em>· discussion thread</em></span></li>
+        <li><span class="pos">#5</span><span class="dom">voicegenie.ai</span></li>
+        <li><span class="pos">#6</span><span class="dom">wacto.in</span></li>
+        <li><span class="pos">#7</span><span class="dom">awaz.ai</span></li>
+        <li><span class="pos">#8</span><span class="dom">vapi.ai <em>· US, developer platform</em></span></li>
+        <li><span class="pos">#9</span><span class="dom">voiceinfra.ai</span></li>
+        <li class="not-exotel"><span class="pos">—</span><span class="dom"><em>Exotel: not in top 20</em></span></li>
+      </ol>
+      <div class="s-verdict lose">✗ The exact category Exotel repositioned its homepage to own ("AI-Led CX"). Zero presence in organic results, discussion threads, or listicles.</div>
+    </div>
+
+    <div class="serp">
+      <div class="s-head"><span class="q-label">Q4</span><span class="q">"cpaas providers india"</span><span class="q-geo">geo: IN · device: desktop</span></div>
+      <ol>
+        <li><span class="pos">FS</span><span class="dom"><strong>Featured snippet</strong>: pulse.in — "Top 10 CPaaS Companies in India"</span></li>
+        <li><span class="pos">#2</span><span class="dom">timesmobile.in</span></li>
+        <li><span class="pos">#3</span><span class="dom">go2market.in <em>· lists Exotel at #3 inside their own listicle</em></span></li>
+        <li><span class="pos">#4</span><span class="dom">routemobile.com</span></li>
+        <li><span class="pos">#5</span><span class="dom">mordorintelligence.com</span></li>
+        <li><span class="pos">#6</span><span class="dom">prpservices.in <em>· cites Tanla as India's largest CPaaS</em></span></li>
+        <li><span class="pos">#7</span><span class="dom">tatacommunications.com/kaleyra/cpaas</span></li>
+        <li><span class="pos">#8</span><span class="dom">twixor.ai</span></li>
+        <li><span class="pos">#10</span><span class="dom">bonvoice.com</span></li>
+        <li class="not-exotel"><span class="pos">—</span><span class="dom"><em>Exotel: not in top 10 · only appears buried inside other people's listicles</em></span></li>
+      </ol>
+      <div class="s-verdict lose">✗ The listicle-holder owns the AI answer. Exotel has one listicle against this query. Ozonetel has eight.</div>
+    </div>
+
+    <div class="serp">
+      <div class="s-head"><span class="q-label">Q5</span><span class="q">"best contact center software india"</span><span class="q-geo">geo: IN · device: desktop</span></div>
+      <ol>
+        <li><span class="pos">AIO</span><span class="dom"><strong>Google AI Overview</strong> present — does not name Exotel</span></li>
+        <li><span class="pos">#2</span><span class="dom">capterra.in <em>· Talkdesk listed first</em></span></li>
+        <li><span class="pos">#3</span><span class="dom">sansoftwares.com</span></li>
+        <li><span class="pos">#4</span><span class="dom">enterprisebot.ai <em>· "Genesys Cloud CX #1"</em></span></li>
+        <li><span class="pos">#6</span><span class="dom">pulse.in</span></li>
+        <li class="exotel"><span class="pos">#5</span><span class="dom"><strong>exotel.com</strong> <em>/blog/best-contact-center-solution-provider-in-india · May 2024 blog, 23 months old</em></span></li>
+        <li><span class="pos">#8</span><span class="dom">ariatelecom.net</span></li>
+        <li><span class="pos">#10</span><span class="dom">techjockey.com <em>· top suggestion: Knowlarity, not Exotel</em></span></li>
+        <li><span class="pos">#11</span><span class="dom">gartner.com <em>· Amazon Connect</em></span></li>
+      </ol>
+      <div class="s-verdict">⚠ Exotel ranks on a 23-month-old blog. AI Overview doesn't cite Exotel. Directory (Techjockey) recommends Knowlarity over Exotel.</div>
+    </div>
+
+    <div class="serp">
+      <div class="s-head"><span class="q-label">Q6</span><span class="q">"whatsapp api"</span><span class="q-geo">geo: IN · LLM volume: 200/mo (highest CPaaS-adjacent term)</span></div>
+      <ol>
+        <li><span class="pos">LLM</span><span class="dom">ChatGPT / Perplexity cite: <strong>Gupshup, AiSensy, Interakt</strong> as India-market defaults</span></li>
+        <li class="not-exotel"><span class="pos">—</span><span class="dom"><em>Exotel has /products/whatsapp-business-api/ but is not cited in LLM answers for this query</em></span></li>
+      </ol>
+      <div class="s-verdict lose">✗ This is the single highest-volume LLM query in the CPaaS-adjacent space (200/mo India). Exotel has a product page for it. Zero citation.</div>
+    </div>
+
+    <div class="serp">
+      <div class="s-head"><span class="q-label">Q7</span><span class="q">"twilio alternative india"</span><span class="q-geo">geo: IN · 0 LLM queries tracked — under-exposed term</span></div>
+      <ol>
+        <li><span class="pos">—</span><span class="dom">Plivo, Ozonetel, DialNexa dominate the comparison pages</span></li>
+        <li><span class="pos">—</span><span class="dom">Exotel has <em>/blog/migrate-twilio-to-exotel-voice-ai-india/</em> (Feb 19 2026) — 58 days old, zero backlinks</span></li>
+      </ol>
+      <div class="s-verdict">⚠ Exotel made the move. Hasn't built the distribution around it.</div>
+    </div>
+  </section>
+
+  <section id="llm">
+    <h2><span class="sid">§03</span> LLM citation volume <span style="font-size:13px;color:var(--ink-3);font-weight:400;font-style:italic">· DataForSEO AI Optimization API · India, Mar 2026</span></h2>
+    <p class="sub">Monthly LLM query volume for CPaaS-adjacent terms. These are the queries buyers are actually asking ChatGPT / Perplexity / Gemini.</p>
+
+    <div class="data-table">
+      <table>
+        <thead>
+          <tr><th>Keyword</th><th style="text-align:right">Mar 2026</th><th style="text-align:right">YoY growth</th><th>Read</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="keyword">whatsapp api</td><td class="num">200</td><td class="num growth-neg">-28%</td><td>Highest volume · Exotel under-indexed vs Gupshup</td></tr>
+          <tr class="exotel-row"><td class="keyword">exotel (brand)</td><td class="num">39</td><td class="num growth-pos">+34%</td><td>Solid but slow growth</td></tr>
+          <tr><td class="keyword">ozonetel (brand)</td><td class="num">29</td><td class="num growth-pos"><strong>+222%</strong></td><td><strong>Fastest-growing India CPaaS brand in LLMs</strong></td></tr>
+          <tr><td class="keyword">cloud telephony</td><td class="num">23</td><td class="num growth-pos">+28%</td><td>Legacy category term</td></tr>
+          <tr><td class="keyword">cpaas</td><td class="num">21</td><td class="num growth-neg">-22%</td><td>Buyers asking brand-specific queries now</td></tr>
+          <tr><td class="keyword">knowlarity</td><td class="num">19</td><td class="num growth-pos">+46%</td><td>Gupshup-owned; growing on acquisition halo</td></tr>
+          <tr><td class="keyword">call center software</td><td class="num">17</td><td class="num growth-pos">+6%</td><td>Flat</td></tr>
+          <tr><td class="keyword">ai voice agent</td><td class="num">7</td><td class="num growth-pos">+75%</td><td>Tiny base, fastest-growing by rate</td></tr>
+          <tr><td class="keyword">voice api</td><td class="num">5</td><td class="num growth-neg">-75%</td><td>Declining — buyers asking about agents, not APIs</td></tr>
+          <tr><td class="keyword">contact center software</td><td class="num">1</td><td class="num growth-neg">-66%</td><td>Collapsing — replaced by brand / capability queries</td></tr>
+          <tr><td class="keyword">ivr for business</td><td class="num">1</td><td class="num">—</td><td>Low; Exotel wins Google but low LLM volume</td></tr>
+          <tr><td class="keyword">twilio alternative india</td><td class="num none">—</td><td class="num">—</td><td>Unregistered — the emergent term to own</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="c-tag">The 6-month problem</div>
+      <p>Ozonetel grew from <strong>9 LLM queries/mo (Apr 2025)</strong> to <strong>29/mo (Mar 2026)</strong>. That's a <strong>3.2× jump in 12 months</strong>. Exotel grew from 29 to 39 — a 1.34× jump. If both curves extrapolate forward six months, Ozonetel overtakes Exotel on LLM citation volume and becomes the default AI answer for "best cloud telephony India".</p>
+      <p>Inverting that trajectory requires a concentrated backlink + G2 + listicle-authoring push starting in Q1. Not Q3.</p>
+    </div>
+  </section>
+
+  <section id="authority">
+    <h2><span class="sid">§04</span> Backlink authority — the India CPaaS scoreboard</h2>
+    <p class="sub">DataForSEO rank (0–1000 scale, higher = more authority). 18 direct and adjacent competitors, April 2026.</p>
+
+    <div class="bars">
+      <div class="bar-row top"><span class="bar-label">Twilio</span><span class="bar-track"><span class="bar-fill" style="width:55.5%"></span></span><span class="bar-num">555</span></div>
+      <div class="bar-row"><span class="bar-label">Vonage</span><span class="bar-track"><span class="bar-fill" style="width:48.2%"></span></span><span class="bar-num">482</span></div>
+      <div class="bar-row"><span class="bar-label">Airtel IQ</span><span class="bar-track"><span class="bar-fill" style="width:42.3%"></span></span><span class="bar-num">423</span></div>
+      <div class="bar-row"><span class="bar-label">Yellow.ai</span><span class="bar-track"><span class="bar-fill" style="width:40.5%"></span></span><span class="bar-num">405</span></div>
+      <div class="bar-row"><span class="bar-label">Gupshup</span><span class="bar-track"><span class="bar-fill" style="width:39.8%"></span></span><span class="bar-num">398</span></div>
+      <div class="bar-row"><span class="bar-label">CallHippo</span><span class="bar-track"><span class="bar-fill" style="width:37.3%"></span></span><span class="bar-num">373</span></div>
+      <div class="bar-row"><span class="bar-label">Netcore Cloud</span><span class="bar-track"><span class="bar-fill" style="width:36.9%"></span></span><span class="bar-num">369</span></div>
+      <div class="bar-row"><span class="bar-label">Plivo</span><span class="bar-track"><span class="bar-fill" style="width:34.4%"></span></span><span class="bar-num">344</span></div>
+      <div class="bar-row"><span class="bar-label">Kaleyra</span><span class="bar-track"><span class="bar-fill" style="width:34.3%"></span></span><span class="bar-num">343</span></div>
+      <div class="bar-row"><span class="bar-label">Haptik</span><span class="bar-track"><span class="bar-fill" style="width:34.2%"></span></span><span class="bar-num">342</span></div>
+      <div class="bar-row"><span class="bar-label">MyOperator</span><span class="bar-track"><span class="bar-fill" style="width:33.9%"></span></span><span class="bar-num">339</span></div>
+      <div class="bar-row exotel"><span class="bar-label">Exotel</span><span class="bar-track"><span class="bar-fill" style="width:33.4%"></span></span><span class="bar-num">334</span></div>
+      <div class="bar-row"><span class="bar-label">FreJun</span><span class="bar-track"><span class="bar-fill" style="width:31.8%"></span></span><span class="bar-num">318</span></div>
+      <div class="bar-row"><span class="bar-label">Knowlarity</span><span class="bar-track"><span class="bar-fill" style="width:31.6%"></span></span><span class="bar-num">316</span></div>
+      <div class="bar-row"><span class="bar-label">Tanla</span><span class="bar-track"><span class="bar-fill" style="width:30.1%"></span></span><span class="bar-num">301</span></div>
+      <div class="bar-row"><span class="bar-label">Route Mobile</span><span class="bar-track"><span class="bar-fill" style="width:29.0%"></span></span><span class="bar-num">290</span></div>
+      <div class="bar-row"><span class="bar-label">Ozonetel</span><span class="bar-track"><span class="bar-fill" style="width:28.3%"></span></span><span class="bar-num">283</span></div>
+      <div class="bar-row"><span class="bar-label">EnableX</span><span class="bar-track"><span class="bar-fill" style="width:27.0%"></span></span><span class="bar-num">270</span></div>
+    </div>
+
+    <div class="callout">
+      <div class="c-tag">Reading this</div>
+      <p>Raw backlink rank puts Exotel middle-of-pack — ahead of Ozonetel and Knowlarity. But rank alone misses the picture: <strong>what kind</strong> of backlinks, <strong>from where</strong>, and <strong>in which direction</strong>.</p>
+      <p>Exotel has 22,419 backlinks vs Ozonetel's 4,292 — a 5× raw advantage. But only 920 of Exotel's referring links are India-origin (vs Ozonetel's 1,205). And only 1,645 (8%) of Exotel's links are in article-context locations — the kind LLMs actually use to construct answers. The rest sit in footers, nav menus, and a .nl automated network that carries little weight.</p>
+    </div>
+  </section>
+
+  <section id="trajectory">
+    <h2><span class="sid">§05</span> Exotel's 12-month backlink trajectory</h2>
+    <p class="sub">New vs lost backlinks and referring domains, month-by-month · Apr 2025 → Apr 2026 · DataForSEO Backlinks timeseries</p>
+
+    <div class="data-table">
+      <table>
+        <thead>
+          <tr><th>Month</th><th style="text-align:right">New backlinks</th><th style="text-align:right">Lost backlinks</th><th style="text-align:right">Net ref. main domains</th><th>Signal</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Apr 2025</td><td class="num">350</td><td class="num">458</td><td class="num growth-pos">+30</td><td>Baseline</td></tr>
+          <tr><td>May 2025</td><td class="num">445</td><td class="num">544</td><td class="num growth-neg">-15</td><td>Quiet</td></tr>
+          <tr><td>Jun 2025</td><td class="num">852</td><td class="num">424</td><td class="num growth-neg">-7</td><td>Quiet</td></tr>
+          <tr><td>Jul 2025</td><td class="num">373</td><td class="num">381</td><td class="num growth-neg">-24</td><td>Quiet</td></tr>
+          <tr><td>Aug 2025</td><td class="num">669</td><td class="num">1,078</td><td class="num growth-pos">+56</td><td>PR push</td></tr>
+          <tr><td>Sep 2025</td><td class="num">858</td><td class="num num growth-neg"><strong>2,640</strong></td><td class="num growth-pos">+25</td><td>Cleanup event</td></tr>
+          <tr><td>Oct 2025</td><td class="num num growth-pos"><strong>5,642</strong></td><td class="num">454</td><td class="num growth-neg">-3</td><td>Major PR burst (analyst cycle)</td></tr>
+          <tr><td>Nov 2025</td><td class="num">805</td><td class="num">900</td><td class="num growth-pos"><strong>+167</strong></td><td>IDC Leader announcement fallout</td></tr>
+          <tr><td>Dec 2025</td><td class="num">515</td><td class="num">520</td><td class="num growth-neg">-29</td><td>Quiet</td></tr>
+          <tr class="exotel-row"><td>Jan 2026</td><td class="num">937</td><td class="num num growth-neg"><strong>6,171</strong></td><td class="num growth-neg"><strong>-18</strong></td><td><strong>Massive link loss event</strong></td></tr>
+          <tr><td>Feb 2026</td><td class="num">451</td><td class="num">583</td><td class="num growth-pos">+9</td><td>Recovery quiet</td></tr>
+          <tr><td>Mar 2026</td><td class="num">321</td><td class="num">578</td><td class="num growth-neg">-7</td><td>Publishing content, not earning links</td></tr>
+          <tr><td>Apr 2026 MTD</td><td class="num">151</td><td class="num">113</td><td class="num growth-pos">0</td><td>Flat</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="c-tag">The twelve-month picture</div>
+      <p><strong>Net referring main domains: -1,100 across the year.</strong> Peak acquisition in October 2025 (+5,642 backlinks, tied to analyst announcement push). Worst single month: January 2026, lost 6,171 backlinks — a de-indexing or link-graph cleanup event that was not offset by new acquisition. The Ameyo acquisition has not translated into link-graph consolidation.</p>
+    </div>
+  </section>
+
+  <section id="ozonetel">
+    <h2><span class="sid">§06</span> The Ozonetel race — the real India mid-market fight</h2>
+    <p class="sub">Side-by-side on the metrics that determine who LLMs quote by default.</p>
+
+    <div class="data-table">
+      <table>
+        <thead><tr><th>Metric</th><th style="text-align:right">Exotel</th><th style="text-align:right">Ozonetel</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr><td>DataForSEO rank (0–1000)</td><td class="num">334</td><td class="num">283</td><td>Exotel higher · but this is raw volume</td></tr>
+          <tr><td>Total backlinks</td><td class="num">22,419</td><td class="num">4,292</td><td>5× advantage · mostly low-quality</td></tr>
+          <tr><td>Referring domains</td><td class="num">2,159</td><td class="num">1,039</td><td>2× advantage</td></tr>
+          <tr><td>Article-context links</td><td class="num">1,645 (8%)</td><td class="num"><strong>1,011 (24%)</strong></td><td><strong>Ozonetel's links are 3× more editorial-quality</strong></td></tr>
+          <tr><td>India-origin referring links</td><td class="num">920</td><td class="num"><strong>1,205</strong></td><td><strong>Ozonetel has a stronger India backlink graph</strong></td></tr>
+          <tr><td>Spam score</td><td class="num">19</td><td class="num">17</td><td>Ozonetel marginally cleaner</td></tr>
+          <tr class="exotel-row"><td>G2 reviews</td><td class="num">89</td><td class="num"><strong>623</strong></td><td><strong>Ozonetel has 7× the review authority</strong></td></tr>
+          <tr class="exotel-row"><td>LLM query volume (Mar 2026)</td><td class="num">39</td><td class="num">29</td><td>Exotel ahead — for now</td></tr>
+          <tr class="exotel-row"><td>LLM growth rate (YoY)</td><td class="num growth-pos">+34%</td><td class="num growth-pos"><strong>+222%</strong></td><td><strong>Ozonetel growing 6.5× faster</strong></td></tr>
+          <tr><td>G2 overall rating</td><td class="num">4.4 / 5</td><td class="num">4.6 / 5</td><td>Ozonetel wins on the card</td></tr>
+          <tr><td>Listicle footprint (India)</td><td class="num">1</td><td class="num">8+</td><td>Ozonetel authors category-defining lists monthly</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="c-tag">Competitive read</div>
+      <p>Exotel has more raw backlinks. Ozonetel has a leaner, sharper, more editorial, more India-focused, more review-backed, faster-growing profile — exactly the attributes LLMs optimise for when constructing an answer. For every "best cloud telephony India" query, Ozonetel shows up with a freshly-published listicle and 623 reviews worth of corroboration.</p>
+      <p><strong>At current trajectory, Ozonetel passes Exotel on LLM citation volume in H2 2026 and becomes the default AI answer for the India mid-market.</strong></p>
+    </div>
+  </section>
+
+  <section id="market">
+    <h2><span class="sid">§07</span> The competitor map</h2>
+    <p class="sub">Who Exotel is actually up against — grouped by where they attack from.</p>
+
+    <div class="data-table">
+      <table>
+        <thead><tr><th>Segment</th><th>Players</th><th>Attack vector</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>India-native CCaaS</strong></td>
+            <td>Ozonetel · Knowlarity (Gupshup) · MyOperator · Tata Tele Smartflo · Airtel IQ · CallHippo · Servetel / Acefone · FreJun · TeleCMI · Bonvoice</td>
+            <td>Mid-market pricing, TRAI compliance, Indian phone numbers, fast activation</td>
+          </tr>
+          <tr>
+            <td><strong>Global CPaaS (developer)</strong></td>
+            <td>Twilio · Plivo · Vonage · MessageBird / Bird · Sinch · Infobip · Telnyx · Bandwidth</td>
+            <td>API quality, global reach, enterprise SLAs, developer mindshare</td>
+          </tr>
+          <tr>
+            <td><strong>Messaging-first CPaaS</strong></td>
+            <td>Gupshup · Tanla · Route Mobile · Netcore · AiSensy · Interakt · WATI</td>
+            <td>WhatsApp API (200 LLM queries/mo — Exotel underexposed), SMS volume</td>
+          </tr>
+          <tr class="exotel-row">
+            <td><strong>AI voice-native (India)</strong></td>
+            <td>Bolna · Gnani · SquadStack · VoiceGenie · Awaz · VoiceInfra · Vomyra · DialNexa · FreJun · Skit · Awaaz De · Nurix · Vodex · Ori</td>
+            <td><strong>Eating Exotel's "AI-Led CX" repositioning with TRAI-compliant, Hinglish-tuned, +91-native voice agents</strong></td>
+          </tr>
+          <tr>
+            <td><strong>AI voice-native (global via India partners)</strong></td>
+            <td>Vapi · Retell · Bland · Synthflow · PolyAI · ElevenLabs Conversational</td>
+            <td>Narrative pull with CTOs, developer toolchain, deployed via India partners</td>
+          </tr>
+          <tr>
+            <td><strong>Infra-tier squeeze</strong></td>
+            <td>ElevenLabs (powers Cars24, Razorpay, Unacademy, Meesho, Apna — 7.5M AI interview mins)</td>
+            <td>Claiming the "voice quality" premium — commoditising Exotel's voice layer</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="g2">
+    <h2><span class="sid">§08</span> G2 review authority — where India buyers actually validate</h2>
+    <p class="sub">G2 review volume per India CPaaS brand. Reddit is sparse for this market — buying happens on G2 + WhatsApp groups + LinkedIn.</p>
+
+    <div class="bars">
+      <div class="bar-row top"><span class="bar-label">JustCall (global)</span><span class="bar-track"><span class="bar-fill" style="width:100%"></span></span><span class="bar-num">2,347</span></div>
+      <div class="bar-row"><span class="bar-label">Ozonetel</span><span class="bar-track"><span class="bar-fill" style="width:26.5%"></span></span><span class="bar-num">623</span></div>
+      <div class="bar-row"><span class="bar-label">Ameyo by Exotel</span><span class="bar-track"><span class="bar-fill" style="width:10.7%"></span></span><span class="bar-num">251</span></div>
+      <div class="bar-row exotel"><span class="bar-label">Exotel (core)</span><span class="bar-track"><span class="bar-fill" style="width:3.8%"></span></span><span class="bar-num">89</span></div>
+      <div class="bar-row"><span class="bar-label">MyOperator</span><span class="bar-track"><span class="bar-fill" style="width:1.4%"></span></span><span class="bar-num">33</span></div>
+      <div class="bar-row"><span class="bar-label">Knowlarity</span><span class="bar-track"><span class="bar-fill" style="width:0.9%"></span></span><span class="bar-num">22</span></div>
+    </div>
+
+    <div class="callout">
+      <div class="c-tag">Why this matters</div>
+      <p>When ChatGPT or Perplexity constructs an answer to "best cloud telephony India", it heavily weights third-party review sites. Ozonetel's 623 reviews give it 7× the corroboration Exotel core has — and 2.5× more than Ameyo-by-Exotel. Even combining Exotel + Ameyo (89 + 251 = 340), Ozonetel still leads 1.83×.</p>
+      <p>Closing this gap is not a content play. It's a systematic G2 review solicitation campaign across 12 months, tied to onboarding, support moments, and CSM motion. The Hub module tracks this weekly.</p>
+    </div>
+  </section>
+
+  <section id="reads">
+    <h2><span class="sid">§09</span> What the data adds up to</h2>
+    <p>Five compounding reads from everything above.</p>
+
+    <div class="callout">
+      <div class="c-tag">Read 01 · The search surface is splitting</div>
+      <p>Google SERP still favours Exotel on legacy terms ("cloud telephony", "IVR for business"). LLM answer layer already favours Ozonetel / Bolna / Gnani / prospeo. Buyer behaviour is migrating from the former to the latter. Exotel's legacy strength does not cover the new surface.</p>
+    </div>
+
+    <div class="callout">
+      <div class="c-tag">Read 02 · Ozonetel's compounding is the immediate threat</div>
+      <p>+222% YoY LLM citations. 623 G2 reviews. 8+ category listicles. Publishing monthly. This is a compounding motion, and Exotel has nothing matching it. Every month Exotel does not match the cadence, the gap widens by approximately 5–7%.</p>
+    </div>
+
+    <div class="callout">
+      <div class="c-tag">Read 03 · Exotel's content is airborne, its authority is on the ground</div>
+      <p>20+ Q1 2026 pillar posts — the strongest AI-Led-CX thesis on any India CPaaS site. None of them are indexed, linked, or cited yet. "Why US voice AI breaks in India" (March 31) is 18 days old and has zero backlinks. Content quality is ~9/10. Distribution surface is ~2/10.</p>
+    </div>
+
+    <div class="callout">
+      <div class="c-tag">Read 04 · The IDC Leader placement is undervalued</div>
+      <p>Exotel earned IDC MarketScape Leader (Nov 25) + Frost Radar (Dec 26) + Omdia next-gen CPaaS (Dec 30) in a five-week window. Individually, each of these is a 6-month LinkedIn + PR + sales-enablement campaign. Collectively, they were announced and then left to sit. This is the highest-leverage unused asset on the table.</p>
+    </div>
+
+    <div class="callout">
+      <div class="c-tag">Read 05 · The window closes in 6–8 months</div>
+      <p>Search surfaces calcify. Once LLMs repeatedly cite Ozonetel for "best cloud telephony India", they learn the citation as ground truth and reinforce it. Overturning a calcified LLM citation takes 3–5× the effort of winning it while the surface is still fluid. The window is now.</p>
+    </div>
+  </section>
+
+  <div class="sources">
+    <h3>Sources &amp; methodology</h3>
+    <ul>
+      <li><strong>SERP:</strong> DataForSEO <code>serp_organic_live_advanced</code> API — India location, English, desktop, top-20 depth. Queries pulled live April 18, 2026.</li>
+      <li><strong>Backlinks:</strong> DataForSEO Backlinks API — <code>bulk_ranks</code> (18 targets), <code>backlinks_summary</code> (Exotel), <code>backlinks_timeseries_new_lost_summary</code> (12 months), <code>bulk_pages_summary</code> (8 competitors).</li>
+      <li><strong>LLM volume:</strong> DataForSEO AI Optimization API — <code>ai_optimization_keyword_data_search_volume</code>, India, English. 12-month series.</li>
+      <li><strong>G2 / Capterra:</strong> Manual pull of per-brand review counts, cross-referenced against vendor-published numbers (Ozonetel, Exotel, Knowlarity, MyOperator homepages).</li>
+      <li><strong>Competitor map:</strong> Exa web search + direct website crawl · 34 vendor sites analysed.</li>
+      <li><strong>Exotel content audit:</strong> exotel.com sitemap (288 URLs) pulled April 18, 2026 · full crawl of 16 priority pages (product, blog, competitor, newsroom).</li>
+    </ul>
+  </div>
+
+</main>
+
+<footer>
+  <div>pages.recurr.co / exotel-proposal / geo-research · April 2026</div>
+  <div><a href="/exotel-proposal/">← back to proposal</a></div>
+</footer>
+
+</body>
+</html>

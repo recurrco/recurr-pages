@@ -398,6 +398,74 @@
     .note-card p { margin-bottom: 12px; color: var(--ink); font-size: 15.5px; }
     .note-card p:last-child { margin-bottom: 0; }
 
+    /* Yellow highlight for content added vs Rakhi's original PDF */
+    mark.new {
+      background: #FFF3A3;
+      color: var(--ink);
+      padding: 0 3px;
+      border-radius: 2px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+    mark.new strong { color: var(--ink); }
+    .new-card {
+      background: linear-gradient(0deg, rgba(255,243,163,0.45), rgba(255,243,163,0.45));
+      border-left: 3px solid #E6B800;
+      padding-left: 14px !important;
+      padding-right: 14px !important;
+    }
+    .legend {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 16px; background: #FFF3A3;
+      border: 1px solid #E6B800; border-radius: 3px;
+      font-size: 12px; color: var(--ink-2); font-style: italic;
+      margin-top: 30px;
+    }
+    .legend::before {
+      content: ""; width: 14px; height: 14px;
+      background: #FFF3A3; border: 1px solid #E6B800; border-radius: 2px;
+    }
+
+    /* Scoreboard — today's loss on GEO */
+    .scoreboard {
+      margin: 32px 0; border: 1px solid var(--rule); border-radius: 3px;
+      overflow: hidden; background: var(--card-bg);
+    }
+    .scoreboard .sb-head {
+      padding: 14px 20px; background: var(--ink); color: #FBFAF8;
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+    }
+    .scoreboard .sb-head .sb-sub { color: #C4B5FD; font-weight: 400; font-size: 12px; font-style: italic; }
+    .scoreboard table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .scoreboard th {
+      text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--rule);
+      font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--ink-3);
+    }
+    .scoreboard td {
+      padding: 14px 16px; border-bottom: 1px solid var(--rule); vertical-align: middle;
+      color: var(--ink-2);
+    }
+    .scoreboard tr:last-child td { border-bottom: none; }
+    .scoreboard td.query {
+      font-style: italic; color: var(--ink); font-weight: 500;
+    }
+    .scoreboard td.rank {
+      font-variant-numeric: tabular-nums; font-weight: 700; letter-spacing: -0.01em;
+    }
+    .scoreboard td.rank.win { color: #2E8B57; }
+    .scoreboard td.rank.lose { color: #C0392B; }
+    .scoreboard td.rank.warn { color: #B47821; }
+    .scoreboard td.winner {
+      font-size: 13px; color: var(--ink-3);
+    }
+    .scoreboard td.winner strong { color: var(--ink); }
+    .scoreboard .sb-foot {
+      padding: 14px 20px; background: var(--hi);
+      font-size: 13px; color: var(--ink-2); font-style: italic;
+    }
+
     /* Signoff */
     .signoff { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--rule); }
     .signoff p { color: var(--ink); margin-bottom: 6px; }
@@ -431,6 +499,7 @@
       <li><a href="#discovery">What we heard from your team</a></li>
       <li><a href="#industry">The industry shift</a></li>
       <li><a href="#ai-search">Buyers won't google. They'll ask an AI.</a></li>
+      <li style="margin-left:22px;list-style:none"><a href="/exotel-proposal/geo-research/" style="font-size:11.5px;color:var(--accent)">→ GEO research page</a></li>
       <li><a href="#opportunities">Three compounding opportunities</a></li>
       <li><a href="#tracks">Two parallel tracks</a></li>
       <li><a href="#pilot">A three-month pilot</a></li>
@@ -441,6 +510,7 @@
       <li><a href="#begin">Let's begin</a></li>
       <li><a href="#appendix">Appendix</a></li>
     </ol>
+    <div class="legend">Yellow = new vs Rakhi's original PDF</div>
   </nav>
 
   <article class="content">
@@ -479,35 +549,91 @@
     </section>
 
     <section id="ai-search">
-      <h2>Buyers won't google. They'll ask an AI.</h2>
-      <p class="lede">Traditional SEO is where you're strong. AI-first search is where the buyer is moving — and where your new positioning currently has no footprint.</p>
+      <h2>Buyers won't google. <mark class="new">They are already asking an AI. You are already losing that answer.</mark></h2>
+      <p class="lede"><mark class="new">This is not a future risk. It's the current state of your SERP and LLM footprint — measured, not projected.</mark></p>
 
-      <div class="compare">
-        <div class="col">
-          <div class="tag">Today · Google SERP</div>
-          <h3>Traditional search behaviour</h3>
-          <ul>
-            <li>Buyer types <em>"cloud telephony India"</em></li>
-            <li>Google returns ten blue links</li>
-            <li><strong>Exotel ranks #1</strong> for "cloud telephony"</li>
-            <li><strong>Exotel ranks #1</strong> for "IVR for business" (cited in Google AI Overview)</li>
-          </ul>
-          <div class="close">Exotel wins this surface — for now.</div>
+      <mark class="new">
+      <div class="scoreboard">
+        <div class="sb-head">
+          <span>GEO scoreboard — Exotel's rank in India SERP and LLM answers today</span>
+          <span class="sb-sub">April 2026 · DataForSEO + manual SERP pulls</span>
         </div>
-        <div class="col dark">
-          <div class="tag">6–8 months from now · LLM answer layer</div>
-          <h3>AI-first search behaviour</h3>
-          <ul>
-            <li>Buyer asks Perplexity / ChatGPT: <em>"Best AI voice agent for BFSI in India, TRAI-compliant"</em></li>
-            <li>LLM cites: <em>Bolna, Gnani, SquadStack, Vapi, Vomyra</em></li>
-            <li>Listicle-holders own the answer (prospeo, Ozonetel blog, DialNexa)</li>
-            <li>Exotel: <strong>invisible in the citation</strong></li>
-          </ul>
-          <div class="close hi">Your AI-Led CX positioning has no footprint here yet.</div>
+        <table>
+          <thead>
+            <tr><th>Buyer query</th><th>Exotel rank</th><th>Who wins the answer</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="query">"cloud telephony india"</td>
+              <td class="rank win">#1</td>
+              <td class="winner"><strong>Exotel</strong> — cloud-telephony product page</td>
+            </tr>
+            <tr>
+              <td class="query">"ivr for business"</td>
+              <td class="rank win">#1 + AI Overview</td>
+              <td class="winner"><strong>Exotel</strong> — cited inside Google AI Overview</td>
+            </tr>
+            <tr>
+              <td class="query">"ai voice agent india"</td>
+              <td class="rank lose">Not in top 20</td>
+              <td class="winner"><strong>Bolna, Gnani, SquadStack, Vapi, VoiceGenie</strong></td>
+            </tr>
+            <tr>
+              <td class="query">"cpaas providers india"</td>
+              <td class="rank lose">Not in top 10</td>
+              <td class="winner"><strong>Pulse, Times Mobile, Route Mobile, Tata, Kaleyra</strong></td>
+            </tr>
+            <tr>
+              <td class="query">"best contact center software india"</td>
+              <td class="rank warn">#5 on a May 2024 blog</td>
+              <td class="winner"><strong>Capterra, Enterprise Bot (Genesys #1), Techjockey (Knowlarity)</strong></td>
+            </tr>
+            <tr>
+              <td class="query">"whatsapp api" <span style="color:var(--ink-4)">(200 LLM queries/mo)</span></td>
+              <td class="rank lose">Not cited</td>
+              <td class="winner"><strong>Gupshup, AiSensy, Interakt</strong> — Exotel exposed on highest-volume query</td>
+            </tr>
+            <tr>
+              <td class="query">"twilio alternative india"</td>
+              <td class="rank lose">Not in top 10</td>
+              <td class="winner"><strong>Plivo, Ozonetel, DialNexa</strong></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="sb-foot">Exotel wins the two queries buyers used in <strong>2022</strong>. Exotel is invisible on the four queries buyers are asking <strong>today</strong>.</div>
+      </div>
+      </mark>
+
+      <h3><mark class="new">The race you are already losing, in three numbers</mark></h3>
+      <div class="signals">
+        <div class="signal new-card">
+          <div class="num">01</div>
+          <h3><mark class="new">Ozonetel's LLM citations are growing 6.5× faster than yours</mark></h3>
+          <p><mark class="new">LLM query volume for "Ozonetel" — the core mid-market competitor — went from 9/mo (Apr 2025) to 29/mo (Mar 2026). <strong>+222% YoY.</strong> Exotel brand went from 29 to 39. <strong>+34%.</strong> At current trajectory, Ozonetel passes Exotel on LLM citation volume in six months and becomes the default AI answer for "best cloud telephony India".</mark></p>
+          <span class="stat">+222% vs +34%</span>
+        </div>
+        <div class="signal new-card">
+          <div class="num">02</div>
+          <h3><mark class="new">Your backlink graph is decaying right now</mark></h3>
+          <p><mark class="new">Across the last twelve months Exotel.com has <strong>net lost 1,100 referring main domains</strong>. January 2026 alone lost 6,171 backlinks. Of the 2,159 referring domains still standing, only 920 are India-origin — the rest are a .nl automated network that will either be de-indexed by Google or has already stopped carrying weight. <strong>Authority is leaking while content is being published.</strong></mark></p>
+          <span class="stat">-1,100 domains / year</span>
+        </div>
+        <div class="signal new-card">
+          <div class="num">03</div>
+          <h3><mark class="new">Ozonetel has 7× your G2 review authority</mark></h3>
+          <p><mark class="new">G2 is where India mid-market buyers validate vendors before they ask an LLM. <strong>Ozonetel: 623 reviews.</strong> Ameyo-by-Exotel: 251. <strong>Exotel core: 89.</strong> That 7× gap is the reason LLMs cite Ozonetel's listicle blog as the default answer for "best cloud telephony India" — they cite the most-reviewed source. Closing this gap is a 9–12 month campaign, not a month.</mark></p>
+          <span class="stat">623 vs 89</span>
         </div>
       </div>
 
-      <p>You published the definitive piece on why US voice AI breaks in India on March 31. It's one of the strongest pieces of category thought leadership on any India CPaaS site. It's too new to be indexed, linked, or cited. Your story is <strong>six months ahead of your indexing</strong> — see <a class="inline" href="#appendix-a">Appendix A</a> for the data.</p>
+      <blockquote class="pull">
+        <mark class="new">Every week Exotel does not fix its LLM citation and backlink profile, the gap compounds. In 6–8 months the AI answer calcifies away from you, and the cost of overturning it becomes 3–5× more expensive than the cost of defending it today.</mark>
+        <cite><mark class="new">Data behind this → <a class="inline" href="/exotel-proposal/geo-research/">geo-research</a></mark></cite>
+      </blockquote>
+
+      <p><mark class="new">Exotel published the definitive piece on why US voice AI breaks in India on March 31, 2026. It's one of the strongest pieces of category thought leadership on any India CPaaS site. It's 18 days old, has zero backlinks, and is invisible in ChatGPT and Perplexity answers. The content is done. The <strong>authority transfer</strong> has not started.</mark></p>
+
+      <p><mark class="new">See the full dataset, query by query, at <a class="inline" href="/exotel-proposal/geo-research/"><strong>/exotel-proposal/geo-research</strong></a>.</mark></p>
     </section>
 
     <section id="opportunities">
@@ -518,20 +644,20 @@
         <div class="signal">
           <div class="num">01</div>
           <h3>SEO / AEO growth multiplier</h3>
-          <p>Strong SEO foundation; AI search (AEO / GEO) is the next frontier. India CPaaS = $1.38B → $3.9B by 2031 (23.1% CAGR). Voice AI = 34.8% CAGR to $47.5B globally. The surfaces buyers use to evaluate you are moving faster than you are indexing on them.</p>
-          <span class="stat">Market doubling every 3 years</span>
+          <p>Strong SEO foundation; AI search (AEO / GEO) is the next frontier. <mark class="new">India CPaaS = $1.38B → $3.9B by 2031 (23.1% CAGR). Voice AI = 34.8% CAGR to $47.5B globally. The surfaces buyers use to evaluate you are moving faster than you are indexing on them.</mark></p>
+          <mark class="new"><span class="stat">Market doubling every 3 years</span></mark>
         </div>
         <div class="signal">
           <div class="num">02</div>
           <h3>PMM team overload</h3>
-          <p>Strategy is a casualty of execution. Twenty pillar pieces, a platform launch, three analyst wins, and an FY25 turnaround announcement in one quarter with two PMMs. The content engine is running hot. Distribution isn't keeping pace.</p>
-          <span class="stat">2 PMMs · $52M ARR · 5 geographies</span>
+          <p>Strategy is a casualty of execution. <mark class="new">Twenty pillar pieces, a platform launch, three analyst wins, and an FY25 turnaround announcement in one quarter with two PMMs. The content engine is running hot. Distribution isn't keeping pace.</mark></p>
+          <mark class="new"><span class="stat">2 PMMs · $52M ARR · 5 geographies</span></mark>
         </div>
-        <div class="signal">
+        <div class="signal new-card">
           <div class="num">03</div>
-          <h3>Central nervous system gap</h3>
-          <p>Exotel has a platform thesis but no unified layer carrying it. PMM, SEO, Sales, AR each operate from their own dashboard. No one has a real-time view of how Harmony, AgentStream, and the IDC Leader placement are landing in analyst, LLM, and buyer mindshare. Marketing reacts to competitor moves instead of seeing them weeks earlier.</p>
-          <span class="stat">Zero unified signal layer today</span>
+          <h3><mark class="new">Central nervous system gap</mark></h3>
+          <p><mark class="new">Exotel has a platform thesis but no unified layer carrying it. PMM, SEO, Sales, AR each operate from their own dashboard. No one has a real-time view of how Harmony, AgentStream, and the IDC Leader placement are landing in analyst, LLM, and buyer mindshare. Marketing reacts to competitor moves instead of seeing them weeks earlier.</mark></p>
+          <mark class="new"><span class="stat">Zero unified signal layer today</span></mark>
         </div>
       </div>
     </section>
@@ -546,10 +672,10 @@
           <h3>SEO + AEO content foundation</h3>
           <div class="t-sub">Build Exotel's AI search visibility before competitors do.</div>
           <ul>
-            <li>5 priority keyword clusters mapped (India CPaaS market = $1.38B → $3.9B by 2031)</li>
-            <li>Bottom-of-funnel pages targeting buyer questions AI surfaces are asking</li>
-            <li>Structured pages LLMs can surface — AEO for ChatGPT, Perplexity, Gemini</li>
-            <li>Competitive gap analysis across Google SERP and LLM citations</li>
+            <li>5 priority keyword clusters mapped <mark class="new">(India CPaaS market = $1.38B → $3.9B by 2031)</mark></li>
+            <li>Bottom-of-funnel <mark class="new">pages targeting buyer questions AI surfaces are asking</mark></li>
+            <li>Structured pages LLMs can surface <mark class="new">— AEO for ChatGPT, Perplexity, Gemini</mark></li>
+            <li>Competitive gap analysis across Google SERP <mark class="new">and LLM citations</mark></li>
           </ul>
         </div>
         <div class="track">
@@ -557,10 +683,10 @@
           <h3>PMM strategic + execution support</h3>
           <div class="t-sub">Close the gap between pipeline and closed-won.</div>
           <ul>
-            <li>Win / loss analysis using HubSpot + Salesforce data</li>
-            <li>Funnel gap closing — every stage tied to a measurable lift</li>
-            <li>Competitive battlecards + objection handling for sales</li>
-            <li>IDC Leader + Frost Radar + Omdia amplification strategy</li>
+            <li>Win / loss analysis using <mark class="new">HubSpot + Salesforce</mark> data</li>
+            <li><mark class="new">Funnel gap closing — every stage tied to a measurable lift</mark></li>
+            <li>Competitive battlecards + objection handling <mark class="new">for sales</mark></li>
+            <li><mark class="new">IDC Leader + Frost Radar + Omdia</mark> amplification strategy</li>
           </ul>
         </div>
       </div>
@@ -599,8 +725,8 @@
       <div class="totals"><span>Combined 3-month pilot</span><strong>$6,000 / month · $18,000 total</strong></div>
     </section>
 
-    <section id="hub">
-      <h2>The third module: a living intelligence hub.</h2>
+    <section id="hub" class="new-card" style="padding:32px;border-radius:4px">
+      <h2><mark class="new">The third module: a living intelligence hub.</mark></h2>
       <p class="lede">Exotel has done the hard work of building a platform thesis. What's missing is a central nervous system that carries it — across teams, surfaces, and weeks.</p>
 
       <p>The Intelligence Hub is two things in one surface. An <strong>Internal GTM Hub</strong> so every PMM, sales, SEO, and AR person is operating from the same truth about positioning, battlecards, wins and losses, customer voice, and analyst proof. And a <strong>Competitive Intelligence Dashboard</strong> that watches the market around Exotel in real time — SERP share, LLM citations, competitor launches, G2 velocity, backlink authority, community sentiment — and returns a weekly prioritised feed.</p>
@@ -648,8 +774,8 @@
       <p class="lede">This is not a Notion doc. It's a living intelligence graph. Its dependencies are real, and it needs 30–60 days to become useful — <a class="inline" href="#appendix-c">see Appendix C</a>.</p>
     </section>
 
-    <section id="hub-pricing">
-      <h2>Hub module pricing.</h2>
+    <section id="hub-pricing" class="new-card" style="padding:32px;border-radius:4px">
+      <h2><mark class="new">Hub module pricing.</mark></h2>
       <p class="lede">Q1 setup is one payment. Q2–Q4 is a subscription for the weekly operation.</p>
 
       <div class="tracks">
@@ -688,17 +814,17 @@
       <p class="lede">Three modules. Fully integrated. Each can run independently — together they compound.</p>
 
       <div class="modules">
-        <div class="module">
-          <div class="m-num">01 · INTELLIGENCE HUB</div>
-          <h3>Intelligence Hub</h3>
-          <div class="m-sub">The central nervous system for GTM</div>
+        <div class="module new-card">
+          <div class="m-num"><mark class="new">01 · INTELLIGENCE HUB</mark></div>
+          <h3><mark class="new">Intelligence Hub</mark></h3>
+          <div class="m-sub"><mark class="new">The central nervous system for GTM</mark></div>
           <ul>
             <li>CRM + conversation + HubSpot integration</li>
-            <li>Competitor signal tracking (SERP, LLM, G2, Reddit)</li>
+            <li><mark class="new">Competitor signal tracking (SERP, LLM, G2, Reddit)</mark></li>
             <li>Market &amp; buyer insights feed</li>
-            <li>Weekly prioritised feed for PMM, Sales, SEO, AR</li>
+            <li><mark class="new">Weekly prioritised feed for PMM, Sales, SEO, AR</mark></li>
           </ul>
-          <div class="m-price"><span class="amt">$55,000</span><span class="unit">annual (Q1 + Q2–Q4)</span></div>
+          <div class="m-price"><span class="amt"><mark class="new">$55,000</mark></span><span class="unit"><mark class="new">annual (Q1 + Q2–Q4)</mark></span></div>
         </div>
         <div class="module">
           <div class="m-num">02 · SEO / AEO / GEO</div>
@@ -725,11 +851,11 @@
           <div class="m-price"><span class="amt">$40,000</span><span class="unit">annual</span></div>
         </div>
       </div>
-      <div class="totals"><span>Total annual engagement · All three modules</span><strong>$115,000</strong></div>
+      <div class="totals"><span>Total annual engagement · All three modules</span><strong><mark class="new">$115,000</mark></strong></div>
 
       <div class="note-card">
-        <div class="nc-tag">Naming note</div>
-        <p>The Intelligence Hub is built for Exotel, on Exotel's data, embedded in Exotel's workflows. Please do not call it "Kyndrev Intelligence Hub" or "Recurr Intelligence Hub" in any customer-facing surface. The name is to be finalised with the Exotel team at kickoff.</p>
+        <div class="nc-tag"><mark class="new">Naming note</mark></div>
+        <p><mark class="new">The Intelligence Hub is built for Exotel, on Exotel's data, embedded in Exotel's workflows. Please do not call it "Kyndrev Intelligence Hub" or "Recurr Intelligence Hub" in any customer-facing surface. The name is to be finalised with the Exotel team at kickoff.</mark></p>
       </div>
     </section>
 
@@ -744,46 +870,46 @@
           <div class="o-big">Baseline</div>
           <div class="o-tag">For all tracks</div>
           <ul>
-            <li>Internal Hub + CI Dashboard live</li>
-            <li>5 keyword clusters mapped + AEO pages scoped</li>
+            <li><mark class="new">Internal Hub + CI Dashboard live</mark></li>
+            <li>5 keyword clusters mapped <mark class="new">+ AEO pages scoped</mark></li>
             <li>Win / loss framework + first battlecards live</li>
-            <li>IDC / Frost / Omdia amplification kicked off</li>
+            <li><mark class="new">IDC / Frost / Omdia amplification kicked off</mark></li>
           </ul>
         </div>
         <div class="outcome">
           <div class="o-month">Month 6</div>
           <div class="o-label">Traction Visible</div>
-          <div class="o-big">+8–10%</div>
+          <div class="o-big"><mark class="new">+8–10%</mark></div>
           <div class="o-tag">Win rate improvement</div>
           <ul>
-            <li>+8–10pp win rate (India mid-market)</li>
-            <li>LLM citations: 3 → 10+ priority queries</li>
-            <li>Sales LinkedIn: 4–5 posts / rep / month</li>
+            <li><mark class="new">+8–10pp win rate (India mid-market)</mark></li>
+            <li><mark class="new">LLM citations: 3 → 10+ priority queries</mark></li>
+            <li>Sales LinkedIn: <mark class="new">4–5 posts / rep / month</mark></li>
             <li>KSA + UAE region-specific assets live</li>
           </ul>
         </div>
         <div class="outcome">
           <div class="o-month">Month 9</div>
           <div class="o-label">Pipeline Impact</div>
-          <div class="o-big">8–12 opps</div>
+          <div class="o-big"><mark class="new">8–12 opps</mark></div>
           <div class="o-tag">From content plays</div>
           <ul>
             <li>Inbound pipeline contribution from SEO / AEO</li>
-            <li>8–12 opportunities from content plays</li>
+            <li><mark class="new">8–12 opportunities from content plays</mark></li>
             <li>Full sales playbook deployed across regions</li>
-            <li>Hub weekly brief shaping exec decisions</li>
+            <li><mark class="new">Hub weekly brief shaping exec decisions</mark></li>
           </ul>
         </div>
         <div class="outcome">
           <div class="o-month">Month 12</div>
           <div class="o-label">PMM as Growth Engine</div>
-          <div class="o-big">25–30%+</div>
+          <div class="o-big"><mark class="new">25–30%+</mark></div>
           <div class="o-tag">Sustained win rate</div>
           <ul>
             <li>PMM operating at strategic level</li>
-            <li>+25–30pp win rate (India)</li>
-            <li>AI search presence across 15+ clusters</li>
-            <li>Exotel indexed as the category authority for AI-Led CX in India</li>
+            <li><mark class="new">+25–30pp win rate (India)</mark></li>
+            <li><mark class="new">AI search presence across 15+ clusters</mark></li>
+            <li><mark class="new">Exotel indexed as the category authority for AI-Led CX in India</mark></li>
           </ul>
         </div>
       </div>
@@ -802,32 +928,19 @@
       </div>
     </section>
 
-    <section id="appendix">
-      <h2>Appendix</h2>
-      <p class="lede">Supporting data and notes referenced throughout the proposal.</p>
+    <section id="appendix" class="new-card" style="padding:32px;border-radius:4px">
+      <h2><mark class="new">Appendix</mark></h2>
+      <p class="lede"><mark class="new">Supporting data and notes referenced throughout the proposal.</mark></p>
       <ul class="appendix">
-        <li><a href="#appendix-a"><span class="a-text"><strong>A. SEO / AEO data support</strong><div class="desc">DataForSEO + Exa + SERP research · India target market</div></span></a></li>
-        <li><a href="#appendix-b"><span class="a-text"><strong>B. Industry &amp; CX trends</strong><div class="desc">Who is stealing business and the movements behind it</div></span></a></li>
-        <li><a href="#appendix-c"><span class="a-text"><strong>C. How the Hub works</strong><div class="desc">CI Dashboard dependencies and 30–60 day setup timeline</div></span></a></li>
-        <li><a href="#appendix-d"><span class="a-text"><strong>D. Internal note</strong><div class="desc">A reframe suggestion — for Rakhi</div></span></a></li>
+        <li><a href="/exotel-proposal/geo-research/" target="_blank"><span class="a-text"><strong><mark class="new">A. GEO research — the full dataset</mark></strong><div class="desc"><mark class="new">Query-by-query SERP, backlinks, LLM citations, India competitor map · dedicated page</mark></div></span></a></li>
+        <li><a href="#appendix-b"><span class="a-text"><strong><mark class="new">B. Industry &amp; CX trends</mark></strong><div class="desc"><mark class="new">Who is stealing business and the movements behind it</mark></div></span></a></li>
+        <li><a href="#appendix-c"><span class="a-text"><strong><mark class="new">C. How the Hub works</mark></strong><div class="desc"><mark class="new">CI Dashboard dependencies and 30–60 day setup timeline</mark></div></span></a></li>
+        <li><a href="#appendix-d"><span class="a-text"><strong><mark class="new">D. Internal note</mark></strong><div class="desc"><mark class="new">A reframe suggestion — for Rakhi</mark></div></span></a></li>
       </ul>
     </section>
 
-    <section id="appendix-a">
-      <h2>A. What the data says.</h2>
-      <p class="lede">The AI search shift, backed by India-targeted data from DataForSEO, Exa, and SERP research.</p>
-
-      <div class="signals">
-        <div class="signal"><div class="num">01</div><h3>SERP reality (India)</h3><p>Exotel ranks #1 for <em>"cloud telephony India"</em> and <em>"IVR for business"</em> (cited inside Google AI Overview). Invisible for <em>"AI voice agent India"</em> and <em>"CPaaS providers India"</em>, where Bolna, Gnani, SquadStack, and Vapi lead.</p></div>
-        <div class="signal"><div class="num">02</div><h3>LLM citation volume (India)</h3><p>Monthly LLM queries in Mar 2026: WhatsApp API 200 · <strong>Exotel 39</strong> · Ozonetel 29 · Knowlarity 19. Ozonetel AI-search growth <strong>+222% YoY</strong> vs Exotel +34%.<span class="stat">Ozonetel growing 6.5× faster</span></p></div>
-        <div class="signal"><div class="num">03</div><h3>Backlink authority trajectory</h3><p>Exotel rank 334 / 1000 — middle of the pack. 22,419 backlinks but only 920 from India. <strong>Net -1,100 referring main domains</strong> in the last 12 months. January 2026 alone: -6,171 backlinks.</p></div>
-        <div class="signal"><div class="num">04</div><h3>The Ozonetel race</h3><p>G2 review volume: Ozonetel <strong>623</strong> · Ameyo-by-Exotel 251 · Exotel 89. Ozonetel publishes a fresh listicle, comparison, or VoIP guide every month — and LLMs cite these as default answers.</p></div>
-        <div class="signal"><div class="num">05</div><h3>Exotel content lag</h3><p>20+ pillar AI-Led CX posts shipped in Q1 2026 — <em>Why US voice AI breaks in India</em>, <em>RBI-compliant AI collections</em>, <em>Hinglish benchmarks for Indian banks</em>. Strong thesis. Too new to index. <strong>Authority transfer is the gap.</strong></p></div>
-      </div>
-    </section>
-
-    <section id="appendix-b">
-      <h2>B. Who is stealing business.</h2>
+    <section id="appendix-b" class="new-card" style="padding:32px;border-radius:4px">
+      <h2><mark class="new">B. Who is stealing business.</mark></h2>
       <p class="lede">Five movements reshaping the India CX + CPaaS market around Exotel.</p>
 
       <div class="signals">
@@ -839,8 +952,8 @@
       </div>
     </section>
 
-    <section id="appendix-c">
-      <h2>C. How the Hub works.</h2>
+    <section id="appendix-c" class="new-card" style="padding:32px;border-radius:4px">
+      <h2><mark class="new">C. How the Hub works.</mark></h2>
       <p class="lede">Why the Hub needs 30–60 days before it's useful. The dependencies are real.</p>
 
       <div class="quadrants">
@@ -873,8 +986,8 @@
       <p><strong>Dependencies to move on Day 1:</strong> data access approvals (HubSpot / Salesforce / Gong), OAuth sign-offs, internal sign-off on the topic + competitor model, and one working session with Exotel to decide what the Hub should <em>not</em> do (scope control is the single biggest risk).</p>
     </section>
 
-    <section id="appendix-d">
-      <h2>D. Internal note — for Rakhi.</h2>
+    <section id="appendix-d" class="new-card" style="padding:32px;border-radius:4px">
+      <h2><mark class="new">D. Internal note — for Rakhi.</mark></h2>
       <p class="lede">A reframe suggestion, not a contradiction.</p>
 
       <p>Your deck leads with "team bandwidth" and "win rate" as the pain. That's the PMM team's self-diagnosis. It's correct — but it's incomplete.</p>
