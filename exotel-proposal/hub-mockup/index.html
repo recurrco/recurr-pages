@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Intelligence Hub Mockup — Exotel × Recurr × Kyndrev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --indigo: #4338CA;
+      --indigo-light: #EEF2FF;
+      --indigo-dark: #3730A3;
+      --indigo-bg: #F5F3FF;
+      --green: #22C55E;
+      --green-light: #DCFCE7;
+      --amber: #F59E0B;
+      --amber-light: #FEF3C7;
+      --red: #EF4444;
+      --red-light: #FEE2E2;
+      --text: #1a1a1a;
+      --text-secondary: #555;
+      --text-muted: #999;
+      --bg: #F8F8F7;
+      --white: #fff;
+      --border: #E5E5E5;
+      --sidebar-bg: #FAFAFA;
+      --yellow: #FFF3A3;
+      --yellow-border: #E6B800;
+      --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Mockup banner */
+    .mockup-banner {
+      background: var(--yellow);
+      border-bottom: 1px solid var(--yellow-border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      font-size: 12.5px;
+      color: #3a2f00;
+    }
+    .mockup-banner .mb-left { display: flex; align-items: center; gap: 10px; }
+    .mockup-banner .mb-badge {
+      font-family: var(--mono); font-size: 10px; font-weight: 700;
+      padding: 2px 8px; background: #3a2f00; color: var(--yellow); border-radius: 2px;
+      letter-spacing: 0.1em;
+    }
+    .mockup-banner strong { color: #1a1300; font-weight: 700; }
+    .mockup-banner a {
+      color: #3a2f00; font-weight: 600; text-decoration: underline;
+      text-decoration-color: rgba(58,47,0,.3);
+    }
+    .mockup-banner a:hover { text-decoration-color: #3a2f00; }
+    @media (max-width: 720px) {
+      .mockup-banner { flex-direction: column; align-items: flex-start; gap: 6px; font-size: 11.5px; }
+    }
+
+    /* App shell */
+    .app {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      grid-template-rows: 56px 1fr;
+      height: calc(100vh - 42px);
+    }
+    @media (max-width: 720px) {
+      .app { grid-template-columns: 1fr; grid-template-rows: 56px auto 1fr; }
+      .sidebar { display: none; }
+    }
+
+    /* Top bar */
+    .topbar {
+      grid-column: 1 / -1;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 22px; z-index: 10;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 14px; }
+    .topbar-logo {
+      font-size: 15px; font-weight: 700;
+      color: var(--indigo); letter-spacing: -0.02em;
+    }
+    .topbar-sep { width: 1px; height: 20px; background: var(--border); }
+    .topbar-company { font-size: 14px; font-weight: 600; color: var(--text); }
+    .topbar-company .sub {
+      font-size: 11px; color: var(--text-muted); font-weight: 500;
+      margin-left: 8px; font-family: var(--mono);
+    }
+    .topbar-right { display: flex; align-items: center; gap: 18px; }
+    .topbar-week {
+      font-size: 11px; color: var(--text-muted); font-family: var(--mono);
+      font-weight: 600; letter-spacing: 0.03em;
+    }
+    .topbar-status {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--green); font-weight: 500;
+    }
+    .topbar-status .dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+      box-shadow: 0 0 0 2px rgba(34,197,94,.18);
+    }
+    .topbar-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--indigo-light); color: var(--indigo);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      padding: 20px 0; overflow-y: auto;
+    }
+    .sidebar-section { margin-bottom: 22px; }
+    .sidebar-section-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.09em; color: var(--text-muted);
+      padding: 0 20px; margin-bottom: 6px;
+    }
+    .sidebar-nav { list-style: none; }
+    .sidebar-nav li { position: relative; }
+    .sidebar-nav a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 20px; font-size: 13px; font-weight: 500;
+      color: var(--text-secondary); text-decoration: none;
+      transition: background 0.1s, color 0.1s; cursor: pointer;
+    }
+    .sidebar-nav a:hover { background: var(--white); color: var(--text); }
+    .sidebar-nav a.active {
+      background: var(--indigo-bg); color: var(--indigo); font-weight: 600;
+    }
+    .sidebar-nav a.active::before {
+      content: ""; position: absolute; left: 0; top: 4px; bottom: 4px;
+      width: 3px; background: var(--indigo); border-radius: 0 3px 3px 0;
+    }
+    .sidebar-nav svg {
+      width: 16px; height: 16px; flex-shrink: 0; opacity: 0.6;
+    }
+    .sidebar-nav a.active svg { opacity: 1; }
+    .sidebar-badge {
+      margin-left: auto; font-size: 10px; font-weight: 600;
+      background: var(--indigo-light); color: var(--indigo);
+      padding: 2px 7px; border-radius: 10px;
+    }
+    .sidebar-badge.red { background: var(--red-light); color: var(--red); }
+    .sidebar-badge.amber { background: var(--amber-light); color: #B45309; }
+
+    /* Main */
+    .main { overflow-y: auto; padding: 26px 30px; }
+    .page-header { margin-bottom: 22px; }
+    .page-header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.01em; }
+    .page-header p { font-size: 13.5px; color: var(--text-muted); }
+
+    /* Tabs */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Stat cards */
+    .overview-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 14px; margin-bottom: 22px;
+    }
+    @media (max-width: 960px) { .overview-grid { grid-template-columns: 1fr 1fr; } }
+    .stat-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 18px;
+    }
+    .stat-label {
+      font-size: 10.5px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 8px;
+    }
+    .stat-value {
+      font-size: 24px; font-weight: 700; color: var(--text);
+      margin-bottom: 4px; letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-value.indigo { color: var(--indigo); }
+    .stat-value.green { color: var(--green); }
+    .stat-value.red { color: var(--red); }
+    .stat-sub { font-size: 11.5px; color: var(--text-muted); }
+    .stat-delta {
+      display: inline-block; font-size: 10px; font-weight: 600;
+      padding: 2px 6px; border-radius: 10px; margin-left: 6px;
+      font-family: var(--mono); letter-spacing: -0.01em;
+    }
+    .stat-delta.up { background: var(--green-light); color: #16A34A; }
+    .stat-delta.down { background: var(--red-light); color: var(--red); }
+
+    /* Brief cards — weekly prioritised feed */
+    .brief-list { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .brief {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 18px 20px 18px 16px;
+      display: grid; grid-template-columns: 32px 1fr auto; gap: 14px; align-items: start;
+    }
+    .brief .rank {
+      background: var(--indigo); color: var(--white);
+      font-family: var(--mono); font-weight: 700; font-size: 11px;
+      width: 30px; height: 30px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .brief.p2 .rank { background: var(--text-secondary); }
+    .brief.p3 .rank { background: var(--text-muted); }
+    .brief h4 { font-size: 14.5px; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.01em; }
+    .brief p { font-size: 12.5px; color: var(--text-secondary); line-height: 1.55; }
+    .brief p strong { color: var(--text); font-weight: 600; }
+    .brief .meta {
+      margin-top: 6px;
+      display: flex; gap: 14px; font-size: 11px; color: var(--text-muted);
+      font-family: var(--mono); font-variant-numeric: tabular-nums;
+    }
+    .brief .meta strong { color: var(--indigo); font-weight: 700; }
+    .brief .team-tags { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; font-size: 10px; }
+    .team-tag {
+      background: var(--indigo-bg); color: var(--indigo);
+      padding: 2px 8px; border-radius: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .team-tag.sales { background: #FEF3C7; color: #B45309; }
+    .team-tag.seo { background: #DCFCE7; color: #16A34A; }
+    .team-tag.ar { background: #FEE2E2; color: var(--red); }
+    .team-tag.pmm { background: #EDE9FE; color: #6D28D9; }
+    .team-tag.regional { background: #E0F2FE; color: #0369A1; }
+
+    /* Activity feed */
+    .activity-feed {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px;
+    }
+    .activity-feed h3 { font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+    .activity-item {
+      display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #F2F1ED;
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--indigo); flex-shrink: 0; margin-top: 6px;
+    }
+    .activity-dot.red { background: var(--red); }
+    .activity-dot.amber { background: var(--amber); }
+    .activity-dot.green { background: var(--green); }
+    .activity-text { font-size: 13px; color: var(--text-secondary); line-height: 1.45; }
+    .activity-text strong { color: var(--text); font-weight: 600; }
+    .activity-time { font-size: 11px; color: var(--text-muted); margin-top: 2px; font-family: var(--mono); }
+
+    /* Context modules */
+    .context-health {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px; margin-bottom: 22px;
+    }
+    @media (max-width: 960px) { .context-health { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 720px) { .context-health { grid-template-columns: 1fr; } }
+    .context-module {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 18px;
+    }
+    .context-module-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .context-module-header h4 { font-size: 13px; font-weight: 600; }
+    .freshness {
+      font-size: 10px; font-weight: 600;
+      padding: 2px 8px; border-radius: 10px;
+    }
+    .freshness.fresh { background: var(--green-light); color: #16A34A; }
+    .freshness.stale { background: var(--amber-light); color: #B45309; }
+    .freshness.new { background: var(--indigo-light); color: var(--indigo); }
+    .context-module p {
+      font-size: 12px; color: var(--text-muted); line-height: 1.5;
+    }
+    .context-module .last-updated {
+      font-size: 10.5px; color: var(--text-muted); margin-top: 8px;
+      font-family: var(--mono);
+    }
+    .context-module ul {
+      list-style: none; margin-top: 10px;
+      font-size: 11.5px; color: var(--text-secondary);
+    }
+    .context-module li {
+      padding: 4px 0; padding-left: 12px; position: relative;
+    }
+    .context-module li::before {
+      content: "›"; position: absolute; left: 0; color: var(--indigo);
+      font-weight: 700;
+    }
+
+    /* Sources card */
+    .sources-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 18px 20px; margin-bottom: 16px;
+    }
+    .sources-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+    .source-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 9px 0; border-bottom: 1px solid #F2F1ED;
+    }
+    .source-row:last-child { border-bottom: none; }
+    .source-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .source-dot.connected { background: var(--green); }
+    .source-dot.pending { background: var(--amber); }
+    .source-dot.disconnected { background: var(--border); }
+    .source-name { font-size: 13px; font-weight: 500; flex: 1; }
+    .source-detail { font-size: 11px; color: var(--text-muted); font-family: var(--mono); }
+
+    /* Artifact cards */
+    .artifacts-section { margin-bottom: 22px; }
+    .artifacts-section h3 {
+      font-size: 13px; font-weight: 600; margin-bottom: 10px;
+      text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted);
+    }
+    .artifact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 720px) { .artifact-grid { grid-template-columns: 1fr; } }
+    .artifact-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px;
+      transition: border-color 0.15s;
+    }
+    .artifact-card:hover { border-color: var(--indigo); }
+    .artifact-top {
+      display: flex; align-items: start; justify-content: space-between; margin-bottom: 8px;
+    }
+    .artifact-title { font-size: 13.5px; font-weight: 600; line-height: 1.3; }
+    .artifact-status {
+      font-size: 10px; font-weight: 600;
+      padding: 2px 8px; border-radius: 10px; flex-shrink: 0; margin-left: 8px;
+    }
+    .artifact-status.live { background: var(--green-light); color: #16A34A; }
+    .artifact-status.draft { background: var(--amber-light); color: #B45309; }
+    .artifact-status.needs-update { background: var(--red-light); color: var(--red); }
+    .artifact-status.scheduled { background: var(--indigo-light); color: var(--indigo); }
+    .artifact-desc {
+      font-size: 12px; color: var(--text-secondary);
+      margin-bottom: 10px; line-height: 1.5;
+    }
+    .artifact-meta {
+      font-size: 10.5px; color: var(--text-muted);
+      display: flex; gap: 12px; font-family: var(--mono);
+    }
+
+    /* Competitor stream */
+    .comp-stream {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px; margin-bottom: 16px;
+    }
+    .comp-stream h3 { font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+    .comp-row {
+      display: grid; grid-template-columns: 120px 1fr auto;
+      gap: 14px; align-items: start;
+      padding: 12px 0; border-bottom: 1px solid #F2F1ED;
+    }
+    .comp-row:last-child { border-bottom: none; }
+    .comp-brand {
+      font-size: 12.5px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .comp-brand .cb-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--red);
+    }
+    .comp-brand .cb-dot.amber { background: var(--amber); }
+    .comp-brand .cb-dot.green { background: var(--green); }
+    .comp-event {
+      font-size: 12.5px; color: var(--text-secondary); line-height: 1.5;
+    }
+    .comp-event strong { color: var(--text); font-weight: 600; }
+    .comp-event em { font-style: italic; color: var(--indigo); }
+    .comp-date {
+      font-size: 10.5px; color: var(--text-muted);
+      font-family: var(--mono); white-space: nowrap;
+    }
+
+    /* SERP tracker */
+    .serp-tracker {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px; margin-bottom: 16px;
+    }
+    .serp-tracker h3 { font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+    .serp-row {
+      display: grid; grid-template-columns: 1fr 70px 70px 70px;
+      gap: 14px; align-items: center;
+      padding: 10px 0; border-bottom: 1px solid #F2F1ED;
+      font-size: 12.5px;
+    }
+    .serp-row:last-child { border-bottom: none; }
+    .serp-row.header {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--text-muted); padding-bottom: 8px;
+    }
+    .serp-row .sr-query { font-style: italic; color: var(--text); font-weight: 500; }
+    .serp-row .sr-num {
+      text-align: right; font-family: var(--mono); font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    .serp-row .sr-num.win  { color: var(--green); }
+    .serp-row .sr-num.lose { color: var(--red); }
+    .serp-row .sr-num.warn { color: var(--amber); }
+    .serp-row .sr-num.none { color: var(--text-muted); }
+
+    /* Footer CTA */
+    .hub-footer {
+      margin-top: 30px; padding: 22px;
+      background: var(--indigo-bg); border: 1px solid var(--indigo-light);
+      border-radius: 10px; display: flex; justify-content: space-between;
+      align-items: center; gap: 18px;
+    }
+    .hub-footer p { font-size: 13px; color: var(--text-secondary); margin: 0; }
+    .hub-footer a {
+      font-size: 12.5px; font-weight: 600; color: var(--white);
+      background: var(--indigo); padding: 8px 16px; border-radius: 6px;
+      text-decoration: none; white-space: nowrap;
+    }
+    .hub-footer a:hover { background: var(--indigo-dark); }
+    .hub-footer a.ghost {
+      background: var(--white); color: var(--indigo);
+      border: 1px solid var(--indigo-light);
+    }
+
+    /* Empty state hint on team tabs */
+    .wireframe-note {
+      background: var(--indigo-bg); border: 1px dashed var(--indigo);
+      border-radius: 10px; padding: 14px 18px;
+      font-size: 12px; color: var(--indigo-dark);
+      margin-bottom: 18px; line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Mockup banner -->
+<div class="mockup-banner">
+  <div class="mb-left">
+    <span class="mb-badge">MOCKUP</span>
+    <span>This is a visual of what the Intelligence Hub <strong>for Exotel</strong> will look like once instrumented. All data shown is <strong>illustrative</strong>, tied to the real research in the proposal.</span>
+  </div>
+  <a href="/exotel-proposal/">← back to proposal</a>
+</div>
+
+<div class="app">
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-logo">Recurr × Kyndrev</span>
+      <span class="topbar-sep"></span>
+      <span class="topbar-company">Exotel Techcom Pvt Ltd<span class="sub">harmony.exotel.in</span></span>
+    </div>
+    <div class="topbar-right">
+      <span class="topbar-week">Week 8 · Q1'27 · Apr 18 2026</span>
+      <div class="topbar-status"><span class="dot"></span>Hub operational</div>
+      <div class="topbar-avatar">UB</div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Workspace</div>
+      <ul class="sidebar-nav">
+        <li><a class="active" data-tab="overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Overview
+        </a></li>
+        <li><a data-tab="brief">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Weekly Brief
+          <span class="sidebar-badge">5</span>
+        </a></li>
+        <li><a data-tab="competitive">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          Competitive Intel
+          <span class="sidebar-badge red">3</span>
+        </a></li>
+        <li><a data-tab="internal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+          Internal Hub
+        </a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Teams</div>
+      <ul class="sidebar-nav">
+        <li><a data-tab="pmm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/></svg>
+          PMM
+          <span class="sidebar-badge">6</span>
+        </a></li>
+        <li><a data-tab="sales">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          Sales
+          <span class="sidebar-badge">8</span>
+        </a></li>
+        <li><a data-tab="seo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          SEO / AEO
+          <span class="sidebar-badge amber">5</span>
+        </a></li>
+        <li><a data-tab="ar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Analyst Relations
+          <span class="sidebar-badge">4</span>
+        </a></li>
+        <li><a data-tab="regional">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Regional · KSA / UAE
+          <span class="sidebar-badge">3</span>
+        </a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Sources</div>
+      <ul class="sidebar-nav">
+        <li><a data-tab="sources">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Connected Sources
+          <span class="sidebar-badge">12</span>
+        </a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- ============ OVERVIEW ============ -->
+    <div class="tab-content active" id="tab-overview">
+      <div class="page-header">
+        <h1>Overview</h1>
+        <p>Exotel Techcom · Engagement Week 8 of 52 · All Hub modules operational.</p>
+      </div>
+
+      <div class="overview-grid">
+        <div class="stat-card">
+          <div class="stat-label">LLM Citation Share</div>
+          <div class="stat-value">39 <span class="stat-delta up">+5</span></div>
+          <div class="stat-sub">queries/mo · Ozonetel 29 (+222% YoY)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">SERP Share — Priority 7</div>
+          <div class="stat-value indigo">3 / 7</div>
+          <div class="stat-sub">Target: 5 / 7 by Month 6</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">G2 Reviews · Exotel</div>
+          <div class="stat-value">94 <span class="stat-delta up">+5</span></div>
+          <div class="stat-sub">Ozonetel 623 · gap closing slowly</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Weekly Brief</div>
+          <div class="stat-value green">Delivered</div>
+          <div class="stat-sub">Apr 15 · 5 moves · <a href="#" style="color:var(--indigo)">view</a></div>
+        </div>
+      </div>
+
+      <div class="activity-feed">
+        <h3>Recent activity · last 14 days</h3>
+        <div class="activity-item">
+          <div class="activity-dot red"></div>
+          <div>
+            <div class="activity-text"><strong>Ozonetel published</strong> "15 Best VoIP Service Providers in India (2026)" — third listicle this quarter. Likely to anchor LLM answers for "best voip india" within 6 weeks.</div>
+            <div class="activity-time">Apr 17 · Competitive Intel</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot green"></div>
+          <div>
+            <div class="activity-text"><strong>IDC Leader LinkedIn series</strong> launched — 3 posts live, 7 scheduled. Engagement: 4,820 impressions, 213 reactions on post #1.</div>
+            <div class="activity-time">Apr 16 · AR team</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot"></div>
+          <div>
+            <div class="activity-text"><strong>Harmony positioning brief v2</strong> shipped to PMM + Sales. Adds CCDP as the primary differentiator vs Vapi / Retell orchestration layers.</div>
+            <div class="activity-time">Apr 15 · Internal Hub</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot amber"></div>
+          <div>
+            <div class="activity-text"><strong>Bolna AI raised $10M Series A</strong> led by Nexus Venture Partners. Expect aggressive content + listicle push. Battlecard update queued for Tue.</div>
+            <div class="activity-time">Apr 14 · Competitive Intel</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot"></div>
+          <div>
+            <div class="activity-text"><strong>New page indexed:</strong> /blog/why-us-voice-ai-breaks-in-india now citing 3 backlinks (Techcrunch India mention, AI4Bharat research repost, LinkedIn expert share). First LLM pickup detected on Perplexity.</div>
+            <div class="activity-time">Apr 12 · SEO / AEO</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot green"></div>
+          <div>
+            <div class="activity-text"><strong>BFSI battlecard v1</strong> shipped to Sales — covers Knowlarity, Ozonetel, Bolna, Vapi. 3 deals already using it this week.</div>
+            <div class="activity-time">Apr 10 · Sales enablement</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ WEEKLY BRIEF ============ -->
+    <div class="tab-content" id="tab-brief">
+      <div class="page-header">
+        <h1>Weekly Brief · Apr 15 – Apr 21</h1>
+        <p>Five moves this week, ranked by expected lift. Distributed automatically to PMM, Sales, SEO, AR.</p>
+      </div>
+
+      <div class="brief-list">
+        <div class="brief">
+          <div class="rank">01</div>
+          <div>
+            <h4>Publish Exotel's "Best AI Voice Agent for Indian BFSI" listicle</h4>
+            <p>Ozonetel just shipped their third listicle of the quarter. The "best AI voice agent India" query has <strong>no strong India-CPaaS listicle owner</strong>. Time to plant the flag using the Harmony + AgentStream + MCP differentiators. Target ranking by Week 12.</p>
+            <div class="meta">
+              <span>EXPECTED LIFT <strong>+4 LLM citations / mo</strong></span>
+              <span>EFFORT 3 days</span>
+              <span>OWNER SEO + PMM</span>
+            </div>
+          </div>
+          <div class="team-tags">
+            <span class="team-tag seo">SEO</span>
+            <span class="team-tag pmm">PMM</span>
+          </div>
+        </div>
+
+        <div class="brief p2">
+          <div class="rank">02</div>
+          <div>
+            <h4>G2 review solicitation — BFSI customers wave 1</h4>
+            <p>Exotel stands at 94 G2 reviews vs Ozonetel's 623. Start with your <strong>6 of 10 private banks</strong> — target 20 reviews by Week 12 using CSM + Support-NPS trigger. Closes 20% of the review-authority gap by Month 6.</p>
+            <div class="meta">
+              <span>EXPECTED LIFT <strong>+20 reviews · G2 → 114</strong></span>
+              <span>EFFORT Ongoing</span>
+              <span>OWNER CSM + PMM</span>
+            </div>
+          </div>
+          <div class="team-tags">
+            <span class="team-tag pmm">PMM</span>
+          </div>
+        </div>
+
+        <div class="brief p2">
+          <div class="rank">03</div>
+          <div>
+            <h4>Amplify IDC MarketScape Leader — video + Sachin LinkedIn series</h4>
+            <p>The IDC Leader placement is 143 days old and still under-amplified. Schedule 3-video series with Shivaku, Vikram, Sachin Bhatia. Co-ordinate with Gulf Enterprises piece (Apr 8) for MENA pickup. <strong>Highest-leverage unused asset.</strong></p>
+            <div class="meta">
+              <span>EXPECTED LIFT <strong>Brand lift in APAC + MENA</strong></span>
+              <span>EFFORT 2 weeks</span>
+              <span>OWNER AR + PMM</span>
+            </div>
+          </div>
+          <div class="team-tags">
+            <span class="team-tag ar">AR</span>
+            <span class="team-tag pmm">PMM</span>
+          </div>
+        </div>
+
+        <div class="brief p3">
+          <div class="rank">04</div>
+          <div>
+            <h4>Update Twilio-migration page with a calculator</h4>
+            <p><em>/blog/migrate-twilio-to-exotel-voice-ai-india/</em> is 58 days old with zero backlinks. Add a latency/cost calculator that outputs personalised migration estimate — proven 3–5× backlink acquisition for comparison pages. Seed via Exotel+Vapi comparison guides.</p>
+            <div class="meta">
+              <span>EXPECTED LIFT <strong>+8 backlinks / 90 days</strong></span>
+              <span>EFFORT 1 week</span>
+              <span>OWNER SEO + Dev</span>
+            </div>
+          </div>
+          <div class="team-tags">
+            <span class="team-tag seo">SEO</span>
+          </div>
+        </div>
+
+        <div class="brief p3">
+          <div class="rank">05</div>
+          <div>
+            <h4>KSA + UAE vertical pitch decks — insurance + BFSI</h4>
+            <p>Deem Finance (UAE) and Jordan Ahli Bank case studies are live but un-used in Gulf sales motion. Build region-specific 12-slide decks pulling from the case studies + Harmony + MENA Frost data. Pair with the Sachin Gulf Enterprises piece.</p>
+            <div class="meta">
+              <span>EXPECTED LIFT <strong>MENA pipeline acceleration</strong></span>
+              <span>EFFORT 1 week</span>
+              <span>OWNER Regional + PMM</span>
+            </div>
+          </div>
+          <div class="team-tags">
+            <span class="team-tag regional">Regional</span>
+            <span class="team-tag pmm">PMM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ COMPETITIVE INTEL ============ -->
+    <div class="tab-content" id="tab-competitive">
+      <div class="page-header">
+        <h1>Competitive Intelligence</h1>
+        <p>Live stream of moves from 20 tracked competitors across 5 surfaces.</p>
+      </div>
+
+      <div class="overview-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+        <div class="stat-card">
+          <div class="stat-label">Ozonetel LLM volume</div>
+          <div class="stat-value red">29 <span class="stat-delta up">+222% YoY</span></div>
+          <div class="stat-sub">growing 6.5× faster than Exotel</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Backlink delta · last 30d</div>
+          <div class="stat-value red">−7 <span class="stat-delta down">ref. domains</span></div>
+          <div class="stat-sub">net loss; Jan 2026: −6,171 backlinks</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">AI voice-native threat</div>
+          <div class="stat-value">14 <span class="stat-delta up">+2</span></div>
+          <div class="stat-sub">Bolna, Gnani, SquadStack + 11 more</div>
+        </div>
+      </div>
+
+      <div class="comp-stream">
+        <h3>Competitor stream · last 14 days</h3>
+
+        <div class="comp-row">
+          <div class="comp-brand"><span class="cb-dot"></span>Ozonetel</div>
+          <div class="comp-event">Published <strong>"15 Best VoIP Service Providers in India (2026)"</strong> — 19-min read listicle. Third category listicle this quarter.<br><em>→ Will anchor LLM answer for "best voip india"; recommend counter-listicle this week.</em></div>
+          <div class="comp-date">Apr 17</div>
+        </div>
+
+        <div class="comp-row">
+          <div class="comp-brand"><span class="cb-dot amber"></span>Bolna AI</div>
+          <div class="comp-event">Raised <strong>$10M Series A</strong> from Nexus Venture Partners. Team scaling from 28 → 65.<br><em>→ Expect aggressive content + listicle push over next 90 days; update BFSI battlecard.</em></div>
+          <div class="comp-date">Apr 14</div>
+        </div>
+
+        <div class="comp-row">
+          <div class="comp-brand"><span class="cb-dot"></span>Gnani.ai</div>
+          <div class="comp-event">New page: <strong>/solutions/bfsi-voice-ai-india</strong> — direct competitive overlap with Exotel's BFSI vertical. Positions "India-first voice AI" narrative.<br><em>→ Sales battlecard update queued; monitor SERP co-occurrence.</em></div>
+          <div class="comp-date">Apr 12</div>
+        </div>
+
+        <div class="comp-row">
+          <div class="comp-brand"><span class="cb-dot green"></span>Knowlarity</div>
+          <div class="comp-event">G2 review count: 22 → 24 (+2). Still thin. No new content published in 21 days. <em>→ No action required.</em></div>
+          <div class="comp-date">Apr 11</div>
+        </div>
+
+        <div class="comp-row">
+          <div class="comp-brand"><span class="cb-dot"></span>Twilio</div>
+          <div class="comp-event">Shipped <strong>India number masking improvements</strong> via Twilio Flex. Targets Exotel + Plivo directly.<br><em>→ Counter-position with UL-VNO license + call survivability in Exotel's Twilio migration page.</em></div>
+          <div class="comp-date">Apr 10</div>
+        </div>
+
+        <div class="comp-row">
+          <div class="comp-brand"><span class="cb-dot"></span>ElevenLabs</div>
+          <div class="comp-event">Announced new India office (Mumbai). Added Cars24 + Razorpay logos to case studies page.<br><em>→ Infra-tier squeeze accelerating. Update "why voice layer matters" narrative on AgentStream page.</em></div>
+          <div class="comp-date">Apr 9</div>
+        </div>
+
+        <div class="comp-row">
+          <div class="comp-brand"><span class="cb-dot amber"></span>SquadStack</div>
+          <div class="comp-event">Updated <strong>"Top AI Voice Agent Companies in India 2026"</strong> — Exotel not included. SquadStack ranks #1 in own list.<br><em>→ Pitch inclusion OR counter-listicle from Exotel side. Priority.</em></div>
+          <div class="comp-date">Apr 8</div>
+        </div>
+      </div>
+
+      <div class="serp-tracker">
+        <h3>SERP &amp; LLM citation tracker — priority 7 queries (India)</h3>
+        <div class="serp-row header">
+          <div>Query</div>
+          <div class="sr-num">Exotel</div>
+          <div class="sr-num">Ozonetel</div>
+          <div class="sr-num">LLM mo</div>
+        </div>
+        <div class="serp-row">
+          <div class="sr-query">"cloud telephony india"</div>
+          <div class="sr-num win">#1</div>
+          <div class="sr-num warn">#4</div>
+          <div class="sr-num">23</div>
+        </div>
+        <div class="serp-row">
+          <div class="sr-query">"ivr for business"</div>
+          <div class="sr-num win">#1 + AIO</div>
+          <div class="sr-num none">—</div>
+          <div class="sr-num">1</div>
+        </div>
+        <div class="serp-row">
+          <div class="sr-query">"ai voice agent india"</div>
+          <div class="sr-num lose">≫20</div>
+          <div class="sr-num lose">≫20</div>
+          <div class="sr-num">7</div>
+        </div>
+        <div class="serp-row">
+          <div class="sr-query">"cpaas providers india"</div>
+          <div class="sr-num lose">≫10</div>
+          <div class="sr-num lose">≫10</div>
+          <div class="sr-num">21</div>
+        </div>
+        <div class="serp-row">
+          <div class="sr-query">"best contact center software india"</div>
+          <div class="sr-num warn">#5</div>
+          <div class="sr-num lose">≫20</div>
+          <div class="sr-num">1</div>
+        </div>
+        <div class="serp-row">
+          <div class="sr-query">"whatsapp api"</div>
+          <div class="sr-num lose">—</div>
+          <div class="sr-num lose">—</div>
+          <div class="sr-num">200</div>
+        </div>
+        <div class="serp-row">
+          <div class="sr-query">"twilio alternative india"</div>
+          <div class="sr-num lose">≫10</div>
+          <div class="sr-num warn">in listicles</div>
+          <div class="sr-num none">0</div>
+        </div>
+      </div>
+
+      <div class="hub-footer">
+        <p>Full query-by-query GEO audit available in the research page.</p>
+        <a href="/exotel-proposal/geo-research/">Open GEO Research →</a>
+      </div>
+    </div>
+
+    <!-- ============ INTERNAL HUB ============ -->
+    <div class="tab-content" id="tab-internal">
+      <div class="page-header">
+        <h1>Internal Hub</h1>
+        <p>Single source of truth for every Exotel GTM team. Maintained continuously.</p>
+      </div>
+
+      <div class="context-health">
+        <div class="context-module">
+          <div class="context-module-header">
+            <h4>Positioning &amp; Messaging</h4>
+            <span class="freshness fresh">Fresh</span>
+          </div>
+          <p>Harmony platform narrative, CCDP differentiator, AgentStream infra story, MCP agentic positioning, AI-Led CX thesis.</p>
+          <ul>
+            <li>Messaging matrix · 4 personas × 5 stages</li>
+            <li>Category definition: "AI-Led CX ecosystem"</li>
+            <li>Competitive framing vs Vapi / Retell / Ozonetel</li>
+          </ul>
+          <div class="last-updated">Last updated · Apr 15, 2026</div>
+        </div>
+
+        <div class="context-module">
+          <div class="context-module-header">
+            <h4>Win / Loss Library</h4>
+            <span class="freshness fresh">Fresh</span>
+          </div>
+          <p>Live dashboard of won &amp; lost deals over the last 12 months, pulled from Salesforce + Gong. Patterns by vertical, deal size, competitor.</p>
+          <ul>
+            <li>Top win reason: compliance + UL-VNO license</li>
+            <li>Top loss reason: perceived AI voice agent gap</li>
+            <li>Competitor most encountered: Ozonetel (37% of lost deals)</li>
+          </ul>
+          <div class="last-updated">Last updated · Apr 14, 2026</div>
+        </div>
+
+        <div class="context-module">
+          <div class="context-module-header">
+            <h4>Battlecards</h4>
+            <span class="freshness fresh">Fresh</span>
+          </div>
+          <p>Head-to-head positioning vs 12 competitors. Updated weekly from Competitive Intel stream.</p>
+          <ul>
+            <li>Ozonetel · Knowlarity · MyOperator · Tata Smartflo</li>
+            <li>Twilio · Plivo · Vonage · Gupshup</li>
+            <li>Bolna · Gnani · SquadStack · Vapi</li>
+          </ul>
+          <div class="last-updated">Last updated · Apr 15, 2026</div>
+        </div>
+
+        <div class="context-module">
+          <div class="context-module-header">
+            <h4>Analyst Library</h4>
+            <span class="freshness fresh">Fresh</span>
+          </div>
+          <p>Full repository of analyst placements + amplification plans. Pre-approved LinkedIn snippets, pitch-ready quotes.</p>
+          <ul>
+            <li>IDC MarketScape Leader (Nov 25)</li>
+            <li>Frost Radar CPaaS 2025</li>
+            <li>Omdia next-gen CPaaS (Dec 30)</li>
+            <li>Forrester Q4 2024 CCaaS Landscape</li>
+          </ul>
+          <div class="last-updated">Last updated · Apr 12, 2026</div>
+        </div>
+
+        <div class="context-module">
+          <div class="context-module-header">
+            <h4>Vertical Playbooks</h4>
+            <span class="freshness fresh">Fresh</span>
+          </div>
+          <p>Per-vertical positioning, customer proof, regulatory context, and buyer journey.</p>
+          <ul>
+            <li>BFSI · 6 of top 10 India private banks</li>
+            <li>Logistics · Shiprocket, delivery rescheduling</li>
+            <li>Healthcare / Pharma · Redcliffe Labs, Smart Apps</li>
+            <li>E-commerce · Shaadi, Flipkart, Swiggy, Zomato</li>
+          </ul>
+          <div class="last-updated">Last updated · Apr 10, 2026</div>
+        </div>
+
+        <div class="context-module">
+          <div class="context-module-header">
+            <h4>Customer Voice</h4>
+            <span class="freshness stale">Needs refresh</span>
+          </div>
+          <p>Gong calls + Zendesk tickets + CSAT + G2 reviews. Scored for sentiment, objections, feature requests.</p>
+          <ul>
+            <li>Top objection Q1: "Support response time"</li>
+            <li>Recurring feature request: native Salesforce connector</li>
+            <li>G2 ratings sub-scores vs Ozonetel</li>
+          </ul>
+          <div class="last-updated">Last updated · Apr 2, 2026 · Gong batch pending</div>
+        </div>
+      </div>
+
+      <div class="context-health" style="grid-template-columns: 1fr 1fr;">
+        <div class="context-module">
+          <div class="context-module-header">
+            <h4>Content Library</h4>
+            <span class="freshness new">75 assets</span>
+          </div>
+          <p>Every asset scored by AI-surface fitness. Flags assets needing LLM-optimisation.</p>
+          <ul>
+            <li>20 pillar posts from Q1'26 content push</li>
+            <li>12 case studies across BFSI, Logistics, MENA</li>
+            <li>5 e-books · 8 analyst assets · 30+ product pages</li>
+            <li>AEO score avg: 62/100 · 23 assets need re-structuring</li>
+          </ul>
+          <div class="last-updated">Last updated · Apr 16, 2026</div>
+        </div>
+
+        <div class="context-module">
+          <div class="context-module-header">
+            <h4>Region Kits</h4>
+            <span class="freshness fresh">Fresh</span>
+          </div>
+          <p>Region-specific assets, compliance notes, and case proof per geography.</p>
+          <ul>
+            <li>India (primary) · TRAI / DLT / TCCCPR compliance</li>
+            <li>UAE · Deem Finance, Dubai Insurance case studies</li>
+            <li>KSA · Jordan Ahli Bank, regulatory context</li>
+            <li>APAC + Africa · Awash, Absa, Burn</li>
+          </ul>
+          <div class="last-updated">Last updated · Apr 11, 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PMM ============ -->
+    <div class="tab-content" id="tab-pmm">
+      <div class="page-header">
+        <h1>PMM Team</h1>
+        <p>Artifacts owned, used, and refreshed by the Exotel PMM function.</p>
+      </div>
+      <div class="artifacts-section">
+        <h3>Positioning &amp; Messaging</h3>
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Harmony platform master narrative v2</div><span class="artifact-status live">live</span></div>
+            <div class="artifact-desc">Canonical deck — used by sales, AR, and product for every Harmony reference. Includes CCDP + AgentStream positioning.</div>
+            <div class="artifact-meta"><span>v2 · Apr 15</span><span>used 31× this week</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">AI-Led CX category brief</div><span class="artifact-status live">live</span></div>
+            <div class="artifact-desc">Category definition that underpins the Exotel repositioning. Ties to Frost + Omdia + IDC category framing.</div>
+            <div class="artifact-meta"><span>v1 · Mar 28</span><span>used 14× this week</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Messaging matrix · 4 personas × 5 stages</div><span class="artifact-status live">live</span></div>
+            <div class="artifact-desc">CX Head, Contact Centre Manager, CTO, Head of Sales — mapped to Awareness → Evaluation → Purchase → Activation → Expansion.</div>
+            <div class="artifact-meta"><span>v3 · Apr 8</span><span>used 22× this week</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">BFSI vertical pitch deck v4</div><span class="artifact-status live">live</span></div>
+            <div class="artifact-desc">"6 of top 10 India private banks" as anchor. Includes RBI-compliant AI collections framing + Fundamento case study.</div>
+            <div class="artifact-meta"><span>v4 · Apr 10</span><span>used 18× this week</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="artifacts-section">
+        <h3>Content operations</h3>
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Q2 editorial calendar</div><span class="artifact-status scheduled">scheduled</span></div>
+            <div class="artifact-desc">8 pillar pieces · "Best AI voicebot for banks" listicle · "WhatsApp API for BFSI" pillar · 2 MENA regional pieces.</div>
+            <div class="artifact-meta"><span>Apr 18 → Jun 30</span><span>8 assets</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Employee advocacy library</div><span class="artifact-status draft">draft</span></div>
+            <div class="artifact-desc">Ready-to-share LinkedIn posts for CSM, sales, AR. Templated around IDC Leader, Harmony, BFSI wins.</div>
+            <div class="artifact-meta"><span>v0.9 · Apr 14</span><span>32 posts queued</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SALES ============ -->
+    <div class="tab-content" id="tab-sales">
+      <div class="page-header">
+        <h1>Sales enablement</h1>
+        <p>Battlecards, cheat sheets, objection handling — updated from Competitive Intel weekly.</p>
+      </div>
+      <div class="artifacts-section">
+        <h3>Active battlecards · 12 competitors</h3>
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Exotel vs Ozonetel</div><span class="artifact-status needs-update">update</span></div>
+            <div class="artifact-desc">Wins on: UL-VNO license, call survivability, BFSI depth, analyst stack. Refresh queued after Ozonetel's Apr 17 listicle.</div>
+            <div class="artifact-meta"><span>v5 · Apr 10</span><span>used in 41 deals</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Exotel vs Twilio (India migration)</div><span class="artifact-status live">live</span></div>
+            <div class="artifact-desc">TRAI compliance, Hinglish ASR, &lt;20ms AgentStream latency, India-local infra. Migration calculator WIP.</div>
+            <div class="artifact-meta"><span>v3 · Apr 8</span><span>used in 18 deals</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Exotel vs Bolna / Gnani / Vapi</div><span class="artifact-status needs-update">update</span></div>
+            <div class="artifact-desc">Position against AI voice-native: single-vendor full stack, compliance, UL-VNO, CCDP. Bolna $10M raise — refresh threat lines.</div>
+            <div class="artifact-meta"><span>v2 · Apr 2</span><span>used in 23 deals</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Exotel vs Knowlarity</div><span class="artifact-status live">live</span></div>
+            <div class="artifact-desc">Billing transparency, contract flexibility, support SLAs, AI voice readiness.</div>
+            <div class="artifact-meta"><span>v3 · Mar 28</span><span>used in 12 deals</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="artifacts-section">
+        <h3>Objection handling</h3>
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">"Your G2 rating is lower than Ozonetel's"</div><span class="artifact-status live">live</span></div>
+            <div class="artifact-desc">Counter: sample depth, Ameyo sub-brand context, sub-scores on product direction, compliance certs, and customer lineage.</div>
+            <div class="artifact-meta"><span>v1 · Apr 14</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">"We're evaluating Vapi / Retell"</div><span class="artifact-status live">live</span></div>
+            <div class="artifact-desc">Counter: India latency, Hinglish ASR failure, no UL-VNO, Twilio dependency, total-cost comparison.</div>
+            <div class="artifact-meta"><span>v2 · Apr 3</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SEO / AEO ============ -->
+    <div class="tab-content" id="tab-seo">
+      <div class="page-header">
+        <h1>SEO / AEO team</h1>
+        <p>Keyword clusters, AEO-ready pages, LLM citation telemetry.</p>
+      </div>
+      <div class="artifacts-section">
+        <h3>5 priority keyword clusters</h3>
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Cluster 1 · AI voice agent India</div><span class="artifact-status draft">draft</span></div>
+            <div class="artifact-desc">Target: listicle + 3 sub-pages + BFSI-specific. SERP leaders: Bolna, Gnani, SquadStack. Exotel entry point: Harmony + AgentStream narrative.</div>
+            <div class="artifact-meta"><span>7 pages planned</span><span>LLM: 7/mo · +75% YoY</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Cluster 2 · CPaaS providers India</div><span class="artifact-status draft">draft</span></div>
+            <div class="artifact-desc">SERP: Pulse, Times, Route Mobile. Entry: "Top CPaaS companies 2026" + category comparison. Target AEO slot in ChatGPT answer.</div>
+            <div class="artifact-meta"><span>5 pages planned</span><span>LLM: 21/mo</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Cluster 3 · WhatsApp API for BFSI</div><span class="artifact-status scheduled">scheduled</span></div>
+            <div class="artifact-desc">200 LLM queries/mo. Exotel under-exposed. Entry: RBI-compliant WhatsApp flows + Harmony orchestration.</div>
+            <div class="artifact-meta"><span>6 pages planned</span><span>LLM: 200/mo (highest)</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Cluster 4 · Twilio alternative India</div><span class="artifact-status needs-update">update</span></div>
+            <div class="artifact-desc">Existing page: 0 backlinks, 58 days old. Add migration calculator + Twilio-to-Exotel case study.</div>
+            <div class="artifact-meta"><span>3 pages planned</span><span>LLM: 0/mo · virgin term</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Cluster 5 · Best contact center software India</div><span class="artifact-status draft">draft</span></div>
+            <div class="artifact-desc">Refresh the 23-month-old blog. AI Overview target. Re-structure for Capterra + Gartner citation.</div>
+            <div class="artifact-meta"><span>4 pages planned</span><span>LLM: 1/mo (declining)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="artifacts-section">
+        <h3>LLM citation telemetry</h3>
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">ChatGPT citation monitor</div><span class="artifact-status live">live</span></div>
+            <div class="artifact-desc">7 priority queries monitored weekly. Current: Exotel cited on 2/7. Ozonetel on 3/7.</div>
+            <div class="artifact-meta"><span>weekly report</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Perplexity citation monitor</div><span class="artifact-status live">live</span></div>
+            <div class="artifact-desc">Same 7 queries. Current: Exotel cited on 2/7 (Apr 12 pickup on the "why US voice AI breaks" piece).</div>
+            <div class="artifact-meta"><span>weekly report</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ AR ============ -->
+    <div class="tab-content" id="tab-ar">
+      <div class="page-header">
+        <h1>Analyst Relations</h1>
+        <p>IDC · Frost · Omdia · Forrester · Gartner. Five live placements, four under-amplified.</p>
+      </div>
+      <div class="artifacts-section">
+        <h3>Analyst placements</h3>
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">IDC MarketScape Leader — APAC AI-Powered CX</div><span class="artifact-status live">live</span></div>
+            <div class="artifact-desc">Placement: Nov 25, 2025. <strong>Highest-leverage unused asset.</strong> Active LinkedIn series from Apr 16 — 3 posts live, 7 scheduled.</div>
+            <div class="artifact-meta"><span>143 days old</span><span>amplification: active</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Frost Radar CPaaS 2025</div><span class="artifact-status needs-update">amplify</span></div>
+            <div class="artifact-desc">Placement: Dec 26, 2025. Blog post live but no LinkedIn series, no sales collateral.</div>
+            <div class="artifact-meta"><span>113 days old</span><span>amplification: stalled</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Omdia — Next-Gen CPaaS insight</div><span class="artifact-status needs-update">amplify</span></div>
+            <div class="artifact-desc">"Defining next-gen CPaaS" — strong narrative fit. No derivatives shipped.</div>
+            <div class="artifact-meta"><span>109 days old</span><span>amplification: 0 derivatives</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Forrester Q4 2024 CCaaS Landscape</div><span class="artifact-status live">live</span></div>
+            <div class="artifact-desc">Placement: Q4 2024. Still referenced in sales decks. Refresh timing: Q4 2025/Q1 2026.</div>
+            <div class="artifact-meta"><span>mentioned in sales decks</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ REGIONAL ============ -->
+    <div class="tab-content" id="tab-regional">
+      <div class="page-header">
+        <h1>Regional · KSA / UAE / APAC / Africa</h1>
+        <p>Region-specific assets, pitches, and compliance proof.</p>
+      </div>
+      <div class="wireframe-note">
+        Regional teams operated without region-specific decks, brochures, or playbooks until the Hub went live.
+        <strong>3 region kits are now seeded</strong>, 5 more queued for Q2.
+      </div>
+      <div class="artifacts-section">
+        <h3>Region kits · live</h3>
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">UAE · BFSI &amp; Insurance kit</div><span class="artifact-status live">live</span></div>
+            <div class="artifact-desc">Deem Finance + Dubai Insurance case studies anchor. "Gulf enterprises race to scale AI" piece referenced.</div>
+            <div class="artifact-meta"><span>v1 · Apr 11</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">KSA · Banking + BFSI kit</div><span class="artifact-status live">live</span></div>
+            <div class="artifact-desc">Jordan Ahli Bank case + Harmony AR Arabic support + MENA compliance proof points.</div>
+            <div class="artifact-meta"><span>v1 · Apr 11</span></div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-top"><div class="artifact-title">Africa · Banking kit</div><span class="artifact-status draft">draft</span></div>
+            <div class="artifact-desc">Awash Bank (Ethiopia) + Absa Mauritius + Burn Africa. Pan-African positioning — work in progress.</div>
+            <div class="artifact-meta"><span>v0.5 · Apr 14</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SOURCES ============ -->
+    <div class="tab-content" id="tab-sources">
+      <div class="page-header">
+        <h1>Connected Sources</h1>
+        <p>12 feeds wired into the Hub. 2 pending OAuth, 10 live.</p>
+      </div>
+
+      <div class="sources-card">
+        <h3>Customer data</h3>
+        <div class="source-row"><div class="source-dot connected"></div><span class="source-name">HubSpot CRM (marketing)</span><span class="source-detail">pipeline synced 1h ago</span></div>
+        <div class="source-row"><div class="source-dot connected"></div><span class="source-name">Salesforce CRM (sales)</span><span class="source-detail">synced 42m ago · 287 deals tracked</span></div>
+        <div class="source-row"><div class="source-dot connected"></div><span class="source-name">Gong call intelligence</span><span class="source-detail">18 calls ingested this week</span></div>
+        <div class="source-row"><div class="source-dot connected"></div><span class="source-name">Zendesk support tickets</span><span class="source-detail">41 tickets analysed this week</span></div>
+        <div class="source-row"><div class="source-dot pending"></div><span class="source-name">Freshdesk (Ameyo side)</span><span class="source-detail">OAuth approval pending</span></div>
+      </div>
+
+      <div class="sources-card">
+        <h3>Market &amp; competitive data</h3>
+        <div class="source-row"><div class="source-dot connected"></div><span class="source-name">DataForSEO · SERP + Backlinks + AI Optimization</span><span class="source-detail">3 pulls / week · 18 competitors · 7 queries</span></div>
+        <div class="source-row"><div class="source-dot connected"></div><span class="source-name">Exa web search</span><span class="source-detail">continuous competitor stream · 20 tracked</span></div>
+        <div class="source-row"><div class="source-dot connected"></div><span class="source-name">G2 velocity feed</span><span class="source-detail">daily poll · 6 vendors tracked</span></div>
+        <div class="source-row"><div class="source-dot connected"></div><span class="source-name">Reddit + Quora mentions</span><span class="source-detail">filtered · 2 mentions this week</span></div>
+        <div class="source-row"><div class="source-dot connected"></div><span class="source-name">LinkedIn post tracker</span><span class="source-detail">employee advocacy metrics</span></div>
+        <div class="source-row"><div class="source-dot pending"></div><span class="source-name">Gartner Peer Insights</span><span class="source-detail">API approval pending</span></div>
+      </div>
+
+      <div class="sources-card">
+        <h3>Product &amp; content</h3>
+        <div class="source-row"><div class="source-dot connected"></div><span class="source-name">exotel.com · sitemap crawl</span><span class="source-detail">288 URLs · weekly refresh · AEO scoring</span></div>
+        <div class="source-row"><div class="source-dot connected"></div><span class="source-name">ameyo.com · sitemap crawl</span><span class="source-detail">merged into content library</span></div>
+      </div>
+
+      <div class="hub-footer">
+        <p>The Hub reads from everywhere. It never writes back. Exotel's systems of record stay untouched.</p>
+        <a href="/exotel-proposal/" class="ghost">Back to proposal</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Simple tab switching
+  const links = document.querySelectorAll('.sidebar-nav a[data-tab]');
+  const tabs = document.querySelectorAll('.tab-content');
+  links.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const tab = a.getAttribute('data-tab');
+      links.forEach(x => x.classList.remove('active'));
+      a.classList.add('active');
+      tabs.forEach(t => t.classList.remove('active'));
+      const target = document.getElementById('tab-' + tab);
+      if (target) target.classList.add('active');
+      document.querySelector('.main').scrollTop = 0;
+    });
+  });
+</script>
+
+</body>
+</html>
