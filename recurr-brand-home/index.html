@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Recurr — Growth studio that reads like a publication.</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --ink: #000;
+      --paper: #fff;
+      --rule: #000;
+      --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      --display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    }
+    html { background: var(--paper); }
+    body { font-family: var(--display); color: var(--ink); background: var(--paper); -webkit-font-smoothing: antialiased; line-height: 1.3; }
+
+    /* ─── Shared primitives ──────────────────────────────────────────── */
+    .rule { border-bottom: 1.5px solid var(--rule); }
+    .mono { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .mono-small { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    .section-head {
+      padding: 28px 40px 16px;
+      display: grid; grid-template-columns: 180px 1fr; gap: 40px;
+      align-items: baseline;
+      border-bottom: 1.5px solid var(--rule);
+    }
+    .section-head .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .section-head .title { font-weight: 900; font-size: clamp(28px, 3.2vw, 44px); line-height: 1; letter-spacing: -0.025em; padding-bottom: 8px; }
+    .section-head .sub { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; padding-bottom: 12px; opacity: 0.6; }
+
+    /* ─── Masthead ─────────────────────────────────────────────────── */
+    .masthead {
+      padding: 20px 40px;
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      gap: 40px;
+      align-items: center;
+      border-bottom: 1.5px solid var(--rule);
+      position: sticky; top: 0; background: var(--paper); z-index: 50;
+    }
+    .wordmark {
+      font-weight: 900; font-size: 28px; letter-spacing: -0.03em; line-height: 1; display: inline-flex; align-items: baseline;
+    }
+    .wordmark .caret {
+      display: inline-block; width: 0.45em; height: 0.85em; background: var(--ink);
+      margin-left: 0.08em; animation: blink 1.05s steps(2) infinite;
+    }
+    @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+    nav.nav ul { list-style: none; display: flex; gap: 32px; }
+    nav.nav a { color: var(--ink); text-decoration: none; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1.5px solid transparent; padding-bottom: 2px; }
+    nav.nav a:hover { border-bottom-color: var(--ink); }
+
+    .masthead-clock { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; text-align: right; line-height: 1.5; }
+    .masthead-clock b { font-weight: 700; }
+
+    .masthead-pulse { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+    .pulse-dot { position: relative; width: 8px; height: 8px; display: block; }
+    .pulse-dot::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--ink); }
+    .pulse-dot::after { content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 1.2px solid var(--ink); animation: pulse 1.6s ease-out infinite; }
+    @keyframes pulse {
+      0% { transform: scale(0.6); opacity: 1; }
+      100% { transform: scale(3.2); opacity: 0; }
+    }
+
+    /* ─── Hero ─────────────────────────────────────────────────────── */
+    .hero { padding: 120px 40px 140px; border-bottom: 1.5px solid var(--rule); }
+    .hero-coord { display: flex; justify-content: space-between; padding-bottom: 60px; }
+    .hero-title {
+      font-weight: 900; font-size: clamp(48px, 9vw, 160px); line-height: 0.88; letter-spacing: -0.035em;
+      max-width: 18ch;
+    }
+    .hero-title .scramble { display: inline-block; min-width: 6ch; }
+    .hero-sub {
+      margin-top: 56px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: end;
+    }
+    .hero-sub p {
+      font-size: clamp(18px, 2vw, 24px); font-weight: 500; max-width: 52ch; line-height: 1.4;
+    }
+    .hero-sub .stamp { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; text-align: right; line-height: 1.8; }
+
+    /* ─── Instruments band ────────────────────────────────────────── */
+    .band {
+      background: var(--ink); color: var(--paper);
+      padding: 22px 40px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+      border-bottom: 1.5px solid var(--rule);
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .band-cell { display: flex; flex-direction: column; gap: 6px; }
+    .band-cell dt { opacity: 0.55; font-size: 10px; }
+    .band-cell dd { font-family: var(--mono); font-weight: 700; font-size: 22px; letter-spacing: -0.01em; text-transform: none; display: flex; align-items: center; gap: 10px; }
+    .band-cell .pulse-dot::before { background: var(--paper); }
+    .band-cell .pulse-dot::after { border-color: var(--paper); }
+    .band-spark { font-size: 22px; line-height: 1; letter-spacing: 0; }
+
+    /* ─── Arms ─────────────────────────────────────────────────────── */
+    .arms-body { display: grid; grid-template-columns: 180px 1fr 1fr; gap: 40px; padding: 48px 40px; border-bottom: 1.5px solid var(--rule); }
+    .arms-body .ascii-col { align-self: start; }
+    .arms-body pre { font-family: var(--mono); font-size: 13px; line-height: 1.45; white-space: pre; }
+    .arms-body pre .hot { background: var(--ink); color: var(--paper); padding: 1px 2px; }
+    .arms-body .copy { display: flex; flex-direction: column; gap: 28px; max-width: 60ch; }
+    .arms-body .copy h3 { font-weight: 800; font-size: 22px; letter-spacing: -0.02em; margin-bottom: 6px; }
+    .arms-body .copy h3 .tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; margin-left: 10px; padding: 2px 6px; border: 1px solid var(--ink); }
+    .arms-body .copy p { font-size: 15px; line-height: 1.5; }
+
+    /* ─── Work ─────────────────────────────────────────────────────── */
+    .work-list { border-bottom: 1.5px solid var(--rule); }
+    .work-row {
+      padding: 44px 40px;
+      display: grid; grid-template-columns: 180px 2fr 2fr; gap: 40px;
+      border-bottom: 1px solid var(--ink);
+      align-items: start;
+    }
+    .work-row:last-child { border-bottom: none; }
+    .work-row .work-coord { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; }
+    .work-row .work-main h3 { font-weight: 900; font-size: clamp(32px, 4vw, 56px); line-height: 1; letter-spacing: -0.03em; margin-bottom: 10px; }
+    .work-row .work-main .summary { font-size: 16px; line-height: 1.5; max-width: 52ch; margin-bottom: 14px; }
+    .work-row .work-main .tags { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; display: flex; gap: 10px; flex-wrap: wrap; }
+    .work-row .work-main .tags span { border: 1px solid var(--ink); padding: 2px 6px; }
+    .work-row .work-metric pre { font-family: var(--mono); font-size: 11.5px; line-height: 1.45; white-space: pre; }
+    .work-row .work-metric .metric-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.55; margin-bottom: 8px; }
+
+    /* ─── Press ───────────────────────────────────────────────────── */
+    .press-list { padding: 32px 40px 48px; border-bottom: 1.5px solid var(--rule); }
+    .press-list ul { list-style: none; }
+    .press-list li {
+      display: grid; grid-template-columns: 120px 120px 1fr 140px; gap: 24px;
+      padding: 22px 0; border-bottom: 1px solid var(--ink);
+      align-items: baseline;
+    }
+    .press-list li:last-child { border-bottom: none; }
+    .press-list .p-date, .press-list .p-type, .press-list .p-author {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .press-list .p-type { opacity: 0.55; }
+    .press-list .p-title { font-weight: 700; font-size: clamp(18px, 2vw, 24px); letter-spacing: -0.015em; line-height: 1.25; }
+    .press-list .p-title a { color: var(--ink); text-decoration: none; border-bottom: 1.5px solid transparent; }
+    .press-list .p-title a:hover { border-bottom-color: var(--ink); }
+    .press-list .p-author { text-align: right; }
+
+    /* ─── Contact ─────────────────────────────────────────────────── */
+    .contact { padding: 100px 40px; border-bottom: 1.5px solid var(--rule); }
+    .contact-inner { display: grid; grid-template-columns: 180px 1fr auto; gap: 40px; align-items: end; }
+    .contact-title { font-weight: 900; font-size: clamp(48px, 7vw, 120px); line-height: 0.92; letter-spacing: -0.035em; }
+    .contact-title .typer { display: inline-block; min-width: 10ch; }
+    .contact-title .typer::after { content: "▋"; animation: blink 1s steps(2) infinite; margin-left: 4px; font-weight: 500; }
+    .contact-cta { display: flex; flex-direction: column; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; text-align: right; }
+    .contact-cta a { color: var(--ink); text-decoration: none; border-bottom: 1.5px solid var(--ink); padding-bottom: 2px; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; }
+
+    /* ─── Footer ─────────────────────────────────────────────────── */
+    footer { padding: 32px 40px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.8; }
+    footer a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); }
+    footer .foot-right { text-align: right; }
+
+    /* ─── Responsive ────────────────────────────────────────────── */
+    @media (max-width: 1000px) {
+      .masthead, .hero, .band, .work-row, .press-list, .contact, footer, .section-head, .arms-body { padding-left: 20px; padding-right: 20px; }
+      .masthead { grid-template-columns: auto 1fr auto; gap: 20px; }
+      nav.nav { display: none; }
+      .hero { padding-top: 80px; padding-bottom: 80px; }
+      .hero-sub { grid-template-columns: 1fr; }
+      .hero-sub .stamp { text-align: left; }
+      .band { grid-template-columns: repeat(2, 1fr); }
+      .arms-body { grid-template-columns: 1fr; }
+      .arms-body .ascii-col { display: none; }
+      .work-row { grid-template-columns: 1fr; gap: 24px; }
+      .press-list li { grid-template-columns: 1fr; gap: 4px; }
+      .press-list .p-author { text-align: left; }
+      .contact-inner { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr; }
+      footer .foot-right { text-align: left; }
+      .section-head { grid-template-columns: 1fr; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ Masthead ═══════════════════════════════════════════════════════ -->
+  <header class="masthead">
+    <div class="wordmark">recurr<span class="caret"></span></div>
+    <nav class="nav"><ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#arms">Studios</a></li>
+      <li><a href="#press">Press</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul></nav>
+    <div class="masthead-clock">
+      <span id="mh-time">--:--:--</span> IST<br>
+      <span id="mh-date">---</span>
+    </div>
+    <div class="masthead-pulse"><span class="pulse-dot"></span>Live</div>
+  </header>
+
+  <!-- ═══ Hero ═══════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-coord mono">
+      <span>SURFACE / 001 / HOME</span>
+      <span>Bengaluru, India — 12°58'N 77°35'E</span>
+    </div>
+    <h1 class="hero-title">A growth studio that reads like a <span class="scramble" id="scramble">publication</span>.</h1>
+    <div class="hero-sub">
+      <p>Communication design for venture businesses. Media <span style="font-family:var(--mono);">×</span> Technology. Three studios, one editorial spine — Press, Agency, Vayam. Inbound is the only moat we respect.</p>
+      <div class="stamp">FY26-27 Active<br>Compiled 2026-04-19<br>v0.1</div>
+    </div>
+  </section>
+
+  <!-- ═══ Instruments band ═══════════════════════════════════════════════ -->
+  <section class="band">
+    <div class="band-cell"><dt>Uptime</dt><dd><span class="pulse-dot"></span> LIVE</dd></div>
+    <div class="band-cell"><dt>Orders synced (MOO)</dt><dd id="band-ticker">00000</dd></div>
+    <div class="band-cell"><dt>Inbound · 16 wk</dt><dd class="band-spark" id="band-spark">▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▁</dd></div>
+    <div class="band-cell"><dt>Asia/Kolkata</dt><dd id="band-clock">--:--:--</dd></div>
+  </section>
+
+  <!-- ═══ Arms ═══════════════════════════════════════════════════════════ -->
+  <div class="section-head" id="arms">
+    <div><div class="label">Section / 01</div><h2 class="title">Three studios.</h2></div>
+    <div class="sub">One company. One editorial spine. Three disciplines.</div>
+  </div>
+  <section class="arms-body">
+    <div class="ascii-col">
+      <pre id="arms-tree">recurr/
+├── agency/
+│   ├── clarisights
+│   ├── exotel
+│   ├── krisatwork
+│   └── pravar
+├── press/
+│   ├── editorial
+│   ├── research
+│   └── podcast
+└── vayam/
+    ├── anthracite
+    └── frontier</pre>
+    </div>
+    <div class="copy">
+      <div>
+        <h3>Agency <span class="tag">B2B GROWTH</span></h3>
+        <p>Positioning + content + SEO for venture-backed B2B. The Rabbit Engine under the hood — competitive internet as graph, scored, versioned weekly. Currently partnering with Clarisights (Sequoia), Exotel (AI-led CX), Kris@Work (InfoEdge Ventures), and others.</p>
+      </div>
+      <div>
+        <h3>Press <span class="tag">EDITORIAL AUTHORITY</span></h3>
+        <p>Research intelligence + media for B2B software evaluation. Weekly essays. A newsletter for venture operators, not tactics-hunters. Launch catalogue of 38 pieces, cold start underway. Podcast begins May.</p>
+      </div>
+    </div>
+    <div class="copy">
+      <div>
+        <h3>Vayam <span class="tag">FRONTIER SECTORS</span></h3>
+        <p>Media channel for India's frontier technology — minerals, energy, quantum, agriculture. Built as a collective of frontier companies that don't know how to market. First project, Anthracite, with Dr. P.S. Mishra on India's critical-minerals destiny.</p>
+      </div>
+      <div>
+        <h3>Rabbit <span class="tag">INTERNAL IP</span></h3>
+        <p>The intelligence engine that powers everything else. Models the competitive internet as a graph, finds strategic holes, turns them into priorities. Used on every Agency client. Not sold — it <em>is</em> the studio.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Work ═══════════════════════════════════════════════════════════ -->
+  <div class="section-head" id="work">
+    <div><div class="label">Section / 02</div><h2 class="title">Work.</h2></div>
+    <div class="sub">Selected clients · 2025–2026</div>
+  </div>
+  <section class="work-list">
+
+    <article class="work-row">
+      <div class="work-coord">W / 01<br>BERLIN · SERIES A</div>
+      <div class="work-main">
+        <h3>Clarisights</h3>
+        <p class="summary">Marketing analytics for CPG + retail. Sequoia-backed. Six-month GTM engagement — positioning refresh, Rabbit Context, competitive displacement program, reporting dashboards, 25-page website rebuild.</p>
+        <div class="tags"><span>Positioning</span><span>Content</span><span>SEO</span><span>Rabbit</span></div>
+      </div>
+      <div class="work-metric">
+        <div class="metric-label">Engagement Scale · $300K budget</div>
+        <pre id="bars-01">Strategy    │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│
+Content     │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│
+SEO         │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│
+Paid        │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│</pre>
+      </div>
+    </article>
+
+    <article class="work-row">
+      <div class="work-coord">W / 02<br>BENGALURU · LATE STAGE</div>
+      <div class="work-main">
+        <h3>Exotel</h3>
+        <p class="summary">India's leading AI-led CX platform (₹490 Cr revenue, IDC Leader). Co-pitch with Kyndrev. Intelligence Hub + SEO/AEO/GEO + PMM strategic — responding to Ozonetel's 6.5× LLM-citation growth.</p>
+        <div class="tags"><span>GEO</span><span>Intel Hub</span><span>AEO</span><span>PMM</span></div>
+      </div>
+      <div class="work-metric">
+        <div class="metric-label">LLM Citation Parity · vs Ozonetel</div>
+        <pre id="bars-02">Brand mentions   │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│
+LLM citations    │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│
+G2 reviews       │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│
+Backlink domains │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│</pre>
+      </div>
+    </article>
+
+    <article class="work-row">
+      <div class="work-coord">W / 03<br>BENGALURU · SEED</div>
+      <div class="work-main">
+        <h3>Kris<span style="font-family:var(--mono)">@</span>Work</h3>
+        <p class="summary">AI-native GTM execution platform. $3M seed, InfoEdge Ventures. Ongoing SEO retainer — 65-keyword plan, 26-page content map, Rabbit Context complete.</p>
+        <div class="tags"><span>SEO</span><span>Rabbit Context</span><span>Content</span></div>
+      </div>
+      <div class="work-metric">
+        <div class="metric-label">Keyword Coverage · 65 terms</div>
+        <pre id="bars-03">Category head   │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│
+Modifier tail   │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│
+Competitor gap  │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│
+Branded         │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│</pre>
+      </div>
+    </article>
+
+    <article class="work-row">
+      <div class="work-coord">W / 04<br>ARTPARK · IISc</div>
+      <div class="work-main">
+        <h3>Uncharted AI</h3>
+        <p class="summary">Autonomous exploration robotics. Antler-backed, ARTPARK at IISc. Site, positioning, and architecture — migrated to Sanity + Next 16 in April. Fold-by-fold design review in progress.</p>
+        <div class="tags"><span>Positioning</span><span>Website</span><span>Sanity</span></div>
+      </div>
+      <div class="work-metric">
+        <div class="metric-label">Site Build · 7 folds</div>
+        <pre id="bars-04">Hero          │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│
+Problem       │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│
+Tech          │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│
+Team + CTA    │░░░░░░░░░░░░░░░░░░░░░░░░░░░░│</pre>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ═══ Press ══════════════════════════════════════════════════════════ -->
+  <div class="section-head" id="press">
+    <div><div class="label">Section / 03</div><h2 class="title">Press.</h2></div>
+    <div class="sub">Research intelligence for B2B software evaluation · Latest</div>
+  </div>
+  <section class="press-list">
+    <ul>
+      <li>
+        <span class="p-date">2026-04-15</span>
+        <span class="p-type">ESSAY</span>
+        <span class="p-title"><a href="#">SaaS Is Dead. So Is Webflow. What Venture Software Actually Ships On Now.</a></span>
+        <span class="p-author">P. Mishra</span>
+      </li>
+      <li>
+        <span class="p-date">2026-04-08</span>
+        <span class="p-type">RESEARCH</span>
+        <span class="p-title"><a href="#">How AI Changes the SEO Stack — Part I: Technical</a></span>
+        <span class="p-author">S. Krishnan</span>
+      </li>
+      <li>
+        <span class="p-date">2026-04-01</span>
+        <span class="p-type">FRAMEWORK</span>
+        <span class="p-title"><a href="#">The Rabbit Context Framework — Building Client Intelligence Before Content</a></span>
+        <span class="p-author">P. Mishra</span>
+      </li>
+      <li>
+        <span class="p-date">2026-03-24</span>
+        <span class="p-type">ESSAY</span>
+        <span class="p-title"><a href="#">Freemium Was Never Free — The Unit Economics Nobody Writes About</a></span>
+        <span class="p-author">A. Bhattacharya</span>
+      </li>
+      <li>
+        <span class="p-date">2026-03-16</span>
+        <span class="p-type">RESEARCH</span>
+        <span class="p-title"><a href="#">Top 50 B2B Websites — What They Get Right (And What We Disagree With)</a></span>
+        <span class="p-author">N. Rao</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ═══ Contact ════════════════════════════════════════════════════════ -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <div class="mono">Section / 04</div>
+      <h2 class="contact-title"><span class="typer" id="contact-typer"></span></h2>
+      <div class="contact-cta">
+        <span class="mono-small">Direct</span>
+        <a href="mailto:pratik@recurr.co">pratik@recurr.co →</a>
+        <span class="mono-small" style="margin-top:12px;">Or book</span>
+        <a href="#">cal.com/recurr →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Footer ═════════════════════════════════════════════════════════ -->
+  <footer>
+    <div>
+      Recurr Studio Pvt Ltd<br>
+      Bengaluru, Karnataka, IN<br>
+      <span id="foot-time">--:--:--</span> · <span id="foot-date">---</span>
+    </div>
+    <div>
+      <a href="#">Agency</a> ·
+      <a href="#">Press</a> ·
+      <a href="#">Vayam</a><br>
+      <a href="#">Work</a> ·
+      <a href="#">About</a> ·
+      <a href="#">Careers</a>
+    </div>
+    <div class="foot-right">
+      <a href="#">LinkedIn</a> ·
+      <a href="#">Twitter</a> ·
+      <a href="#">RSS</a><br>
+      Compiled 2026-04-19 · v0.1
+    </div>
+  </footer>
+
+  <script>
+    /* ─── Shared: mono time formatter ─────────────────────────────── */
+    function updateTime() {
+      const now = new Date();
+      const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+      const dfmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' });
+      const t = fmt.format(now);
+      const d = dfmt.format(now).toUpperCase();
+      ['mh-time', 'foot-time', 'band-clock'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = t; });
+      ['mh-date', 'foot-date'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = d; });
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+
+    /* ─── Hero scramble ──────────────────────────────────────────── */
+    (function() {
+      const el = document.getElementById('scramble');
+      if (!el) return;
+      const words = ['publication', 'magazine', 'manuscript', 'journal', 'dispatch', 'broadsheet', 'notebook', 'periodical'];
+      const alphabet = 'abcdefghijklmnopqrstuvwxyz#$%&@+=*/';
+      let idx = 0;
+      function scramble(target) {
+        const settled = new Array(target.length).fill(false);
+        let frame = 0;
+        function step() {
+          const out = target.split('').map((ch, i) => {
+            if (settled[i]) return ch;
+            if (frame > i * 5 + Math.random() * 5) { settled[i] = true; return ch; }
+            return alphabet[Math.floor(Math.random() * alphabet.length)];
+          }).join('');
+          el.textContent = out;
+          frame++;
+          if (settled.every(s => s)) { setTimeout(next, 3200); return; }
+          setTimeout(step, 45);
+        }
+        function next() { idx = (idx + 1) % words.length; scramble(words[idx]); }
+        step();
+      }
+      scramble(words[0]);
+    })();
+
+    /* ─── Band: ticker ───────────────────────────────────────────── */
+    (function() {
+      const el = document.getElementById('band-ticker');
+      if (!el) return;
+      const target = 68421;
+      const duration = 2800;
+      function pad(n) { return String(n).padStart(5, '0'); }
+      function run() {
+        const start = performance.now();
+        function step(ts) {
+          const t = Math.min(1, (ts - start) / duration);
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = pad(Math.floor(eased * target));
+          if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { run(); io.disconnect(); } });
+      }, { threshold: 0.3 });
+      io.observe(el);
+    })();
+
+    /* ─── Band: sparkline ─────────────────────────────────────────── */
+    (function() {
+      const el = document.getElementById('band-spark');
+      if (!el) return;
+      const blocks = ['▁','▂','▃','▄','▅','▆','▇','█'];
+      const len = 20;
+      let data = Array(len).fill(0).map(() => Math.random() * 0.6 + 0.2);
+      function render() {
+        const max = Math.max(...data) || 1;
+        el.textContent = data.map(v => blocks[Math.min(blocks.length-1, Math.floor((v/max) * (blocks.length-1)))]).join('');
+      }
+      render();
+      setInterval(() => {
+        data.shift();
+        const prev = data[data.length-1] || 0.4;
+        const next = Math.max(0.05, Math.min(1, prev + (Math.random() - 0.5) * 0.35));
+        data.push(next);
+        render();
+      }, 1600);
+    })();
+
+    /* ─── Arms tree cycle ─────────────────────────────────────────── */
+    (function() {
+      const el = document.getElementById('arms-tree');
+      if (!el) return;
+      const base = `recurr/
+├── agency/
+│   ├── clarisights
+│   ├── exotel
+│   ├── krisatwork
+│   └── pravar
+├── press/
+│   ├── editorial
+│   ├── research
+│   └── podcast
+└── vayam/
+    ├── anthracite
+    └── frontier`;
+      const leaves = ['clarisights', 'exotel', 'krisatwork', 'pravar', 'editorial', 'research', 'podcast', 'anthracite', 'frontier'];
+      let idx = 0;
+      function render() {
+        const active = leaves[idx];
+        el.innerHTML = base.replace(active, '<span class="hot">' + active + '</span>');
+      }
+      render();
+      setInterval(() => { idx = (idx + 1) % leaves.length; render(); }, 1600);
+    })();
+
+    /* ─── Work bar charts (per-row IntersectionObserver) ─────────── */
+    (function() {
+      const specs = [
+        { id: 'bars-01', rows: [
+          ['Strategy', 0.85, '$ 60K'],
+          ['Content', 0.70, '$ 50K'],
+          ['SEO', 0.55, '$ 40K'],
+          ['Paid', 0.30, '$ 20K']
+        ], width: 28 },
+        { id: 'bars-02', rows: [
+          ['Brand mentions', 0.72, 'Exotel'],
+          ['LLM citations', 0.18, 'Exotel'],
+          ['G2 reviews', 0.14, '89 vs 623'],
+          ['Backlink domains', 0.62, '-1,100/yr']
+        ], width: 28 },
+        { id: 'bars-03', rows: [
+          ['Category head', 0.60, '8 terms'],
+          ['Modifier tail', 0.90, '42 terms'],
+          ['Competitor gap', 0.40, '9 terms'],
+          ['Branded', 0.20, '6 terms']
+        ], width: 28 },
+        { id: 'bars-04', rows: [
+          ['Hero', 0.95, '✓ live'],
+          ['Problem', 0.70, 'copy'],
+          ['Tech', 0.55, 'build'],
+          ['Team + CTA', 0.35, 'pending']
+        ], width: 28 }
+      ];
+      specs.forEach(spec => {
+        const el = document.getElementById(spec.id);
+        if (!el) return;
+        function render(t) {
+          const eased = 1 - Math.pow(1 - t, 3);
+          const maxLabel = Math.max(...spec.rows.map(r => r[0].length));
+          const lines = spec.rows.map(r => {
+            const label = r[0].padEnd(maxLabel, ' ');
+            const filled = Math.floor(r[1] * eased * spec.width);
+            const bar = '█'.repeat(filled) + '░'.repeat(spec.width - filled);
+            return label + ' │' + bar + '│ ' + r[2];
+          });
+          el.textContent = lines.join('\n');
+        }
+        function run() {
+          const start = performance.now();
+          const duration = 1600;
+          function step(ts) {
+            const t = Math.min(1, (ts - start) / duration);
+            render(t);
+            if (t < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if (e.isIntersecting) { run(); io.disconnect(); } });
+        }, { threshold: 0.3 });
+        io.observe(el);
+      });
+    })();
+
+    /* ─── Contact typewriter ──────────────────────────────────────── */
+    (function() {
+      const el = document.getElementById('contact-typer');
+      if (!el) return;
+      const lines = ["Let's talk.", "Write a brief.", "Pitch a bet.", "Hire us."];
+      let i = 0, j = 0, erasing = false;
+      function tick() {
+        const current = lines[i];
+        if (!erasing) {
+          j++;
+          el.textContent = current.slice(0, j);
+          if (j >= current.length) { erasing = true; setTimeout(tick, 2400); return; }
+          setTimeout(tick, 52 + Math.random() * 30);
+        } else {
+          j--;
+          el.textContent = current.slice(0, j);
+          if (j <= 0) { erasing = false; i = (i + 1) % lines.length; setTimeout(tick, 300); return; }
+          setTimeout(tick, 22);
+        }
+      }
+      tick();
+    })();
+  </script>
+</body>
+</html>
