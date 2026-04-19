@@ -120,17 +120,23 @@
     @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
     /* Pulse */
-    .sp-pulse { position: relative; width: 18px; height: 18px; }
-    .sp-pulse::before, .sp-pulse::after {
-      content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--paper);
+    .sp-pulse { position: relative; width: 10px; height: 10px; display: block; }
+    .sp-pulse::before {
+      content: ""; position: absolute; inset: 0;
+      border-radius: 50%; background: var(--paper);
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.18);
     }
-    .sp-pulse::after { animation: pulse 1.8s ease-out infinite; }
+    .sp-pulse::after {
+      content: ""; position: absolute; inset: -3px;
+      border-radius: 50%; border: 1.5px solid var(--paper);
+      animation: pulse 1.6s ease-out infinite;
+    }
     @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      100% { transform: scale(5.5); opacity: 0; }
+      0% { transform: scale(0.6); opacity: 1; }
+      100% { transform: scale(4); opacity: 0; }
     }
-    .sp-pulse-row { display: flex; align-items: center; gap: 20px; color: var(--paper); font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .sp-pulse-row .dot-wrap { position: relative; width: 18px; height: 18px; }
+    .sp-pulse-row { display: flex; align-items: center; gap: 22px; color: var(--paper); font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .sp-pulse-row .dot-wrap { position: relative; width: 10px; height: 10px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
     /* Live clock */
     .sp-clock { font-family: var(--mono); font-weight: 700; font-size: clamp(28px, 4.5vw, 56px); letter-spacing: -0.01em; text-align: center; }
@@ -149,10 +155,25 @@
     .sp-crt-inner .mono { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: 0.14em; opacity: 0.85; margin-top: 12px; }
     .sp-crt-lines {
       position: absolute; inset: 0; pointer-events: none;
-      background: repeating-linear-gradient(0deg, rgba(255,255,255,0.09) 0, rgba(255,255,255,0.09) 1px, transparent 1px, transparent 3px);
-      animation: crt-flicker 3.4s steps(28) infinite;
+      background: repeating-linear-gradient(0deg, rgba(255,255,255,0.14) 0, rgba(255,255,255,0.14) 1px, transparent 1px, transparent 3px);
     }
-    @keyframes crt-flicker { 0%,94%,100% { opacity: 1; } 95% { opacity: 0.55; } 96% { opacity: 0.85; } 97% { opacity: 0.7; } 98% { opacity: 0.95; } }
+    .sp-crt-sweep {
+      position: absolute; left: 0; right: 0; height: 36%; pointer-events: none;
+      background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.08) 35%, rgba(255,255,255,0.28) 50%, rgba(255,255,255,0.08) 65%, transparent 100%);
+      animation: crt-sweep 4.2s linear infinite;
+      will-change: transform;
+      mix-blend-mode: screen;
+    }
+    @keyframes crt-sweep { 0% { transform: translateY(-120%); } 100% { transform: translateY(320%); } }
+    .sp-crt-inner { animation: crt-jitter 3.8s steps(40) infinite; }
+    @keyframes crt-jitter {
+      0%, 86%, 100% { transform: translate(0, 0); }
+      88% { transform: translate(-1px, 0); }
+      90% { transform: translate(1px, 1px); opacity: 0.85; }
+      92% { transform: translate(-2px, 0); }
+      94% { transform: translate(0, -1px); }
+      96% { transform: translate(0, 0); }
+    }
 
     /* Sparkline */
     .sp-spark { font-family: var(--mono); font-size: clamp(28px, 4vw, 52px); letter-spacing: 0; line-height: 1; text-align: center; }
@@ -281,6 +302,7 @@
           </div>
         </div>
         <div class="sp-crt-lines"></div>
+        <div class="sp-crt-sweep"></div>
       </div>
       <div class="card-head"><h2 class="card-title">CRT Scanlines</h2></div>
       <p class="card-take"><b>Phosphor overlay.</b> Horizontal scanline texture + occasional frame drop. Signals "old machine". Good on full-bleed quote pages, transitions, 404.</p>
@@ -741,16 +763,22 @@ W26  █  █  █  █  █  █  █</pre>
       const el = document.getElementById('ticker-value');
       if (!el) return;
       const target = 68421;
-      const start = performance.now();
       const duration = 2400;
       function pad(n) { return String(n).padStart(5, '0'); }
-      function step(ts) {
-        const t = Math.min(1, (ts - start) / duration);
-        const eased = 1 - Math.pow(1 - t, 3);
-        el.textContent = pad(Math.floor(eased * target));
-        if (t < 1) requestAnimationFrame(step);
+      function run() {
+        const start = performance.now();
+        function step(ts) {
+          const t = Math.min(1, (ts - start) / duration);
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = pad(Math.floor(eased * target));
+          if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
       }
-      requestAnimationFrame(step);
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { run(); io.disconnect(); } });
+      }, { threshold: 0.4 });
+      io.observe(el);
     })();
 
     /* ─── SPEC/09 Sparkline ────────────────────────────────────────── */
@@ -932,7 +960,6 @@ W26  █  █  █  █  █  █  █</pre>
         { label: 'Q4', pct: 0.85, value: '₹3.40 Cr' }
       ];
       const width = 40;
-      const start = performance.now();
       const duration = 2400;
       function render(t) {
         const eased = 1 - Math.pow(1 - t, 3);
@@ -944,12 +971,19 @@ W26  █  █  █  █  █  █  █</pre>
         });
         el.textContent = lines.join('\n');
       }
-      function step(ts) {
-        const t = Math.min(1, (ts - start) / duration);
-        render(t);
-        if (t < 1) requestAnimationFrame(step);
+      function run() {
+        const start = performance.now();
+        function step(ts) {
+          const t = Math.min(1, (ts - start) / duration);
+          render(t);
+          if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
       }
-      requestAnimationFrame(step);
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { run(); io.disconnect(); } });
+      }, { threshold: 0.3 });
+      io.observe(el);
     })();
 
     /* ─── SPEC/17 Market Shift ────────────────────────────────────── */
