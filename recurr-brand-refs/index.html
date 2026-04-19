@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Recurr — Brand Reference Wall</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #000;
+      --paper: #fff;
+      --rule: #000;
+      --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      --display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    }
+
+    html { background: var(--paper); }
+    body {
+      font-family: var(--display);
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.3;
+    }
+
+    /* ─── Header ────────────────────────────────────────────────────────── */
+    .masthead {
+      border-bottom: 1.5px solid var(--rule);
+      padding: 24px 40px 20px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: end;
+    }
+    .masthead-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .masthead-title {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: clamp(40px, 6vw, 88px);
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      margin-top: 8px;
+    }
+    .masthead-meta {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-align: right;
+      text-transform: uppercase;
+      line-height: 1.6;
+    }
+
+    /* ─── Intro ─────────────────────────────────────────────────────────── */
+    .intro {
+      padding: 40px 40px 48px;
+      border-bottom: 1.5px solid var(--rule);
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 40px;
+    }
+    .intro-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .intro-body {
+      max-width: 820px;
+      font-size: clamp(20px, 2vw, 28px);
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      font-weight: 500;
+    }
+    .intro-body strong {
+      font-weight: 900;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 0 6px;
+    }
+    .intro-body em {
+      font-style: normal;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    /* ─── Wall grid ─────────────────────────────────────────────────────── */
+    .wall {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .card {
+      border-right: 1.5px solid var(--rule);
+      border-bottom: 1.5px solid var(--rule);
+      padding: 32px 40px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .card:nth-child(2n) { border-right: none; }
+
+    .card-ref {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .card-ref-code { font-weight: 700; }
+    .card-ref-tags span {
+      margin-left: 8px;
+      border: 1px solid var(--ink);
+      padding: 2px 6px;
+    }
+
+    .card-thumb {
+      width: 100%;
+      aspect-ratio: 1440 / 900;
+      background: #f2f2f2;
+      overflow: hidden;
+      border: 1.5px solid var(--rule);
+    }
+    .card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 24px;
+      margin-top: 8px;
+    }
+    .card-title {
+      font-weight: 900;
+      font-size: clamp(28px, 3.2vw, 44px);
+      line-height: 0.98;
+      letter-spacing: -0.025em;
+    }
+    .card-url {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      color: var(--ink);
+      white-space: nowrap;
+      border-bottom: 1.5px solid var(--ink);
+      padding-bottom: 2px;
+    }
+    .card-url:hover { background: var(--ink); color: var(--paper); border-bottom-color: var(--ink); }
+
+    .card-take {
+      font-size: 16px;
+      line-height: 1.45;
+      max-width: 56ch;
+    }
+    .card-take b { font-weight: 800; }
+
+    .card-meta {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--ink);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      gap: 8px;
+    }
+    .card-meta dt { opacity: 0.5; margin-bottom: 2px; }
+    .card-meta dd { font-weight: 700; }
+
+    /* ─── Synthesis block ──────────────────────────────────────────────── */
+    .synth {
+      padding: 56px 40px;
+      border-top: 1.5px solid var(--rule);
+    }
+    .synth-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .synth-title {
+      font-weight: 900;
+      font-size: clamp(32px, 4.5vw, 64px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 32px;
+    }
+    .synth-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-top: 32px;
+    }
+    .synth-col h3 {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding-bottom: 8px;
+      border-bottom: 1.5px solid var(--ink);
+      margin-bottom: 16px;
+    }
+    .synth-col ul { list-style: none; }
+    .synth-col li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--ink);
+      font-size: 16px;
+      line-height: 1.4;
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+    }
+    .synth-col li::before {
+      content: attr(data-n);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      opacity: 0.5;
+      padding-top: 3px;
+    }
+
+    /* ─── Footer ────────────────────────────────────────────────────────── */
+    footer {
+      padding: 24px 40px;
+      border-top: 1.5px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    footer a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); }
+
+    /* ─── Responsive ────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .masthead, .intro, .card, .synth, footer { padding-left: 20px; padding-right: 20px; }
+      .intro { grid-template-columns: 1fr; gap: 16px; }
+      .wall { grid-template-columns: 1fr; }
+      .card { border-right: none !important; }
+      .synth-grid { grid-template-columns: 1fr; }
+      .card-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="masthead">
+    <div>
+      <div class="masthead-label">Recurr / Brand Playground / 001</div>
+      <h1 class="masthead-title">Reference Wall</h1>
+    </div>
+    <div class="masthead-meta">
+      Compiled 2026-04-19<br>
+      08 References<br>
+      B&amp;W · Editorial · Technical
+    </div>
+  </header>
+
+  <section class="intro">
+    <div class="intro-label">Brief</div>
+    <p class="intro-body">
+      North star is <strong>Pentagram</strong>. The ask: an agency site that
+      <em>breaks modern UI rules</em> — no cards, no pills, no soft shadows — and
+      reads like a publication, not a product. Plus a <em>technical</em> layer:
+      mono captions, coordinate markers, instruments, readouts. And a hard
+      commitment: <strong>bold black and white</strong>, no shades of grey.
+    </p>
+  </section>
+
+  <section class="wall">
+
+    <!-- 01 Pentagram -->
+    <article class="card">
+      <div class="card-ref">
+        <span class="card-ref-code">REF / 01</span>
+        <span class="card-ref-tags"><span>north-star</span><span>editorial</span></span>
+      </div>
+      <div class="card-thumb"><img src="img/pentagram.jpeg" alt="Pentagram homepage"></div>
+      <div class="card-head">
+        <h2 class="card-title">Pentagram</h2>
+        <a class="card-url" href="https://www.pentagram.com/" target="_blank">pentagram.com →</a>
+      </div>
+      <p class="card-take">
+        <b>Publication, not product.</b> Work is the hero. No UI chrome. Hierarchy
+        from size + weight, not colour-value. The grid shows. Reads like a
+        monograph of a practice — which is exactly the ambition for Recurr.
+      </p>
+      <dl class="card-meta">
+        <div><dt>Take</dt><dd>Confidence</dd></div>
+        <div><dt>Type</dt><dd>Grotesk · large</dd></div>
+        <div><dt>Palette</dt><dd>B / W / red</dd></div>
+      </dl>
+    </article>
+
+    <!-- 02 Teenage Engineering -->
+    <article class="card">
+      <div class="card-ref">
+        <span class="card-ref-code">REF / 02</span>
+        <span class="card-ref-tags"><span>industrial</span><span>technical</span></span>
+      </div>
+      <div class="card-thumb"><img src="img/teenage-engineering.jpeg" alt="Teenage Engineering"></div>
+      <div class="card-head">
+        <h2 class="card-title">Teenage Engineering</h2>
+        <a class="card-url" href="https://teenage.engineering/" target="_blank">teenage.engineering →</a>
+      </div>
+      <p class="card-take">
+        <b>Instrument catalogue as website.</b> Product specs are the poetry.
+        Type restraint, orthographic photography, no storytelling padding. Teaches
+        us that "technical" doesn't mean ugly — it means honest about the object.
+      </p>
+      <dl class="card-meta">
+        <div><dt>Take</dt><dd>Restraint</dd></div>
+        <div><dt>Type</dt><dd>Mono + grotesk</dd></div>
+        <div><dt>Palette</dt><dd>Orange / black</dd></div>
+      </dl>
+    </article>
+
+    <!-- 03 Linear -->
+    <article class="card">
+      <div class="card-ref">
+        <span class="card-ref-code">REF / 03</span>
+        <span class="card-ref-tags"><span>product</span><span>polished</span></span>
+      </div>
+      <div class="card-thumb"><img src="img/linear.jpeg" alt="Linear.app"></div>
+      <div class="card-head">
+        <h2 class="card-title">Linear</h2>
+        <a class="card-url" href="https://linear.app/" target="_blank">linear.app →</a>
+      </div>
+      <p class="card-take">
+        <b>The polished tech default.</b> Great craft, micro-animations, dark glass.
+        Included as the <em>anti-pattern</em>: this is what "B2B software" looks
+        like. Recurr should share the craft but reject the vocabulary — cards,
+        gradients, frosted UI chrome. We're the opposite of this.
+      </p>
+      <dl class="card-meta">
+        <div><dt>Take</dt><dd>What NOT to do</dd></div>
+        <div><dt>Type</dt><dd>Inter · medium</dd></div>
+        <div><dt>Palette</dt><dd>Greys + purple</dd></div>
+      </dl>
+    </article>
+
+    <!-- 04 Are.na -->
+    <article class="card">
+      <div class="card-ref">
+        <span class="card-ref-code">REF / 04</span>
+        <span class="card-ref-tags"><span>content-first</span><span>mono</span></span>
+      </div>
+      <div class="card-thumb"><img src="img/arena.jpeg" alt="Are.na"></div>
+      <div class="card-head">
+        <h2 class="card-title">Are.na</h2>
+        <a class="card-url" href="https://www.are.na/" target="_blank">are.na →</a>
+      </div>
+      <p class="card-take">
+        <b>Zero-chrome, content-as-UI.</b> Everything is a block. Mono system font,
+        black on white, no decoration anywhere. Proof that stripping 90% of UI
+        makes the other 10% feel considered.
+      </p>
+      <dl class="card-meta">
+        <div><dt>Take</dt><dd>Discipline</dd></div>
+        <div><dt>Type</dt><dd>Mono system</dd></div>
+        <div><dt>Palette</dt><dd>Pure B/W</dd></div>
+      </dl>
+    </article>
+
+    <!-- 05 Stripe Press -->
+    <article class="card">
+      <div class="card-ref">
+        <span class="card-ref-code">REF / 05</span>
+        <span class="card-ref-tags"><span>editorial</span><span>publishing</span></span>
+      </div>
+      <div class="card-thumb"><img src="img/stripe-press.jpeg" alt="Stripe Press"></div>
+      <div class="card-head">
+        <h2 class="card-title">Stripe Press</h2>
+        <a class="card-url" href="https://press.stripe.com/" target="_blank">press.stripe.com →</a>
+      </div>
+      <p class="card-take">
+        <b>Tech company that writes like a university press.</b> Cover-first, each
+        book a poster. Tight grid, generous whitespace, serif running text.
+        A plausible skeleton for "Recurr as publication" — covers become case
+        studies, press becomes Recurr Press.
+      </p>
+      <dl class="card-meta">
+        <div><dt>Take</dt><dd>Covers-as-heroes</dd></div>
+        <div><dt>Type</dt><dd>Serif + grotesk</dd></div>
+        <div><dt>Palette</dt><dd>Cream / ink</dd></div>
+      </dl>
+    </article>
+
+    <!-- 06 Accept & Proceed -->
+    <article class="card">
+      <div class="card-ref">
+        <span class="card-ref-code">REF / 06</span>
+        <span class="card-ref-tags"><span>studio</span><span>editorial</span></span>
+      </div>
+      <div class="card-thumb"><img src="img/accept-and-proceed.jpeg" alt="Accept & Proceed"></div>
+      <div class="card-head">
+        <h2 class="card-title">Accept &amp; Proceed</h2>
+        <a class="card-url" href="https://www.acceptandproceed.com/" target="_blank">acceptandproceed.com →</a>
+      </div>
+      <p class="card-take">
+        <b>London studio, B&amp;W discipline, huge type.</b> Case studies as
+        full-bleed posters. The "agency that does something else but looks
+        technical" read — their system work (Nike, Samsung) proves the aesthetic
+        scales beyond art-direction.
+      </p>
+      <dl class="card-meta">
+        <div><dt>Take</dt><dd>B/W scale</dd></div>
+        <div><dt>Type</dt><dd>Grotesk · huge</dd></div>
+        <div><dt>Palette</dt><dd>Pure B/W</dd></div>
+      </dl>
+    </article>
+
+    <!-- 07 Browser Company -->
+    <article class="card">
+      <div class="card-ref">
+        <span class="card-ref-code">REF / 07</span>
+        <span class="card-ref-tags"><span>voice</span><span>editorial</span></span>
+      </div>
+      <div class="card-thumb"><img src="img/browser-company.jpeg" alt="The Browser Company"></div>
+      <div class="card-head">
+        <h2 class="card-title">Browser Company</h2>
+        <a class="card-url" href="https://thebrowser.company/" target="_blank">thebrowser.company →</a>
+      </div>
+      <p class="card-take">
+        <b>A tech company that sounds like a magazine.</b> Long-form editorial
+        voice on what's normally a marketing site. Useful for <em>tone</em> more
+        than visuals — how to write case studies that aren't lists of features.
+      </p>
+      <dl class="card-meta">
+        <div><dt>Take</dt><dd>Editorial voice</dd></div>
+        <div><dt>Type</dt><dd>Serif running</dd></div>
+        <div><dt>Palette</dt><dd>Warm off-white</dd></div>
+      </dl>
+    </article>
+
+    <!-- 08 Readymag -->
+    <article class="card">
+      <div class="card-ref">
+        <span class="card-ref-code">REF / 08</span>
+        <span class="card-ref-tags"><span>layout</span><span>publication</span></span>
+      </div>
+      <div class="card-thumb"><img src="img/readymag.jpeg" alt="Readymag"></div>
+      <div class="card-head">
+        <h2 class="card-title">Readymag</h2>
+        <a class="card-url" href="https://readymag.com/" target="_blank">readymag.com →</a>
+      </div>
+      <p class="card-take">
+        <b>Platform for editorial-first websites.</b> Included as a library of
+        examples of what "web as publication" looks like when the tool rewards
+        layout confidence. Scan their showcase for grid ideas.
+      </p>
+      <dl class="card-meta">
+        <div><dt>Take</dt><dd>Layout confidence</dd></div>
+        <div><dt>Type</dt><dd>Varied</dd></div>
+        <div><dt>Palette</dt><dd>Editor-led</dd></div>
+      </dl>
+    </article>
+
+  </section>
+
+  <section class="synth">
+    <div class="synth-label">Synthesis / Working hypothesis</div>
+    <h2 class="synth-title">
+      Editorial publication on a<br>technical chassis.
+    </h2>
+    <p class="intro-body" style="max-width:780px;">
+      Pentagram's confidence + Teenage Engineering's instrument honesty. Case
+      studies read like long-form articles with mono captions, coordinate
+      markers, timestamps, real numbers. Black and white are structural — not
+      mood. Greys banned.
+    </p>
+
+    <div class="synth-grid">
+      <div class="synth-col">
+        <h3>Keep</h3>
+        <ul>
+          <li data-n="01">Pentagram-level type scale — hierarchy from size + weight, never from colour-value.</li>
+          <li data-n="02">Are.na / Teenage Engineering discipline — zero UI ornament, no cards, no pills, no glass.</li>
+          <li data-n="03">V6 motion vocabulary (matrix rain, braille wave, cursor) as technical substrate — lives under the editorial.</li>
+          <li data-n="04">Mono captions + coordinate markers as page furniture (REF/01, 2026-04-19, etc).</li>
+        </ul>
+      </div>
+      <div class="synth-col">
+        <h3>Kill</h3>
+        <ul>
+          <li data-n="01">All greys. Pure black, pure white, one accent maximum.</li>
+          <li data-n="02">Soft shadows, rounded cards, frosted glass, gradient chrome — the Linear.app vocabulary.</li>
+          <li data-n="03">Hero headline + sub-headline + CTA templates. Pages are articles, not landing pages.</li>
+          <li data-n="04">Inline "feature grids" and badge-lists. Specs belong in mono footnotes, not bento boxes.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>Recurr / Brand Playground / 001</div>
+    <div><a href="/">← pages.recurr.co</a></div>
+  </footer>
+
+</body>
+</html>
