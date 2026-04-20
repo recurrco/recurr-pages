@@ -54,6 +54,96 @@
     .nav-dropdown-menu a:hover { background: var(--notebook); color: var(--ink); }
     [data-theme="dark"] .nav-dropdown-menu { box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
 
+    /* Active Threads quick view */
+    .threads-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-s);
+      margin-top: var(--space-s);
+    }
+    .thread-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: var(--space-s);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .thread-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 3px;
+    }
+    .thread-card.tc-red::before { background: var(--red); }
+    .thread-card.tc-blue::before { background: var(--blue); }
+    .thread-card.tc-green::before { background: var(--green); }
+    .thread-card.tc-yellow::before { background: var(--yellow); }
+    .thread-card.tc-ink::before { background: var(--ink); }
+    .thread-card.tc-pencil::before { background: var(--pencil); }
+    .thread-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+    }
+    .thread-num {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      font-weight: 700;
+      color: var(--pencil);
+      letter-spacing: 0.12em;
+    }
+    .thread-status {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+    .ts-live { background: #3D8C6E20; color: var(--green); }
+    .ts-progress { background: rgba(43,108,176,0.15); color: var(--blue); }
+    .ts-new { background: #E03E3620; color: var(--red); }
+    .ts-delivered { background: #3D8C6E20; color: var(--green); }
+    .ts-ready { background: rgba(212,184,44,0.22); color: #8A7A1A; }
+    [data-theme="dark"] .ts-ready { color: var(--yellow); }
+    .thread-title {
+      font-family: var(--serif);
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+    .thread-body {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      line-height: 1.55;
+    }
+    .thread-body strong { color: var(--ink); }
+    .thread-meta {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border-faint);
+    }
+    .thread-meta .ask {
+      color: var(--red);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
     /* Updates section */
     .updates-section { margin-top: var(--space-s); }
     .updates-label {
@@ -404,7 +494,101 @@
 </section>
 
 <!-- ===================================================================
-     STATUS & UPDATES (combined — first thing after hero)
+     ACTIVE THREADS (quick view — 20-second skim)
+     =================================================================== -->
+<section class="section-wide" data-reveal>
+  <div class="section-label dot-ink">Active Threads</div>
+  <p class="section-desc" style="max-width:72ch;">
+    Six live workstreams. One card each &mdash; status, what's moving, what's needed. Detailed updates below.
+  </p>
+
+  <div class="threads-grid">
+
+    <!-- 1. New Product Launch -->
+    <div class="thread-card tc-red">
+      <div class="thread-head">
+        <span class="thread-num">01 &middot; Product</span>
+        <span class="thread-status ts-new">New &middot; Unscoped</span>
+      </div>
+      <div class="thread-title">New Product Launch</div>
+      <div class="thread-body">
+        Ships <strong>~June 2026</strong> (~6 weeks out). Captured so far: <strong>Notebooks</strong> (authored analyses &mdash; Cohort, LTV, Source Efficiency, Fatigue), <strong>EDN Query DSL</strong> (composable <code>:multiply</code>/<code>:divide</code>/<code>:add</code> with <code>SUPPORTED</code>/<code>PARTIAL</code>/<code>GAP</code> labels), <strong>AI on Q2 roadmap</strong>, Table 2.0. This is a bigger positioning shift than "added AI" &mdash; it's programmable measurement. No messaging, launch calendar, or Early Access plan yet.
+      </div>
+      <div class="thread-meta"><span class="ask">Ask:</span> 30-min scoping with Arun before end-April</div>
+    </div>
+
+    <!-- 2. Content Programs -->
+    <div class="thread-card tc-blue">
+      <div class="thread-head">
+        <span class="thread-num">02 &middot; Content</span>
+        <span class="thread-status ts-progress">2 of 4 active</span>
+      </div>
+      <div class="thread-title">Content Programs</div>
+      <div class="thread-body">
+        <strong>Track C (Displacement):</strong> executing weekly on unified calendar. <strong>Track B (Integrations):</strong> 41 sources &times; 23 cols fill draft shared Apr 17. <strong>Track A (Data Literacy):</strong> parked &mdash; Yashika OOO. <strong>Track D (Arun thought leadership):</strong> to be folded into the Product Launch workstream.
+      </div>
+      <div class="thread-meta">Next: Yashika merge on B &middot; Track D rolls into Thread 01</div>
+    </div>
+
+    <!-- 3. Competitive Displacement -->
+    <div class="thread-card tc-green">
+      <div class="thread-head">
+        <span class="thread-num">03 &middot; Displacement</span>
+        <span class="thread-status ts-live">Live</span>
+      </div>
+      <div class="thread-title">Pages + Reddit Feed</div>
+      <div class="thread-body">
+        <strong>Funnel.io page</strong> built (Linear-migration styling). <strong>Reddit feed</strong> live &mdash; 28 curated threads in team-facing Notion DB, employee assignment workflow open. <strong>Still to build: Reddinbox</strong> &mdash; the intake / triage UI so the feed becomes a habit not a hunt.
+      </div>
+      <div class="thread-meta">Next: Supermetrics page &middot; Reddinbox v0</div>
+    </div>
+
+    <!-- 4. CRM Updates -->
+    <div class="thread-card tc-yellow">
+      <div class="thread-head">
+        <span class="thread-num">04 &middot; CRM</span>
+        <span class="thread-status ts-progress">In progress</span>
+      </div>
+      <div class="thread-title">CRM Updates</div>
+      <div class="thread-body">
+        <strong>Deal Dashboard cleaned up.</strong> Win/loss enrichment underway against the 180 / 424 lost deals with no reason + the $1.13M open renewal book. <code>closed_won_reason</code> backfill being structured alongside the losses.
+      </div>
+      <div class="thread-meta"><span class="ask">Ask:</span> write-scope decision this call</div>
+    </div>
+
+    <!-- 5. Migrated Users -->
+    <div class="thread-card tc-ink">
+      <div class="thread-head">
+        <span class="thread-num">05 &middot; Champions</span>
+        <span class="thread-status ts-delivered">90% matched</span>
+      </div>
+      <div class="thread-title">Migrated Users Found</div>
+      <div class="thread-body">
+        From the ~3K historical user export: <strong>90% matched</strong> to current company + role + LinkedIn via Clay enrichment waterfall. <strong>File shared with Sasha.</strong> Next: Top 200 scoring (seniority &times; ICP &times; tenure &times; function &times; geo) and warm re-intro sequence in her voice.
+      </div>
+      <div class="thread-meta">Next: Top 200 scoring &middot; outreach template with Sasha</div>
+    </div>
+
+    <!-- 6. Intelligence Hub -->
+    <div class="thread-card tc-pencil">
+      <div class="thread-head">
+        <span class="thread-num">06 &middot; Intelligence</span>
+        <span class="thread-status ts-ready">Production ready</span>
+      </div>
+      <div class="thread-title">Intelligence Hub</div>
+      <div class="thread-body">
+        Zulip + HubSpot + Notion CRM feeding the entity system. <strong>Ready to generate PMM assets and content</strong> from the current substrate. <strong>Gong + Pitch will unlock 5&times; more</strong> &mdash; customer voice, objections, gap-analysis decks, QBR narratives.
+      </div>
+      <div class="thread-meta"><span class="ask">Ask Abhishek:</span> Gong + Pitch access</div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider" style="margin:0 auto;max-width:1400px">
+
+<!-- ===================================================================
+     STATUS & UPDATES (combined — detail below the quick view)
      =================================================================== -->
 <section class="section-wide" data-reveal>
   <div class="section-label dot-ink">Status &amp; Updates</div>
@@ -412,8 +596,8 @@
     Bi-weekly cadence. This view shows what shipped in the last two weeks, what's in motion, and what we need from the Clarisights side to keep moving. Updated Apr&nbsp;20, 2026 &mdash; next sync Apr&nbsp;22.
   </p>
 
-  <!-- April Plan — 5 blocks (locked Apr 9, 2026) -->
-  <div class="subsection-label" style="margin-top:var(--space-m);">April plan &mdash; five blocks (locked Apr&nbsp;9)</div>
+  <!-- April Plan — 5 blocks (locked Apr 9, 2026) + June Launch (added Apr 20) -->
+  <div class="subsection-label" style="margin-top:var(--space-m);">April plan &mdash; five blocks (locked Apr&nbsp;9) &middot; Block 6 added Apr&nbsp;20</div>
   <div class="data-table-wrap" style="margin-bottom:var(--space-m);">
     <table class="data-table">
       <thead>
@@ -455,6 +639,12 @@
           <td class="num">Apr 13</td>
           <td>Notion task board as single source of truth for team visibility. Awaiting Arun / Sasha sign-off on comms.</td>
         </tr>
+        <tr>
+          <td style="font-weight:700;">6. June Launch Prep <span style="color:var(--red);font-family:var(--mono);font-size:var(--fs-label);letter-spacing:0.08em;margin-left:6px;">NEW</span></td>
+          <td><span class="status-badge status-draft">Unscoped</span></td>
+          <td class="num">Apr 20</td>
+          <td>CEO-visible launch ~6 weeks out. Product = Notebooks + EDN Query DSL + AI layer + Table 2.0. Absorbs Track D (Arun thought leadership) and Early Access campaign. Needs: positioning doc, messaging frame, launch calendar, website plan, Early Access scope.</td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -486,9 +676,9 @@
         </tr>
         <tr>
           <td style="font-weight:700;">Ex-Employee Champions Program</td>
-          <td><span class="status-badge status-draft">Design ready</span></td>
-          <td class="num">Apr 13</td>
-          <td>Six-step pipeline designed for ~3K historical user emails. Target: 200 high-score champions for warm re-intros. <strong>Awaiting:</strong> Sasha's CSV export (email + signup + last login).</td>
+          <td><span class="status-badge status-live">90% matched &middot; delivered</span></td>
+          <td class="num">Apr 20</td>
+          <td>~3K historical users enriched via Clay waterfall &mdash; <strong>90% matched</strong> to current company + role + LinkedIn. Master file shared with Sasha. Next: Top 200 scoring + warm re-intro sequence.</td>
         </tr>
         <tr>
           <td style="font-weight:700;">Research &amp; Audits</td>
@@ -502,6 +692,31 @@
 
   <!-- Recent milestones -->
   <div class="updates-label">What shipped in the last two weeks</div>
+
+  <div class="update-card">
+    <span class="update-badge" style="background:var(--ink);border:1px solid var(--pencil);">Apr 20</span>
+    <div style="flex:1;min-width:240px;">
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:white;line-height:1.55;margin-bottom:6px;">
+        <strong>Ex-Employee Champions &mdash; 90% match delivered.</strong> Clay waterfall resolved current company + title + LinkedIn + verified email across the ~3K historical Clarisights user export. Master file handed to Sasha.
+      </p>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:#C8CECC;line-height:1.55;">
+        <strong style="color:var(--yellow);">Sasha:</strong> review file &amp; confirm region split.
+        <strong style="color:var(--blue);margin-left:8px;">Next:</strong> score + Top 200 filter + draft warm re-intro template in Sasha's voice.
+      </p>
+    </div>
+  </div>
+
+  <div class="update-card">
+    <span class="update-badge" style="background:var(--red);">Apr 20</span>
+    <div style="flex:1;min-width:240px;">
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:white;line-height:1.55;margin-bottom:6px;">
+        <strong>New Product captured &mdash; launch workstream opened.</strong> Reviewed demo of Clarisights Labs: pre-built Notebooks (Cohort Analysis, Portfolio LTV Heatmap, Source Efficiency &amp; Fatigue, Marketing Mix, Creative Analysis), EDN Query DSL with composable operators (<code>:select</code>, <code>:add</code>, <code>:multiply</code>, <code>:divide</code>, <code>:as</code>), connector status surface with live row counts.
+      </p>
+      <p style="font-family:var(--serif);font-size:var(--fs-small);color:#C8CECC;line-height:1.55;">
+        POV forming: this is <strong style="color:white;">programmable measurement</strong>, not "BI with AI". Category reframe opportunity. Track D absorbs into this workstream.
+      </p>
+    </div>
+  </div>
 
   <div class="update-card">
     <span class="update-badge">Apr 17</span>
@@ -597,9 +812,24 @@
           <td class="num">Apr 25</td>
         </tr>
         <tr>
-          <td>Intelligence: Gong MCP connection + Sasha CSV for Champions program</td>
-          <td>Sasha</td>
+          <td>Champions: Top 200 scoring + warm re-intro template in Sasha's voice</td>
+          <td>Recurr + Sasha</td>
           <td class="num">May 2</td>
+        </tr>
+        <tr>
+          <td>Intelligence: Gong + Pitch MCP connections (scope from Abhishek)</td>
+          <td>Abhishek + Recurr</td>
+          <td class="num">May 2</td>
+        </tr>
+        <tr>
+          <td>June Launch: scoping session with Arun &rarr; positioning brief + launch block plan</td>
+          <td>Arun + Pratik</td>
+          <td class="num">Apr 30</td>
+        </tr>
+        <tr>
+          <td>Displacement: Reddinbox v0 (Reddit thread intake / triage UI for team)</td>
+          <td>Sujith</td>
+          <td class="num">May 4</td>
         </tr>
       </tbody>
     </table>
@@ -609,11 +839,11 @@
   <div class="callout callout-yellow" data-reveal>
     <div class="callout-label">What we need from Clarisights</div>
     <ol style="font-family:var(--serif);font-size:var(--fs-small);line-height:1.65;margin:0;padding-left:1.2em;color:var(--ink);">
+      <li><strong>New Product Launch &mdash; scoping session with Arun</strong> (30 min, before Apr 30). Positioning angle, Early Access scope, launch calendar, owners. Absorbs Track D (thought leadership) and the Track 2 "June launch prep" deliverable. <span style="color:var(--red);">CEO-visible milestone, ~6 weeks out.</span></li>
       <li><strong>CRM Hygiene decision</strong> &mdash; grant Recurr write scope on HubSpot <em>or</em> commit an internal cleanup window. Unblocks Reporting block too.</li>
-      <li><strong>Notion GTM pages access</strong> &mdash; share the 18 identified GTM / marketing pages with the <code>pratik-cc</code> integration. Same root blocker as Apr&nbsp;2.</li>
-      <li><strong>Champions CSV</strong> &mdash; Sasha to export the ~3K historical user list (email + signup_date + last_login + account_name).</li>
-      <li><strong>Arun thought-leadership scoping</strong> &mdash; 30 min to scope Track D against the Early Access campaign.</li>
-      <li><strong>Gong access</strong> &mdash; confirm <code>pratikmishra@clarisights.com</code> Gong scope for MCP connection.</li>
+      <li><strong>Gong + Pitch access &mdash; Abhishek</strong>. Gong unlocks customer voice / objections / buying signals. Pitch unlocks gap-analysis + QBR narratives. Both multiply the Intelligence Hub's PMM asset output.</li>
+      <li><strong>Notion GTM pages access</strong> &mdash; share the 18 identified GTM / marketing pages with the <code>pratik-cc</code> integration. Outstanding since Apr 2.</li>
+      <li><strong>Champions file review &mdash; Sasha</strong>. Confirm region split + send tone/voice for the warm re-intro template.</li>
     </ol>
   </div>
 </section>
