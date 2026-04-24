@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Recurr — Content that powers organic growth.</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="description" content="Content marketing that influences your buyer. Recurr builds and scales content programs for the post-AI era.">
+  <style>
+    /* ─── Tokens ─────────────────────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --ink: #000;
+      --paper: #fff;
+      --rule: #000;
+      --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      --display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      --pad-x: 40px;
+    }
+    html { background: var(--paper); scroll-behavior: smooth; }
+    body {
+      font-family: var(--display);
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.3;
+    }
+    body.lock { overflow: hidden; }
+    ::selection { background: var(--ink); color: var(--paper); }
+
+    /* ─── Shared primitives ──────────────────────────────────────────────── */
+    .rule { border-bottom: 1.5px solid var(--rule); }
+    .mono { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .mono-s { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    .section-head {
+      padding: 28px var(--pad-x) 16px;
+      display: grid;
+      grid-template-columns: 180px 1fr auto;
+      gap: 40px;
+      align-items: baseline;
+      border-bottom: 1.5px solid var(--rule);
+    }
+    .section-head .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .section-head .title { font-weight: 900; font-size: clamp(28px, 3.4vw, 46px); line-height: 1; letter-spacing: -0.028em; padding-bottom: 8px; }
+    .section-head .sub { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; padding-bottom: 12px; opacity: 0.6; }
+
+    /* ─── Masthead ───────────────────────────────────────────────────────── */
+    .masthead {
+      padding: 20px var(--pad-x);
+      display: grid;
+      grid-template-columns: auto 1fr auto auto auto;
+      gap: 40px;
+      align-items: center;
+      border-bottom: 1.5px solid var(--rule);
+      position: sticky; top: 0; background: var(--paper); z-index: 50;
+    }
+    .wordmark {
+      font-weight: 900; font-size: 28px; letter-spacing: -0.03em; line-height: 1;
+      display: inline-flex; align-items: baseline; color: var(--ink);
+      text-decoration: none;
+    }
+    .wordmark .caret {
+      display: inline-block; width: 0.45em; height: 0.85em; background: var(--ink);
+      margin-left: 0.08em; animation: blink 1.05s steps(2) infinite;
+    }
+    @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+    nav.nav { justify-self: end; }
+    nav.nav ul { list-style: none; display: flex; gap: 32px; }
+    nav.nav a {
+      color: var(--ink); text-decoration: none;
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      border-bottom: 1.5px solid transparent; padding-bottom: 2px;
+    }
+    nav.nav a:hover { border-bottom-color: var(--ink); }
+    nav.nav a.cta { font-weight: 700; }
+
+    .masthead-clock { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; text-align: right; line-height: 1.5; }
+    .masthead-clock b { font-weight: 700; }
+
+    .masthead-pulse { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+    .pulse-dot { position: relative; width: 8px; height: 8px; display: block; }
+    .pulse-dot::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--ink); }
+    .pulse-dot::after { content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 1.2px solid var(--ink); animation: pulse 1.6s ease-out infinite; }
+    @keyframes pulse {
+      0% { transform: scale(0.6); opacity: 1; }
+      100% { transform: scale(3.2); opacity: 0; }
+    }
+
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 8px 14px;
+      background: var(--ink); color: var(--paper);
+      font-family: var(--mono); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      border: none; cursor: pointer;
+      text-decoration: none;
+    }
+    .cta-btn:hover { background: #111; }
+    .cta-btn .arrow { display: inline-block; transition: transform .18s ease; }
+    .cta-btn:hover .arrow { transform: translateX(4px); }
+
+    /* ─── Hero ───────────────────────────────────────────────────────────── */
+    .hero { padding: 100px var(--pad-x) 120px; border-bottom: 1.5px solid var(--rule); }
+    .hero-coord { display: flex; justify-content: space-between; padding-bottom: 56px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .hero-title {
+      font-weight: 900; font-size: clamp(48px, 9vw, 148px); line-height: 0.88; letter-spacing: -0.035em;
+      max-width: 18ch;
+    }
+    .hero-title .scramble { display: inline-block; min-width: 8ch; }
+    .hero-deck {
+      margin-top: 56px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 56px;
+      align-items: end;
+    }
+    .hero-deck .sub { font-size: clamp(18px, 1.6vw, 22px); font-weight: 500; max-width: 52ch; line-height: 1.45; }
+    .hero-deck .sub em { font-style: normal; border-bottom: 2px solid var(--ink); }
+    .hero-deck .action { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+    .hero-deck .stamp { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.8; opacity: 0.7; margin-top: 8px; }
+    .hero-deck .big-cta {
+      display: inline-flex; align-items: center; gap: 14px;
+      padding: 14px 22px;
+      background: var(--ink); color: var(--paper);
+      font-family: var(--mono); font-size: 13px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border: none; cursor: pointer;
+      text-decoration: none;
+    }
+    .hero-deck .big-cta:hover { background: #111; }
+    .hero-deck .big-cta .arrow { transition: transform .2s ease; }
+    .hero-deck .big-cta:hover .arrow { transform: translateX(4px); }
+
+    /* ─── Case Index (logo bar) ──────────────────────────────────────────── */
+    .case-head {
+      padding: 28px var(--pad-x) 16px;
+      display: grid;
+      grid-template-columns: 180px 1fr auto;
+      gap: 40px;
+      align-items: baseline;
+      border-bottom: 1.5px solid var(--rule);
+    }
+    .case-head .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+    .case-head .title { font-weight: 900; font-size: clamp(22px, 2.4vw, 30px); line-height: 1; letter-spacing: -0.02em; padding-bottom: 10px; }
+    .case-head .count { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.55; padding-bottom: 12px; }
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      border-bottom: 1.5px solid var(--rule);
+    }
+    .case-cell {
+      position: relative;
+      aspect-ratio: 3 / 1.8;
+      border-right: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      background: var(--paper);
+      overflow: hidden;
+      transition: background .25s ease;
+    }
+    .case-cell:nth-child(6n) { border-right: none; }
+    .case-cell:nth-last-child(-n+6) { border-bottom: none; }
+    .case-cell img {
+      width: 70%; max-width: 160px; height: auto;
+      display: block;
+      mix-blend-mode: multiply;
+      filter: grayscale(1) contrast(1.1);
+      opacity: 0.45;
+      transition: opacity .3s ease, filter .3s ease, transform .3s ease;
+    }
+    .case-cell.is-active img {
+      opacity: 1;
+      filter: grayscale(1) contrast(1.2);
+    }
+    .case-cell .cell-coord {
+      position: absolute; top: 10px; left: 12px;
+      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase;
+      opacity: 0.35;
+    }
+    .case-cell .cell-sweep {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px;
+      background: var(--ink); transform-origin: left;
+      transform: scaleX(0); transition: transform .4s cubic-bezier(.6,0,.2,1);
+    }
+    .case-cell.is-active .cell-sweep { transform: scaleX(1); }
+    .case-cell .cell-pulse {
+      position: absolute; top: 10px; right: 12px;
+      width: 7px; height: 7px; opacity: 0; transition: opacity .2s ease;
+    }
+    .case-cell.is-active .cell-pulse { opacity: 1; }
+    .case-cell .cell-pulse::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--ink); }
+    .case-cell .cell-pulse::after { content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 1px solid var(--ink); animation: pulse 1.6s ease-out infinite; }
+
+    .case-footer {
+      padding: 18px var(--pad-x);
+      display: grid;
+      grid-template-columns: 180px 1fr auto;
+      gap: 40px;
+      align-items: center;
+      border-bottom: 1.5px solid var(--rule);
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .case-footer .active-name { font-weight: 700; }
+    .case-footer .muted { opacity: 0.55; }
+
+    /* ─── Buyer Mirror (3 hunts) ─────────────────────────────────────────── */
+    .mirror { border-bottom: 1.5px solid var(--rule); }
+    .mirror-lead {
+      padding: 56px var(--pad-x) 40px;
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 40px;
+    }
+    .mirror-lead .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .mirror-lead .intro {
+      max-width: 820px;
+      font-weight: 500;
+      font-size: clamp(22px, 2.4vw, 34px);
+      line-height: 1.28;
+      letter-spacing: -0.015em;
+    }
+    .mirror-lead .intro em { font-style: normal; border-bottom: 2px solid var(--ink); }
+    .mirror-lead .intro strong { font-weight: 900; background: var(--ink); color: var(--paper); padding: 0 6px; }
+
+    .hunt {
+      padding: 52px var(--pad-x) 60px;
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 40px;
+      border-top: 1.5px solid var(--rule);
+      align-items: start;
+    }
+    .hunt .left {
+      display: flex; flex-direction: column; gap: 12px;
+      font-family: var(--mono);
+    }
+    .hunt .num {
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      font-weight: 700;
+    }
+    .hunt .handle {
+      font-size: clamp(14px, 1.3vw, 18px);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding-top: 10px;
+      border-top: 1.5px solid var(--ink);
+    }
+    .hunt .body h3 {
+      font-weight: 900;
+      font-size: clamp(30px, 3.6vw, 54px);
+      line-height: 1;
+      letter-spacing: -0.028em;
+      margin-bottom: 18px;
+      max-width: 22ch;
+    }
+    .hunt .body p {
+      font-size: clamp(17px, 1.4vw, 20px);
+      line-height: 1.5;
+      max-width: 62ch;
+    }
+    .hunt .body p em { font-style: normal; border-bottom: 2px solid var(--ink); }
+
+    /* ─── Operating Matrix ──────────────────────────────────────────────── */
+    .matrix-wrap { background: var(--ink); color: var(--paper); }
+    .matrix-head {
+      padding: 24px var(--pad-x) 20px;
+      display: grid;
+      grid-template-columns: 180px 1fr auto;
+      gap: 40px;
+      align-items: end;
+      border-bottom: 1.5px solid var(--paper);
+      font-family: var(--mono);
+    }
+    .matrix-head .label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.55; }
+    .matrix-head .title { font-family: var(--display); font-weight: 900; font-size: clamp(20px, 2.2vw, 28px); letter-spacing: -0.02em; line-height: 1; }
+    .matrix-head .version { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.55; }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: 180px 1.3fr 2.2fr;
+      font-family: var(--mono);
+    }
+    .matrix > div {
+      padding: 24px var(--pad-x);
+      border-bottom: 1px solid rgba(255,255,255,0.35);
+    }
+    .matrix > div:last-child:not(.matrix-colhead) { }
+    .matrix-colhead {
+      font-size: 10.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.55;
+      font-weight: 500;
+      border-bottom: 1.5px solid var(--paper);
+      padding-top: 16px; padding-bottom: 16px;
+    }
+    .matrix-hunt { display: flex; flex-direction: column; gap: 12px; }
+    .matrix-hunt .n {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      opacity: 0.55;
+    }
+    .matrix-hunt .h {
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: clamp(18px, 2vw, 26px);
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+    .matrix-kpi ul { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13px; line-height: 1.4; }
+    .matrix-kpi li { display: flex; gap: 10px; }
+    .matrix-kpi li::before { content: "·"; opacity: 0.55; }
+
+    .matrix-surfaces .surfaces-grid {
+      display: flex; flex-wrap: wrap; gap: 6px 10px;
+      font-size: 12.5px; line-height: 1.4;
+    }
+    .matrix-surfaces .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      border: 1px solid var(--paper);
+      padding: 4px 10px;
+      letter-spacing: 0.02em;
+    }
+    .matrix-surfaces .pill::before {
+      content: "✓"; font-size: 10px; opacity: 0.65;
+    }
+
+    /* Draw-in rule on matrix borders */
+    .matrix > div { position: relative; }
+    .matrix > div.reveal .draw-in {
+      position: absolute; left: 0; right: 0; bottom: -1px; height: 1.5px;
+      background: var(--paper); transform-origin: left;
+      transform: scaleX(0); transition: transform .8s cubic-bezier(.7,0,.3,1) .2s;
+    }
+    .matrix > div.reveal.is-visible .draw-in { transform: scaleX(1); }
+
+    /* ─── Team ──────────────────────────────────────────────────────────── */
+    .team {
+      padding: 72px var(--pad-x) 88px;
+      border-bottom: 1.5px solid var(--rule);
+    }
+    .team-label {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+    .team-mast {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 40px;
+      align-items: baseline;
+      padding-top: 18px;
+      padding-bottom: 18px;
+      border-top: 1.5px solid var(--ink);
+      border-bottom: 1.5px solid var(--ink);
+      margin-bottom: 36px;
+    }
+    .team-mast .name {
+      font-weight: 900;
+      font-size: clamp(32px, 4.4vw, 64px);
+      line-height: 1;
+      letter-spacing: -0.032em;
+    }
+    .team-mast .role {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: block;
+      margin-top: 10px;
+      opacity: 0.65;
+    }
+    .team-mast .amp {
+      font-family: var(--mono);
+      font-size: clamp(24px, 3vw, 40px);
+      align-self: center;
+      opacity: 0.5;
+    }
+    .team-mast .right { text-align: right; }
+
+    .team-bio {
+      max-width: 72ch;
+      font-size: clamp(18px, 1.6vw, 22px);
+      line-height: 1.5;
+      font-weight: 500;
+    }
+    .team-bio em { font-style: normal; border-bottom: 2px solid var(--ink); }
+
+    /* ─── Press ─────────────────────────────────────────────────────────── */
+    .press-head {
+      padding: 28px var(--pad-x) 16px;
+      display: grid;
+      grid-template-columns: 180px 1fr auto;
+      gap: 40px;
+      align-items: baseline;
+      border-bottom: 1.5px solid var(--rule);
+    }
+    .press-head .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .press-head .title { font-weight: 900; font-size: clamp(28px, 3.2vw, 46px); line-height: 1; letter-spacing: -0.028em; padding-bottom: 8px; }
+    .press-head a {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none;
+      border-bottom: 1.5px solid var(--ink); padding-bottom: 2px;
+    }
+    .press-head a:hover { background: var(--ink); color: var(--paper); }
+
+    .press-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1.5px solid var(--rule);
+    }
+    .press-featured {
+      padding: 52px var(--pad-x);
+      border-right: 1.5px solid var(--ink);
+      display: flex; flex-direction: column; justify-content: space-between;
+      gap: 40px;
+    }
+    .press-featured .tag {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      display: inline-flex; gap: 10px; align-items: center;
+    }
+    .press-featured .tag b { font-weight: 700; }
+    .press-featured h3 {
+      font-weight: 900;
+      font-size: clamp(30px, 3.8vw, 52px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      max-width: 18ch;
+    }
+    .press-featured .dek {
+      font-size: clamp(16px, 1.4vw, 18px);
+      line-height: 1.5;
+      max-width: 44ch;
+    }
+    .press-featured .read {
+      font-family: var(--mono); font-size: 12px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none;
+      border-bottom: 1.5px solid var(--ink);
+      padding-bottom: 3px;
+      align-self: flex-start;
+    }
+    .press-featured .read:hover { background: var(--ink); color: var(--paper); }
+    .press-featured .meta {
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+      opacity: 0.55;
+    }
+
+    .press-latest { display: flex; flex-direction: column; }
+    .press-latest .item {
+      padding: 28px var(--pad-x);
+      border-bottom: 1px solid var(--ink);
+      display: grid;
+      grid-template-columns: 110px 1fr auto;
+      gap: 24px;
+      align-items: baseline;
+      text-decoration: none;
+      color: var(--ink);
+      transition: background .2s ease;
+    }
+    .press-latest .item:last-child { border-bottom: none; flex-grow: 1; }
+    .press-latest .item:hover { background: #f6f6f6; }
+    .press-latest .date {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      opacity: 0.65;
+    }
+    .press-latest .t {
+      font-weight: 700;
+      font-size: clamp(17px, 1.5vw, 20px);
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+    }
+    .press-latest .author {
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+      opacity: 0.55;
+    }
+
+    /* ─── Footer ───────────────────────────────────────────────────────── */
+    .site-foot {
+      padding: 48px var(--pad-x) 32px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+      border-bottom: 1.5px solid var(--rule);
+    }
+    .site-foot .f-word {
+      font-weight: 900; font-size: 48px; letter-spacing: -0.035em; line-height: 0.95;
+      display: inline-flex; align-items: baseline;
+    }
+    .site-foot .f-word .caret {
+      display: inline-block; width: 0.45em; height: 0.82em; background: var(--ink);
+      margin-left: 0.08em; animation: blink 1.05s steps(2) infinite;
+    }
+    .site-foot .f-manifesto {
+      margin-top: 16px;
+      font-size: 16px;
+      line-height: 1.5;
+      max-width: 48ch;
+    }
+    .site-foot .f-col h4 {
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      border-bottom: 1.5px solid var(--ink);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+    .site-foot .f-col ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .site-foot .f-col a {
+      color: var(--ink); text-decoration: none;
+      font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+    }
+    .site-foot .f-col a:hover { border-bottom-color: var(--ink); }
+
+    .copy-band {
+      padding: 18px var(--pad-x);
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      opacity: 0.65;
+    }
+
+    /* ─── Contact Modal ────────────────────────────────────────────────── */
+    .scrim {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s ease;
+      z-index: 90;
+    }
+    .scrim.open { opacity: 1; pointer-events: auto; }
+
+    .contact-panel {
+      position: fixed; top: 0; right: 0; bottom: 0;
+      width: min(560px, 100vw);
+      background: var(--paper);
+      transform: translateX(100%);
+      transition: transform .4s cubic-bezier(.6,0,.2,1);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .contact-panel.open { transform: translateX(0); }
+
+    .contact-panel .cp-head {
+      padding: 22px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1.5px solid var(--ink);
+    }
+    .contact-panel .cp-head .label {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .contact-panel .cp-close {
+      background: none; border: none; cursor: pointer;
+      font-family: var(--mono); font-size: 16px; font-weight: 700;
+      color: var(--ink);
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .contact-panel .cp-close:hover { background: var(--ink); color: var(--paper); }
+
+    .contact-panel .cp-body {
+      padding: 40px 32px 48px;
+      flex: 1;
+    }
+    .contact-panel h2 {
+      font-weight: 900;
+      font-size: clamp(34px, 4vw, 48px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .contact-panel .sub {
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 36px;
+      max-width: 44ch;
+    }
+
+    .form-field { margin-bottom: 26px; }
+    .form-field label {
+      display: block;
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .form-field input, .form-field textarea, .form-field select {
+      width: 100%;
+      padding: 12px 0;
+      border: none;
+      border-bottom: 1.5px solid var(--ink);
+      background: transparent;
+      font-family: var(--display);
+      font-size: 16px;
+      line-height: 1.4;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .2s ease;
+    }
+    .form-field input:focus, .form-field textarea:focus, .form-field select:focus {
+      border-bottom-color: var(--ink);
+      border-bottom-width: 2.5px;
+    }
+    .form-field textarea { resize: vertical; min-height: 84px; }
+    .form-field select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M0 0 L6 8 L12 0' fill='black'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 0 center;
+      background-size: 10px;
+      padding-right: 20px;
+      cursor: pointer;
+    }
+
+    .form-submit-row {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+    .form-submit-row .sla {
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+      opacity: 0.55;
+    }
+    .form-submit {
+      display: inline-flex; align-items: center; gap: 14px;
+      padding: 14px 24px;
+      background: var(--ink); color: var(--paper);
+      font-family: var(--mono); font-size: 12px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      border: none; cursor: pointer;
+    }
+    .form-submit .arrow { transition: transform .2s ease; }
+    .form-submit:hover { background: #111; }
+    .form-submit:hover .arrow { transform: translateX(4px); }
+
+    /* Success state */
+    .success-state {
+      padding: 80px 32px;
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 28px;
+      flex: 1;
+    }
+    .success-state.show { display: flex; }
+    .success-state h2 {
+      font-weight: 900;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+    .success-state .typer-line {
+      font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em;
+      line-height: 1.6;
+      max-width: 42ch;
+    }
+    .success-state .typer-line::after {
+      content: "▋"; animation: blink 1s steps(2) infinite;
+      margin-left: 3px;
+    }
+    .success-state .typer-line.done::after { animation: none; content: ""; }
+    .success-state .press-link {
+      margin-top: 16px;
+      font-family: var(--mono); font-size: 12px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none;
+      border-bottom: 1.5px solid var(--ink);
+      padding-bottom: 3px;
+    }
+    .success-state .press-link:hover { background: var(--ink); color: var(--paper); }
+
+    /* ─── Reveals ──────────────────────────────────────────────────────── */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal-up {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity .7s cubic-bezier(.3,.7,.3,1), transform .7s cubic-bezier(.3,.7,.3,1);
+      }
+      .reveal-up.is-visible { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── Responsive ──────────────────────────────────────────────────── */
+    @media (max-width: 1100px) {
+      :root { --pad-x: 24px; }
+      .masthead { grid-template-columns: auto 1fr auto; gap: 20px; }
+      nav.nav { display: none; }
+      .masthead-clock { display: none; }
+      .hero { padding-top: 72px; padding-bottom: 80px; }
+      .hero-deck { grid-template-columns: 1fr; gap: 32px; }
+      .case-grid { grid-template-columns: repeat(3, 1fr); }
+      .case-cell:nth-child(6n) { border-right: 1px solid var(--ink); }
+      .case-cell:nth-child(3n) { border-right: none; }
+      .case-cell:nth-last-child(-n+6) { border-bottom: 1px solid var(--ink); }
+      .case-cell:nth-last-child(-n+3) { border-bottom: none; }
+      .mirror-lead, .hunt { grid-template-columns: 1fr; }
+      .matrix { grid-template-columns: 1fr; }
+      .matrix > div { border-bottom: 1px solid rgba(255,255,255,0.35); }
+      .matrix-colhead { display: none; }
+      .matrix-hunt { padding-top: 32px !important; }
+      .team-mast { grid-template-columns: 1fr; gap: 24px; }
+      .team-mast .amp { display: none; }
+      .team-mast .right { text-align: left; }
+      .press-grid { grid-template-columns: 1fr; }
+      .press-featured { border-right: none; border-bottom: 1.5px solid var(--ink); }
+      .site-foot { grid-template-columns: 1fr; gap: 32px; }
+      .copy-band { flex-direction: column; gap: 4px; }
+      .section-head, .press-head, .case-head, .case-footer { grid-template-columns: 1fr; gap: 10px; }
+    }
+    @media (max-width: 600px) {
+      .case-grid { grid-template-columns: repeat(2, 1fr); }
+      .case-cell:nth-child(3n) { border-right: 1px solid var(--ink); }
+      .case-cell:nth-child(2n) { border-right: none; }
+      .case-cell:nth-last-child(-n+3) { border-bottom: 1px solid var(--ink); }
+      .case-cell:nth-last-child(-n+2) { border-bottom: none; }
+      .press-latest .item { grid-template-columns: 1fr; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ Masthead ═══════════════════════════════════════════════════════ -->
+  <header class="masthead">
+    <a class="wordmark" href="/recurr-website-mvp/">recurr<span class="caret"></span></a>
+    <div></div>
+    <nav class="nav">
+      <ul>
+        <li><a href="#press">Press</a></li>
+        <li><a href="#subscribe">Subscribe</a></li>
+      </ul>
+    </nav>
+    <div class="masthead-clock">
+      <span id="mh-time">--:--:--</span> IST<br>
+      <span id="mh-date">---</span>
+    </div>
+    <button class="cta-btn" id="open-contact" aria-haspopup="dialog">
+      <span>Work with Us</span><span class="arrow">→</span>
+    </button>
+  </header>
+
+  <!-- ═══ Hero ═══════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-coord">
+      <span>SURFACE / 001 / HOME</span>
+      <span>Bengaluru, India — 12°58'N 77°35'E</span>
+    </div>
+    <h1 class="hero-title">Content that powers <span class="scramble" id="scramble">organic</span> growth.</h1>
+    <div class="hero-deck">
+      <p class="sub">
+        We build and scale content marketing programs for the <em>post-AI era</em> —
+        driving visibility across every channel your buyer lives on, and turning
+        <em>attention into revenue</em>.
+      </p>
+      <div class="action">
+        <button class="big-cta" id="open-contact-2" aria-haspopup="dialog">
+          <span>Build your content marketing program</span><span class="arrow">→</span>
+        </button>
+        <div class="stamp">
+          FY26-27 Active<br>
+          Compiled 2026-04-25 · v0.1
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Case Index (logo bar) ═════════════════════════════════════════ -->
+  <div class="case-head">
+    <div class="label"><span class="pulse-dot"></span>Section / 01</div>
+    <h2 class="title">Case Index.</h2>
+    <div class="count">12 Clients · Career + Recurr</div>
+  </div>
+  <section class="case-grid" id="case-grid">
+    <div class="case-cell" data-name="UserExperior"><span class="cell-coord">C / 01</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-01.png" alt="UserExperior"><span class="cell-sweep"></span></div>
+    <div class="case-cell" data-name="Pazcare"><span class="cell-coord">C / 02</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-02.png" alt="Pazcare"><span class="cell-sweep"></span></div>
+    <div class="case-cell" data-name="NestAway"><span class="cell-coord">C / 03</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-03.png" alt="NestAway"><span class="cell-sweep"></span></div>
+    <div class="case-cell" data-name="Fyle"><span class="cell-coord">C / 04</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-04.png" alt="Fyle"><span class="cell-sweep"></span></div>
+    <div class="case-cell" data-name="Goodera"><span class="cell-coord">C / 05</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-05.png" alt="Goodera"><span class="cell-sweep"></span></div>
+    <div class="case-cell" data-name="elevateHQ"><span class="cell-coord">C / 06</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-06.png" alt="elevateHQ"><span class="cell-sweep"></span></div>
+    <div class="case-cell" data-name="Mettl"><span class="cell-coord">C / 07</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-07.png" alt="Mettl"><span class="cell-sweep"></span></div>
+    <div class="case-cell" data-name="Mercer"><span class="cell-coord">C / 08</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-08.png" alt="Mercer"><span class="cell-sweep"></span></div>
+    <div class="case-cell" data-name="Wingify"><span class="cell-coord">C / 09</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-09.png" alt="Wingify"><span class="cell-sweep"></span></div>
+    <div class="case-cell" data-name="GoComet"><span class="cell-coord">C / 10</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-10.png" alt="GoComet"><span class="cell-sweep"></span></div>
+    <div class="case-cell" data-name="Hippo Video"><span class="cell-coord">C / 11</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-11.png" alt="Hippo Video"><span class="cell-sweep"></span></div>
+    <div class="case-cell" data-name="EasyEcom"><span class="cell-coord">C / 12</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-12.png" alt="EasyEcom"><span class="cell-sweep"></span></div>
+  </section>
+  <div class="case-footer">
+    <div class="muted">Currently viewing</div>
+    <div><span class="active-name" id="case-active-name">UserExperior</span></div>
+    <div class="muted">Auto-rotate every 3.2s · Hover to hold</div>
+  </div>
+
+  <!-- ═══ Buyer Mirror ══════════════════════════════════════════════════ -->
+  <section class="mirror">
+    <div class="mirror-lead">
+      <div class="label">Section / 02</div>
+      <p class="intro">
+        If you're here, you're probably looking for <strong>one of these</strong>.
+      </p>
+    </div>
+
+    <article class="hunt">
+      <div class="left">
+        <span class="num">Hunt / 01</span>
+        <span class="handle">Findability</span>
+      </div>
+      <div class="body">
+        <h3>Be findable everywhere your buyer looks.</h3>
+        <p>
+          Your buyer's journey no longer runs through one channel. Publish for Google,
+          AI answer engines, Reddit, directories, and the long tail of surfaces where
+          discovery actually happens today. <em>Visibility isn't a single surface anymore</em> —
+          it's every surface.
+        </p>
+      </div>
+    </article>
+
+    <article class="hunt">
+      <div class="left">
+        <span class="num">Hunt / 02</span>
+        <span class="handle">Recall</span>
+      </div>
+      <div class="body">
+        <h3>Be the first brand your buyer remembers.</h3>
+        <p>
+          Own the topics that matter in your category. Build a body of writing,
+          research, and conversation that keeps you top-of-mind before buyers ever
+          open a comparison tab — whether that buyer is a CFO with a budget or a
+          consumer with a cart.
+        </p>
+      </div>
+    </article>
+
+    <article class="hunt">
+      <div class="left">
+        <span class="num">Hunt / 03</span>
+        <span class="handle">Decision</span>
+      </div>
+      <div class="body">
+        <h3>Win the decision, not just the click.</h3>
+        <p>
+          When your buyer is evaluating, they need <em>evidence</em> — not awareness.
+          Landing pages, case studies, competitive displacement, and bottom-funnel
+          content that move them from short-list to signature, from basket to
+          checkout.
+        </p>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══ Operating Matrix ══════════════════════════════════════════════ -->
+  <section class="matrix-wrap" id="matrix">
+    <div class="matrix-head">
+      <div class="label">Datasheet / 01</div>
+      <div class="title">Operating Matrix.</div>
+      <div class="version">recurr.co · v1.0 · 2026</div>
+    </div>
+    <div class="matrix">
+      <div class="matrix-colhead">Hunt</div>
+      <div class="matrix-colhead">KPIs Impacted</div>
+      <div class="matrix-colhead">Content Surfaces</div>
+
+      <div class="matrix-hunt reveal">
+        <span class="n">01</span>
+        <span class="h">Findability</span>
+        <span class="draw-in"></span>
+      </div>
+      <div class="matrix-kpi reveal">
+        <ul>
+          <li>Search traffic</li>
+          <li>AI citations</li>
+          <li>Domain authority</li>
+          <li>Reddit &amp; directory reach</li>
+          <li>SERP share of voice</li>
+        </ul>
+        <span class="draw-in"></span>
+      </div>
+      <div class="matrix-surfaces reveal">
+        <div class="surfaces-grid">
+          <span class="pill">SEO &amp; AEO Strategy</span>
+          <span class="pill">Blog Articles</span>
+          <span class="pill">Glossaries</span>
+          <span class="pill">Hub &amp; Spoke</span>
+          <span class="pill">Technical SEO</span>
+          <span class="pill">Content Refreshes</span>
+          <span class="pill">Micro-refreshes</span>
+          <span class="pill">SEO &amp; AEO Audits</span>
+          <span class="pill">Citation Outreach</span>
+          <span class="pill">Reddit Engagement</span>
+          <span class="pill">AI-assisted SEO</span>
+        </div>
+        <span class="draw-in"></span>
+      </div>
+
+      <div class="matrix-hunt reveal">
+        <span class="n">02</span>
+        <span class="h">Recall</span>
+        <span class="draw-in"></span>
+      </div>
+      <div class="matrix-kpi reveal">
+        <ul>
+          <li>Brand mentions</li>
+          <li>Social engagement</li>
+          <li>Newsletter subscribers</li>
+          <li>Share of voice</li>
+          <li>Earned reach</li>
+        </ul>
+        <span class="draw-in"></span>
+      </div>
+      <div class="matrix-surfaces reveal">
+        <div class="surfaces-grid">
+          <span class="pill">Thought Leadership</span>
+          <span class="pill">Research Reports</span>
+          <span class="pill">LinkedIn</span>
+          <span class="pill">Social Posts</span>
+          <span class="pill">Podcasts</span>
+          <span class="pill">Books</span>
+          <span class="pill">Micro-sites</span>
+          <span class="pill">Survey-driven White Papers</span>
+          <span class="pill">State-of-Industry Reports</span>
+          <span class="pill">Email Newsletters</span>
+          <span class="pill">Blog Articles</span>
+        </div>
+        <span class="draw-in"></span>
+      </div>
+
+      <div class="matrix-hunt reveal">
+        <span class="n">03</span>
+        <span class="h">Decision</span>
+        <span class="draw-in"></span>
+      </div>
+      <div class="matrix-kpi reveal">
+        <ul>
+          <li>Pipeline influenced</li>
+          <li>Demo / signup conversions</li>
+          <li>Win-rate lift</li>
+          <li>Assisted conversions</li>
+          <li>Brand consideration</li>
+        </ul>
+        <span class="draw-in"></span>
+      </div>
+      <div class="matrix-surfaces reveal">
+        <div class="surfaces-grid">
+          <span class="pill">Landing Pages</span>
+          <span class="pill">Case Studies</span>
+          <span class="pill">Competitive Content</span>
+          <span class="pill">One Pagers</span>
+          <span class="pill">ABM Assets</span>
+          <span class="pill">Sales Enablement</span>
+          <span class="pill">Gated Assets</span>
+          <span class="pill">Campaign Content</span>
+          <span class="pill">Industry White Papers</span>
+          <span class="pill">Infographics</span>
+          <span class="pill">Video Snippets</span>
+          <span class="pill">Microsite Design</span>
+        </div>
+        <span class="draw-in"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Team ══════════════════════════════════════════════════════════ -->
+  <section class="team">
+    <div class="team-label">Section / 03 · The Team</div>
+    <div class="team-mast">
+      <div>
+        <div class="name">Pratik Mishra.</div>
+        <span class="role">Founder · Strategy</span>
+      </div>
+      <div class="amp">×</div>
+      <div class="right">
+        <div class="name">Sujith Nair.</div>
+        <span class="role">Agency Lead · SEO</span>
+      </div>
+    </div>
+    <p class="team-bio">
+      Two operators with two decades across B2B SaaS, GTM, and content. Interested
+      in content systems, positioning, and the <em>post-AI shape of marketing</em>.
+    </p>
+  </section>
+
+  <!-- ═══ Press ═════════════════════════════════════════════════════════ -->
+  <div class="press-head" id="press">
+    <div class="label">Section / 04</div>
+    <h2 class="title">From the Press.</h2>
+    <a href="#all-articles" id="press-all">All articles →</a>
+  </div>
+  <section class="press-grid">
+    <article class="press-featured">
+      <div class="tag"><span>★</span><b>Featured</b><span>·</span><span>May 2026 Theme</span></div>
+      <h3>AI will eat SaaS. The Four-Layer Turnover.</h3>
+      <p class="dek">
+        Interface → Workflow → Data → Business model. Each layer of the enterprise
+        software stack dies on its own clock. Most incumbents won't die at the
+        interface — they'll die at the business model.
+      </p>
+      <div>
+        <a class="read" href="#featured">Read the series →</a>
+        <div class="meta" style="margin-top:12px;">Pratik Mishra · 2026-04-22 · Essay</div>
+      </div>
+    </article>
+    <div class="press-latest">
+      <a class="item" href="#a1">
+        <span class="date">2026-04-22</span>
+        <span class="t">Interface Eats UI — Why the chat box is the new homepage.</span>
+        <span class="author">Pratik</span>
+      </a>
+      <a class="item" href="#a2">
+        <span class="date">2026-04-18</span>
+        <span class="t">How early-stage SaaS should think about AEO in 2026.</span>
+        <span class="author">Sujith</span>
+      </a>
+      <a class="item" href="#a3">
+        <span class="date">2026-04-12</span>
+        <span class="t">The S3 operating system — how Recurr Press ships weekly.</span>
+        <span class="author">Recurr Press</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══ Footer ════════════════════════════════════════════════════════ -->
+  <footer>
+    <div class="site-foot">
+      <div>
+        <div class="f-word">recurr<span class="caret"></span></div>
+        <p class="f-manifesto">
+          Content marketing that influences your buyer. Bengaluru, India.
+        </p>
+      </div>
+      <div class="f-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="#press">Press</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Reach</h4>
+        <ul>
+          <li><a href="mailto:hello@recurr.co">hello@recurr.co</a></li>
+          <li><a href="#" id="open-contact-3">Work with Us →</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copy-band">
+      <div>© 2026 Recurr Studio Pvt Ltd</div>
+      <div><span id="foot-stamp">Compiled 2026-04-25 · v0.1</span></div>
+    </div>
+  </footer>
+
+  <!-- ═══ Contact Modal ═══════════════════════════════════════════════ -->
+  <div class="scrim" id="scrim"></div>
+  <aside class="contact-panel" id="contact-panel" role="dialog" aria-labelledby="cp-title" aria-hidden="true">
+    <div class="cp-head">
+      <div class="label">Work with Us</div>
+      <button class="cp-close" id="cp-close" aria-label="Close">×</button>
+    </div>
+
+    <div class="cp-body" id="cp-form">
+      <h2 id="cp-title">Tell us what you're working on.</h2>
+      <p class="sub">
+        A sentence or two is enough to start. We read every one.
+      </p>
+
+      <form id="work-form" novalidate>
+        <div class="form-field">
+          <label for="f-name">Your name</label>
+          <input type="text" id="f-name" name="name" required>
+        </div>
+        <div class="form-field">
+          <label for="f-company">Company</label>
+          <input type="text" id="f-company" name="company" required>
+        </div>
+        <div class="form-field">
+          <label for="f-email">Work email</label>
+          <input type="email" id="f-email" name="email" required>
+        </div>
+        <div class="form-field">
+          <label for="f-brief">What are you working on?</label>
+          <textarea id="f-brief" name="brief" rows="3" required></textarea>
+        </div>
+        <div class="form-field">
+          <label for="f-source">Where did you find us?</label>
+          <select id="f-source" name="source">
+            <option value="">Optional</option>
+            <option>Google search</option>
+            <option>Referral</option>
+            <option>LinkedIn</option>
+            <option>Event</option>
+            <option>Recurr Press</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-submit-row">
+          <span class="sla">We will get back soon.</span>
+          <button type="submit" class="form-submit"><span>Send</span><span class="arrow">→</span></button>
+        </div>
+      </form>
+    </div>
+
+    <div class="success-state" id="cp-success">
+      <h2>Got it.</h2>
+      <p class="typer-line" id="success-typer"></p>
+      <a class="press-link" href="#press">Meanwhile, the press is here →</a>
+    </div>
+  </aside>
+
+  <script>
+    /* ─── Live clock (mono time formatter) ───────────────────────────── */
+    function updateTime() {
+      const now = new Date();
+      const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+      const dfmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' });
+      const t = fmt.format(now);
+      const d = dfmt.format(now).toUpperCase();
+      const tEl = document.getElementById('mh-time'); if (tEl) tEl.textContent = t;
+      const dEl = document.getElementById('mh-date'); if (dEl) dEl.textContent = d;
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+
+    /* ─── Hero scramble ─────────────────────────────────────────────── */
+    (function() {
+      const el = document.getElementById('scramble');
+      if (!el) return;
+      const words = ['organic', 'compound', 'inbound', 'earned', 'organic'];
+      const alphabet = 'abcdefghijklmnopqrstuvwxyz#$%&@+=*/';
+      let idx = 0;
+      function scramble(target) {
+        const settled = new Array(target.length).fill(false);
+        let frame = 0;
+        function step() {
+          const out = target.split('').map((ch, i) => {
+            if (settled[i]) return ch;
+            if (frame > i * 5 + Math.random() * 5) { settled[i] = true; return ch; }
+            return alphabet[Math.floor(Math.random() * alphabet.length)];
+          }).join('');
+          el.textContent = out;
+          frame++;
+          if (settled.every(s => s)) { setTimeout(next, 5200); return; }
+          setTimeout(step, 45);
+        }
+        function next() { idx = (idx + 1) % words.length; scramble(words[idx]); }
+        step();
+      }
+      scramble(words[0]);
+    })();
+
+    /* ─── Case Index auto-rotate ─────────────────────────────────────── */
+    (function() {
+      const grid = document.getElementById('case-grid');
+      if (!grid) return;
+      const cells = Array.from(grid.querySelectorAll('.case-cell'));
+      const nameEl = document.getElementById('case-active-name');
+      let idx = 0;
+      let paused = false;
+      let interval = null;
+
+      function setActive(n) {
+        cells.forEach((c, i) => c.classList.toggle('is-active', i === n));
+        if (nameEl) nameEl.textContent = cells[n].dataset.name || '';
+      }
+
+      function tick() {
+        if (paused) return;
+        idx = (idx + 1) % cells.length;
+        setActive(idx);
+      }
+
+      setActive(0);
+      interval = setInterval(tick, 3200);
+
+      // Hover to pause on individual cell (and highlight it)
+      cells.forEach((c, i) => {
+        c.addEventListener('mouseenter', () => {
+          paused = true;
+          idx = i;
+          setActive(i);
+        });
+        c.addEventListener('mouseleave', () => {
+          paused = false;
+        });
+        c.addEventListener('click', () => {
+          paused = true;
+          idx = i;
+          setActive(i);
+          setTimeout(() => { paused = false; }, 4000);
+        });
+      });
+
+      // Pause when tab is hidden
+      document.addEventListener('visibilitychange', () => {
+        paused = document.hidden;
+      });
+    })();
+
+    /* ─── Reveal on scroll (draw-in rules + reveal-up) ───────────────── */
+    (function() {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.reveal, .reveal-up').forEach(el => io.observe(el));
+    })();
+
+    /* ─── Contact modal open/close ──────────────────────────────────── */
+    (function() {
+      const scrim = document.getElementById('scrim');
+      const panel = document.getElementById('contact-panel');
+      const opens = ['open-contact', 'open-contact-2', 'open-contact-3'];
+      const closer = document.getElementById('cp-close');
+
+      function open(e) {
+        if (e) e.preventDefault();
+        scrim.classList.add('open');
+        panel.classList.add('open');
+        panel.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('lock');
+        setTimeout(() => {
+          const firstInput = document.getElementById('f-name');
+          if (firstInput && !document.getElementById('cp-success').classList.contains('show')) firstInput.focus();
+        }, 400);
+      }
+      function close() {
+        scrim.classList.remove('open');
+        panel.classList.remove('open');
+        panel.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('lock');
+      }
+
+      opens.forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.addEventListener('click', open);
+      });
+      closer.addEventListener('click', close);
+      scrim.addEventListener('click', close);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && panel.classList.contains('open')) close();
+      });
+
+      /* ─── Submit handler (prototype — console only) ─────────────── */
+      const form = document.getElementById('work-form');
+      const formWrap = document.getElementById('cp-form');
+      const successWrap = document.getElementById('cp-success');
+      const typerEl = document.getElementById('success-typer');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Minimal validation
+        const required = ['f-name', 'f-company', 'f-email', 'f-brief'];
+        let valid = true;
+        required.forEach(id => {
+          const el = document.getElementById(id);
+          if (!el.value.trim()) {
+            el.style.borderBottomColor = '#000';
+            el.style.borderBottomWidth = '2.5px';
+            el.focus();
+            valid = false;
+          }
+        });
+        if (!valid) return;
+
+        const payload = {
+          name: document.getElementById('f-name').value,
+          company: document.getElementById('f-company').value,
+          email: document.getElementById('f-email').value,
+          brief: document.getElementById('f-brief').value,
+          source: document.getElementById('f-source').value,
+          ts: new Date().toISOString()
+        };
+        console.log('[Recurr Contact] Prototype submission:', payload);
+        // TODO: wire to Attio + email in Sanity build
+
+        formWrap.style.display = 'none';
+        successWrap.classList.add('show');
+        typewrite(typerEl, "We've got your message. A human at Recurr will be in touch.");
+      });
+
+      function typewrite(el, text) {
+        let i = 0;
+        el.textContent = '';
+        el.classList.remove('done');
+        function step() {
+          if (i >= text.length) { el.classList.add('done'); return; }
+          el.textContent += text[i++];
+          setTimeout(step, 22 + Math.random() * 25);
+        }
+        step();
+      }
+    })();
+  </script>
+</body>
+</html>
