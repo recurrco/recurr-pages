@@ -16,15 +16,24 @@
       --rule: #000;
       --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       --display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-      --pad-x: 40px;
+      --pad-x: 48px;
+      --page-max: 1200px;
     }
-    html { background: var(--paper); scroll-behavior: smooth; }
+    html {
+      background: #f4f4f2;
+      scroll-behavior: smooth;
+    }
     body {
       font-family: var(--display);
       color: var(--ink);
       background: var(--paper);
       -webkit-font-smoothing: antialiased;
       line-height: 1.3;
+      max-width: var(--page-max);
+      margin: 0 auto;
+      border-left: 1.5px solid var(--rule);
+      border-right: 1.5px solid var(--rule);
+      min-height: 100vh;
     }
     body.lock { overflow: hidden; }
     ::selection { background: var(--ink); color: var(--paper); }
@@ -103,18 +112,18 @@
     .cta-btn:hover .arrow { transform: translateX(4px); }
 
     /* ─── Hero ───────────────────────────────────────────────────────────── */
-    .hero { padding: 100px var(--pad-x) 120px; border-bottom: 1.5px solid var(--rule); }
-    .hero-coord { display: flex; justify-content: space-between; padding-bottom: 56px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .hero { padding: 88px var(--pad-x) 96px; border-bottom: 1.5px solid var(--rule); }
+    .hero-coord { display: flex; justify-content: space-between; padding-bottom: 48px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
     .hero-title {
-      font-weight: 900; font-size: clamp(48px, 9vw, 148px); line-height: 0.88; letter-spacing: -0.035em;
+      font-weight: 900; font-size: clamp(44px, 8vw, 116px); line-height: 0.88; letter-spacing: -0.035em;
       max-width: 18ch;
     }
     .hero-title .scramble { display: inline-block; min-width: 8ch; }
     .hero-deck {
-      margin-top: 56px;
+      margin-top: 48px;
       display: grid;
       grid-template-columns: 1.4fr 1fr;
-      gap: 56px;
+      gap: 48px;
       align-items: end;
     }
     .hero-deck .sub { font-size: clamp(18px, 1.6vw, 22px); font-weight: 500; max-width: 52ch; line-height: 1.45; }
@@ -679,6 +688,174 @@
     }
     .success-state .press-link:hover { background: var(--ink); color: var(--paper); }
 
+    /* ─── Gradient mock images (placeholders) ─────────────────────────── */
+    /* All "images" below are pure CSS gradient placeholders — B&W only. */
+
+    /* Hero poster — full-bleed editorial cover below the hero-deck */
+    .hero-poster {
+      margin-top: 72px;
+      position: relative;
+      aspect-ratio: 16 / 5.2;
+      width: 100%;
+      border: 1.5px solid var(--ink);
+      overflow: hidden;
+      background:
+        /* grain */
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 3px),
+        /* diagonal light sweep */
+        linear-gradient(125deg, #fff 0%, #fff 38%, #000 38.1%, #000 100%),
+        #000;
+      color: var(--paper);
+    }
+    .hero-poster::before {
+      /* big sun/orb in the dark half */
+      content: ""; position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 78% 62%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.32) 14%, rgba(255,255,255,0) 32%),
+        radial-gradient(circle at 78% 62%, rgba(255,255,255,0) 20%, rgba(255,255,255,0.08) 32%, rgba(255,255,255,0) 55%);
+      pointer-events: none;
+    }
+    .hero-poster::after {
+      /* subtle scanlines on top */
+      content: ""; position: absolute; inset: 0;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.08) 0 1px, transparent 1px 4px);
+      pointer-events: none;
+      mix-blend-mode: multiply;
+    }
+    .hero-poster .hp-inner {
+      position: absolute; inset: 0;
+      padding: 28px 32px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      z-index: 2;
+    }
+    .hero-poster .hp-top {
+      display: flex; justify-content: space-between; align-items: start;
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .hero-poster .hp-top .left { color: var(--ink); mix-blend-mode: difference; color: #fff; }
+    .hero-poster .hp-top .right { color: var(--paper); opacity: 0.85; text-align: right; line-height: 1.7; }
+    .hero-poster .hp-center {
+      align-self: center;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .hero-poster .hp-title {
+      font-family: var(--display); font-weight: 900;
+      font-size: clamp(28px, 4.5vw, 64px);
+      letter-spacing: -0.03em; line-height: 0.95;
+      color: var(--paper);
+      max-width: 16ch;
+      margin-left: auto;
+      text-align: right;
+    }
+    .hero-poster .hp-title .tint {
+      color: var(--ink);
+      -webkit-text-stroke: 1px var(--paper);
+      background: var(--paper);
+      padding: 0 10px;
+    }
+    .hero-poster .hp-bottom {
+      display: flex; justify-content: space-between; align-items: end;
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--paper);
+      opacity: 0.85;
+    }
+    .hero-poster .hp-bottom .l-axis {
+      color: var(--ink);
+      mix-blend-mode: difference; color: #fff;
+    }
+
+    /* Portrait mocks — circular B&W gradient discs */
+    .portrait {
+      width: clamp(88px, 9vw, 124px); height: clamp(88px, 9vw, 124px);
+      border-radius: 50%;
+      border: 1.5px solid var(--ink);
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 30% 28%, #fff 0%, #ddd 28%, #666 58%, #111 88%, #000 100%);
+      flex-shrink: 0;
+    }
+    .portrait.pratik {
+      background:
+        radial-gradient(circle at 32% 30%, #fff 0%, #d4d4d2 26%, #555 60%, #0a0a0a 92%);
+    }
+    .portrait.sujith {
+      background:
+        radial-gradient(circle at 70% 30%, #fff 0%, #cfcfcc 26%, #4a4a4a 58%, #0a0a0a 92%);
+    }
+    .portrait::after {
+      content: "";
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.06) 0 1px, transparent 1px 2.5px);
+      pointer-events: none;
+      mix-blend-mode: multiply;
+    }
+    .portrait .p-caption {
+      position: absolute; left: 50%; bottom: -24px;
+      transform: translateX(-50%);
+      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink); opacity: 0.55;
+      white-space: nowrap;
+    }
+
+    /* Press featured poster — magazine cover block */
+    .press-featured .pf-poster {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      width: 100%;
+      border: 1.5px solid var(--ink);
+      overflow: hidden;
+      margin-bottom: 28px;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 3px),
+        linear-gradient(180deg, #000 0%, #000 58%, #fff 58.1%, #fff 100%);
+      color: var(--paper);
+    }
+    .press-featured .pf-poster::before {
+      /* four layer markers — ASCII bars */
+      content: "L1 INTERFACE\A L2 WORKFLOW\A L3 DATA\A L4 BUSINESS MODEL";
+      white-space: pre;
+      position: absolute;
+      top: 22px; left: 22px;
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em;
+      color: var(--paper);
+      line-height: 1.7;
+      opacity: 0.8;
+      z-index: 2;
+    }
+    .press-featured .pf-poster::after {
+      /* orb */
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 74% 36%, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0) 28%);
+      pointer-events: none;
+    }
+    .press-featured .pf-title-overlay {
+      position: absolute;
+      left: 22px; right: 22px;
+      top: 58%;
+      font-family: var(--display);
+      font-weight: 900;
+      font-size: clamp(22px, 2.4vw, 32px);
+      letter-spacing: -0.025em;
+      line-height: 0.95;
+      color: var(--ink);
+      z-index: 3;
+    }
+    .press-featured .pf-meta-overlay {
+      position: absolute;
+      right: 22px; bottom: 22px;
+      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink);
+      z-index: 3;
+    }
+
+    /* Team mast updated for portraits */
+    .team-mast .cell { display: flex; align-items: center; gap: 20px; }
+    .team-mast .cell.right { flex-direction: row-reverse; text-align: right; }
+
     /* ─── Reveals ──────────────────────────────────────────────────────── */
     @media (prefers-reduced-motion: no-preference) {
       .reveal-up {
@@ -709,7 +886,10 @@
       .matrix-hunt { padding-top: 32px !important; }
       .team-mast { grid-template-columns: 1fr; gap: 24px; }
       .team-mast .amp { display: none; }
-      .team-mast .right { text-align: left; }
+      .team-mast .cell.right { flex-direction: row; text-align: left; }
+      .hero-poster { aspect-ratio: 4 / 3; margin-top: 48px; }
+      .hero-poster .hp-title { font-size: clamp(24px, 6vw, 36px); margin-left: 0; text-align: left; }
+      .hero-poster .hp-center { align-self: start; margin-top: 24px; }
       .press-grid { grid-template-columns: 1fr; }
       .press-featured { border-right: none; border-bottom: 1.5px solid var(--ink); }
       .site-foot { grid-template-columns: 1fr; gap: 32px; }
@@ -767,6 +947,26 @@
         <div class="stamp">
           FY26-27 Active<br>
           Compiled 2026-04-25 · v0.1
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero poster (CSS-gradient mock) -->
+    <div class="hero-poster" aria-hidden="true">
+      <div class="hp-inner">
+        <div class="hp-top">
+          <span class="left">POSTER / 01</span>
+          <span class="right">
+            Recurr 2026<br>
+            B/W · Editorial
+          </span>
+        </div>
+        <div class="hp-center">
+          <h2 class="hp-title"><span class="tint">Organic</span> growth,<br>in the post-AI era.</h2>
+        </div>
+        <div class="hp-bottom">
+          <span class="l-axis">12°58'N 77°35'E</span>
+          <span>pages.recurr.co</span>
         </div>
       </div>
     </div>
@@ -971,14 +1171,20 @@
   <section class="team">
     <div class="team-label">Section / 03 · The Team</div>
     <div class="team-mast">
-      <div>
-        <div class="name">Pratik Mishra.</div>
-        <span class="role">Founder · Strategy</span>
+      <div class="cell">
+        <div class="portrait pratik" aria-hidden="true"></div>
+        <div>
+          <div class="name">Pratik Mishra.</div>
+          <span class="role">Founder · Strategy</span>
+        </div>
       </div>
       <div class="amp">×</div>
-      <div class="right">
-        <div class="name">Sujith Nair.</div>
-        <span class="role">Agency Lead · SEO</span>
+      <div class="cell right">
+        <div class="portrait sujith" aria-hidden="true"></div>
+        <div>
+          <div class="name">Sujith Nair.</div>
+          <span class="role">Agency Lead · SEO</span>
+        </div>
       </div>
     </div>
     <p class="team-bio">
@@ -995,6 +1201,12 @@
   </div>
   <section class="press-grid">
     <article class="press-featured">
+      <div class="pf-poster" aria-hidden="true">
+        <div class="pf-title-overlay">
+          AI<br>will eat<br>SaaS.
+        </div>
+        <div class="pf-meta-overlay">ISSUE 01 · MAY 2026</div>
+      </div>
       <div class="tag"><span>★</span><b>Featured</b><span>·</span><span>May 2026 Theme</span></div>
       <h3>AI will eat SaaS. The Four-Layer Turnover.</h3>
       <p class="dek">
