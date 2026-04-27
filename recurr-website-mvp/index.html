@@ -16,7 +16,7 @@
       --rule: #000;
       --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       --display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-      --pad-x: 48px;
+      --pad-x: 80px;
       --page-max: 1200px;
     }
     html {
@@ -39,34 +39,21 @@
     ::selection { background: var(--ink); color: var(--paper); }
 
     /* ─── Shared primitives ──────────────────────────────────────────────── */
-    .rule { border-bottom: 1.5px solid var(--rule); }
     .mono { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .mono-s { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; }
-
-    .section-head {
-      padding: 28px var(--pad-x) 16px;
-      display: grid;
-      grid-template-columns: 180px 1fr auto;
-      gap: 40px;
-      align-items: baseline;
-      border-bottom: 1.5px solid var(--rule);
-    }
-    .section-head .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .section-head .title { font-weight: 900; font-size: clamp(28px, 3.4vw, 46px); line-height: 1; letter-spacing: -0.028em; padding-bottom: 8px; }
-    .section-head .sub { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; padding-bottom: 12px; opacity: 0.6; }
+    .rule-bot { border-bottom: 1.5px solid var(--rule); }
 
     /* ─── Masthead ───────────────────────────────────────────────────────── */
     .masthead {
-      padding: 20px var(--pad-x);
+      padding: 22px var(--pad-x);
       display: grid;
-      grid-template-columns: auto 1fr auto auto auto;
-      gap: 40px;
+      grid-template-columns: auto 1fr auto auto;
+      gap: 32px;
       align-items: center;
       border-bottom: 1.5px solid var(--rule);
       position: sticky; top: 0; background: var(--paper); z-index: 50;
     }
     .wordmark {
-      font-weight: 900; font-size: 28px; letter-spacing: -0.03em; line-height: 1;
+      font-weight: 900; font-size: 24px; letter-spacing: -0.03em; line-height: 1;
       display: inline-flex; align-items: baseline; color: var(--ink);
       text-decoration: none;
     }
@@ -76,31 +63,16 @@
     }
     @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
-    nav.nav { justify-self: end; }
-    nav.nav ul { list-style: none; display: flex; gap: 32px; }
-    nav.nav a {
-      color: var(--ink); text-decoration: none;
-      font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-      border-bottom: 1.5px solid transparent; padding-bottom: 2px;
+    .masthead-clock {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      text-align: right; line-height: 1.5;
+      opacity: 0.6;
     }
-    nav.nav a:hover { border-bottom-color: var(--ink); }
-    nav.nav a.cta { font-weight: 700; }
-
-    .masthead-clock { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; text-align: right; line-height: 1.5; }
     .masthead-clock b { font-weight: 700; }
-
-    .masthead-pulse { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
-    .pulse-dot { position: relative; width: 8px; height: 8px; display: block; }
-    .pulse-dot::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--ink); }
-    .pulse-dot::after { content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 1.2px solid var(--ink); animation: pulse 1.6s ease-out infinite; }
-    @keyframes pulse {
-      0% { transform: scale(0.6); opacity: 1; }
-      100% { transform: scale(3.2); opacity: 0; }
-    }
 
     .cta-btn {
       display: inline-flex; align-items: center; gap: 12px;
-      padding: 8px 14px;
+      padding: 10px 18px;
       background: var(--ink); color: var(--paper);
       font-family: var(--mono); font-size: 11px; font-weight: 700;
       letter-spacing: 0.12em; text-transform: uppercase;
@@ -111,393 +83,557 @@
     .cta-btn .arrow { display: inline-block; transition: transform .18s ease; }
     .cta-btn:hover .arrow { transform: translateX(4px); }
 
-    /* ─── Hero ───────────────────────────────────────────────────────────── */
-    .hero { padding: 88px var(--pad-x) 96px; border-bottom: 1.5px solid var(--rule); }
-    .hero-coord { display: flex; justify-content: space-between; padding-bottom: 48px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .hero-title {
-      font-weight: 900; font-size: clamp(44px, 8vw, 116px); line-height: 0.88; letter-spacing: -0.035em;
-      max-width: 18ch;
-    }
-    .hero-title .scramble { display: inline-block; min-width: 8ch; }
-    .hero-deck {
-      margin-top: 48px;
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 48px;
-      align-items: end;
-    }
-    .hero-deck .sub { font-size: clamp(18px, 1.6vw, 22px); font-weight: 500; max-width: 52ch; line-height: 1.45; }
-    .hero-deck .sub em { font-style: normal; border-bottom: 2px solid var(--ink); }
-    .hero-deck .action { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
-    .hero-deck .stamp { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.8; opacity: 0.7; margin-top: 8px; }
-    .hero-deck .big-cta {
-      display: inline-flex; align-items: center; gap: 14px;
-      padding: 14px 22px;
-      background: var(--ink); color: var(--paper);
-      font-family: var(--mono); font-size: 13px; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      border: none; cursor: pointer;
-      text-decoration: none;
-    }
-    .hero-deck .big-cta:hover { background: #111; }
-    .hero-deck .big-cta .arrow { transition: transform .2s ease; }
-    .hero-deck .big-cta:hover .arrow { transform: translateX(4px); }
-
-    /* ─── Case Index (logo bar) ──────────────────────────────────────────── */
-    .case-head {
-      padding: 28px var(--pad-x) 16px;
-      display: grid;
-      grid-template-columns: 180px 1fr auto;
-      gap: 40px;
-      align-items: baseline;
+    /* ─── Section frame ──────────────────────────────────────────────────── */
+    .fold {
+      padding: 200px var(--pad-x) 200px;
       border-bottom: 1.5px solid var(--rule);
+      position: relative;
     }
-    .case-head .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
-    .case-head .title { font-weight: 900; font-size: clamp(22px, 2.4vw, 30px); line-height: 1; letter-spacing: -0.02em; padding-bottom: 10px; }
-    .case-head .count { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.55; padding-bottom: 12px; }
+    .fold-tag {
+      position: absolute;
+      top: 32px; left: var(--pad-x);
+      display: flex; gap: 12px; align-items: center;
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      opacity: 0.55;
+    }
+    .fold-tag .dot {
+      width: 6px; height: 6px; background: var(--ink); border-radius: 50%;
+    }
+    .fold-coord {
+      position: absolute;
+      top: 32px; right: var(--pad-x);
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      opacity: 0.55;
+    }
 
-    .case-grid {
+    /* ─── Hero ───────────────────────────────────────────────────────────── */
+    .hero {
+      padding-top: 200px;
+      padding-bottom: 280px;
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .hero-title {
+      font-weight: 900;
+      font-size: clamp(54px, 9.4vw, 132px);
+      line-height: 0.92;
+      letter-spacing: -0.038em;
+      max-width: 14ch;
+      margin-top: 60px;
+    }
+    .hero-title .scramble {
+      display: inline-block;
+      min-width: 7ch;
+    }
+    .hero-sub {
+      margin-top: 80px;
+      font-size: clamp(20px, 1.7vw, 24px);
+      font-weight: 500;
+      line-height: 1.5;
+      max-width: 38ch;
+      opacity: 0.78;
+    }
+    .hero-sub em { font-style: normal; border-bottom: 2px solid var(--ink); }
+
+    /* ─── Case Showcase ──────────────────────────────────────────────────── */
+    .showcase {
+      padding-top: 180px;
+      padding-bottom: 80px;
+    }
+    .showcase-poster {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 1.5px solid var(--ink);
+      overflow: hidden;
+      background: var(--ink);
+    }
+    .showcase-slide {
+      position: absolute; inset: 0;
+      display: flex; align-items: stretch;
+      opacity: 0;
+      transition: opacity .8s cubic-bezier(.4,0,.2,1);
+    }
+    .showcase-slide.is-active { opacity: 1; }
+    .showcase-slide .slide-bg {
+      position: absolute; inset: 0;
+      pointer-events: none;
+    }
+    .showcase-slide .slide-grain {
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 3px);
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+    .showcase-slide .slide-inner {
+      position: relative;
+      z-index: 2;
+      padding: 56px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      width: 100%;
+      color: var(--paper);
+    }
+    .showcase-slide .slide-top {
+      display: flex; justify-content: space-between; align-items: start;
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      opacity: 0.85;
+    }
+    .showcase-slide .slide-top .right { text-align: right; line-height: 1.7; }
+    .showcase-slide .slide-name {
+      align-self: end;
+      font-weight: 900;
+      font-size: clamp(48px, 7.5vw, 108px);
+      letter-spacing: -0.035em;
+      line-height: 0.9;
+    }
+    .showcase-slide .slide-bottom {
+      display: flex; justify-content: space-between; align-items: end;
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      opacity: 0.85;
+    }
+    .showcase-slide .slide-bottom .outcome {
+      font-family: var(--display);
+      font-size: clamp(15px, 1.4vw, 18px);
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+      text-transform: none;
+      max-width: 44ch;
+      opacity: 1;
+    }
+
+    /* per-slide gradient backs */
+    .slide-bg-1 { background: radial-gradient(circle at 78% 32%, #fff 0%, rgba(255,255,255,0.16) 14%, rgba(255,255,255,0) 32%), linear-gradient(135deg, #1a1a1a 0%, #000 65%); }
+    .slide-bg-2 { background: linear-gradient(155deg, #fff 0%, #fff 42%, #000 42.1%, #000 100%); }
+    .slide-bg-3 { background: radial-gradient(circle at 24% 70%, #fff 0%, rgba(255,255,255,0.18) 16%, rgba(255,255,255,0) 36%), linear-gradient(180deg, #0a0a0a 0%, #000 100%); }
+    .slide-bg-4 { background: repeating-linear-gradient(45deg, #000 0 36px, #1a1a1a 36px 72px); }
+    .slide-bg-5 { background: linear-gradient(225deg, #fff 0%, #fff 38%, #000 38.1%, #000 100%); }
+    .slide-bg-6 { background: radial-gradient(circle at 50% 50%, #fff 0%, rgba(255,255,255,0.14) 12%, rgba(255,255,255,0) 30%), #000; }
+    .slide-bg-7 { background: linear-gradient(110deg, #000 0%, #000 60%, #fff 60.1%, #fff 100%); }
+    .slide-bg-8 { background: radial-gradient(ellipse at 80% 80%, #fff 0%, rgba(255,255,255,0.18) 18%, rgba(255,255,255,0) 38%), linear-gradient(45deg, #1a1a1a 0%, #000 100%); }
+    .slide-bg-9 { background: repeating-linear-gradient(0deg, #000 0 4px, #1a1a1a 4px 8px); }
+    .slide-bg-10 { background: linear-gradient(195deg, #fff 0%, #fff 50%, #000 50.1%, #000 100%); }
+    .slide-bg-11 { background: radial-gradient(circle at 16% 24%, #fff 0%, rgba(255,255,255,0.2) 14%, rgba(255,255,255,0) 32%), #000; }
+    .slide-bg-12 { background: conic-gradient(from 220deg at 70% 50%, #000 0%, #1a1a1a 40%, #fff 50%, #1a1a1a 60%, #000 100%); }
+
+    /* slides 2,5,7,10 — half-paper, ink-text variant */
+    .showcase-slide.flip-ink { color: var(--ink); }
+    .showcase-slide.flip-ink .slide-name { color: var(--ink); }
+
+    /* ─── Logo strip ─────────────────────────────────────────────────────── */
+    .logo-strip {
+      margin-top: 80px;
+      padding: 32px 0 0;
+      border-top: 1px solid var(--ink);
+    }
+    .logo-strip-meta {
+      display: flex; justify-content: space-between;
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      opacity: 0.55;
+      margin-bottom: 28px;
+    }
+    .logo-strip-row {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      border-bottom: 1.5px solid var(--rule);
+      gap: 0;
     }
-    .case-cell {
-      position: relative;
-      aspect-ratio: 3 / 1.8;
-      border-right: 1px solid var(--ink);
-      border-bottom: 1px solid var(--ink);
+    .logo-strip-cell {
+      height: 56px;
       display: flex; align-items: center; justify-content: center;
-      background: var(--paper);
-      overflow: hidden;
-      transition: background .25s ease;
+      border-right: 1px solid rgba(0,0,0,0.12);
+      cursor: pointer;
     }
-    .case-cell:nth-child(6n) { border-right: none; }
-    .case-cell:nth-last-child(-n+6) { border-bottom: none; }
-    .case-cell img {
-      width: 70%; max-width: 160px; height: auto;
-      display: block;
-      mix-blend-mode: multiply;
-      filter: grayscale(1) contrast(1.1);
-      opacity: 0.45;
-      transition: opacity .3s ease, filter .3s ease, transform .3s ease;
+    .logo-strip-cell:nth-child(6n) { border-right: none; }
+    .logo-strip-cell:nth-child(n+7) { border-top: 1px solid rgba(0,0,0,0.12); }
+    .logo-strip-cell img {
+      height: 24px; width: auto; max-width: 92px;
+      filter: grayscale(1);
+      opacity: 0.32;
+      transition: opacity .25s ease;
     }
-    .case-cell.is-active img {
-      opacity: 1;
-      filter: grayscale(1) contrast(1.2);
-    }
-    .case-cell .cell-coord {
-      position: absolute; top: 10px; left: 12px;
-      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase;
-      opacity: 0.35;
-    }
-    .case-cell .cell-sweep {
-      position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px;
-      background: var(--ink); transform-origin: left;
-      transform: scaleX(0); transition: transform .4s cubic-bezier(.6,0,.2,1);
-    }
-    .case-cell.is-active .cell-sweep { transform: scaleX(1); }
-    .case-cell .cell-pulse {
-      position: absolute; top: 10px; right: 12px;
-      width: 7px; height: 7px; opacity: 0; transition: opacity .2s ease;
-    }
-    .case-cell.is-active .cell-pulse { opacity: 1; }
-    .case-cell .cell-pulse::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--ink); }
-    .case-cell .cell-pulse::after { content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 1px solid var(--ink); animation: pulse 1.6s ease-out infinite; }
+    .logo-strip-cell:hover img,
+    .logo-strip-cell.is-active img { opacity: 1; }
 
-    .case-footer {
-      padding: 18px var(--pad-x);
-      display: grid;
-      grid-template-columns: 180px 1fr auto;
-      gap: 40px;
-      align-items: center;
-      border-bottom: 1.5px solid var(--rule);
-      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
-    }
-    .case-footer .active-name { font-weight: 700; }
-    .case-footer .muted { opacity: 0.55; }
-
-    /* ─── Buyer Mirror (3 hunts) ─────────────────────────────────────────── */
-    .mirror { border-bottom: 1.5px solid var(--rule); }
-    .mirror-lead {
-      padding: 56px var(--pad-x) 40px;
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 40px;
-    }
-    .mirror-lead .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .mirror-lead .intro {
-      max-width: 820px;
-      font-weight: 500;
-      font-size: clamp(22px, 2.4vw, 34px);
-      line-height: 1.28;
-      letter-spacing: -0.015em;
-    }
-    .mirror-lead .intro em { font-style: normal; border-bottom: 2px solid var(--ink); }
-    .mirror-lead .intro strong { font-weight: 900; background: var(--ink); color: var(--paper); padding: 0 6px; }
-
+    /* ─── Hunt fold ──────────────────────────────────────────────────────── */
     .hunt {
-      padding: 52px var(--pad-x) 60px;
+      min-height: 92vh;
       display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 40px;
-      border-top: 1.5px solid var(--rule);
+      grid-template-columns: 1fr;
+      align-content: center;
+      gap: 80px;
+    }
+    .hunt-num {
+      font-weight: 900;
+      font-size: clamp(180px, 24vw, 360px);
+      line-height: 0.78;
+      letter-spacing: -0.06em;
+      color: var(--ink);
+      margin-top: 40px;
+    }
+    .hunt-body {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 80px;
       align-items: start;
     }
-    .hunt .left {
-      display: flex; flex-direction: column; gap: 12px;
-      font-family: var(--mono);
+    .hunt-body .left h2 {
+      font-weight: 900;
+      font-size: clamp(40px, 5.4vw, 80px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      max-width: 16ch;
+      margin-bottom: 36px;
     }
-    .hunt .num {
-      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-      font-weight: 700;
+    .hunt-body .left p {
+      font-size: clamp(17px, 1.5vw, 20px);
+      line-height: 1.55;
+      max-width: 50ch;
+      opacity: 0.82;
     }
-    .hunt .handle {
-      font-size: clamp(14px, 1.3vw, 18px);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+    .hunt-body .left p em { font-style: normal; border-bottom: 2px solid var(--ink); }
+    .hunt-body .left .handle {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
       font-weight: 700;
-      padding-top: 10px;
+      padding-top: 14px;
+      border-top: 1.5px solid var(--ink);
+      display: inline-block;
+      margin-bottom: 36px;
+    }
+
+    .hunt-image {
+      aspect-ratio: 4 / 5;
+      width: 100%;
+      border: 1.5px solid var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+    .hunt-image-1 {
+      background:
+        radial-gradient(circle at 70% 30%, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 40%),
+        repeating-linear-gradient(90deg, transparent 0 11px, rgba(0,0,0,0.12) 11px 12px),
+        repeating-linear-gradient(0deg, transparent 0 11px, rgba(0,0,0,0.12) 11px 12px),
+        #fff;
+    }
+    .hunt-image-1::after {
+      content: ""; position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 30% 60%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 18%),
+        radial-gradient(circle at 78% 22%, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 12%),
+        radial-gradient(circle at 60% 78%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 14%),
+        radial-gradient(circle at 12% 84%, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 16%);
+    }
+    .hunt-image-2 {
+      background:
+        linear-gradient(180deg, #fff 0%, #fff 50%, #000 50.1%, #000 100%);
+    }
+    .hunt-image-2::after {
+      content: ""; position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0) 24%);
+    }
+    .hunt-image-3 {
+      background:
+        linear-gradient(135deg, #000 0%, #000 35%, transparent 35.1%, transparent 65%, #000 65.1%, #000 100%),
+        #fff;
+    }
+    .hunt-image-3::after {
+      content: ""; position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(45deg, rgba(0,0,0,0.05) 0 2px, transparent 2px 6px);
+    }
+    .hunt-image .img-tag {
+      position: absolute;
+      top: 18px; left: 18px;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink);
+      mix-blend-mode: difference;
+      color: #fff;
+      z-index: 2;
+    }
+
+    /* ─── Operating Matrix ───────────────────────────────────────────────── */
+    .matrix-wrap {
+      padding: 160px var(--pad-x) 160px;
+      border-bottom: 1.5px solid var(--rule);
+      position: relative;
+    }
+    .matrix-wrap .fold-tag,
+    .matrix-wrap .fold-coord {
+      opacity: 0.55;
+    }
+    .matrix-title {
+      font-weight: 900;
+      font-size: clamp(40px, 5.2vw, 76px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      max-width: 16ch;
+      margin-top: 40px;
+      margin-bottom: 80px;
+    }
+    .matrix-table {
       border-top: 1.5px solid var(--ink);
     }
-    .hunt .body h3 {
-      font-weight: 900;
-      font-size: clamp(30px, 3.6vw, 54px);
-      line-height: 1;
-      letter-spacing: -0.028em;
-      margin-bottom: 18px;
-      max-width: 22ch;
-    }
-    .hunt .body p {
-      font-size: clamp(17px, 1.4vw, 20px);
-      line-height: 1.5;
-      max-width: 62ch;
-    }
-    .hunt .body p em { font-style: normal; border-bottom: 2px solid var(--ink); }
-
-    /* ─── Operating Matrix ──────────────────────────────────────────────── */
-    .matrix-wrap { background: var(--ink); color: var(--paper); }
-    .matrix-head {
-      padding: 24px var(--pad-x) 20px;
+    .matrix-row {
       display: grid;
-      grid-template-columns: 180px 1fr auto;
-      gap: 40px;
-      align-items: end;
-      border-bottom: 1.5px solid var(--paper);
+      grid-template-columns: 96px 1.2fr 2.2fr;
+      gap: 32px;
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.18);
+      align-items: baseline;
+    }
+    .matrix-row.head {
+      padding: 14px 0;
+      border-bottom: 1.5px solid var(--ink);
       font-family: var(--mono);
-    }
-    .matrix-head .label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.55; }
-    .matrix-head .title { font-family: var(--display); font-weight: 900; font-size: clamp(20px, 2.2vw, 28px); letter-spacing: -0.02em; line-height: 1; }
-    .matrix-head .version { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.55; }
-
-    .matrix {
-      display: grid;
-      grid-template-columns: 180px 1.3fr 2.2fr;
-      font-family: var(--mono);
-    }
-    .matrix > div {
-      padding: 24px var(--pad-x);
-      border-bottom: 1px solid rgba(255,255,255,0.35);
-    }
-    .matrix > div:last-child:not(.matrix-colhead) { }
-    .matrix-colhead {
       font-size: 10.5px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       opacity: 0.55;
-      font-weight: 500;
-      border-bottom: 1.5px solid var(--paper);
-      padding-top: 16px; padding-bottom: 16px;
     }
-    .matrix-hunt { display: flex; flex-direction: column; gap: 12px; }
-    .matrix-hunt .n {
+    .matrix-row .col-num {
+      font-family: var(--mono);
       font-size: 11px;
       letter-spacing: 0.14em;
       opacity: 0.55;
     }
-    .matrix-hunt .h {
-      font-family: var(--display);
+    .matrix-row .col-hunt {
       font-weight: 900;
-      font-size: clamp(18px, 2vw, 26px);
+      font-size: clamp(20px, 2.2vw, 28px);
       letter-spacing: -0.02em;
-      text-transform: uppercase;
+      line-height: 1.05;
     }
-    .matrix-kpi ul { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13px; line-height: 1.4; }
-    .matrix-kpi li { display: flex; gap: 10px; }
-    .matrix-kpi li::before { content: "·"; opacity: 0.55; }
-
-    .matrix-surfaces .surfaces-grid {
-      display: flex; flex-wrap: wrap; gap: 6px 10px;
-      font-size: 12.5px; line-height: 1.4;
+    .matrix-row .col-surfaces {
+      font-size: 14.5px;
+      line-height: 1.55;
+      opacity: 0.82;
     }
-    .matrix-surfaces .pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      border: 1px solid var(--paper);
-      padding: 4px 10px;
-      letter-spacing: 0.02em;
-    }
-    .matrix-surfaces .pill::before {
-      content: "✓"; font-size: 10px; opacity: 0.65;
+    .matrix-row .col-surfaces .sep {
+      opacity: 0.35; margin: 0 6px;
     }
 
-    /* Draw-in rule on matrix borders */
-    .matrix > div { position: relative; }
-    .matrix > div.reveal .draw-in {
-      position: absolute; left: 0; right: 0; bottom: -1px; height: 1.5px;
-      background: var(--paper); transform-origin: left;
-      transform: scaleX(0); transition: transform .8s cubic-bezier(.7,0,.3,1) .2s;
-    }
-    .matrix > div.reveal.is-visible .draw-in { transform: scaleX(1); }
-
-    /* ─── Team ──────────────────────────────────────────────────────────── */
+    /* ─── Team ───────────────────────────────────────────────────────────── */
     .team {
-      padding: 72px var(--pad-x) 88px;
+      padding: 200px var(--pad-x) 200px;
       border-bottom: 1.5px solid var(--rule);
+      position: relative;
     }
-    .team-label {
-      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    .team-title {
+      font-weight: 900;
+      font-size: clamp(40px, 5.4vw, 80px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      max-width: 16ch;
+      margin-top: 40px;
+      margin-bottom: 120px;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+    .team-card .portrait {
+      width: 100%;
+      aspect-ratio: 1;
+      border: 1.5px solid var(--ink);
+      position: relative;
+      overflow: hidden;
       margin-bottom: 32px;
     }
-    .team-mast {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 40px;
-      align-items: baseline;
-      padding-top: 18px;
-      padding-bottom: 18px;
-      border-top: 1.5px solid var(--ink);
-      border-bottom: 1.5px solid var(--ink);
-      margin-bottom: 36px;
+    .team-card .portrait::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.06) 0 1px, transparent 1px 2.5px);
+      pointer-events: none;
+      mix-blend-mode: multiply;
     }
-    .team-mast .name {
+    .portrait.pratik {
+      background:
+        radial-gradient(circle at 36% 36%, #fff 0%, #d4d4d2 22%, #555 56%, #0a0a0a 92%);
+    }
+    .portrait.sujith {
+      background:
+        radial-gradient(circle at 64% 36%, #fff 0%, #cfcfcc 22%, #4a4a4a 56%, #0a0a0a 92%);
+    }
+    .team-card .name {
       font-weight: 900;
-      font-size: clamp(32px, 4.4vw, 64px);
+      font-size: clamp(28px, 3.4vw, 48px);
       line-height: 1;
-      letter-spacing: -0.032em;
+      letter-spacing: -0.028em;
     }
-    .team-mast .role {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    .team-card .role {
       display: block;
-      margin-top: 10px;
-      opacity: 0.65;
+      margin-top: 12px;
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      opacity: 0.55;
     }
-    .team-mast .amp {
-      font-family: var(--mono);
-      font-size: clamp(24px, 3vw, 40px);
-      align-self: center;
-      opacity: 0.5;
-    }
-    .team-mast .right { text-align: right; }
-
     .team-bio {
-      max-width: 72ch;
-      font-size: clamp(18px, 1.6vw, 22px);
+      margin-top: 80px;
+      max-width: 56ch;
+      font-size: clamp(18px, 1.55vw, 22px);
       line-height: 1.5;
       font-weight: 500;
+      opacity: 0.85;
     }
     .team-bio em { font-style: normal; border-bottom: 2px solid var(--ink); }
 
-    /* ─── Press ─────────────────────────────────────────────────────────── */
-    .press-head {
-      padding: 28px var(--pad-x) 16px;
-      display: grid;
-      grid-template-columns: 180px 1fr auto;
-      gap: 40px;
-      align-items: baseline;
+    /* ─── Press ──────────────────────────────────────────────────────────── */
+    .press {
+      padding: 200px var(--pad-x) 160px;
       border-bottom: 1.5px solid var(--rule);
+      position: relative;
     }
-    .press-head .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .press-head .title { font-weight: 900; font-size: clamp(28px, 3.2vw, 46px); line-height: 1; letter-spacing: -0.028em; padding-bottom: 8px; }
-    .press-head a {
-      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--ink); text-decoration: none;
-      border-bottom: 1.5px solid var(--ink); padding-bottom: 2px;
-    }
-    .press-head a:hover { background: var(--ink); color: var(--paper); }
-
-    .press-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      border-bottom: 1.5px solid var(--rule);
-    }
-    .press-featured {
-      padding: 52px var(--pad-x);
-      border-right: 1.5px solid var(--ink);
-      display: flex; flex-direction: column; justify-content: space-between;
-      gap: 40px;
-    }
-    .press-featured .tag {
-      font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-      display: inline-flex; gap: 10px; align-items: center;
-    }
-    .press-featured .tag b { font-weight: 700; }
-    .press-featured h3 {
+    .press-title {
       font-weight: 900;
-      font-size: clamp(30px, 3.8vw, 52px);
+      font-size: clamp(40px, 5.4vw, 80px);
       line-height: 0.95;
       letter-spacing: -0.03em;
+      max-width: 16ch;
+      margin-top: 40px;
+      margin-bottom: 100px;
+    }
+    .press-cover {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 1.5px solid var(--ink);
+      overflow: hidden;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 3px),
+        linear-gradient(180deg, #000 0%, #000 60%, #fff 60.1%, #fff 100%);
+    }
+    .press-cover::before {
+      content: "L1 INTERFACE\A L2 WORKFLOW\A L3 DATA\A L4 BUSINESS MODEL";
+      white-space: pre;
+      position: absolute;
+      top: 32px; left: 32px;
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+      color: var(--paper);
+      line-height: 1.9;
+      opacity: 0.85;
+      z-index: 2;
+    }
+    .press-cover::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 76% 32%, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0) 26%);
+    }
+    .press-cover .pc-title {
+      position: absolute;
+      left: 32px;
+      bottom: 32px;
+      font-weight: 900;
+      font-size: clamp(40px, 5.6vw, 84px);
+      line-height: 0.92;
+      letter-spacing: -0.034em;
+      color: var(--ink);
+      max-width: 11ch;
+      z-index: 3;
+    }
+    .press-cover .pc-meta {
+      position: absolute;
+      right: 32px; top: 32px;
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--paper);
+      opacity: 0.85;
+      text-align: right;
+      line-height: 1.7;
+      z-index: 3;
+    }
+    .press-cover .pc-issue {
+      position: absolute;
+      right: 32px; bottom: 32px;
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink);
+      z-index: 3;
+    }
+
+    .press-feature {
+      margin-top: 56px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .press-feature .deck {
+      font-size: clamp(17px, 1.5vw, 20px);
+      line-height: 1.55;
+      max-width: 44ch;
+      opacity: 0.82;
+    }
+    .press-feature .right {
+      display: flex; flex-direction: column; gap: 24px;
+      align-items: flex-start;
+    }
+    .press-feature h3 {
+      font-weight: 900;
+      font-size: clamp(24px, 2.6vw, 32px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
       max-width: 18ch;
     }
-    .press-featured .dek {
-      font-size: clamp(16px, 1.4vw, 18px);
-      line-height: 1.5;
-      max-width: 44ch;
-    }
-    .press-featured .read {
+    .press-feature .read {
       font-family: var(--mono); font-size: 12px; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
+      letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--ink); text-decoration: none;
       border-bottom: 1.5px solid var(--ink);
       padding-bottom: 3px;
-      align-self: flex-start;
     }
-    .press-featured .read:hover { background: var(--ink); color: var(--paper); }
-    .press-featured .meta {
-      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    .press-feature .read:hover { background: var(--ink); color: var(--paper); }
+    .press-feature .meta {
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
       opacity: 0.55;
     }
 
-    .press-latest { display: flex; flex-direction: column; }
+    .press-latest {
+      margin-top: 120px;
+      border-top: 1.5px solid var(--ink);
+    }
+    .press-latest-head {
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.18);
+      display: flex; justify-content: space-between;
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      opacity: 0.55;
+    }
     .press-latest .item {
-      padding: 28px var(--pad-x);
-      border-bottom: 1px solid var(--ink);
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.18);
       display: grid;
-      grid-template-columns: 110px 1fr auto;
-      gap: 24px;
+      grid-template-columns: 120px 1fr auto;
+      gap: 32px;
       align-items: baseline;
       text-decoration: none;
       color: var(--ink);
-      transition: background .2s ease;
     }
-    .press-latest .item:last-child { border-bottom: none; flex-grow: 1; }
-    .press-latest .item:hover { background: #f6f6f6; }
-    .press-latest .date {
-      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    .press-latest .item:last-child { border-bottom: none; }
+    .press-latest .item .date {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
       opacity: 0.65;
     }
-    .press-latest .t {
+    .press-latest .item .t {
       font-weight: 700;
-      font-size: clamp(17px, 1.5vw, 20px);
-      letter-spacing: -0.015em;
-      line-height: 1.25;
+      font-size: clamp(17px, 1.4vw, 19px);
+      letter-spacing: -0.012em;
+      line-height: 1.3;
     }
-    .press-latest .author {
-      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+    .press-latest .item .author {
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
       opacity: 0.55;
     }
+    .press-latest .item:hover .t { border-bottom: 1px solid var(--ink); }
 
-    /* ─── Footer ───────────────────────────────────────────────────────── */
+    /* ─── Footer ────────────────────────────────────────────────────────── */
     .site-foot {
-      padding: 48px var(--pad-x) 32px;
+      padding: 80px var(--pad-x) 32px;
       display: grid;
       grid-template-columns: 2fr 1fr 1fr;
-      gap: 40px;
+      gap: 60px;
       border-bottom: 1.5px solid var(--rule);
     }
     .site-foot .f-word {
-      font-weight: 900; font-size: 48px; letter-spacing: -0.035em; line-height: 0.95;
+      font-weight: 900; font-size: 64px; letter-spacing: -0.038em; line-height: 0.92;
       display: inline-flex; align-items: baseline;
     }
     .site-foot .f-word .caret {
@@ -505,18 +641,19 @@
       margin-left: 0.08em; animation: blink 1.05s steps(2) infinite;
     }
     .site-foot .f-manifesto {
-      margin-top: 16px;
+      margin-top: 24px;
       font-size: 16px;
       line-height: 1.5;
-      max-width: 48ch;
+      max-width: 40ch;
+      opacity: 0.78;
     }
     .site-foot .f-col h4 {
       font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
       border-bottom: 1.5px solid var(--ink);
-      padding-bottom: 8px;
-      margin-bottom: 12px;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
     }
-    .site-foot .f-col ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .site-foot .f-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
     .site-foot .f-col a {
       color: var(--ink); text-decoration: none;
       font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
@@ -524,13 +661,12 @@
       padding-bottom: 2px;
     }
     .site-foot .f-col a:hover { border-bottom-color: var(--ink); }
-
     .copy-band {
-      padding: 18px var(--pad-x);
+      padding: 20px var(--pad-x);
       display: flex;
       justify-content: space-between;
       font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
-      opacity: 0.65;
+      opacity: 0.55;
     }
 
     /* ─── Contact Modal ────────────────────────────────────────────────── */
@@ -591,8 +727,8 @@
       line-height: 1.5;
       margin-bottom: 36px;
       max-width: 44ch;
+      opacity: 0.75;
     }
-
     .form-field { margin-bottom: 26px; }
     .form-field label {
       display: block;
@@ -611,10 +747,8 @@
       line-height: 1.4;
       color: var(--ink);
       outline: none;
-      transition: border-color .2s ease;
     }
     .form-field input:focus, .form-field textarea:focus, .form-field select:focus {
-      border-bottom-color: var(--ink);
       border-bottom-width: 2.5px;
     }
     .form-field textarea { resize: vertical; min-height: 84px; }
@@ -628,7 +762,6 @@
       padding-right: 20px;
       cursor: pointer;
     }
-
     .form-submit-row {
       margin-top: 40px;
       display: flex;
@@ -652,7 +785,6 @@
     .form-submit:hover { background: #111; }
     .form-submit:hover .arrow { transform: translateX(4px); }
 
-    /* Success state */
     .success-state {
       padding: 80px 32px;
       display: none;
@@ -686,223 +818,42 @@
       border-bottom: 1.5px solid var(--ink);
       padding-bottom: 3px;
     }
-    .success-state .press-link:hover { background: var(--ink); color: var(--paper); }
-
-    /* ─── Gradient mock images (placeholders) ─────────────────────────── */
-    /* All "images" below are pure CSS gradient placeholders — B&W only. */
-
-    /* Hero poster — full-bleed editorial cover below the hero-deck */
-    .hero-poster {
-      margin-top: 72px;
-      position: relative;
-      aspect-ratio: 16 / 5.2;
-      width: 100%;
-      border: 1.5px solid var(--ink);
-      overflow: hidden;
-      background:
-        /* grain */
-        repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 3px),
-        /* diagonal light sweep */
-        linear-gradient(125deg, #fff 0%, #fff 38%, #000 38.1%, #000 100%),
-        #000;
-      color: var(--paper);
-    }
-    .hero-poster::before {
-      /* big sun/orb in the dark half */
-      content: ""; position: absolute; inset: 0;
-      background:
-        radial-gradient(circle at 78% 62%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.32) 14%, rgba(255,255,255,0) 32%),
-        radial-gradient(circle at 78% 62%, rgba(255,255,255,0) 20%, rgba(255,255,255,0.08) 32%, rgba(255,255,255,0) 55%);
-      pointer-events: none;
-    }
-    .hero-poster::after {
-      /* subtle scanlines on top */
-      content: ""; position: absolute; inset: 0;
-      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.08) 0 1px, transparent 1px 4px);
-      pointer-events: none;
-      mix-blend-mode: multiply;
-    }
-    .hero-poster .hp-inner {
-      position: absolute; inset: 0;
-      padding: 28px 32px;
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      z-index: 2;
-    }
-    .hero-poster .hp-top {
-      display: flex; justify-content: space-between; align-items: start;
-      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
-    }
-    .hero-poster .hp-top .left { color: var(--ink); mix-blend-mode: difference; color: #fff; }
-    .hero-poster .hp-top .right { color: var(--paper); opacity: 0.85; text-align: right; line-height: 1.7; }
-    .hero-poster .hp-center {
-      align-self: center;
-      display: flex; flex-direction: column; gap: 4px;
-    }
-    .hero-poster .hp-title {
-      font-family: var(--display); font-weight: 900;
-      font-size: clamp(28px, 4.5vw, 64px);
-      letter-spacing: -0.03em; line-height: 0.95;
-      color: var(--paper);
-      max-width: 16ch;
-      margin-left: auto;
-      text-align: right;
-    }
-    .hero-poster .hp-title .tint {
-      color: var(--ink);
-      -webkit-text-stroke: 1px var(--paper);
-      background: var(--paper);
-      padding: 0 10px;
-    }
-    .hero-poster .hp-bottom {
-      display: flex; justify-content: space-between; align-items: end;
-      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--paper);
-      opacity: 0.85;
-    }
-    .hero-poster .hp-bottom .l-axis {
-      color: var(--ink);
-      mix-blend-mode: difference; color: #fff;
-    }
-
-    /* Portrait mocks — circular B&W gradient discs */
-    .portrait {
-      width: clamp(88px, 9vw, 124px); height: clamp(88px, 9vw, 124px);
-      border-radius: 50%;
-      border: 1.5px solid var(--ink);
-      position: relative;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 30% 28%, #fff 0%, #ddd 28%, #666 58%, #111 88%, #000 100%);
-      flex-shrink: 0;
-    }
-    .portrait.pratik {
-      background:
-        radial-gradient(circle at 32% 30%, #fff 0%, #d4d4d2 26%, #555 60%, #0a0a0a 92%);
-    }
-    .portrait.sujith {
-      background:
-        radial-gradient(circle at 70% 30%, #fff 0%, #cfcfcc 26%, #4a4a4a 58%, #0a0a0a 92%);
-    }
-    .portrait::after {
-      content: "";
-      position: absolute; inset: 0;
-      border-radius: 50%;
-      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.06) 0 1px, transparent 1px 2.5px);
-      pointer-events: none;
-      mix-blend-mode: multiply;
-    }
-    .portrait .p-caption {
-      position: absolute; left: 50%; bottom: -24px;
-      transform: translateX(-50%);
-      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--ink); opacity: 0.55;
-      white-space: nowrap;
-    }
-
-    /* Press featured poster — magazine cover block */
-    .press-featured .pf-poster {
-      position: relative;
-      aspect-ratio: 4 / 3;
-      width: 100%;
-      border: 1.5px solid var(--ink);
-      overflow: hidden;
-      margin-bottom: 28px;
-      background:
-        repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 3px),
-        linear-gradient(180deg, #000 0%, #000 58%, #fff 58.1%, #fff 100%);
-      color: var(--paper);
-    }
-    .press-featured .pf-poster::before {
-      /* four layer markers — ASCII bars */
-      content: "L1 INTERFACE\A L2 WORKFLOW\A L3 DATA\A L4 BUSINESS MODEL";
-      white-space: pre;
-      position: absolute;
-      top: 22px; left: 22px;
-      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em;
-      color: var(--paper);
-      line-height: 1.7;
-      opacity: 0.8;
-      z-index: 2;
-    }
-    .press-featured .pf-poster::after {
-      /* orb */
-      content: "";
-      position: absolute; inset: 0;
-      background: radial-gradient(circle at 74% 36%, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0) 28%);
-      pointer-events: none;
-    }
-    .press-featured .pf-title-overlay {
-      position: absolute;
-      left: 22px; right: 22px;
-      top: 58%;
-      font-family: var(--display);
-      font-weight: 900;
-      font-size: clamp(22px, 2.4vw, 32px);
-      letter-spacing: -0.025em;
-      line-height: 0.95;
-      color: var(--ink);
-      z-index: 3;
-    }
-    .press-featured .pf-meta-overlay {
-      position: absolute;
-      right: 22px; bottom: 22px;
-      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--ink);
-      z-index: 3;
-    }
-
-    /* Team mast updated for portraits */
-    .team-mast .cell { display: flex; align-items: center; gap: 20px; }
-    .team-mast .cell.right { flex-direction: row-reverse; text-align: right; }
 
     /* ─── Reveals ──────────────────────────────────────────────────────── */
     @media (prefers-reduced-motion: no-preference) {
       .reveal-up {
         opacity: 0;
         transform: translateY(18px);
-        transition: opacity .7s cubic-bezier(.3,.7,.3,1), transform .7s cubic-bezier(.3,.7,.3,1);
+        transition: opacity .8s cubic-bezier(.3,.7,.3,1), transform .8s cubic-bezier(.3,.7,.3,1);
       }
       .reveal-up.is-visible { opacity: 1; transform: translateY(0); }
     }
 
     /* ─── Responsive ──────────────────────────────────────────────────── */
     @media (max-width: 1100px) {
-      :root { --pad-x: 24px; }
-      .masthead { grid-template-columns: auto 1fr auto; gap: 20px; }
-      nav.nav { display: none; }
+      :root { --pad-x: 32px; }
+      .masthead { grid-template-columns: auto 1fr auto; gap: 16px; }
       .masthead-clock { display: none; }
-      .hero { padding-top: 72px; padding-bottom: 80px; }
-      .hero-deck { grid-template-columns: 1fr; gap: 32px; }
-      .case-grid { grid-template-columns: repeat(3, 1fr); }
-      .case-cell:nth-child(6n) { border-right: 1px solid var(--ink); }
-      .case-cell:nth-child(3n) { border-right: none; }
-      .case-cell:nth-last-child(-n+6) { border-bottom: 1px solid var(--ink); }
-      .case-cell:nth-last-child(-n+3) { border-bottom: none; }
-      .mirror-lead, .hunt { grid-template-columns: 1fr; }
-      .matrix { grid-template-columns: 1fr; }
-      .matrix > div { border-bottom: 1px solid rgba(255,255,255,0.35); }
-      .matrix-colhead { display: none; }
-      .matrix-hunt { padding-top: 32px !important; }
-      .team-mast { grid-template-columns: 1fr; gap: 24px; }
-      .team-mast .amp { display: none; }
-      .team-mast .cell.right { flex-direction: row; text-align: left; }
-      .hero-poster { aspect-ratio: 4 / 3; margin-top: 48px; }
-      .hero-poster .hp-title { font-size: clamp(24px, 6vw, 36px); margin-left: 0; text-align: left; }
-      .hero-poster .hp-center { align-self: start; margin-top: 24px; }
-      .press-grid { grid-template-columns: 1fr; }
-      .press-featured { border-right: none; border-bottom: 1.5px solid var(--ink); }
-      .site-foot { grid-template-columns: 1fr; gap: 32px; }
-      .copy-band { flex-direction: column; gap: 4px; }
-      .section-head, .press-head, .case-head, .case-footer { grid-template-columns: 1fr; gap: 10px; }
-    }
-    @media (max-width: 600px) {
-      .case-grid { grid-template-columns: repeat(2, 1fr); }
-      .case-cell:nth-child(3n) { border-right: 1px solid var(--ink); }
-      .case-cell:nth-child(2n) { border-right: none; }
-      .case-cell:nth-last-child(-n+3) { border-bottom: 1px solid var(--ink); }
-      .case-cell:nth-last-child(-n+2) { border-bottom: none; }
+      .fold { padding: 120px var(--pad-x); }
+      .hero { padding-top: 120px; padding-bottom: 160px; min-height: auto; }
+      .hero-title { margin-top: 40px; }
+      .hero-sub { margin-top: 56px; }
+      .showcase { padding-top: 120px; padding-bottom: 60px; }
+      .showcase-slide .slide-inner { padding: 32px; }
+      .logo-strip-row { grid-template-columns: repeat(3, 1fr); }
+      .logo-strip-cell:nth-child(6n) { border-right: 1px solid rgba(0,0,0,0.12); }
+      .logo-strip-cell:nth-child(3n) { border-right: none; }
+      .logo-strip-cell:nth-child(n+4) { border-top: 1px solid rgba(0,0,0,0.12); }
+      .hunt { gap: 56px; min-height: auto; }
+      .hunt-body { grid-template-columns: 1fr; gap: 56px; }
+      .hunt-num { margin-top: 16px; }
+      .matrix-row { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; }
+      .matrix-row.head { display: none; }
+      .team-grid { grid-template-columns: 1fr; gap: 80px; }
+      .press-feature { grid-template-columns: 1fr; gap: 48px; }
       .press-latest .item { grid-template-columns: 1fr; gap: 4px; }
+      .site-foot { grid-template-columns: 1fr; gap: 40px; }
+      .copy-band { flex-direction: column; gap: 4px; }
     }
   </style>
 </head>
@@ -912,12 +863,6 @@
   <header class="masthead">
     <a class="wordmark" href="/recurr-website-mvp/">recurr<span class="caret"></span></a>
     <div></div>
-    <nav class="nav">
-      <ul>
-        <li><a href="#press">Press</a></li>
-        <li><a href="#subscribe">Subscribe</a></li>
-      </ul>
-    </nav>
     <div class="masthead-clock">
       <span id="mh-time">--:--:--</span> IST<br>
       <span id="mh-date">---</span>
@@ -928,124 +873,282 @@
   </header>
 
   <!-- ═══ Hero ═══════════════════════════════════════════════════════════ -->
-  <section class="hero">
-    <div class="hero-coord">
-      <span>SURFACE / 001 / HOME</span>
-      <span>Bengaluru, India — 12°58'N 77°35'E</span>
-    </div>
+  <section class="fold hero">
+    <div class="fold-tag"><span class="dot"></span>Surface / 001 / Home</div>
+    <div class="fold-coord">Bengaluru · 12°58'N 77°35'E</div>
     <h1 class="hero-title">Content that powers <span class="scramble" id="scramble">organic</span> growth.</h1>
-    <div class="hero-deck">
-      <p class="sub">
-        We build and scale content marketing programs for the <em>post-AI era</em> —
-        driving visibility across every channel your buyer lives on, and turning
-        <em>attention into revenue</em>.
-      </p>
-      <div class="action">
-        <button class="big-cta" id="open-contact-2" aria-haspopup="dialog">
-          <span>Build your content marketing program</span><span class="arrow">→</span>
-        </button>
-        <div class="stamp">
-          FY26-27 Active<br>
-          Compiled 2026-04-25 · v0.1
+    <p class="hero-sub">
+      We build and scale content marketing programs for the <em>post-AI era</em> —
+      driving visibility across every channel your buyer lives on, and turning
+      <em>attention into revenue</em>.
+    </p>
+  </section>
+
+  <!-- ═══ Case Showcase ═════════════════════════════════════════════════ -->
+  <section class="fold showcase">
+    <div class="fold-tag"><span class="dot"></span>Section / 01 · Case Index</div>
+    <div class="fold-coord" id="case-counter">01 / 12</div>
+
+    <div class="showcase-poster" id="showcase">
+      <!-- 12 slides — first is active -->
+      <div class="showcase-slide is-active" data-name="UserExperior" data-sector="Mobile App Analytics">
+        <div class="slide-bg slide-bg-1"></div>
+        <div class="slide-grain"></div>
+        <div class="slide-inner">
+          <div class="slide-top">
+            <span>Case / 01</span>
+            <span class="right">Mobile App Analytics<br>2018 — 2020</span>
+          </div>
+          <div class="slide-name">UserExperior.</div>
+          <div class="slide-bottom">
+            <span class="outcome">Built the content engine that took an unknown analytics tool to category visibility — pre-acquisition.</span>
+            <span>Recurr · 01</span>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-slide flip-ink" data-name="Pazcare" data-sector="Group Insurance">
+        <div class="slide-bg slide-bg-2"></div>
+        <div class="slide-grain"></div>
+        <div class="slide-inner">
+          <div class="slide-top">
+            <span>Case / 02</span>
+            <span class="right">Group Insurance<br>SaaS · India</span>
+          </div>
+          <div class="slide-name">Pazcare.</div>
+          <div class="slide-bottom">
+            <span class="outcome">Built the SEO foundation for a category-defining group insurance platform during its growth phase.</span>
+            <span>Recurr · 02</span>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-slide" data-name="NestAway" data-sector="Managed Rentals">
+        <div class="slide-bg slide-bg-3"></div>
+        <div class="slide-grain"></div>
+        <div class="slide-inner">
+          <div class="slide-top">
+            <span>Case / 03</span>
+            <span class="right">Managed Rentals<br>Consumer · India</span>
+          </div>
+          <div class="slide-name">NestAway.</div>
+          <div class="slide-bottom">
+            <span class="outcome">Programmatic SEO + content systems for a pan-India rental marketplace at peak scale.</span>
+            <span>Career · 03</span>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-slide" data-name="Fyle" data-sector="Expense Management">
+        <div class="slide-bg slide-bg-4"></div>
+        <div class="slide-grain"></div>
+        <div class="slide-inner">
+          <div class="slide-top">
+            <span>Case / 04</span>
+            <span class="right">Expense Management<br>B2B SaaS · USA</span>
+          </div>
+          <div class="slide-name">Fyle.</div>
+          <div class="slide-bottom">
+            <span class="outcome">Demand-side content for a US-focused expense platform — pipeline content for the SMB and mid-market.</span>
+            <span>Career · 04</span>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-slide flip-ink" data-name="Goodera" data-sector="ESG / Volunteering">
+        <div class="slide-bg slide-bg-5"></div>
+        <div class="slide-grain"></div>
+        <div class="slide-inner">
+          <div class="slide-top">
+            <span>Case / 05</span>
+            <span class="right">ESG &amp; Volunteering<br>Enterprise · Global</span>
+          </div>
+          <div class="slide-name">Goodera.</div>
+          <div class="slide-bottom">
+            <span class="outcome">Took a category-creating volunteering platform from $4.5M to $10M ARR via content-led GTM.</span>
+            <span>Career · 05</span>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-slide" data-name="elevateHQ" data-sector="Sales Compensation">
+        <div class="slide-bg slide-bg-6"></div>
+        <div class="slide-grain"></div>
+        <div class="slide-inner">
+          <div class="slide-top">
+            <span>Case / 06</span>
+            <span class="right">Sales Compensation<br>B2B SaaS</span>
+          </div>
+          <div class="slide-name">elevateHQ.</div>
+          <div class="slide-bottom">
+            <span class="outcome">Category education and demand content for a sales-comp platform competing in a noisy market.</span>
+            <span>Recurr · 06</span>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-slide flip-ink" data-name="Mettl" data-sector="Talent Assessment">
+        <div class="slide-bg slide-bg-7"></div>
+        <div class="slide-grain"></div>
+        <div class="slide-inner">
+          <div class="slide-top">
+            <span>Case / 07</span>
+            <span class="right">Talent Assessment<br>HR Tech</span>
+          </div>
+          <div class="slide-name">Mettl.</div>
+          <div class="slide-bottom">
+            <span class="outcome">Early-stage SEO and content systems at the assessment platform that became a Mercer acquisition.</span>
+            <span>Career · 07</span>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-slide" data-name="Mercer | Mettl" data-sector="HR Tech">
+        <div class="slide-bg slide-bg-8"></div>
+        <div class="slide-grain"></div>
+        <div class="slide-inner">
+          <div class="slide-top">
+            <span>Case / 08</span>
+            <span class="right">Enterprise HR Tech<br>Post-Acquisition</span>
+          </div>
+          <div class="slide-name">Mercer | Mettl.</div>
+          <div class="slide-bottom">
+            <span class="outcome">Post-acquisition content programme for the global Mercer | Mettl assessment business.</span>
+            <span>Career · 08</span>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-slide" data-name="Wingify" data-sector="Conversion Optimisation">
+        <div class="slide-bg slide-bg-9"></div>
+        <div class="slide-grain"></div>
+        <div class="slide-inner">
+          <div class="slide-top">
+            <span>Case / 09</span>
+            <span class="right">CRO &amp; Experimentation<br>VWO</span>
+          </div>
+          <div class="slide-name">Wingify.</div>
+          <div class="slide-bottom">
+            <span class="outcome">Editorial-grade content for one of India's earliest content-led B2B SaaS plays.</span>
+            <span>Career · 09</span>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-slide flip-ink" data-name="GoComet" data-sector="Logistics SaaS">
+        <div class="slide-bg slide-bg-10"></div>
+        <div class="slide-grain"></div>
+        <div class="slide-inner">
+          <div class="slide-top">
+            <span>Case / 10</span>
+            <span class="right">Logistics SaaS<br>Global</span>
+          </div>
+          <div class="slide-name">GoComet.</div>
+          <div class="slide-bottom">
+            <span class="outcome">Demand-side content for a logistics platform serving global enterprise shippers.</span>
+            <span>Recurr · 10</span>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-slide" data-name="Hippo Video" data-sector="Sales Video">
+        <div class="slide-bg slide-bg-11"></div>
+        <div class="slide-grain"></div>
+        <div class="slide-inner">
+          <div class="slide-top">
+            <span>Case / 11</span>
+            <span class="right">Sales Video Platform<br>B2B SaaS</span>
+          </div>
+          <div class="slide-name">Hippo Video.</div>
+          <div class="slide-bottom">
+            <span class="outcome">Content programme for a sales-video platform competing in a fast-consolidating space.</span>
+            <span>Recurr · 11</span>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-slide" data-name="EasyEcom" data-sector="E-commerce Ops">
+        <div class="slide-bg slide-bg-12"></div>
+        <div class="slide-grain"></div>
+        <div class="slide-inner">
+          <div class="slide-top">
+            <span>Case / 12</span>
+            <span class="right">E-commerce Ops<br>SaaS · India</span>
+          </div>
+          <div class="slide-name">EasyEcom.</div>
+          <div class="slide-bottom">
+            <span class="outcome">SEO and content for an e-commerce operations platform serving multi-channel sellers.</span>
+            <span>Recurr · 12</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Hero poster (CSS-gradient mock) -->
-    <div class="hero-poster" aria-hidden="true">
-      <div class="hp-inner">
-        <div class="hp-top">
-          <span class="left">POSTER / 01</span>
-          <span class="right">
-            Recurr 2026<br>
-            B/W · Editorial
-          </span>
-        </div>
-        <div class="hp-center">
-          <h2 class="hp-title"><span class="tint">Organic</span> growth,<br>in the post-AI era.</h2>
-        </div>
-        <div class="hp-bottom">
-          <span class="l-axis">12°58'N 77°35'E</span>
-          <span>pages.recurr.co</span>
-        </div>
+    <!-- Logo strip — small, monospace, all 12 -->
+    <div class="logo-strip">
+      <div class="logo-strip-meta">
+        <span>Index — 12 clients · Career + Recurr</span>
+        <span>Auto-rotate · Click to hold</span>
+      </div>
+      <div class="logo-strip-row" id="logo-strip">
+        <div class="logo-strip-cell is-active" data-idx="0"><img src="logos/recurr-client-logo-01.png" alt="UserExperior"></div>
+        <div class="logo-strip-cell" data-idx="1"><img src="logos/recurr-client-logo-02.png" alt="Pazcare"></div>
+        <div class="logo-strip-cell" data-idx="2"><img src="logos/recurr-client-logo-03.png" alt="NestAway"></div>
+        <div class="logo-strip-cell" data-idx="3"><img src="logos/recurr-client-logo-04.png" alt="Fyle"></div>
+        <div class="logo-strip-cell" data-idx="4"><img src="logos/recurr-client-logo-05.png" alt="Goodera"></div>
+        <div class="logo-strip-cell" data-idx="5"><img src="logos/recurr-client-logo-06.png" alt="elevateHQ"></div>
+        <div class="logo-strip-cell" data-idx="6"><img src="logos/recurr-client-logo-07.png" alt="Mettl"></div>
+        <div class="logo-strip-cell" data-idx="7"><img src="logos/recurr-client-logo-08.png" alt="Mercer | Mettl"></div>
+        <div class="logo-strip-cell" data-idx="8"><img src="logos/recurr-client-logo-09.png" alt="Wingify"></div>
+        <div class="logo-strip-cell" data-idx="9"><img src="logos/recurr-client-logo-10.png" alt="GoComet"></div>
+        <div class="logo-strip-cell" data-idx="10"><img src="logos/recurr-client-logo-11.png" alt="Hippo Video"></div>
+        <div class="logo-strip-cell" data-idx="11"><img src="logos/recurr-client-logo-12.png" alt="EasyEcom"></div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ Case Index (logo bar) ═════════════════════════════════════════ -->
-  <div class="case-head">
-    <div class="label"><span class="pulse-dot"></span>Section / 01</div>
-    <h2 class="title">Case Index.</h2>
-    <div class="count">12 Clients · Career + Recurr</div>
-  </div>
-  <section class="case-grid" id="case-grid">
-    <div class="case-cell" data-name="UserExperior"><span class="cell-coord">C / 01</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-01.png" alt="UserExperior"><span class="cell-sweep"></span></div>
-    <div class="case-cell" data-name="Pazcare"><span class="cell-coord">C / 02</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-02.png" alt="Pazcare"><span class="cell-sweep"></span></div>
-    <div class="case-cell" data-name="NestAway"><span class="cell-coord">C / 03</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-03.png" alt="NestAway"><span class="cell-sweep"></span></div>
-    <div class="case-cell" data-name="Fyle"><span class="cell-coord">C / 04</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-04.png" alt="Fyle"><span class="cell-sweep"></span></div>
-    <div class="case-cell" data-name="Goodera"><span class="cell-coord">C / 05</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-05.png" alt="Goodera"><span class="cell-sweep"></span></div>
-    <div class="case-cell" data-name="elevateHQ"><span class="cell-coord">C / 06</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-06.png" alt="elevateHQ"><span class="cell-sweep"></span></div>
-    <div class="case-cell" data-name="Mettl"><span class="cell-coord">C / 07</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-07.png" alt="Mettl"><span class="cell-sweep"></span></div>
-    <div class="case-cell" data-name="Mercer"><span class="cell-coord">C / 08</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-08.png" alt="Mercer"><span class="cell-sweep"></span></div>
-    <div class="case-cell" data-name="Wingify"><span class="cell-coord">C / 09</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-09.png" alt="Wingify"><span class="cell-sweep"></span></div>
-    <div class="case-cell" data-name="GoComet"><span class="cell-coord">C / 10</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-10.png" alt="GoComet"><span class="cell-sweep"></span></div>
-    <div class="case-cell" data-name="Hippo Video"><span class="cell-coord">C / 11</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-11.png" alt="Hippo Video"><span class="cell-sweep"></span></div>
-    <div class="case-cell" data-name="EasyEcom"><span class="cell-coord">C / 12</span><span class="cell-pulse"></span><img src="logos/recurr-client-logo-12.png" alt="EasyEcom"><span class="cell-sweep"></span></div>
-  </section>
-  <div class="case-footer">
-    <div class="muted">Currently viewing</div>
-    <div><span class="active-name" id="case-active-name">UserExperior</span></div>
-    <div class="muted">Auto-rotate every 3.2s · Hover to hold</div>
-  </div>
-
-  <!-- ═══ Buyer Mirror ══════════════════════════════════════════════════ -->
-  <section class="mirror">
-    <div class="mirror-lead">
-      <div class="label">Section / 02</div>
-      <p class="intro">
-        If you're here, you're probably looking for <strong>one of these</strong>.
-      </p>
-    </div>
-
-    <article class="hunt">
+  <!-- ═══ Hunt 01 · Findability ═════════════════════════════════════════ -->
+  <section class="fold hunt">
+    <div class="fold-tag"><span class="dot"></span>Section / 02 · Buyer Mirror</div>
+    <div class="fold-coord">Hunt / 01 of 03</div>
+    <div class="hunt-num">01</div>
+    <div class="hunt-body">
       <div class="left">
-        <span class="num">Hunt / 01</span>
         <span class="handle">Findability</span>
-      </div>
-      <div class="body">
-        <h3>Be findable everywhere your buyer looks.</h3>
+        <h2>Be findable everywhere your buyer looks.</h2>
         <p>
-          Your buyer's journey no longer runs through one channel. Publish for Google,
-          AI answer engines, Reddit, directories, and the long tail of surfaces where
-          discovery actually happens today. <em>Visibility isn't a single surface anymore</em> —
-          it's every surface.
+          Your buyer's journey no longer runs through one channel. We publish for
+          Google, AI answer engines, Reddit, directories, and the long tail of
+          surfaces where discovery actually happens today. <em>Visibility isn't a
+          single surface anymore</em> — it's every surface.
         </p>
       </div>
-    </article>
+      <div class="hunt-image hunt-image-1" aria-hidden="true">
+        <span class="img-tag">Surfaces / 01 · Discovery Mesh</span>
+      </div>
+    </div>
+  </section>
 
-    <article class="hunt">
+  <!-- ═══ Hunt 02 · Recall ══════════════════════════════════════════════ -->
+  <section class="fold hunt">
+    <div class="fold-tag"><span class="dot"></span>Section / 02 · Buyer Mirror</div>
+    <div class="fold-coord">Hunt / 02 of 03</div>
+    <div class="hunt-num">02</div>
+    <div class="hunt-body">
       <div class="left">
-        <span class="num">Hunt / 02</span>
         <span class="handle">Recall</span>
-      </div>
-      <div class="body">
-        <h3>Be the first brand your buyer remembers.</h3>
+        <h2>Be the first brand your buyer remembers.</h2>
         <p>
-          Own the topics that matter in your category. Build a body of writing,
-          research, and conversation that keeps you top-of-mind before buyers ever
-          open a comparison tab — whether that buyer is a CFO with a budget or a
-          consumer with a cart.
+          Own the topics that matter in your category. We build a body of writing,
+          research, and conversation that keeps you <em>top-of-mind</em> before
+          buyers ever open a comparison tab — whether that buyer is a CFO with a
+          budget or a consumer with a cart.
         </p>
       </div>
-    </article>
-
-    <article class="hunt">
-      <div class="left">
-        <span class="num">Hunt / 03</span>
-        <span class="handle">Decision</span>
+      <div class="hunt-image hunt-image-2" aria-hidden="true">
+        <span class="img-tag">Surfaces / 02 · Memory Field</span>
       </div>
-      <div class="body">
-        <h3>Win the decision, not just the click.</h3>
+    </div>
+  </section>
+
+  <!-- ═══ Hunt 03 · Decision ════════════════════════════════════════════ -->
+  <section class="fold hunt">
+    <div class="fold-tag"><span class="dot"></span>Section / 02 · Buyer Mirror</div>
+    <div class="fold-coord">Hunt / 03 of 03</div>
+    <div class="hunt-num">03</div>
+    <div class="hunt-body">
+      <div class="left">
+        <span class="handle">Decision</span>
+        <h2>Win the decision, not just the click.</h2>
         <p>
           When your buyer is evaluating, they need <em>evidence</em> — not awareness.
           Landing pages, case studies, competitive displacement, and bottom-funnel
@@ -1053,173 +1156,100 @@
           checkout.
         </p>
       </div>
-    </article>
-  </section>
-
-  <!-- ═══ Operating Matrix ══════════════════════════════════════════════ -->
-  <section class="matrix-wrap" id="matrix">
-    <div class="matrix-head">
-      <div class="label">Datasheet / 01</div>
-      <div class="title">Operating Matrix.</div>
-      <div class="version">recurr.co · v1.0 · 2026</div>
-    </div>
-    <div class="matrix">
-      <div class="matrix-colhead">Hunt</div>
-      <div class="matrix-colhead">KPIs Impacted</div>
-      <div class="matrix-colhead">Content Surfaces</div>
-
-      <div class="matrix-hunt reveal">
-        <span class="n">01</span>
-        <span class="h">Findability</span>
-        <span class="draw-in"></span>
-      </div>
-      <div class="matrix-kpi reveal">
-        <ul>
-          <li>Search traffic</li>
-          <li>AI citations</li>
-          <li>Domain authority</li>
-          <li>Reddit &amp; directory reach</li>
-          <li>SERP share of voice</li>
-        </ul>
-        <span class="draw-in"></span>
-      </div>
-      <div class="matrix-surfaces reveal">
-        <div class="surfaces-grid">
-          <span class="pill">SEO &amp; AEO Strategy</span>
-          <span class="pill">Blog Articles</span>
-          <span class="pill">Glossaries</span>
-          <span class="pill">Hub &amp; Spoke</span>
-          <span class="pill">Technical SEO</span>
-          <span class="pill">Content Refreshes</span>
-          <span class="pill">Micro-refreshes</span>
-          <span class="pill">SEO &amp; AEO Audits</span>
-          <span class="pill">Citation Outreach</span>
-          <span class="pill">Reddit Engagement</span>
-          <span class="pill">AI-assisted SEO</span>
-        </div>
-        <span class="draw-in"></span>
-      </div>
-
-      <div class="matrix-hunt reveal">
-        <span class="n">02</span>
-        <span class="h">Recall</span>
-        <span class="draw-in"></span>
-      </div>
-      <div class="matrix-kpi reveal">
-        <ul>
-          <li>Brand mentions</li>
-          <li>Social engagement</li>
-          <li>Newsletter subscribers</li>
-          <li>Share of voice</li>
-          <li>Earned reach</li>
-        </ul>
-        <span class="draw-in"></span>
-      </div>
-      <div class="matrix-surfaces reveal">
-        <div class="surfaces-grid">
-          <span class="pill">Thought Leadership</span>
-          <span class="pill">Research Reports</span>
-          <span class="pill">LinkedIn</span>
-          <span class="pill">Social Posts</span>
-          <span class="pill">Podcasts</span>
-          <span class="pill">Books</span>
-          <span class="pill">Micro-sites</span>
-          <span class="pill">Survey-driven White Papers</span>
-          <span class="pill">State-of-Industry Reports</span>
-          <span class="pill">Email Newsletters</span>
-          <span class="pill">Blog Articles</span>
-        </div>
-        <span class="draw-in"></span>
-      </div>
-
-      <div class="matrix-hunt reveal">
-        <span class="n">03</span>
-        <span class="h">Decision</span>
-        <span class="draw-in"></span>
-      </div>
-      <div class="matrix-kpi reveal">
-        <ul>
-          <li>Pipeline influenced</li>
-          <li>Demo / signup conversions</li>
-          <li>Win-rate lift</li>
-          <li>Assisted conversions</li>
-          <li>Brand consideration</li>
-        </ul>
-        <span class="draw-in"></span>
-      </div>
-      <div class="matrix-surfaces reveal">
-        <div class="surfaces-grid">
-          <span class="pill">Landing Pages</span>
-          <span class="pill">Case Studies</span>
-          <span class="pill">Competitive Content</span>
-          <span class="pill">One Pagers</span>
-          <span class="pill">ABM Assets</span>
-          <span class="pill">Sales Enablement</span>
-          <span class="pill">Gated Assets</span>
-          <span class="pill">Campaign Content</span>
-          <span class="pill">Industry White Papers</span>
-          <span class="pill">Infographics</span>
-          <span class="pill">Video Snippets</span>
-          <span class="pill">Microsite Design</span>
-        </div>
-        <span class="draw-in"></span>
+      <div class="hunt-image hunt-image-3" aria-hidden="true">
+        <span class="img-tag">Surfaces / 03 · Decision Surface</span>
       </div>
     </div>
   </section>
 
-  <!-- ═══ Team ══════════════════════════════════════════════════════════ -->
+  <!-- ═══ Operating Matrix ═════════════════════════════════════════════ -->
+  <section class="matrix-wrap">
+    <div class="fold-tag"><span class="dot"></span>Datasheet / 01</div>
+    <div class="fold-coord">recurr.co · v1.0 · 2026</div>
+    <h2 class="matrix-title">Operating Matrix.</h2>
+    <div class="matrix-table">
+      <div class="matrix-row head">
+        <div>#</div>
+        <div>Hunt</div>
+        <div>Content Surfaces</div>
+      </div>
+      <div class="matrix-row">
+        <div class="col-num">01</div>
+        <div class="col-hunt">Findability</div>
+        <div class="col-surfaces">
+          SEO &amp; AEO Strategy<span class="sep">·</span>Blog Articles<span class="sep">·</span>Glossaries<span class="sep">·</span>Hub &amp; Spoke<span class="sep">·</span>Technical SEO<span class="sep">·</span>Content Refreshes<span class="sep">·</span>Citation Outreach<span class="sep">·</span>Reddit Engagement<span class="sep">·</span>AI-assisted SEO
+        </div>
+      </div>
+      <div class="matrix-row">
+        <div class="col-num">02</div>
+        <div class="col-hunt">Recall</div>
+        <div class="col-surfaces">
+          Thought Leadership<span class="sep">·</span>Research Reports<span class="sep">·</span>LinkedIn<span class="sep">·</span>Social Posts<span class="sep">·</span>Podcasts<span class="sep">·</span>Books<span class="sep">·</span>Micro-sites<span class="sep">·</span>White Papers<span class="sep">·</span>Email Newsletters
+        </div>
+      </div>
+      <div class="matrix-row">
+        <div class="col-num">03</div>
+        <div class="col-hunt">Decision</div>
+        <div class="col-surfaces">
+          Landing Pages<span class="sep">·</span>Case Studies<span class="sep">·</span>Competitive Content<span class="sep">·</span>One Pagers<span class="sep">·</span>ABM Assets<span class="sep">·</span>Sales Enablement<span class="sep">·</span>Industry White Papers<span class="sep">·</span>Microsites
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Team ═════════════════════════════════════════════════════════ -->
   <section class="team">
-    <div class="team-label">Section / 03 · The Team</div>
-    <div class="team-mast">
-      <div class="cell">
+    <div class="fold-tag"><span class="dot"></span>Section / 03 · The Team</div>
+    <div class="fold-coord">Client-facing · 02</div>
+    <h2 class="team-title">Two operators, one engine.</h2>
+    <div class="team-grid">
+      <div class="team-card">
         <div class="portrait pratik" aria-hidden="true"></div>
-        <div>
-          <div class="name">Pratik Mishra.</div>
-          <span class="role">Founder · Strategy</span>
-        </div>
+        <div class="name">Pratik Mishra.</div>
+        <span class="role">Founder · Strategy</span>
       </div>
-      <div class="amp">×</div>
-      <div class="cell right">
+      <div class="team-card">
         <div class="portrait sujith" aria-hidden="true"></div>
-        <div>
-          <div class="name">Sujith Nair.</div>
-          <span class="role">Agency Lead · SEO</span>
-        </div>
+        <div class="name">Sujith Nair.</div>
+        <span class="role">Agency Lead · SEO</span>
       </div>
     </div>
     <p class="team-bio">
-      Two operators with two decades across B2B SaaS, GTM, and content. Interested
-      in content systems, positioning, and the <em>post-AI shape of marketing</em>.
+      Two decades across B2B SaaS, GTM, and content. Interested in content systems,
+      positioning, and the <em>post-AI shape of marketing</em>.
     </p>
   </section>
 
   <!-- ═══ Press ═════════════════════════════════════════════════════════ -->
-  <div class="press-head" id="press">
-    <div class="label">Section / 04</div>
-    <h2 class="title">From the Press.</h2>
-    <a href="#all-articles" id="press-all">All articles →</a>
-  </div>
-  <section class="press-grid">
-    <article class="press-featured">
-      <div class="pf-poster" aria-hidden="true">
-        <div class="pf-title-overlay">
-          AI<br>will eat<br>SaaS.
-        </div>
-        <div class="pf-meta-overlay">ISSUE 01 · MAY 2026</div>
-      </div>
-      <div class="tag"><span>★</span><b>Featured</b><span>·</span><span>May 2026 Theme</span></div>
-      <h3>AI will eat SaaS. The Four-Layer Turnover.</h3>
-      <p class="dek">
+  <section class="press" id="press">
+    <div class="fold-tag"><span class="dot"></span>Section / 04 · From the Press</div>
+    <div class="fold-coord">Issue 01 · May 2026</div>
+    <h2 class="press-title">AI will eat SaaS.</h2>
+
+    <div class="press-cover" aria-hidden="true">
+      <div class="pc-meta">Recurr Press<br>Issue 01 · May 2026</div>
+      <div class="pc-title">The Four-<br>Layer<br>Turnover.</div>
+      <div class="pc-issue">Pratik Mishra · Essay · 2026-04-22</div>
+    </div>
+
+    <div class="press-feature">
+      <p class="deck">
         Interface → Workflow → Data → Business model. Each layer of the enterprise
         software stack dies on its own clock. Most incumbents won't die at the
         interface — they'll die at the business model.
       </p>
-      <div>
+      <div class="right">
+        <h3>The May 2026 theme. Four essays. One unfolding argument.</h3>
         <a class="read" href="#featured">Read the series →</a>
-        <div class="meta" style="margin-top:12px;">Pratik Mishra · 2026-04-22 · Essay</div>
+        <span class="meta">Pratik Mishra · 2026-04-22 · Recurr Press</span>
       </div>
-    </article>
+    </div>
+
     <div class="press-latest">
+      <div class="press-latest-head">
+        <span>Latest from the press</span>
+        <span>3 of 12</span>
+      </div>
       <a class="item" href="#a1">
         <span class="date">2026-04-22</span>
         <span class="t">Interface Eats UI — Why the chat box is the new homepage.</span>
@@ -1263,7 +1293,7 @@
     </div>
     <div class="copy-band">
       <div>© 2026 Recurr Studio Pvt Ltd</div>
-      <div><span id="foot-stamp">Compiled 2026-04-25 · v0.1</span></div>
+      <div><span id="foot-stamp">Compiled 2026-04-25 · v0.2</span></div>
     </div>
   </footer>
 
@@ -1274,13 +1304,9 @@
       <div class="label">Work with Us</div>
       <button class="cp-close" id="cp-close" aria-label="Close">×</button>
     </div>
-
     <div class="cp-body" id="cp-form">
       <h2 id="cp-title">Tell us what you're working on.</h2>
-      <p class="sub">
-        A sentence or two is enough to start. We read every one.
-      </p>
-
+      <p class="sub">A sentence or two is enough to start. We read every one.</p>
       <form id="work-form" novalidate>
         <div class="form-field">
           <label for="f-name">Your name</label>
@@ -1316,7 +1342,6 @@
         </div>
       </form>
     </div>
-
     <div class="success-state" id="cp-success">
       <h2>Got it.</h2>
       <p class="typer-line" id="success-typer"></p>
@@ -1325,15 +1350,13 @@
   </aside>
 
   <script>
-    /* ─── Live clock (mono time formatter) ───────────────────────────── */
+    /* ─── Live clock ────────────────────────────────────────────────── */
     function updateTime() {
       const now = new Date();
       const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
       const dfmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' });
-      const t = fmt.format(now);
-      const d = dfmt.format(now).toUpperCase();
-      const tEl = document.getElementById('mh-time'); if (tEl) tEl.textContent = t;
-      const dEl = document.getElementById('mh-date'); if (dEl) dEl.textContent = d;
+      const tEl = document.getElementById('mh-time'); if (tEl) tEl.textContent = fmt.format(now);
+      const dEl = document.getElementById('mh-date'); if (dEl) dEl.textContent = dfmt.format(now).toUpperCase();
     }
     updateTime();
     setInterval(updateTime, 1000);
@@ -1356,7 +1379,7 @@
           }).join('');
           el.textContent = out;
           frame++;
-          if (settled.every(s => s)) { setTimeout(next, 5200); return; }
+          if (settled.every(s => s)) { setTimeout(next, 5400); return; }
           setTimeout(step, 45);
         }
         function next() { idx = (idx + 1) % words.length; scramble(words[idx]); }
@@ -1365,124 +1388,80 @@
       scramble(words[0]);
     })();
 
-    /* ─── Case Index auto-rotate ─────────────────────────────────────── */
+    /* ─── Case Showcase auto-rotate ─────────────────────────────────── */
     (function() {
-      const grid = document.getElementById('case-grid');
-      if (!grid) return;
-      const cells = Array.from(grid.querySelectorAll('.case-cell'));
-      const nameEl = document.getElementById('case-active-name');
-      let idx = 0;
-      let paused = false;
-      let interval = null;
+      const slides = Array.from(document.querySelectorAll('.showcase-slide'));
+      const cells = Array.from(document.querySelectorAll('.logo-strip-cell'));
+      const counter = document.getElementById('case-counter');
+      if (!slides.length) return;
 
+      let idx = 0, paused = false, interval = null;
       function setActive(n) {
+        slides.forEach((s, i) => s.classList.toggle('is-active', i === n));
         cells.forEach((c, i) => c.classList.toggle('is-active', i === n));
-        if (nameEl) nameEl.textContent = cells[n].dataset.name || '';
+        if (counter) counter.textContent = String(n + 1).padStart(2, '0') + ' / 12';
       }
-
-      function tick() {
-        if (paused) return;
-        idx = (idx + 1) % cells.length;
-        setActive(idx);
-      }
-
+      function tick() { if (paused) return; idx = (idx + 1) % slides.length; setActive(idx); }
       setActive(0);
-      interval = setInterval(tick, 3200);
+      interval = setInterval(tick, 6000);
 
-      // Hover to pause on individual cell (and highlight it)
       cells.forEach((c, i) => {
-        c.addEventListener('mouseenter', () => {
-          paused = true;
-          idx = i;
-          setActive(i);
-        });
-        c.addEventListener('mouseleave', () => {
-          paused = false;
-        });
         c.addEventListener('click', () => {
-          paused = true;
-          idx = i;
-          setActive(i);
-          setTimeout(() => { paused = false; }, 4000);
+          paused = true; idx = i; setActive(i);
+          setTimeout(() => { paused = false; }, 8000);
         });
+        c.addEventListener('mouseenter', () => { paused = true; });
+        c.addEventListener('mouseleave', () => { paused = false; });
       });
 
-      // Pause when tab is hidden
-      document.addEventListener('visibilitychange', () => {
-        paused = document.hidden;
-      });
+      document.addEventListener('visibilitychange', () => { paused = document.hidden; });
     })();
 
-    /* ─── Reveal on scroll (draw-in rules + reveal-up) ───────────────── */
+    /* ─── Reveal on scroll ──────────────────────────────────────────── */
     (function() {
       const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('is-visible');
-            io.unobserve(e.target);
-          }
-        });
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
       }, { threshold: 0.15 });
-      document.querySelectorAll('.reveal, .reveal-up').forEach(el => io.observe(el));
+      document.querySelectorAll('.reveal-up').forEach(el => io.observe(el));
     })();
 
     /* ─── Contact modal open/close ──────────────────────────────────── */
     (function() {
       const scrim = document.getElementById('scrim');
       const panel = document.getElementById('contact-panel');
-      const opens = ['open-contact', 'open-contact-2', 'open-contact-3'];
+      const opens = ['open-contact', 'open-contact-3'];
       const closer = document.getElementById('cp-close');
-
       function open(e) {
         if (e) e.preventDefault();
-        scrim.classList.add('open');
-        panel.classList.add('open');
-        panel.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('lock');
+        scrim.classList.add('open'); panel.classList.add('open');
+        panel.setAttribute('aria-hidden', 'false'); document.body.classList.add('lock');
         setTimeout(() => {
           const firstInput = document.getElementById('f-name');
           if (firstInput && !document.getElementById('cp-success').classList.contains('show')) firstInput.focus();
         }, 400);
       }
       function close() {
-        scrim.classList.remove('open');
-        panel.classList.remove('open');
-        panel.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('lock');
+        scrim.classList.remove('open'); panel.classList.remove('open');
+        panel.setAttribute('aria-hidden', 'true'); document.body.classList.remove('lock');
       }
-
-      opens.forEach(id => {
-        const btn = document.getElementById(id);
-        if (btn) btn.addEventListener('click', open);
-      });
+      opens.forEach(id => { const btn = document.getElementById(id); if (btn) btn.addEventListener('click', open); });
       closer.addEventListener('click', close);
       scrim.addEventListener('click', close);
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && panel.classList.contains('open')) close();
-      });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && panel.classList.contains('open')) close(); });
 
-      /* ─── Submit handler (prototype — console only) ─────────────── */
       const form = document.getElementById('work-form');
       const formWrap = document.getElementById('cp-form');
       const successWrap = document.getElementById('cp-success');
       const typerEl = document.getElementById('success-typer');
-
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        // Minimal validation
         const required = ['f-name', 'f-company', 'f-email', 'f-brief'];
         let valid = true;
         required.forEach(id => {
           const el = document.getElementById(id);
-          if (!el.value.trim()) {
-            el.style.borderBottomColor = '#000';
-            el.style.borderBottomWidth = '2.5px';
-            el.focus();
-            valid = false;
-          }
+          if (!el.value.trim()) { el.style.borderBottomWidth = '2.5px'; el.focus(); valid = false; }
         });
         if (!valid) return;
-
         const payload = {
           name: document.getElementById('f-name').value,
           company: document.getElementById('f-company').value,
@@ -1492,21 +1471,15 @@
           ts: new Date().toISOString()
         };
         console.log('[Recurr Contact] Prototype submission:', payload);
-        // TODO: wire to Attio + email in Sanity build
-
         formWrap.style.display = 'none';
         successWrap.classList.add('show');
         typewrite(typerEl, "We've got your message. A human at Recurr will be in touch.");
       });
-
       function typewrite(el, text) {
-        let i = 0;
-        el.textContent = '';
-        el.classList.remove('done');
+        let i = 0; el.textContent = ''; el.classList.remove('done');
         function step() {
           if (i >= text.length) { el.classList.add('done'); return; }
-          el.textContent += text[i++];
-          setTimeout(step, 22 + Math.random() * 25);
+          el.textContent += text[i++]; setTimeout(step, 22 + Math.random() * 25);
         }
         step();
       }
