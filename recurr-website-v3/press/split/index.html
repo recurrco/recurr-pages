@@ -71,24 +71,45 @@ img { display: block; max-width: 100%; height: auto; }
 /* ─── Reading progress (fixed thin bar at top of viewport) ─── */
 .read-progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--accent); z-index: 60; width: 0; transition: width 80ms linear; pointer-events: none; }
 
-/* ─── Variant switcher (preview only) ─── */
+/* ─── Variant switcher ─── */
 .variant-switch { display: flex; gap: 0; padding: 0 var(--gutter); border-bottom: 1px solid rgba(10,10,10,0.16); background: var(--paper); }
 .variant-switch a { padding: 12px 18px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: rgba(10,10,10,0.5); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color 150ms ease, border-color 150ms ease; }
 .variant-switch a:hover { color: var(--ink); }
 .variant-switch a.current { color: var(--ink); border-bottom-color: var(--accent); }
 .variant-switch .vs-label { padding: 12px 12px 12px 0; color: rgba(10,10,10,0.4); font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; }
 
-/* ─── Cover/Stacked (variant A — default) ─── */
-.cover-stacked { padding: 24px var(--gutter) 0; }
-.cover-stacked .cover-image {
-  width: 100%; aspect-ratio: 16 / 9; overflow: hidden;
+/* ─── Cover/Split (variant C) ─── */
+.cover-split { padding: 24px var(--gutter) 0; }
+.cover-split .cover-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0;
+  min-height: clamp(460px, 72vh, 720px);
+  align-items: stretch;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.cover-split .cover-image-cell {
+  overflow: hidden;
   background: linear-gradient(135deg, #1A1A1A 0%, #4A2618 40%, #C95E2D 75%, #FF5A1F 100%);
 }
-.cover-stacked .cover-image img { width: 100%; height: 100%; object-fit: cover; }
-.cover-stacked .cover-text { padding: 56px 0 24px; max-width: 1280px; }
-.cover-stacked .cover-format { display: inline-block; margin-bottom: 28px; padding: 6px 10px; border: 1px solid var(--ink); }
-.cover-stacked h1 { margin-bottom: 28px; }
-.cover-stacked .cover-lede { font-family: var(--serif); font-weight: 400; font-size: clamp(22px, 2.2vw, 28px); line-height: 1.4; letter-spacing: -0.005em; max-width: 920px; color: rgba(10, 10, 10, 0.78); }
+.cover-split .cover-image-cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cover-split .cover-text {
+  padding: 56px 64px 56px 64px;
+  display: flex; flex-direction: column; justify-content: center; gap: 28px;
+  border-left: 1px solid var(--ink);
+}
+.cover-split .cover-format { display: inline-flex; align-self: flex-start; padding: 6px 10px; border: 1px solid var(--ink); }
+.cover-split h1 { font-size: clamp(32px, 3.4vw, 56px); line-height: 0.98; }
+.cover-split .cover-lede {
+  font-family: var(--serif); font-weight: 400; font-size: clamp(18px, 1.4vw, 22px);
+  line-height: 1.5; letter-spacing: -0.004em; color: rgba(10,10,10,0.78);
+}
+@media (max-width: 900px) {
+  .cover-split .cover-grid { grid-template-columns: 1fr; min-height: 0; }
+  .cover-split .cover-image-cell { aspect-ratio: 16 / 9; }
+  .cover-split .cover-text { padding: 40px var(--gutter); border-left: 0; border-top: 1px solid var(--ink); }
+}
 
 /* ─── Article shell (rail + body) ─── */
 .article-shell {
@@ -273,20 +294,22 @@ img { display: block; max-width: 100%; height: auto; }
 
 <div class="variant-switch">
   <span class="vs-label">Cover variant →</span>
-  <a href="/recurr-website-v3/press/" class="current">Stacked (A)</a>
+  <a href="/recurr-website-v3/press/">Stacked (A)</a>
   <a href="/recurr-website-v3/press/overlay/">Overlay (B)</a>
-  <a href="/recurr-website-v3/press/split/">Split (C)</a>
+  <a href="/recurr-website-v3/press/split/" class="current">Split (C)</a>
 </div>
 
-<!-- ─── COVER / Stacked (variant A) ─── -->
-<header class="cover-stacked reveal">
-  <div class="cover-image">
-    <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1920&q=80" alt="Abstract neural network visualisation" loading="eager"/>
-  </div>
-  <div class="cover-text">
-    <span class="cover-format mono-label">Essay · Marketing in the Post-AI Era</span>
-    <h1 class="display-xl">You're no longer marketing to buyers. You're marketing to the systems that influence them.</h1>
-    <p class="cover-lede">Ranking on Google and appearing in LLM responses are two separate problems. Most B2B teams are invisible in the second one.</p>
+<!-- ─── COVER / Split (variant C) ─── -->
+<header class="cover-split reveal">
+  <div class="cover-grid">
+    <div class="cover-image-cell">
+      <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1920&q=80" alt="Abstract neural network visualisation" loading="eager"/>
+    </div>
+    <div class="cover-text">
+      <span class="cover-format mono-label">Essay · Marketing in the Post-AI Era</span>
+      <h1 class="display-l">You're no longer marketing to buyers. You're marketing to the systems that influence them.</h1>
+      <p class="cover-lede">Ranking on Google and appearing in LLM responses are two separate problems. Most B2B teams are invisible in the second one.</p>
+    </div>
   </div>
 </header>
 
