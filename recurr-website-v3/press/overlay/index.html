@@ -160,18 +160,8 @@ button { font: inherit; }
 
 .body { max-width: var(--body-w); margin: 0 auto; }
 
-/* Rail — fixed in left margin on desktop, inline at top of body on tablet/mobile */
-.rail { display: none; }
-@media (min-width: 1180px) {
-  .rail {
-    position: fixed;
-    top: 110px;
-    left: max(var(--gutter), calc((100vw - 1680px) / 2 + var(--gutter)));
-    width: var(--rail-w);
-    z-index: 4;
-    display: block;
-  }
-}
+/* Rail (fixed-position version) — REMOVED. Byline lives inline at top of body via .rail-inline at all widths. */
+.rail { display: none !important; }
 
 .byline-card { padding: 0; border: 1px solid rgba(10,10,10,0.16); background: var(--paper); }
 .byline-card[open] { border-color: var(--ink); }
@@ -193,9 +183,8 @@ button { font: inherit; }
 .byline-socials a { color: rgba(10,10,10,0.7); transition: color 150ms ease; }
 .byline-socials a:hover { color: var(--accent); }
 
-/* Inline rail (mobile/tablet) — appears at top of body when fixed-rail hidden */
-.rail-inline { display: block; max-width: var(--body-w); margin: 0 auto 32px; }
-@media (min-width: 1180px) { .rail-inline { display: none; } }
+/* Inline byline at top of body (all widths) */
+.rail-inline { display: block; max-width: var(--body-w); margin: 0 auto 36px; }
 .rail-inline .byline-card + .byline-card { margin-top: 8px; }
 
 /* ─── Body (single column, centered) ─── */
@@ -276,39 +265,33 @@ button { font: inherit; }
 .rn-all .rn-l-b { font-family: var(--mono); font-size: 11px; color: rgba(10,10,10,0.55); letter-spacing: 0.04em; text-transform: uppercase; }
 .rn-all:hover .rn-l-b { color: rgba(247,245,240,0.65); }
 
-/* ─── Floating ActionBar dock ─── */
-.dock { position: fixed; bottom: 28px; left: 28px; z-index: 40; display: flex; flex-direction: column; gap: 6px; padding: 10px; background: var(--paper-pure); border: 1px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); transition: transform 200ms ease, opacity 200ms ease; }
-.dock-btn { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: transparent; border: 0; cursor: pointer; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); transition: background 120ms ease, color 120ms ease; min-width: 180px; text-align: left; }
+/* ─── Floating ActionBar dock (bottom-right, only visible during article reading) ─── */
+.dock {
+  position: fixed; bottom: 28px; right: 28px; z-index: 40;
+  display: flex; flex-direction: column; gap: 4px; padding: 8px;
+  background: var(--paper-pure); border: 1px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 240ms cubic-bezier(0.16,1,0.3,1), opacity 240ms ease;
+  opacity: 0; transform: translateY(20px); pointer-events: none;
+}
+.dock.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.dock-btn { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: transparent; border: 0; cursor: pointer; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); transition: background 120ms ease, color 120ms ease; min-width: 170px; text-align: left; }
 .dock-btn:hover { background: var(--ink); color: var(--paper); }
 .dock-btn .dock-icon { width: 14px; height: 14px; flex-shrink: 0; }
 .dock-divider { height: 1px; background: rgba(10,10,10,0.12); margin: 4px 0; }
 .dock-btn.copied { background: var(--accent); color: var(--accent-ink); }
+.dock-btn .dock-label-short { display: none; }
 
-/* Mobile: collapsed icon bar at bottom */
 @media (max-width: 768px) {
-  .dock {
-    flex-direction: row;
-    bottom: 12px; left: 12px; right: 12px;
-    padding: 4px;
-    gap: 0;
-    justify-content: space-around;
-    box-shadow: 2px 2px 0 var(--ink);
-  }
-  .dock-btn {
-    flex-direction: column; gap: 3px;
-    min-width: 0; flex: 1;
-    padding: 8px 4px;
-    font-size: 9px; letter-spacing: 0.02em;
-    text-align: center;
-    align-items: center;
-  }
-  .dock-btn .dock-label-full { display: none; }
-  .dock-btn .dock-label-short { display: inline; }
+  .dock { flex-direction: row; bottom: 12px; left: 12px; right: 12px; padding: 4px; gap: 0; justify-content: space-around; box-shadow: 2px 2px 0 var(--ink); }
+  .dock-btn { flex-direction: column; gap: 4px; min-width: 0; flex: 1; padding: 8px 4px; font-size: 9px; letter-spacing: 0.02em; text-align: center; align-items: center; }
+  .dock-btn .dock-icon { width: 16px; height: 16px; }
+  .dock-btn .dock-label-full { display: none !important; }
+  .dock-btn .dock-label-short { display: inline !important; }
   .dock-divider { display: none; }
   .dock-btn:hover { background: transparent; color: var(--ink); }
   .dock-btn:active { background: var(--ink); color: var(--paper); }
 }
-.dock-btn .dock-label-short { display: none; }
 
 /* ─── Footer (back-of-the-book) ─── */
 .footer-zone { padding-top: clamp(80px, 12vh, 140px); }
@@ -449,28 +432,6 @@ button { font: inherit; }
 
 <!-- ─── ARTICLE SHELL ─── -->
 <div class="article-shell">
-
-  <!-- Sticky Rail (desktop only) — author accordion -->
-  <aside class="rail">
-    <details class="byline-card" open>
-      <summary class="byline-author">
-        <div class="byline-avatar"><span class="monogram">S</span></div>
-        <div class="byline-text">
-          <div class="byline-name">Sujith</div>
-          <div class="byline-role mono-label">Editor, Studio</div>
-        </div>
-        <span class="byline-toggle">+</span>
-      </summary>
-      <div class="byline-detail">
-        <p class="byline-bio">Sujith leads Studio at Recurr — the consulting arm that works with B2B founders on positioning, content, and demand. He writes about what's actually changing in B2B marketing as the buying journey moves through LLMs.</p>
-        <div class="byline-socials mono-label">
-          <a href="#">X / @sujith</a>
-          <a href="#">LinkedIn</a>
-          <a href="/recurr-website-v3/press/authors/sujith/">More from Sujith →</a>
-        </div>
-      </div>
-    </details>
-  </aside>
 
   <!-- Body (centered in viewport) -->
   <article class="body" id="articleBody">
@@ -795,8 +756,20 @@ button { font: inherit; }
   }
   setTimeout(() => items.forEach(i => i.classList.add('in')), 1500);
 
-  // ActionBar
+  // ActionBar dock — only show while article body is in view
   const dock = document.getElementById('dock');
+  if (article && 'IntersectionObserver' in window) {
+    const dockIo = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) dock.classList.add('show');
+        else dock.classList.remove('show');
+      });
+    }, { threshold: 0, rootMargin: '-10% 0px -20% 0px' });
+    dockIo.observe(article);
+  } else {
+    dock.classList.add('show');
+  }
+
   function flashCopied(btn, label){
     const original = btn.innerHTML;
     btn.classList.add('copied');
