@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Quad AI — Inbound Visibility Strategy</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #ffffff;
+    --rule: #0a0a0a;
+    --soft: #f4f4f0;
+    --muted: #6a6a6a;
+    --hi: #0a0a0a;
+    --accent: #0a0a0a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--soft); color: var(--ink); font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; font-feature-settings: 'ss01', 'cv11'; }
+  body { font-size: 15px; line-height: 1.55; }
+
+  /* ───────── Layout ───────── */
+  .app { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+  .nav { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 36px 28px; border-right: 1px solid var(--rule); background: var(--paper); }
+  .stage { padding: 28px 24px; }
+
+  /* ───────── Nav ───────── */
+  .brand { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+  .doc-title { font-size: 13px; line-height: 1.3; color: var(--muted); margin-bottom: 32px; }
+  .nav-section { margin-bottom: 24px; }
+  .nav-section-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
+  .nav-list { list-style: none; }
+  .nav-list li { margin-bottom: 4px; }
+  .nav-list a { display: flex; gap: 10px; padding: 6px 8px 6px 0; font-size: 12.5px; color: var(--ink); text-decoration: none; line-height: 1.35; border-left: 2px solid transparent; padding-left: 10px; transition: border-color 0.15s; }
+  .nav-list a:hover { border-left-color: var(--ink); }
+  .nav-list a.active { border-left-color: var(--ink); font-weight: 600; }
+  .nav-list .num { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 26px; }
+  .nav-list a.active .num { color: var(--ink); }
+  .nav-foot { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--rule); font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+  /* ───────── Slides ───────── */
+  .deck { max-width: 1180px; margin: 0 auto; }
+  .slide { background: var(--paper); border: 1px solid var(--rule); border-radius: 4px; aspect-ratio: 16 / 9; padding: 56px 64px; margin-bottom: 28px; scroll-margin-top: 28px; position: relative; overflow: hidden; }
+  .slide-meta { display: flex; justify-content: space-between; align-items: baseline; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 28px; }
+  .slide-meta .right { font-variant-numeric: tabular-nums; }
+  .slide h2 { font-size: 36px; line-height: 1.1; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 16px; }
+  .slide h2.large { font-size: 56px; line-height: 1.05; letter-spacing: -0.02em; }
+  .slide h2.xl { font-size: 72px; line-height: 1.0; }
+  .slide h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.005em; margin-bottom: 8px; }
+  .slide .lede { font-size: 16px; color: var(--muted); margin-bottom: 24px; max-width: 760px; line-height: 1.5; }
+
+  /* ───────── Components ───────── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; height: calc(100% - 100px); }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  .col { border-top: 2px solid var(--ink); padding-top: 14px; }
+  .col-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
+  .col h4 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 14px; }
+  .col p { font-size: 13.5px; line-height: 1.55; margin-bottom: 10px; }
+
+  table.data { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  table.data th { text-align: left; font-weight: 600; padding: 10px 12px; border-bottom: 1.5px solid var(--ink); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  table.data td { padding: 9px 12px; border-bottom: 1px solid #e2e2dc; vertical-align: top; }
+  table.data tr:hover td { background: #fafaf6; }
+  table.data .right { text-align: right; }
+  table.data .num { font-variant-numeric: tabular-nums; }
+  table.data .strong { font-weight: 600; }
+  table.data .quad { background: #fff8e6; }
+  table.data .quad td { background: #fff8e6; }
+
+  ul.tight { list-style: none; }
+  ul.tight li { padding: 5px 0; padding-left: 14px; position: relative; font-size: 13.5px; line-height: 1.5; }
+  ul.tight li::before { content: '—'; position: absolute; left: 0; color: var(--muted); }
+
+  ol.numbered { list-style: none; counter-reset: i; padding-left: 0; }
+  ol.numbered li { counter-increment: i; padding: 6px 0 6px 28px; position: relative; font-size: 13.5px; line-height: 1.5; }
+  ol.numbered li::before { content: counter(i, decimal-leading-zero); position: absolute; left: 0; top: 6px; font-size: 10px; font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 600; }
+
+  .pill { display: inline-block; padding: 3px 8px; border: 1px solid var(--ink); border-radius: 100px; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; margin-right: 6px; }
+  .pill.solid { background: var(--ink); color: var(--paper); }
+  .pill.muted { border-color: #ccc; color: var(--muted); }
+
+  .stat { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
+  .stat .v { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .stat .l { font-size: 12px; color: var(--muted); }
+
+  .footnote { position: absolute; bottom: 24px; left: 64px; right: 64px; font-size: 11px; color: var(--muted); line-height: 1.45; padding-top: 10px; border-top: 1px solid #e2e2dc; }
+  .footnote.warn { color: var(--ink); }
+  .footnote strong { font-weight: 600; }
+
+  /* ───────── Section dividers ───────── */
+  .slide.divider { background: var(--ink); color: var(--paper); display: flex; flex-direction: column; justify-content: center; }
+  .slide.divider .slide-meta { color: rgba(255,255,255,0.6); }
+  .slide.divider .num-big { font-size: 220px; line-height: 0.85; font-weight: 500; letter-spacing: -0.04em; }
+  .slide.divider h2 { font-size: 56px; line-height: 1.05; margin-top: -20px; max-width: 720px; }
+  .slide.divider .lede { color: rgba(255,255,255,0.7); margin-top: 16px; max-width: 640px; }
+
+  /* ───────── Title slide ───────── */
+  .slide.title { display: flex; flex-direction: column; justify-content: space-between; }
+  .title-top { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .title-mid h1 { font-size: 76px; line-height: 1.0; letter-spacing: -0.025em; font-weight: 600; max-width: 900px; }
+  .title-mid .sub { font-size: 22px; color: var(--muted); margin-top: 22px; max-width: 720px; line-height: 1.4; }
+  .title-bot { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; padding-top: 22px; border-top: 1px solid var(--rule); }
+  .title-bot .b-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+  .title-bot .b-val { font-size: 14px; font-weight: 500; }
+
+  /* Journey chart */
+  .journey { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; height: calc(100% - 120px); }
+  .stage-card { border: 1px solid var(--rule); border-right: none; padding: 14px 14px 16px; display: flex; flex-direction: column; }
+  .stage-card:last-child { border-right: 1px solid var(--rule); }
+  .stage-card .sn { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+  .stage-card .st { font-size: 14px; font-weight: 600; line-height: 1.25; margin-bottom: 10px; }
+  .stage-card .sq { font-size: 11.5px; line-height: 1.45; color: var(--muted); margin-bottom: 10px; flex: 1; }
+  .stage-card .sp { font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); font-weight: 600; padding-top: 8px; border-top: 1px solid #e2e2dc; }
+  .stage-card .sp small { display: block; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); margin-top: 2px; font-size: 10.5px; }
+  .stage-card.leak { background: #fff8e6; }
+  .stage-card.leak .sn { color: var(--ink); }
+
+  /* Emotion grid */
+  .emotion-grid { display: grid; grid-template-columns: 120px repeat(6, 1fr); gap: 1px; background: #e2e2dc; border: 1px solid var(--rule); margin-top: 12px; }
+  .emotion-grid > div { background: var(--paper); padding: 10px 12px; font-size: 11.5px; }
+  .emotion-grid .eh { font-weight: 600; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .emotion-grid .er { font-weight: 600; font-size: 11px; color: var(--ink); }
+  .emotion-grid .v0 { background: #fafaf6; }
+  .emotion-grid .v1 { background: #f4f4f0; }
+  .emotion-grid .v2 { background: #e8e8de; }
+  .emotion-grid .v3 { background: #c8c8b8; }
+  .emotion-grid .v4 { background: #8a8a78; color: var(--paper); }
+
+  /* Decision arch */
+  .arch { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border: 1px solid var(--rule); margin-top: 14px; }
+  .arch > div { padding: 16px 18px; border-right: 1px solid var(--rule); }
+  .arch > div:last-child { border-right: none; }
+  .arch .a-l { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 8px; }
+  .arch .a-v { font-size: 24px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.1; margin-bottom: 6px; }
+  .arch .a-d { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* Mobile */
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+    .nav { position: relative; height: auto; border-right: none; border-bottom: 1px solid var(--rule); }
+    .stage { padding: 16px 12px; }
+    .slide { padding: 28px 28px; aspect-ratio: auto; }
+    .slide h2 { font-size: 26px; }
+    .slide h2.large { font-size: 32px; }
+    .slide h2.xl { font-size: 40px; }
+    .title-mid h1 { font-size: 38px; }
+    .title-mid .sub { font-size: 16px; }
+    .title-bot { grid-template-columns: 1fr 1fr; }
+    .two-col { grid-template-columns: 1fr; height: auto; }
+    .three-col { grid-template-columns: 1fr; }
+    .journey { grid-template-columns: 1fr; }
+    .stage-card { border-right: 1px solid var(--rule); border-bottom: none; }
+    .stage-card:not(:last-child) { border-bottom: none; }
+    .emotion-grid { grid-template-columns: 1fr; }
+    .arch { grid-template-columns: 1fr; }
+    .arch > div { border-right: none; border-bottom: 1px solid var(--rule); }
+    .footnote { position: relative; left: 0; right: 0; margin-top: 16px; }
+    table.data { font-size: 11px; }
+    table.data th, table.data td { padding: 6px 6px; }
+    .slide.divider .num-big { font-size: 100px; }
+    .slide.divider h2 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ═════════════════════ NAV ═════════════════════ -->
+  <aside class="nav">
+    <div class="brand">RECURR · STUDIO</div>
+    <div class="doc-title">Quad AI — Inbound Visibility Strategy<br><span style="color:#aaa">Sections 1–3 of 7 · Apr 2026</span></div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Cover</div>
+      <ul class="nav-list">
+        <li><a href="#s00" data-slide="s00"><span class="num">00</span><span>Cover</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">01 · The Buyer</div>
+      <ul class="nav-list">
+        <li><a href="#s10" data-slide="s10"><span class="num">1.0</span><span>Section opener</span></a></li>
+        <li><a href="#s11" data-slide="s11"><span class="num">1.1</span><span>Two buyers, one purchase</span></a></li>
+        <li><a href="#s12" data-slide="s12"><span class="num">1.2</span><span>Demographics</span></a></li>
+        <li><a href="#s13" data-slide="s13"><span class="num">1.3</span><span>Jobs to be done</span></a></li>
+        <li><a href="#s14" data-slide="s14"><span class="num">1.4</span><span>Decision architecture</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">02 · The Search</div>
+      <ul class="nav-list">
+        <li><a href="#s20" data-slide="s20"><span class="num">2.0</span><span>Section opener</span></a></li>
+        <li><a href="#s21" data-slide="s21"><span class="num">2.1</span><span>Discovery journey</span></a></li>
+        <li><a href="#s22" data-slide="s22"><span class="num">2.2</span><span>Top searches by stage</span></a></li>
+        <li><a href="#s23" data-slide="s23"><span class="num">2.3</span><span>Where the buyer lives online</span></a></li>
+        <li><a href="#s24" data-slide="s24"><span class="num">2.4</span><span>Top questions buyers ask</span></a></li>
+        <li><a href="#s25" data-slide="s25"><span class="num">2.5</span><span>Emotion map</span></a></li>
+        <li><a href="#s26" data-slide="s26"><span class="num">2.6</span><span>Both buyers, end-to-end</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">03 · The Winners</div>
+      <ul class="nav-list">
+        <li><a href="#s30" data-slide="s30"><span class="num">3.0</span><span>Section opener</span></a></li>
+        <li><a href="#s31" data-slide="s31"><span class="num">3.1</span><span>The competitive set</span></a></li>
+        <li><a href="#s32" data-slide="s32"><span class="num">3.2</span><span>Visibility audit</span></a></li>
+        <li><a href="#s33" data-slide="s33"><span class="num">3.3</span><span>Scaler SST teardown</span></a></li>
+        <li><a href="#s34" data-slide="s34"><span class="num">3.4</span><span>Newton SoT teardown</span></a></li>
+        <li><a href="#s35" data-slide="s35"><span class="num">3.5</span><span>Masters Union teardown</span></a></li>
+        <li><a href="#s36" data-slide="s36"><span class="num">3.6</span><span>PW IoI teardown</span></a></li>
+        <li><a href="#s37" data-slide="s37"><span class="num">3.7</span><span>NxtWave NIAT teardown</span></a></li>
+        <li><a href="#s38" data-slide="s38"><span class="num">3.8</span><span>What every winner does</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Next</div>
+      <ul class="nav-list">
+        <li><a href="#s40" data-slide="s40"><span class="num">→</span><span>What's coming in §4</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-foot">
+      Scroll to advance, or click any slide title.<br>Best read on desktop · 16:9 layout.
+    </div>
+  </aside>
+
+  <!-- ═════════════════════ DECK ═════════════════════ -->
+  <main class="stage">
+    <div class="deck">
+
+    <!-- ░░░ 0.0 COVER ░░░ -->
+    <section class="slide title" id="s00">
+      <div class="slide-meta"><span>Recurr · Studio</span><span class="right">00 / 18</span></div>
+      <div class="title-top">Inbound Visibility Strategy · Quad AI</div>
+      <div class="title-mid">
+        <h1>When someone searches for you, do you show up?</h1>
+        <div class="sub">A research-led look at who Quad's buyer is, what they search for, and how the category's winners are quietly winning the surface area of the internet that this buyer travels through.</div>
+      </div>
+      <div class="title-bot">
+        <div><div class="b-label">Scope</div><div class="b-val">Sections 1–3</div></div>
+        <div><div class="b-label">Sections 4–7</div><div class="b-val">Coming separately</div></div>
+        <div><div class="b-label">Prepared for</div><div class="b-val">Sourav · Co-founder, Quad AI</div></div>
+        <div><div class="b-label">Date</div><div class="b-val">April 2026</div></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- ░░░░░░░░░░░░░░░░ §1 · THE BUYER ░░░░░░░░░░░░░░░░░░░ -->
+    <!-- ════════════════════════════════════════════════════ -->
+
+    <!-- ░░░ 1.0 ░░░ -->
+    <section class="slide divider" id="s10">
+      <div class="slide-meta"><span style="color:rgba(255,255,255,0.6)">Section One</span><span class="right">01 / 18</span></div>
+      <div class="num-big">01</div>
+      <h2>Who is your buyer.</h2>
+      <div class="lede">A Rs.8L–24L decision is not made by one person. The student starts the search. The parent ends it. Both get fed different content from different platforms — and both must be convinced for the cheque to clear.</div>
+    </section>
+
+    <!-- ░░░ 1.1 Two buyers ░░░ -->
+    <section class="slide" id="s11">
+      <div class="slide-meta"><span>1.1 · The Buyer</span><span class="right">02 / 18</span></div>
+      <h2>Two buyers, one purchase.</h2>
+      <div class="lede">In the Indian new-age tech-ed category, the parent and the child are co-buyers with different motivations, different platforms, and different fears. Marketing that ignores either one leaks.</div>
+
+      <div class="two-col" style="margin-top: 8px;">
+        <div class="col">
+          <div class="col-label">Buyer A · The Student</div>
+          <h4>Champion. Initiator. Drives discovery.</h4>
+          <p><strong>Role:</strong> Finds the brand first. Watches the YouTube reviews. Lurks the Reddit threads. Brings options to the family.</p>
+          <p><strong>Cares about:</strong> career outcomes, peer comparison, "is this cool", campus life, will I be embarrassed when I tell my JEE friends where I'm going.</p>
+          <p><strong>Fears:</strong> shame, FOMO, wasting four years, parents' disappointment, joining a place no one has heard of.</p>
+          <p><strong>Decision power:</strong> initiates 90% of searches. Vetoes ~30% of options on vibes alone.</p>
+        </div>
+        <div class="col">
+          <div class="col-label">Buyer B · The Parent</div>
+          <h4>Approver. Financier. Holds the veto.</h4>
+          <p><strong>Role:</strong> Doesn't search first. Gets pulled in once the child shortlists. Validates with neighbours, counsellors, family WhatsApp groups.</p>
+          <p><strong>Cares about:</strong> legitimacy ("is the degree real?"), ROI, safety, recoverability if the child doesn't get a job, what relatives will say.</p>
+          <p><strong>Fears:</strong> being conned, paying for a non-degree, social judgement, child's future being foreclosed.</p>
+          <p><strong>Decision power:</strong> writes the cheque. Vetoes ~70% of options on legitimacy or ROI grounds.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░░ 1.2 Demographics ░░░ -->
+    <section class="slide" id="s12">
+      <div class="slide-meta"><span>1.2 · The Buyer</span><span class="right">03 / 18</span></div>
+      <h2>Demographics, in broad strokes.</h2>
+      <div class="lede">A reverse-engineered picture of who Quad's buyer most likely is, built from category-wide signals (Scaler's published intake mix, AISHE / NSDC, India Skills Report) plus what the Quad geography suggests. Treat as starting hypotheses, not ground truth.</div>
+
+      <div class="two-col" style="margin-top: 8px;">
+        <div class="col">
+          <div class="col-label">Student profile</div>
+          <table class="data" style="margin-top: 4px;">
+            <tr><td>Age</td><td class="strong">17–19</td></tr>
+            <tr><td>Class 12 board %</td><td class="strong">60–88% range; sweet spot 70–82%</td></tr>
+            <tr><td>JEE / CUET status</td><td class="strong">Attempted, did not crack top 100k</td></tr>
+            <tr><td>City tier</td><td class="strong">Tier 2 / 3 dominant (~65–75%)</td></tr>
+            <tr><td>Gender split</td><td class="strong">~75 / 25 male-female (category-wide)</td></tr>
+            <tr><td>English fluency</td><td class="strong">Functional; not native-thinking</td></tr>
+            <tr><td>Prior coding exposure</td><td class="strong">Low to none for the majority</td></tr>
+            <tr><td>Primary medium</td><td class="strong">YouTube > Instagram > Reddit > Quora</td></tr>
+          </table>
+        </div>
+        <div class="col">
+          <div class="col-label">Parent profile</div>
+          <table class="data" style="margin-top: 4px;">
+            <tr><td>Age</td><td class="strong">42–55</td></tr>
+            <tr><td>Household income</td><td class="strong">Rs.6–25L p.a. dominant; some 25L+</td></tr>
+            <tr><td>Employment type</td><td class="strong">Mix of govt service, small-business owner, salaried mid-career</td></tr>
+            <tr><td>Own education</td><td class="strong">Often graduate, rarely from "name" colleges</td></tr>
+            <tr><td>City tier</td><td class="strong">Same as child; lives at home</td></tr>
+            <tr><td>Language preference</td><td class="strong">Hindi / regional first; English second</td></tr>
+            <tr><td>Risk tolerance</td><td class="strong">Low. Rs.8L is a meaningful family sum.</td></tr>
+            <tr><td>Primary medium</td><td class="strong">WhatsApp > YouTube > FB > newspapers</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="footnote warn"><strong>Reality check.</strong> Almost all of this is reverse-engineered from category-level proxies — Scaler's first-batch disclosure that 70% came from Tier 2/3, AICTE / India Skills Report numbers on board % distributions, and what Quad's three-campus geography (Patna · Mangalore · Bengaluru) implies. We would love to see Quad's actual intake data to replace these estimates with ground truth.</div>
+    </section>
+
+    <!-- ░░░ 1.3 JTBD ░░░ -->
+    <section class="slide" id="s13">
+      <div class="slide-meta"><span>1.3 · The Buyer</span><span class="right">04 / 18</span></div>
+      <h2>What the two buyers are really hiring this purchase to do.</h2>
+      <div class="lede">Beyond "get my child a job" or "get me a career" — the actual emotional jobs the parent and student are paying Rs.8L to solve. This frames every piece of content the brand has to make.</div>
+
+      <div class="two-col" style="margin-top: 6px;">
+        <div class="col">
+          <div class="col-label">Student JTBD</div>
+          <h4 style="font-size: 18px; line-height: 1.35; margin-bottom: 14px;">"When my friends are getting into named colleges and I'm not, hire me to give me a place I'm not embarrassed to put on Instagram."</h4>
+          <ul class="tight">
+            <li>Avoid the social cost of "no college / waste year"</li>
+            <li>Get a real-sounding career story to tell at family weddings</li>
+            <li>Land an internship before friends do — that's the receipt</li>
+            <li>Be among smart peers, not the only ambitious one in the room</li>
+            <li>Feel like the underdog story, not the failure story</li>
+          </ul>
+        </div>
+        <div class="col">
+          <div class="col-label">Parent JTBD</div>
+          <h4 style="font-size: 18px; line-height: 1.35; margin-bottom: 14px;">"When my child can't crack IIT, hire me to find the option that won't cost the family Rs.10L+ in regret and won't make us look foolish to relatives."</h4>
+          <ul class="tight">
+            <li>Pay for legitimacy — a degree, a recognised university name, a UGC stamp</li>
+            <li>Buy ROI insurance — measurable placement record, not promises</li>
+            <li>Protect against scam risk — this is the single largest fear</li>
+            <li>Have a defensible story to tell relatives and neighbours</li>
+            <li>Recover if it doesn't work — where does the child go from here</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footnote"><strong>So what.</strong> Content built for the student must remove shame and add desire. Content built for the parent must remove fear and add proof. The same homepage cannot do both jobs equally well — and most of Quad's competitors don't even try.</div>
+    </section>
+
+    <!-- ░░░ 1.4 Decision architecture ░░░ -->
+    <section class="slide" id="s14">
+      <div class="slide-meta"><span>1.4 · The Buyer</span><span class="right">05 / 18</span></div>
+      <h2>How the decision actually gets made.</h2>
+      <div class="lede">The path from first search to applied-and-paid is rarely linear. Mapping the actual mechanics of the co-purchase reveals where leakage happens and which moments matter most.</div>
+
+      <div class="arch">
+        <div>
+          <div class="a-l">Initiator</div>
+          <div class="a-v">~90% Student</div>
+          <div class="a-d">Student starts the search. Parent rarely opens the laptop and types "tech college" cold.</div>
+        </div>
+        <div>
+          <div class="a-l">Vetoer</div>
+          <div class="a-v">~70% Parent</div>
+          <div class="a-d">Once parent sees the option, parent has the kill switch. Tier 2/3 parent veto rate runs higher than Tier 1.</div>
+        </div>
+        <div>
+          <div class="a-l">Financier</div>
+          <div class="a-v">~95% Parent</div>
+          <div class="a-d">Parent pays — directly or by signing the education loan. The cheque conversation always happens.</div>
+        </div>
+      </div>
+
+      <div class="three-col" style="margin-top: 22px;">
+        <div class="col">
+          <div class="col-label">Time to Decision</div>
+          <h4 style="font-size: 28px; margin-bottom: 4px;">1–3 mo</h4>
+          <p>From first search to enrolment cheque. Compresses to 2–3 weeks once a deadline is on the table.</p>
+        </div>
+        <div class="col">
+          <div class="col-label">Options shortlisted</div>
+          <h4 style="font-size: 28px; margin-bottom: 4px;">3–7</h4>
+          <p>Mix of new-gen (Scaler, Newton, NxtWave, Quad) and traditional (local Tier-2 college fallback).</p>
+        </div>
+        <div class="col">
+          <div class="col-label">Touchpoints before yes</div>
+          <h4 style="font-size: 28px; margin-bottom: 4px;">12–25</h4>
+          <p>Across Google, YouTube, Reddit, Quora, ChatGPT, counsellor calls, family WhatsApp, neighbours.</p>
+        </div>
+      </div>
+
+      <div class="footnote"><strong>Why this matters for inbound.</strong> 12–25 touchpoints means visibility is not won at one moment — it is won across the whole surface. If Quad shows up at touchpoint 2 (YouTube) but is invisible at 7 (Reddit), 11 (ChatGPT), and 18 (Quora), the parent will quietly steer the child elsewhere.</div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- ░░░░░░░░░░░░░░░ §2 · THE SEARCH ░░░░░░░░░░░░░░░░░░░ -->
+    <!-- ════════════════════════════════════════════════════ -->
+
+    <!-- ░░░ 2.0 ░░░ -->
+    <section class="slide divider" id="s20">
+      <div class="slide-meta"><span style="color:rgba(255,255,255,0.6)">Section Two</span><span class="right">06 / 18</span></div>
+      <div class="num-big">02</div>
+      <h2>What is your buyer searching for.</h2>
+      <div class="lede">The journey, the queries, the questions, the platforms. Six slides on what actually happens between "I didn't get IIT" and "Sign the cheque."</div>
+    </section>
+
+    <!-- ░░░ 2.1 Journey ░░░ -->
+    <section class="slide" id="s21">
+      <div class="slide-meta"><span>2.1 · The Search</span><span class="right">07 / 18</span></div>
+      <h2>The discovery journey, in six stages.</h2>
+      <div class="lede">From "I have a problem" to "I've signed up." Each stage has a dominant question, a dominant platform, and a dominant emotion. Stage 3 (vetting) is where the most buyers leak — and where Quad is most invisible today.</div>
+
+      <div class="journey">
+        <div class="stage-card">
+          <div class="sn">Stage 1</div>
+          <div class="st">Problem awareness</div>
+          <div class="sq">"What now if not IIT? What's my next move?"</div>
+          <div class="sp">Google · YouTube<small>broad alternative searches</small></div>
+        </div>
+        <div class="stage-card">
+          <div class="sn">Stage 2</div>
+          <div class="st">Category discovery</div>
+          <div class="sq">"Wait — there are 'tech schools' now? Like Scaler, Newton?"</div>
+          <div class="sp">YouTube · Ads<small>creator reviews, retargeting</small></div>
+        </div>
+        <div class="stage-card leak">
+          <div class="sn">Stage 3 · LEAK</div>
+          <div class="st">Vetting</div>
+          <div class="sq">"Is this even real? Is the degree legit? Is this a scam?"</div>
+          <div class="sp">Reddit · Quora<small>parent enters here</small></div>
+        </div>
+        <div class="stage-card">
+          <div class="sn">Stage 4</div>
+          <div class="st">Comparison</div>
+          <div class="sq">"Scaler vs Newton vs NxtWave — which one?"</div>
+          <div class="sp">Google · YouTube<small>X-vs-Y queries</small></div>
+        </div>
+        <div class="stage-card">
+          <div class="sn">Stage 5</div>
+          <div class="st">Reviews / proof</div>
+          <div class="sq">"What do current students actually say?"</div>
+          <div class="sp">Shiksha · CollegeDunia<small>+ alumni LinkedIn</small></div>
+        </div>
+        <div class="stage-card">
+          <div class="sn">Stage 6</div>
+          <div class="st">Conversion</div>
+          <div class="sq">"How do I apply, what's the entrance, what's the fee?"</div>
+          <div class="sp">Brand site · Counsellor<small>final 2–3 week window</small></div>
+        </div>
+      </div>
+
+      <div class="footnote"><strong>The leak point.</strong> Reddit's #1 result for "is scaler school of technology a real college" is a 180-comment thread titled <em>"Newton School Of Engineering and Scalar Institute of Technology are NOT ACTUAL Colleges or Universities!!!"</em> Parents read this. It is the single most leveraged content gap in the category.</div>
+    </section>
+
+    <!-- ░░░ 2.2 Top searches ░░░ -->
+    <section class="slide" id="s22">
+      <div class="slide-meta"><span>2.2 · The Search</span><span class="right">08 / 18</span></div>
+      <h2>Top searches at each stage.</h2>
+      <div class="lede">A representative cross-section of what the buyer actually types into Google, ranked by funnel stage. Top of funnel is high-volume / low-intent. Bottom is the inverse.</div>
+
+      <table class="data" style="margin-top: 6px;">
+        <tr>
+          <th>Stage</th>
+          <th>Representative queries</th>
+          <th class="right">Intent</th>
+          <th class="right">Volume tier</th>
+        </tr>
+        <tr>
+          <td><strong>1 · Awareness</strong></td>
+          <td>"alternative to btech" · "what to do after 12th if not iit" · "best career after 12th science" · "btech alternative india"</td>
+          <td class="right">Low</td>
+          <td class="right">High (10K+ /mo cluster)</td>
+        </tr>
+        <tr>
+          <td><strong>2 · Category</strong></td>
+          <td>"tech school india" · "new age engineering college" · "btech in ai" (3.6K/mo) · "ai college india"</td>
+          <td class="right">Medium</td>
+          <td class="right">Medium (2–8K /mo)</td>
+        </tr>
+        <tr>
+          <td><strong>3 · Vetting</strong></td>
+          <td>"is scaler legit" · "is newton school real" · "scaler degree validity" · "is X ugc approved" · "scaler scam"</td>
+          <td class="right">High (parent)</td>
+          <td class="right">Medium · rising fast</td>
+        </tr>
+        <tr>
+          <td><strong>4 · Comparison</strong></td>
+          <td>"scaler vs newton" · "scaler vs btech" · "newton vs nxtwave vs polaris" · "scaler vs vit"</td>
+          <td class="right">Very high</td>
+          <td class="right">Medium (1–5K /mo cluster)</td>
+        </tr>
+        <tr>
+          <td><strong>5 · Reviews / Proof</strong></td>
+          <td>"[brand] review" · "[brand] placement" · "[brand] honest review reddit" · "[brand] alumni"</td>
+          <td class="right">Very high</td>
+          <td class="right">Brand-bound</td>
+        </tr>
+        <tr>
+          <td><strong>6 · Conversion</strong></td>
+          <td>"[brand] admission" · "[brand] entrance exam" · "[brand] fees" · "[brand] application date"</td>
+          <td class="right">Decision</td>
+          <td class="right">Brand-bound · highest CPC</td>
+        </tr>
+      </table>
+
+      <div class="footnote"><strong>Where Quad sits today.</strong> Quad currently ranks for one keyword in India with measurable search volume. It is invisible at every stage above. The earlier Quad enters each stage's content market, the cheaper that real estate is — by the time anyone notices, collegesimplified.in and Newton already own it.</div>
+    </section>
+
+    <!-- ░░░ 2.3 Top places ░░░ -->
+    <section class="slide" id="s23">
+      <div class="slide-meta"><span>2.3 · The Search</span><span class="right">09 / 18</span></div>
+      <h2>Where the buyer actually lives online.</h2>
+      <div class="lede">The eight surfaces where this buyer's discovery time is spent — ranked by how much time, how high the trust, and how hard each is to win for a new entrant.</div>
+
+      <table class="data" style="margin-top: 6px;">
+        <tr>
+          <th style="width: 20%;">Surface</th>
+          <th>What the buyer does there</th>
+          <th>Currently owned by</th>
+          <th class="right">Quad effort to win</th>
+        </tr>
+        <tr>
+          <td><strong>YouTube</strong></td>
+          <td>Watches 20–40 min of "Scaler vs X" and "should I join X" videos. The single most influential surface.</td>
+          <td>Career-counsellor creators (Vedantu JEE, HellO Akhuli, The Hustling Engineer, Shrimay Somani)</td>
+          <td class="right">Medium · partner with mid-tier creators</td>
+        </tr>
+        <tr>
+          <td><strong>Google Search</strong></td>
+          <td>The connective tissue between every other surface. Mostly informational and comparison queries.</td>
+          <td>Scaler, Newton, collegesimplified.in (affiliate-content farm)</td>
+          <td class="right">High · 12–24 month build</td>
+        </tr>
+        <tr>
+          <td><strong>Reddit</strong></td>
+          <td>Where parents go to verify legitimacy. r/JEENEETards, r/Indian_Academia, r/developersIndia, r/Btechtards.</td>
+          <td>Skeptics — "is X a real college" threads dominate. Brands barely show up.</td>
+          <td class="right">Low cost · high impact (founder-led seeding)</td>
+        </tr>
+        <tr>
+          <td><strong>Quora</strong></td>
+          <td>"Is X worth it" / "Is X fraud" single-answer pages. Heavily LLM-cited.</td>
+          <td>Individual contributors. Brand pages exist but are thin.</td>
+          <td class="right">Low cost · founder + alumni answers</td>
+        </tr>
+        <tr>
+          <td><strong>ChatGPT / Gemini / Perplexity</strong></td>
+          <td>Increasingly the first stop. "Should my child join Scaler?" / "What's the best alternative to BTech?"</td>
+          <td>Whatever Reddit + Quora + collegesimplified say is what the LLM says.</td>
+          <td class="right">Medium · downstream of Reddit/Quora work</td>
+        </tr>
+        <tr>
+          <td><strong>Aggregators</strong></td>
+          <td>Shiksha, Collegedunia, CollegeBatch, collegesimplified.in. Reviews, fee tables, comparison pages.</td>
+          <td>Newton & Scaler are heavily reviewed. Quad has no profile yet.</td>
+          <td class="right">Low · onboard + manage profiles</td>
+        </tr>
+        <tr>
+          <td><strong>WhatsApp / family</strong></td>
+          <td>The uncatchable layer. Forwards, neighbour conversations, family group recommendations.</td>
+          <td>Whoever the parent's network already trusts.</td>
+          <td class="right">Indirect · trust spillover from other surfaces</td>
+        </tr>
+        <tr>
+          <td><strong>School counsellors / coaching</strong></td>
+          <td>Allen, Aakash, Vedantu — coaches recommend after-JEE options.</td>
+          <td>Scaler is a counsellor-recommended option in major coaching. Newton is catching up.</td>
+          <td class="right">Medium · partner play, not content</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- ░░░ 2.4 Top questions ░░░ -->
+    <section class="slide" id="s24">
+      <div class="slide-meta"><span>2.4 · The Search</span><span class="right">10 / 18</span></div>
+      <h2>The 18 questions every buyer asks.</h2>
+      <div class="lede">Pulled from Google's People Also Ask, the top Reddit thread titles, and the most-trafficked Quora pages in this category. These are AEO targets — every one is a place a brand can plant a flag, and most are still un-flagged.</div>
+
+      <div class="two-col" style="height: auto; margin-top: 6px;">
+        <div class="col" style="padding-top: 10px;">
+          <div class="col-label">Legitimacy questions · parent-led</div>
+          <ol class="numbered">
+            <li>Is [brand] a real college or just a coaching institute?</li>
+            <li>Is the degree UGC-approved? Who actually grants it?</li>
+            <li>Will this degree work for govt jobs / UPSC / MS abroad?</li>
+            <li>Is [brand] a scam? Is the marketing genuine?</li>
+            <li>What happens if the company shuts down mid-program?</li>
+          </ol>
+
+          <div class="col-label" style="margin-top: 18px;">ROI questions · parent-led</div>
+          <ol class="numbered">
+            <li>What is the actual placement %, not the marketing one?</li>
+            <li>What is the average package, and what's the median?</li>
+            <li>Is Rs.20L worth it vs a Rs.4L Tier-2 BTech?</li>
+            <li>What's the placement gap between top 10% and bottom 10%?</li>
+          </ol>
+        </div>
+        <div class="col" style="padding-top: 10px;">
+          <div class="col-label">Comparison questions · student-led</div>
+          <ol class="numbered">
+            <li>Scaler vs Newton — which is better in 2026?</li>
+            <li>Scaler / Newton vs IIT — should I drop a year and try IIT?</li>
+            <li>Is Scaler / Newton better than a Tier-2 BTech?</li>
+            <li>NxtWave vs Newton — which is more affordable?</li>
+            <li>Which one is the best for AI / ML specifically?</li>
+          </ol>
+
+          <div class="col-label" style="margin-top: 18px;">How-to questions · student-led</div>
+          <ol class="numbered">
+            <li>How do I crack the entrance exam? (NSET / NSAT / NAT)</li>
+            <li>What does the interview look like, what do they ask?</li>
+            <li>How do I get the maximum scholarship?</li>
+            <li>Can I get into [brand] without coding background?</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="footnote"><strong>The opening.</strong> Of these 18 questions, Scaler and Newton actively own answers to maybe 8 each. collegesimplified.in owns about 12. Reddit owns the rest by accident. None of the brands have built a clean, structured Q&amp;A library — meaning every one of these is a slot Quad can take if it shows up first.</div>
+    </section>
+
+    <!-- ░░░ 2.5 Emotion map ░░░ -->
+    <section class="slide" id="s25">
+      <div class="slide-meta"><span>2.5 · The Search</span><span class="right">11 / 18</span></div>
+      <h2>Emotion across the journey.</h2>
+      <div class="lede">Each buyer arrives at each stage with a dominant emotion. The intensity matters: high-emotion stages need the most careful content, because that's where the buyer either commits or walks. Read darker = stronger emotion.</div>
+
+      <div class="emotion-grid">
+        <div class="eh"></div>
+        <div class="eh">1 · Awareness</div>
+        <div class="eh">2 · Category</div>
+        <div class="eh">3 · Vetting</div>
+        <div class="eh">4 · Comparison</div>
+        <div class="eh">5 · Proof</div>
+        <div class="eh">6 · Convert</div>
+
+        <div class="er">Student</div>
+        <div class="v3">Anxiety</div>
+        <div class="v2">Curiosity</div>
+        <div class="v3">Comparison FOMO</div>
+        <div class="v4">Identity-anxiety</div>
+        <div class="v2">Cautious hope</div>
+        <div class="v1">Commitment</div>
+
+        <div class="er">Parent</div>
+        <div class="v1">Quiet concern</div>
+        <div class="v2">Confusion</div>
+        <div class="v4">Skepticism / fear</div>
+        <div class="v3">ROI calculation</div>
+        <div class="v3">Veto reflex</div>
+        <div class="v2">Reluctant approval</div>
+      </div>
+
+      <div class="three-col" style="margin-top: 26px;">
+        <div class="col">
+          <div class="col-label">Strongest student emotion</div>
+          <h4 style="font-size: 22px;">Identity-anxiety at comparison</h4>
+          <p>"Will I have a college name I'm not embarrassed by?" Peaks when the student has 3 options open and is comparing how each sounds out loud.</p>
+        </div>
+        <div class="col">
+          <div class="col-label">Strongest parent emotion</div>
+          <h4 style="font-size: 22px;">Skepticism at vetting</h4>
+          <p>"Is this even a real institution?" Peaks the moment the parent first hears the brand name and starts Googling. Reddit lives here.</p>
+        </div>
+        <div class="col">
+          <div class="col-label">The defusing content</div>
+          <h4 style="font-size: 22px;">Different at each stage</h4>
+          <p>Skepticism is defused by structured proof, not animated heroes. FOMO is defused by peer-language, not brochure copy. Most brands use the wrong defuser at the wrong stage.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░░ 2.6 Both buyers end-to-end ░░░ -->
+    <section class="slide" id="s26">
+      <div class="slide-meta"><span>2.6 · The Search</span><span class="right">12 / 18</span></div>
+      <h2>The full journey, both buyers, end-to-end.</h2>
+      <div class="lede">The student track and the parent track run in parallel. They diverge during research, then converge at decision moments. Most marketing is built for one or the other — almost none is built for the handshake between them.</div>
+
+      <table class="data" style="margin-top: 6px;">
+        <tr>
+          <th style="width: 13%;">Stage</th>
+          <th>Student is doing</th>
+          <th>Parent is doing</th>
+          <th>Handshake moment</th>
+        </tr>
+        <tr>
+          <td><strong>1 · Awareness</strong></td>
+          <td>Watching post-12th career YouTube. Lurking r/JEENEETards.</td>
+          <td>Asking neighbours and family WhatsApp. Mostly passive.</td>
+          <td>Child shows parent one viral YouTube reel.</td>
+        </tr>
+        <tr>
+          <td><strong>2 · Category</strong></td>
+          <td>Discovers Scaler / Newton via creator review or ad.</td>
+          <td>Hears the brand name from child for the first time. Asks "what is this".</td>
+          <td>Child says "look at this college mom/dad".</td>
+        </tr>
+        <tr>
+          <td><strong>3 · Vetting</strong></td>
+          <td>Skims Reddit, decides "looks cool".</td>
+          <td>Reads Reddit thoroughly, types "is X a scam" into Google.</td>
+          <td>Parent says "this looks like a scam, na?". Child has to defend.</td>
+        </tr>
+        <tr>
+          <td><strong>4 · Comparison</strong></td>
+          <td>Watches "Scaler vs Newton vs X" videos. Independent.</td>
+          <td>Looks at fees side-by-side. Asks "why is this Rs.20L?"</td>
+          <td>Family meeting with all options laid out.</td>
+        </tr>
+        <tr>
+          <td><strong>5 · Proof</strong></td>
+          <td>DMs alumni on LinkedIn. Hunts for honest stories.</td>
+          <td>Asks counsellor / known parents whose kids went there.</td>
+          <td>Parent says "show me one alumnus working at a real company".</td>
+        </tr>
+        <tr>
+          <td><strong>6 · Convert</strong></td>
+          <td>Sits the entrance, prepares interview answers.</td>
+          <td>Applies for education loan, talks to bank.</td>
+          <td>Cheque conversation. Both must be aligned.</td>
+        </tr>
+      </table>
+
+      <div class="footnote"><strong>The most leveraged moment.</strong> The handshake at Stage 3 — when the parent says "is this a scam?" — is where most buyers lose Quad. Whatever the child can show the parent in that moment (a press article, a structured legitimacy page, a UGC partner explainer, an honest Reddit answer) determines whether the funnel continues.</div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- ░░░░░░░░░░░░░░ §3 · THE WINNERS ░░░░░░░░░░░░░░░░░░░ -->
+    <!-- ════════════════════════════════════════════════════ -->
+
+    <!-- ░░░ 3.0 ░░░ -->
+    <section class="slide divider" id="s30">
+      <div class="slide-meta"><span style="color:rgba(255,255,255,0.6)">Section Three</span><span class="right">13 / 18</span></div>
+      <div class="num-big">03</div>
+      <h2>How the category's winners are winning.</h2>
+      <div class="lede">Ten competitors. One overall visibility audit. Five teardowns of the most strategically interesting plays. One pattern slide on what they all share — and what Quad has zero of today.</div>
+    </section>
+
+    <!-- ░░░ 3.1 Competitive set ░░░ -->
+    <section class="slide" id="s31">
+      <div class="slide-meta"><span>3.1 · The Winners</span><span class="right">14 / 18</span></div>
+      <h2>The competitive set, by tier.</h2>
+      <div class="lede">Ten competitors, picked from the 17 in the brief. Cut: Polaris, Merai, Zenith, Nexus, Altera, Bower (smaller scale or duplicate strategies). Quad sits at Tier 3, with Tier 2 ambition.</div>
+
+      <table class="data" style="margin-top: 6px;">
+        <tr>
+          <th style="width: 18%;">Tier</th>
+          <th style="width: 30%;">Players</th>
+          <th>What defines the tier</th>
+        </tr>
+        <tr>
+          <td><strong>Tier 1 · Incumbents</strong></td>
+          <td>Scaler SST · Newton SoT · Masters Union</td>
+          <td>Established brand, premium pricing (Rs.20L+), proven cohorts, dominate organic + paid + creator ecosystem. Hard to displace.</td>
+        </tr>
+        <tr>
+          <td><strong>Tier 2 · Challengers</strong></td>
+          <td>PW IoI · NxtWave NIAT · Mesa School of Business · Scaler School of Management</td>
+          <td>Well-funded, scaling. Each has a sharp wedge — distribution muscle (PW), Tier 2/3 affordability (NIAT), startup-leadership niche (Mesa), or platform pull (Scaler SoM).</td>
+        </tr>
+        <tr>
+          <td class="quad"><strong>Tier 3 · Peers</strong></td>
+          <td class="quad">100xDevs · upGrad SoT · Intellipaat IST · <strong>Quad AI</strong></td>
+          <td class="quad">Smaller / newer / niche. Either fewer campuses, smaller batch, or less brand. Quad sits here today.</td>
+        </tr>
+      </table>
+
+      <div class="footnote"><strong>What Quad's tier actually means.</strong> Quad is not "long tail" relative to Scaler — it's same-buyer, different price tier. The Rs.8L price band, the Bihar geography, and the AI specialisation are real wedges. The visibility gap is the gap to close, not the proposition.</div>
+    </section>
+
+    <!-- ░░░ 3.2 Visibility audit ░░░ -->
+    <section class="slide" id="s32">
+      <div class="slide-meta"><span>3.2 · The Winners</span><span class="right">15 / 18</span></div>
+      <h2>Visibility audit · 10 competitors + Quad.</h2>
+      <div class="lede">Single snapshot of who shows up when someone searches in this category. Ranked by India-specific organic traffic. The gap between Tier 1 and Quad is not 3×. It is roughly 600,000×.</div>
+
+      <table class="data" style="margin-top: 4px;">
+        <tr>
+          <th>Domain</th>
+          <th class="right">Ranked KW (India)</th>
+          <th class="right">Est. monthly traffic</th>
+          <th class="right">Programmatic moat</th>
+          <th class="right">Free tools</th>
+          <th class="right">Reddit / Quora</th>
+        </tr>
+        <tr>
+          <td><strong>Scaler · scaler.com</strong></td>
+          <td class="right">29,588</td>
+          <td class="right">~646,500</td>
+          <td class="right">Yes · /topics/ library</td>
+          <td class="right">Yes · AI mock interview</td>
+          <td class="right">Heavy</td>
+        </tr>
+        <tr>
+          <td><strong>Newton · newtonschool.co</strong></td>
+          <td class="right">3,580</td>
+          <td class="right">~610,800</td>
+          <td class="right">Yes · online compilers</td>
+          <td class="right">Yes · 15+ language IDEs</td>
+          <td class="right">Medium</td>
+        </tr>
+        <tr>
+          <td><strong>PW IoI · pwioi.com</strong></td>
+          <td class="right">377</td>
+          <td class="right">~78,400</td>
+          <td class="right">No · channel-led</td>
+          <td class="right">No (lives on PW main)</td>
+          <td class="right">Low</td>
+        </tr>
+        <tr>
+          <td><strong>NxtWave NIAT · niatindia.com</strong></td>
+          <td class="right">838</td>
+          <td class="right">~36,300</td>
+          <td class="right">Partial · regional content</td>
+          <td class="right">No (lives on ccbp.in)</td>
+          <td class="right">Low</td>
+        </tr>
+        <tr>
+          <td><strong>Masters Union · mastersunion.org</strong></td>
+          <td class="right">1,032</td>
+          <td class="right">~33,200</td>
+          <td class="right">No · PR-led</td>
+          <td class="right">No</td>
+          <td class="right">Low / brand-skewed</td>
+        </tr>
+        <tr>
+          <td><strong>Mesa SoB · mesaschool.co</strong></td>
+          <td class="right">439</td>
+          <td class="right">~7,970</td>
+          <td class="right">No</td>
+          <td class="right">No</td>
+          <td class="right">Low</td>
+        </tr>
+        <tr>
+          <td><strong>100xDevs · 100xdevs.com</strong></td>
+          <td class="right">88</td>
+          <td class="right">~4,070</td>
+          <td class="right">No · creator-led</td>
+          <td class="right">No</td>
+          <td class="right">Medium (Harkirat-led)</td>
+        </tr>
+        <tr>
+          <td><strong>Scaler SoM · scaler.com/.../som</strong></td>
+          <td class="right">— (rolls up to scaler.com)</td>
+          <td class="right">— (parent halo)</td>
+          <td class="right">Inherits parent</td>
+          <td class="right">Inherits parent</td>
+          <td class="right">Medium</td>
+        </tr>
+        <tr>
+          <td><strong>upGrad SoT · sot.upgrad.com</strong></td>
+          <td class="right">2</td>
+          <td class="right">~40</td>
+          <td class="right">No (inherits upgrad.com)</td>
+          <td class="right">No</td>
+          <td class="right">None</td>
+        </tr>
+        <tr>
+          <td><strong>Intellipaat IST · intellipaat.com/ist</strong></td>
+          <td class="right">~0</td>
+          <td class="right">~0</td>
+          <td class="right">No (inherits parent)</td>
+          <td class="right">No</td>
+          <td class="right">None</td>
+        </tr>
+        <tr class="quad">
+          <td><strong>Quad AI · quadcse.com</strong></td>
+          <td class="right">1</td>
+          <td class="right">&lt;1</td>
+          <td class="right">No</td>
+          <td class="right">No</td>
+          <td class="right">None</td>
+        </tr>
+      </table>
+
+      <div class="footnote"><strong>The reading.</strong> Tier-1 traffic is built by programmatic content + free tools, not brand pages. The two highest-traffic players (Scaler, Newton) are within ~5% of each other on monthly visits despite Newton having 1/8th the keyword count — Newton's traffic is deep on a few thousand high-intent compiler queries. Both compound. None of the Tier-2 / Tier-3 players have started.</div>
+    </section>
+
+    <!-- ░░░ 3.3 Scaler SST ░░░ -->
+    <section class="slide" id="s33">
+      <div class="slide-meta"><span>3.3 · Teardown</span><span class="right">16a / 18</span></div>
+      <h2>Scaler SST.</h2>
+      <div class="lede">Built on top of Scaler Academy's existing brand and SEO equity. The most polished playbook in the category — and the one Quad will be benchmarked against.</div>
+
+      <table class="data" style="margin-top: 6px;">
+        <tr>
+          <th style="width: 30%;">The five moves</th>
+          <th>What they actually did</th>
+        </tr>
+        <tr>
+          <td><strong>1 · Programmatic SEO</strong></td>
+          <td><code>scaler.com/topics/</code> — thousands of CS concept explainers (DSA, OS, DBMS, system design). Captures students from Class 11 onwards through tutorial-style intent.</td>
+        </tr>
+        <tr>
+          <td><strong>2 · Free AI tools</strong></td>
+          <td>AI Mock Interview as the lead-magnet. 5,400/mo on "ai interview" alone. Bookmarked by users for years before they ever buy.</td>
+        </tr>
+        <tr>
+          <td><strong>3 · Comparison content</strong></td>
+          <td>"SST vs IIT", "SST vs traditional engineering", "SST for parents" — all owned on the brand domain. Captures Stage 3 + 4 buyers natively.</td>
+        </tr>
+        <tr>
+          <td><strong>4 · Legitimacy story</strong></td>
+          <td>Partner-degree packaging (BITS Pilani / IIT Madras / Woolf) front and centre. Their disclaimer ("not a university, does not confer degrees") is paired with the partner story to neutralise it.</td>
+        </tr>
+        <tr>
+          <td><strong>5 · Creator ecosystem</strong></td>
+          <td>The "Hustling Engineer", Vedantu JEE, HellO Akhuli, Shrimay Somani — all running Scaler-vs-X reviews. Some incentivised, some organic. Outsources top-of-funnel video to 50+ creators.</td>
+        </tr>
+      </table>
+
+      <div class="footnote"><strong>What Quad can copy.</strong> Moves 3, 4, 5 are doable inside 6 months. Move 1 is a 12–24 month build. Move 2 needs one good free AI tool aimed at first-year coders, not the same DSA mock-interview territory.</div>
+    </section>
+
+    <!-- ░░░ 3.4 Newton ░░░ -->
+    <section class="slide" id="s34">
+      <div class="slide-meta"><span>3.4 · Teardown</span><span class="right">16b / 18</span></div>
+      <h2>Newton School of Technology.</h2>
+      <div class="lede">A different shape from Scaler — fewer keywords (3,580 vs 29,588) but nearly the same total traffic (~610K vs ~646K). Newton built deep on a few high-volume utility queries.</div>
+
+      <table class="data" style="margin-top: 6px;">
+        <tr>
+          <th style="width: 30%;">The five moves</th>
+          <th>What they actually did</th>
+        </tr>
+        <tr>
+          <td><strong>1 · Free dev compilers</strong></td>
+          <td>Online C, Python, Java, GCC compilers. Each ranks for queries with 1M+ monthly volume. This is ~80% of Newton's organic traffic. A Class 9 student who bookmarks the compiler today is a Class 12 lead in 3 years.</td>
+        </tr>
+        <tr>
+          <td><strong>2 · UGC-degree front-and-centre</strong></td>
+          <td>Rishihood University / Ajeenkya DY Patil partnership prominently displayed. "B.Tech recognised by 2000+ companies" framing — answers the parent's #1 question without making them ask.</td>
+        </tr>
+        <tr>
+          <td><strong>3 · NSAT as branded acquisition</strong></td>
+          <td>Newton Scholastic Aptitude Test is both a filter and a brand asset. Drives email capture upstream, replaces the cold lead form.</td>
+        </tr>
+        <tr>
+          <td><strong>4 · Honest review content</strong></td>
+          <td>Newton publishes "Newton honest student review — is it worth joining" on its own domain. Counter-intuitive — but ranks for the exact skeptical query and contains the narrative.</td>
+        </tr>
+        <tr>
+          <td><strong>5 · Aggregator review depth</strong></td>
+          <td>Heavy presence on Shiksha, Collegedunia, CollegeBatch with student-written reviews. Stage 5 (proof) demand is met without paid effort.</td>
+        </tr>
+      </table>
+
+      <div class="footnote"><strong>What Quad can copy.</strong> Move 2 is the single most copyable thing in this entire deck — Quad's "not a UGC HEI" disclaimer needs to be re-framed as Newton has done. Move 4 is also worth replicating: Quad publishes "Quad — honest review" on its own domain to capture the skeptical query before Reddit does.</div>
+    </section>
+
+    <!-- ░░░ 3.5 Masters Union ░░░ -->
+    <section class="slide" id="s35">
+      <div class="slide-meta"><span>3.5 · Teardown</span><span class="right">17a / 18</span></div>
+      <h2>Masters' Union.</h2>
+      <div class="lede">Different category (management, not tech), but the strongest positioning play of any new-gen institute in India. Worth one slide on what positioning, well done, can do at a fraction of the SEO budget.</div>
+
+      <table class="data" style="margin-top: 6px;">
+        <tr>
+          <th style="width: 30%;">The five moves</th>
+          <th>What they actually did</th>
+        </tr>
+        <tr>
+          <td><strong>1 · Sharp category claim</strong></td>
+          <td>"Learn by Doing" + "Built by scholars, for builders". Doesn't try to be the cheaper IIM. Claims a new category — startup-leadership, not management.</td>
+        </tr>
+        <tr>
+          <td><strong>2 · Founder-driven PR</strong></td>
+          <td>Pratham Mittal builds the brand on LinkedIn / podcasts. Recent Rs.100Cr MU Ventures fund announcement is a brand asset, not just news.</td>
+        </tr>
+        <tr>
+          <td><strong>3 · Pedigree as proof</strong></td>
+          <td>"Built by IIT/IIM operators" — same UGC-disclaimer constraint as everyone else, but the founders' credentials carry the legitimacy load.</td>
+        </tr>
+        <tr>
+          <td><strong>4 · Premium pricing as positioning</strong></td>
+          <td>~Rs.30L+ fees framed as the proof, not the obstacle. Positions itself as the only option for serious founders.</td>
+        </tr>
+        <tr>
+          <td><strong>5 · Cohort marketing</strong></td>
+          <td>Each batch has a published profile — average GMAT, prior companies, college mix. Becomes the Stage-5 proof without needing alumni outcomes.</td>
+        </tr>
+      </table>
+
+      <div class="footnote"><strong>What Quad can copy.</strong> Move 1 is the lesson. "New age education" is not a positioning — it's a category descriptor everyone uses. Quad needs a sharper claim it can defend. Move 5 is also transplantable to a tech school — publish the cohort profile, make the peer set the proof.</div>
+    </section>
+
+    <!-- ░░░ 3.6 PW IoI ░░░ -->
+    <section class="slide" id="s36">
+      <div class="slide-meta"><span>3.6 · Teardown</span><span class="right">17b / 18</span></div>
+      <h2>PW Institute of Innovation.</h2>
+      <div class="lede">An entirely different playbook. PW IoI doesn't win on SEO — it wins because Alakh Pandey's PhysicsWallah owns the largest after-school audience in India. Owned-channel-first, search-second.</div>
+
+      <table class="data" style="margin-top: 6px;">
+        <tr>
+          <th style="width: 30%;">The five moves</th>
+          <th>What they actually did</th>
+        </tr>
+        <tr>
+          <td><strong>1 · Massive owned audience</strong></td>
+          <td>PhysicsWallah's YouTube + app reaches every JEE aspirant. PW IoI inherits the trust spillover. Acquisition cost approaches zero from existing audience.</td>
+        </tr>
+        <tr>
+          <td><strong>2 · Founder-as-brand</strong></td>
+          <td>Alakh Pandey is the brand. PW IoI's "Bharat-first" framing rides his personal authenticity in Tier 2/3 — the same buyer Quad targets.</td>
+        </tr>
+        <tr>
+          <td><strong>3 · University partnership</strong></td>
+          <td>Medhavi Skills University — UGC-recognised partner solves the legitimacy question. Same template Newton and Scaler use, but lower cost of explanation thanks to PW trust transfer.</td>
+        </tr>
+        <tr>
+          <td><strong>4 · Concentrated traffic on intent</strong></td>
+          <td>Only 377 ranked keywords but ~78K monthly traffic — extremely concentrated on transactional brand-bound terms. Top-of-funnel comes from YouTube, search picks up only at conversion.</td>
+        </tr>
+        <tr>
+          <td><strong>5 · Aggressive pricing relative to Tier 1</strong></td>
+          <td>Rs.14.86L (vs Scaler's ~Rs.22L) positioned as "affordable elite". The price + PW trust combination is hard for new entrants to match.</td>
+        </tr>
+      </table>
+
+      <div class="footnote"><strong>What Quad can copy.</strong> The honest reading: PW's playbook is mostly not transferable without an Alakh Pandey. But Move 5 is — Quad's Rs.8L is sharper than PW's Rs.14.86L, and that price story has not been told well anywhere on Quad's site. The price is a feature, not an apology.</div>
+    </section>
+
+    <!-- ░░░ 3.7 NxtWave NIAT ░░░ -->
+    <section class="slide" id="s37">
+      <div class="slide-meta"><span>3.7 · Teardown</span><span class="right">17c / 18</span></div>
+      <h2>NxtWave Institute of Advanced Technologies.</h2>
+      <div class="lede">The closest spirit-match to Quad. Same Tier-2/3 focus, similar price band, similar "industry-aligned + UGC partner" structure. The most useful teardown for Quad to study.</div>
+
+      <table class="data" style="margin-top: 6px;">
+        <tr>
+          <th style="width: 30%;">The five moves</th>
+          <th>What they actually did</th>
+        </tr>
+        <tr>
+          <td><strong>1 · Multi-university expansion</strong></td>
+          <td>Partners with 10+ universities across India (Chaitanya Deemed, others) to scale geographically without owning campuses. Local credibility in each market.</td>
+        </tr>
+        <tr>
+          <td><strong>2 · Regional language YouTube</strong></td>
+          <td>Telugu and Hindi YouTube channels with deep tutorial content. Not English-first — meets Tier-2/3 student where they actually are.</td>
+        </tr>
+        <tr>
+          <td><strong>3 · CCBP as funnel</strong></td>
+          <td>The pre-existing ccbp.tech upskilling brand is the warming layer. NIAT is the premium step-up. Cross-sell architecture, not parallel acquisition.</td>
+        </tr>
+        <tr>
+          <td><strong>4 · Branded entrance test</strong></td>
+          <td>NAT — same NSAT/NSET pattern. Filter + brand asset + email capture in one.</td>
+        </tr>
+        <tr>
+          <td><strong>5 · Tier-aligned pricing</strong></td>
+          <td>Rs.8–18L spread across partner universities. Quad's Rs.8L matches the lower end of this range almost exactly — the price story is comparable, not differentiated.</td>
+        </tr>
+      </table>
+
+      <div class="footnote"><strong>What Quad must reckon with.</strong> NIAT is the most direct competitor for Quad's specific buyer — Tier-2/3 student, family-budget-conscious, looking for AI/tech credibility. The single Quad differentiator NIAT cannot match easily is geography (Bihar / Mangalore). That wedge has to be defended explicitly, not left implicit.</div>
+    </section>
+
+    <!-- ░░░ 3.8 Pattern ░░░ -->
+    <section class="slide" id="s38">
+      <div class="slide-meta"><span>3.8 · The Winners</span><span class="right">18 / 18</span></div>
+      <h2>What every winner is doing. What Quad has zero of.</h2>
+      <div class="lede">Across all five teardowns plus the broader audit, five patterns repeat. The honest count: Quad has zero of the five today. This is the gap section 4 will translate into action.</div>
+
+      <table class="data" style="margin-top: 6px;">
+        <tr>
+          <th style="width: 32%;">Pattern</th>
+          <th>Why it works</th>
+          <th class="right">Quad today</th>
+        </tr>
+        <tr>
+          <td><strong>1 · Programmatic content at scale</strong></td>
+          <td>Free tools or topic libraries that earn traffic from upstream queries — long before the buyer hears the brand name.</td>
+          <td class="right">None</td>
+        </tr>
+        <tr>
+          <td><strong>2 · Owned comparison content</strong></td>
+          <td>"X vs Y" pages on the brand's own domain — captures Stage 4 demand and frames the comparison on the brand's terms.</td>
+          <td class="right">None</td>
+        </tr>
+        <tr>
+          <td><strong>3 · Legitimacy front-and-centre</strong></td>
+          <td>UGC partner story explained in plain language, paired with the disclaimer instead of hidden behind it.</td>
+          <td class="right">Disclaimer is hidden in footer</td>
+        </tr>
+        <tr>
+          <td><strong>4 · Creator ecosystem</strong></td>
+          <td>Career-counsellor YouTubers and reviewers cover the brand independently — outsources top-of-funnel.</td>
+          <td class="right">None</td>
+        </tr>
+        <tr>
+          <td><strong>5 · Reddit / Quora founder seeding</strong></td>
+          <td>Founders + early alumni answer the skeptical questions in public, with substance. Becomes LLM training data for 2027.</td>
+          <td class="right">None</td>
+        </tr>
+      </table>
+
+      <div class="footnote warn"><strong>The honest summary.</strong> Quad is not behind on one of these five. Quad is at zero on all five. That is the bad news — and also the good news, because every one of these five is buildable in the next 12 months and the cost of starting now is materially lower than the cost of starting in 2027.</div>
+    </section>
+
+    <!-- ░░░ Coming next ░░░ -->
+    <section class="slide" id="s40">
+      <div class="slide-meta"><span>What's coming</span><span class="right">→</span></div>
+      <h2 class="large">Sections 4–7. Coming separately.</h2>
+      <div class="lede" style="max-width: 760px; margin-top: 18px;">This document covers <strong>who, where, and how</strong>. The next document covers <strong>what to do, what we'd do for you, and what to fix</strong>.</div>
+
+      <div class="three-col" style="margin-top: 32px;">
+        <div class="col">
+          <div class="col-label">§4 · The Action</div>
+          <h4 style="font-size: 18px;">If we ran this for the next 12 months.</h4>
+          <p>30-day actions, 12-month plan, the engine we'd build, and what Recurr's actual capabilities map onto.</p>
+        </div>
+        <div class="col">
+          <div class="col-label">§5 · The Site</div>
+          <h4 style="font-size: 18px;">Site critique, anxiety lens.</h4>
+          <p>Frame each issue as the fear it raises in the parent's head — and the fix that neutralises it. Not a font review.</p>
+        </div>
+        <div class="col">
+          <div class="col-label">§6–7 · Positioning + Matrix</div>
+          <h4 style="font-size: 18px;">Positioning brief + full competitor matrix.</h4>
+          <p>The category claim, the anxiety-killer block, the geo wedge. Plus the structured comparison across all 17 players.</p>
+        </div>
+      </div>
+
+      <div class="footnote">Prepared by Recurr Studio · pages.recurr.co/quad-inbound-strategy/ · April 2026</div>
+    </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  // ───── Active-slide nav highlighter ─────
+  const slides = document.querySelectorAll('.slide');
+  const links = document.querySelectorAll('.nav-list a');
+  const linkMap = {};
+  links.forEach(a => { linkMap[a.dataset.slide] = a; });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        Object.values(linkMap).forEach(a => a.classList.remove('active'));
+        if (linkMap[id]) linkMap[id].classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+  slides.forEach(s => observer.observe(s));
+
+  // ───── Click → smooth scroll ─────
+  links.forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const id = a.dataset.slide;
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // ───── Arrow-key nav ─────
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'PageDown' && e.key !== 'PageUp') return;
+    const ids = Array.from(slides).map(s => s.id);
+    const active = document.querySelector('.nav-list a.active');
+    if (!active) return;
+    const idx = ids.indexOf(active.dataset.slide);
+    let next = idx;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') next = Math.min(ids.length - 1, idx + 1);
+    if (e.key === 'ArrowUp' || e.key === 'PageUp') next = Math.max(0, idx - 1);
+    if (next !== idx) {
+      e.preventDefault();
+      document.getElementById(ids[next]).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+</script>
+
+</body>
+</html>
