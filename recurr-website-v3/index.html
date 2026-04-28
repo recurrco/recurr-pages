@@ -67,12 +67,13 @@ a { color: inherit; text-decoration: none; }
   display: flex; justify-content: space-between; align-items: center;
   padding: 20px var(--gutter);
   background: rgba(247, 245, 240, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid transparent;
-  transition: border-color 200ms ease, background 200ms ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1), background 200ms ease;
+  will-change: transform;
 }
-.nav.scrolled { border-bottom-color: var(--ink); background: rgba(247, 245, 240, 0.95); }
+.nav.scrolled { background: rgba(247, 245, 240, 0.95); }
+.nav.hidden { transform: translateY(-100%); }
 .nav-l { display: flex; align-items: center; gap: 16px; }
 .nav-logo { width: 110px; height: auto; display: block; }
 .nav-r { display: flex; align-items: center; gap: 28px; }
@@ -131,22 +132,21 @@ a { color: inherit; text-decoration: none; }
 .cover-foot a { transition: opacity 150ms ease; }
 .cover-foot a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
 
-/* ────────── Section head ────────── */
+/* ────────── Section head — heading flush-left ────────── */
 .section-head {
-  display: grid; grid-template-columns: 200px 1fr 240px;
-  gap: 40px; padding: 48px var(--gutter);
-  border-top: 1.5px solid var(--ink);
-  align-items: baseline;
+  padding: clamp(80px, 12vh, 160px) var(--gutter) clamp(40px, 6vh, 64px);
+  display: flex; flex-direction: column; gap: 28px;
 }
-.section-head-r { text-align: right; }
-.section-num { padding-top: 8px; }
-@media (max-width: 800px) {
-  .section-head { grid-template-columns: 1fr; gap: 12px; }
-  .section-head-r { text-align: left; }
+.section-head .meta-row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 24px; flex-wrap: wrap;
+}
+.section-head h2 { line-height: 0.95; }
+@media (max-width: 700px) {
+  .section-head .meta-row { flex-direction: column; align-items: flex-start; gap: 4px; }
 }
 
 /* ────────── Tile grid ────────── */
-.grid { padding: 24px var(--gutter) clamp(64px, 10vh, 120px); }
+.grid { padding: 0 var(--gutter) clamp(120px, 16vh, 200px); }
 .grid-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 24px; }
 .grid-row:last-child { margin-bottom: 0; }
 .tile { display: flex; flex-direction: column; gap: 14px; }
@@ -183,10 +183,10 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 900px) { .grid-row { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 600px) { .grid-row { grid-template-columns: 1fr; } }
 
-.grid-foot { display: flex; justify-content: space-between; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--ink); }
+.grid-foot { display: flex; justify-content: space-between; margin-top: 56px; }
 
 /* ────────── Buyer Mirror hunts ────────── */
-.hunts { padding: 24px var(--gutter) clamp(80px, 12vh, 160px); }
+.hunts { padding: 0 var(--gutter) clamp(120px, 16vh, 200px); }
 .hunts-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .hunt {  }
 .hunt-cover {
@@ -208,15 +208,15 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 900px) { .hunts-row { grid-template-columns: 1fr; gap: 32px; } }
 
 /* ────────── Datasheet (Operating Matrix) ────────── */
-.matrix { padding: 24px var(--gutter) clamp(80px, 12vh, 160px); }
-.matrix-table { border-top: 1.5px solid var(--ink); }
-.matrix-row { display: grid; grid-template-columns: 60px 220px 1fr; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--ink); align-items: baseline; }
-.matrix-row .matrix-col-2 { display: flex; flex-direction: column; gap: 4px; }
-.matrix-row .body-m { font-family: var(--body); font-weight: 400; }
-@media (max-width: 700px) { .matrix-row { grid-template-columns: 1fr; gap: 8px; } }
+.matrix { padding: 0 var(--gutter) clamp(120px, 16vh, 200px); }
+.matrix-table { border-top: 1px solid var(--ink); }
+.matrix-row { display: grid; grid-template-columns: minmax(280px, 380px) 1fr; gap: 64px; padding: 32px 0; border-bottom: 1px solid var(--ink); align-items: start; }
+.matrix-row .matrix-col-l { display: flex; flex-direction: column; gap: 8px; }
+.matrix-row .matrix-body { font-family: var(--body); font-weight: 400; padding-top: 22px; }
+@media (max-width: 700px) { .matrix-row { grid-template-columns: 1fr; gap: 8px; } .matrix-row .matrix-body { padding-top: 0; } }
 
 /* ────────── Team ────────── */
-.team { padding: 24px var(--gutter) clamp(80px, 12vh, 160px); }
+.team { padding: 0 var(--gutter) clamp(120px, 16vh, 200px); }
 .team-lede {
   font-family: var(--body); font-weight: 500;
   font-size: clamp(22px, 2.4vw, 32px); line-height: 1.32; letter-spacing: -0.015em;
@@ -230,7 +230,7 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 700px) { .team-row { grid-template-columns: 1fr; } }
 
 /* ────────── Press list ────────── */
-.press-list { padding: 24px var(--gutter) clamp(80px, 12vh, 160px); }
+.press-list { padding: 0 var(--gutter) clamp(120px, 16vh, 200px); }
 .press-row { display: grid; grid-template-columns: 140px 1fr 180px; gap: 32px; padding: 26px 0; border-top: 1px solid var(--ink); align-items: baseline; transition: background 200ms ease; }
 .press-row:last-of-type { border-bottom: 1px solid var(--ink); }
 .press-row:hover { background: rgba(10, 10, 10, 0.03); }
@@ -330,9 +330,11 @@ a { color: inherit; text-decoration: none; }
 
 <!-- ────────── CASE INDEX ────────── -->
 <header class="section-head" id="work">
-  <div class="section-num mono-label">Section / 01</div>
+  <div class="meta-row">
+    <span class="mono-label">Section / 01</span>
+    <span class="mono-label">06 of 12 · Career + Recurr</span>
+  </div>
   <h2 class="display-m">Case Index.</h2>
-  <div class="section-head-r mono-label">06 of 12 · Career + Recurr</div>
 </header>
 <section class="grid">
   <div class="grid-row">
@@ -353,9 +355,11 @@ a { color: inherit; text-decoration: none; }
 
 <!-- ────────── BUYER MIRROR ────────── -->
 <header class="section-head">
-  <div class="section-num mono-label">Section / 02</div>
+  <div class="meta-row">
+    <span class="mono-label">Section / 02</span>
+    <span class="mono-label">Findability · Recall · Decision</span>
+  </div>
   <h2 class="display-m">Buyer Mirror.</h2>
-  <div class="section-head-r mono-label">Findability · Recall · Decision</div>
 </header>
 <section class="hunts">
   <div class="hunts-row">
@@ -388,35 +392,45 @@ a { color: inherit; text-decoration: none; }
 
 <!-- ────────── OPERATING MATRIX ────────── -->
 <header class="section-head">
-  <div class="section-num mono-label">Section / 03</div>
+  <div class="meta-row">
+    <span class="mono-label">Section / 03</span>
+    <span class="mono-label">Datasheet / 01 · recurr.co · v1.0</span>
+  </div>
   <h2 class="display-m">Operating Matrix.</h2>
-  <div class="section-head-r mono-label">Datasheet / 01 · recurr.co · v1.0</div>
 </header>
 <section class="matrix">
   <div class="matrix-table">
     <div class="matrix-row reveal">
-      <div class="mono-label">01</div>
-      <div class="matrix-col-2"><span class="mono-label">Findability</span><span class="display-s">Discovery Mesh.</span></div>
-      <div class="body-m">SEO &amp; AEO Strategy · Blog Articles · Glossaries · Hub &amp; Spoke · Technical SEO · Content Refreshes · Citation Outreach · Reddit Engagement · AI-assisted SEO</div>
+      <div class="matrix-col-l">
+        <span class="mono-label">01 — Findability</span>
+        <span class="display-s">Discovery Mesh.</span>
+      </div>
+      <div class="body-m matrix-body">SEO &amp; AEO Strategy · Blog Articles · Glossaries · Hub &amp; Spoke · Technical SEO · Content Refreshes · Citation Outreach · Reddit Engagement · AI-assisted SEO</div>
     </div>
     <div class="matrix-row reveal">
-      <div class="mono-label">02</div>
-      <div class="matrix-col-2"><span class="mono-label">Recall</span><span class="display-s">Memory Field.</span></div>
-      <div class="body-m">Thought Leadership · Research Reports · LinkedIn · Social Posts · Podcasts · Books · Micro-sites · White Papers · Email Newsletters</div>
+      <div class="matrix-col-l">
+        <span class="mono-label">02 — Recall</span>
+        <span class="display-s">Memory Field.</span>
+      </div>
+      <div class="body-m matrix-body">Thought Leadership · Research Reports · LinkedIn · Social Posts · Podcasts · Books · Micro-sites · White Papers · Email Newsletters</div>
     </div>
     <div class="matrix-row reveal">
-      <div class="mono-label">03</div>
-      <div class="matrix-col-2"><span class="mono-label">Decision</span><span class="display-s">Decision Surface.</span></div>
-      <div class="body-m">Landing Pages · Case Studies · Competitive Content · One Pagers · ABM Assets · Sales Enablement · Industry White Papers · Microsites</div>
+      <div class="matrix-col-l">
+        <span class="mono-label">03 — Decision</span>
+        <span class="display-s">Decision Surface.</span>
+      </div>
+      <div class="body-m matrix-body">Landing Pages · Case Studies · Competitive Content · One Pagers · ABM Assets · Sales Enablement · Industry White Papers · Microsites</div>
     </div>
   </div>
 </section>
 
 <!-- ────────── TEAM ────────── -->
 <header class="section-head" id="team">
-  <div class="section-num mono-label">Section / 04</div>
+  <div class="meta-row">
+    <span class="mono-label">Section / 04</span>
+    <span class="mono-label">Client-facing · 02</span>
+  </div>
   <h2 class="display-m">The Team.</h2>
-  <div class="section-head-r mono-label">Client-facing · 02</div>
 </header>
 <section class="team">
   <p class="team-lede reveal">Two operators, one engine. Two decades across B2B SaaS, GTM, and content. Interested in content systems, positioning, and the post-AI shape of marketing.</p>
@@ -436,9 +450,11 @@ a { color: inherit; text-decoration: none; }
 
 <!-- ────────── PRESS LIST ────────── -->
 <header class="section-head">
-  <div class="section-num mono-label">Section / 05</div>
+  <div class="meta-row">
+    <span class="mono-label">Section / 05</span>
+    <span class="mono-label">Latest · 03 of 12</span>
+  </div>
   <h2 class="display-m">From the Press.</h2>
-  <div class="section-head-r mono-label">Latest · 03 of 12</div>
 </header>
 <section class="press-list">
   <a href="/recurr-website-v3/press/" class="press-row reveal">
@@ -528,16 +544,30 @@ a { color: inherit; text-decoration: none; }
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   setTimeout(() => { document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in')); }, 1500);
 
-  // Nav scrolled state
+  // Nav: hide on scroll-down past threshold, reveal on any upward delta
   const nav = document.getElementById('nav');
-  let last = 0;
-  function onScroll() {
+  let lastY = 0;
+  let pendingFrame = false;
+  const HIDE_AFTER = 80;
+  function updateNav() {
+    pendingFrame = false;
     const y = window.scrollY || document.documentElement.scrollTop;
+    const delta = y - lastY;
     nav.classList.toggle('scrolled', y > 16);
-    last = y;
+    if (y < 4) {
+      nav.classList.remove('hidden');
+    } else if (delta > 2 && y > HIDE_AFTER) {
+      nav.classList.add('hidden');
+    } else if (delta < -2) {
+      nav.classList.remove('hidden');
+    }
+    lastY = y;
+  }
+  function onScroll() {
+    if (!pendingFrame) { pendingFrame = true; requestAnimationFrame(updateNav); }
   }
   window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  updateNav();
 
   // Live timestamp
   const ts = document.getElementById('ts');
