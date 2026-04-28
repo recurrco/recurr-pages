@@ -9,11 +9,12 @@
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --ink: #000;
+    --ink: #111;
     --paper: #fff;
-    --rule: #000;
+    --rule: #111;
     --faint: #888;
-    --muted: #555;
+    --muted: #444;
+    --soft: #fafafa;
     --hi: #fbeb1c;
 
     --serif: 'New York', ui-serif, Georgia, 'Times New Roman', serif;
@@ -21,25 +22,25 @@
     --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
 
     --margin: clamp(1.25rem, 1rem + 4vw, 5rem);
-    --content-w: 760px;
-    --wide-w: 1180px;
+    --content-w: 720px;
+    --wide-w: 1100px;
   }
 
   ::selection { background: var(--hi); color: var(--ink); }
 
   body {
-    font-family: var(--serif);
+    font-family: var(--sans);
     background: var(--paper);
     color: var(--ink);
     -webkit-font-smoothing: antialiased;
-    line-height: 1.55;
+    line-height: 1.65;
     font-size: 17px;
   }
 
   /* ── Header ───────────────────────────── */
   header.masthead {
-    border-bottom: 2px solid var(--rule);
-    padding: 12px var(--margin);
+    border-bottom: 1px solid var(--rule);
+    padding: 14px var(--margin);
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -57,7 +58,7 @@
 
   /* ── Title block ──────────────────────── */
   .title-block {
-    padding: clamp(48px, 10vw, 120px) var(--margin) clamp(40px, 8vw, 80px);
+    padding: clamp(56px, 10vw, 120px) var(--margin) clamp(48px, 8vw, 80px);
     border-bottom: 1px solid var(--rule);
     max-width: var(--wide-w);
     margin: 0 auto;
@@ -68,36 +69,23 @@
     text-transform: uppercase;
     letter-spacing: 0.16em;
     color: var(--faint);
-    margin-bottom: 24px;
+    margin-bottom: 28px;
   }
   h1 {
     font-family: var(--serif);
     font-weight: 800;
-    font-size: clamp(2.5rem, 1.5rem + 6vw, 6rem);
+    font-size: clamp(2.75rem, 1.5rem + 6vw, 6rem);
     line-height: 0.95;
     letter-spacing: -0.03em;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
   }
   .deck {
     font-family: var(--serif);
-    font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.4rem);
-    line-height: 1.4;
+    font-size: clamp(1.15rem, 1rem + 0.5vw, 1.5rem);
+    line-height: 1.45;
     max-width: 720px;
     color: var(--muted);
-    font-style: italic;
   }
-  .meta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 32px;
-    margin-top: 40px;
-    font-family: var(--mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--faint);
-  }
-  .meta-row span strong { color: var(--ink); font-weight: 500; }
 
   /* ── TOC ───────────────────────────────── */
   nav.toc {
@@ -106,18 +94,18 @@
     max-width: var(--wide-w);
     margin: 0 auto;
   }
-  nav.toc-label {
+  nav .toc-label {
     font-family: var(--mono);
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.16em;
     color: var(--faint);
-    margin-bottom: 16px;
+    margin-bottom: 18px;
   }
   .toc-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 8px 32px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 6px 32px;
     font-family: var(--mono);
     font-size: 12px;
   }
@@ -127,15 +115,15 @@
     color: var(--ink);
     text-decoration: none;
     padding: 8px 0;
-    border-bottom: 1px dotted var(--faint);
+    border-bottom: 1px dotted #ccc;
+    transition: background 0.1s;
   }
-  .toc-grid a:hover { background: var(--hi); }
-  .toc-grid a span:first-child { letter-spacing: 0.04em; }
+  .toc-grid a:hover { background: var(--hi); padding-left: 8px; padding-right: 8px; }
   .toc-grid a span:last-child { color: var(--faint); font-feature-settings: "tnum"; }
 
   /* ── Section ───────────────────────────── */
   section {
-    padding: clamp(48px, 8vw, 96px) var(--margin);
+    padding: clamp(56px, 8vw, 96px) var(--margin);
     border-bottom: 1px solid var(--rule);
     max-width: var(--wide-w);
     margin: 0 auto;
@@ -148,24 +136,24 @@
     text-transform: uppercase;
     letter-spacing: 0.16em;
     color: var(--faint);
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     display: block;
   }
   h2 {
     font-family: var(--serif);
     font-weight: 800;
-    font-size: clamp(2rem, 1.4rem + 2.5vw, 3.5rem);
-    line-height: 1;
+    font-size: clamp(2rem, 1.4rem + 2.5vw, 3.25rem);
+    line-height: 1.05;
     letter-spacing: -0.02em;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
   }
   h3 {
     font-family: var(--serif);
     font-weight: 700;
-    font-size: clamp(1.3rem, 1.1rem + 0.6vw, 1.6rem);
+    font-size: clamp(1.4rem, 1.1rem + 0.8vw, 1.8rem);
     line-height: 1.2;
     letter-spacing: -0.01em;
-    margin: 48px 0 16px;
+    margin: 56px 0 16px;
   }
   h4 {
     font-family: var(--mono);
@@ -173,33 +161,52 @@
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    margin: 32px 0 12px;
+    margin: 36px 0 14px;
     color: var(--ink);
   }
-  p { margin-bottom: 16px; }
-  p + h3 { margin-top: 56px; }
+  p {
+    margin-bottom: 18px;
+    max-width: 720px;
+  }
+  p + h3 { margin-top: 64px; }
 
   strong { font-weight: 700; }
   em { font-style: italic; }
   code {
     font-family: var(--mono);
-    font-size: 0.88em;
-    background: #f5f5f5;
-    padding: 1px 6px;
-    border-radius: 2px;
-    border: 1px solid #e5e5e5;
+    font-size: 0.85em;
+    background: var(--soft);
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid #eee;
   }
 
-  ul, ol { margin: 16px 0 16px 24px; }
-  li { margin-bottom: 8px; }
-  ul.tight li { margin-bottom: 4px; }
+  ul, ol { margin: 16px 0 20px 22px; max-width: 720px; }
+  li { margin-bottom: 10px; line-height: 1.6; }
+  ul.tight li { margin-bottom: 6px; }
+
+  a.inline { color: var(--ink); border-bottom: 1px solid currentColor; text-decoration: none; }
+  a.inline:hover { background: var(--hi); }
+
+  /* ── Big-callout intro block (used per section opener) ─── */
+  .intro-callout {
+    font-family: var(--serif);
+    font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem);
+    line-height: 1.5;
+    color: var(--ink);
+    border-left: 3px solid var(--rule);
+    padding: 4px 0 4px 24px;
+    margin: 0 0 32px;
+    max-width: 720px;
+    font-weight: 500;
+  }
 
   /* ── Lifecycle diagram ─────────────────── */
   .lifecycle {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 0;
-    margin: 32px 0 48px;
+    margin: 32px 0 40px;
     border: 1px solid var(--rule);
     font-family: var(--mono);
     font-size: 11px;
@@ -207,21 +214,25 @@
     letter-spacing: 0.1em;
   }
   .lifecycle div {
-    padding: 24px 16px;
+    padding: 24px 12px;
     text-align: center;
     border-right: 1px solid var(--rule);
     position: relative;
+    background: var(--paper);
   }
   .lifecycle div:last-child { border-right: none; }
   .lifecycle div .state {
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 8px;
     display: block;
+    font-size: 12px;
   }
   .lifecycle div .who {
     color: var(--faint);
     font-size: 9px;
     line-height: 1.4;
+    text-transform: none;
+    letter-spacing: 0.02em;
   }
   .lifecycle div::after {
     content: "→";
@@ -235,7 +246,8 @@
     color: var(--ink);
     z-index: 1;
   }
-  .lifecycle div:last-child::after { display: none; }
+  .lifecycle div:last-child::after { content: ""; }
+  .lifecycle div.terminal { background: var(--soft); }
 
   /* ── Tables ───────────────────────────── */
   .tbl {
@@ -247,9 +259,10 @@
   }
   .tbl th, .tbl td {
     text-align: left;
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--rule);
+    padding: 12px 14px;
+    border-bottom: 1px solid #e5e5e5;
     vertical-align: top;
+    line-height: 1.5;
   }
   .tbl th {
     font-family: var(--mono);
@@ -257,21 +270,21 @@
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--faint);
-    border-bottom: 2px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
     font-weight: 500;
+    background: var(--soft);
   }
-  .tbl td:first-child { font-weight: 600; white-space: nowrap; }
-  .tbl-wide { font-size: 13px; }
-  .tbl-wide td:first-child { white-space: normal; min-width: 140px; }
+  .tbl td:first-child { font-weight: 600; }
+  .tbl-narrow td:first-child { white-space: nowrap; }
 
   /* ── Field cards ──────────────────────── */
   .fields {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 1px;
-    background: var(--rule);
-    border: 1px solid var(--rule);
-    margin: 32px 0;
+    background: #e5e5e5;
+    border: 1px solid #e5e5e5;
+    margin: 24px 0;
   }
   .field {
     background: var(--paper);
@@ -283,7 +296,7 @@
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 4px;
-    font-weight: 600;
+    font-weight: 700;
   }
   .field-meta {
     font-family: var(--mono);
@@ -294,9 +307,8 @@
     letter-spacing: 0.1em;
   }
   .field-desc {
-    font-family: var(--sans);
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.55;
     color: var(--ink);
   }
 
@@ -304,82 +316,103 @@
   .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px;
-    margin: 32px 0;
+    gap: 16px;
+    margin: 28px 0;
   }
   .card {
-    border: 1px solid var(--rule);
+    border: 1px solid #e5e5e5;
     padding: 24px;
     background: var(--paper);
-  }
-  .card h4 {
-    margin-top: 0;
-    font-family: var(--serif);
-    font-size: 18px;
-    text-transform: none;
-    letter-spacing: -0.01em;
-    font-weight: 700;
-    margin-bottom: 8px;
   }
   .card .num {
     font-family: var(--mono);
     font-size: 11px;
     color: var(--faint);
     letter-spacing: 0.12em;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+  }
+  .card h4 {
+    font-family: var(--serif);
+    font-size: 19px;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    font-weight: 700;
+    margin: 0 0 8px;
   }
   .card p {
-    font-family: var(--sans);
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.55;
     color: var(--muted);
     margin: 0;
   }
 
   /* ── Pull box ──────────────────────────── */
   .pull {
-    border-left: 4px solid var(--rule);
-    padding: 16px 24px;
-    margin: 32px 0;
-    font-style: italic;
-    background: #fafafa;
+    border-left: 3px solid var(--rule);
+    padding: 16px 20px;
+    margin: 28px 0;
+    background: var(--soft);
   }
-  .pull-mono {
+  .pull .label {
     font-family: var(--mono);
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     color: var(--faint);
-    font-style: normal;
     margin-bottom: 8px;
   }
+  .pull p { margin: 0; line-height: 1.5; }
 
   /* ── Checklist ────────────────────────── */
   .checklist {
     margin: 24px 0;
     padding: 0;
     list-style: none;
+    max-width: 720px;
   }
   .checklist li {
-    padding: 10px 0;
-    border-bottom: 1px dotted var(--faint);
-    font-family: var(--sans);
-    font-size: 14px;
+    padding: 12px 0;
+    border-bottom: 1px dotted #ccc;
+    font-size: 15px;
     display: flex;
     align-items: flex-start;
+    margin: 0;
+    line-height: 1.5;
   }
   .checklist li::before {
     content: "☐";
     font-family: var(--mono);
-    margin-right: 12px;
+    margin-right: 14px;
     color: var(--faint);
-    font-size: 16px;
-    line-height: 1.2;
+    font-size: 18px;
+    line-height: 1.1;
+  }
+
+  /* ── Q&A block (for "where does X live") ─ */
+  .qa {
+    margin: 24px 0;
+    max-width: 760px;
+  }
+  .qa-item {
+    padding: 16px 0;
+    border-bottom: 1px solid #eee;
+  }
+  .qa-q {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .qa-a {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--muted);
   }
 
   /* ── Footer ───────────────────────────── */
   footer {
-    padding: 48px var(--margin) 64px;
+    padding: 56px var(--margin) 72px;
     max-width: var(--wide-w);
     margin: 0 auto;
     font-family: var(--mono);
@@ -394,18 +427,18 @@
   }
   footer a { color: inherit; text-decoration: underline; }
 
-  /* ── Anchor offsets ───────────────────── */
   section[id] { scroll-margin-top: 32px; }
 
   /* ── Mobile ───────────────────────────── */
   @media (max-width: 720px) {
+    body { font-size: 16px; }
     .lifecycle { grid-template-columns: 1fr; }
     .lifecycle div { border-right: none; border-bottom: 1px solid var(--rule); }
     .lifecycle div:last-child { border-bottom: none; }
     .lifecycle div::after { content: "↓"; right: 50%; top: auto; bottom: -7px; transform: translateX(50%); }
-    .lifecycle div:last-child::after { display: none; }
+    .lifecycle div:last-child::after { content: ""; }
     .tbl { font-size: 13px; }
-    .tbl th, .tbl td { padding: 8px; }
+    .tbl th, .tbl td { padding: 10px; }
   }
 </style>
 </head>
@@ -419,12 +452,7 @@
 <div class="title-block">
   <div class="eyebrow">Recurr Press · Editorial Handbook</div>
   <h1>Press Desk.</h1>
-  <p class="deck">How to write, review, and publish on Recurr Press. Read this once before your first piece. The Sanity Studio has a lot of fields — most have a reason. This is the reason.</p>
-  <div class="meta-row">
-    <span>Audience: <strong>Recurr Press team</strong></span>
-    <span>Studio: <strong>recurr.co/press-desk</strong></span>
-    <span>Status: <strong>v1 · April 2026</strong></span>
-  </div>
+  <p class="deck">A practical guide to writing, reviewing, and publishing on Recurr Press. Read it once before your first piece. Every field in the Studio has a purpose, and this is where each one is explained.</p>
 </div>
 
 <nav class="toc">
@@ -433,385 +461,471 @@
     <a href="#what"><span>What Press Desk Is</span><span>01</span></a>
     <a href="#roles"><span>Roles</span><span>02</span></a>
     <a href="#lifecycle"><span>Lifecycle</span><span>03</span></a>
-    <a href="#fields"><span>Every Field</span><span>04</span></a>
-    <a href="#pillars"><span>The 5 Pillars</span><span>05</span></a>
-    <a href="#formats"><span>The 5 Formats</span><span>06</span></a>
-    <a href="#themes"><span>Themes &amp; Releases</span><span>07</span></a>
-    <a href="#images"><span>The Image Problem</span><span>08</span></a>
-    <a href="#ai"><span>AI Assist</span><span>09</span></a>
-    <a href="#comments"><span>Comments &amp; Review</span><span>10</span></a>
-    <a href="#publish"><span>Publish Checklist</span><span>11</span></a>
-    <a href="#mistakes"><span>Common Mistakes</span><span>12</span></a>
-    <a href="#stuck"><span>When You're Stuck</span><span>13</span></a>
+    <a href="#after-publish"><span>What Happens After Publish</span><span>04</span></a>
+    <a href="#fields"><span>Every Field on an Article</span><span>05</span></a>
+    <a href="#pillars"><span>The 5 Pillars</span><span>06</span></a>
+    <a href="#formats"><span>The 5 Formats</span><span>07</span></a>
+    <a href="#themes"><span>Themes &amp; Releases</span><span>08</span></a>
+    <a href="#newsletter"><span>The Newsletter</span><span>09</span></a>
+    <a href="#signals"><span>Signals</span><span>10</span></a>
+    <a href="#library"><span>The Library</span><span>11</span></a>
+    <a href="#images"><span>The Image Question</span><span>12</span></a>
+    <a href="#ai"><span>AI Assist</span><span>13</span></a>
+    <a href="#review"><span>Comments &amp; Review</span><span>14</span></a>
+    <a href="#publish"><span>Publish Checklist</span><span>15</span></a>
+    <a href="#mistakes"><span>Common Mistakes</span><span>16</span></a>
+    <a href="#stuck"><span>When You're Stuck</span><span>17</span></a>
   </div>
 </nav>
 
 <!-- 01 — What Press Desk Is -->
 <section id="what">
-  <span class="sec-num">01 / What Press Desk Is</span>
-  <h2>The editorial UI for Recurr Press.</h2>
-  <p>Press Desk lives at <code>recurr.co/press-desk</code> — workflow Kanban plus editorial document lists. The full Sanity Studio is at <code>recurr.co/studio</code>, where every document type and the deep configuration lives.</p>
-  <p>You'll spend ~95% of your time in <code>/press-desk</code>. Use <code>/studio</code> only when you need to edit site singletons (homepage, contact page) — most editors won't.</p>
+  <span class="sec-num">01 · What Press Desk Is</span>
+  <h2>The editorial workspace for Recurr Press.</h2>
 
-  <h3>The two surfaces</h3>
-  <table class="tbl tbl-wide">
-    <thead><tr><th>Surface</th><th>URL</th><th>When to use</th></tr></thead>
+  <p>Press Desk is one of two surfaces inside Sanity. They serve different jobs.</p>
+
+  <table class="tbl tbl-narrow">
+    <thead><tr><th>Surface</th><th>Where</th><th>Use it for</th></tr></thead>
     <tbody>
-      <tr><td>Press Desk</td><td><code>recurr.co/press-desk</code></td><td>Daily editorial work — write, review, schedule, publish</td></tr>
-      <tr><td>Sanity Studio</td><td><code>recurr.co/studio</code></td><td>Site config, careers posts, anything outside Press</td></tr>
+      <tr><td>Press Desk</td><td><code>recurr.co/press-desk</code></td><td>Daily editorial work — write, review, publish</td></tr>
+      <tr><td>Sanity Studio</td><td><code>recurr.co/studio</code></td><td>Site configuration, careers posts, anything outside Press</td></tr>
     </tbody>
   </table>
+
+  <p>Most of your time will be in Press Desk. You only need the full Studio for things outside the editorial flow.</p>
 
   <h3>What's inside Press Desk</h3>
   <ul class="tight">
     <li><strong>My Work</strong> — articles assigned to you</li>
-    <li><strong>Articles</strong> — All articles · By theme</li>
-    <li><strong>Releases</strong> — Weekly drops grouping articles for a coordinated publish</li>
-    <li><strong>Newsletter</strong> — Weekly newsletter docs</li>
-    <li><strong>Signals</strong> — Signal Engine queue (automated content firehose) + Posted history</li>
-    <li><strong>Library</strong> — Themes · Authors (Bylines) · Pillars (reference data)</li>
-    <li><strong>Workflow board</strong> — separate tool in left sidebar: Brief → Draft → In Review → Approved Kanban</li>
+    <li><strong>Articles</strong> — All articles, or grouped by theme. <em>This is where published pieces live.</em></li>
+    <li><strong>Releases</strong> — weekly drops that bundle articles for a coordinated publish</li>
+    <li><strong>Newsletter</strong> — weekly newsletter documents</li>
+    <li><strong>Signals</strong> — the queue of automated signals + a history of what's been posted</li>
+    <li><strong>Library</strong> — Themes, Authors, Pillars (the reference data your articles point to)</li>
+    <li><strong>Workflow board</strong> — a separate Kanban tool in the left sidebar (Brief → Draft → In Review → Approved)</li>
   </ul>
 </section>
 
 <!-- 02 — Roles -->
 <section id="roles">
-  <span class="sec-num">02 / Roles</span>
+  <span class="sec-num">02 · Roles</span>
   <h2>Who can do what.</h2>
-  <table class="tbl tbl-wide">
-    <thead><tr><th>Role</th><th>Who</th><th>Can do</th></tr></thead>
+
+  <table class="tbl tbl-narrow">
+    <thead><tr><th>Role</th><th>What they can do</th></tr></thead>
     <tbody>
-      <tr><td>Editor-in-Chief</td><td>Pratik</td><td>Anything. Approves all publishes. Last mile on every piece.</td></tr>
-      <tr><td>Editor</td><td>Sujith, Nagen, Ankita, content intern</td><td>Write, review, move pieces from Brief → Draft → In Review. Cannot move to Approved.</td></tr>
-      <tr><td>External byline</td><td>Guest authors (no Sanity login)</td><td>Their name appears on the byline. We coordinate over email.</td></tr>
-      <tr><td>Administrator</td><td>Pratik</td><td>Plus the only role that can move pieces to Approved.</td></tr>
+      <tr><td>Editor-in-chief</td><td>Anything. Last sign-off on every published piece. Only role that can move work into Approved.</td></tr>
+      <tr><td>Editor</td><td>Write, review, leave comments, move pieces from Brief → Draft → In Review.</td></tr>
+      <tr><td>External byline</td><td>Guest authors whose name appears on the byline. They don't log in. We coordinate over email.</td></tr>
     </tbody>
   </table>
-  <p>If you're an Editor and want to ship, hand the piece to Pratik for the Approved → Publish step.</p>
+
+  <p>If you're an Editor and you want to ship, hand the piece off to the Editor-in-chief for the Approved → Publish step.</p>
 </section>
 
 <!-- 03 — Lifecycle -->
 <section id="lifecycle">
-  <span class="sec-num">03 / Lifecycle</span>
+  <span class="sec-num">03 · Lifecycle</span>
   <h2>Every article moves through five states.</h2>
 
   <div class="lifecycle">
-    <div><span class="state">Brief</span><span class="who">Author drags forward</span></div>
-    <div><span class="state">Draft</span><span class="who">Author writes</span></div>
-    <div><span class="state">In Review</span><span class="who">Reviewer comments</span></div>
-    <div><span class="state">Approved</span><span class="who">Pratik signs off</span></div>
-    <div><span class="state">Published</span><span class="who">Live on /press</span></div>
+    <div><span class="state">Brief</span><span class="who">idea exists, body empty</span></div>
+    <div><span class="state">Draft</span><span class="who">writing in progress</span></div>
+    <div><span class="state">In Review</span><span class="who">reviewer comments</span></div>
+    <div><span class="state">Approved</span><span class="who">signed off</span></div>
+    <div class="terminal"><span class="state">Published</span><span class="who">live on /press</span></div>
   </div>
 
-  <table class="tbl tbl-wide">
+  <table class="tbl">
     <thead><tr><th>State</th><th>Meaning</th><th>Who moves it forward</th></tr></thead>
     <tbody>
-      <tr><td>Brief</td><td>Idea exists. Title, slug, excerpt, format set. Body empty.</td><td>Author drags to Draft when they start writing.</td></tr>
-      <tr><td>Draft</td><td>Body is being written. TLDR + distribution cuts being filled.</td><td>Author drags to In Review when ready.</td></tr>
-      <tr><td>In Review</td><td>Reviewer reads, comments. Reviewer must be assigned.</td><td>Reviewer drags back to Draft for revisions, OR Pratik to Approved.</td></tr>
-      <tr><td>Approved</td><td>Pratik signed off. Ready to ship.</td><td>Pratik hits "Publish" in Studio (terminal — leaves the workflow).</td></tr>
-      <tr><td>Published</td><td>Live on recurr.co/press. Workflow doc complete.</td><td>(No further state. Edits go through a republish.)</td></tr>
+      <tr><td>Brief</td><td>The idea is captured. Title, slug, excerpt, format are set. Body is empty.</td><td>Author drags to Draft when they start writing.</td></tr>
+      <tr><td>Draft</td><td>Body is being written. TLDR and distribution cuts are being filled.</td><td>Author drags to In Review when ready.</td></tr>
+      <tr><td>In Review</td><td>A reviewer reads the piece and leaves comments. Reviewer must be assigned.</td><td>Reviewer drags back to Draft for revisions, or the Editor-in-chief moves it to Approved.</td></tr>
+      <tr><td>Approved</td><td>Signed off. Ready to ship.</td><td>The Publish button in the Studio takes it live and removes it from the Kanban.</td></tr>
+      <tr><td>Published</td><td>Live on <code>recurr.co/press</code>. No longer on the Kanban.</td><td>(See <a class="inline" href="#after-publish">section 4</a>.)</td></tr>
     </tbody>
   </table>
 
   <div class="pull">
-    <div class="pull-mono">Review SLA</div>
-    <strong>In Review by Wednesday for a Friday publish.</strong> Pratik clears the review queue mid-week. Don't drop a piece into review at 9pm Thursday and expect Friday.
+    <div class="label">Review SLA</div>
+    <p>For a Friday publish, a piece should be in <strong>In Review by Wednesday</strong>. The review queue gets cleared mid-week. Pieces dropped into review on Thursday evening rarely make Friday.</p>
   </div>
 
-  <h3>Starting a new piece</h3>
-  <p>You usually don't. Briefs are seeded ahead of time by Pratik (one per piece in the monthly plan). You pick up an existing Brief from the Kanban.</p>
-  <p>If you genuinely need to start from scratch:</p>
+  <h3>How to start a new piece</h3>
+  <p>You usually don't. Briefs are seeded ahead of time, one per piece in the monthly plan. You pick up an existing Brief from the Kanban.</p>
+  <p>If you really need to start from scratch:</p>
   <ol>
-    <li>Sanity Studio → New document → Press Article</li>
-    <li>Fill in title, slug, excerpt, pillar, byline (yourself), format, theme (current month)</li>
-    <li>Save → a workflow doc is auto-created in Brief state</li>
-    <li>Drag yourself to Draft when you start writing</li>
+    <li>Studio → New document → Press Article</li>
+    <li>Fill in title, slug, excerpt, pillar, byline (yourself), format, theme (if there's an active month)</li>
+    <li>Save. A workflow card is auto-created in the Brief column.</li>
+    <li>Drag yourself to Draft when you start writing.</li>
   </ol>
 </section>
 
-<!-- 04 — Every Field -->
+<!-- 04 — After Publish (NEW) -->
+<section id="after-publish">
+  <span class="sec-num">04 · What Happens After Publish</span>
+  <h2>Where a piece lives once it's live.</h2>
+
+  <p class="intro-callout">The Kanban ends at Approved. The Publish action takes the piece live <em>and</em> removes its card from the board. Published pieces don't disappear — they just live somewhere else.</p>
+
+  <h3>Where to find published pieces</h3>
+
+  <div class="qa">
+    <div class="qa-item">
+      <div class="qa-q">On the public site</div>
+      <div class="qa-a">Listed at <code>recurr.co/press</code>, sorted by publish date (newest first). Each article is at <code>recurr.co/press/&lt;slug&gt;</code>.</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q">Inside Press Desk</div>
+      <div class="qa-a">Press Desk → <strong>Articles</strong> → <strong>All articles</strong>. Sorted by publish date. This is the editorial archive — every published piece, plus anything in flight that has a slug.</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q">By month / theme</div>
+      <div class="qa-a">Press Desk → <strong>Articles</strong> → <strong>By theme</strong>. Click a theme to see every article tied to it.</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q">By weekly drop</div>
+      <div class="qa-a">Press Desk → <strong>Releases</strong>. Each Release lists the articles it bundles. Status moves Building → Scheduled → Published.</div>
+    </div>
+  </div>
+
+  <h3>Editing something already published</h3>
+  <p>Open the article in Press Desk, edit, hit Publish again. The site re-validates within 1–2 seconds. You don't need to redeploy.</p>
+
+  <p>One thing not to do: <strong>change the slug after publish.</strong> It breaks every inbound link to the piece. If you really need to, set up a redirect first.</p>
+</section>
+
+<!-- 05 — Every Field -->
 <section id="fields">
-  <span class="sec-num">04 / Every Field</span>
-  <h2>What lives in the Article editor.</h2>
-  <p>The Article editor groups fields into 4 tabs: <strong>Content · Meta · Distribution · SEO</strong>.</p>
+  <span class="sec-num">05 · Every Field on an Article</span>
+  <h2>What lives in the editor.</h2>
+
+  <p>The Article editor groups fields into four tabs: <strong>Content</strong>, <strong>Meta</strong>, <strong>Distribution</strong>, <strong>SEO</strong>. Walk through each.</p>
 
   <h3>Tab 1 — Content</h3>
   <div class="fields">
     <div class="field"><div class="field-name">Title</div><div class="field-meta">Required · Max 140</div><div class="field-desc">The headline. Honest, opinionated. No clickbait.</div></div>
     <div class="field"><div class="field-name">Slug</div><div class="field-meta">Required · URL path</div><div class="field-desc">Lowercase, hyphenated. Don't change after publish — breaks inbound links.</div></div>
-    <div class="field"><div class="field-name">Excerpt</div><div class="field-meta">Max 280</div><div class="field-desc">Listing + SERP preview. 1–2 sentences. Reader should know what they're getting.</div></div>
-    <div class="field"><div class="field-name">TLDR</div><div class="field-meta">Max 160</div><div class="field-desc">One-sentence promise at top of the article. Earns the click without clickbait.</div></div>
-    <div class="field"><div class="field-name">Cover</div><div class="field-meta">Image · Required for visual quality</div><div class="field-desc">Cover image. See <a href="#images">The Image Problem</a> below — system's biggest gap.</div></div>
-    <div class="field"><div class="field-name">Body</div><div class="field-meta">Portable Text</div><div class="field-desc">The article. H2 / H3 / blockquote / pull-quote / inline images supported.</div></div>
+    <div class="field"><div class="field-name">Excerpt</div><div class="field-meta">Max 280</div><div class="field-desc">Listing card and search-result preview. One or two sentences. The reader should know what they're getting.</div></div>
+    <div class="field"><div class="field-name">TLDR</div><div class="field-meta">Max 160</div><div class="field-desc">One-sentence promise at the top of the article. Earns the click without overpromising.</div></div>
+    <div class="field"><div class="field-name">Cover</div><div class="field-meta">Image · Highly recommended</div><div class="field-desc">Cover image. See <a class="inline" href="#images">section 12</a>.</div></div>
+    <div class="field"><div class="field-name">Body</div><div class="field-meta">Rich text</div><div class="field-desc">The article. Supports H2 / H3, blockquotes, pull-quotes, and inline images.</div></div>
   </div>
 
   <h3>Tab 2 — Meta</h3>
   <div class="fields">
-    <div class="field"><div class="field-name">Pillar</div><div class="field-meta">Required · One of 5</div><div class="field-desc">Editorial pillar. See <a href="#pillars">section 5</a>.</div></div>
-    <div class="field"><div class="field-name">Byline (legacy)</div><div class="field-meta">Single primary author</div><div class="field-desc">Use for solo pieces. Required if Authors is empty.</div></div>
-    <div class="field"><div class="field-name">Authors</div><div class="field-meta">Array · Multi-author</div><div class="field-desc">Use for co-authored pieces. First entry is the lead byline.</div></div>
-    <div class="field"><div class="field-name">Format</div><div class="field-meta">One of 5</div><div class="field-desc">Type of piece. See <a href="#formats">section 6</a>.</div></div>
-    <div class="field"><div class="field-name">Theme</div><div class="field-meta">Optional · Themed months</div><div class="field-desc">Required for themed months. Standalone essays can leave blank.</div></div>
-    <div class="field"><div class="field-name">Release</div><div class="field-meta">Optional · v1</div><div class="field-desc">Which weekly Release this ships in. Used to bundle pieces for a coordinated drop.</div></div>
-    <div class="field"><div class="field-name">Published At</div><div class="field-meta">Required · Datetime</div><div class="field-desc">Publish timestamp. Site uses this for sort order on /press.</div></div>
-    <div class="field"><div class="field-name">Related Articles</div><div class="field-meta">Up to 4</div><div class="field-desc">Cross-references. Pulled in the article footer.</div></div>
+    <div class="field"><div class="field-name">Pillar</div><div class="field-meta">Required · One of 5</div><div class="field-desc">Editorial pillar. See <a class="inline" href="#pillars">section 6</a>.</div></div>
+    <div class="field"><div class="field-name">Byline</div><div class="field-meta">Single author</div><div class="field-desc">Use this for solo pieces.</div></div>
+    <div class="field"><div class="field-name">Authors</div><div class="field-meta">Multi-author</div><div class="field-desc">Use for co-authored pieces. The first entry is the lead byline.</div></div>
+    <div class="field"><div class="field-name">Format</div><div class="field-meta">One of 5</div><div class="field-desc">Type of piece. See <a class="inline" href="#formats">section 7</a>.</div></div>
+    <div class="field"><div class="field-name">Theme</div><div class="field-meta">Optional</div><div class="field-desc">The monthly theme this piece belongs to. Standalone pieces leave it blank.</div></div>
+    <div class="field"><div class="field-name">Release</div><div class="field-meta">Optional</div><div class="field-desc">The weekly Release this piece ships in. Used to bundle a coordinated drop.</div></div>
+    <div class="field"><div class="field-name">Published At</div><div class="field-meta">Required</div><div class="field-desc">Publish timestamp. Used to sort articles on <code>/press</code>.</div></div>
+    <div class="field"><div class="field-name">Related Articles</div><div class="field-meta">Up to 4</div><div class="field-desc">Cross-references shown in the article footer.</div></div>
   </div>
 
-  <h3>Tab 3 — Distribution (companion fields)</h3>
-  <p>The same idea, cut for different channels. <strong>Required before Approved</strong> — every piece earns its distribution at writing time, not as an afterthought.</p>
+  <h3>Tab 3 — Distribution</h3>
+  <p>The same idea, cut for different channels. Required before Approved.</p>
   <div class="fields">
-    <div class="field"><div class="field-name">Twitter / X thread</div><div class="field-meta">Array · Max 20 tweets</div><div class="field-desc">Hook tweet first. Last tweet ends with a pointed question.</div></div>
+    <div class="field"><div class="field-name">Twitter / X thread</div><div class="field-meta">Up to 20 tweets</div><div class="field-desc">One string per tweet. Hook tweet first. Last tweet ends with a pointed question.</div></div>
     <div class="field"><div class="field-name">LinkedIn post</div><div class="field-meta">250–400 words</div><div class="field-desc">First-person. No hashtags. Posted to the author's personal profile.</div></div>
-    <div class="field"><div class="field-name">Reddit prompt</div><div class="field-meta">Subreddit + title + body</div><div class="field-desc">Non-promotional. Asks the community something.</div></div>
-    <div class="field"><div class="field-name">Newsletter cut</div><div class="field-meta">Excerpt for digest</div><div class="field-desc">The bit that goes into Substack when this piece is bundled.</div></div>
-    <div class="field"><div class="field-name">Companion image</div><div class="field-meta">1.91:1 ratio</div><div class="field-desc">For X / LinkedIn preview. Falls back to cover image if empty.</div></div>
+    <div class="field"><div class="field-name">Reddit prompt</div><div class="field-meta">Subreddit + title + body</div><div class="field-desc">Non-promotional. Asks the community something rather than promoting the piece.</div></div>
+    <div class="field"><div class="field-name">Newsletter cut</div><div class="field-meta">Excerpt for digest</div><div class="field-desc">The slice that goes into the weekly newsletter when this piece is bundled.</div></div>
+    <div class="field"><div class="field-name">Companion image</div><div class="field-meta">1.91:1 ratio</div><div class="field-desc">For X / LinkedIn previews. Falls back to the cover image if empty.</div></div>
   </div>
+
+  <p>Why these are required: every piece earns its distribution at writing time, not as an afterthought. Writing the Twitter cut at the same time as the body keeps the argument tight.</p>
 
   <h3>Tab 4 — SEO</h3>
   <div class="fields">
-    <div class="field"><div class="field-name">SEO title</div><div class="field-meta">Optional</div><div class="field-desc">Custom &lt;title&gt; tag. Use when SERP-optimized phrasing differs from editorial title.</div></div>
-    <div class="field"><div class="field-name">SEO description</div><div class="field-meta">Optional</div><div class="field-desc">Meta description. Falls back to excerpt.</div></div>
-    <div class="field"><div class="field-name">OG image</div><div class="field-meta">Optional</div><div class="field-desc">Social sharing image. Falls back to cover.</div></div>
+    <div class="field"><div class="field-name">SEO title</div><div class="field-meta">Optional</div><div class="field-desc">Custom <code>&lt;title&gt;</code> tag. Use when search-optimised phrasing differs from the editorial title. Falls back to the article title.</div></div>
+    <div class="field"><div class="field-name">SEO description</div><div class="field-meta">Optional</div><div class="field-desc">Meta description. Falls back to the excerpt.</div></div>
+    <div class="field"><div class="field-name">OG image</div><div class="field-meta">Optional</div><div class="field-desc">Social sharing image. Falls back to the cover.</div></div>
   </div>
 </section>
 
-<!-- 05 — Pillars -->
+<!-- 06 — Pillars -->
 <section id="pillars">
-  <span class="sec-num">05 / The 5 Pillars</span>
-  <h2>Every article gets exactly one pillar.</h2>
-  <p>Internal classifications — they don't appear as public categories yet. Don't agonize. Pick the closest. Pratik will reassign if needed.</p>
+  <span class="sec-num">06 · The 5 Pillars</span>
+  <h2>Every article gets exactly one.</h2>
+
+  <p>Pillars are internal classifications — a way to track what we're writing about. They're not public categories yet. Pick the closest match.</p>
 
   <div class="cards">
-    <div class="card">
-      <div class="num">01</div>
-      <h4>Enterprise Software Marketing</h4>
-      <p>The big bucket. B2B SaaS GTM, content marketing, demand gen, PMM, founder-led marketing. Most cold-start SaaStitute pieces fit here.</p>
-    </div>
-    <div class="card">
-      <div class="num">02</div>
-      <h4>Positioning &amp; Strategy</h4>
-      <p>How companies decide what they are. Categories, frames, pricing, packaging.</p>
-    </div>
-    <div class="card">
-      <div class="num">03</div>
-      <h4>Design as Communication</h4>
-      <p>Web, product, decks, visual storytelling treated as language, not decoration.</p>
-    </div>
-    <div class="card">
-      <div class="num">04</div>
-      <h4>Internet &amp; Media</h4>
-      <p>Distribution, content engines, the LLM era, the shift from search to systems-that-influence-buyers. SEO/AEO/GEO pieces live here.</p>
-    </div>
-    <div class="card">
-      <div class="num">05</div>
-      <h4>Building &amp; Operating</h4>
-      <p>The work itself. Running platforms, ventures, teams. Operational machinery.</p>
-    </div>
+    <div class="card"><div class="num">01</div><h4>Enterprise Software Marketing</h4><p>The big bucket. B2B software GTM, content marketing, demand gen, product marketing, founder-led marketing. Most early pieces fit here.</p></div>
+    <div class="card"><div class="num">02</div><h4>Positioning &amp; Strategy</h4><p>How companies decide what they are. Categories, frames, pricing, packaging.</p></div>
+    <div class="card"><div class="num">03</div><h4>Design as Communication</h4><p>Web, product, decks, visual storytelling treated as language — not decoration.</p></div>
+    <div class="card"><div class="num">04</div><h4>Internet &amp; Media</h4><p>Distribution, content engines, the LLM era, the shift from search to systems that influence buyers. SEO and AI-search pieces live here.</p></div>
+    <div class="card"><div class="num">05</div><h4>Building &amp; Operating</h4><p>The work itself. Running platforms, ventures, teams. Operational machinery.</p></div>
   </div>
 
   <div class="pull">
-    <div class="pull-mono">Heuristic</div>
-    Between two pillars? Pick the one the article's <em>closing argument</em> serves. A SEO piece that ends with "and here's how to think about your category" is <strong>Positioning &amp; Strategy</strong>, not Internet &amp; Media.
+    <div class="label">Heuristic</div>
+    <p>Stuck between two pillars? Pick the one that the article's <em>closing argument</em> serves. A SEO piece that ends with "and here's how to think about your category" is <strong>Positioning &amp; Strategy</strong>, not Internet &amp; Media.</p>
   </div>
 </section>
 
-<!-- 06 — Formats -->
+<!-- 07 — Formats -->
 <section id="formats">
-  <span class="sec-num">06 / The 5 Formats</span>
+  <span class="sec-num">07 · The 5 Formats</span>
   <h2>What kind of piece this is.</h2>
-  <p>Format drives visual treatment on <code>/press</code>.</p>
 
-  <table class="tbl tbl-wide">
-    <thead><tr><th>Format</th><th>What</th><th>Length</th><th>Cadence</th></tr></thead>
+  <p>Format drives the visual treatment on <code>/press</code> and how the piece is positioned.</p>
+
+  <table class="tbl">
+    <thead><tr><th>Format</th><th>What it is</th><th>Length</th><th>Cadence</th></tr></thead>
     <tbody>
-      <tr><td>Essay</td><td>Opinionated, framework-first. One author.</td><td>1,500–3,000 words</td><td>1/week (Pratik)</td></tr>
-      <tr><td>Co-authored essay</td><td>Two named authors — Pratik + external operator. Website exclusive.</td><td>1,500–3,000 words</td><td>1/week</td></tr>
-      <tr><td>Research</td><td>Fact-led, data-driven. Charts, tables, datasets allowed.</td><td>1,500–4,000 words</td><td>2/week (Sujith leads)</td></tr>
-      <tr><td>Build project</td><td>Tech-first content — pSEO, directory, tool, tracker. The piece is the build.</td><td>Varies</td><td>1/month</td></tr>
-      <tr><td>Signal digest</td><td>Curated weekly digest of signals from the Signal Engine.</td><td>600–1,200 words</td><td>1/week (semi-automated)</td></tr>
+      <tr><td>Essay</td><td>Opinionated, framework-first. One author.</td><td>1,500–3,000 words</td><td>~1 a week</td></tr>
+      <tr><td>Co-authored essay</td><td>Two named authors — typically one of us with an external operator. Website exclusive.</td><td>1,500–3,000 words</td><td>~1 a week</td></tr>
+      <tr><td>Research</td><td>Fact-led, data-driven. Charts, tables, datasets allowed.</td><td>1,500–4,000 words</td><td>~2 a week</td></tr>
+      <tr><td>Build project</td><td>Tech-first content — programmatic SEO, directories, tools, trackers. The piece <em>is</em> the build.</td><td>Varies</td><td>~1 a month</td></tr>
+      <tr><td>Signal digest</td><td>Curated weekly digest of items from the Signal Engine.</td><td>600–1,200 words</td><td>~1 a week</td></tr>
     </tbody>
   </table>
 
   <div class="pull">
-    <div class="pull-mono">Note</div>
-    <strong>Newsletter is not a format on Articles.</strong> Newsletters are their own document type (<code>newsletter</code>). If you're writing the weekly Pratik newsletter, use the Newsletter doc type, not Article.
+    <div class="label">Newsletter is not an Article format</div>
+    <p>The weekly newsletter is a separate document type, not a Press Article. See <a class="inline" href="#newsletter">section 9</a>.</p>
   </div>
 </section>
 
-<!-- 07 — Themes & Releases -->
+<!-- 08 — Themes & Releases -->
 <section id="themes">
-  <span class="sec-num">07 / Themes &amp; Releases</span>
+  <span class="sec-num">08 · Themes &amp; Releases</span>
   <h2>The umbrella, and the bundle.</h2>
+
+  <p class="intro-callout">A <strong>Theme</strong> is the editorial umbrella for a month. A <strong>Release</strong> is the bundle for a single week.</p>
 
   <h3>Monthly theme</h3>
   <ul class="tight">
-    <li>One theme per month. Picked by Pratik in the last week of the prior month.</li>
-    <li>Has 4 weekly sub-themes (W1, W2, W3, W4).</li>
+    <li>One theme per month.</li>
+    <li>Has four weekly sub-themes (W1, W2, W3, W4).</li>
     <li>Every article in that month aligns to the theme.</li>
-    <li>Articles reference the theme via the <code>theme</code> field.</li>
-    <li>Standalone essays (no theme) are allowed. Sujith's first piece had no theme.</li>
+    <li>Articles point at the theme via the <code>theme</code> field on the article.</li>
+    <li>Standalone pieces — ones that don't belong to a monthly arc — leave the field blank.</li>
   </ul>
 
   <h3>Weekly Release</h3>
   <ul class="tight">
-    <li>Bundles articles that ship together in a given week.</li>
-    <li>Has its own publish time.</li>
-    <li>Status: Building → Scheduled → Published → Reverted.</li>
-    <li>Used for a coordinated drop where 3-4 pieces go live at once.</li>
-    <li>Optional in v1 — pieces can publish independently.</li>
+    <li>A Release bundles articles that ship together in the same week.</li>
+    <li>Each Release has its own publish time and a status (Building → Scheduled → Published → Reverted).</li>
+    <li>Used when you want a coordinated "week's drop" feel — three or four pieces going live at once.</li>
+    <li>Optional. Pieces can publish independently without a Release.</li>
   </ul>
 
   <div class="pull">
-    <div class="pull-mono">Current month — May 2026</div>
-    <strong>"AI Will Eat SaaS — The Four-Layer Turnover."</strong> Sub-themes: W1 Interface · W2 Workflow · W3 Data · W4 Business model. 16 briefs already seeded in Sanity for May.
+    <div class="label">May 2026 — current month</div>
+    <p>Theme: <strong>"AI Will Eat SaaS — The Four-Layer Turnover."</strong> Sub-themes: W1 Interface · W2 Workflow · W3 Data · W4 Business model. Sixteen briefs are already in Sanity for May, grouped into four weekly Releases.</p>
   </div>
 </section>
 
-<!-- 08 — Image Problem -->
+<!-- 09 — Newsletter -->
+<section id="newsletter">
+  <span class="sec-num">09 · The Newsletter</span>
+  <h2>How the weekly digest works.</h2>
+
+  <p class="intro-callout">The newsletter is a <em>separate</em> document type from articles. It has its own document, its own editor, and its own publishing channel (Substack).</p>
+
+  <h3>The structure</h3>
+  <ul class="tight">
+    <li>One newsletter per week.</li>
+    <li>Each newsletter has a body, a week label, and a list of articles it covers.</li>
+    <li>Often bundled into the same Release as that week's articles — so the newsletter and the articles ship together.</li>
+  </ul>
+
+  <h3>Where to write it</h3>
+  <p>Press Desk → <strong>Newsletter</strong> in the left nav. Each entry is one week's edition. Sorted by week label, newest first.</p>
+
+  <h3>Where it goes</h3>
+  <p>Substack is the public newsletter channel. The plan is for an automated fan-out worker to pick up Approved newsletter docs and post them to Substack — the wiring is built but not yet deployed. Until that's live, newsletters are written in Sanity and copy-pasted to Substack manually.</p>
+
+  <h3>What goes in it</h3>
+  <p>Mental models for venture businesses. Not tactical content. The bar: would someone bookmark this and refer back to it six months from now?</p>
+  <p>Each week's newsletter usually pulls in the <em>Newsletter cut</em> companion field from that week's articles, plus a fresh editorial framing on top.</p>
+</section>
+
+<!-- 10 — Signals -->
+<section id="signals">
+  <span class="sec-num">10 · Signals</span>
+  <h2>The automated content firehose.</h2>
+
+  <p class="intro-callout">A <strong>Signal</strong> is a small, atomic piece of curated content — a funding announcement, a positioning move, a launch, an industry datapoint. The Signal Engine collects them automatically; we approve, we post.</p>
+
+  <h3>The lifecycle</h3>
+
+  <table class="tbl">
+    <thead><tr><th>Status</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td>Queued</td><td>The Engine ingested this signal and gave it a relevance score. Waiting for a human to approve or kill.</td></tr>
+      <tr><td>Approved</td><td>Cleared by an editor. Scheduled for posting.</td></tr>
+      <tr><td>Posted</td><td>Live — published on the company X account and added to the website signals page.</td></tr>
+      <tr><td>Killed</td><td>Rejected. Off the queue. Not deleted, just hidden.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Where to find them</h3>
+  <ul class="tight">
+    <li>Press Desk → <strong>Signals → Queue (ready to review)</strong> — sorted by relevance × novelty. Daily review pass lives here.</li>
+    <li>Press Desk → <strong>Signals → Posted</strong> — history of what's gone live.</li>
+    <li>Press Desk → <strong>Signals → All signals</strong> — everything, including killed.</li>
+  </ul>
+
+  <h3>The two outputs</h3>
+  <ol>
+    <li><strong>Twitter / X — @recurrco.</strong> Posted signals go out as tweets, automatically.</li>
+    <li><strong>The signals page —</strong> <code>recurr.co/press/signals</code>. A living archive that compounds. Over time it becomes a database of B2B marketing moves — useful as a research surface and an SEO magnet.</li>
+  </ol>
+
+  <h3>When you'd touch a Signal</h3>
+  <p>Mostly during the daily review pass: open the queue, scan the top 10–20, kill anything off, approve what's good. Editing a signal is unusual; usually you just approve or kill.</p>
+</section>
+
+<!-- 11 — Library -->
+<section id="library">
+  <span class="sec-num">11 · The Library</span>
+  <h2>Reference data your articles point to.</h2>
+
+  <p class="intro-callout">The Library holds the things that articles <em>reference</em> rather than contain. Editing the Library updates every article that references that item.</p>
+
+  <table class="tbl">
+    <thead><tr><th>Item</th><th>What it is</th><th>When you edit it</th></tr></thead>
+    <tbody>
+      <tr><td>Themes</td><td>Monthly editorial themes — the umbrella for a month.</td><td>Once a month, when setting the next theme.</td></tr>
+      <tr><td>Authors</td><td>Bylines — internal team members and external contributors. Includes name, role, bio, avatar, social handles.</td><td>When a new author joins, or when an existing author updates their bio / photo.</td></tr>
+      <tr><td>Pillars</td><td>The five editorial pillars. Title, slug, description.</td><td>Almost never. Pillars are deliberately stable.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>An author's profile</h3>
+  <p>Each author entry has a <strong>publicProfile</strong> toggle. When it's on, the author shows up at <code>recurr.co/press/authors</code> and gets their own page at <code>recurr.co/press/authors/&lt;slug&gt;</code>. When it's off, they're still a usable byline on articles, but they don't appear in the public author directory.</p>
+  <p>External byline accounts default to off — flip them on case by case once you've decided the author should be publicly listed.</p>
+</section>
+
+<!-- 12 — Image Question -->
 <section id="images">
-  <span class="sec-num">08 / The Image Problem</span>
-  <h2>Currently the system's biggest gap.</h2>
-  <p>Right now there is no clear answer to "what does an image look like on Recurr Press." Pratik is closing this in a parallel design-system thread.</p>
+  <span class="sec-num">12 · The Image Question</span>
+  <h2>An open gap right now.</h2>
 
-  <h4>For now</h4>
+  <p>Recurr Press doesn't yet have a settled answer to "what does an image look like on this site." It's being closed in a parallel design-system thread.</p>
+
+  <h3>For now</h3>
   <ul class="tight">
-    <li><strong>Cover required for visual quality, but you can ship without one</strong> — listing card looks worse but the page works.</li>
-    <li><strong>Inline images:</strong> allowed via the body editor. Add alt text. Add a caption.</li>
-    <li><strong>Pull quotes:</strong> preferred over inline imagery for editorial weight.</li>
-    <li><strong>Don't use stock photography.</strong> Ever.</li>
-    <li><strong>Diagrams:</strong> sketch it and ask Pratik to render it in the house style.</li>
+    <li>A cover image is recommended. Without one the listing card looks thin, but the article page still works.</li>
+    <li>Inline images are allowed. Add alt text and a caption.</li>
+    <li>Pull-quotes are preferred over decorative inline images.</li>
+    <li>No stock photography.</li>
+    <li>Diagrams: sketch it and ask for it to be rendered in the house style.</li>
   </ul>
-  <p>When the design system closes, this section will be replaced with concrete specs.</p>
+
+  <p>Once the design system closes, this section will be replaced with concrete specs — cover dimensions, OG template, illustration style, photography rules.</p>
 </section>
 
-<!-- 09 — AI Assist -->
+<!-- 13 — AI Assist -->
 <section id="ai">
-  <span class="sec-num">09 / AI Assist</span>
-  <h2>What it's good at — and what it isn't.</h2>
+  <span class="sec-num">13 · AI Assist</span>
+  <h2>What it's good at, what it isn't.</h2>
 
-  <h4>Use AI Assist for</h4>
+  <h3>Use it for</h3>
   <ul class="tight">
-    <li><strong>Drafting Twitter thread cuts</strong> from the body. "Write a 6-tweet thread. Hook first. Question last."</li>
-    <li><strong>Drafting LinkedIn post cuts</strong> from the body.</li>
-    <li><strong>Suggesting TLDRs</strong> — paste body, ask for 5 options under 160 chars.</li>
-    <li><strong>Excerpt rewriting</strong> — when the body's done, regenerate excerpt to match.</li>
-    <li><strong>SEO title variants</strong> — 5 keyword-front-loaded options.</li>
+    <li>Drafting Twitter / X thread cuts from the body.</li>
+    <li>Drafting LinkedIn cuts from the body.</li>
+    <li>TLDR options — paste body, ask for five under 160 chars.</li>
+    <li>Excerpt rewriting — when the body is final, regenerate the excerpt to match.</li>
+    <li>SEO title variants — five keyword-front-loaded options.</li>
   </ul>
 
-  <h4>Don't use AI Assist for</h4>
+  <h3>Don't use it for</h3>
   <ul class="tight">
-    <li>The article body itself. The body is the human's voice. AI ghostwriting kills the brand.</li>
-    <li>Naming pillars or formats (fixed enums — AI gets them wrong).</li>
-    <li>Image generation inside Sanity (use the design pipeline, not Studio AI).</li>
+    <li>The article body itself. The body is the human voice — that's the brand.</li>
+    <li>Naming pillars or formats. AI gets these wrong; they're fixed enums.</li>
+    <li>Image generation inside the Studio — use the design pipeline.</li>
   </ul>
 
   <div class="pull">
-    <div class="pull-mono">Open thread</div>
-    AI Assist needs the Sanity <strong>Growth plan</strong>. Currently on a lower tier. Pratik is closing this. Until then AI features may be unavailable.
+    <div class="label">Note</div>
+    <p>AI Assist requires the Sanity Growth plan. Until that upgrade lands, AI features may be unavailable in the Studio.</p>
   </div>
 </section>
 
-<!-- 10 — Comments -->
-<section id="comments">
-  <span class="sec-num">10 / Comments &amp; Review</span>
+<!-- 14 — Comments & Review -->
+<section id="review">
+  <span class="sec-num">14 · Comments &amp; Review</span>
   <h2>How feedback flows.</h2>
-  <p>Sanity has document-level comments. How we use them:</p>
+
+  <p>Sanity has document-level comments. The flow:</p>
+
   <ul class="tight">
-    <li><strong>Reviewer</strong> opens the doc, reads, leaves comments via the Comments panel on the right.</li>
-    <li>Comments can be on <strong>fields</strong> ("this excerpt undersells the piece") or on <strong>selections in the body</strong> (highlight + comment).</li>
-    <li><strong>Author</strong> resolves comments by editing OR replying.</li>
-    <li>Once all comments are resolved, the reviewer drags the piece to Approved (Pratik only) or back to Draft (anyone) with a summary comment.</li>
+    <li>Reviewer opens the doc and reads it. The Comments panel is on the right side of the editor.</li>
+    <li>Comments can be on a <strong>field</strong> ("this excerpt undersells the piece") or on a <strong>selection in the body</strong> (highlight a sentence, comment on it).</li>
+    <li>The author resolves comments by editing the piece or replying.</li>
+    <li>Once everything is resolved, the reviewer either drags it forward (Approved) or back (Draft) with a summary comment.</li>
   </ul>
 
   <div class="pull">
-    <div class="pull-mono">Don't</div>
-    Comment-and-leave. Always drag the piece to the next state when you're done reviewing.
+    <div class="label">One rule</div>
+    <p>Don't comment and leave. Always move the piece to the next state when you're done reviewing — either back to Draft, or forward to Approved.</p>
   </div>
 </section>
 
-<!-- 11 — Publish Checklist -->
+<!-- 15 — Publish Checklist -->
 <section id="publish">
-  <span class="sec-num">11 / Publish Checklist</span>
+  <span class="sec-num">15 · Publish Checklist</span>
   <h2>Before hitting Publish.</h2>
+
   <ul class="checklist">
     <li>Title — final, not a working title</li>
-    <li>Slug — final (won't change after publish)</li>
-    <li>Excerpt — under 280 chars, makes the click feel earned</li>
-    <li>TLDR — under 160 chars, one sentence</li>
-    <li>Cover image — present (or accept the listing-card hit)</li>
+    <li>Slug — final (it won't change after publish)</li>
+    <li>Excerpt — under 280 characters, makes the click feel earned</li>
+    <li>TLDR — under 160 characters, one sentence</li>
+    <li>Cover image — present, or we accept the listing-card hit</li>
     <li>Body — proofread end to end</li>
     <li>Pillar — set</li>
-    <li>Byline / Authors — set</li>
+    <li>Byline or Authors — set</li>
     <li>Format — set</li>
-    <li>Theme — set (if themed month) or intentionally blank</li>
-    <li>Distribution: Twitter thread, LinkedIn post, newsletter cut written</li>
-    <li>SEO title — only if it differs from editorial title</li>
-    <li>PublishedAt — set to scheduled time</li>
+    <li>Theme — set if there's an active monthly arc, blank if standalone</li>
+    <li>Distribution: Twitter thread, LinkedIn cut, newsletter cut written</li>
+    <li>SEO title — only if it differs from the editorial title</li>
+    <li>Published At — set to the scheduled time</li>
   </ul>
 
-  <p>When all green: hit <strong>Publish</strong> in the upper right of the Studio. Site revalidates within 1–2 seconds via the Sanity webhook → <code>/api/revalidate</code>. No deploy needed.</p>
+  <p>When everything's green, hit <strong>Publish</strong> in the upper right. The site re-validates within a couple of seconds via the Sanity webhook.</p>
 </section>
 
-<!-- 12 — Common Mistakes -->
+<!-- 16 — Common Mistakes -->
 <section id="mistakes">
-  <span class="sec-num">12 / Common Mistakes</span>
+  <span class="sec-num">16 · Common Mistakes</span>
   <h2>And how to avoid them.</h2>
 
-  <table class="tbl tbl-wide">
+  <table class="tbl">
     <thead><tr><th>Mistake</th><th>What goes wrong</th><th>Fix</th></tr></thead>
     <tbody>
-      <tr>
-        <td>Writing body before brief is locked</td>
-        <td>Half the piece gets thrown away</td>
-        <td>Write the brief into the Excerpt field first. Lock the angle. THEN write the body.</td>
-      </tr>
-      <tr>
-        <td>Publishing without a Pillar</td>
-        <td>Listing card looks half-empty; affects SEO</td>
-        <td>Always set Pillar. Required field.</td>
-      </tr>
-      <tr>
-        <td>Using Byline AND Authors</td>
-        <td>Old/new authorship UI conflict</td>
-        <td>Solo: use Byline. Multi: use Authors array (leave Byline empty). Site renders Authors if present, else Byline.</td>
-      </tr>
-      <tr>
-        <td>Skipping distribution cuts</td>
-        <td>Piece goes live with no social plan</td>
-        <td>Write Twitter + LinkedIn cuts during Draft. Easier when body is fresh.</td>
-      </tr>
-      <tr>
-        <td>Editing a published piece's slug</td>
-        <td>Breaks all inbound links</td>
-        <td>Don't. If you must, set up a redirect at the Vercel layer.</td>
-      </tr>
-      <tr>
-        <td>Stuck in Brief because no body</td>
-        <td>Pratik can't approve a stub</td>
-        <td>Either fill the body or move it back to Backlog. Don't leave Briefs sitting.</td>
-      </tr>
+      <tr><td>Writing the body before the brief is locked</td><td>Half the piece gets thrown out</td><td>Write the angle into the Excerpt first. Lock that. Then write the body.</td></tr>
+      <tr><td>Publishing without a Pillar</td><td>Listing card looks half-empty; the piece is hard to find later</td><td>Always set a Pillar.</td></tr>
+      <tr><td>Filling both Byline and Authors</td><td>Old/new authorship UI conflict</td><td>Solo: use Byline. Multi-author: use Authors and leave Byline empty. The site renders Authors if present, otherwise Byline.</td></tr>
+      <tr><td>Skipping distribution cuts</td><td>The piece goes live with no social plan</td><td>Write the Twitter and LinkedIn cuts during Draft. They're easier to write when the body is fresh.</td></tr>
+      <tr><td>Editing a published piece's slug</td><td>Breaks every inbound link</td><td>Don't. If you must, set up a redirect first.</td></tr>
+      <tr><td>Leaving Briefs sitting</td><td>Approval can't happen on a stub</td><td>Either fill the body or move it back to backlog. Don't let Briefs decay.</td></tr>
     </tbody>
   </table>
 </section>
 
-<!-- 13 — When You're Stuck -->
+<!-- 17 — When You're Stuck -->
 <section id="stuck">
-  <span class="sec-num">13 / When You're Stuck</span>
+  <span class="sec-num">17 · When You're Stuck</span>
   <h2>Quick answers.</h2>
 
-  <table class="tbl tbl-wide">
-    <thead><tr><th>Question</th><th>Answer</th></tr></thead>
-    <tbody>
-      <tr><td>What pillar?</td><td>Closest match. Pratik will reassign if needed.</td></tr>
-      <tr><td>What format?</td><td>Essay if opinion. Research if data-led. Co-authored if there's a second name.</td></tr>
-      <tr><td>What theme?</td><td>Whatever the current month's theme is, OR leave blank for standalone.</td></tr>
-      <tr><td>Cover image?</td><td>See <a href="#images">section 8</a>. Ship without if needed.</td></tr>
-      <tr><td>AI Assist not showing?</td><td>Sanity Growth plan upgrade pending.</td></tr>
-      <tr><td>Webhook not firing?</td><td>Check <code>sanity.io/manage/project/nt7mthth/api/webhooks → Attempts</code>. Pratik debugs.</td></tr>
-      <tr><td>I broke something</td><td>Sanity has Document History. Revert from there. Worst case ping Pratik.</td></tr>
-    </tbody>
-  </table>
+  <div class="qa">
+    <div class="qa-item"><div class="qa-q">What pillar do I pick?</div><div class="qa-a">The closest match. The Editor-in-chief will reassign if needed.</div></div>
+    <div class="qa-item"><div class="qa-q">What format do I pick?</div><div class="qa-a">Essay if it's opinion-led. Research if it's data-led. Co-authored if there's a second name on it.</div></div>
+    <div class="qa-item"><div class="qa-q">What theme do I pick?</div><div class="qa-a">Whatever the current month's theme is — or leave blank for a standalone piece.</div></div>
+    <div class="qa-item"><div class="qa-q">Cover image?</div><div class="qa-a">Recommended but not blocking. See <a class="inline" href="#images">section 12</a>.</div></div>
+    <div class="qa-item"><div class="qa-q">AI Assist isn't showing up.</div><div class="qa-a">The Sanity Growth plan upgrade is pending. Once it's live, AI features will appear.</div></div>
+    <div class="qa-item"><div class="qa-q">My piece won't publish.</div><div class="qa-a">Check that Pillar, Byline, and Format are all set — those are required. Then check that you're in Approved state.</div></div>
+    <div class="qa-item"><div class="qa-q">I broke something.</div><div class="qa-a">Sanity has Document History. Revert from there. If you're really stuck, ping the Editor-in-chief.</div></div>
+  </div>
 </section>
 
 <footer>
