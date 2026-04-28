@@ -1,0 +1,2134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>50 AI-Native B2B Websites — Recurr Press research</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --ink: #1a1a1a;
+    --muted: #6b7280;
+    --muted-2: #9ca3af;
+    --accent: #d97706;
+    --border: #e5e5e5;
+    --border-soft: #f0f0f0;
+    --card: #ffffff;
+    --hl: #eef2ff;
+    --hl-ink: #4338ca;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, "SF Pro Text", "Inter", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 48px 24px 96px; }
+  h1.title { font-size: 36px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 6px; }
+  .lede { color: var(--muted); font-size: 16px; margin: 0 0 32px; max-width: 800px; }
+  .toc { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; font-size: 13px; }
+  .toc a { color: var(--hl-ink); text-decoration: none; padding: 6px 12px; background: var(--hl); border-radius: 999px; }
+  .toc a:hover { background: #ddd6fe; }
+
+  section { margin-top: 56px; }
+  h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.015em; margin: 0 0 4px; }
+  h2 .sub { color: var(--muted); font-size: 14px; font-weight: 400; margin-left: 8px; letter-spacing: 0; }
+  h3.sub-head { font-size: 16px; font-weight: 600; margin: 24px 0 8px; color: var(--ink); }
+
+  /* Hero stats */
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px; padding: 20px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; margin: 0 0 12px;
+  }
+  .stat { padding: 4px 0; }
+  .stat dt { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; font-weight: 500; }
+  .stat dd { margin: 0; font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .stat dd .unit { font-size: 13px; color: var(--muted-2); font-weight: 400; margin-left: 2px; }
+  .downloads { display: flex; gap: 8px; margin: 12px 0 0; }
+  .downloads a {
+    padding: 8px 14px; background: var(--ink); color: white; text-decoration: none;
+    border-radius: 6px; font-size: 13px; font-weight: 500;
+  }
+  .downloads a:hover { background: var(--accent); }
+  .downloads a.ghost { background: white; color: var(--ink); border: 1px solid var(--border); }
+
+  /* Findings */
+  .findings { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+  .find { padding: 18px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; }
+  .find .stat-num { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+  .find .stat-num .denom { color: var(--muted-2); font-weight: 500; }
+  .find .stat-num .pct { color: var(--accent); font-size: 16px; margin-left: 6px; font-weight: 600; }
+  .find h4 { font-size: 14px; font-weight: 600; margin: 6px 0 4px; }
+  .find p { font-size: 13px; color: var(--muted); margin: 0; }
+
+  /* Article briefs */
+  .article {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px 28px; margin-bottom: 16px;
+  }
+  .article header { border-bottom: 1px solid var(--border-soft); padding-bottom: 12px; margin-bottom: 16px; }
+  .article header .num { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; }
+  .article header h3 { font-size: 19px; margin: 4px 0 4px; font-weight: 600; }
+  .article header .role { font-size: 13px; color: var(--muted); }
+  .article .thesis {
+    font-size: 15px; line-height: 1.55; padding: 14px 16px; background: #fef3c7;
+    border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; margin: 0 0 14px;
+  }
+  .article ul { padding-left: 22px; margin: 6px 0 14px; }
+  .article ul li { font-size: 14px; line-height: 1.55; margin: 6px 0; }
+  .article .data { font-size: 12px; color: var(--muted); font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  .article .quote { font-style: italic; color: var(--muted); margin: 4px 0 4px 12px; }
+  .article .gap { padding: 10px 14px; background: #fee2e2; border-radius: 6px; font-size: 13px; color: #991b1b; margin-top: 10px; }
+  .article .gap strong { color: #7f1d1d; }
+
+  /* Site grid */
+  .filter-bar {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 12px 16px; background: white; border: 1px solid var(--border);
+    border-radius: 8px; margin-bottom: 16px; position: sticky; top: 0; z-index: 10;
+  }
+  .filter-bar input {
+    flex: 1; min-width: 200px; padding: 6px 10px; font-size: 13px;
+    border: 1px solid var(--border); border-radius: 4px; outline: none;
+  }
+  .filter-bar input:focus { border-color: var(--hl-ink); }
+  .filter-bar select { padding: 6px 10px; font-size: 13px; border: 1px solid var(--border); border-radius: 4px; background: white; }
+  .filter-bar .count { font-size: 12px; color: var(--muted); margin-left: auto; }
+
+  .sites { display: grid; gap: 12px; }
+  .site {
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    overflow: hidden;
+  }
+  .site-head {
+    padding: 14px 18px; border-bottom: 1px solid var(--border-soft);
+    display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap;
+  }
+  .site-head h3 { font-size: 17px; margin: 0; font-weight: 600; }
+  .site-head h3 .ext { color: var(--muted); text-decoration: none; font-size: 12px; margin-left: 4px; }
+  .site-head h3 .ext:hover { color: var(--accent); }
+  .site-head .meta { color: var(--muted); font-size: 12px; }
+  .site-head .badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge {
+    font-size: 10px; padding: 2px 8px; border-radius: 999px; background: #f3f4f6;
+    color: #374151; font-weight: 500;
+  }
+  .badge.high { background: #ecfdf5; color: #065f46; }
+  .badge.medium { background: #fef3c7; color: #92400e; }
+  .badge.low { background: #fee2e2; color: #991b1b; }
+  .site-body { padding: 14px 18px; }
+  .site-body p.oneline { font-size: 14px; margin: 0 0 6px; }
+  .site-body p.distinct { font-size: 13px; color: var(--muted); margin: 0 0 12px; line-height: 1.45; }
+  dl.facts {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 4px 18px; font-size: 12px; margin: 12px 0;
+  }
+  dl.facts dt { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+  dl.facts dd { margin: 0 0 4px; font-weight: 500; word-break: break-word; }
+  dl.facts .swatch {
+    display: inline-block; width: 12px; height: 12px; border-radius: 3px;
+    border: 1px solid var(--border); vertical-align: middle; margin-right: 4px;
+  }
+  .shots {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 12px;
+  }
+  .shots a { display: block; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+  .shots img { width: 100%; height: auto; display: block; aspect-ratio: 16/10; object-fit: cover; object-position: top; }
+
+  footer { margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    .wrap { padding: 24px 16px 64px; }
+    h1.title { font-size: 26px; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .findings { grid-template-columns: 1fr; }
+    dl.facts { grid-template-columns: 1fr; }
+    .shots { grid-template-columns: repeat(3, 1fr); }
+    .shots a:nth-child(n+4) { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1 class="title">50 AI-Native B2B Websites</h1>
+<p class="lede">A 50-site survey across 10 sub-categories, 148 columns per site, 250 screenshots. The dataset that drives the upcoming Recurr Press piece on how AI-native B2B is designing itself today — fold by fold, page by page.</p>
+
+<div class="toc">
+  <a href="#stats">Numbers</a>
+  <a href="#findings">Findings</a>
+  <a href="#articles">Article briefs</a>
+  <a href="#sites">All 50 sites</a>
+  <a href="#methodology">Methodology</a>
+  <a href="data.csv">↓ data.csv</a>
+</div>
+
+<section id="stats">
+<h2>The numbers</h2>
+<dl class="stats">
+  <div class="stat"><dt>Sites surveyed</dt><dd>50<span class="unit">/ 50</span></dd></div>
+  <div class="stat"><dt>Columns each</dt><dd>148</dd></div>
+  <div class="stat"><dt>Screenshots</dt><dd>250</dd></div>
+  <div class="stat"><dt>Confidence: high</dt><dd>25<span class="unit">/ 50 (50%)</span></dd></div>
+  <div class="stat"><dt>Total cost</dt><dd>$0.32</dd></div>
+  <div class="stat"><dt>Wall clock</dt><dd>24 min</dd></div>
+</dl>
+<div class="downloads">
+  <a href="data.csv" download>↓ Download CSV (89 KB)</a>
+  <a href="screenshots/" class="ghost">Browse 250 screenshots</a>
+</div>
+</section>
+
+<section id="findings">
+<h2>The 10 biggest findings <span class="sub">— from 50 × 148 cells</span></h2>
+<p class="lede" style="margin-bottom:18px">Things that surprised us. Things that clearly converged. Things worth a sentence in the article.</p>
+<div class="findings">
+
+  <div class="find">
+    <div class="stat-num">41<span class="denom">/50</span><span class="pct">82%</span></div>
+    <h4>Hero copy = benefit-first</h4>
+    <p>The category has converged on outcome-led headlines. Almost no manifesto-led, no founder-voice, no benchmark-led heroes. AI-native B2B is buying-committee-ready copy.</p>
+  </div>
+
+  <div class="find">
+    <div class="stat-num">23<span class="denom">/50</span><span class="pct">46%</span></div>
+    <h4>Have an llms.txt</h4>
+    <p>Plurality, not yet table-stakes. Adoption skews to design-tooling (100%), marketing-ops, customer-support, coding-agents (~67% each). Lowest in ops-automation (17%).</p>
+  </div>
+
+  <div class="find">
+    <div class="stat-num">3<span class="denom">/50</span><span class="pct">6%</span></div>
+    <h4>Block GPTBot</h4>
+    <p>The clearest sentiment in the dataset: AI-native companies want LLM citation traffic. 47/50 leave the door open. 88% have robots.txt at all.</p>
+  </div>
+
+  <div class="find">
+    <div class="stat-num">17<span class="denom">/50</span><span class="pct">34%</span></div>
+    <h4>Built on Webflow</h4>
+    <p>Biggest single framework — beating Next.js (15/50) for "AI-native" sites. Cloudflare hosts 21 (42%); Vercel hosts 14. The infrastructure narrative diverges from the marketing-site reality.</p>
+  </div>
+
+  <div class="find">
+    <div class="stat-num">19<span class="denom">/50</span><span class="pct">38%</span></div>
+    <h4>Lead with "Book a Demo"</h4>
+    <p>Plus another 8 with "Contact Sales" → 54% are demo-gated. Only 13/50 have self-sign-up as the primary conversion. AI-native ≠ PLG.</p>
+  </div>
+
+  <div class="find">
+    <div class="stat-num">27<span class="denom">/50</span><span class="pct">54%</span></div>
+    <h4>Voice = corporate</h4>
+    <p>Plus 16 authoritative. Founder-voice exists on only 5 sites (Ragas, Coderabbit, Braintrust, 11x.ai, Attio). Playful voice on 1.</p>
+  </div>
+
+  <div class="find">
+    <div class="stat-num">11<span class="denom">/50</span><span class="pct">22%</span></div>
+    <h4>Show 6 pricing tiers</h4>
+    <p>The "too many tiers" pattern. 11 sites front-load 6+ pricing tiers (Lutra, Relay, Kombai, Inferless, Sybill, Braintrust, Warmly, Rocketlane, Attio, Clay, Murf). Decision fatigue at the cart.</p>
+  </div>
+
+  <div class="find">
+    <div class="stat-num">38<span class="denom">/50</span><span class="pct">76%</span></div>
+    <h4>Display compliance badges</h4>
+    <p>SOC 2 (26), GDPR (21), PCI (14), CCPA (12), HIPAA (10), ISO 27001 (9). Compliance is the new "trusted by" — even pre-Series A startups are signaling it.</p>
+  </div>
+
+  <div class="find">
+    <div class="stat-num">18<span class="denom">/50</span><span class="pct">36%</span></div>
+    <h4>Hero contains the word "AI"</h4>
+    <p>Surprisingly low. The category is AI-native by definition; only 1 in 3 say so in the H1. They lead with the outcome, not the technology — even if the company name and category give it away.</p>
+  </div>
+
+  <div class="find">
+    <div class="stat-num">31<span class="denom">/50</span><span class="pct">62%</span></div>
+    <h4>Use Google Analytics</h4>
+    <p>Plus HubSpot 18, PostHog 13, Segment 9, Clarity 8. PostHog has serious traction in this cohort — 26% adoption, almost matching HubSpot.</p>
+  </div>
+</div>
+</section>
+
+<section id="articles">
+<h2>Article briefs <span class="sub">— first-level content feedback for Nagendra</span></h2>
+<p class="lede" style="margin-bottom:18px">The 4 derivative pieces from one research project. Each below has a thesis-from-data, supporting evidence, sites to feature, and remaining gaps. Use as starting points; the cuts and order are yours.</p>
+
+<div class="article">
+  <header>
+    <div class="num">Article 01 — Headline piece</div>
+    <h3>Design patterns: what 50 AI-native B2B sites all do</h3>
+    <div class="role">Pattern essay · 1500-2000 words · meta-piece for the cohort</div>
+  </header>
+
+  <p class="thesis"><strong>Thesis from the data:</strong> AI-native B2B has already converged. The category is two years old and looks like it's twenty — same hero structure, same nav, same compliance shelf, same pricing logic. The interesting question isn't <em>how is AI-native different from old SaaS</em>. It's <em>why does the category that's supposed to be reinventing software look so much like the software it's replacing?</em></p>
+
+  <h3 class="sub-head">5 patterns that show up everywhere</h3>
+  <ul>
+    <li><strong>Benefit-first heroes (82%)</strong>. "Cut code review time & bugs in half." "Get two hours back every day." Almost no manifesto, no benchmark-led, no visionary copy. The H1 word that matters is what changes for the buyer.</li>
+    <li><strong>Product-led navs (78%)</strong>. Same five-or-six items: Product / Solutions / Pricing / Customers / Resources / Login. The "audience-led" nav (For Developers / For PMs) only shows up on 5/50.</li>
+    <li><strong>Compliance shelf (76%)</strong>. SOC 2 + GDPR by default. Even seed-stage companies are signaling enterprise-readiness in 2026. Compliance has eaten "trusted by" as the social proof of choice.</li>
+    <li><strong>Demo-first conversion (54%)</strong>. AI-native is supposed to be PLG. It isn't. Book-a-demo (19) + Contact-Sales (8) = 27 sites that gate the funnel. Only 13/50 actually let you self-sign-up.</li>
+    <li><strong>Inter font (10/50 use it as body)</strong>. Plus the "Manrope / Onest / Satoshi" cluster of clean geometric sans serifs. Of 50 sites, exactly zero serif headlines.</li>
+  </ul>
+
+  <h3 class="sub-head">3 patterns that <em>break</em> the consensus</h3>
+  <ul>
+    <li><strong>Webflow > Next.js (17 vs 15).</strong> The "AI-native" cohort builds its marketing on no-code more than on the framework its founders cite. The infrastructure story is more about velocity than ideology.</li>
+    <li><strong>Hero copy doesn't say "AI" 64% of the time.</strong> They've already moved past needing to say it.</li>
+    <li><strong>Founder-voice is functionally dead</strong> in B2B — 5/50, all of them dev-tool / coding-agent companies (Ragas, Coderabbit, Braintrust, 11x, Attio).</li>
+  </ul>
+
+  <h3 class="sub-head">Sites to feature as exemplars</h3>
+  <ul>
+    <li><strong>Lindy</strong> — perfect benefit-first hero ("Get two hours back every day") + product UI in hero. Confidence high, missing 17.</li>
+    <li><strong>Coderabbit</strong> — dark terminal aesthetic, monospace subhead, embedded code-review UI. Founder-voice, authoritative.</li>
+    <li><strong>Attio</strong> — corporate-clean done right. "Customer relationship magic." Hero embeds an interactive AI demo.</li>
+    <li><strong>11x.ai</strong> — the contrarian. Alien/astronaut imagery, "Digital workers, Human results." Visual creative risk vs. category norm.</li>
+    <li><strong>Sarvam AI</strong> — geographic-positioning outlier. India-first sovereign AI. Different conversation entirely.</li>
+  </ul>
+
+  <div class="gap"><strong>Open question:</strong> the data says nav structure has converged, but it doesn't tell us <em>why</em>. Worth one founder/marketer DM each from a corporate-voice site (Glean, Writer, Findem) and a founder-voice site (Coderabbit, Braintrust): "Why this nav and not another?"</div>
+</div>
+
+<div class="article">
+  <header>
+    <div class="num">Article 02 — Components piece</div>
+    <h3>Best of: headers, footers, hero CTAs, pricing pages</h3>
+    <div class="role">Ranked round-up · 1200-1500 words · screenshot-heavy</div>
+  </header>
+
+  <p class="thesis"><strong>Thesis from the data:</strong> the components that work hardest aren't the ones founders argue about. Headers are 78% the same. Pricing pages are where the category fights. Hero CTAs are remarkably uniform — 17 sites lead with "Book a demo," 9 with "Try for free."</p>
+
+  <h3 class="sub-head">Header categories worth ranking</h3>
+  <ul>
+    <li><strong>Bold-on-bold</strong>: Reevo (massive all-caps hero), Kombai (neon mint on pure black). Best for category-creator positioning.</li>
+    <li><strong>Demo-in-hero</strong>: Attio (Ask Attio chatbot embedded in hero), Fyxer (Gmail UI overlay). Best for "show, don't tell."</li>
+    <li><strong>Mockup-as-proof</strong>: Lindy (product UI in hero), Sybill (network diagram), Coframe. Best for visual category newcomers.</li>
+    <li><strong>Brand-credibility</strong>: Distyl (institutional partner logos in lieu of CTA), Aaru (EY validation banner). Best for enterprise-skewed sales.</li>
+  </ul>
+
+  <h3 class="sub-head">Hero CTA rankings (by volume)</h3>
+  <ul>
+    <li>Book / Get / Request a demo — <strong>17 sites</strong>. The default. ["Book a demo" × 4, "Get a demo" × 3, "Request a demo" × 3 + 7 variants]</li>
+    <li>Try / Start for free — <strong>9 sites</strong>. Plus 8 "Sign up." 17 total self-serve invites.</li>
+    <li>Contact Sales / Contact Us — <strong>7 sites</strong>. Distyl, Cognition, Sarvam — high-touch enterprise.</li>
+    <li>"Get early access" — <strong>1 site</strong>. Wait-list pattern is essentially extinct in this cohort.</li>
+  </ul>
+
+  <h3 class="sub-head">Pricing page patterns</h3>
+  <ul>
+    <li><strong>14/50 are "talk to us"</strong> — no public pricing. Slightly higher than expected for SaaS.</li>
+    <li><strong>11/50 show 6 pricing tiers</strong> — too many. Lutra, Relay, Kombai, Inferless, Sybill, Braintrust, Warmly, Rocketlane, Attio, Clay, Murf.</li>
+    <li><strong>17/50 toggle annual / monthly</strong>. 25/50 have a free tier. 19/50 advertise a free trial.</li>
+    <li><strong>Pricing model split</strong>: tier (19) ≈ usage-based (17) ≈ talk-to-us (14). Roughly equal — a thin majority for explicit tiering.</li>
+  </ul>
+
+  <h3 class="sub-head">Footer signals</h3>
+  <ul>
+    <li>Compliance badges in footer = 76% (very high)</li>
+    <li>Newsletter signup in footer = ~30% (not as common as expected)</li>
+    <li>Status page link = ~40% (only data-infra and dev-tools sites do this religiously)</li>
+  </ul>
+
+  <div class="gap"><strong>Gap:</strong> we didn't crawl pricing-page subpages, only the top of /pricing. For an article ranking the <em>best</em> pricing pages, you'd want to manually review the top 6-tier offenders to see if their tier explanations actually justify the count.</div>
+</div>
+
+<div class="article">
+  <header>
+    <div class="num">Article 03 — Agent-readability</div>
+    <h3>The AEO audit: how AI-native sites get read by AI</h3>
+    <div class="role">Technical/SEO piece · 1200-1500 words · the most "Recurr Press" angle</div>
+  </header>
+
+  <p class="thesis"><strong>Thesis from the data:</strong> AI-native B2B is in the middle of a quiet shift from being readable by Googlebot to being readable by GPTBot — but the cohort is split. 46% have an llms.txt; 6% block GPTBot. Half the sites are SPAs that scrapers can't read without JS execution. This is the sub-genre where the category leaders are openly competing for citation share, and the laggards don't yet realize the rules changed.</p>
+
+  <h3 class="sub-head">The 4 hard numbers</h3>
+  <ul>
+    <li><strong>llms.txt adoption: 46%.</strong> Plurality, not table-stakes. Top adopters: design-tooling (100%), marketing-ops (67%), coding-agents (67%), customer-support (67%). Laggards: ops-automation (17%), security (0%).</li>
+    <li><strong>GPTBot blocked: 6%.</strong> 47/50 have decided LLM citation traffic is desirable. Compare to media — NYT, WSJ, Guardian all block. The B2B SaaS posture is the opposite.</li>
+    <li><strong>Server-side rendering: 48%.</strong> Half the cohort can be read by a no-JS scraper. The other half (SPA) requires headless browser execution to extract the hero copy. This matters for AI-search agents that don't run JS.</li>
+    <li><strong>JSON-LD structured data: ~46%.</strong> Organization (12), WebSite (9), SoftwareApplication (5). Surprisingly weak adoption — leaves citation context on the table.</li>
+  </ul>
+
+  <h3 class="sub-head">The AEO winners</h3>
+  <ul>
+    <li><strong>Lindy, Glean, Attio, Lutra, Writer</strong> — full stack: SSR + llms.txt + JSON-LD + structured nav. Ready to be read.</li>
+    <li><strong>Lindy is the standout</strong> — high confidence, 17 missing fields, llms.txt + robots.txt + structured data + benefit-first hero copy. The most "agent-legible" site in the cohort.</li>
+  </ul>
+
+  <h3 class="sub-head">The AEO losers</h3>
+  <ul>
+    <li><strong>3 sites block GPTBot</strong>. We should call them out (and ask what their reasoning is). Could be a sidebar.</li>
+    <li><strong>SPA-only sites</strong> (CodeRabbit, Lindy as SPA, half the cohort): hero text not in initial HTML. AI scrapers without JS can't read them. This is a real performance gap.</li>
+    <li><strong>Ops-automation sub-cat (17% llms.txt adoption)</strong> — the laggard. Probably because ops-automation buyers don't search-via-LLM yet.</li>
+  </ul>
+
+  <h3 class="sub-head">The framing for the article</h3>
+  <p>"In 2026, the new SEO is being read by ChatGPT. AI-native B2B is split: half the cohort is already optimizing for it. The other half is acting like Google is still the only place buyers look." Use the 46% / 6% / 48% / 46% as the structural numbers.</p>
+
+  <div class="gap"><strong>Gap:</strong> we don't have data on whether these llms.txt files are actually well-structured (some may exist but be useless). A v2 pass could fetch + grade each one. ~5 min of additional work.</div>
+</div>
+
+<div class="article">
+  <header>
+    <div class="num">Article 04 — The composite</div>
+    <h3>The composite median AI-native B2B site (Claude generated)</h3>
+    <div class="role">Generated piece · short essay + a Claude-built mockup · 600-900 words</div>
+  </header>
+
+  <p class="thesis"><strong>Thesis from the data:</strong> if you wanted to build the most boringly average AI-native B2B website in 2026, here's exactly what it would look like. (And: every site that's actually working is a deviation from this average.)</p>
+
+  <h3 class="sub-head">The composite median</h3>
+  <ul>
+    <li><strong>Hero:</strong> 1-column centered. "Cut [X] in half" or "Get [Y] back" — benefit-first, 6 words, doesn't say "AI." Below it: a product UI screenshot.</li>
+    <li><strong>CTA:</strong> "Book a demo" (or "Get started" if PLG). Black or near-black button. "Try for free" as secondary.</li>
+    <li><strong>Nav:</strong> Product / Solutions / Pricing / Customers / Resources / Login. Sticky. Traditional bar.</li>
+    <li><strong>Below the fold:</strong> Logo cloud (grayscale, 8-12 logos). Then features in a cards-grid (3 or 6). Then testimonials with named headshots. Then a CTA slab. Then footer.</li>
+    <li><strong>Type:</strong> Inter or Manrope. Sans-on-sans. H1 between 64-96px.</li>
+    <li><strong>Color:</strong> One accent color (hex value: anything but #000000), used on buttons + a heading word. Subtle gradients.</li>
+    <li><strong>Pricing:</strong> 3-tier or "talk to us." Annual/monthly toggle. Free trial — credit-card-not-required.</li>
+    <li><strong>Footer:</strong> 4 columns. SOC 2 + GDPR badges. © 2026.</li>
+    <li><strong>Tech:</strong> Webflow on Cloudflare Pages. SSR. JSON-LD Organization. Has llms.txt. Doesn't block GPTBot. GA4 + HubSpot.</li>
+  </ul>
+
+  <h3 class="sub-head">Why this is interesting</h3>
+  <p>The composite is so specific that it's actually a checklist: any site missing 3+ items is either intentionally distinctive (Reevo, Kombai, 11x.ai) or accidentally underbaked. Use it as a "score yourself" tool. Tag it as a Recurr Press shelf-ready resource.</p>
+
+  <h3 class="sub-head">How Claude builds the mockup</h3>
+  <p>Generate an HTML page from the median values. Render it. Drop it in the article as the centerpiece visual. ("This is the website 50 AI-native B2B companies built. Find yourself in it.") Hosted at <code>pages.recurr.co/the-composite-site</code> — an asset on its own.</p>
+
+  <div class="gap"><strong>Gap:</strong> we should ask 5-10 of the surveyed companies to comment on the composite — "fairly accurate" / "we deliberately broke this rule" / "we didn't realize we were doing this." That's the column we don't have yet.</div>
+</div>
+</section>
+
+<section id="sites">
+<h2>All 50 sites <span class="sub">— search/filter</span></h2>
+<div class="filter-bar">
+  <input type="text" id="filter-q" placeholder="Search company / H1 / framework / voice / fonts...">
+  <select id="filter-cat">
+    <option value="">All categories</option>
+    <option>sales-enablement</option>
+    <option>ops-automation</option>
+    <option>marketing-ops</option>
+    <option>agent-platforms</option>
+    <option>data-infra</option>
+    <option>customer-support</option>
+    <option>coding-agents</option>
+    <option>dev-tools</option>
+    <option>design-tooling</option>
+    <option>security</option>
+  </select>
+  <select id="filter-conf">
+    <option value="">Any confidence</option>
+    <option>high</option>
+    <option>medium</option>
+    <option>low</option>
+  </select>
+  <span class="count" id="visible-count"></span>
+</div>
+
+<div class="sites">
+
+<div class="site" id="site-reevo">
+  <div class="site-head">
+    <div>
+      <h3>Reevo <a class="ext" href="https://reevo.ai" target="_blank">↗</a></h3>
+      <div class="meta">sales-enablement · series-c · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">18 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Unified revenue operating system consolidating prospecting, outreach, and pipeline management into single platform.</strong></p>
+    <p class="distinct">Bold all-caps headline with extreme contrast and massive font hierarchy dominates entire hero section</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"ONE PLATFORM. FROM FIRST TOUCH TO CLOSED WON." (8w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Get started · sign-up</dd></div>
+      <div><dt>Stack</dt><dd>next · vercel · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Metrify / Haltung</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#000000"></span> #000000</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 2 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>sign-up</dd></div>
+      <div><dt>ICP</dt><dd>pm</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/reevo/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/reevo/01-hero.png" alt=""></a><a href="screenshots/reevo/02-features.png" target="_blank"><img loading="lazy" src="screenshots/reevo/02-features.png" alt=""></a><a href="screenshots/reevo/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/reevo/03-social-proof.png" alt=""></a><a href="screenshots/reevo/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/reevo/04-pricing.png" alt=""></a><a href="screenshots/reevo/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/reevo/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-lutra-ai">
+  <div class="site-head">
+    <div>
+      <h3>Lutra AI <a class="ext" href="https://lutra.ai" target="_blank">↗</a></h3>
+      <div class="meta">ops-automation · seed · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">19 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI productivity agent that automates work by connecting enterprise apps via integrations and natural language.</strong></p>
+    <p class="distinct">Inline chat input with app integration icons in hero; lime-green accent on key words draws attention</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"What would you like to automate today?" (7w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Log In · login</dd></div>
+      <div><dt>Stack</dt><dd>next · vercel · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>__Plus_Jakarta_Sans_646807 / __Inter_f367f3</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#008f99"></span> #008f99</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 6 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✗ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>self-sign-up</dd></div>
+      <div><dt>ICP</dt><dd>ops</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/lutra-ai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/lutra-ai/01-hero.png" alt=""></a><a href="screenshots/lutra-ai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/lutra-ai/02-features.png" alt=""></a><a href="screenshots/lutra-ai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/lutra-ai/03-social-proof.png" alt=""></a><a href="screenshots/lutra-ai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/lutra-ai/04-pricing.png" alt=""></a><a href="screenshots/lutra-ai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/lutra-ai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-relay-app">
+  <div class="site-head">
+    <div>
+      <h3>Relay.app <a class="ext" href="https://relay.app" target="_blank">↗</a></h3>
+      <div class="meta">ops-automation · seed · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">21 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI automation platform converting natural language to visual workflows across 200+ apps with playful, persona-driven design</strong></p>
+    <p class="distinct">Colorful illustrated workflow cards with named user personas below hero showcasing real use cases</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"The easiest way to automate with AI" (7w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Start for free · self-sign-up</dd></div>
+      <div><dt>Stack</dt><dd>webflow · vercel · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>playful</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Onest / sans-serif</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#4461ff"></span> #4461ff</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 6 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>self-sign-up</dd></div>
+      <div><dt>ICP</dt><dd>unknown</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/relay-app/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/relay-app/01-hero.png" alt=""></a><a href="screenshots/relay-app/02-features.png" target="_blank"><img loading="lazy" src="screenshots/relay-app/02-features.png" alt=""></a><a href="screenshots/relay-app/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/relay-app/03-social-proof.png" alt=""></a><a href="screenshots/relay-app/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/relay-app/04-pricing.png" alt=""></a><a href="screenshots/relay-app/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/relay-app/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-artisan-ai">
+  <div class="site-head">
+    <div>
+      <h3>Artisan AI <a class="ext" href="https://artisan.co" target="_blank">↗</a></h3>
+      <div class="meta">sales-enablement · series-a · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">27 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI-powered autonomous BDR platform that automates lead generation, outreach, and meeting booking at enterprise scale.</strong></p>
+    <p class="distinct">Purple gradient background with AI agent avatar (Ava) as centerpiece in product demo section</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Hire Ava The autonomous AI BDR" (6w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Get early access · wait-list</dd></div>
+      <div><dt>Stack</dt><dd>next · vercel · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>intrinseca / ui-sans-serif</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#4c12a1"></span> #4c12a1</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 1 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>wait-list</dd></div>
+      <div><dt>ICP</dt><dd>ops</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/artisan-ai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/artisan-ai/01-hero.png" alt=""></a><a href="screenshots/artisan-ai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/artisan-ai/02-features.png" alt=""></a><a href="screenshots/artisan-ai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/artisan-ai/03-social-proof.png" alt=""></a><a href="screenshots/artisan-ai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/artisan-ai/04-pricing.png" alt=""></a><a href="screenshots/artisan-ai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/artisan-ai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-fibr-ai">
+  <div class="site-head">
+    <div>
+      <h3>Fibr AI <a class="ext" href="https://fibr.ai" target="_blank">↗</a></h3>
+      <div class="meta">marketing-ops · seed · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">23 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Fibr AI offers adaptive web experiences powered by AI agents that personalize URLs in real-time for each visitor.</strong></p>
+    <p class="distinct">Agentic execution framework with human oversight positioning and dark teal accent color.</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Adaptive AI Web Experiences, crafted for each consumer’s story" (9w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Get a Demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>webflow · unknown · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Inter Display / sans-serif</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#ff6633"></span> #ff6633</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 2 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>pm</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/fibr-ai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/fibr-ai/01-hero.png" alt=""></a><a href="screenshots/fibr-ai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/fibr-ai/02-features.png" alt=""></a><a href="screenshots/fibr-ai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/fibr-ai/03-social-proof.png" alt=""></a><a href="screenshots/fibr-ai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/fibr-ai/04-pricing.png" alt=""></a><a href="screenshots/fibr-ai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/fibr-ai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-koala">
+  <div class="site-head">
+    <div>
+      <h3>Koala <a class="ext" href="https://getkoala.com" target="_blank">↗</a></h3>
+      <div class="meta">sales-enablement · series-a · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">17 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI-powered sales enablement platform helping reps prioritize leads and maintain engagement through contact lifecycle.</strong></p>
+    <p class="distinct">Bold purple gradient hero with energetic orange accent CTAs and lightning bolt emoji</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Scale your winning sales plays" (5w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Get Started · sign-up</dd></div>
+      <div><dt>Stack</dt><dd>next · cloudflare · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Satoshi / Satoshi</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#ff6b35"></span> #ff6b35</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 0 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>self-sign-up</dd></div>
+      <div><dt>ICP</dt><dd>pm</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/koala/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/koala/01-hero.png" alt=""></a><a href="screenshots/koala/02-features.png" target="_blank"><img loading="lazy" src="screenshots/koala/02-features.png" alt=""></a><a href="screenshots/koala/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/koala/03-social-proof.png" alt=""></a><a href="screenshots/koala/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/koala/04-pricing.png" alt=""></a><a href="screenshots/koala/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/koala/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-coframe">
+  <div class="site-head">
+    <div>
+      <h3>Coframe <a class="ext" href="https://coframe.ai" target="_blank">↗</a></h3>
+      <div class="meta">marketing-ops · seed · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">20 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI-powered website optimization platform that continuously creates and tests variations to improve conversions.</strong></p>
+    <p class="distinct">Dark navy background with contrasting white card showing live product metrics and variation testing interface</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Coframe creates and tests variations of your website, improving 24/7." (10w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Get a demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>webflow · cloudflare · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>NB International Pro / NB International Pro</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#0000ee"></span> #0000ee</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 1 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>marketer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/coframe/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/coframe/01-hero.png" alt=""></a><a href="screenshots/coframe/02-features.png" target="_blank"><img loading="lazy" src="screenshots/coframe/02-features.png" alt=""></a><a href="screenshots/coframe/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/coframe/03-social-proof.png" alt=""></a><a href="screenshots/coframe/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/coframe/04-pricing.png" alt=""></a><a href="screenshots/coframe/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/coframe/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-alex">
+  <div class="site-head">
+    <div>
+      <h3>Alex <a class="ext" href="https://www.alex.com/" target="_blank">↗</a></h3>
+      <div class="meta">ops-automation · series-a · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">18 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI recruiter platform automating screening, interviews and candidate engagement across multiple channels for hiring teams.</strong></p>
+    <p class="distinct">Minimalist typographic hero with forest-green brand color; dark header banner with funding announcement</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Your AI Recruiter to" (4w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Request a demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>webflow · cloudflare · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>DM Sans / DM Sans</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#082900"></span> #082900</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✓</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>ops</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/alex/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/alex/01-hero.png" alt=""></a><a href="screenshots/alex/02-features.png" target="_blank"><img loading="lazy" src="screenshots/alex/02-features.png" alt=""></a><a href="screenshots/alex/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/alex/03-social-proof.png" alt=""></a><a href="screenshots/alex/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/alex/04-pricing.png" alt=""></a><a href="screenshots/alex/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/alex/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-lexi">
+  <div class="site-head">
+    <div>
+      <h3>Lexi <a class="ext" href="https://www.withlexi.com/" target="_blank">↗</a></h3>
+      <div class="meta">ops-automation · seed · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">25 miss</span>
+      <span class="badge">4/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Enterprise healthcare AI interpreter enabling multilingual patient conversations across the care journey.</strong></p>
+    <p class="distinct">Multilingual greeting phrases integrated into hero photography layout showing diverse patient faces</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Care in ‍any language" (4w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>CONTACT US · contact-sales</dd></div>
+      <div><dt>Stack</dt><dd>webflow · cloudflare · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Fraunces Variablefont Soft Wonk Opsz Wght / Arial</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#3420b8"></span> #3420b8</dd></div>
+      <div><dt>Pricing</dt><dd>talk-to-us · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>contact-sales</dd></div>
+      <div><dt>ICP</dt><dd>unknown</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/lexi/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/lexi/01-hero.png" alt=""></a><a href="screenshots/lexi/02-features.png" target="_blank"><img loading="lazy" src="screenshots/lexi/02-features.png" alt=""></a><a href="screenshots/lexi/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/lexi/03-social-proof.png" alt=""></a><a href="screenshots/lexi/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/lexi/04-pricing.png" alt=""></a><a href="screenshots/lexi/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/lexi/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-distyl-ai">
+  <div class="site-head">
+    <div>
+      <h3>Distyl AI <a class="ext" href="https://distyl.ai" target="_blank">↗</a></h3>
+      <div class="meta">ops-automation · series-b · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">22 miss</span>
+      <span class="badge">4/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Enterprise AI operations platform helping institutions rearchitect systems for frontier technologies while preserving human agency</strong></p>
+    <p class="distinct">Deep navy gradient background with abstract data visualization and white sans-serif typography creating premium tech aesthetic</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Rearchitecting Entire Industries For Frontier Technologies" (6w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>— · unknown</dd></div>
+      <div><dt>Stack</dt><dd>wordpress · unknown · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>visionary</dd></div>
+      <div><dt>Fonts</dt><dd>AlliancePlatt / Inter</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#ffffff"></span> #ffffff</dd></div>
+      <div><dt>Pricing</dt><dd>talk-to-us · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>contact-sales</dd></div>
+      <div><dt>ICP</dt><dd>exec</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/distyl-ai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/distyl-ai/01-hero.png" alt=""></a><a href="screenshots/distyl-ai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/distyl-ai/02-features.png" alt=""></a><a href="screenshots/distyl-ai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/distyl-ai/03-social-proof.png" alt=""></a><a href="screenshots/distyl-ai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/distyl-ai/04-pricing.png" alt=""></a><a href="screenshots/distyl-ai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/distyl-ai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-ragas">
+  <div class="site-head">
+    <div>
+      <h3>Ragas <a class="ext" href="https://ragas.io" target="_blank">↗</a></h3>
+      <div class="meta">dev-tools · seed · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">21 miss</span>
+      <span class="badge">4/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Ragas is an LLM evaluation framework targeting developers with automated metrics and synthetic data generation for production apps.</strong></p>
+    <p class="distinct">Geometric network diagram overlay with gold connecting lines creating visual hierarchy for LLM architecture concepts</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"ragas" (1w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Contact Us · contact-sales</dd></div>
+      <div><dt>Stack</dt><dd>next · vercel · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>terminal-hacker</dd></div>
+      <div><dt>Voice</dt><dd>founder-voice</dd></div>
+      <div><dt>Hero copy</dt><dd>feature-list</dd></div>
+      <div><dt>Fonts</dt><dd>__Tenor_Sans_d4b61f / Satoshi-Variable</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#d4a135"></span> #d4a135</dd></div>
+      <div><dt>Pricing</dt><dd>talk-to-us · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✗ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>contact-sales</dd></div>
+      <div><dt>ICP</dt><dd>developer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/ragas/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/ragas/01-hero.png" alt=""></a><a href="screenshots/ragas/02-features.png" target="_blank"><img loading="lazy" src="screenshots/ragas/02-features.png" alt=""></a><a href="screenshots/ragas/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/ragas/03-social-proof.png" alt=""></a><a href="screenshots/ragas/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/ragas/04-pricing.png" alt=""></a><a href="screenshots/ragas/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/ragas/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-orbitshift">
+  <div class="site-head">
+    <div>
+      <h3>OrbitShift <a class="ext" href="https://orbitshift.ai/" target="_blank">↗</a></h3>
+      <div class="meta">sales-enablement · seed · india</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">19 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Enterprise sales platform positioning AI-driven account orchestration for ABM teams with consistent demo-first conversion model.</strong></p>
+    <p class="distinct">Purple gradient hero with curved abstract shapes creating premium, tech-forward aesthetic while maintaining clarity</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"System of works for account based sales teams" (8w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Request a Demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>next · aws · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Funnel Display / Inter</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#7c3aed"></span> #7c3aed</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 4 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>exec</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/orbitshift/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/orbitshift/01-hero.png" alt=""></a><a href="screenshots/orbitshift/02-features.png" target="_blank"><img loading="lazy" src="screenshots/orbitshift/02-features.png" alt=""></a><a href="screenshots/orbitshift/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/orbitshift/03-social-proof.png" alt=""></a><a href="screenshots/orbitshift/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/orbitshift/04-pricing.png" alt=""></a><a href="screenshots/orbitshift/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/orbitshift/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-superagi">
+  <div class="site-head">
+    <div>
+      <h3>SuperAGI <a class="ext" href="https://superagi.com" target="_blank">↗</a></h3>
+      <div class="meta">agent-platforms · series-a · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">24 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Platform for deploying 50+ AI-native apps and agents with a freemium conversational onboarding model</strong></p>
+    <p class="distinct">Conversational AI input field as primary hero CTA with non-human expert chatbot option</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Get Work done with SuperAGI" (5w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Sign up for free · sign-up</dd></div>
+      <div><dt>Stack</dt><dd>custom-react · aws · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Proxima Nova / ui-sans-serif</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#131315"></span> #131315</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 1 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>self-sign-up</dd></div>
+      <div><dt>ICP</dt><dd>developer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/superagi/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/superagi/01-hero.png" alt=""></a><a href="screenshots/superagi/02-features.png" target="_blank"><img loading="lazy" src="screenshots/superagi/02-features.png" alt=""></a><a href="screenshots/superagi/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/superagi/03-social-proof.png" alt=""></a><a href="screenshots/superagi/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/superagi/04-pricing.png" alt=""></a><a href="screenshots/superagi/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/superagi/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-kombai">
+  <div class="site-head">
+    <div>
+      <h3>Kombai <a class="ext" href="https://kombai.com" target="_blank">↗</a></h3>
+      <div class="meta">design-tooling · seed · india</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">17 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI agent for frontend developers combining specialized skills, deep browser access, and repository understanding.</strong></p>
+    <p class="distinct">Neon mint green accent on pure black with minimal typography hierarchy creates bold tech-forward aesthetic</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"The AI Agent Built for Frontend" (6w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Get Started · sign-up</dd></div>
+      <div><dt>Stack</dt><dd>next · vercel · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Manrope / Manrope</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#48de94"></span> #48de94</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 6 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>self-sign-up</dd></div>
+      <div><dt>ICP</dt><dd>developer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/kombai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/kombai/01-hero.png" alt=""></a><a href="screenshots/kombai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/kombai/02-features.png" alt=""></a><a href="screenshots/kombai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/kombai/03-social-proof.png" alt=""></a><a href="screenshots/kombai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/kombai/04-pricing.png" alt=""></a><a href="screenshots/kombai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/kombai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-latentforce">
+  <div class="site-head">
+    <div>
+      <h3>LatentForce <a class="ext" href="https://www.latentforce.ai/" target="_blank">↗</a></h3>
+      <div class="meta">coding-agents · seed · india</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">24 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>LatentForce enables AI coding agents to understand and modify codebases safely via a persistent context layer.</strong></p>
+    <p class="distinct">Monochrome dark background with large serif italic headline, bold orange accent color for key words and CTAs creating stark contrast.</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Make Your Codebase Agent-Ready." (4w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>GET EARLY ACCESS · contact-sales</dd></div>
+      <div><dt>Stack</dt><dd>unknown · unknown · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Fraunces / -apple-system</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#ff6b35"></span> #ff6b35</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>contact-sales</dd></div>
+      <div><dt>ICP</dt><dd>developer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/latentforce/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/latentforce/01-hero.png" alt=""></a><a href="screenshots/latentforce/02-features.png" target="_blank"><img loading="lazy" src="screenshots/latentforce/02-features.png" alt=""></a><a href="screenshots/latentforce/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/latentforce/03-social-proof.png" alt=""></a><a href="screenshots/latentforce/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/latentforce/04-pricing.png" alt=""></a><a href="screenshots/latentforce/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/latentforce/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-inferless">
+  <div class="site-head">
+    <div>
+      <h3>Inferless <a class="ext" href="https://inferless.com" target="_blank">↗</a></h3>
+      <div class="meta">data-infra · seed · india</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">21 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Serverless GPU infrastructure platform for ML model deployment with effortless scaling</strong></p>
+    <p class="distinct">Lime-green accent on deep forest green creates striking contrast; isometric 3D infrastructure diagram communicates complexity simply</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"—" (0w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Deploy now · start-free-trial</dd></div>
+      <div><dt>Stack</dt><dd>webflow · cloudflare · unknown</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Karelia / Maisonneue book</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#c6ff00"></span> #c6ff00</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 6 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>self-sign-up</dd></div>
+      <div><dt>ICP</dt><dd>developer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/inferless/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/inferless/01-hero.png" alt=""></a><a href="screenshots/inferless/02-features.png" target="_blank"><img loading="lazy" src="screenshots/inferless/02-features.png" alt=""></a><a href="screenshots/inferless/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/inferless/03-social-proof.png" alt=""></a><a href="screenshots/inferless/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/inferless/04-pricing.png" alt=""></a><a href="screenshots/inferless/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/inferless/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-frugal-ai">
+  <div class="site-head">
+    <div>
+      <h3>Frugal AI <a class="ext" href="https://frugal.co" target="_blank">↗</a></h3>
+      <div class="meta">ops-automation · seed · india</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">18 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI-powered cloud cost optimization tool targeting developers with benefit-first messaging and dual conversion paths.</strong></p>
+    <p class="distinct">Hand-drawn robot illustration with green accent color theme; brand personality through custom iconography placed around hero</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"See how Frugal works" (4w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Book Demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>webflow · cloudflare · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Aeonik / system-ui</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#2d62ff"></span> #2d62ff</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>developer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/frugal-ai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/frugal-ai/01-hero.png" alt=""></a><a href="screenshots/frugal-ai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/frugal-ai/02-features.png" alt=""></a><a href="screenshots/frugal-ai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/frugal-ai/03-social-proof.png" alt=""></a><a href="screenshots/frugal-ai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/frugal-ai/04-pricing.png" alt=""></a><a href="screenshots/frugal-ai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/frugal-ai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-repello-ai">
+  <div class="site-head">
+    <div>
+      <h3>Repello AI <a class="ext" href="https://repello.ai" target="_blank">↗</a></h3>
+      <div class="meta">security · seed · india</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">20 miss</span>
+      <span class="badge">4/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Enterprise AI security platform protecting agentic workflows via threat detection and proactive defense.</strong></p>
+    <p class="distinct">Dark gradient background with minimal floating threat labels emphasizing security urgency</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Secure your AI. Outsmart attackers." (5w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Get a demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>framer · unknown · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Manrope / sans-serif</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#0000ee"></span> #0000ee</dd></div>
+      <div><dt>Pricing</dt><dd>talk-to-us · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>unknown</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/repello-ai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/repello-ai/01-hero.png" alt=""></a><a href="screenshots/repello-ai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/repello-ai/02-features.png" alt=""></a><a href="screenshots/repello-ai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/repello-ai/03-social-proof.png" alt=""></a><a href="screenshots/repello-ai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/repello-ai/04-pricing.png" alt=""></a><a href="screenshots/repello-ai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/repello-ai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-ema">
+  <div class="site-head">
+    <div>
+      <h3>Ema <a class="ext" href="https://www.ema.ai/" target="_blank">↗</a></h3>
+      <div class="meta">agent-platforms · series-a · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">27 miss</span>
+      <span class="badge">4/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Enterprise AI employee platform that adapts across business functions to automate specialized knowledge work.</strong></p>
+    <p class="distinct">Product UI mockup integrated into hero showing agent interaction flow with customer support context</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"One employee Infinite roles" (4w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Hire Ema · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>next · vercel · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>satoshi / gtSuperDisplay</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#1f8844"></span> #1f8844</dd></div>
+      <div><dt>Pricing</dt><dd>talk-to-us · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✓</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>exec</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/ema/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/ema/01-hero.png" alt=""></a><a href="screenshots/ema/02-features.png" target="_blank"><img loading="lazy" src="screenshots/ema/02-features.png" alt=""></a><a href="screenshots/ema/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/ema/03-social-proof.png" alt=""></a><a href="screenshots/ema/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/ema/04-pricing.png" alt=""></a><a href="screenshots/ema/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/ema/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-relevance-ai">
+  <div class="site-head">
+    <div>
+      <h3>Relevance AI <a class="ext" href="https://relevanceai.com" target="_blank">↗</a></h3>
+      <div class="meta">agent-platforms · series-a · other</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">23 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI workforce platform for GTM teams to automate sales processes without scaling headcount, positioned as Copilot-to-Autopilot evolution.</strong></p>
+    <p class="distinct">Split hero with live product UI showing AI task automation workflow on right side, creating immediate product context</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Scale GTM results, without scaling headcount" (6w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Talk to sales · contact-sales</dd></div>
+      <div><dt>Stack</dt><dd>astro · vercel · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Sora / Inter</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#5b5bff"></span> #5b5bff</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 4 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>contact-sales</dd></div>
+      <div><dt>ICP</dt><dd>pm</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/relevance-ai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/relevance-ai/01-hero.png" alt=""></a><a href="screenshots/relevance-ai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/relevance-ai/02-features.png" alt=""></a><a href="screenshots/relevance-ai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/relevance-ai/03-social-proof.png" alt=""></a><a href="screenshots/relevance-ai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/relevance-ai/04-pricing.png" alt=""></a><a href="screenshots/relevance-ai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/relevance-ai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-sybill">
+  <div class="site-head">
+    <div>
+      <h3>Sybill <a class="ext" href="https://sybill.ai" target="_blank">↗</a></h3>
+      <div class="meta">sales-enablement · series-a · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">19 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI sales assistant that learns winning playbooks and helps reps execute deals like your best performer</strong></p>
+    <p class="distinct">Colorful network diagram with buyer personas as nodes showing deal relationships and competitive context</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Stop losing deals your best rep would have closed" (9w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Book a demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>webflow · cloudflare · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Ppfragment / Inter</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#414651"></span> #414651</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 6 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✓</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>pm</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/sybill/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/sybill/01-hero.png" alt=""></a><a href="screenshots/sybill/02-features.png" target="_blank"><img loading="lazy" src="screenshots/sybill/02-features.png" alt=""></a><a href="screenshots/sybill/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/sybill/03-social-proof.png" alt=""></a><a href="screenshots/sybill/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/sybill/04-pricing.png" alt=""></a><a href="screenshots/sybill/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/sybill/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-peec-ai">
+  <div class="site-head">
+    <div>
+      <h3>Peec AI <a class="ext" href="https://peec.ai" target="_blank">↗</a></h3>
+      <div class="meta">marketing-ops · series-a · eu</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">20 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI search analytics platform enabling marketing teams to track and improve brand performance across AI search engines.</strong></p>
+    <p class="distinct">Dual CTA strategy with &#x27;Talk to Sales&#x27; and &#x27;Start Free Trial&#x27; prominently positioned below hero copy</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"AI search analytics for marketing teams" (6w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Start Free Trial · start-free-trial</dd></div>
+      <div><dt>Stack</dt><dd>framer · unknown · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Geist Variable / sans-serif</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#0000ee"></span> #0000ee</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 5 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>start-free-trial</dd></div>
+      <div><dt>ICP</dt><dd>marketer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/peec-ai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/peec-ai/01-hero.png" alt=""></a><a href="screenshots/peec-ai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/peec-ai/02-features.png" alt=""></a><a href="screenshots/peec-ai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/peec-ai/03-social-proof.png" alt=""></a><a href="screenshots/peec-ai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/peec-ai/04-pricing.png" alt=""></a><a href="screenshots/peec-ai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/peec-ai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-kapa-ai">
+  <div class="site-head">
+    <div>
+      <h3>Kapa.ai <a class="ext" href="https://kapa.ai" target="_blank">↗</a></h3>
+      <div class="meta">dev-tools · seed · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">19 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI documentation agent platform enabling teams to build accurate support chatbots from technical docs in hours.</strong></p>
+    <p class="distinct">Dark minimal hero with bold typography and live product demo mockup embedded below</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"The answers are in your docs.Nobody can find them." (9w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Try for free · start-free-trial</dd></div>
+      <div><dt>Stack</dt><dd>framer · unknown · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Darker Grotesque / sans-serif</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#0000ee"></span> #0000ee</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 0 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>free-trial</dd></div>
+      <div><dt>ICP</dt><dd>developer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/kapa-ai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/kapa-ai/01-hero.png" alt=""></a><a href="screenshots/kapa-ai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/kapa-ai/02-features.png" alt=""></a><a href="screenshots/kapa-ai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/kapa-ai/03-social-proof.png" alt=""></a><a href="screenshots/kapa-ai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/kapa-ai/04-pricing.png" alt=""></a><a href="screenshots/kapa-ai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/kapa-ai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-coderabbit">
+  <div class="site-head">
+    <div>
+      <h3>Coderabbit <a class="ext" href="https://coderabbit.ai" target="_blank">↗</a></h3>
+      <div class="meta">coding-agents · series-b · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">20 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI-powered code review agent for developers that cuts review time and bugs in half with instant feedback.</strong></p>
+    <p class="distinct">Dark terminal-inspired UI with orange accent and embedded code review screenshot as hero visual</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Cut code review time &amp; bugs in half, instantly." (9w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Try it for free · start-free-trial</dd></div>
+      <div><dt>Stack</dt><dd>next · vercel · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>terminal-hacker</dd></div>
+      <div><dt>Voice</dt><dd>founder-voice</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>scandia / IBM Plex Mono</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#ff6b35"></span> #ff6b35</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 0 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>free-trial</dd></div>
+      <div><dt>ICP</dt><dd>developer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/coderabbit/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/coderabbit/01-hero.png" alt=""></a><a href="screenshots/coderabbit/02-features.png" target="_blank"><img loading="lazy" src="screenshots/coderabbit/02-features.png" alt=""></a><a href="screenshots/coderabbit/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/coderabbit/03-social-proof.png" alt=""></a><a href="screenshots/coderabbit/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/coderabbit/04-pricing.png" alt=""></a><a href="screenshots/coderabbit/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/coderabbit/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-braintrust">
+  <div class="site-head">
+    <div>
+      <h3>Braintrust <a class="ext" href="https://braintrustdata.com" target="_blank">↗</a></h3>
+      <div class="meta">dev-tools · series-b · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">17 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI observability platform enabling developers to evaluate, monitor, and improve production AI systems at scale.</strong></p>
+    <p class="distinct">Abstract vertical bar visualization as hero graphic, representing data traces and evaluations in minimalist form</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Ship quality AI at scale" (5w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Start building · sign-up</dd></div>
+      <div><dt>Stack</dt><dd>next · vercel · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>founder-voice</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>btSans / Inter</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#5b4ef5"></span> #5b4ef5</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 6 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>self-sign-up</dd></div>
+      <div><dt>ICP</dt><dd>unknown</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/braintrust/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/braintrust/01-hero.png" alt=""></a><a href="screenshots/braintrust/02-features.png" target="_blank"><img loading="lazy" src="screenshots/braintrust/02-features.png" alt=""></a><a href="screenshots/braintrust/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/braintrust/03-social-proof.png" alt=""></a><a href="screenshots/braintrust/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/braintrust/04-pricing.png" alt=""></a><a href="screenshots/braintrust/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/braintrust/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-glean">
+  <div class="site-head">
+    <div>
+      <h3>Glean <a class="ext" href="https://glean.com" target="_blank">↗</a></h3>
+      <div class="meta">ops-automation · series-c · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">17 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Enterprise AI work platform enabling retail employees with AI assistants and agents powered by company knowledge.</strong></p>
+    <p class="distinct">Asymmetric product showcase with animated agent illustrations on right; blue gradient backdrop with floating integration icons</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Work AI that works for retail." (6w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Get a demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>webflow · cloudflare · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Polysans Neutral / Polysans Neutral</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#343ced"></span> #343ced</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 0 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>ops</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/glean/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/glean/01-hero.png" alt=""></a><a href="screenshots/glean/02-features.png" target="_blank"><img loading="lazy" src="screenshots/glean/02-features.png" alt=""></a><a href="screenshots/glean/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/glean/03-social-proof.png" alt=""></a><a href="screenshots/glean/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/glean/04-pricing.png" alt=""></a><a href="screenshots/glean/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/glean/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-writer">
+  <div class="site-head">
+    <div>
+      <h3>Writer <a class="ext" href="https://writer.com" target="_blank">↗</a></h3>
+      <div class="meta">marketing-ops · series-c · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">18 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Enterprise AI agent platform enabling marketers to automate and delegate work through AI rather than prompt tools.</strong></p>
+    <p class="distinct">Purple accent color paired with genuine human photography overlaid with use-case cards creating conversational UI depth</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Your best marketer can’t be everywhere. Their AI agents can." (10w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Try for free · start-free-trial</dd></div>
+      <div><dt>Stack</dt><dd>wordpress · other · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Poppins / CanelaDeck</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#5551ff"></span> #5551ff</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 3 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>marketer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/writer/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/writer/01-hero.png" alt=""></a><a href="screenshots/writer/02-features.png" target="_blank"><img loading="lazy" src="screenshots/writer/02-features.png" alt=""></a><a href="screenshots/writer/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/writer/03-social-proof.png" alt=""></a><a href="screenshots/writer/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/writer/04-pricing.png" alt=""></a><a href="screenshots/writer/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/writer/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-aaru">
+  <div class="site-head">
+    <div>
+      <h3>Aaru <a class="ext" href="https://aaru.com/" target="_blank">↗</a></h3>
+      <div class="meta">marketing-ops · series-a · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">25 miss</span>
+      <span class="badge">4/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Multi-agent simulation software for population modeling and decision prediction with visionary positioning.</strong></p>
+    <p class="distinct">Monochromatic dark hero with ASCII/text-based human visualization as central visual metaphor</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Rendering human granularity." (3w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>CONTACT · contact-sales</dd></div>
+      <div><dt>Stack</dt><dd>next · vercel · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>visionary</dd></div>
+      <div><dt>Fonts</dt><dd>abcOracle / abcOracle</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#ccff00"></span> #ccff00</dd></div>
+      <div><dt>Pricing</dt><dd>talk-to-us · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✗ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>contact-sales</dd></div>
+      <div><dt>ICP</dt><dd>exec</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/aaru/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/aaru/01-hero.png" alt=""></a><a href="screenshots/aaru/02-features.png" target="_blank"><img loading="lazy" src="screenshots/aaru/02-features.png" alt=""></a><a href="screenshots/aaru/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/aaru/03-social-proof.png" alt=""></a><a href="screenshots/aaru/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/aaru/04-pricing.png" alt=""></a><a href="screenshots/aaru/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/aaru/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-lyzr">
+  <div class="site-head">
+    <div>
+      <h3>Lyzr <a class="ext" href="https://lyzr.ai" target="_blank">↗</a></h3>
+      <div class="meta">agent-platforms · series-a · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">19 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Enterprise AI agent deployment platform positioning speed-to-production as core differentiator</strong></p>
+    <p class="distinct">Isometric 3D illustration of control plane showing enterprise AI agents integration with major platforms</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Deploy AI Agents to Production. In weeks, not quarters." (9w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Talk to us · contact-sales</dd></div>
+      <div><dt>Stack</dt><dd>wordpress · unknown · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Playfair Display / Inter</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#8b6b5f"></span> #8b6b5f</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 1 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>contact-sales</dd></div>
+      <div><dt>ICP</dt><dd>exec</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/lyzr/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/lyzr/01-hero.png" alt=""></a><a href="screenshots/lyzr/02-features.png" target="_blank"><img loading="lazy" src="screenshots/lyzr/02-features.png" alt=""></a><a href="screenshots/lyzr/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/lyzr/03-social-proof.png" alt=""></a><a href="screenshots/lyzr/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/lyzr/04-pricing.png" alt=""></a><a href="screenshots/lyzr/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/lyzr/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-warmly">
+  <div class="site-head">
+    <div>
+      <h3>Warmly <a class="ext" href="https://warmly.ai" target="_blank">↗</a></h3>
+      <div class="meta">sales-enablement · series-a · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">17 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI-native GTM platform using two autonomous agents and context graphs to automate full-funnel sales execution.</strong></p>
+    <p class="distinct">Vibrant magenta accent color with flowing context-graph visualization showing AI agent decision pathways</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"AI GTM Platform That Learns Your Business" (7w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Book a Demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>webflow · cloudflare · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>feature-list</dd></div>
+      <div><dt>Fonts</dt><dd>Hind / Inter</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#ff1493"></span> #ff1493</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 6 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>ops</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/warmly/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/warmly/01-hero.png" alt=""></a><a href="screenshots/warmly/02-features.png" target="_blank"><img loading="lazy" src="screenshots/warmly/02-features.png" alt=""></a><a href="screenshots/warmly/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/warmly/03-social-proof.png" alt=""></a><a href="screenshots/warmly/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/warmly/04-pricing.png" alt=""></a><a href="screenshots/warmly/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/warmly/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-lindy">
+  <div class="site-head">
+    <div>
+      <h3>Lindy <a class="ext" href="https://lindy.ai" target="_blank">↗</a></h3>
+      <div class="meta">agent-platforms · series-b · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">17 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI inbox assistant helping knowledge workers reclaim two hours daily through proactive email and calendar management.</strong></p>
+    <p class="distinct">Wood-grain device mockup with chat overlay showing Lindy proactively managing inbox</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Get two hours back every day." (6w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Try for free · start-free-trial</dd></div>
+      <div><dt>Stack</dt><dd>webflow · cloudflare · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Manrope / Manrope</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#0f3547"></span> #0f3547</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 2 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>free-trial</dd></div>
+      <div><dt>ICP</dt><dd>pm</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/lindy/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/lindy/01-hero.png" alt=""></a><a href="screenshots/lindy/02-features.png" target="_blank"><img loading="lazy" src="screenshots/lindy/02-features.png" alt=""></a><a href="screenshots/lindy/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/lindy/03-social-proof.png" alt=""></a><a href="screenshots/lindy/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/lindy/04-pricing.png" alt=""></a><a href="screenshots/lindy/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/lindy/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-11x-ai">
+  <div class="site-head">
+    <div>
+      <h3>11x.ai <a class="ext" href="https://11x.ai" target="_blank">↗</a></h3>
+      <div class="meta">sales-enablement · series-b · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">18 miss</span>
+      <span class="badge">4/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI-powered digital workers platform automating outreach for sales and RevOps teams.</strong></p>
+    <p class="distinct">Surrealist alien figure on barren landscape as hero image reinforces &#x27;digital workers&#x27; metaphor unusually.</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Digital workers, Human results." (4w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Get started · sign-up</dd></div>
+      <div><dt>Stack</dt><dd>webflow · cloudflare · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>founder-voice</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>ES Allianz / ES Allianz</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#ffffff"></span> #ffffff</dd></div>
+      <div><dt>Pricing</dt><dd>talk-to-us · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>self-sign-up</dd></div>
+      <div><dt>ICP</dt><dd>pm</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/11x-ai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/11x-ai/01-hero.png" alt=""></a><a href="screenshots/11x-ai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/11x-ai/02-features.png" alt=""></a><a href="screenshots/11x-ai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/11x-ai/03-social-proof.png" alt=""></a><a href="screenshots/11x-ai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/11x-ai/04-pricing.png" alt=""></a><a href="screenshots/11x-ai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/11x-ai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-common-room">
+  <div class="site-head">
+    <div>
+      <h3>Common Room <a class="ext" href="https://commonroom.io" target="_blank">↗</a></h3>
+      <div class="meta">sales-enablement · series-b · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">22 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI-powered GTM platform that generates sales pipeline through buyer intelligence and automated signal collection.</strong></p>
+    <p class="distinct">Teal-to-turquoise gradient background with centered white typography and inline email-capture form</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Pipeline powered by buyer intelligence" (5w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Request demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>gatsby · netlify · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Suisse Intl / Suisse Intl</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#1bc88c"></span> #1bc88c</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>pm</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/common-room/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/common-room/01-hero.png" alt=""></a><a href="screenshots/common-room/02-features.png" target="_blank"><img loading="lazy" src="screenshots/common-room/02-features.png" alt=""></a><a href="screenshots/common-room/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/common-room/03-social-proof.png" alt=""></a><a href="screenshots/common-room/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/common-room/04-pricing.png" alt=""></a><a href="screenshots/common-room/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/common-room/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-sarvam-ai">
+  <div class="site-head">
+    <div>
+      <h3>Sarvam AI <a class="ext" href="https://sarvam.ai" target="_blank">↗</a></h3>
+      <div class="meta">data-infra · series-a · india</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">26 miss</span>
+      <span class="badge">4/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>India-first sovereign AI platform offering models and infrastructure built on local compute.</strong></p>
+    <p class="distinct">Ornamental divider and sovereign/India-first positioning emphasis in hero</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"AI for all from India" (5w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Experience Sarvam · start-free-trial</dd></div>
+      <div><dt>Stack</dt><dd>astro · other · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>visionary</dd></div>
+      <div><dt>Fonts</dt><dd>Season Mix / Matter</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#212191"></span> #212191</dd></div>
+      <div><dt>Pricing</dt><dd>talk-to-us · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>unknown</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/sarvam-ai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/sarvam-ai/01-hero.png" alt=""></a><a href="screenshots/sarvam-ai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/sarvam-ai/02-features.png" alt=""></a><a href="screenshots/sarvam-ai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/sarvam-ai/03-social-proof.png" alt=""></a><a href="screenshots/sarvam-ai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/sarvam-ai/04-pricing.png" alt=""></a><a href="screenshots/sarvam-ai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/sarvam-ai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-rocketlane">
+  <div class="site-head">
+    <div>
+      <h3>Rocketlane <a class="ext" href="https://rocketlane.com" target="_blank">↗</a></h3>
+      <div class="meta">customer-support · series-c · india</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">17 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI-powered PSA platform for service delivery teams emphasizing radical efficiency through agentic automation</strong></p>
+    <p class="distinct">Scenic landscape background with integrated architecture imagery creates premium SaaS feel</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Deliver radical efficiency with an agentic, all-in-one PSA" (8w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Book a demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>webflow · cloudflare · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Sf Pro Display / Sf Pro Display</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#0052cc"></span> #0052cc</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 6 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>pm</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/rocketlane/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/rocketlane/01-hero.png" alt=""></a><a href="screenshots/rocketlane/02-features.png" target="_blank"><img loading="lazy" src="screenshots/rocketlane/02-features.png" alt=""></a><a href="screenshots/rocketlane/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/rocketlane/03-social-proof.png" alt=""></a><a href="screenshots/rocketlane/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/rocketlane/04-pricing.png" alt=""></a><a href="screenshots/rocketlane/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/rocketlane/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-attio">
+  <div class="site-head">
+    <div>
+      <h3>Attio <a class="ext" href="https://attio.com" target="_blank">↗</a></h3>
+      <div class="meta">sales-enablement · series-b · uk</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">19 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI-native CRM platform positioning itself as relationship intelligence for GTM teams with free trial entry.</strong></p>
+    <p class="distinct">Integrated AI chat interface (Ask Attio) embedded within product UI showcase below hero</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Customer relationship magic." (3w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Start for free · self-sign-up</dd></div>
+      <div><dt>Stack</dt><dd>next · vercel · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>founder-voice</dd></div>
+      <div><dt>Hero copy</dt><dd>visionary</dd></div>
+      <div><dt>Fonts</dt><dd>interDisplay / inter</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#000000"></span> #000000</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 6 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>self-sign-up</dd></div>
+      <div><dt>ICP</dt><dd>pm</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/attio/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/attio/01-hero.png" alt=""></a><a href="screenshots/attio/02-features.png" target="_blank"><img loading="lazy" src="screenshots/attio/02-features.png" alt=""></a><a href="screenshots/attio/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/attio/03-social-proof.png" alt=""></a><a href="screenshots/attio/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/attio/04-pricing.png" alt=""></a><a href="screenshots/attio/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/attio/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-gamma">
+  <div class="site-head">
+    <div>
+      <h3>Gamma <a class="ext" href="https://gamma.app" target="_blank">↗</a></h3>
+      <div class="meta">design-tooling · series-b · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge low">low</span>
+      <span class="badge">48 miss</span>
+      <span class="badge">4/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Gamma loading/verification screen with minimal branding and cloud-themed aesthetic.</strong></p>
+    <p class="distinct">Loading state as hero—deferred reveal with cloud illustrations and Cloudflare badge</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"—" (0w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>— · unknown</dd></div>
+      <div><dt>Stack</dt><dd>unknown · cloudflare · unknown</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>minimal</dd></div>
+      <div><dt>Hero copy</dt><dd>ambiguous</dd></div>
+      <div><dt>Fonts</dt><dd>? / PPMori</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#1a3a52"></span> #1a3a52</dd></div>
+      <div><dt>Pricing</dt><dd>talk-to-us · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✗ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>unknown</dd></div>
+      <div><dt>ICP</dt><dd>unknown</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/gamma/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/gamma/01-hero.png" alt=""></a><a href="screenshots/gamma/02-features.png" target="_blank"><img loading="lazy" src="screenshots/gamma/02-features.png" alt=""></a><a href="screenshots/gamma/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/gamma/03-social-proof.png" alt=""></a><a href="screenshots/gamma/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/gamma/04-pricing.png" alt=""></a><a href="screenshots/gamma/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/gamma/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-cognition-(devin)">
+  <div class="site-head">
+    <div>
+      <h3>Cognition (Devin) <a class="ext" href="https://cognition.ai" target="_blank">↗</a></h3>
+      <div class="meta">coding-agents · series-b · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">21 miss</span>
+      <span class="badge">4/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Cognition positions DEVIN as The AI software engineer through a terminal-hacker aesthetic and visionary copywriting targeting developer audiences</strong></p>
+    <p class="distinct">Code-patterned dark background with ASCII/matrix styling evokes terminal-hacker aesthetic while showcasing AI software engineer identity</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"COGNITION IS AN AGENT LAB" (5w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>GET STARTED WITH DEVIN · sign-up</dd></div>
+      <div><dt>Stack</dt><dd>astro · vercel · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>terminal-hacker</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>visionary</dd></div>
+      <div><dt>Fonts</dt><dd>IBM Plex Sans Condensed / IBM Plex Sans</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#4d9bff"></span> #4d9bff</dd></div>
+      <div><dt>Pricing</dt><dd>talk-to-us · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>sign-up</dd></div>
+      <div><dt>ICP</dt><dd>developer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/cognition-(devin)/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/cognition-(devin)/01-hero.png" alt=""></a><a href="screenshots/cognition-(devin)/02-features.png" target="_blank"><img loading="lazy" src="screenshots/cognition-(devin)/02-features.png" alt=""></a><a href="screenshots/cognition-(devin)/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/cognition-(devin)/03-social-proof.png" alt=""></a><a href="screenshots/cognition-(devin)/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/cognition-(devin)/04-pricing.png" alt=""></a><a href="screenshots/cognition-(devin)/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/cognition-(devin)/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-genspark">
+  <div class="site-head">
+    <div>
+      <h3>Genspark <a class="ext" href="https://genspark.ai" target="_blank">↗</a></h3>
+      <div class="meta">ops-automation · series-b · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">43 miss</span>
+      <span class="badge">4/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Security verification page blocking access to Genspark.ai</strong></p>
+    <p class="distinct">Cloudflare security verification interstitial page blocking access</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"www.genspark.ai" (1w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>— · unknown</dd></div>
+      <div><dt>Stack</dt><dd>unknown · cloudflare · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>ambiguous</dd></div>
+      <div><dt>Fonts</dt><dd>system-ui / system-ui</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#313131"></span> #313131</dd></div>
+      <div><dt>Pricing</dt><dd>talk-to-us · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>unknown</dd></div>
+      <div><dt>ICP</dt><dd>unknown</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/genspark/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/genspark/01-hero.png" alt=""></a><a href="screenshots/genspark/02-features.png" target="_blank"><img loading="lazy" src="screenshots/genspark/02-features.png" alt=""></a><a href="screenshots/genspark/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/genspark/03-social-proof.png" alt=""></a><a href="screenshots/genspark/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/genspark/04-pricing.png" alt=""></a><a href="screenshots/genspark/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/genspark/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-fyxer-ai">
+  <div class="site-head">
+    <div>
+      <h3>Fyxer AI <a class="ext" href="https://fyxer.ai" target="_blank">↗</a></h3>
+      <div class="meta">ops-automation · series-b · uk</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">16 miss</span>
+      <span class="badge">4/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI email assistant for inbox organization and email drafting targeting operations teams, emphasizing quick Gmail/Outlook integration.</strong></p>
+    <p class="distinct">Dual-option CTA buttons (Gmail/Outlook) with branded icons; bold orange accent color on &#x27;sorting emails&#x27; hero text</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Your assistant for sorting emails" (5w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Start with Gmail · self-sign-up</dd></div>
+      <div><dt>Stack</dt><dd>next · vercel · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>f37Hybrid / ui-sans-serif</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#ff5a39"></span> #ff5a39</dd></div>
+      <div><dt>Pricing</dt><dd>talk-to-us · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✗ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>self-sign-up</dd></div>
+      <div><dt>ICP</dt><dd>ops</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/fyxer-ai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/fyxer-ai/01-hero.png" alt=""></a><a href="screenshots/fyxer-ai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/fyxer-ai/02-features.png" alt=""></a><a href="screenshots/fyxer-ai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/fyxer-ai/03-social-proof.png" alt=""></a><a href="screenshots/fyxer-ai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/fyxer-ai/04-pricing.png" alt=""></a><a href="screenshots/fyxer-ai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/fyxer-ai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-atomicwork">
+  <div class="site-head">
+    <div>
+      <h3>Atomicwork <a class="ext" href="https://atomicwork.com" target="_blank">↗</a></h3>
+      <div class="meta">customer-support · series-a · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">17 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI-powered IT service management platform targeting enterprise IT teams with agentic automation for HR, Finance, and Workplace requests.</strong></p>
+    <p class="distinct">Purple-to-pink gradient hero with bold black headline and accent color highlight on &#x27;IT team&#x27;</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"AI Agents that work for" (5w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Book a demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>webflow · cloudflare · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Interdisplay / Intervariable</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#862fe7"></span> #862fe7</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 1 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>enterprise-it</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/atomicwork/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/atomicwork/01-hero.png" alt=""></a><a href="screenshots/atomicwork/02-features.png" target="_blank"><img loading="lazy" src="screenshots/atomicwork/02-features.png" alt=""></a><a href="screenshots/atomicwork/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/atomicwork/03-social-proof.png" alt=""></a><a href="screenshots/atomicwork/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/atomicwork/04-pricing.png" alt=""></a><a href="screenshots/atomicwork/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/atomicwork/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-clay">
+  <div class="site-head">
+    <div>
+      <h3>Clay <a class="ext" href="https://clay.com" target="_blank">↗</a></h3>
+      <div class="meta">sales-enablement · series-c · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">16 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Clay unifies GTM data and AI orchestration for go-to-market teams to enrich, target, and activate at scale.</strong></p>
+    <p class="distinct">Colorful 3D stacked shapes and icons flanking centered headline to soften enterprise software aesthetic</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Go to market with unique data — and the ability to act on it" (14w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Start building for free · self-sign-up</dd></div>
+      <div><dt>Stack</dt><dd>unknown · cloudflare · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Roobert / Roobert</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#9f9b93"></span> #9f9b93</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 6 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>self-sign-up</dd></div>
+      <div><dt>ICP</dt><dd>marketer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/clay/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/clay/01-hero.png" alt=""></a><a href="screenshots/clay/02-features.png" target="_blank"><img loading="lazy" src="screenshots/clay/02-features.png" alt=""></a><a href="screenshots/clay/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/clay/03-social-proof.png" alt=""></a><a href="screenshots/clay/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/clay/04-pricing.png" alt=""></a><a href="screenshots/clay/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/clay/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-portkey-ai">
+  <div class="site-head">
+    <div>
+      <h3>Portkey.ai <a class="ext" href="https://portkey.ai" target="_blank">↗</a></h3>
+      <div class="meta">data-infra · series-a · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">19 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Portkey is an AI infrastructure platform providing gateway, observability, guardrails and governance for production LLM deployment.</strong></p>
+    <p class="distinct">Dark gradient hero with cyan accent, product screenshot in frame below headline creates visual hierarchy</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Production Stack for Gen AI Builders" (6w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Book a Demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>framer · cloudflare · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>authoritative</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Inter / sans-serif</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#1ba9d9"></span> #1ba9d9</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 2 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>developer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/portkey-ai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/portkey-ai/01-hero.png" alt=""></a><a href="screenshots/portkey-ai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/portkey-ai/02-features.png" alt=""></a><a href="screenshots/portkey-ai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/portkey-ai/03-social-proof.png" alt=""></a><a href="screenshots/portkey-ai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/portkey-ai/04-pricing.png" alt=""></a><a href="screenshots/portkey-ai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/portkey-ai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-findem">
+  <div class="site-head">
+    <div>
+      <h3>Findem <a class="ext" href="https://findem.ai" target="_blank">↗</a></h3>
+      <div class="meta">ops-automation · series-c · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">18 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI-powered talent operations platform helping enterprises find, hire, and retain the right people through deep human insight.</strong></p>
+    <p class="distinct">Stark black &amp; white photography with gold accent typography and minimal layout emphasizes human-centric AI narrative</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Built to find what builds people." (6w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Request a demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>webflow · cloudflare · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Season Serif / Season Sans</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#e9cf3b"></span> #e9cf3b</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>ops</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/findem/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/findem/01-hero.png" alt=""></a><a href="screenshots/findem/02-features.png" target="_blank"><img loading="lazy" src="screenshots/findem/02-features.png" alt=""></a><a href="screenshots/findem/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/findem/03-social-proof.png" alt=""></a><a href="screenshots/findem/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/findem/04-pricing.png" alt=""></a><a href="screenshots/findem/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/findem/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-rillet">
+  <div class="site-head">
+    <div>
+      <h3>Rillet <a class="ext" href="https://rillet.com" target="_blank">↗</a></h3>
+      <div class="meta">ops-automation · series-b · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">20 miss</span>
+      <span class="badge">4/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Enterprise ERP solution positioning itself as NetSuite alternative for scaling companies, emphasizing ease and speed.</strong></p>
+    <p class="distinct">Dark hero with bold typography and credibility badge (5-star G2 rating) prominently positioned</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Enterprise ERP without the headache." (5w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Request a demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>webflow · cloudflare · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Space Grotesk / Space Grotesk</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#582efd"></span> #582efd</dd></div>
+      <div><dt>Pricing</dt><dd>talk-to-us · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>exec</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/rillet/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/rillet/01-hero.png" alt=""></a><a href="screenshots/rillet/02-features.png" target="_blank"><img loading="lazy" src="screenshots/rillet/02-features.png" alt=""></a><a href="screenshots/rillet/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/rillet/03-social-proof.png" alt=""></a><a href="screenshots/rillet/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/rillet/04-pricing.png" alt=""></a><a href="screenshots/rillet/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/rillet/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-ashby">
+  <div class="site-head">
+    <div>
+      <h3>Ashby <a class="ext" href="https://ashbyhq.com" target="_blank">↗</a></h3>
+      <div class="meta">ops-automation · series-c · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">19 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>All-in-one AI-powered recruiting platform targeting ops leaders with emphasis on speed and scale.</strong></p>
+    <p class="distinct">Bold typographic hero with &#x27;What an ATS should be&#x27; positioning statement emphasizing category redefinition</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"What an ATS should be." (5w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Get in Touch · contact-sales</dd></div>
+      <div><dt>Stack</dt><dd>next · netlify · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>TTNormsPro / TTNormsPro</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#5149d6"></span> #5149d6</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 1 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>contact-sales</dd></div>
+      <div><dt>ICP</dt><dd>ops</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/ashby/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/ashby/01-hero.png" alt=""></a><a href="screenshots/ashby/02-features.png" target="_blank"><img loading="lazy" src="screenshots/ashby/02-features.png" alt=""></a><a href="screenshots/ashby/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/ashby/03-social-proof.png" alt=""></a><a href="screenshots/ashby/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/ashby/04-pricing.png" alt=""></a><a href="screenshots/ashby/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/ashby/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-unstructured">
+  <div class="site-head">
+    <div>
+      <h3>Unstructured <a class="ext" href="https://unstructured.io" target="_blank">↗</a></h3>
+      <div class="meta">data-infra · series-a · us</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">25 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Data infrastructure platform for AI-ready extraction, transformation, and loading</strong></p>
+    <p class="distinct">Dual-color CTA buttons (yellow &amp; purple) with contrasting nav design</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"GenAI-Ready Data Starts Here" (4w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Book A Demo · book-demo</dd></div>
+      <div><dt>Stack</dt><dd>unknown · unknown · ssr</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Inter / Inter</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#5afda5"></span> #5afda5</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 0 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✗ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>book-demo</dd></div>
+      <div><dt>ICP</dt><dd>developer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/unstructured/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/unstructured/01-hero.png" alt=""></a><a href="screenshots/unstructured/02-features.png" target="_blank"><img loading="lazy" src="screenshots/unstructured/02-features.png" alt=""></a><a href="screenshots/unstructured/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/unstructured/03-social-proof.png" alt=""></a><a href="screenshots/unstructured/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/unstructured/04-pricing.png" alt=""></a><a href="screenshots/unstructured/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/unstructured/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-dust">
+  <div class="site-head">
+    <div>
+      <h3>Dust <a class="ext" href="https://dust.tt" target="_blank">↗</a></h3>
+      <div class="meta">agent-platforms · series-a · eu</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">22 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Enterprise AI agent deployment and orchestration platform emphasizing safety, governance, and team integration.</strong></p>
+    <p class="distinct">Minimalist centered hero with inline email capture + social proof via customer logos and case study links</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"The Operating System for AI Agents" (6w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Get started · start-free-trial</dd></div>
+      <div><dt>Stack</dt><dd>next · unknown · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Geist / Geist</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#1c91ff"></span> #1c91ff</dd></div>
+      <div><dt>Pricing</dt><dd>usage-based · tiers 0 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>self-sign-up</dd></div>
+      <div><dt>ICP</dt><dd>developer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/dust/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/dust/01-hero.png" alt=""></a><a href="screenshots/dust/02-features.png" target="_blank"><img loading="lazy" src="screenshots/dust/02-features.png" alt=""></a><a href="screenshots/dust/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/dust/03-social-proof.png" alt=""></a><a href="screenshots/dust/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/dust/04-pricing.png" alt=""></a><a href="screenshots/dust/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/dust/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-skit-ai">
+  <div class="site-head">
+    <div>
+      <h3>Skit.ai <a class="ext" href="https://skit.ai" target="_blank">↗</a></h3>
+      <div class="meta">customer-support · series-a · india</div>
+    </div>
+    <div class="badges">
+      <span class="badge medium">medium</span>
+      <span class="badge">27 miss</span>
+      <span class="badge">4/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>AI-powered collections and AR platform for modern finance teams using conversational AI</strong></p>
+    <p class="distinct">Serif headline paired with sans-serif body, minimalist black hero with abstract loading animation</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"AI Collections and Accounts Receivable Platform for Modern Teams" (9w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Try Skit.ai Today · start-free-trial</dd></div>
+      <div><dt>Stack</dt><dd>wordpress · cloudflare · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>corporate-clean</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Merriweather / Inter</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#1e90ff"></span> #1e90ff</dd></div>
+      <div><dt>Pricing</dt><dd>talk-to-us · tiers 0 · free-tier ✗</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✗ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>start-free-trial</dd></div>
+      <div><dt>ICP</dt><dd>ops</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/skit-ai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/skit-ai/01-hero.png" alt=""></a><a href="screenshots/skit-ai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/skit-ai/02-features.png" alt=""></a><a href="screenshots/skit-ai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/skit-ai/03-social-proof.png" alt=""></a><a href="screenshots/skit-ai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/skit-ai/04-pricing.png" alt=""></a><a href="screenshots/skit-ai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/skit-ai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+
+<div class="site" id="site-murf-ai">
+  <div class="site-head">
+    <div>
+      <h3>Murf AI <a class="ext" href="https://murf.ai" target="_blank">↗</a></h3>
+      <div class="meta">marketing-ops · series-a · india</div>
+    </div>
+    <div class="badges">
+      <span class="badge high">high</span>
+      <span class="badge">18 miss</span>
+      <span class="badge">5/5 shots</span>
+    </div>
+  </div>
+  <div class="site-body">
+    <p class="oneline"><strong>Ultra-realistic AI voice generator API for developers, creators, and enterprises with emphasis on speed, customization, and multi-language support.</strong></p>
+    <p class="distinct">Gradient neon pink-orange CTA buttons with glowing effect against dark navy background; vibrant color contrast for developer audience</p>
+    <dl class="facts">
+      <div><dt>H1</dt><dd>"Ultra-Realistic AI Voice Generator Built for Maximum Speed &amp; Efficiency" (10w)</dd></div>
+      <div><dt>Hero CTA</dt><dd>Open Studio · sign-up</dd></div>
+      <div><dt>Stack</dt><dd>webflow · cloudflare · spa</dd></div>
+      <div><dt>Aesthetic</dt><dd>tech-minimal</dd></div>
+      <div><dt>Voice</dt><dd>corporate</dd></div>
+      <div><dt>Hero copy</dt><dd>benefit-first</dd></div>
+      <div><dt>Fonts</dt><dd>Robotoflex Custom / Inter</dd></div>
+      <div><dt>Color</dt><dd><span class="swatch" style="background:#ff6b35"></span> #ff6b35</dd></div>
+      <div><dt>Pricing</dt><dd>tier · tiers 6 · free-tier ✓</dd></div>
+      <div><dt>llms.txt / robots / GPTBot-block</dt><dd>✓ / ✓ / ✗</dd></div>
+      <div><dt>Conversion</dt><dd>self-sign-up</dd></div>
+      <div><dt>ICP</dt><dd>developer</dd></div>
+    </dl>
+    <div class="shots"><a href="screenshots/murf-ai/01-hero.png" target="_blank"><img loading="lazy" src="screenshots/murf-ai/01-hero.png" alt=""></a><a href="screenshots/murf-ai/02-features.png" target="_blank"><img loading="lazy" src="screenshots/murf-ai/02-features.png" alt=""></a><a href="screenshots/murf-ai/03-social-proof.png" target="_blank"><img loading="lazy" src="screenshots/murf-ai/03-social-proof.png" alt=""></a><a href="screenshots/murf-ai/04-pricing.png" target="_blank"><img loading="lazy" src="screenshots/murf-ai/04-pricing.png" alt=""></a><a href="screenshots/murf-ai/05-footer.png" target="_blank"><img loading="lazy" src="screenshots/murf-ai/05-footer.png" alt=""></a></div>
+  </div>
+</div>
+</div>
+</section>
+
+<section id="methodology">
+<h2>Methodology <span class="sub">— how this dataset was built</span></h2>
+<p>Three-stage pipeline: <strong>Playwright extractor</strong> (visits 5 pages per site, captures DOM/CSS/headers/JSON-LD/screenshots — no LLM) → <strong>Deterministic rules layer</strong> (~108 fields filled by pure-Python rules over the bundle — no LLM) → <strong>LLM judge</strong> (one Anthropic Haiku 4.5 call per site with the hero screenshot + compact text excerpts, fills ~40 subjective fields). All wrapped in a $5 cost gate.</p>
+
+<p>50 sites. 148 columns each. 250 screenshots. <strong>Total cost: $0.32. Total wall clock: 24 minutes.</strong> The original LLM-agent approach (browser-use driving a full agent through every page) projected $50 and 5 hours and hit a 10K-tokens-per-minute rate-limit wall. Splitting deterministic from judgment dropped cost ~160× with no quality loss on factual fields.</p>
+
+<p>Code at <code>~/recurrco/projects/top-50-research/pilot_v2/</code>. Reproducible: <code>python pilot_v2/pilot.py --all</code>. Source list locked Apr 28 in <code>companies-final.csv</code>. Schema in <code>research-prompt.md</code> (148 cols, frozen enums).</p>
+</section>
+
+<footer>
+  <p>Recurr Press research · 2026-04-28 · Pratik Mishra + Nagendra Kumar (research). Code & docs at <code>recurr.co</code> internal infra. CSV: <a href="data.csv">data.csv</a> · raw JSON in <code>output_v2/raw/</code>.</p>
+</footer>
+
+</div>
+
+<script>
+  // Live filter for site grid
+  const q = document.getElementById('filter-q');
+  const cat = document.getElementById('filter-cat');
+  const conf = document.getElementById('filter-conf');
+  const sites = Array.from(document.querySelectorAll('.site'));
+  const counter = document.getElementById('visible-count');
+
+  function applyFilters() {
+    const qv = q.value.trim().toLowerCase();
+    const cv = cat.value;
+    const fv = conf.value;
+    let visible = 0;
+    sites.forEach(s => {
+      const text = s.textContent.toLowerCase();
+      const matchQ = !qv || text.includes(qv);
+      const matchC = !cv || text.includes(cv);
+      const matchF = !fv || s.querySelector('.badge.' + fv);
+      const show = matchQ && matchC && matchF;
+      s.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    counter.textContent = visible + ' / 50 sites';
+  }
+  q.addEventListener('input', applyFilters);
+  cat.addEventListener('change', applyFilters);
+  conf.addEventListener('change', applyFilters);
+  applyFilters();
+</script>
+
+</body>
+</html>
