@@ -30,7 +30,7 @@
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; background: var(--paper); }
-body { font-family: var(--body); background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.5; font-weight: 500; overflow-x: hidden; max-width: 1680px; margin-inline: auto; }
+body { font-family: var(--body); background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.5; font-weight: 500; overflow-x: clip; max-width: 1680px; margin-inline: auto; }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; height: auto; }
 button { font: inherit; }
@@ -102,8 +102,7 @@ button { font: inherit; }
   .nav-r { display: none; }
 }
 
-/* ─── Reading progress ─── */
-.read-progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--accent); z-index: 60; width: 0; transition: width 80ms linear; pointer-events: none; }
+/* (Top reading-progress strip removed — progress now lives in the bottom bar) */
 
 /* ─── Variant switcher ─── */
 .variant-switch { display: flex; gap: 0; padding: 0 var(--gutter); border-bottom: 1px solid rgba(10,10,10,0.16); background: var(--paper); overflow-x: auto; scrollbar-width: none; }
@@ -228,8 +227,8 @@ button { font: inherit; }
 .toc-list a:hover { color: var(--accent); }
 .toc-list .toc-num { font-family: var(--mono); font-size: 11px; color: rgba(10,10,10,0.5); padding-top: 5px; min-width: 24px; }
 
-/* ─── ReadNext as single-column rows ─── */
-.read-next { padding: clamp(80px, 12vh, 140px) var(--gutter) 0; max-width: var(--body-w); margin: 0 auto; }
+/* ─── ReadNext as single-column rows (full container width, like footer) ─── */
+.read-next { padding: clamp(80px, 12vh, 140px) var(--gutter) 0; max-width: 1680px; margin: 0 auto; }
 .rn-list { display: flex; flex-direction: column; }
 .rn-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(10,10,10,0.16); transition: background 220ms ease, color 220ms ease, padding 220ms ease; }
 .rn-row:first-child { border-top: 1px solid var(--ink); }
@@ -247,11 +246,11 @@ button { font: inherit; }
 .rn-hero:hover .rn-kick { color: rgba(247,245,240,0.7); }
 
 /* Simple rows */
-.rn-simple { grid-template-columns: 100px minmax(0, 1fr) 90px 32px; gap: 20px; align-items: baseline; padding: 22px 0; }
+.rn-simple { grid-template-columns: 140px minmax(0, 1fr) 160px 36px; gap: 32px; align-items: baseline; padding: 26px 0; }
 .rn-simple .rn-meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: rgba(10,10,10,0.55); white-space: nowrap; }
-.rn-simple .rn-title { font-family: var(--display); font-weight: 700; font-size: clamp(17px, 1.4vw, 19px); line-height: 1.32; letter-spacing: -0.008em; }
+.rn-simple .rn-title { font-family: var(--display); font-weight: 700; font-size: clamp(18px, 1.6vw, 22px); line-height: 1.32; letter-spacing: -0.01em; }
 .rn-simple .rn-byline { font-family: var(--mono); font-size: 11px; color: rgba(10,10,10,0.55); text-align: right; white-space: nowrap; }
-.rn-simple .rn-arrow { font-size: 20px; }
+.rn-simple .rn-arrow { font-size: 22px; }
 @media (max-width: 640px) {
   .rn-simple { grid-template-columns: 1fr; gap: 6px; padding: 16px 0; }
   .rn-simple .rn-meta, .rn-simple .rn-byline { display: inline; font-size: 10px; }
@@ -267,32 +266,46 @@ button { font: inherit; }
 .rn-all .rn-l-b { font-family: var(--mono); font-size: 11px; color: rgba(10,10,10,0.55); letter-spacing: 0.04em; text-transform: uppercase; }
 .rn-all:hover .rn-l-b { color: rgba(247,245,240,0.65); }
 
-/* ─── Floating ActionBar dock (bottom-right, only visible during article reading) ─── */
-.dock {
-  position: fixed; bottom: 28px; right: 28px; z-index: 40;
-  display: flex; flex-direction: column; gap: 4px; padding: 8px;
-  background: var(--paper-pure); border: 1px solid var(--ink);
-  box-shadow: 4px 4px 0 var(--ink);
-  transition: transform 240ms cubic-bezier(0.16,1,0.3,1), opacity 240ms ease;
-  opacity: 0; transform: translateY(20px); pointer-events: none;
+/* ─── ReadBar: bottom navbar, sticky while body in view, releases at end of article ─── */
+.read-bar {
+  position: sticky; bottom: 0; z-index: 30;
+  width: 100vw; max-width: 1680px;
+  margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
+  background: var(--paper);
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  transform: translateY(100%);
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
 }
-.dock.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
-.dock-btn { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: transparent; border: 0; cursor: pointer; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); transition: background 120ms ease, color 120ms ease; min-width: 170px; text-align: left; }
-.dock-btn:hover { background: var(--ink); color: var(--paper); }
-.dock-btn .dock-icon { width: 14px; height: 14px; flex-shrink: 0; }
-.dock-divider { height: 1px; background: rgba(10,10,10,0.12); margin: 4px 0; }
-.dock-btn.copied { background: var(--accent); color: var(--accent-ink); }
-.dock-btn .dock-label-short { display: none; }
+.read-bar.visible { transform: translateY(0); pointer-events: auto; }
+.read-bar.above { transform: translateY(0); pointer-events: none; transition: none; }
+.read-bar-progress { position: absolute; top: 0; left: 0; height: 2px; background: var(--accent); width: 0; transition: width 80ms linear; pointer-events: none; }
+.read-bar-inner { display: flex; justify-content: space-between; align-items: stretch; max-width: 1680px; margin: 0 auto; padding: 0 var(--gutter); }
+.rb-group { display: flex; align-items: stretch; }
+.rb-btn { display: flex; align-items: center; gap: 8px; padding: 19px 18px; background: transparent; border: 0; cursor: pointer; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); border-right: 1px solid rgba(10,10,10,0.12); transition: background 120ms ease, color 120ms ease; }
+.rb-group:first-child .rb-btn:first-child { border-left: 1px solid rgba(10,10,10,0.12); }
+.rb-group:last-child .rb-btn:last-child { border-right: 1px solid rgba(10,10,10,0.12); }
+.rb-btn:hover { background: var(--ink); color: var(--paper); }
+.rb-btn .rb-icon { width: 14px; height: 14px; flex-shrink: 0; }
+.rb-btn.copied { background: var(--accent); color: var(--accent-ink); }
+.rb-meta { display: flex; align-items: center; gap: 14px; padding: 19px 24px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: rgba(10,10,10,0.55); white-space: nowrap; }
+.rb-meta .rb-pct { color: var(--ink); font-weight: 600; font-size: 12px; }
+.rb-meta .rb-divider-vert { width: 1px; height: 14px; background: rgba(10,10,10,0.18); display: inline-block; }
+.rb-btn .rb-label-short { display: none; }
 
 @media (max-width: 768px) {
-  .dock { flex-direction: row; bottom: 12px; left: 12px; right: 12px; padding: 4px; gap: 0; justify-content: space-around; box-shadow: 2px 2px 0 var(--ink); }
-  .dock-btn { flex-direction: column; gap: 4px; min-width: 0; flex: 1; padding: 8px 4px; font-size: 9px; letter-spacing: 0.02em; text-align: center; align-items: center; }
-  .dock-btn .dock-icon { width: 16px; height: 16px; }
-  .dock-btn .dock-label-full { display: none !important; }
-  .dock-btn .dock-label-short { display: inline !important; }
-  .dock-divider { display: none; }
-  .dock-btn:hover { background: transparent; color: var(--ink); }
-  .dock-btn:active { background: var(--ink); color: var(--paper); }
+  .read-bar-inner { padding: 0; }
+  .rb-meta { display: none; }
+  .rb-group { flex: 1; }
+  .rb-btn { flex: 1; flex-direction: column; gap: 4px; padding: 12px 4px; font-size: 9px; letter-spacing: 0.02em; text-align: center; justify-content: center; align-items: center; border-right: 1px solid rgba(10,10,10,0.12); }
+  .rb-btn .rb-icon { width: 16px; height: 16px; }
+  .rb-btn .rb-label-full { display: none !important; }
+  .rb-btn .rb-label-short { display: inline !important; }
+  .rb-group:first-child .rb-btn:first-child { border-left: 0; }
+  .rb-group:last-child .rb-btn:last-child { border-right: 0; }
+  .rb-btn:hover { background: transparent; color: var(--ink); }
+  .rb-btn:active { background: var(--ink); color: var(--paper); }
 }
 
 /* ─── Footer (back-of-the-book) ─── */
@@ -354,8 +367,6 @@ button { font: inherit; }
 </style>
 </head>
 <body>
-
-<div class="read-progress" id="readProgress"></div>
 
 <nav class="nav" id="nav">
   <div class="nav-inner">
@@ -438,7 +449,7 @@ button { font: inherit; }
   <!-- Body (centered in viewport) -->
   <article class="body" id="articleBody">
 
-    <!-- Inline rail (mobile/tablet only) -->
+    <!-- Byline (inline at top of body, all widths — author accordion) -->
     <div class="rail-inline">
       <details class="byline-card">
         <summary class="byline-author">
@@ -542,6 +553,44 @@ button { font: inherit; }
     <p><em>One question worth sitting with: if your buyers are consulting LLMs before they contact you — and the data suggests they are — what is your brand's verdict today?</em></p>
 
   </article>
+
+  <!-- ─── READ BAR (sticky bottom while article in view) ─── -->
+  <aside class="read-bar" id="readBar" aria-label="Article actions">
+    <div class="read-bar-progress" id="readBarProgress"></div>
+    <div class="read-bar-inner">
+      <div class="rb-group">
+        <button class="rb-btn" data-action="share">
+          <svg class="rb-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3.5" cy="8" r="1.5"/><circle cx="12" cy="3.5" r="1.5"/><circle cx="12" cy="12.5" r="1.5"/><line x1="4.8" y1="7.4" x2="10.7" y2="4.1"/><line x1="4.8" y1="8.6" x2="10.7" y2="11.9"/></svg>
+          <span class="rb-label-full">Share</span><span class="rb-label-short">Share</span>
+        </button>
+        <button class="rb-btn" data-action="listen">
+          <svg class="rb-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6v4M6 4v8M9 5v6M12 7v2"/></svg>
+          <span class="rb-label-full">Listen 5:42</span><span class="rb-label-short">Listen</span>
+        </button>
+        <button class="rb-btn" data-action="save">
+          <svg class="rb-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h10v12l-5-3-5 3z"/></svg>
+          <span class="rb-label-full">Save</span><span class="rb-label-short">Save</span>
+        </button>
+      </div>
+
+      <div class="rb-meta">
+        <span><span class="rb-pct" id="readBarPct">0%</span> read</span>
+        <span class="rb-divider-vert"></span>
+        <span>5 min left</span>
+      </div>
+
+      <div class="rb-group">
+        <button class="rb-btn" data-action="copy-md">
+          <svg class="rb-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M4.5 7v3M6.5 5v5M6.5 7l1.5 2 1.5-2M11 5v5M9.5 8.5L11 10l1.5-1.5"/></svg>
+          <span class="rb-label-full">Copy Markdown</span><span class="rb-label-short">.MD</span>
+        </button>
+        <button class="rb-btn" data-action="copy-gpt">
+          <svg class="rb-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="5"/><path d="M5.6 7l1.4 2 2.4-3.5"/></svg>
+          <span class="rb-label-full">Copy for GPT</span><span class="rb-label-short">GPT</span>
+        </button>
+      </div>
+    </div>
+  </aside>
 </div>
 
 <!-- ─── READ NEXT (single column rows) ─── -->
@@ -591,31 +640,6 @@ button { font: inherit; }
 
   </div>
 </section>
-
-<!-- ─── ACTION BAR ─── -->
-<aside class="dock" id="dock" aria-label="Article actions">
-  <button class="dock-btn" data-action="share">
-    <svg class="dock-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3.5" cy="8" r="1.5"/><circle cx="12" cy="3.5" r="1.5"/><circle cx="12" cy="12.5" r="1.5"/><line x1="4.8" y1="7.4" x2="10.7" y2="4.1"/><line x1="4.8" y1="8.6" x2="10.7" y2="11.9"/></svg>
-    <span class="dock-label-full">Share</span><span class="dock-label-short">Share</span>
-  </button>
-  <button class="dock-btn" data-action="listen">
-    <svg class="dock-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6v4M6 4v8M9 5v6M12 7v2"/></svg>
-    <span class="dock-label-full">Listen (5:42)</span><span class="dock-label-short">Listen</span>
-  </button>
-  <button class="dock-btn" data-action="save">
-    <svg class="dock-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h10v12l-5-3-5 3z"/></svg>
-    <span class="dock-label-full">Save</span><span class="dock-label-short">Save</span>
-  </button>
-  <div class="dock-divider"></div>
-  <button class="dock-btn" data-action="copy-md">
-    <svg class="dock-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M4.5 7v3M6.5 5v5M6.5 7l1.5 2 1.5-2M11 5v5M9.5 8.5L11 10l1.5-1.5"/></svg>
-    <span class="dock-label-full">Copy Markdown</span><span class="dock-label-short">.md</span>
-  </button>
-  <button class="dock-btn" data-action="copy-gpt">
-    <svg class="dock-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="5"/><path d="M5.6 7l1.4 2 2.4-3.5"/></svg>
-    <span class="dock-label-full">Copy for GPT</span><span class="dock-label-short">GPT</span>
-  </button>
-</aside>
 
 <!-- ─── FOOTER ─── -->
 <div class="footer-zone">
@@ -731,20 +755,34 @@ button { font: inherit; }
     document.body.style.overflow = '';
   }));
 
-  // Reading progress (article body only)
-  const bar = document.getElementById('readProgress');
+  // ReadBar — sticky bottom while article is in view; releases at end and scrolls up with content
   const article = document.getElementById('articleBody');
-  function updateProgress() {
-    if (!article || !bar) return;
+  const readBar = document.getElementById('readBar');
+  const readBarPct = document.getElementById('readBarPct');
+  const readBarProgress = document.getElementById('readBarProgress');
+  function updateReadBar() {
+    if (!article || !readBar) return;
     const rect = article.getBoundingClientRect();
-    const total = rect.height - window.innerHeight;
+    const vh = window.innerHeight;
+    // Three states: below (article hasn't entered viewport from below) / visible (article in view) / above (article scrolled past)
+    readBar.classList.remove('visible', 'above');
+    if (rect.top > vh) {
+      // hidden state — translateY(100%) by default class state
+    } else if (rect.bottom < 0) {
+      readBar.classList.add('above');  // article scrolled past — bar in natural flow above viewport
+    } else {
+      readBar.classList.add('visible');
+    }
+    // progress
+    const total = rect.height - vh;
     const seen = Math.min(Math.max(-rect.top, 0), total);
-    const pct = total > 0 ? (seen / total) * 100 : 0;
-    bar.style.width = pct + '%';
+    const pct = total > 0 ? Math.round((seen / total) * 100) : 0;
+    if (readBarPct) readBarPct.textContent = pct + '%';
+    if (readBarProgress) readBarProgress.style.width = pct + '%';
   }
-  window.addEventListener('scroll', updateProgress, { passive: true });
-  window.addEventListener('resize', updateProgress);
-  updateProgress();
+  window.addEventListener('scroll', updateReadBar, { passive: true });
+  window.addEventListener('resize', updateReadBar);
+  updateReadBar();
 
   // Reveals
   const items = document.querySelectorAll('.reveal');
@@ -758,19 +796,7 @@ button { font: inherit; }
   }
   setTimeout(() => items.forEach(i => i.classList.add('in')), 1500);
 
-  // ActionBar dock — only show while article body is in view
-  const dock = document.getElementById('dock');
-  if (article && 'IntersectionObserver' in window) {
-    const dockIo = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) dock.classList.add('show');
-        else dock.classList.remove('show');
-      });
-    }, { threshold: 0, rootMargin: '-10% 0px -20% 0px' });
-    dockIo.observe(article);
-  } else {
-    dock.classList.add('show');
-  }
+
 
   function flashCopied(btn, label){
     const original = btn.innerHTML;
@@ -778,8 +804,8 @@ button { font: inherit; }
     btn.innerHTML = '<span>✓ ' + label + '</span>';
     setTimeout(()=>{ btn.classList.remove('copied'); btn.innerHTML = original; }, 1400);
   }
-  dock.addEventListener('click', async (e) => {
-    const btn = e.target.closest('.dock-btn');
+  readBar.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.rb-btn');
     if (!btn) return;
     const action = btn.dataset.action;
     const url = window.location.href;
