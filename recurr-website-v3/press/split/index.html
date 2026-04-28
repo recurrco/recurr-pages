@@ -258,9 +258,48 @@ img { display: block; max-width: 100%; height: auto; }
   .dock-btn { min-width: 0; flex: 1; }
 }
 
-/* ─── Footer placeholder (full rebuild in next commit) ─── */
-.footer-placeholder { padding: 48px var(--gutter); border-top: 1px solid var(--ink); margin-top: 80px; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-.footer-placeholder .mono-foot { color: rgba(10,10,10,0.55); }
+/* ─── Footer (back-of-the-book) ─── */
+.footer-zone { padding-top: clamp(80px, 12vh, 140px); }
+.footer { max-width: 1680px; margin: 0 auto; padding: 0 var(--gutter); }
+.footer-block { position: relative; overflow: hidden; isolation: isolate; padding: 56px 48px 48px; min-height: 760px; color: var(--paper); background: linear-gradient(135deg, #0F0F0F 0%, #2A1610 32%, #4A2618 55%, #C95E2D 82%, #FF5A1F 100%); display: flex; flex-direction: column; gap: 48px; }
+.footer-block::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 80% at 82% 108%, rgba(255,90,31,0.42) 0%, transparent 60%); z-index: 0; }
+.footer-block > * { position: relative; z-index: 1; }
+.footer-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.footer-top .mono-label { color: rgba(247,245,240,0.72); }
+.footer-center { flex: 1; display: flex; align-items: center; justify-content: center; padding: 32px 0; }
+.orbit { position: relative; width: 320px; height: 320px; }
+.orbit-svg { width: 100%; height: 100%; display: block; }
+.orbit-arm { position: absolute; inset: 0; transform-origin: 50% 50%; pointer-events: none; }
+.orbit-arm-1 { animation: orbit-rot 14s linear infinite; }
+.orbit-arm-2 { animation: orbit-rot 22s linear infinite reverse; }
+.orbit-arm-3 { animation: orbit-rot 36s linear infinite; }
+.orbit-dot { position: absolute; left: 50%; width: 9px; height: 9px; background: var(--accent); border-radius: 50%; transform: translateX(-50%); box-shadow: 0 0 18px rgba(255,90,31,0.7); }
+.orbit-dot-1 { top: 22px; }
+.orbit-dot-2 { top: 62px; width: 5px; height: 5px; background: rgba(247,245,240,0.85); box-shadow: 0 0 8px rgba(247,245,240,0.55); }
+.orbit-dot-3 { top: 102px; width: 4px; height: 4px; background: rgba(247,245,240,0.5); box-shadow: 0 0 6px rgba(247,245,240,0.35); }
+@keyframes orbit-rot { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .orbit-arm-1, .orbit-arm-2, .orbit-arm-3 { animation: none; } }
+.orbit-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 8px; pointer-events: none; }
+.orbit-mark { font-family: var(--display); font-weight: 900; font-size: 24px; letter-spacing: 0.16em; line-height: 1; color: var(--paper); }
+.orbit-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(247,245,240,0.55); }
+.footer-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; padding-top: 32px; border-top: 1px solid rgba(247,245,240,0.18); }
+.footer-col { display: flex; flex-direction: column; gap: 12px; }
+.footer-col-head { color: var(--paper); margin-bottom: 4px; }
+.footer-col a { font-family: var(--display); font-weight: 500; font-size: 15px; letter-spacing: -0.01em; color: rgba(247,245,240,0.75); transition: color 150ms ease; }
+.footer-col a:hover { color: var(--accent); }
+.footer-subscribe { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; padding-top: 32px; border-top: 1px solid rgba(247,245,240,0.18); align-items: end; }
+.footer-sub-l { display: flex; flex-direction: column; gap: 10px; max-width: 520px; }
+.footer-sub-l .display-s { color: var(--paper); font-weight: 700; }
+.footer-sub-l p { font-family: var(--serif); font-size: 15px; line-height: 1.5; color: rgba(247,245,240,0.72); margin: 0; }
+.footer-form { display: flex; gap: 0; align-items: stretch; min-width: 420px; }
+.footer-form input { flex: 1; padding: 14px 16px; background: transparent; border: 1px solid rgba(247,245,240,0.4); border-right: 0; font-family: var(--mono); font-size: 12px; color: var(--paper); letter-spacing: 0.02em; }
+.footer-form input::placeholder { color: rgba(247,245,240,0.45); }
+.footer-form input:focus { outline: none; border-color: var(--paper); }
+.footer-form button { padding: 14px 22px; background: var(--accent); border: 1px solid var(--accent); color: var(--accent-ink); font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: background 150ms ease, color 150ms ease, border-color 150ms ease; }
+.footer-form button:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.footer-meta { padding: 24px var(--gutter) 64px; max-width: 1680px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.footer-meta .mono-foot { color: rgba(10,10,10,0.55); }
+@media (max-width: 900px) { .footer-block { padding: 40px 24px; min-height: 0; gap: 32px; } .footer-cols { grid-template-columns: repeat(2, 1fr); gap: 24px; } .footer-subscribe { grid-template-columns: 1fr; } .footer-form { min-width: 0; } .orbit { width: 240px; height: 240px; } .orbit-mark { font-size: 18px; } }
 
 </style>
 </head>
@@ -510,12 +549,54 @@ img { display: block; max-width: 100%; height: auto; }
   </button>
 </aside>
 
-<!-- ─── FOOTER (placeholder — full rebuild next commit) ─── -->
-<footer class="footer-placeholder">
-  <span class="mono-foot">© 2026 Recurr Studio Pvt Ltd</span>
-  <span class="mono-foot">Footer rebuild — Orbit + back-of-the-book treatment — pending</span>
-  <span class="mono-foot">Compiled in Bengaluru</span>
-</footer>
+<div class="footer-zone">
+  <footer class="footer">
+    <div class="footer-block">
+      <div class="footer-top">
+        <span class="mono-label">Recurr Press</span>
+        <span class="mono-label">Issue 04 · Apr 2026</span>
+        <span class="mono-label">Compiled in Bengaluru</span>
+      </div>
+      <div class="footer-center">
+        <div class="orbit" aria-hidden="true">
+          <svg class="orbit-svg" viewBox="0 0 320 320">
+            <circle cx="160" cy="160" r="140" stroke="rgba(247,245,240,0.18)" stroke-width="1" fill="none"/>
+            <circle cx="160" cy="160" r="100" stroke="rgba(247,245,240,0.10)" stroke-width="1" fill="none" stroke-dasharray="2 5"/>
+            <circle cx="160" cy="160" r="60" stroke="rgba(247,245,240,0.06)" stroke-width="1" fill="none"/>
+          </svg>
+          <div class="orbit-arm orbit-arm-1"><span class="orbit-dot orbit-dot-1"></span></div>
+          <div class="orbit-arm orbit-arm-2"><span class="orbit-dot orbit-dot-2"></span></div>
+          <div class="orbit-arm orbit-arm-3"><span class="orbit-dot orbit-dot-3"></span></div>
+          <div class="orbit-center">
+            <span class="orbit-mark">RECURR</span>
+            <span class="orbit-tag">A growth studio · Press</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><span class="mono-label footer-col-head">Studio</span><a href="/recurr-website-v3/#work">Services</a><a href="/recurr-website-v3/#work">Case studies</a><a href="#">Frameworks</a></div>
+        <div class="footer-col"><span class="mono-label footer-col-head">Press</span><a href="/recurr-website-v3/press/">Latest</a><a href="#">Authors</a><a href="#">Signals</a><a href="#">Archive</a></div>
+        <div class="footer-col"><span class="mono-label footer-col-head">Recurr</span><a href="#">About</a><a href="#">Careers</a><a href="#">Press kit</a></div>
+        <div class="footer-col"><span class="mono-label footer-col-head">Reach</span><a href="/recurr-website-v3/#reach">Contact</a><a href="#">X / @recurrco</a><a href="#">LinkedIn</a></div>
+      </div>
+      <div class="footer-subscribe">
+        <div class="footer-sub-l">
+          <span class="display-s">A weekly note from the Press desk.</span>
+          <p>One drop a week. Mental models for venture builders. No tracking, no growth hacks.</p>
+        </div>
+        <form class="footer-form" onsubmit="event.preventDefault();">
+          <input type="email" placeholder="you@yourcompany.com" aria-label="Email address" required/>
+          <button type="submit">Subscribe →</button>
+        </form>
+      </div>
+    </div>
+  </footer>
+  <div class="footer-meta">
+    <span class="mono-foot">© 2026 Recurr Studio Pvt Ltd</span>
+    <span class="mono-foot">Compiled in Bengaluru</span>
+    <span class="mono-foot">v3 build · 29.04.2026</span>
+  </div>
+</div>
 
 <script>
 (function(){
