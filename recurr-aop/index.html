@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#E5E8E8">
+  <title>Recurr — Annual Operating Plan FY26-27</title>
+  <link rel="stylesheet" href="/recurr-system/style.css">
+  <style>
+    /* -- Slide sections -- */
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: var(--space-2xl) var(--margin);
+      position: relative;
+    }
+    .slide-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* -- Slide number -- */
+    .slide-num {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--faint);
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-s);
+      display: flex;
+      align-items: center;
+      gap: 0.6em;
+    }
+    .slide-num::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+
+    /* -- Title slide -- */
+    .slide-title {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-2xl) var(--margin);
+    }
+    .slide-title .slide-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .slide-title h1 {
+      font-family: var(--serif);
+      font-size: var(--fs-mega);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      margin-bottom: var(--space-m);
+    }
+    .slide-title .subtitle {
+      font-family: var(--serif);
+      font-size: var(--fs-h2);
+      font-style: italic;
+      color: var(--graphite);
+      margin-bottom: var(--space-l);
+      max-width: 40ch;
+    }
+    .slide-title .meta-line {
+      font-family: var(--mono);
+      font-size: var(--fs-small);
+      color: var(--pencil);
+      letter-spacing: 0.03em;
+    }
+    .slide-title .meta-line + .meta-line {
+      margin-top: 6px;
+    }
+
+    /* -- Slide headings -- */
+    .slide h2 {
+      font-family: var(--serif);
+      font-size: var(--fs-h1);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: var(--space-m);
+    }
+    .slide h3 {
+      font-family: var(--serif);
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: var(--space-xs);
+    }
+
+    /* -- Prose inside slides -- */
+    .slide-prose {
+      font-family: var(--serif);
+      font-size: var(--fs-body-lg);
+      color: var(--graphite);
+      line-height: 1.65;
+      max-width: 65ch;
+    }
+    .slide-prose + .slide-prose {
+      margin-top: var(--space-s);
+    }
+
+    /* -- Bullet lists -- */
+    .slide-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .slide-list li {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      color: var(--ink);
+      line-height: 1.55;
+      padding-left: 1.4em;
+      position: relative;
+    }
+    .slide-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--faint);
+    }
+    .slide-list li strong {
+      color: var(--ink);
+    }
+    .slide-list .hl-dot::before {
+      background: var(--red);
+    }
+
+    /* -- Two-column layout -- */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-l);
+    }
+    @media (max-width: 768px) {
+      .two-col { grid-template-columns: 1fr; gap: var(--space-m); }
+    }
+    .col h3 {
+      margin-bottom: var(--space-xs);
+    }
+
+    /* -- Principle cards -- */
+    .principle-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-s);
+    }
+    @media (max-width: 768px) {
+      .principle-grid { grid-template-columns: 1fr; }
+    }
+    .principle-card {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1.5rem, 1.2rem + 1vw, 2.2rem);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .principle-card .principle-num {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--red);
+      letter-spacing: 0.1em;
+      font-weight: 700;
+    }
+    .principle-card .principle-quote {
+      font-family: var(--serif);
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    .principle-card .principle-desc {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      line-height: 1.55;
+    }
+
+    /* -- Blockquote -- */
+    .slide-quote {
+      border-left: 4px solid var(--red);
+      padding: var(--space-s) var(--space-m);
+      margin: var(--space-m) 0;
+      background: var(--whiteboard);
+      border-radius: 0 4px 4px 0;
+    }
+    .slide-quote p {
+      font-family: var(--serif);
+      font-size: var(--fs-body-lg);
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    .slide-quote .quote-src {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--pencil);
+      margin-top: var(--space-xs);
+      font-style: normal;
+      letter-spacing: 0.05em;
+    }
+
+    /* -- Flywheel diagram -- */
+    .flywheel {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0;
+      margin: var(--space-m) 0;
+      font-family: var(--mono);
+      font-size: var(--fs-small);
+      color: var(--ink);
+      line-height: 2.4;
+    }
+    .flywheel-step {
+      white-space: nowrap;
+    }
+    .flywheel-arrow {
+      color: var(--red);
+      margin: 0 0.4em;
+      font-weight: 700;
+    }
+
+    /* -- Slide divider -- */
+    .slide-divider {
+      border: none;
+      border-top: 1px dashed var(--border-color);
+      margin: 0;
+    }
+
+    /* -- Dark slide (inverted) -- */
+    .slide-dark {
+      background: var(--ink);
+      color: var(--notebook);
+    }
+    [data-theme="dark"] .slide-dark {
+      background: #111414;
+    }
+    .slide-dark h2,
+    .slide-dark h3,
+    .slide-dark .slide-prose,
+    .slide-dark .slide-list li,
+    .slide-dark .slide-list li strong {
+      color: var(--notebook);
+    }
+    [data-theme="dark"] .slide-dark h2,
+    [data-theme="dark"] .slide-dark h3,
+    [data-theme="dark"] .slide-dark .slide-prose,
+    [data-theme="dark"] .slide-dark .slide-list li {
+      color: var(--ink);
+    }
+    .slide-dark .slide-num {
+      color: var(--pencil);
+    }
+    .slide-dark .slide-quote {
+      background: rgba(255,255,255,0.05);
+      border-left-color: var(--yellow);
+    }
+    .slide-dark .slide-quote p {
+      color: var(--notebook);
+    }
+    [data-theme="dark"] .slide-dark .slide-quote p {
+      color: var(--ink);
+    }
+    .slide-dark .slide-quote .quote-src {
+      color: var(--faint);
+    }
+
+    /* -- Nav hint -- */
+    .nav-hint {
+      position: fixed;
+      bottom: var(--space-s);
+      right: var(--space-s);
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--faint);
+      letter-spacing: 0.05em;
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    /* -- Route table -- */
+    .route-table {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: var(--space-s);
+      border-top: 1px solid var(--border-color);
+    }
+    .route-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: var(--space-s);
+      padding: var(--space-xs) 0;
+      border-bottom: 1px solid var(--border-faint);
+      align-items: baseline;
+    }
+    .route-path {
+      font-family: var(--mono);
+      font-size: var(--fs-small);
+      color: var(--red);
+      font-weight: 700;
+    }
+    .route-desc {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+    }
+
+    /* -- IGS layer table -- */
+    .igs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xs);
+      margin-top: var(--space-s);
+    }
+    @media (max-width: 768px) {
+      .igs-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .igs-layer {
+      background: var(--whiteboard);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: clamp(1rem, 0.8rem + 0.6vw, 1.5rem);
+    }
+    .igs-layer-num {
+      font-family: var(--mono);
+      font-size: var(--fs-label);
+      color: var(--red);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+    .igs-layer-name {
+      font-family: var(--serif);
+      font-size: var(--fs-body);
+      font-weight: 700;
+      color: var(--ink);
+      margin-top: 4px;
+    }
+    .igs-layer-desc {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    /* -- Highlight number -- */
+    .big-num {
+      font-family: var(--mono);
+      font-size: var(--fs-display);
+      font-weight: 700;
+      color: var(--red);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .big-num-label {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      margin-top: 4px;
+    }
+
+    /* -- Revenue table -- */
+    .rev-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-m);
+      margin-top: var(--space-s);
+    }
+    @media (max-width: 768px) {
+      .rev-grid { grid-template-columns: 1fr; }
+    }
+
+    /* -- Closing slide -- */
+    .slide-close {
+      text-align: center;
+    }
+    .slide-close h2 {
+      margin-bottom: var(--space-xs);
+    }
+    .slide-close .close-tagline {
+      font-family: var(--serif);
+      font-size: var(--fs-body-lg);
+      font-style: italic;
+      color: var(--graphite);
+      margin-bottom: var(--space-xs);
+    }
+    .slide-close .close-url {
+      font-family: var(--mono);
+      font-size: var(--fs-small);
+      color: var(--red);
+      letter-spacing: 0.05em;
+    }
+
+    /* -- Risk grid -- */
+    .risk-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--border-color);
+    }
+    .risk-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-m);
+      padding: var(--space-xs) 0;
+      border-bottom: 1px solid var(--border-faint);
+    }
+    @media (max-width: 768px) {
+      .risk-row { grid-template-columns: 1fr; gap: var(--space-xs); }
+    }
+    .risk-label {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .risk-mitigation {
+      font-family: var(--serif);
+      font-size: var(--fs-small);
+      color: var(--graphite);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+<canvas class="dot-grid-canvas" id="dot-grid"></canvas>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="/recurr-co/" class="nav-logo">recurr</a>
+    <div class="nav-right">
+      <span class="nav-clock" id="clock"></span>
+      <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode" aria-label="Toggle dark mode">&#9684;</button>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 01: TITLE -->
+<!-- ============================================================ -->
+<section class="slide-title" id="slide-01">
+  <div class="slide-inner">
+    <div data-reveal>
+      <h1>Annual Operating Plan<br>FY26-27</h1>
+    </div>
+    <div data-reveal>
+      <p class="subtitle">Positioning and content for B2B startups.</p>
+    </div>
+    <div data-reveal>
+      <p class="meta-line">March 2026</p>
+      <p class="meta-line">Recurr Studio Private Limited</p>
+    </div>
+  </div>
+</section>
+
+<hr class="slide-divider">
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 02: WHO WE ARE -->
+<!-- ============================================================ -->
+<section class="slide" id="slide-02">
+  <div class="slide-inner">
+    <div class="slide-num" data-reveal>02</div>
+    <h2 data-reveal>Who We Are</h2>
+
+    <p class="slide-prose" data-reveal>Communication design company. Not an agency. Not consultants.</p>
+    <p class="slide-prose" data-reveal>We do two things: <strong>positioning</strong> and <strong>content</strong> &mdash; done deeply. We practice what we preach. Our own editorial (Press) is Client Zero.</p>
+
+    <div class="route-table" style="margin-top: var(--space-m);" data-reveal>
+      <div class="route-row">
+        <span class="route-path">recurr.co/</span>
+        <span class="route-desc">Homepage &mdash; who we are, what we do for clients</span>
+      </div>
+      <div class="route-row">
+        <span class="route-path">/press</span>
+        <span class="route-desc">Editorial &mdash; articles, essays, podcast</span>
+      </div>
+      <div class="route-row">
+        <span class="route-path">/outwork</span>
+        <span class="route-desc">Creative team, ventures, events</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="slide-divider">
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 03: IGS -->
+<!-- ============================================================ -->
+<section class="slide" id="slide-03">
+  <div class="slide-inner">
+    <div class="slide-num" data-reveal>03</div>
+    <h2 data-reveal>The Internet Growth System</h2>
+    <p class="slide-prose" data-reveal>Recurr's IP &mdash; a 6-layer framework for building world-class web presence. Built internally first (Press), then deployed to clients. This is what makes productized retainers work.</p>
+
+    <div class="igs-grid" data-reveal>
+      <div class="igs-layer" data-reveal>
+        <div class="igs-layer-num">L1</div>
+        <div class="igs-layer-name">Structure</div>
+        <div class="igs-layer-desc">Sitemap, IA, page architecture, URL strategy</div>
+      </div>
+      <div class="igs-layer" data-reveal>
+        <div class="igs-layer-num">L2</div>
+        <div class="igs-layer-name">Surface</div>
+        <div class="igs-layer-desc">Design, copy, interactions, brand expression</div>
+      </div>
+      <div class="igs-layer" data-reveal>
+        <div class="igs-layer-num">L3</div>
+        <div class="igs-layer-name">Discovery</div>
+        <div class="igs-layer-desc">SEO, content marketing, distribution, backlinks</div>
+      </div>
+      <div class="igs-layer" data-reveal>
+        <div class="igs-layer-num">L4</div>
+        <div class="igs-layer-name">Intelligence</div>
+        <div class="igs-layer-desc">Analytics, heatmaps, user behavior, A/B testing</div>
+      </div>
+      <div class="igs-layer" data-reveal>
+        <div class="igs-layer-num">L5</div>
+        <div class="igs-layer-name">Analytics</div>
+        <div class="igs-layer-desc">Dashboards, reporting, attribution, ROI tracking</div>
+      </div>
+      <div class="igs-layer" data-reveal>
+        <div class="igs-layer-num">L6</div>
+        <div class="igs-layer-name">Operations</div>
+        <div class="igs-layer-desc">CMS, workflows, publishing, automation, QA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="slide-divider">
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 04: THE TEAM -->
+<!-- ============================================================ -->
+<section class="slide" id="slide-04">
+  <div class="slide-inner">
+    <div class="slide-num" data-reveal>04</div>
+    <h2 data-reveal>The Team</h2>
+
+    <div class="data-table-wrap" data-reveal>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Person</th>
+            <th>Role</th>
+            <th>Focus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Pratik</strong></td>
+            <td>Founder</td>
+            <td>Positioning, strategy, Clarisights, MOO, ventures</td>
+          </tr>
+          <tr>
+            <td><strong>Sujith</strong></td>
+            <td>Client Lead</td>
+            <td>Content production, client execution, IGS deployment</td>
+          </tr>
+          <tr>
+            <td><strong>Interns</strong></td>
+            <td>Account Management</td>
+            <td>Client operations, coordination (incoming)</td>
+          </tr>
+          <tr>
+            <td><strong>Rushil + Disha</strong></td>
+            <td>Outwork &mdash; Brand &amp; Content</td>
+            <td>Creative production, social, copy</td>
+          </tr>
+          <tr>
+            <td><strong>Vishwas, Ravi</strong></td>
+            <td>Outwork &mdash; Design</td>
+            <td>Visual design, assets, web production</td>
+          </tr>
+          <tr>
+            <td><strong>Ankita</strong></td>
+            <td>Chief of Staff</td>
+            <td>Finance, compliance, project management</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<hr class="slide-divider">
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 05: RETROSPECTIVE -->
+<!-- ============================================================ -->
+<section class="slide" id="slide-05">
+  <div class="slide-inner">
+    <div class="slide-num" data-reveal>05</div>
+    <h2 data-reveal>Where We Are &mdash; FY25-26</h2>
+
+    <div class="two-col">
+      <div class="col" data-reveal>
+        <h3 style="color: var(--green);">What Got Built</h3>
+        <ul class="slide-list">
+          <li>Infrastructure &mdash; Claude Code, MCP, Outwork, workspace architecture</li>
+          <li>recurr.co &mdash; 7 pages, V5 design system, brand identity</li>
+          <li>Press architecture &mdash; S3 vision, 175 SaaStitute articles migrated</li>
+          <li>IGS framework &mdash; 6 layers defined</li>
+          <li>Clarisights &mdash; $300K design partnership</li>
+          <li>Team in place</li>
+        </ul>
+      </div>
+      <div class="col" data-reveal>
+        <h3 style="color: var(--red);">What Didn't Happen</h3>
+        <ul class="slide-list">
+          <li>Consistent revenue &mdash; clients were sporadic</li>
+          <li>Consistent publishing &mdash; zero articles on recurr.co</li>
+          <li>Sharp GTM &mdash; no pipeline, no productized offering</li>
+          <li>IGS deployment &mdash; framework only, not built</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="slide-divider">
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 06: HONEST ASSESSMENT -->
+<!-- ============================================================ -->
+<section class="slide slide-dark" id="slide-06">
+  <div class="slide-inner">
+    <div class="slide-num" data-reveal>06</div>
+    <h2 data-reveal>Honest Assessment</h2>
+
+    <p class="slide-prose" data-reveal>We rebuilt the foundation but didn't generate consistent revenue or publish consistently.</p>
+    <p class="slide-prose" data-reveal>The infrastructure is ready. The positioning is clear. The team is in place. Now we execute.</p>
+
+    <div class="slide-quote" data-reveal>
+      <p>"Record is running 5 and that's a big milestone... we might have disappeared and come back... the undertaker of my own journey."</p>
+      <div class="quote-src">Voice memo &mdash; Pratik, Mar 2026</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 07: PRESS -->
+<!-- ============================================================ -->
+<section class="slide" id="slide-07">
+  <div class="slide-inner">
+    <div class="slide-num dot-red" data-reveal>07</div>
+    <h2 data-reveal>Year 3 &mdash; Press</h2>
+    <p class="slide-prose" data-reveal>The sacrosanct unit. Non-negotiable: <strong>publish consistently</strong>.</p>
+
+    <div class="two-col" style="margin-top: var(--space-m);">
+      <div class="col" data-reveal>
+        <h3>How It Works</h3>
+        <ul class="slide-list">
+          <li class="hl-dot">Press = Client Zero &mdash; first IGS deployment</li>
+          <li>Collaborate with industry people (not Pratik writing alone)</li>
+          <li>175 SaaStitute articles as cold-start base</li>
+          <li>AI deeply embedded in production</li>
+          <li>Min 2 pieces/week, podcast in Q2</li>
+          <li>April 3 launch</li>
+        </ul>
+      </div>
+      <div class="col" data-reveal>
+        <h3>Six Editorial Pillars</h3>
+        <ul class="slide-list">
+          <li>Positioning &amp; Category Design</li>
+          <li>GTM &amp; Go-to-Market</li>
+          <li>Content &amp; Distribution</li>
+          <li>Product-Led Growth</li>
+          <li>SaaS Intelligence</li>
+          <li>AI &amp; the New Stack</li>
+        </ul>
+        <p style="font-family: var(--mono); font-size: var(--fs-label); color: var(--pencil); margin-top: var(--space-s); letter-spacing: 0.05em;">REVENUE TARGET: SPONSORSHIPS, BACKLINKS, CO-MARKETING &mdash; &#8377;50L</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="slide-divider">
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 08: CLIENT SERVICES -->
+<!-- ============================================================ -->
+<section class="slide" id="slide-08">
+  <div class="slide-inner">
+    <div class="slide-num" data-reveal>08</div>
+    <h2 data-reveal>Year 3 &mdash; Client Services</h2>
+
+    <div class="two-col" style="margin-top: var(--space-s);">
+      <div class="col" data-reveal>
+        <h3>Two Capabilities, Modular</h3>
+        <ul class="slide-list">
+          <li><strong>Month 1:</strong> Onboarding intensive &mdash; positioning sprint, content strategy, IGS deployment</li>
+          <li><strong>Month 2+:</strong> Productized retainer &mdash; system runs, we optimize</li>
+        </ul>
+
+        <h3 style="margin-top: var(--space-m);">Client Portal</h3>
+        <ul class="slide-list">
+          <li><strong>The Work</strong> &mdash; Plane kanban (task visibility)</li>
+          <li><strong>The Impact</strong> &mdash; API performance dashboard: 3rd party traffic, 2nd party referrals, search, LLM discovery</li>
+        </ul>
+      </div>
+      <div class="col" data-reveal>
+        <h3>Client Numbering</h3>
+        <ul class="slide-list">
+          <li><strong>Zero:</strong> Press (internal)</li>
+          <li><strong>One:</strong> Clarisights &mdash; Pratik only, design partner</li>
+          <li><strong>Two+:</strong> Commercial clients &mdash; Sujith + interns</li>
+        </ul>
+
+        <h3 style="margin-top: var(--space-m);">Economics</h3>
+        <ul class="slide-list">
+          <li>Starting &#8377;2.5L/month, target &#8377;3.5-4L avg by Q4</li>
+          <li>Capacity: 5 &#8594; 8-10 concurrent clients</li>
+          <li>Pipeline: Network first &#8594; Press inbound by Q4 (80%+ inbound)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="slide-divider">
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 09: OUTWORK -->
+<!-- ============================================================ -->
+<section class="slide" id="slide-09">
+  <div class="slide-inner">
+    <div class="slide-num" data-reveal>09</div>
+    <h2 data-reveal>Year 3 &mdash; Outwork</h2>
+    <p class="slide-prose" data-reveal>Creative engine + venture support. The bench that powers everything.</p>
+
+    <div class="two-col" style="margin-top: var(--space-m);">
+      <div class="col" data-reveal>
+        <h3>Creative Bench</h3>
+        <ul class="slide-list">
+          <li><strong>Rushil, Disha, Vishwas, Ravi</strong> &mdash; supports clients + ventures + Press</li>
+          <li><strong>Ankita</strong> as Chief of Staff (finance, compliance, venture ops)</li>
+          <li>Physical studio: mics, cameras, events, workshops by Q1 end</li>
+        </ul>
+      </div>
+      <div class="col" data-reveal>
+        <h3>Three Ventures</h3>
+        <ul class="slide-list">
+          <li><strong>MOO</strong> &mdash; Ministry of Oats. Operational, 3 kitchens. Recurr charges 5% of net sales.</li>
+          <li><strong>BLR</strong> &mdash; blr.store. India's premium consumer product media. Pre-build, May 1 launch.</li>
+          <li><strong>Vayam</strong> &mdash; vayam.in. Frontier-sector media. Concept stage + Anthracite book.</li>
+        </ul>
+        <p style="font-family: var(--mono); font-size: var(--fs-label); color: var(--pencil); margin-top: var(--space-s); letter-spacing: 0.05em;">VENTURE REVENUE: MOO FEE &#8377;35L + MEDIA &#8377;65L = &#8377;1 CR</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="slide-divider">
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 10: THE NUMBERS -->
+<!-- ============================================================ -->
+<section class="slide" id="slide-10">
+  <div class="slide-inner">
+    <div class="slide-num" data-reveal>10</div>
+    <h2 data-reveal>The Numbers</h2>
+
+    <div class="rev-grid">
+      <div data-reveal>
+        <h3>Revenue Plan</h3>
+        <div class="data-table-wrap" style="margin-top: var(--space-xs);">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Business Unit</th>
+                <th>FY27 Target</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Client Services</td>
+                <td class="num">&#8377;3.5 Cr</td>
+              </tr>
+              <tr>
+                <td>MOO Marketing Fee</td>
+                <td class="num">&#8377;35L</td>
+              </tr>
+              <tr>
+                <td>Media (Press + BLR + Vayam)</td>
+                <td class="num">&#8377;65L</td>
+              </tr>
+              <tr>
+                <td><strong>Total</strong></td>
+                <td class="num" style="color: var(--red); font-weight: 700;"><strong>&#8377;4.5-5 Cr</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div data-reveal>
+        <h3>Quarterly Ramp &mdash; Client Services</h3>
+        <div class="data-table-wrap" style="margin-top: var(--space-xs);">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Quarter</th>
+                <th>Clients</th>
+                <th>Monthly Rev</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Q1</td>
+                <td class="num">3-5</td>
+                <td class="num">&#8377;7.5-12.5L</td>
+              </tr>
+              <tr>
+                <td>Q2</td>
+                <td class="num">6-8</td>
+                <td class="num">&#8377;15-20L</td>
+              </tr>
+              <tr>
+                <td>Q3</td>
+                <td class="num">8-10</td>
+                <td class="num">&#8377;25-35L</td>
+              </tr>
+              <tr>
+                <td>Q4</td>
+                <td class="num">8-10</td>
+                <td class="num">&#8377;30-40L</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p style="font-family: var(--serif); font-size: var(--fs-small); color: var(--graphite); margin-top: var(--space-s); line-height: 1.5;">
+          Costs: &#8377;5-8L/month. At Q4 run rate (~&#8377;35L/month), <strong style="color: var(--green);">75%+ gross margins</strong>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="slide-divider">
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 11: KEY PRINCIPLES -->
+<!-- ============================================================ -->
+<section class="slide" id="slide-11">
+  <div class="slide-inner">
+    <div class="slide-num" data-reveal>11</div>
+    <h2 data-reveal>Key Principles</h2>
+
+    <div class="principle-grid" style="margin-top: var(--space-s);">
+      <div class="principle-card" data-reveal>
+        <span class="principle-num">01</span>
+        <span class="principle-quote">"Every rupee has a thesis."</span>
+        <span class="principle-desc">No spend without a clear hypothesis. Test, measure, iterate.</span>
+      </div>
+      <div class="principle-card" data-reveal>
+        <span class="principle-num">02</span>
+        <span class="principle-quote">"Practice what we preach."</span>
+        <span class="principle-desc">Press = Client Zero. We deploy IGS on ourselves before selling it.</span>
+      </div>
+      <div class="principle-card" data-reveal>
+        <span class="principle-num">03</span>
+        <span class="principle-quote">"Productize relentlessly."</span>
+        <span class="principle-desc">Onboarding is custom. Everything after that is systemized.</span>
+      </div>
+      <div class="principle-card" data-reveal>
+        <span class="principle-num">04</span>
+        <span class="principle-quote">"Inbound over outbound."</span>
+        <span class="principle-desc">80%+ leads from Press + recurr.co + LinkedIn by Q4.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="slide-divider">
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 12: RISKS -->
+<!-- ============================================================ -->
+<section class="slide" id="slide-12">
+  <div class="slide-inner">
+    <div class="slide-num" data-reveal>12</div>
+    <h2 data-reveal>Risks</h2>
+
+    <div class="risk-grid" data-reveal>
+      <div class="risk-row" style="padding-top: var(--space-xs);">
+        <div class="risk-label">Press doesn't publish consistently</div>
+        <div class="risk-mitigation">Editorial calendar locked. AI-assisted production. Min 2/week non-negotiable. Accountability via Outwork tracking.</div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-label">Pipeline doesn't fill</div>
+        <div class="risk-mitigation">Network-first outreach Q1. Press builds inbound by Q2-Q3. If lagging, activate paid LinkedIn + cold outbound.</div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-label">Can't scale past 5 clients</div>
+        <div class="risk-mitigation">Productized retainers reduce per-client time. Sujith + interns handle execution. Pratik focuses on positioning only.</div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-label">Sujith can't own client execution</div>
+        <div class="risk-mitigation">Invest in onboarding + frameworks. Co-serve first 2-3 clients. Graduate to solo by Q2. Hire backup if needed.</div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-label">Media monetization is slow</div>
+        <div class="risk-mitigation">Media revenue is gravy, not the meal. Client services is the core engine. Keep media costs near zero.</div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-label">Outwork bench stretched thin</div>
+        <div class="risk-mitigation">Prioritize client work > Press > ventures. Hire freelancers for peak load. Say no to scope creep.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="slide-divider">
+
+
+<!-- ============================================================ -->
+<!-- SLIDE 13: MARCH 2027 -->
+<!-- ============================================================ -->
+<section class="slide slide-dark" id="slide-13">
+  <div class="slide-inner slide-close">
+    <div class="slide-num" data-reveal>13</div>
+    <h2 data-reveal>March 2027 &mdash; What It Looks Like</h2>
+
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-m); margin: var(--space-m) 0; text-align: center;" data-reveal>
+      <div>
+        <div class="big-num">&#8377;5 Cr</div>
+        <div class="big-num-label">Revenue</div>
+      </div>
+      <div>
+        <div class="big-num">8-10</div>
+        <div class="big-num-label">Concurrent clients</div>
+      </div>
+      <div>
+        <div class="big-num">3-4x</div>
+        <div class="big-num-label">Publishing per week</div>
+      </div>
+      <div>
+        <div class="big-num">12-15</div>
+        <div class="big-num-label">Team size</div>
+      </div>
+    </div>
+
+    <div data-reveal style="text-align: left; max-width: 65ch; margin: 0 auto;">
+      <ul class="slide-list" style="margin-bottom: var(--space-m);">
+        <li style="color: var(--notebook);">Press publishing 3-4x/week, podcast running, primary lead source</li>
+        <li style="color: var(--notebook);">8-10 concurrent clients on productized retainers</li>
+        <li style="color: var(--notebook);">Outwork creative engine supporting everything</li>
+        <li style="color: var(--notebook);">The flywheel is spinning</li>
+      </ul>
+    </div>
+
+    <div class="flywheel" data-reveal style="justify-content: center; flex-wrap: wrap;">
+      <span class="flywheel-step">Press publishes</span>
+      <span class="flywheel-arrow">&rarr;</span>
+      <span class="flywheel-step">Authority builds</span>
+      <span class="flywheel-arrow">&rarr;</span>
+      <span class="flywheel-step">Inbound leads</span>
+      <span class="flywheel-arrow">&rarr;</span>
+      <span class="flywheel-step">Client services converts</span>
+      <span class="flywheel-arrow">&rarr;</span>
+      <span class="flywheel-step">Case studies</span>
+      <span class="flywheel-arrow">&rarr;</span>
+      <span class="flywheel-step">More authority</span>
+      <span class="flywheel-arrow">&rarr;</span>
+      <span class="flywheel-step">More inbound</span>
+      <span class="flywheel-arrow">&circlearrowleft;</span>
+    </div>
+
+    <div data-reveal style="margin-top: var(--space-l);">
+      <h2>recurr</h2>
+      <p class="close-tagline">Positioning and content for B2B startups.</p>
+      <p class="close-url">recurr.co</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-entity">Recurr Studio Private Limited</p>
+      <p class="footer-loc">Bengaluru, India</p>
+    </div>
+    <div class="footer-links">
+      <p style="font-family: var(--mono); font-size: var(--fs-label); color: var(--faint);">Internal document &mdash; March 2026</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Nav hint -->
+<div class="nav-hint">Scroll to navigate slides</div>
+
+<script src="/recurr-system/engine.js"></script>
+<script>
+  // Optional: keyboard navigation between slides
+  (function() {
+    var slides = document.querySelectorAll('[id^="slide-"]');
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        var current = getCurrentSlide();
+        if (current < slides.length - 1) {
+          slides[current + 1].scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        var current = getCurrentSlide();
+        if (current > 0) {
+          slides[current - 1].scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+
+    function getCurrentSlide() {
+      var scrollY = window.scrollY;
+      var vh = window.innerHeight;
+      for (var i = slides.length - 1; i >= 0; i--) {
+        if (slides[i].offsetTop <= scrollY + vh * 0.4) return i;
+      }
+      return 0;
+    }
+  })();
+</script>
+</body>
+</html>

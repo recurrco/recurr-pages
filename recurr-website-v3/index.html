@@ -61,21 +61,28 @@ a { color: inherit; text-decoration: none; }
 .has-reveals .reveal.in { opacity: 1; transform: translateY(0); }
 @media (prefers-reduced-motion: reduce) { .has-reveals .reveal { transition: none; transform: none; opacity: 1; } }
 
-/* ────────── Nav ────────── */
+/* ────────── Nav (full-viewport, inner content re-capped) ────────── */
 .nav {
   position: sticky; top: 0; z-index: 50;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 20px var(--gutter);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   background: rgba(247, 245, 240, 0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1), background 200ms ease;
   will-change: transform;
 }
+.nav-inner {
+  max-width: 1680px;
+  margin-inline: auto;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px var(--gutter);
+}
 .nav.scrolled { background: rgba(247, 245, 240, 0.95); }
 .nav.hidden { transform: translateY(-100%); }
 .nav-l { display: flex; align-items: center; gap: 16px; }
-.nav-logo { width: 110px; height: auto; display: block; }
+.nav-logo { width: 96px; height: auto; display: block; }
 .nav-r { display: flex; align-items: center; gap: 28px; }
 .nav-link { transition: color 150ms ease; }
 .nav-link:hover { color: var(--accent); }
@@ -262,9 +269,10 @@ a { color: inherit; text-decoration: none; }
 
 <!-- ────────── NAV ────────── -->
 <nav class="nav" id="nav">
+  <div class="nav-inner">
   <div class="nav-l">
     <a href="/recurr-website-v3/" aria-label="Recurr home">
-      <svg class="nav-logo" viewBox="0 0 640 264" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+      <svg class="nav-logo" viewBox="60 80 520 105" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
         <path d="M98.6666 82.8662V105.195C109.745 89.6997 118.569 82.385 127.784 82.385C135.921 82.385 139.255 88.0635 139.255 94.6083C139.255 97.8807 138.372 101.153 137.196 102.885C134.941 102.212 135.098 101.634 126.02 101.634C115.333 101.634 103.961 105.099 99.0588 110.2V163.136C99.0588 170.45 100.725 171.99 113.667 173.434V179.979H62V173.434C73.5686 172.087 75.1372 170.45 75.1372 164.291V103.174C75.1372 97.7844 74.3529 96.437 68.8627 94.897L62 93.1646V87.1973L98.6666 82.8662Z"/>
         <path d="M132.098 132.529C132.098 102.789 151.51 82.0962 180.137 82.0962C206.804 82.0962 222.098 98.1694 222.098 123.001C222.098 125.503 221.902 128.102 221.706 129.738H156.412C157.98 154.089 172.882 169.392 194.941 169.392C204.843 169.392 214.157 165.927 219.843 160.537V167.178C212.784 175.936 199.059 182 181.902 182C153.667 182 132.098 163.136 132.098 132.529ZM180.039 90.9509C166.314 90.9509 157.196 101.442 156.314 122.135L199.941 122.038C199.941 121.269 199.941 120.499 199.941 119.536C199.941 101.827 193.078 90.9509 180.039 90.9509Z"/>
         <path d="M273.341 182C245.596 182 224.028 162.751 224.028 132.529C224.028 101.827 247.165 82 275.498 82C298.537 82 310.106 92.8758 310.106 105.58C310.106 112.991 304.616 118.092 297.753 118.092C290.792 118.092 285.498 112.895 285.498 106.254C285.498 100.576 289.322 95.9557 294.322 94.8008C290.596 92.4909 285.694 91.4321 279.714 91.4321C261.773 91.4321 249.028 105.484 249.028 128.102C249.028 153.8 264.518 169.295 285.89 169.295C295.694 169.295 305.008 165.831 310.792 160.537V167.178C303.831 175.936 290.204 182 273.341 182Z"/>
@@ -280,6 +288,7 @@ a { color: inherit; text-decoration: none; }
     <a href="#team" class="nav-link mono-label">Team</a>
     <a href="#reach" class="nav-link mono-label">Reach</a>
     <a href="#reach" class="cta">Work with us →</a>
+  </div>
   </div>
 </nav>
 
