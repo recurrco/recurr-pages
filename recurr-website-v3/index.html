@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F7F5F0">
+<title>Recurr — Content that powers organic growth.</title>
+<meta name="description" content="A growth studio building content marketing programs for the post-AI era. Bengaluru, India.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('has-reveals');</script>
+<style>
+/* ────────── Tokens (design.md v0.1) ────────── */
+:root {
+  --ink: #0A0A0A;
+  --paper: #F7F5F0;
+  --paper-pure: #FFFFFF;
+  --rule: #0A0A0A;
+  --accent: #FF5A1F;
+  --accent-ink: #FFFFFF;
+  --display: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --body: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --serif: 'New York', 'Source Serif 4', Charter, Georgia, serif;
+  --gutter: clamp(20px, 3vw, 40px);
+  --max: 1440px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+body {
+  font-family: var(--body);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 500;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ────────── Type ────────── */
+.display-xxl { font-family: var(--display); font-weight: 900; font-size: clamp(56px, 9vw, 128px); line-height: 0.88; letter-spacing: -0.035em; }
+.display-xl  { font-family: var(--display); font-weight: 900; font-size: clamp(40px, 6.5vw, 88px);  line-height: 0.92; letter-spacing: -0.03em; }
+.display-l   { font-family: var(--display); font-weight: 900; font-size: clamp(32px, 4vw, 56px);    line-height: 0.95; letter-spacing: -0.025em; }
+.display-m   { font-family: var(--display); font-weight: 800; font-size: clamp(24px, 2.6vw, 40px);  line-height: 1.0;  letter-spacing: -0.02em; }
+.display-s   { font-family: var(--display); font-weight: 800; font-size: clamp(20px, 1.8vw, 28px);  line-height: 1.05; letter-spacing: -0.018em; }
+.body-l      { font-family: var(--body); font-weight: 500; font-size: clamp(18px, 1.5vw, 22px); line-height: 1.45; letter-spacing: -0.005em; }
+.body-m      { font-family: var(--body); font-weight: 500; font-size: 16px; line-height: 1.55; }
+.mono-label  { font-family: var(--mono); font-weight: 500; font-size: 11px; line-height: 1.2; letter-spacing: 0.04em; text-transform: uppercase; }
+.mono-cap    { font-family: var(--mono); font-weight: 400; font-size: 12px; line-height: 1.4; }
+.mono-foot   { font-family: var(--mono); font-weight: 400; font-size: 10.5px; line-height: 1.4; letter-spacing: 0.03em; }
+
+/* ────────── Reveal motion (fail-open: visible without JS) ────────── */
+.reveal { opacity: 1; transform: none; }
+.has-reveals .reveal { opacity: 0; transform: translateY(8px); transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
+.has-reveals .reveal.in { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) { .has-reveals .reveal { transition: none; transform: none; opacity: 1; } }
+
+/* ────────── Nav ────────── */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px var(--gutter);
+  background: rgba(247, 245, 240, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 200ms ease, background 200ms ease;
+}
+.nav.scrolled { border-bottom-color: var(--ink); background: rgba(247, 245, 240, 0.95); }
+.nav-l { display: flex; align-items: center; gap: 16px; }
+.nav-logo { width: 110px; height: auto; display: block; }
+.nav-r { display: flex; align-items: center; gap: 28px; }
+.nav-link { transition: color 150ms ease; }
+.nav-link:hover { color: var(--accent); }
+.cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 14px; border: 1px solid var(--ink);
+  font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em;
+  background: transparent; color: var(--ink);
+  transition: background 150ms ease, color 150ms ease;
+}
+.cta:hover { background: var(--ink); color: var(--paper); }
+.cta-accent { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.cta-accent:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+/* ────────── Hero ────────── */
+.hero { padding: clamp(48px, 9vh, 120px) var(--gutter) clamp(80px, 12vh, 160px); }
+.hero-kick { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; }
+.hero-kick-l { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+.hero-kick-r { display: flex; gap: 12px; align-items: center; }
+.live-dot { width: 8px; height: 8px; background: var(--accent); display: inline-block; animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.55; transform: scale(0.9); } }
+.hero h1 { margin-bottom: 28px; max-width: 1200px; }
+.hero-lede { font-family: var(--body); font-weight: 500; font-size: clamp(20px, 2.2vw, 30px); line-height: 1.35; letter-spacing: -0.012em; max-width: 880px; color: var(--ink); }
+
+/* ────────── Featured ────────── */
+.featured { padding: 0 var(--gutter) clamp(80px, 12vh, 160px); }
+.featured-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; gap: 16px; flex-wrap: wrap; }
+.cover {
+  position: relative;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 32px 36px;
+  height: clamp(420px, 70vh, 720px);
+  overflow: hidden;
+  cursor: pointer;
+  background:
+    linear-gradient(135deg,
+      #1A1A1A 0%,
+      #4A2618 40%,
+      #C95E2D 75%,
+      #FF5A1F 100%);
+  isolation: isolate;
+}
+.cover::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(120% 100% at 80% 110%, rgba(255, 90, 31, 0.4) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cover-top { display: flex; justify-content: space-between; align-items: flex-start; color: var(--paper); position: relative; z-index: 1; }
+.cover-logo { width: 110px; height: auto; }
+.cover-bot { color: var(--paper); position: relative; z-index: 1; }
+.cover-kick { margin-bottom: 12px; opacity: 0.92; }
+.cover-title { max-width: 1100px; }
+.cover-foot { display: flex; justify-content: space-between; margin-top: 24px; opacity: 0.85; }
+.cover-foot a { transition: opacity 150ms ease; }
+.cover-foot a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+
+/* ────────── Section head ────────── */
+.section-head {
+  display: grid; grid-template-columns: 200px 1fr 240px;
+  gap: 40px; padding: 48px var(--gutter);
+  border-top: 1.5px solid var(--ink);
+  align-items: baseline;
+}
+.section-head-r { text-align: right; }
+.section-num { padding-top: 8px; }
+@media (max-width: 800px) {
+  .section-head { grid-template-columns: 1fr; gap: 12px; }
+  .section-head-r { text-align: left; }
+}
+
+/* ────────── Tile grid ────────── */
+.grid { padding: 24px var(--gutter) clamp(64px, 10vh, 120px); }
+.grid-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 24px; }
+.grid-row:last-child { margin-bottom: 0; }
+.tile { display: flex; flex-direction: column; gap: 14px; }
+.tile-cover {
+  position: relative;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 24px;
+  aspect-ratio: 4/4.4;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tile-cover::before {
+  content: ''; position: absolute; inset: 0;
+  transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+.tile-cover:hover::before { transform: scale(1.04); }
+.tile-cover > * { position: relative; z-index: 1; }
+.tile-title { color: var(--paper); font-family: var(--display); font-weight: 900; font-size: clamp(22px, 2.4vw, 32px); line-height: 1.0; letter-spacing: -0.025em; }
+.tile-title.dark-text { color: var(--ink); }
+.tile-meta { display: flex; justify-content: space-between; gap: 12px; }
+
+/* Tile gradient variants */
+.var-slate::before  { background: linear-gradient(135deg, #0A0A0A 0%, #34343A 55%, #66666E 100%); }
+.var-warm::before   { background: linear-gradient(135deg, #F7F5F0 0%, #E8DAB2 55%, #FFC957 100%); }
+.var-teal::before   { background: linear-gradient(135deg, #0D1A1E 0%, #1A4D52 55%, #8CC7B7 100%); }
+.var-ember::before  { background: linear-gradient(135deg, #1A1A1A 0%, #732E18 50%, #FF5A1F 100%); }
+.var-carbon::before { background: linear-gradient(135deg, #050505 0%, #1A1A1F 55%, #2E3038 100%); }
+.var-sand::before   { background: linear-gradient(135deg, #C7B89A 0%, #EBDFC0 55%, #F7F5F0 100%); }
+.var-wash::before   { background: linear-gradient(135deg, #D9D7D2 0%, #F7F5F0 50%, #E8DAB2 100%); }
+.var-dusk::before   { background: linear-gradient(135deg, #261F33 0%, #664D80 55%, #D9A68C 100%); }
+
+@media (max-width: 900px) { .grid-row { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .grid-row { grid-template-columns: 1fr; } }
+
+.grid-foot { display: flex; justify-content: space-between; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--ink); }
+
+/* ────────── Buyer Mirror hunts ────────── */
+.hunts { padding: 24px var(--gutter) clamp(80px, 12vh, 160px); }
+.hunts-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.hunt {  }
+.hunt-cover {
+  position: relative;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 28px;
+  height: 320px;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+.hunt-cover::before { content: ''; position: absolute; inset: 0; z-index: 0; }
+.hunt-cover > * { position: relative; z-index: 1; }
+.hunt-num { font-family: var(--display); font-weight: 900; font-size: clamp(64px, 7vw, 104px); line-height: 0.88; letter-spacing: -0.04em; }
+.hunt-label { opacity: 0.92; }
+.hunt-title { margin-bottom: 12px; }
+.hunt-body { color: var(--ink); }
+.hunt.dark .hunt-num, .hunt.dark .hunt-label { color: var(--paper); }
+.hunt.light .hunt-num, .hunt.light .hunt-label { color: var(--ink); }
+@media (max-width: 900px) { .hunts-row { grid-template-columns: 1fr; gap: 32px; } }
+
+/* ────────── Datasheet (Operating Matrix) ────────── */
+.matrix { padding: 24px var(--gutter) clamp(80px, 12vh, 160px); }
+.matrix-table { border-top: 1.5px solid var(--ink); }
+.matrix-row { display: grid; grid-template-columns: 60px 220px 1fr; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--ink); align-items: baseline; }
+.matrix-row .matrix-col-2 { display: flex; flex-direction: column; gap: 4px; }
+.matrix-row .body-m { font-family: var(--body); font-weight: 400; }
+@media (max-width: 700px) { .matrix-row { grid-template-columns: 1fr; gap: 8px; } }
+
+/* ────────── Team ────────── */
+.team { padding: 24px var(--gutter) clamp(80px, 12vh, 160px); }
+.team-lede {
+  font-family: var(--body); font-weight: 500;
+  font-size: clamp(22px, 2.4vw, 32px); line-height: 1.32; letter-spacing: -0.015em;
+  max-width: 1100px; margin-bottom: 48px;
+}
+.team-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.team-card {  }
+.team-portrait { aspect-ratio: 11/6; margin-bottom: 16px; position: relative; overflow: hidden; }
+.team-portrait::before { content: ''; position: absolute; inset: 0; z-index: 0; }
+.team-name { margin-bottom: 4px; }
+@media (max-width: 700px) { .team-row { grid-template-columns: 1fr; } }
+
+/* ────────── Press list ────────── */
+.press-list { padding: 24px var(--gutter) clamp(80px, 12vh, 160px); }
+.press-row { display: grid; grid-template-columns: 140px 1fr 180px; gap: 32px; padding: 26px 0; border-top: 1px solid var(--ink); align-items: baseline; transition: background 200ms ease; }
+.press-row:last-of-type { border-bottom: 1px solid var(--ink); }
+.press-row:hover { background: rgba(10, 10, 10, 0.03); }
+.press-row .press-r { text-align: right; }
+@media (max-width: 700px) { .press-row { grid-template-columns: 1fr; gap: 8px; } .press-row .press-r { text-align: left; } }
+
+/* ────────── Footer ────────── */
+.footer { background: var(--ink); color: var(--paper); padding: clamp(56px, 9vh, 96px) var(--gutter) 32px; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; }
+.footer-l .footer-logo { width: 200px; height: auto; margin-bottom: 24px; display: block; }
+.footer-tag { font-family: var(--body); font-size: 16px; line-height: 1.55; opacity: 0.92; margin-bottom: 16px; }
+.footer-col { display: flex; flex-direction: column; gap: 10px; }
+.footer-col h6 { margin-bottom: 4px; }
+.footer-col a { opacity: 0.78; transition: opacity 150ms ease; }
+.footer-col a:hover { opacity: 1; }
+.footer-rule { border-top: 1px solid rgba(247, 245, 240, 0.18); margin-bottom: 16px; }
+.footer-bot { display: flex; justify-content: space-between; gap: 16px; opacity: 0.6; flex-wrap: wrap; }
+@media (max-width: 800px) { .footer-top { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 500px) { .footer-top { grid-template-columns: 1fr; } }
+
+/* Mobile nav simplification */
+@media (max-width: 700px) {
+  .nav-r .nav-link { display: none; }
+  .nav-r .nav-link.show-mobile { display: inline; }
+}
+</style>
+</head>
+<body>
+
+<!-- ────────── NAV ────────── -->
+<nav class="nav" id="nav">
+  <div class="nav-l">
+    <a href="/recurr-website-v3/" aria-label="Recurr home">
+      <svg class="nav-logo" viewBox="0 0 640 264" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+        <path d="M98.6666 82.8662V105.195C109.745 89.6997 118.569 82.385 127.784 82.385C135.921 82.385 139.255 88.0635 139.255 94.6083C139.255 97.8807 138.372 101.153 137.196 102.885C134.941 102.212 135.098 101.634 126.02 101.634C115.333 101.634 103.961 105.099 99.0588 110.2V163.136C99.0588 170.45 100.725 171.99 113.667 173.434V179.979H62V173.434C73.5686 172.087 75.1372 170.45 75.1372 164.291V103.174C75.1372 97.7844 74.3529 96.437 68.8627 94.897L62 93.1646V87.1973L98.6666 82.8662Z"/>
+        <path d="M132.098 132.529C132.098 102.789 151.51 82.0962 180.137 82.0962C206.804 82.0962 222.098 98.1694 222.098 123.001C222.098 125.503 221.902 128.102 221.706 129.738H156.412C157.98 154.089 172.882 169.392 194.941 169.392C204.843 169.392 214.157 165.927 219.843 160.537V167.178C212.784 175.936 199.059 182 181.902 182C153.667 182 132.098 163.136 132.098 132.529ZM180.039 90.9509C166.314 90.9509 157.196 101.442 156.314 122.135L199.941 122.038C199.941 121.269 199.941 120.499 199.941 119.536C199.941 101.827 193.078 90.9509 180.039 90.9509Z"/>
+        <path d="M273.341 182C245.596 182 224.028 162.751 224.028 132.529C224.028 101.827 247.165 82 275.498 82C298.537 82 310.106 92.8758 310.106 105.58C310.106 112.991 304.616 118.092 297.753 118.092C290.792 118.092 285.498 112.895 285.498 106.254C285.498 100.576 289.322 95.9557 294.322 94.8008C290.596 92.4909 285.694 91.4321 279.714 91.4321C261.773 91.4321 249.028 105.484 249.028 128.102C249.028 153.8 264.518 169.295 285.89 169.295C295.694 169.295 305.008 165.831 310.792 160.537V167.178C303.831 175.936 290.204 182 273.341 182Z"/>
+        <path d="M347.027 82.8662V146.389C347.027 161.5 354.674 169.392 368.106 169.392C377.616 169.392 384.576 164.964 388.106 159.19V103.174C388.106 97.7844 387.321 96.437 381.831 94.897L374.969 93.1646V87.1973L412.027 82.8662V160.922C412.027 166.312 411.996 171.247 417.584 172.787C423.172 174.327 427.273 173.251 427.273 173.251L425.902 179.979L388.498 181.038V165.157C383.008 174.782 371.635 182 356.047 182C336.537 182 323.106 171.124 323.106 150.816V103.174C323.106 97.7844 322.223 96.437 316.733 94.897L309.969 93.1646V87.1973L347.027 82.8662Z"/>
+        <path d="M462.316 82.8662V105.195C473.395 89.6997 482.218 82.385 491.434 82.385C499.571 82.385 502.905 88.0635 502.905 94.6083C502.905 97.8807 502.022 101.153 500.846 102.885C498.591 102.212 494.179 101.634 489.669 101.634C478.983 101.634 467.611 105.099 462.709 110.2V163.136C462.709 170.45 464.375 171.99 477.316 173.434V179.979H425.65V173.434C437.218 172.087 438.787 170.45 438.787 164.291V103.174C438.787 97.7844 438.003 96.437 432.513 94.897L425.65 93.1646V87.1973L462.316 82.8662Z"/>
+        <path d="M535.412 82.8662V105.195C546.49 89.6997 555.314 82.385 564.529 82.385C572.667 82.385 576 88.0635 576 94.6083C576 97.8807 575.118 101.153 573.941 102.885C571.686 102.212 567.275 101.634 562.765 101.634C552.078 101.634 540.706 105.099 535.804 110.2V163.136C535.804 170.45 537.471 171.99 550.412 173.434V179.979H498.745V173.434C510.314 172.087 511.882 170.45 511.882 164.291V103.174C511.882 97.7844 511.098 96.437 505.608 94.897L498.745 93.1646V87.1973L535.412 82.8662Z"/>
+      </svg>
+    </a>
+  </div>
+  <div class="nav-r">
+    <a href="/recurr-website-v3/press/" class="nav-link mono-label show-mobile">Press</a>
+    <a href="#work" class="nav-link mono-label">Work</a>
+    <a href="#team" class="nav-link mono-label">Team</a>
+    <a href="#reach" class="nav-link mono-label">Reach</a>
+    <a href="#reach" class="cta">Work with us →</a>
+  </div>
+</nav>
+
+<!-- ────────── HERO ────────── -->
+<section class="hero">
+  <div class="hero-kick reveal">
+    <div class="hero-kick-l">
+      <span class="mono-label">Surface / 001 / Home</span>
+      <span class="mono-label">Bengaluru · 12.97°N 77.59°E</span>
+    </div>
+    <div class="hero-kick-r">
+      <span class="live-dot" aria-hidden="true"></span>
+      <span class="mono-label">Live — recurr.co</span>
+    </div>
+  </div>
+  <h1 class="display-xxl reveal">Content that powers organic growth.</h1>
+  <p class="hero-lede reveal">We build and scale content marketing programs for the post-AI era — driving visibility across every channel your buyer lives on, and turning attention into revenue.</p>
+</section>
+
+<!-- ────────── FEATURED ────────── -->
+<section class="featured">
+  <div class="featured-meta reveal">
+    <span class="mono-label">Featured — Recurr Press · Issue 01 · May 2026</span>
+    <span class="mono-label">01 / 06</span>
+  </div>
+  <a href="/recurr-website-v3/press/" class="cover reveal" aria-label="Read essay">
+    <div class="cover-top">
+      <svg class="cover-logo" viewBox="0 0 640 264" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+        <path d="M98.6666 82.8662V105.195C109.745 89.6997 118.569 82.385 127.784 82.385C135.921 82.385 139.255 88.0635 139.255 94.6083C139.255 97.8807 138.372 101.153 137.196 102.885C134.941 102.212 135.098 101.634 126.02 101.634C115.333 101.634 103.961 105.099 99.0588 110.2V163.136C99.0588 170.45 100.725 171.99 113.667 173.434V179.979H62V173.434C73.5686 172.087 75.1372 170.45 75.1372 164.291V103.174C75.1372 97.7844 74.3529 96.437 68.8627 94.897L62 93.1646V87.1973L98.6666 82.8662Z"/>
+        <path d="M132.098 132.529C132.098 102.789 151.51 82.0962 180.137 82.0962C206.804 82.0962 222.098 98.1694 222.098 123.001C222.098 125.503 221.902 128.102 221.706 129.738H156.412C157.98 154.089 172.882 169.392 194.941 169.392C204.843 169.392 214.157 165.927 219.843 160.537V167.178C212.784 175.936 199.059 182 181.902 182C153.667 182 132.098 163.136 132.098 132.529ZM180.039 90.9509C166.314 90.9509 157.196 101.442 156.314 122.135L199.941 122.038C199.941 121.269 199.941 120.499 199.941 119.536C199.941 101.827 193.078 90.9509 180.039 90.9509Z"/>
+        <path d="M273.341 182C245.596 182 224.028 162.751 224.028 132.529C224.028 101.827 247.165 82 275.498 82C298.537 82 310.106 92.8758 310.106 105.58C310.106 112.991 304.616 118.092 297.753 118.092C290.792 118.092 285.498 112.895 285.498 106.254C285.498 100.576 289.322 95.9557 294.322 94.8008C290.596 92.4909 285.694 91.4321 279.714 91.4321C261.773 91.4321 249.028 105.484 249.028 128.102C249.028 153.8 264.518 169.295 285.89 169.295C295.694 169.295 305.008 165.831 310.792 160.537V167.178C303.831 175.936 290.204 182 273.341 182Z"/>
+        <path d="M347.027 82.8662V146.389C347.027 161.5 354.674 169.392 368.106 169.392C377.616 169.392 384.576 164.964 388.106 159.19V103.174C388.106 97.7844 387.321 96.437 381.831 94.897L374.969 93.1646V87.1973L412.027 82.8662V160.922C412.027 166.312 411.996 171.247 417.584 172.787C423.172 174.327 427.273 173.251 427.273 173.251L425.902 179.979L388.498 181.038V165.157C383.008 174.782 371.635 182 356.047 182C336.537 182 323.106 171.124 323.106 150.816V103.174C323.106 97.7844 322.223 96.437 316.733 94.897L309.969 93.1646V87.1973L347.027 82.8662Z"/>
+        <path d="M462.316 82.8662V105.195C473.395 89.6997 482.218 82.385 491.434 82.385C499.571 82.385 502.905 88.0635 502.905 94.6083C502.905 97.8807 502.022 101.153 500.846 102.885C498.591 102.212 494.179 101.634 489.669 101.634C478.983 101.634 467.611 105.099 462.709 110.2V163.136C462.709 170.45 464.375 171.99 477.316 173.434V179.979H425.65V173.434C437.218 172.087 438.787 170.45 438.787 164.291V103.174C438.787 97.7844 438.003 96.437 432.513 94.897L425.65 93.1646V87.1973L462.316 82.8662Z"/>
+        <path d="M535.412 82.8662V105.195C546.49 89.6997 555.314 82.385 564.529 82.385C572.667 82.385 576 88.0635 576 94.6083C576 97.8807 575.118 101.153 573.941 102.885C571.686 102.212 567.275 101.634 562.765 101.634C552.078 101.634 540.706 105.099 535.804 110.2V163.136C535.804 170.45 537.471 171.99 550.412 173.434V179.979H498.745V173.434C510.314 172.087 511.882 170.45 511.882 164.291V103.174C511.882 97.7844 511.098 96.437 505.608 94.897L498.745 93.1646V87.1973L535.412 82.8662Z"/>
+      </svg>
+      <span class="mono-label">Essay · Pratik Mishra · 2026-04-22</span>
+    </div>
+    <div class="cover-bot">
+      <div class="cover-kick mono-label">AI will eat SaaS — the four-layer turnover</div>
+      <h2 class="cover-title display-xl">Interface → Workflow → Data → Business model. Each layer of the stack dies on its own clock.</h2>
+      <div class="cover-foot">
+        <span class="mono-label">Four essays · One unfolding argument</span>
+        <span class="mono-label">Read the series →</span>
+      </div>
+    </div>
+  </a>
+</section>
+
+<!-- ────────── CASE INDEX ────────── -->
+<header class="section-head" id="work">
+  <div class="section-num mono-label">Section / 01</div>
+  <h2 class="display-m">Case Index.</h2>
+  <div class="section-head-r mono-label">06 of 12 · Career + Recurr</div>
+</header>
+<section class="grid">
+  <div class="grid-row">
+    <a class="tile reveal" href="#"><div class="tile-cover var-slate"><div class="tile-title">UserExperior.</div></div><div class="tile-meta"><span class="mono-label">Case / 01 — Mobile App Analytics</span><span class="mono-label">2018–20 · Career</span></div></a>
+    <a class="tile reveal" href="#"><div class="tile-cover var-warm"><div class="tile-title dark-text">Pazcare.</div></div><div class="tile-meta"><span class="mono-label">Case / 02 — Group Insurance</span><span class="mono-label">India · Career</span></div></a>
+    <a class="tile reveal" href="#"><div class="tile-cover var-teal"><div class="tile-title">NestAway.</div></div><div class="tile-meta"><span class="mono-label">Case / 03 — Managed Rentals</span><span class="mono-label">Consumer · Career</span></div></a>
+  </div>
+  <div class="grid-row">
+    <a class="tile reveal" href="#"><div class="tile-cover var-ember"><div class="tile-title">Fyle.</div></div><div class="tile-meta"><span class="mono-label">Case / 04 — Expense Mgmt</span><span class="mono-label">USA · Career</span></div></a>
+    <a class="tile reveal" href="#"><div class="tile-cover var-carbon"><div class="tile-title">Goodera.</div></div><div class="tile-meta"><span class="mono-label">Case / 05 — ESG Volunteering</span><span class="mono-label">Enterprise · Career</span></div></a>
+    <a class="tile reveal" href="#"><div class="tile-cover var-sand"><div class="tile-title dark-text">elevateHQ.</div></div><div class="tile-meta"><span class="mono-label">Case / 06 — Sales Comp</span><span class="mono-label">SaaS · Recurr</span></div></a>
+  </div>
+  <div class="grid-foot">
+    <span class="mono-label">Index — 12 clients · Career + Recurr</span>
+    <a class="mono-label" href="#" style="color: var(--accent);">View all cases →</a>
+  </div>
+</section>
+
+<!-- ────────── BUYER MIRROR ────────── -->
+<header class="section-head">
+  <div class="section-num mono-label">Section / 02</div>
+  <h2 class="display-m">Buyer Mirror.</h2>
+  <div class="section-head-r mono-label">Findability · Recall · Decision</div>
+</header>
+<section class="hunts">
+  <div class="hunts-row">
+    <div class="hunt dark reveal">
+      <div class="hunt-cover var-slate">
+        <div class="hunt-num">01</div>
+        <div class="hunt-label mono-label">Hunt / Findability</div>
+      </div>
+      <h3 class="hunt-title display-s">Be findable everywhere your buyer looks.</h3>
+      <p class="hunt-body body-m">Your buyer's journey no longer runs through one channel. We publish for Google, AI answer engines, Reddit, directories, and the long tail of surfaces where discovery actually happens today.</p>
+    </div>
+    <div class="hunt light reveal">
+      <div class="hunt-cover var-warm">
+        <div class="hunt-num">02</div>
+        <div class="hunt-label mono-label">Hunt / Recall</div>
+      </div>
+      <h3 class="hunt-title display-s">Be the first brand your buyer remembers.</h3>
+      <p class="hunt-body body-m">Own the topics that matter in your category. We build a body of writing, research, and conversation that keeps you top-of-mind before buyers ever open a comparison tab.</p>
+    </div>
+    <div class="hunt dark reveal">
+      <div class="hunt-cover var-teal">
+        <div class="hunt-num">03</div>
+        <div class="hunt-label mono-label">Hunt / Decision</div>
+      </div>
+      <h3 class="hunt-title display-s">Win the decision, not just the click.</h3>
+      <p class="hunt-body body-m">When your buyer is evaluating, they need evidence, not awareness. Landing pages, case studies, competitive displacement — content that moves them from short-list to signature.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── OPERATING MATRIX ────────── -->
+<header class="section-head">
+  <div class="section-num mono-label">Section / 03</div>
+  <h2 class="display-m">Operating Matrix.</h2>
+  <div class="section-head-r mono-label">Datasheet / 01 · recurr.co · v1.0</div>
+</header>
+<section class="matrix">
+  <div class="matrix-table">
+    <div class="matrix-row reveal">
+      <div class="mono-label">01</div>
+      <div class="matrix-col-2"><span class="mono-label">Findability</span><span class="display-s">Discovery Mesh.</span></div>
+      <div class="body-m">SEO &amp; AEO Strategy · Blog Articles · Glossaries · Hub &amp; Spoke · Technical SEO · Content Refreshes · Citation Outreach · Reddit Engagement · AI-assisted SEO</div>
+    </div>
+    <div class="matrix-row reveal">
+      <div class="mono-label">02</div>
+      <div class="matrix-col-2"><span class="mono-label">Recall</span><span class="display-s">Memory Field.</span></div>
+      <div class="body-m">Thought Leadership · Research Reports · LinkedIn · Social Posts · Podcasts · Books · Micro-sites · White Papers · Email Newsletters</div>
+    </div>
+    <div class="matrix-row reveal">
+      <div class="mono-label">03</div>
+      <div class="matrix-col-2"><span class="mono-label">Decision</span><span class="display-s">Decision Surface.</span></div>
+      <div class="body-m">Landing Pages · Case Studies · Competitive Content · One Pagers · ABM Assets · Sales Enablement · Industry White Papers · Microsites</div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── TEAM ────────── -->
+<header class="section-head" id="team">
+  <div class="section-num mono-label">Section / 04</div>
+  <h2 class="display-m">The Team.</h2>
+  <div class="section-head-r mono-label">Client-facing · 02</div>
+</header>
+<section class="team">
+  <p class="team-lede reveal">Two operators, one engine. Two decades across B2B SaaS, GTM, and content. Interested in content systems, positioning, and the post-AI shape of marketing.</p>
+  <div class="team-row">
+    <div class="team-card reveal">
+      <div class="team-portrait var-carbon"></div>
+      <h3 class="team-name display-m">Pratik Mishra.</h3>
+      <span class="mono-label">Founder · Strategy</span>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-portrait var-wash"></div>
+      <h3 class="team-name display-m">Sujith Nair.</h3>
+      <span class="mono-label">Agency Lead · SEO</span>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── PRESS LIST ────────── -->
+<header class="section-head">
+  <div class="section-num mono-label">Section / 05</div>
+  <h2 class="display-m">From the Press.</h2>
+  <div class="section-head-r mono-label">Latest · 03 of 12</div>
+</header>
+<section class="press-list">
+  <a href="/recurr-website-v3/press/" class="press-row reveal">
+    <span class="mono-label">2026-04-22</span>
+    <h3 class="display-s">Interface Eats UI — why the chat box is the new homepage.</h3>
+    <span class="press-r mono-label">Pratik</span>
+  </a>
+  <a href="#" class="press-row reveal">
+    <span class="mono-label">2026-04-18</span>
+    <h3 class="display-s">How early-stage SaaS should think about AEO in 2026.</h3>
+    <span class="press-r mono-label">Sujith</span>
+  </a>
+  <a href="#" class="press-row reveal">
+    <span class="mono-label">2026-04-12</span>
+    <h3 class="display-s">The S3 operating system — how Recurr Press ships weekly.</h3>
+    <span class="press-r mono-label">Recurr Press</span>
+  </a>
+</section>
+
+<!-- ────────── FOOTER ────────── -->
+<footer class="footer" id="reach">
+  <div class="footer-top">
+    <div class="footer-l">
+      <svg class="footer-logo" viewBox="0 0 640 264" xmlns="http://www.w3.org/2000/svg" fill="#F7F5F0" aria-label="Recurr">
+        <path d="M98.6666 82.8662V105.195C109.745 89.6997 118.569 82.385 127.784 82.385C135.921 82.385 139.255 88.0635 139.255 94.6083C139.255 97.8807 138.372 101.153 137.196 102.885C134.941 102.212 135.098 101.634 126.02 101.634C115.333 101.634 103.961 105.099 99.0588 110.2V163.136C99.0588 170.45 100.725 171.99 113.667 173.434V179.979H62V173.434C73.5686 172.087 75.1372 170.45 75.1372 164.291V103.174C75.1372 97.7844 74.3529 96.437 68.8627 94.897L62 93.1646V87.1973L98.6666 82.8662Z"/>
+        <path d="M132.098 132.529C132.098 102.789 151.51 82.0962 180.137 82.0962C206.804 82.0962 222.098 98.1694 222.098 123.001C222.098 125.503 221.902 128.102 221.706 129.738H156.412C157.98 154.089 172.882 169.392 194.941 169.392C204.843 169.392 214.157 165.927 219.843 160.537V167.178C212.784 175.936 199.059 182 181.902 182C153.667 182 132.098 163.136 132.098 132.529ZM180.039 90.9509C166.314 90.9509 157.196 101.442 156.314 122.135L199.941 122.038C199.941 121.269 199.941 120.499 199.941 119.536C199.941 101.827 193.078 90.9509 180.039 90.9509Z"/>
+        <path d="M273.341 182C245.596 182 224.028 162.751 224.028 132.529C224.028 101.827 247.165 82 275.498 82C298.537 82 310.106 92.8758 310.106 105.58C310.106 112.991 304.616 118.092 297.753 118.092C290.792 118.092 285.498 112.895 285.498 106.254C285.498 100.576 289.322 95.9557 294.322 94.8008C290.596 92.4909 285.694 91.4321 279.714 91.4321C261.773 91.4321 249.028 105.484 249.028 128.102C249.028 153.8 264.518 169.295 285.89 169.295C295.694 169.295 305.008 165.831 310.792 160.537V167.178C303.831 175.936 290.204 182 273.341 182Z"/>
+        <path d="M347.027 82.8662V146.389C347.027 161.5 354.674 169.392 368.106 169.392C377.616 169.392 384.576 164.964 388.106 159.19V103.174C388.106 97.7844 387.321 96.437 381.831 94.897L374.969 93.1646V87.1973L412.027 82.8662V160.922C412.027 166.312 411.996 171.247 417.584 172.787C423.172 174.327 427.273 173.251 427.273 173.251L425.902 179.979L388.498 181.038V165.157C383.008 174.782 371.635 182 356.047 182C336.537 182 323.106 171.124 323.106 150.816V103.174C323.106 97.7844 322.223 96.437 316.733 94.897L309.969 93.1646V87.1973L347.027 82.8662Z"/>
+        <path d="M462.316 82.8662V105.195C473.395 89.6997 482.218 82.385 491.434 82.385C499.571 82.385 502.905 88.0635 502.905 94.6083C502.905 97.8807 502.022 101.153 500.846 102.885C498.591 102.212 494.179 101.634 489.669 101.634C478.983 101.634 467.611 105.099 462.709 110.2V163.136C462.709 170.45 464.375 171.99 477.316 173.434V179.979H425.65V173.434C437.218 172.087 438.787 170.45 438.787 164.291V103.174C438.787 97.7844 438.003 96.437 432.513 94.897L425.65 93.1646V87.1973L462.316 82.8662Z"/>
+        <path d="M535.412 82.8662V105.195C546.49 89.6997 555.314 82.385 564.529 82.385C572.667 82.385 576 88.0635 576 94.6083C576 97.8807 575.118 101.153 573.941 102.885C571.686 102.212 567.275 101.634 562.765 101.634C552.078 101.634 540.706 105.099 535.804 110.2V163.136C535.804 170.45 537.471 171.99 550.412 173.434V179.979H498.745V173.434C510.314 172.087 511.882 170.45 511.882 164.291V103.174C511.882 97.7844 511.098 96.437 505.608 94.897L498.745 93.1646V87.1973L535.412 82.8662Z"/>
+      </svg>
+      <p class="footer-tag">Content marketing that influences your buyer.<br>Bengaluru, India.</p>
+      <a href="mailto:hello@recurr.co" class="mono-label" style="color: var(--accent);">Reach — hello@recurr.co</a>
+    </div>
+    <div class="footer-col">
+      <h6 class="mono-label">Pages</h6>
+      <a href="/recurr-website-v3/press/" class="mono-cap">Press</a>
+      <a href="#work" class="mono-cap">Work</a>
+      <a href="#team" class="mono-cap">Team</a>
+      <a href="#reach" class="mono-cap">Reach</a>
+    </div>
+    <div class="footer-col">
+      <h6 class="mono-label">Press</h6>
+      <a href="#" class="mono-cap">Issue 01 — May 2026</a>
+      <a href="#" class="mono-cap">Latest</a>
+      <a href="#" class="mono-cap">Authors</a>
+      <a href="#" class="mono-cap">Subscribe</a>
+    </div>
+    <div class="footer-col">
+      <h6 class="mono-label">Social</h6>
+      <a href="#" class="mono-cap">Twitter</a>
+      <a href="#" class="mono-cap">LinkedIn</a>
+      <a href="#" class="mono-cap">GitHub</a>
+    </div>
+  </div>
+  <div class="footer-rule"></div>
+  <div class="footer-bot">
+    <span class="mono-foot">© 2026 Recurr Studio Pvt Ltd</span>
+    <span class="mono-foot" id="ts">Compiled 2026-04-28 · v0.2</span>
+    <span class="mono-foot">Bengaluru · 12.97°N 77.59°E</span>
+  </div>
+</footer>
+
+<!-- ────────── Lenis smooth scroll + reveal IO ────────── -->
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  // Smooth scroll
+  if (window.Lenis && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const lenis = new Lenis({ duration: 1.15, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    // Anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id.length > 1) {
+        const target = document.querySelector(id);
+        if (target) { e.preventDefault(); lenis.scrollTo(target, { offset: -64 }); }
+      }
+    }));
+  }
+
+  // Reveal on scroll (IO + 1.5s safety fallback in case IO never fires — e.g. headless capture, prerender)
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  setTimeout(() => { document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in')); }, 1500);
+
+  // Nav scrolled state
+  const nav = document.getElementById('nav');
+  let last = 0;
+  function onScroll() {
+    const y = window.scrollY || document.documentElement.scrollTop;
+    nav.classList.toggle('scrolled', y > 16);
+    last = y;
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Live timestamp
+  const ts = document.getElementById('ts');
+  if (ts) {
+    function update() {
+      const d = new Date();
+      const pad = (n) => String(n).padStart(2, '0');
+      const date = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+      const time = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      ts.textContent = `Compiled ${date} ${time} IST · v0.2`;
+    }
+    update(); setInterval(update, 30000);
+  }
+})();
+</script>
+</body>
+</html>
