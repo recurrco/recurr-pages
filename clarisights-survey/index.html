@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clarisights — Site Survey & Migration Plan</title>
+<meta name="description" content="A complete inventory of clarisights.com — 187 URLs, 7 content types, design tokens, and the proposed migration path from Framer to Sanity.">
+<style>
+:root{
+  --ink:#0c1e0b;
+  --ink-2:#1a1a1a;
+  --mute:#666;
+  --mute-2:#aaa;
+  --line:#e6e6e6;
+  --line-2:#f1f1f1;
+  --paper:#fff;
+  --cream:#faf6ee;
+  --teal:#098477;        /* Clarisights primary */
+  --teal-deep:#07351e;
+  --red:#d61f26;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font:16px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-feature-settings:"ss01","cv11";
+}
+.wrap{max-width:1080px;margin:0 auto;padding:64px 28px 120px}
+header.top{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:18px;margin-bottom:48px}
+header.top .meta{font-size:13px;color:var(--mute)}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:500}
+h1{font:600 44px/1.05 ui-serif,Georgia,"Times New Roman",serif;letter-spacing:-.02em;margin:8px 0 18px}
+h2{font:600 26px/1.15 ui-serif,Georgia,serif;letter-spacing:-.01em;margin:80px 0 8px;padding-top:32px;border-top:1px solid var(--ink)}
+h2 + .sub{color:var(--mute);font-size:15px;margin-bottom:32px}
+h3{font:600 17px/1.3 ui-sans-serif,system-ui,sans-serif;letter-spacing:.005em;margin:36px 0 10px;text-transform:uppercase;font-size:12px;letter-spacing:.14em;color:var(--mute)}
+h4{font:600 18px/1.3 ui-sans-serif,system-ui,sans-serif;margin:24px 0 6px}
+p{margin:0 0 14px;color:var(--ink-2);max-width:68ch}
+p.lede{font-size:18px;line-height:1.6;color:var(--ink-2);max-width:60ch;margin-bottom:32px}
+a{color:var(--teal);text-decoration:none;border-bottom:1px solid transparent}
+a:hover{border-bottom-color:var(--teal)}
+strong{font-weight:600;color:var(--ink)}
+code{font:13px/1 ui-monospace,Menlo,monospace;background:var(--line-2);padding:2px 6px;border-radius:3px}
+ul{padding-left:20px;margin:0 0 14px}
+li{margin-bottom:6px;color:var(--ink-2)}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{font-weight:600;color:var(--mute);font-size:12px;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--ink)}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+tr:hover td{background:var(--line-2)}
+
+/* swatch grid */
+.palette{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin:18px 0}
+.sw{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.sw .ch{height:84px}
+.sw .meta{padding:10px 12px}
+.sw code{background:none;padding:0;font-size:12px;color:var(--ink)}
+.sw .role{display:block;font-size:11px;color:var(--mute);margin-top:3px;letter-spacing:.04em;text-transform:uppercase}
+
+/* template cards */
+.tmpl{display:grid;grid-template-columns:1fr;gap:0;margin:18px 0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.tmpl .row{display:grid;grid-template-columns:340px 1fr;gap:0;border-bottom:1px solid var(--line)}
+.tmpl .row:last-child{border-bottom:none}
+.tmpl .row > div:first-child{background:var(--cream);padding:0;border-right:1px solid var(--line);min-height:240px;display:flex;align-items:center;justify-content:center}
+.tmpl img{display:block;max-width:100%;max-height:300px;object-fit:cover}
+.tmpl .row .body{padding:22px 26px}
+.tmpl h4{margin-top:0}
+.tmpl ul{font-size:14px}
+.tag{display:inline-block;padding:2px 8px;background:var(--ink);color:#fff;border-radius:3px;font-size:11px;letter-spacing:.04em;font-weight:500;margin-right:6px;text-transform:uppercase}
+.tag-soft{background:var(--cream);color:var(--ink);border:1px solid var(--line)}
+
+/* schema block */
+pre.schema{background:var(--ink);color:#fafaee;padding:22px 26px;border-radius:8px;font:13px/1.6 ui-monospace,monospace;overflow-x:auto;margin:18px 0}
+pre.schema .k{color:#88dec5}
+pre.schema .c{color:#888}
+pre.schema .s{color:#ffd58c}
+
+/* roadmap */
+.roadmap{counter-reset:step;margin:24px 0}
+.step{display:grid;grid-template-columns:80px 1fr;gap:0;padding:18px 0;border-top:1px solid var(--line)}
+.step:first-child{border-top:1px solid var(--ink)}
+.step:last-child{border-bottom:1px solid var(--ink)}
+.step .n{font:600 22px/1 ui-serif,Georgia,serif;color:var(--teal);counter-increment:step}
+.step .n::before{content:"0" counter(step)}
+.step h4{margin:0 0 4px}
+.step p{margin:0;font-size:14px;color:var(--mute)}
+.step .who{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:var(--cream);border:1px solid var(--line);padding:2px 8px;border-radius:3px;margin-left:8px;display:inline-block;vertical-align:1px}
+
+/* responsive */
+@media (max-width:680px){
+  .wrap{padding:32px 18px 80px}
+  h1{font-size:32px}
+  h2{font-size:22px;margin-top:60px}
+  .tmpl .row{grid-template-columns:1fr}
+  .tmpl .row > div:first-child{min-height:180px;border-right:none;border-bottom:1px solid var(--line)}
+  .step{grid-template-columns:1fr}
+  table{font-size:13px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div>
+    <span class="eyebrow">Clarisights · Site Survey</span>
+  </div>
+  <div class="meta">Recurr Studio · Apr 29 2026</div>
+</header>
+
+<h1>What clarisights.com is today, and how we get it onto Sanity.</h1>
+<p class="lede">A complete inventory of the public site — every URL, every content type, every design token — and a clear path from the current Framer build to a Sanity + Next.js system the team can run, edit, and extend without touching code.</p>
+
+<!-- ─────────────────────────────────────────────── -->
+<h2>1 / The site at a glance</h2>
+<p class="sub">Pulled directly from <code>clarisights.com/sitemap.xml</code> on Apr 29, 2026.</p>
+
+<table>
+<tr><th>Stack</th><td>Framer (server: <code>Framer/5ec735e</code>, framerusercontent CDN, dynamic CSS tokens)</td></tr>
+<tr><th>URLs in sitemap</th><td>187</td></tr>
+<tr><th>Content types found</th><td>7 distinct templates + 8 bespoke static pages</td></tr>
+<tr><th>Total body words</th><td>~108,000 (excluding nav/footer chrome)</td></tr>
+<tr><th>Errors / non-2xx</th><td>0</td></tr>
+</table>
+
+<h3>The corpus, by template</h3>
+<table>
+<tr><th>Type</th><th class="num">Pages</th><th class="num">Avg words</th><th>What it is</th></tr>
+<tr><td>Blog articles</td><td class="num">69</td><td class="num">1,328</td><td>Editorial — meatiest corpus, 171–3,911 words</td></tr>
+<tr><td>Data sources</td><td class="num">41</td><td class="num">362</td><td>Programmatic SEO — one template, identical shape (Google Ads, Meta, TikTok…)</td></tr>
+<tr><td>Use cases</td><td class="num">20</td><td class="num">949</td><td>Channel + industry + workflow deep dives — very tight 845–1,109 words</td></tr>
+<tr><td>Blog categories</td><td class="num">15</td><td class="num">70</td><td>Index pages, no body</td></tr>
+<tr><td>Blog authors</td><td class="num">15</td><td class="num">55</td><td>Index pages, byline only</td></tr>
+<tr><td>Static marketing</td><td class="num">8</td><td class="num">433</td><td>Home, About, Demo, Customers, Integrations, Security, For-Marketing, For-Data</td></tr>
+<tr><td>Legal</td><td class="num">6</td><td class="num">1,688</td><td>Privacy, Cookies, DPA × 2, Certifications</td></tr>
+<tr><td>Case studies</td><td class="num">5</td><td class="num">1,292</td><td>Bitpanda · On · HelloFresh · DeliveryHero (×2)</td></tr>
+<tr><td>Misc</td><td class="num">8</td><td class="num">—</td><td>Blog index ×2, Guides ×2, Ebooks ×2, Competitor ×1, Migrate ×1</td></tr>
+</table>
+
+<p>The two takeaways: <strong>(a)</strong> 110 of 187 pages — every blog article + every data source — are CMS-shaped records that auto-import from a Framer CSV export. <strong>(b)</strong> the static + use-case + case-study + competitor pages are ~36 bespoke layouts in total, the realistic redesign surface.</p>
+
+<!-- ─────────────────────────────────────────────── -->
+<h2>2 / The five page templates</h2>
+<p class="sub">Detected by clustering the H2 phrasings across all 187 pages. Same H2s appearing on 41 pages = a single repeating template.</p>
+
+<div class="tmpl">
+
+  <div class="row">
+    <div><img src="home.png" alt="Clarisights homepage"></div>
+    <div class="body">
+      <span class="tag">1 page</span><span class="tag tag-soft">bespoke</span>
+      <h4>Home + 7 static marketing pages</h4>
+      <p>Hero · Logo wall · Three feature blocks · Testimonial strip · Stats · CTA card. The eight static pages (home, /for-marketing-teams, /for-data-teams, /customers, /integrations, /security, /demo, /about-us, /migrate-to-clarisights, /competitors/clarisights-vs-bi-dashboards) all use ad-hoc layouts that don't repeat. <strong>Page builder in Sanity.</strong></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div><img src="usecase.png" alt="Use-case page"></div>
+    <div class="body">
+      <span class="tag">20 pages</span><span class="tag tag-soft">templated</span>
+      <h4>Use cases · channel + industry + workflow</h4>
+      <p>Hero with H1 + 1-line description · Logo wall · Three "why teams use Clarisights" cards · Capability paragraphs · "What our customers say" pullquote · "See the platform in action" CTA · FAQ. Every page is variations on the same scaffold.</p>
+      <p><strong>Sanity:</strong> <code>useCase</code> doctype with reusable section blocks.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div><img src="datasource.png" alt="Data source page"></div>
+    <div class="body">
+      <span class="tag">41 pages</span><span class="tag tag-soft">programmatic SEO</span>
+      <h4>Data sources · the integrations matrix</h4>
+      <p>Identical structure on all 41 pages: Hero · "About this integration" · <strong>Reports you can build</strong> · <strong>Cross-channel pairing</strong> · <strong>Industry use cases</strong> · <strong>Metrics &amp; dimensions</strong> · FAQ. Each section appears on exactly 41 pages — confirming this is one programmatic template fed by structured data.</p>
+      <p><strong>Sanity:</strong> <code>dataSource</code> doctype with shared section blocks. Source data probably lives in a Framer CMS table — clean export.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div><img src="casestudy.png" alt="Case study"></div>
+    <div class="body">
+      <span class="tag">5 pages</span><span class="tag tag-soft">templated</span>
+      <h4>Case studies</h4>
+      <p>Customer header · <strong>Key Results</strong> (3–4 metrics) · <strong>Challenge</strong> · <strong>Solution</strong> · <strong>Impact</strong> · CTA card. Each block appears on 5 of 5 pages.</p>
+      <p><strong>Sanity:</strong> <code>caseStudy</code> doctype with metric array + body Portable Text.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div><img src="legal.png" alt="Legal page"></div>
+    <div class="body">
+      <span class="tag">6 pages</span><span class="tag tag-soft">long-form</span>
+      <h4>Legal &amp; Blog articles</h4>
+      <p>Title · Long-form body. Blog articles also have author byline + category + cover image. Both render the same article shell — different metadata.</p>
+      <p><strong>Sanity:</strong> <code>post</code> + <code>byline</code> + <code>category</code>; legal pages can be a thin <code>legalPage</code> doctype or a body inside <code>page</code>.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ─────────────────────────────────────────────── -->
+<h2>3 / Design tokens</h2>
+<p class="sub">Real values pulled from rendered HTML across 14 representative pages. Counts = occurrences in raw CSS.</p>
+
+<h3>Typography — the brand display face</h3>
+<table>
+<tr><th>Where</th><th>Family</th><th>Weight / use</th></tr>
+<tr><td>H1 (108 of 187 pages)</td><td><strong>FFF Acid Grotesk Light</strong></td><td>Display headlines. Loaded from framerusercontent.com.</td></tr>
+<tr><td>H1 (41 pages, mostly data-sources)</td><td><strong>FFF Acid Grotesk Regular</strong></td><td>Slightly heavier for SEO templates.</td></tr>
+<tr><td>Body</td><td>System sans-serif fallback</td><td>Inherits Acid Grotesk via parent. Inter is in the CSS but never reached.</td></tr>
+</table>
+<p><em>The homepage CSS also defines Manrope, Be Vietnam Pro, Adamina, and Fragment Mono — none of these are actually rendered. Pure leftovers from earlier Framer template iterations. Ignore them.</em></p>
+
+<h3>Brand palette — the real one (not the noise)</h3>
+<div class="palette">
+  <div class="sw"><div class="ch" style="background:#098477"></div><div class="meta"><code>#098477</code> teal<span class="role">Primary · 425×</span></div></div>
+  <div class="sw"><div class="ch" style="background:#0a8577"></div><div class="meta"><code>#0a8577</code> teal-bright<span class="role">Hover / accent · 161×</span></div></div>
+  <div class="sw"><div class="ch" style="background:#217a6e"></div><div class="meta"><code>#217a6e</code> teal-deep<span class="role">Icon stroke · 44×</span></div></div>
+  <div class="sw"><div class="ch" style="background:#266b31"></div><div class="meta"><code>#266b31</code> deep green<span class="role">Secondary · 191×</span></div></div>
+  <div class="sw"><div class="ch" style="background:#07351e"></div><div class="meta"><code>#07351e</code> dark green<span class="role">Headline ink · 80×</span></div></div>
+  <div class="sw"><div class="ch" style="background:#0c1e0b"></div><div class="meta"><code>#0c1e0b</code> near-black<span class="role">Body ink · 27×</span></div></div>
+  <div class="sw"><div class="ch" style="background:#d61f26"></div><div class="meta" style="color:#fff;background:#d61f26"><code style="color:#fff">#d61f26</code> red<span class="role" style="color:#fff;opacity:.85">Accent · 43× text only</span></div></div>
+  <div class="sw"><div class="ch" style="background:#9f3852"></div><div class="meta" style="color:#fff;background:#9f3852"><code style="color:#fff">#9f3852</code> rose<span class="role" style="color:#fff;opacity:.85">Accent text · 59×</span></div></div>
+  <div class="sw"><div class="ch" style="background:#fbbe37"></div><div class="meta"><code>#fbbe37</code> yellow<span class="role">Chart highlight · 58×</span></div></div>
+  <div class="sw"><div class="ch" style="background:#10b981"></div><div class="meta"><code>#10b981</code> emerald<span class="role">Chart · 136×</span></div></div>
+  <div class="sw"><div class="ch" style="background:#64748b"></div><div class="meta" style="color:#fff;background:#64748b"><code style="color:#fff">#64748b</code> slate<span class="role" style="color:#fff;opacity:.85">Borders · 315×</span></div></div>
+  <div class="sw"><div class="ch" style="background:#faf6ee;border-bottom:1px solid var(--line)"></div><div class="meta"><code>#faf6ee</code> cream<span class="role">Section bg accent</span></div></div>
+</div>
+
+<p>Reading: <strong>teal is the brand.</strong> The deep-green family (266b31 / 07351e / 0c1e0b) reads as a "darker than black" headline color — Framer is treating it as a brand-tinted ink, not as a separate color. The red is used <em>only</em> as inline accent text (43 hits, 100% in <code>color:</code> declarations). The yellows / emeralds are illustration / chart colors and don't need to migrate as tokens.</p>
+<p>Full palette reference: <a href="../../" style="border-bottom:1px solid var(--teal)">site-survey/palette.html</a> (local).</p>
+
+<h3>Recurring section vocabulary</h3>
+<p>The 14 most-used H2 phrasings tell us exactly which sections to build as Sanity components:</p>
+<table>
+<tr><th class="num">Pages</th><th>H2</th><th>Translates to</th></tr>
+<tr><td class="num">69</td><td>"See Clarisights in action"</td><td><code>FinalCtaBlock</code></td></tr>
+<tr><td class="num">42</td><td>"Frequently asked questions"</td><td><code>FaqBlock</code></td></tr>
+<tr><td class="num">41</td><td>"Reports you can build"</td><td><code>ReportsBlock</code> (data-source only)</td></tr>
+<tr><td class="num">41</td><td>"Cross-channel pairing"</td><td><code>CrossChannelBlock</code></td></tr>
+<tr><td class="num">41</td><td>"Industry use cases"</td><td><code>IndustryUseCasesBlock</code></td></tr>
+<tr><td class="num">41</td><td>"Metrics &amp; dimensions"</td><td><code>MetricsTableBlock</code></td></tr>
+<tr><td class="num">20</td><td>"What our customers say"</td><td><code>TestimonialBlock</code></td></tr>
+<tr><td class="num">20</td><td>"See the platform in action"</td><td><code>PlatformDemoCta</code></td></tr>
+<tr><td class="num">11</td><td>"Full visibility at all times"</td><td><code>FeatureCard</code> (variants)</td></tr>
+<tr><td class="num">7</td><td>"Hands-on support from experts"</td><td><code>FeatureCard</code> (variants)</td></tr>
+<tr><td class="num">5</td><td>Key Results / Challenge / Solution / Impact</td><td><code>CaseStudyBody</code> (4 fixed slots)</td></tr>
+</table>
+<p><strong>Total Figma components needed: ~14.</strong> Hero, Logo wall, Feature card, Stat strip, Testimonial, FAQ, Final CTA, Case-study metric, Reports block, Cross-channel, Industry uses, Metrics table, Blog card, Author card.</p>
+
+<h3>The single biggest CTA</h3>
+<p><code>Get a Demo</code> on 105 of 187 pages. Everything funnels here. The new site should keep this as the primary action, with one secondary <code>Talk to Sales</code> on enterprise-leaning pages.</p>
+
+<!-- ─────────────────────────────────────────────── -->
+<h2>4 / Proposed Sanity schema</h2>
+<p class="sub">Seven document types + a page builder. Mirrors what we shipped for recurr.co (recurr-v6) and uncharted-ai.com.</p>
+
+<pre class="schema"><span class="c">// 7 document types — drives the entire site</span>
+
+<span class="k">post</span>            { title, slug, byline→, category→, hero, body[], excerpt, publishedAt, ogImage }
+<span class="k">byline</span>          { name, slug, role, bio, avatar, links[] }
+<span class="k">category</span>        { name, slug, description }
+<span class="k">useCase</span>         { title, slug, type:&apos;channel&apos;|&apos;industry&apos;|&apos;workflow&apos;, hero, sections[] }
+<span class="k">caseStudy</span>       { customer, slug, logo, metrics[], hero, challenge, solution, impact, body[] }
+<span class="k">dataSource</span>      { name, slug, vendor, logo, hero, reports[], pairings[], industries[], metrics[], faq[] }
+<span class="k">guide</span>           { title, slug, downloadFile, sections[] }
+
+<span class="c">// + 1 flexible page builder for the 8 static pages</span>
+<span class="k">page</span>            { title, slug, sections[] }   <span class="c">// home, demo, security, etc.</span>
+
+<span class="c">// + 1 site-wide settings</span>
+<span class="k">siteSettings</span>    { nav[], footer[], primaryCta, ogDefault }
+
+<span class="c">// ───── reusable section blocks (used inside sections[]) ─────</span>
+
+heroBlock           { eyebrow, headline, subhead, primaryCta, secondaryCta, media }
+logoWallBlock       { headline?, logos[]→customer }
+featureCardBlock    { title, body, icon?, image?, cta? }
+testimonialBlock    { quote, person, company, logo? }
+statsStripBlock     { stats[]:{value, label, suffix?} }
+faqBlock            { questions[]:{q, a} }
+finalCtaBlock       { headline, subhead, primaryCta, secondaryCta }
+reportsBlock        { items[]:{title, description, image?} }
+crossChannelBlock   { headline, channels[]→dataSource }
+industryUsesBlock   { headline, items[]:{industry, body} }
+metricsTableBlock   { headline, rows[]:{name, type, description} }
+blogCardBlock       { post→post }   <span class="c">// shown in indexes</span>
+caseStudyMetricBlock{ value, label, customer→ }</pre>
+
+<p>Notes worth flagging now:</p>
+<ul>
+  <li><strong>Programmatic data sources stay programmatic.</strong> 41 records → 41 routes. The schema's reportsBlock / metricsTable / industryUses can be defined per record, OR (smarter) abstracted into a <code>dataSourceTemplate</code> singleton with overrides per record. Decision for build phase.</li>
+  <li><strong>Slug normalization needed at migration.</strong> The current site has <code>Blog/Articles/foo</code>, <code>blog-articles/collection</code>, and <code>Blog/Collection</code> all live — that's three slug schemes. New site standardizes on <code>/blog/foo</code>, <code>/blog/categories/foo</code>, <code>/blog/authors/foo</code>. We generate a 187-row 301 redirect map at cutover.</li>
+  <li><strong>Customer logos as a doctype, not strings.</strong> 20+ logos repeat across hero · logo wall · case studies. Make <code>customer</code> a top-level type so a logo update propagates everywhere.</li>
+</ul>
+
+<!-- ─────────────────────────────────────────────── -->
+<h2>5 / The migration roadmap</h2>
+<p class="sub">7 steps, one role-tag per step. Estimated 5–8 working days end to end (excluding the design redesign itself).</p>
+
+<div class="roadmap">
+  <div class="step">
+    <div class="n"></div>
+    <div>
+      <h4>Survey current site <span class="who">Recurr · DONE</span></h4>
+      <p>187 URLs scraped, body text + meta extracted, design tokens mapped, components inventoried. This page is the deliverable.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n"></div>
+    <div>
+      <h4>Pull Framer CMS exports <span class="who">Clarisights · 30 min</span></h4>
+      <p>Settings → CMS → for each collection (Blog Articles, Blog Authors, Blog Categories, Case Studies, Use Cases, Data Sources, Guides) → Export CSV. Drop into <code>~/recurrco/projects/content-studio/clients/clarisights/framer-export/</code>. We get clean source-of-truth records instead of scraped HTML.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n"></div>
+    <div>
+      <h4>Lock the design system in Figma <span class="who">Recurr · 2–3 days</span></h4>
+      <p>Build the ~14 components + 5 page templates as a single Figma library, using Acid Grotesk + the brand teal palette as the foundation. Decision call here: <strong>rebuild same design</strong> (1× scope) <strong>or redesign</strong> (2× scope, but worth it — the current site has 5 fonts defined, 2 competing accents, inconsistent slug casing, weak blog typography).</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n"></div>
+    <div>
+      <h4>Scaffold Sanity schema + Next.js repo <span class="who">Recurr · 1 day</span></h4>
+      <p>New repo <code>recurrco/clarisights-sanity</code> from the <code>recurr-v6</code> template. 7 doctypes + page builder + section blocks per the schema above. Sanity project under the <code>recurrco</code> org, dataset <code>production</code>.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n"></div>
+    <div>
+      <h4>Build templates <span class="who">Recurr · 3–4 days</span></h4>
+      <p>One route per template: <code>/blog/[slug]</code>, <code>/use-cases/[slug]</code>, <code>/case-studies/[slug]</code>, <code>/data-sources/[slug]</code>, <code>/guides/[slug]</code>, plus the static page-builder routes. Components map 1:1 to the Figma library.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n"></div>
+    <div>
+      <h4>Migrate content <span class="who">Recurr · 1 day</span></h4>
+      <p>Idempotent script reads Framer CSV exports + scraped body markdown → creates Sanity documents. Markdown → Portable Text uses our existing <code>_md-to-pt-v2.mjs</code> converter (already battle-tested on 25 SaaStitute imports). Customer logos and OG images uploaded to Sanity assets.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n"></div>
+    <div>
+      <h4>Cutover <span class="who">Joint · 1 day</span></h4>
+      <p>187-row redirect map (old slug → new slug). DNS swap from Framer to Vercel. Sanity webhook → <code>/api/revalidate</code> for instant publish (same loop as recurr.co/press). Smoke tests on 14 representative URLs across all templates.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────── -->
+<h2>6 / Open decisions before we start</h2>
+<ol style="padding-left:24px">
+  <li style="margin-bottom:14px"><strong>Same design or redesign?</strong> Defaulting to redesign — current site has typography drift and unclear hierarchy. But this is the single biggest scope lever.</li>
+  <li style="margin-bottom:14px"><strong>Keep all 187 URLs?</strong> Some blog articles are weak (4-word categories, 13-word author pages). Easy to merge/cull during migration.</li>
+  <li style="margin-bottom:14px"><strong>Programmatic data-source pages — same 41 or expand?</strong> If we're doing the work, worth pulling DataForSEO volume on the 41 vendor names + adding 10–20 more (HubSpot, Klaviyo are there but Marketo, Salesforce Marketing Cloud, Adobe Analytics already are too). Marginal cost is low once the template exists.</li>
+  <li style="margin-bottom:14px"><strong>Blog comments / search?</strong> Framer has neither. Sanity build can add both cheaply if useful — defer decision.</li>
+  <li><strong>Studio access for the Clarisights team?</strong> We'll set up Editor seats so Arun / Sasha / future content folks publish directly. Like recurr.co/studio works for the Recurr team.</li>
+</ol>
+
+<hr style="margin:80px 0 32px;border:none;border-top:1px solid var(--ink)">
+<p style="font-size:13px;color:var(--mute)">Survey artefacts (raw): <code>~/recurrco/projects/content-studio/clients/clarisights/site-survey/</code> — 187 body markdowns, page index CSV, design-token JSON, screenshots, palette HTML. <a href="https://recurr.co" style="border-bottom:1px solid var(--mute)">recurr.co</a></p>
+
+</div>
+</body>
+</html>
