@@ -18,7 +18,7 @@
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { background: var(--soft); color: var(--ink); font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; font-feature-settings: 'ss01', 'cv11'; }
-  body { font-size: 15px; line-height: 1.55; }
+  body { font-size: 16px; line-height: 1.55; }
 
   /* ───────── Layout ───────── */
   .app { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
@@ -56,11 +56,71 @@
   .col { border-top: 2px solid var(--ink); padding-top: 14px; }
   .col-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
   .col h4 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 14px; }
-  .col p { font-size: 13.5px; line-height: 1.55; margin-bottom: 10px; }
+  .col p { font-size: 14.5px; line-height: 1.55; margin-bottom: 10px; }
 
-  table.data { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
-  table.data th { text-align: left; font-weight: 600; padding: 10px 12px; border-bottom: 1.5px solid var(--ink); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-  table.data td { padding: 9px 12px; border-bottom: 1px solid #e2e2dc; vertical-align: top; }
+  /* ───────── Icon cards ───────── */
+  .card-grid { display: grid; gap: 14px; margin-top: 14px; }
+  .card-grid.g4 { grid-template-columns: repeat(4, 1fr); }
+  .card-grid.g3 { grid-template-columns: repeat(3, 1fr); }
+  .card-grid.g2 { grid-template-columns: 1fr 1fr; }
+  .card { border: 1px solid var(--rule); border-radius: 4px; padding: 16px 16px 14px; background: var(--paper); }
+  .card .ci { width: 32px; height: 32px; border: 1.5px solid var(--ink); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; margin-bottom: 12px; font-variant-numeric: tabular-nums; }
+  .card .ct { font-size: 15.5px; font-weight: 600; line-height: 1.3; margin-bottom: 6px; }
+  .card .cd { font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+  .card.dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .card.dark .ci { border-color: var(--paper); }
+  .card.dark .cd { color: rgba(255,255,255,0.7); }
+  .card.warn { background: #fff8e6; border-color: var(--ink); }
+
+  /* ───────── ✓ / ✕ tiles ───────── */
+  .vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .vs-tile { border: 2px solid var(--ink); border-radius: 4px; padding: 22px 22px 20px; background: var(--paper); }
+  .vs-tile .vs-mark { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; margin-bottom: 14px; }
+  .vs-tile.no .vs-mark { background: #1a1a1a; color: var(--paper); }
+  .vs-tile.yes .vs-mark { background: var(--paper); border: 2px solid var(--ink); color: var(--ink); }
+  .vs-tile .vs-l { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 8px; }
+  .vs-tile h4 { font-size: 24px; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 12px; }
+  .vs-tile.no h4 { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1.5px; text-underline-offset: 6px; }
+  .vs-tile p { font-size: 14px; line-height: 1.5; color: var(--ink); }
+
+  /* ───────── Big metric tiles ───────── */
+  .star-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .star-tile { background: var(--paper); border: 1.5px solid var(--ink); border-radius: 4px; padding: 24px 26px; }
+  .star-tile.dark { background: var(--ink); color: var(--paper); }
+  .star-tile .sl { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; opacity: 0.6; margin-bottom: 10px; }
+  .star-tile .sv { font-size: 60px; line-height: 1.0; font-weight: 600; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; }
+  .star-tile .ss { font-size: 13.5px; margin-top: 10px; line-height: 1.5; opacity: 0.85; }
+
+  /* ───────── Universe tiles ───────── */
+  .uni-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 14px; }
+  .uni-tile { border: 1.5px solid var(--ink); border-radius: 4px; padding: 22px 22px 20px; }
+  .uni-tile .glyph { width: 56px; height: 56px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; }
+  .uni-tile .ul { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+  .uni-tile h4 { font-size: 22px; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .uni-tile .ud { font-size: 13.5px; line-height: 1.5; margin-bottom: 12px; }
+  .uni-tile ul.tight li { font-size: 13px; padding: 4px 0 4px 14px; }
+
+  /* ───────── 90-day column-stack ───────── */
+  .day-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 14px; }
+  .day-col { border: 1.5px solid var(--ink); border-radius: 4px; padding: 18px 16px; background: var(--paper); }
+  .day-col-head { padding-bottom: 10px; border-bottom: 1px solid #e2e2dc; margin-bottom: 14px; }
+  .day-col-head .dt { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+  .day-col-head .dn { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .day-row { padding: 10px 0; border-bottom: 1px dashed #e2e2dc; }
+  .day-row:last-child { border-bottom: none; }
+  .day-row .dl { font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+  .day-row .dh { font-size: 14px; font-weight: 600; line-height: 1.3; margin-bottom: 4px; }
+  .day-row .dd { font-size: 13px; line-height: 1.5; color: var(--muted); }
+  .day-row.hi { background: #fff8e6; padding: 10px 10px; margin: 4px -10px; border-radius: 3px; border-bottom: none; }
+
+  /* compact data table for matrix */
+  table.data.compact { font-size: 11.5px; }
+  table.data.compact th, table.data.compact td { padding: 7px 7px; }
+  table.data.compact th { font-size: 9.5px; }
+
+  table.data { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+  table.data th { text-align: left; font-weight: 600; padding: 11px 12px; border-bottom: 1.5px solid var(--ink); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  table.data td { padding: 11px 12px; border-bottom: 1px solid #e2e2dc; vertical-align: top; }
   table.data tr:hover td { background: #fafaf6; }
   table.data .right { text-align: right; }
   table.data .num { font-variant-numeric: tabular-nums; }
@@ -69,7 +129,7 @@
   table.data .quad td { background: #fff8e6; }
 
   ul.tight { list-style: none; }
-  ul.tight li { padding: 5px 0; padding-left: 14px; position: relative; font-size: 13.5px; line-height: 1.5; }
+  ul.tight li { padding: 6px 0; padding-left: 16px; position: relative; font-size: 14.5px; line-height: 1.5; }
   ul.tight li::before { content: '—'; position: absolute; left: 0; color: var(--muted); }
 
   ol.numbered { list-style: none; counter-reset: i; padding-left: 0; }
@@ -170,7 +230,7 @@
   <!-- ═════════════════════ NAV ═════════════════════ -->
   <aside class="nav">
     <div class="brand">INBOUND · VISIBILITY</div>
-    <div class="doc-title">Quad AI — Strategy<br><span style="color:#aaa">Sections 1–4 of 7 · Apr 2026</span></div>
+    <div class="doc-title">Quad AI — Strategy<br><span style="color:#aaa">All seven sections · Apr 2026</span></div>
 
     <div class="nav-section">
       <div class="nav-section-label">Cover</div>
@@ -222,22 +282,45 @@
       <div class="nav-section-label">04 · The Plan</div>
       <ul class="nav-list">
         <li><a href="#s40" data-slide="s40"><span class="num">4.0</span><span>Section opener</span></a></li>
-        <li><a href="#s41" data-slide="s41"><span class="num">4.1</span><span>Pillar 1 · Trust</span></a></li>
-        <li><a href="#s42" data-slide="s42"><span class="num">4.2</span><span>Pillar 2 · Capture</span></a></li>
-        <li><a href="#s43" data-slide="s43"><span class="num">4.3</span><span>Pillar 3 · Top-of-funnel creation</span></a></li>
-        <li><a href="#s44" data-slide="s44"><span class="num">4.4</span><span>Cohort precondition</span></a></li>
-        <li><a href="#s45" data-slide="s45"><span class="num">4.5</span><span>The first 90 days</span></a></li>
-        <li><a href="#s46" data-slide="s46"><span class="num">4.6</span><span>Months 4–12</span></a></li>
-        <li><a href="#s47" data-slide="s47"><span class="num">4.7</span><span>Three universes of distribution</span></a></li>
+        <li><a href="#s41a" data-slide="s41a"><span class="num">4.1a</span><span>Build trust with parents</span></a></li>
+        <li><a href="#s41b" data-slide="s41b"><span class="num">4.1b</span><span>Build trust with students</span></a></li>
+        <li><a href="#s42a" data-slide="s42a"><span class="num">4.2a</span><span>Win on owned surfaces</span></a></li>
+        <li><a href="#s42b" data-slide="s42b"><span class="num">4.2b</span><span>Win off-surface</span></a></li>
+        <li><a href="#s43a" data-slide="s43a"><span class="num">4.3a</span><span>Where new traffic comes from</span></a></li>
+        <li><a href="#s43b" data-slide="s43b"><span class="num">4.3b</span><span>What that traffic actually buys</span></a></li>
+        <li><a href="#s44" data-slide="s44"><span class="num">4.4</span><span>Define the cohort first</span></a></li>
+        <li><a href="#s45" data-slide="s45"><span class="num">4.5</span><span>How the first 90 days unfold</span></a></li>
+        <li><a href="#s46" data-slide="s46"><span class="num">4.6</span><span>Months 4 to 12</span></a></li>
+        <li><a href="#s47" data-slide="s47"><span class="num">4.7</span><span>Where this content goes</span></a></li>
         <li><a href="#s48" data-slide="s48"><span class="num">4.8</span><span>The north star</span></a></li>
         <li><a href="#s49" data-slide="s49"><span class="num">4.9</span><span>What this plan is not</span></a></li>
       </ul>
     </div>
 
     <div class="nav-section">
-      <div class="nav-section-label">Next</div>
+      <div class="nav-section-label">05 · The Site</div>
       <ul class="nav-list">
-        <li><a href="#s50" data-slide="s50"><span class="num">→</span><span>§5–7 coming separately</span></a></li>
+        <li><a href="#s50" data-slide="s50"><span class="num">5.0</span><span>Section opener</span></a></li>
+        <li><a href="#s51" data-slide="s51"><span class="num">5.1</span><span>What the site is today</span></a></li>
+        <li><a href="#s52" data-slide="s52"><span class="num">5.2</span><span>The end of every internet journey</span></a></li>
+        <li><a href="#s53" data-slide="s53"><span class="num">5.3</span><span>What the site needs to become</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">06 · Positioning</div>
+      <ul class="nav-list">
+        <li><a href="#s60" data-slide="s60"><span class="num">6.0</span><span>Section opener</span></a></li>
+        <li><a href="#s61" data-slide="s61"><span class="num">6.1</span><span>You don't have a position yet</span></a></li>
+        <li><a href="#s62" data-slide="s62"><span class="num">6.2</span><span>Three paths Quad could pick</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">07 · Reference</div>
+      <ul class="nav-list">
+        <li><a href="#s70" data-slide="s70"><span class="num">7.0</span><span>Section opener</span></a></li>
+        <li><a href="#s71" data-slide="s71"><span class="num">7.1</span><span>Full competitor matrix</span></a></li>
       </ul>
     </div>
 
@@ -252,16 +335,16 @@
 
     <!-- ░░░ 0.0 COVER ░░░ -->
     <section class="slide title" id="s00">
-      <div class="slide-meta"><span>Inbound Visibility Study</span><span class="right">00 / 28</span></div>
+      <div class="slide-meta"><span>Inbound Visibility Study</span><span class="right">00 / 44</span></div>
       <div class="title-top">Inbound Visibility Strategy · Quad AI</div>
       <div class="title-mid">
         <h1>When someone searches for you, do you show up?</h1>
         <div class="sub">A research-led look at who Quad's buyer is, what they search for, and how the category's winners are quietly winning the surface area of the internet that this buyer travels through.</div>
       </div>
       <div class="title-bot">
-        <div><div class="b-label">Scope</div><div class="b-val">Sections 1–4</div></div>
-        <div><div class="b-label">Sections 5–7</div><div class="b-val">Coming separately</div></div>
+        <div><div class="b-label">Scope</div><div class="b-val">Sections 1–7</div></div>
         <div><div class="b-label">Format</div><div class="b-val">Research-led, deck-style</div></div>
+        <div><div class="b-label">Reading time</div><div class="b-val">~25 min skim · ~75 min full</div></div>
         <div><div class="b-label">Date</div><div class="b-val">April 2026</div></div>
       </div>
     </section>
@@ -272,7 +355,7 @@
 
     <!-- ░░░ 1.0 ░░░ -->
     <section class="slide divider" id="s10">
-      <div class="slide-meta"><span style="color:rgba(255,255,255,0.6)">Section One</span><span class="right">01 / 28</span></div>
+      <div class="slide-meta"><span style="color:rgba(255,255,255,0.6)">Section One</span><span class="right">01 / 44</span></div>
       <div class="num-big">01</div>
       <h2>Who is your buyer.</h2>
       <div class="lede">A Rs.8L–24L decision is not made by one person. The student starts the search. The parent ends it. Both get fed different content from different platforms — and both must be convinced for the cheque to clear.</div>
@@ -280,7 +363,7 @@
 
     <!-- ░░░ 1.1 Two buyers ░░░ -->
     <section class="slide" id="s11">
-      <div class="slide-meta"><span>1.1 · The Buyer</span><span class="right">02 / 28</span></div>
+      <div class="slide-meta"><span>1.1 · The Buyer</span><span class="right">02 / 44</span></div>
       <h2>Two buyers, one purchase.</h2>
       <div class="lede">In the Indian new-age tech-ed category, the parent and the child are co-buyers with different motivations, different platforms, and different fears. Marketing that ignores either one leaks.</div>
 
@@ -306,7 +389,7 @@
 
     <!-- ░░░ 1.2 Demographics ░░░ -->
     <section class="slide" id="s12">
-      <div class="slide-meta"><span>1.2 · The Buyer</span><span class="right">03 / 28</span></div>
+      <div class="slide-meta"><span>1.2 · The Buyer</span><span class="right">03 / 44</span></div>
       <h2>Demographics, in broad strokes.</h2>
       <div class="lede">A reverse-engineered picture of who Quad's buyer most likely is, built from category-wide signals (Scaler's published intake mix, AISHE / NSDC, India Skills Report) plus what the Quad geography suggests. Treat as starting hypotheses, not ground truth.</div>
 
@@ -344,7 +427,7 @@
 
     <!-- ░░░ 1.3 JTBD ░░░ -->
     <section class="slide" id="s13">
-      <div class="slide-meta"><span>1.3 · The Buyer</span><span class="right">04 / 28</span></div>
+      <div class="slide-meta"><span>1.3 · The Buyer</span><span class="right">04 / 44</span></div>
       <h2>What the two buyers are really hiring this purchase to do.</h2>
       <div class="lede">Beyond "get my child a job" or "get me a career" — the actual emotional jobs the parent and student are paying Rs.8L to solve. This frames every piece of content the brand has to make.</div>
 
@@ -378,7 +461,7 @@
 
     <!-- ░░░ 1.4 Decision architecture ░░░ -->
     <section class="slide" id="s14">
-      <div class="slide-meta"><span>1.4 · The Buyer</span><span class="right">05 / 28</span></div>
+      <div class="slide-meta"><span>1.4 · The Buyer</span><span class="right">05 / 44</span></div>
       <h2>How the decision actually gets made.</h2>
       <div class="lede">The path from first search to applied-and-paid is rarely linear. Mapping the actual mechanics of the co-purchase reveals where leakage happens and which moments matter most.</div>
 
@@ -427,7 +510,7 @@
 
     <!-- ░░░ 2.0 ░░░ -->
     <section class="slide divider" id="s20">
-      <div class="slide-meta"><span style="color:rgba(255,255,255,0.6)">Section Two</span><span class="right">06 / 28</span></div>
+      <div class="slide-meta"><span style="color:rgba(255,255,255,0.6)">Section Two</span><span class="right">06 / 44</span></div>
       <div class="num-big">02</div>
       <h2>What is your buyer searching for.</h2>
       <div class="lede">The journey, the queries, the questions, the platforms. Six slides on what actually happens between "I didn't get IIT" and "Sign the cheque."</div>
@@ -435,7 +518,7 @@
 
     <!-- ░░░ 2.1 Journey ░░░ -->
     <section class="slide" id="s21">
-      <div class="slide-meta"><span>2.1 · The Search</span><span class="right">07 / 28</span></div>
+      <div class="slide-meta"><span>2.1 · The Search</span><span class="right">07 / 44</span></div>
       <h2>The discovery journey, in six stages.</h2>
       <div class="lede">From "I have a problem" to "I've signed up." Each stage has a dominant question, a dominant platform, and a dominant emotion. Stage 3 (vetting) is where the most buyers leak — and where Quad is most invisible today.</div>
 
@@ -483,7 +566,7 @@
 
     <!-- ░░░ 2.2 Top searches ░░░ -->
     <section class="slide" id="s22">
-      <div class="slide-meta"><span>2.2 · The Search</span><span class="right">08 / 28</span></div>
+      <div class="slide-meta"><span>2.2 · The Search</span><span class="right">08 / 44</span></div>
       <h2>Top searches at each stage.</h2>
       <div class="lede">A representative cross-section of what the buyer actually types into Google, ranked by funnel stage. Top of funnel is high-volume / low-intent. Bottom is the inverse.</div>
 
@@ -537,7 +620,7 @@
 
     <!-- ░░░ 2.3 Top places ░░░ -->
     <section class="slide" id="s23">
-      <div class="slide-meta"><span>2.3 · The Search</span><span class="right">09 / 28</span></div>
+      <div class="slide-meta"><span>2.3 · The Search</span><span class="right">09 / 44</span></div>
       <h2>Where the buyer actually lives online.</h2>
       <div class="lede">The eight surfaces where this buyer's discovery time is spent — ranked by how much time, how high the trust, and how hard each is to win for a new entrant.</div>
 
@@ -601,7 +684,7 @@
 
     <!-- ░░░ 2.4 Top questions ░░░ -->
     <section class="slide" id="s24">
-      <div class="slide-meta"><span>2.4 · The Search</span><span class="right">10 / 28</span></div>
+      <div class="slide-meta"><span>2.4 · The Search</span><span class="right">10 / 44</span></div>
       <h2>The 18 questions every buyer asks.</h2>
       <div class="lede">Pulled from Google's People Also Ask, the top Reddit thread titles, and the most-trafficked Quora pages in this category. These are AEO targets — every one is a place a brand can plant a flag, and most are still un-flagged.</div>
 
@@ -649,7 +732,7 @@
 
     <!-- ░░░ 2.5 Emotion map ░░░ -->
     <section class="slide" id="s25">
-      <div class="slide-meta"><span>2.5 · The Search</span><span class="right">11 / 28</span></div>
+      <div class="slide-meta"><span>2.5 · The Search</span><span class="right">11 / 44</span></div>
       <h2>Emotion across the journey.</h2>
       <div class="lede">Each buyer arrives at each stage with a dominant emotion. The intensity matters: high-emotion stages need the most careful content, because that's where the buyer either commits or walks. Read darker = stronger emotion.</div>
 
@@ -700,7 +783,7 @@
 
     <!-- ░░░ 2.6 Both buyers end-to-end ░░░ -->
     <section class="slide" id="s26">
-      <div class="slide-meta"><span>2.6 · The Search</span><span class="right">12 / 28</span></div>
+      <div class="slide-meta"><span>2.6 · The Search</span><span class="right">12 / 44</span></div>
       <h2>The full journey, both buyers, end-to-end.</h2>
       <div class="lede">The student track and the parent track run in parallel. They diverge during research, then converge at decision moments. Most marketing is built for one or the other — almost none is built for the handshake between them.</div>
 
@@ -758,7 +841,7 @@
 
     <!-- ░░░ 3.0 ░░░ -->
     <section class="slide divider" id="s30">
-      <div class="slide-meta"><span style="color:rgba(255,255,255,0.6)">Section Three</span><span class="right">13 / 28</span></div>
+      <div class="slide-meta"><span style="color:rgba(255,255,255,0.6)">Section Three</span><span class="right">13 / 44</span></div>
       <div class="num-big">03</div>
       <h2>How the category's winners are winning.</h2>
       <div class="lede">Ten competitors. One overall visibility audit. Five teardowns of the most strategically interesting plays. One pattern slide on what they all share — and what Quad has zero of today.</div>
@@ -766,7 +849,7 @@
 
     <!-- ░░░ 3.1 Competitive set ░░░ -->
     <section class="slide" id="s31">
-      <div class="slide-meta"><span>3.1 · The Winners</span><span class="right">14 / 28</span></div>
+      <div class="slide-meta"><span>3.1 · The Winners</span><span class="right">14 / 44</span></div>
       <h2>The competitive set, by tier.</h2>
       <div class="lede">Ten competitors, picked from the 17 in the brief. Cut: Polaris, Merai, Zenith, Nexus, Altera, Bower (smaller scale or duplicate strategies). Quad sits at Tier 3, with Tier 2 ambition.</div>
 
@@ -798,7 +881,7 @@
 
     <!-- ░░░ 3.2 Visibility audit ░░░ -->
     <section class="slide" id="s32">
-      <div class="slide-meta"><span>3.2 · The Winners</span><span class="right">15 / 28</span></div>
+      <div class="slide-meta"><span>3.2 · The Winners</span><span class="right">15 / 44</span></div>
       <h2>Visibility audit · 10 competitors + Quad.</h2>
       <div class="lede">Single snapshot of who shows up when someone searches in this category. Ranked by India-specific organic traffic. The gap between Tier 1 and Quad is not 3×. It is roughly 600,000×.</div>
 
@@ -906,7 +989,7 @@
 
     <!-- ░░░ 3.3 Scaler SST ░░░ -->
     <section class="slide" id="s33">
-      <div class="slide-meta"><span>3.3 · Teardown</span><span class="right">16a / 28</span></div>
+      <div class="slide-meta"><span>3.3 · Teardown</span><span class="right">16a / 44</span></div>
       <h2>Scaler SST.</h2>
       <div class="lede">Built on top of Scaler Academy's existing brand and SEO equity. The most polished playbook in the category — and the one Quad will be benchmarked against.</div>
 
@@ -942,7 +1025,7 @@
 
     <!-- ░░░ 3.4 Newton ░░░ -->
     <section class="slide" id="s34">
-      <div class="slide-meta"><span>3.4 · Teardown</span><span class="right">16b / 28</span></div>
+      <div class="slide-meta"><span>3.4 · Teardown</span><span class="right">16b / 44</span></div>
       <h2>Newton School of Technology.</h2>
       <div class="lede">A different shape from Scaler — fewer keywords (3,580 vs 29,588) but nearly the same total traffic (~610K vs ~646K). Newton built deep on a few high-volume utility queries.</div>
 
@@ -978,7 +1061,7 @@
 
     <!-- ░░░ 3.5 Masters Union ░░░ -->
     <section class="slide" id="s35">
-      <div class="slide-meta"><span>3.5 · Teardown</span><span class="right">17a / 28</span></div>
+      <div class="slide-meta"><span>3.5 · Teardown</span><span class="right">17a / 44</span></div>
       <h2>Masters' Union.</h2>
       <div class="lede">Different category (management, not tech), but the strongest positioning play of any new-gen institute in India. Worth one slide on what positioning, well done, can do at a fraction of the SEO budget.</div>
 
@@ -1014,7 +1097,7 @@
 
     <!-- ░░░ 3.6 PW IoI ░░░ -->
     <section class="slide" id="s36">
-      <div class="slide-meta"><span>3.6 · Teardown</span><span class="right">17b / 28</span></div>
+      <div class="slide-meta"><span>3.6 · Teardown</span><span class="right">17b / 44</span></div>
       <h2>PW Institute of Innovation.</h2>
       <div class="lede">An entirely different playbook. PW IoI doesn't win on SEO — it wins because Alakh Pandey's PhysicsWallah owns the largest after-school audience in India. Owned-channel-first, search-second.</div>
 
@@ -1050,7 +1133,7 @@
 
     <!-- ░░░ 3.7 NxtWave NIAT ░░░ -->
     <section class="slide" id="s37">
-      <div class="slide-meta"><span>3.7 · Teardown</span><span class="right">17c / 28</span></div>
+      <div class="slide-meta"><span>3.7 · Teardown</span><span class="right">17c / 44</span></div>
       <h2>NxtWave Institute of Advanced Technologies.</h2>
       <div class="lede">The closest spirit-match to Quad. Same Tier-2/3 focus, similar price band, similar "industry-aligned + UGC partner" structure. The most useful teardown for Quad to study.</div>
 
@@ -1086,7 +1169,7 @@
 
     <!-- ░░░ 3.8 Pattern ░░░ -->
     <section class="slide" id="s38">
-      <div class="slide-meta"><span>3.8 · The Winners</span><span class="right">18 / 28</span></div>
+      <div class="slide-meta"><span>3.8 · The Winners</span><span class="right">18 / 44</span></div>
       <h2>What every winner is doing. What Quad has zero of.</h2>
       <div class="lede">Across all five teardowns plus the broader audit, five patterns repeat. The honest count: Quad has zero of the five today. This is the gap section 4 will translate into action.</div>
 
@@ -1132,297 +1215,493 @@
 
     <!-- ░░░ 4.0 ░░░ -->
     <section class="slide divider" id="s40">
-      <div class="slide-meta"><span style="color:rgba(255,255,255,0.6)">Section Four</span><span class="right">19 / 28</span></div>
+      <div class="slide-meta"><span style="color:rgba(255,255,255,0.6)">Section Four</span><span class="right">22 / 44</span></div>
       <div class="num-big">04</div>
-      <h2>If you were the CMO, here's the next 12 months.</h2>
-      <div class="lede">Three pillars. One precondition. The first ninety days are a framework, not a Gantt chart — anyone who promises week-by-week clarity this early is making it up.</div>
+      <h2>What the next 12 months should focus on.</h2>
+      <div class="lede">Three pillars, in priority order. One precondition before any of them ship. The first 90 days are a framework with examples — sequencing belongs to the team that's executing, not to the deck that proposes the work.</div>
     </section>
 
-    <!-- ░░░ 4.1 Pillar 1 · Trust ░░░ -->
-    <section class="slide" id="s41">
-      <div class="slide-meta"><span>4.1 · The Plan</span><span class="right">20 / 28</span></div>
-      <h2>Pillar 1 · Trust.</h2>
-      <div class="lede">Win the moment a parent types "is Quad AI a real college" — and the moment a student asks "will I be embarrassed to say I go here". Same pillar, two jobs. Bottom-of-funnel: this is what stops the cheque from being torn up.</div>
+    <!-- ░░░ 4.1a Pillar 1 · Trust with parents ░░░ -->
+    <section class="slide" id="s41a">
+      <div class="slide-meta"><span>4.1a · Pillar 1 · Trust</span><span class="right">23 / 44</span></div>
+      <h2>Build trust with parents — fix the legitimacy gap.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 18px;">What this slide answers · Where will the parent's "is this real?" reflex be defused?</p>
 
-      <div class="two-col" style="margin-top: 8px;">
-        <div class="col">
-          <div class="col-label">Parent-facing job · legitimacy</div>
-          <ul class="tight">
-            <li>Canonical "How Quad's degree works" page — UGC partner story, pulled out of the footer and made the answer to the parent's first question</li>
-            <li>"Quad — honest review" page on Quad's own domain. The skeptical query exists. Either Quad answers it, or Reddit does</li>
-            <li>Aggregator profile sweep: Shiksha · CollegeDunia · CollegeBatch · CollegeDekho. Claim, populate, push for as many genuine student reviews as the team can land</li>
-            <li>An on-domain tool that captures email + signals confidence — exact tool to be designed in this sprint, not pre-committed</li>
-          </ul>
+      <div class="card-grid g4">
+        <div class="card">
+          <div class="ci">01</div>
+          <div class="ct">A canonical "How Quad's degree works" page</div>
+          <div class="cd">UGC partner story (Mangalore Univ, others) explained in plain language. Disclaimer baked in, not buried.</div>
         </div>
-        <div class="col">
-          <div class="col-label">Student-facing job · social proof</div>
-          <ul class="tight">
-            <li>Cohort profile published per batch — board %, cities of origin, prior background. Builds peer-credibility the moment a student lands on the site</li>
-            <li>Alumni / current-student LinkedIn presence — early internships, hackathon wins, real screenshots, live posts. Stage 5 demand met natively</li>
-            <li>Founder + alumni Reddit / Quora seeding on the 30 most-trafficked questions in the category. AEO play — what's published in 2026 is what ChatGPT cites in 2027</li>
-            <li>Press / earned media starting <strong>Month 7</strong>, not Month 12. Trust takes time to compound — start before the final quarter</li>
-          </ul>
+        <div class="card">
+          <div class="ci">02</div>
+          <div class="ct">A "Quad — honest review" page on Quad's own domain</div>
+          <div class="cd">The skeptical query already exists in search. Either Quad answers it, or Reddit does — Newton already does this.</div>
+        </div>
+        <div class="card">
+          <div class="ci">03</div>
+          <div class="ct">Aggregator presence on 4+ platforms</div>
+          <div class="cd">Shiksha · CollegeDunia · CollegeBatch · CollegeDekho. Profiles claimed, populated, and seeded with as many real student reviews as outreach can land.</div>
+        </div>
+        <div class="card">
+          <div class="ci">04</div>
+          <div class="ct">An on-domain tool that captures email + signals confidence</div>
+          <div class="cd">Specific tool to be designed in the sprint, with brand-risk as the first input. Indicative slot, not pre-committed artefact.</div>
         </div>
       </div>
 
-      <div class="footnote"><strong>What gets left out.</strong> No paid trust-building (it's a contradiction). No PR pushed before there's a proof surface to anchor it to. No tool we'd be embarrassed to defend in public — the brand cannot be put at risk to win a metric.</div>
+      <div class="footnote"><strong>What this earns.</strong> When a parent types "is Quad AI a real college" or asks ChatGPT "should my child join Quad" — these are the four surfaces that have to show up. Today, none of them exist.</div>
     </section>
 
-    <!-- ░░░ 4.2 Pillar 2 · Capture ░░░ -->
-    <section class="slide" id="s42">
-      <div class="slide-meta"><span>4.2 · The Plan</span><span class="right">21 / 28</span></div>
-      <h2>Pillar 2 · Capture.</h2>
-      <div class="lede">Once the buyer has drawn their sample set — Scaler, Newton, NxtWave, a Tier-2 BTech, Quad — win inside it. Quad is not competing with IIT. Quad is competing inside its own cohort. Pillar 2 wins that cohort.</div>
+    <!-- ░░░ 4.1b Pillar 1 · Trust with students ░░░ -->
+    <section class="slide" id="s41b">
+      <div class="slide-meta"><span>4.1b · Pillar 1 · Trust</span><span class="right">24 / 44</span></div>
+      <h2>Build trust with students — supply the social proof.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 18px;">What this slide answers · Why will the student be willing to put Quad on Instagram?</p>
 
-      <div class="two-col" style="margin-top: 8px;">
-        <div class="col">
-          <div class="col-label">Owned-surface capture</div>
-          <ul class="tight">
-            <li>30-page comparison cluster — Quad vs Scaler, Quad vs Newton, Quad vs NxtWave, Quad vs Tier-2 BTech in Bihar, Quad vs traditional engineering. Already in flight by Month 3, not just starting</li>
-            <li>Geo cluster — "Best CS college in Patna" · "Best AI college in Mangalore" · "Best AI college in Bengaluru". Three campuses, three landing pages no incumbent can credibly own</li>
-            <li>"Tech schools in India 2026" pillar page — Quad places itself inside the category map, on its own terms</li>
-          </ul>
+      <div class="card-grid g4">
+        <div class="card">
+          <div class="ci">01</div>
+          <div class="ct">Per-batch cohort profile, published</div>
+          <div class="cd">Board %, cities of origin, prior background. Builds peer-credibility the moment a Class 12 student lands on the site — same move Masters Union has perfected.</div>
         </div>
-        <div class="col">
-          <div class="col-label">Off-surface capture · the bigger lever</div>
-          <ul class="tight">
-            <li><strong>Creator partnerships are where the real work is.</strong> 5–8 mid-tier career-counsellor YouTubers + regional Hindi / Telugu voices commissioned across Q2 and Q3. Goal: own the word-of-mouth + influencer recommendation surface inside Quad's defined cohort</li>
-            <li>By the final quarter — when the buyer is in evaluation mode — Quad shows up in the top 5 choices of any honest comparison. That is the year-end win condition, not abstract traffic</li>
-            <li>Paid amplification (Instagram + Meta) introduced in Q2 / Q3 as a complement, not a substitute. Budget number to be set jointly</li>
-          </ul>
+        <div class="card">
+          <div class="ci">02</div>
+          <div class="ct">Alumni / current-student LinkedIn surface</div>
+          <div class="cd">Internships, hackathon wins, screenshots, posts. Stage-5 demand met natively. Costs labour, not budget.</div>
+        </div>
+        <div class="card">
+          <div class="ci">03</div>
+          <div class="ct">Founder + alumni answers on Reddit and Quora</div>
+          <div class="cd">Substantive, named, on the 30 most-trafficked questions in the category. The AEO play — what's published in 2026 is what ChatGPT cites in 2027.</div>
+        </div>
+        <div class="card">
+          <div class="ci">04</div>
+          <div class="ct">Press + earned media — starting Month 7</div>
+          <div class="cd">Not Q4. Trust takes time to compound. Founder bylines, podcast appearances, 2–3 publications by Month 9.</div>
         </div>
       </div>
 
-      <div class="footnote"><strong>The precondition for this pillar.</strong> Pillar 2 only works if the cohort is sharply defined first. Without that — without "we are not competing with IIT, we are competing with X, Y, Z" — the comparison cluster is a wishlist and the creator partnerships have no story. See 4.4.</div>
+      <div class="footnote"><strong>What gets left out of Pillar 1.</strong> No paid trust-building (it's a contradiction). No PR before there's a proof surface to anchor it to. No tool we'd be embarrassed to defend in public.</div>
     </section>
 
-    <!-- ░░░ 4.3 Pillar 3 · Top-of-Funnel Creation ░░░ -->
-    <section class="slide" id="s43">
-      <div class="slide-meta"><span>4.3 · The Plan</span><span class="right">22 / 28</span></div>
-      <h2>Pillar 3 · Top-of-funnel creation.</h2>
-      <div class="lede">Demand that does not yet exist. Class 11 and 12 students who have not started looking, parents whose child has not yet sat the boards. The 80% of traffic that never converts — but feeds Pillars 1 and 2 with familiarity, search habit, and brand recall when the buyer does enter the funnel.</div>
+    <!-- ░░░ 4.2a Pillar 2 · Owned-surface capture ░░░ -->
+    <section class="slide" id="s42a">
+      <div class="slide-meta"><span>4.2a · Pillar 2 · Capture</span><span class="right">25 / 44</span></div>
+      <h2>Show up on Quad's own surfaces when the buyer is comparing options.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 18px;">What this slide answers · When the buyer types "Quad vs Newton" or "best AI college Bihar", what does Quad own?</p>
 
-      <div class="two-col" style="margin-top: 8px;">
-        <div class="col">
-          <div class="col-label">Where the traffic comes from</div>
-          <ul class="tight">
-            <li>One free tool aimed at students who are coding-curious but not college-shopping yet. Specific tool to be designed in this sprint — not pre-committed here, not the same territory Scaler and Newton already saturated</li>
-            <li>Programmatic AI/ML topic library — RAG, fine-tuning, vector databases, prompt engineering, agentic patterns. Structured for both Google and LLM citation. The DSA layer is closed; the AI-native layer is open right now</li>
-            <li>Monthly "Quad AI Index" — Indian AI hiring, salary ranges, top startups. Built from public data. Becomes a recurring backlink magnet and category-authority asset</li>
-          </ul>
+      <div class="card-grid g3">
+        <div class="card">
+          <div class="ci">01</div>
+          <div class="ct">A 30-page comparison cluster</div>
+          <div class="cd" style="margin-bottom: 10px;">Quad vs Scaler, Quad vs Newton, Quad vs NxtWave, Quad vs PW IoI, Quad vs Tier-2 BTech in Bihar, Quad vs traditional engineering. Honest, structured matrices — not propaganda.</div>
+          <div style="font-size: 11.5px; color: var(--ink); padding: 8px 10px; background: #f4f4f0; border-radius: 3px;"><strong>Already in flight by Month 3, not just starting.</strong></div>
         </div>
-        <div class="col">
-          <div class="col-label">What it actually buys</div>
-          <ul class="tight">
-            <li><strong>Familiarity, not conversion.</strong> A Class 11 student who bookmarks a Quad tool today is a Class 12 lead in 18 months — without ever seeing an ad</li>
-            <li>The base on which AEO citations sit. ChatGPT cites brands that show up across many sources; Pillar 3 builds those sources</li>
-            <li>Complemented in parallel by an Instagram brand-push campaign (separate from this plan, separate budget). Pillar 3 is the inbound side of that same intent</li>
-            <li>Compounding cost curve: build cost is high in Y1, near-zero in Y2 onwards. Traffic curve does the opposite</li>
-          </ul>
+        <div class="card">
+          <div class="ci">02</div>
+          <div class="ct">A geo cluster · three cities, three pages</div>
+          <div class="cd" style="margin-bottom: 10px;">"Best CS college in Patna" · "Best AI college in Mangalore" · "Best AI college in Bengaluru". Three campuses are three landing pages no incumbent can credibly own.</div>
+          <div style="font-size: 11.5px; color: var(--ink); padding: 8px 10px; background: #f4f4f0; border-radius: 3px;"><strong>Bihar is the most defensible — Scaler and Newton are not there.</strong></div>
+        </div>
+        <div class="card">
+          <div class="ci">03</div>
+          <div class="ct">A category-landscape pillar page</div>
+          <div class="cd" style="margin-bottom: 10px;">"Tech schools in India · 2026" — Quad places itself inside the category map on its own terms. Currently this SERP is owned by Shiksha and Reddit; neither is Quad's friend.</div>
+          <div style="font-size: 11.5px; color: var(--ink); padding: 8px 10px; background: #f4f4f0; border-radius: 3px;"><strong>Drives the comparison, doesn't follow it.</strong></div>
         </div>
       </div>
 
-      <div class="footnote"><strong>Read the trade-off honestly.</strong> Pillar 3 will produce the largest share of traffic and the smallest share of leads. That is the design, not a flaw. If Quad needs leads in 6 months and is willing to under-invest in 18-month compounding, Pillar 3 starts in Month 7 instead of Month 1.</div>
+      <div class="footnote"><strong>The condition this depends on.</strong> Owned-surface capture only works after the cohort is defined (slide 4.4). Comparisons against the wrong competitive set waste effort and damage credibility.</div>
+    </section>
+
+    <!-- ░░░ 4.2b Pillar 2 · Off-surface capture ░░░ -->
+    <section class="slide" id="s42b">
+      <div class="slide-meta"><span>4.2b · Pillar 2 · Capture</span><span class="right">26 / 44</span></div>
+      <h2>Show up off-surface — where the bigger lever lives.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 18px;">What this slide answers · Where does the buyer hear about Quad before ever visiting the site?</p>
+
+      <div class="card-grid g3">
+        <div class="card warn">
+          <div class="ci">01</div>
+          <div class="ct">Creator partnerships · the largest line item</div>
+          <div class="cd" style="margin-bottom: 10px;">5–8 mid-tier career-counsellor YouTubers, plus regional Hindi / Telugu voices. Commissioned across Q2 and Q3. Honest reviews, not paid placements.</div>
+          <div style="font-size: 11.5px; color: var(--ink); padding: 8px 10px; background: var(--paper); border-radius: 3px; border: 1px solid var(--ink);"><strong>Goal: own the word-of-mouth surface inside the defined cohort.</strong></div>
+        </div>
+        <div class="card">
+          <div class="ci">02</div>
+          <div class="ct">Paid amplification · Q2 / Q3 only</div>
+          <div class="cd" style="margin-bottom: 10px;">Instagram + Meta to amplify creator content and own surfaces. Introduced as complement, not substitute. Budget set jointly with brand-side and admissions teams — not assumed in this plan.</div>
+          <div style="font-size: 11.5px; color: var(--muted); padding: 8px 10px; background: #f4f4f0; border-radius: 3px;"><strong>No paid search on competitor branded keywords.</strong></div>
+        </div>
+        <div class="card dark">
+          <div class="ci">03</div>
+          <div class="ct">Q4 win condition</div>
+          <div class="cd" style="margin-bottom: 10px;">When the buyer enters the evaluation window (typically Apr–Jul), Quad shows up in the top-5 honest comparison inside the defined cohort.</div>
+          <div style="font-size: 11.5px; color: var(--paper); padding: 8px 10px; background: rgba(255,255,255,0.1); border-radius: 3px;"><strong>This — not abstract traffic — is the year-end measure.</strong></div>
+        </div>
+      </div>
+
+      <div class="footnote"><strong>What this isn't.</strong> Banner ads. Display retargeting. Branded-keyword bidding. None of these match how this buyer trusts brands. Creator + Reddit + comparison surface is the trust layer for this category.</div>
+    </section>
+
+    <!-- ░░░ 4.3a Pillar 3 · Where new traffic comes from ░░░ -->
+    <section class="slide" id="s43a">
+      <div class="slide-meta"><span>4.3a · Pillar 3 · Reach</span><span class="right">27 / 44</span></div>
+      <h2>Reach buyers before they know they're buyers.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 18px;">What this slide answers · Where does new top-of-funnel traffic come from when no one is searching for Quad yet?</p>
+
+      <div class="card-grid g3">
+        <div class="card">
+          <div class="ci">01</div>
+          <div class="ct">One free tool, deliberately scoped</div>
+          <div class="cd" style="margin-bottom: 10px;">For a Class 12 / first-year student who is coding-curious, not college-shopping yet. Not a C compiler (Newton owns it). Not a mock interview (Scaler owns it). The right slot for Quad to be designed in this sprint.</div>
+          <div style="font-size: 11.5px; color: var(--muted); padding: 8px 10px; background: #f4f4f0; border-radius: 3px;"><strong>Examples to react to, not commitments:</strong> a JEE-to-AI-career calculator, a "first internship" prep playbook, a self-grading AI-project rubric.</div>
+        </div>
+        <div class="card">
+          <div class="ci">02</div>
+          <div class="ct">A programmatic AI/ML topic library</div>
+          <div class="cd" style="margin-bottom: 10px;">RAG · fine-tuning · vector databases · prompt engineering · agentic patterns. 200–400 pages over 12 months. Structured for both Google SERP and LLM citation.</div>
+          <div style="font-size: 11.5px; color: var(--muted); padding: 8px 10px; background: #f4f4f0; border-radius: 3px;"><strong>The DSA layer is closed. The AI-native layer is open right now. Window won't be there in 2027.</strong></div>
+        </div>
+        <div class="card">
+          <div class="ci">03</div>
+          <div class="ct">A monthly "Quad AI Index"</div>
+          <div class="cd" style="margin-bottom: 10px;">Indian AI hiring · salary ranges by city · top startups hiring freshers. Built from public LinkedIn + job-board data. Twelve issues = twelve evergreen, citable pieces.</div>
+          <div style="font-size: 11.5px; color: var(--muted); padding: 8px 10px; background: #f4f4f0; border-radius: 3px;"><strong>Recurring backlink magnet, recurring media-cite.</strong></div>
+        </div>
+      </div>
+
+      <div class="footnote"><strong>The harsh reality this pillar absorbs.</strong> 80% of the traffic this generates will never convert — by design. Pillar 3 buys familiarity, search habit, and brand-recall for buyers who are 12–18 months from the funnel. The conversion logic is in Pillars 1 and 2; the reach logic is here.</div>
+    </section>
+
+    <!-- ░░░ 4.3b Pillar 3 · What it actually buys ░░░ -->
+    <section class="slide" id="s43b">
+      <div class="slide-meta"><span>4.3b · Pillar 3 · Reach</span><span class="right">28 / 44</span></div>
+      <h2>What the top-of-funnel surface actually buys.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 18px;">What this slide answers · If 80% never converts, why bother?</p>
+
+      <div class="card-grid g4">
+        <div class="card">
+          <div class="ci">A</div>
+          <div class="ct">Familiarity — not conversion</div>
+          <div class="cd">A Class 11 student who bookmarks a Quad tool today is a Class 12 lead in 18 months — without ever seeing an ad. Newton's compounding C-compiler traffic is the proof.</div>
+        </div>
+        <div class="card">
+          <div class="ci">B</div>
+          <div class="ct">The base AEO citations sit on</div>
+          <div class="cd">ChatGPT cites brands that show up across many sources. Pillar 3 builds those sources. Without it, the AEO citation rate target in 4.8 is unreachable.</div>
+        </div>
+        <div class="card">
+          <div class="ci">C</div>
+          <div class="ct">Inbound twin to a parallel brand push</div>
+          <div class="cd">Instagram brand campaigns are run separately, with separate budget. Pillar 3 is the inbound side of that same intent — meeting the buyer after the ad has done its work.</div>
+        </div>
+        <div class="card">
+          <div class="ci">D</div>
+          <div class="ct">Compounding cost curve</div>
+          <div class="cd">Build cost is high in Y1, near-zero in Y2 onwards. Traffic curve does the opposite. Starting in 2026 is materially cheaper than starting in 2027.</div>
+        </div>
+      </div>
+
+      <div class="footnote"><strong>The trade-off, named.</strong> If lead pressure is acute and runway is tight, Pillar 3 starts in Month 7 instead of Month 1 — Pillars 1 and 2 absorb the first half. The order matters; the priority does too.</div>
     </section>
 
     <!-- ░░░ 4.4 Cohort precondition ░░░ -->
     <section class="slide" id="s44">
-      <div class="slide-meta"><span>4.4 · The Plan</span><span class="right">23 / 28</span></div>
-      <h2>None of this works without defining the cohort.</h2>
-      <div class="lede">Quad cannot win against IIT. Quad cannot win against the broad category of "Indian engineering colleges". Quad can only win inside the sample set the buyer has drawn — and that sample set must be defined before any of Pillars 1, 2, or 3 ships.</div>
+      <div class="slide-meta"><span>4.4 · The Plan</span><span class="right">29 / 44</span></div>
+      <h2>Define the exact cohort of choices before any work begins.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 18px;">What this slide answers · Who is Quad actually competing with — and who is Quad not?</p>
 
-      <div class="three-col" style="margin-top: 14px;">
-        <div class="col">
-          <div class="col-label">The wrong question</div>
-          <h4 style="font-size: 22px;">"Why pick Quad over IIT?"</h4>
-          <p>This is unwinnable. Anyone who has an IIT seat is not Quad's buyer. Building any content against this comparison wastes effort and damages credibility.</p>
+      <div class="vs-grid">
+        <div class="vs-tile no">
+          <div class="vs-mark">✕</div>
+          <div class="vs-l">The wrong question</div>
+          <h4>Why pick Quad over IIT?</h4>
+          <p>Unwinnable. Anyone who has an IIT seat is not Quad's buyer. Building any content against this comparison wastes effort and damages credibility with the buyer who is actually choosing.</p>
         </div>
-        <div class="col">
-          <div class="col-label">The right question</div>
-          <h4 style="font-size: 22px;">"Why pick Quad inside the set the buyer has actually drawn?"</h4>
+        <div class="vs-tile yes">
+          <div class="vs-mark">✓</div>
+          <div class="vs-l">The right question</div>
+          <h4>Why pick Quad inside the set the buyer has actually drawn?</h4>
           <p>The honest set: Scaler, Newton, NxtWave, PW IoI, plus the local Tier-2 BTech the family was going to fall back on. Five to seven options. Quad has to win inside that.</p>
-        </div>
-        <div class="col">
-          <div class="col-label">The CMO's Day-1 task</div>
-          <h4 style="font-size: 22px;">Lock the cohort definition.</h4>
-          <p>One paragraph the entire team agrees on. Drives every comparison page, creator brief, Reddit answer, and ad. Nothing meaningful can ship until this is signed off.</p>
         </div>
       </div>
 
-      <div class="footnote">This slide is a precondition, not a pillar. It is also the cheapest move on the entire plan — and the most leveraged. Skip it and the rest leaks at every joint.</div>
+      <div class="card warn" style="margin-top: 20px; padding: 18px 22px;">
+        <div class="ci">!</div>
+        <div class="ct" style="font-size: 17px;">The CMO's Day-1 task · lock the cohort definition.</div>
+        <div class="cd" style="font-size: 14.5px;">One paragraph the entire team agrees on. Drives every comparison page, every creator brief, every Reddit answer, every ad. Cheapest move on the entire plan, and the most leveraged. Skip it and the rest leaks at every joint.</div>
+      </div>
     </section>
 
     <!-- ░░░ 4.5 First 90 days ░░░ -->
     <section class="slide" id="s45">
-      <div class="slide-meta"><span>4.5 · The Plan</span><span class="right">24 / 28</span></div>
-      <h2>The first 90 days · framework, not Gantt.</h2>
-      <div class="lede">A real CMO and a real team will sequence this on Day 1. What follows is the shape — what gets started when — illustrated with examples of what each block could contain. The goal is to show the rhythm, not pre-commit the calendar.</div>
+      <div class="slide-meta"><span>4.5 · The Plan</span><span class="right">30 / 44</span></div>
+      <h2>How the first 90 days unfold.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 14px;">What this slide answers · What's the rhythm of work across the first quarter — and what does each block contain?</p>
 
-      <table class="data" style="margin-top: 6px;">
-        <tr>
-          <th style="width: 16%;">Window</th>
-          <th>Pillar 1 · Trust</th>
-          <th>Pillar 2 · Capture</th>
-          <th>Pillar 3 · Top-of-funnel</th>
-        </tr>
-        <tr>
-          <td><strong>Days 1–30</strong><br><span style="color:var(--muted); font-size:11px;">Earn the right</span></td>
-          <td>Cohort definition locked. Legitimacy page drafted. First aggregator profile claimed. Founder posts first 2–3 substantive Reddit / Quora answers under their own name.</td>
-          <td>Comparison cluster outline + first 3 pages drafted (the 3 most-searched comparisons). Creator partnership shortlist drawn up; first conversation opened.</td>
-          <td>Concept work only. Free-tool concept scoped, not built. Topic-library taxonomy decided. Index methodology drafted.</td>
-        </tr>
-        <tr>
-          <td><strong>Days 31–60</strong><br><span style="color:var(--muted); font-size:11px;">Go wider</span></td>
-          <td>Legitimacy page live. "Quad — honest review" page drafted. Aggregator presence on 3+ platforms with student outreach campaign live. Founder seeding cadence steady — handful per week.</td>
-          <td>First 8 comparison pages live + indexed. Geo cluster (Patna · Mangalore · Bengaluru) drafted. First creator partnership signed.</td>
-          <td>Free tool MVP in build. First 10–15 programmatic AI/ML pages drafted.</td>
-        </tr>
-        <tr>
-          <td><strong>Days 61–90</strong><br><span style="color:var(--muted); font-size:11px;">Pick up speed</span></td>
-          <td>Cohort profile of current batch published. Press / earned media outreach begins (intro conversations, not pitches). 30+ Reddit / Quora answers indexed.</td>
-          <td>Comparison cluster at 15+ pages. Geo cluster live. 2–3 creator videos in production. First outreach to coaching / counsellor partners.</td>
-          <td>Free tool live in beta. First 30+ programmatic pages live. Issue 1 of the Quad AI Index drafted.</td>
-        </tr>
-      </table>
+      <div class="day-cols">
+        <div class="day-col">
+          <div class="day-col-head">
+            <div class="dt">Days 1 — 30</div>
+            <div class="dn">Earn the right.</div>
+          </div>
+          <div class="day-row hi">
+            <div class="dl">Precondition</div>
+            <div class="dh">Cohort definition locked</div>
+            <div class="dd">One paragraph, signed off by founders.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 1 · Trust</div>
+            <div class="dh">Legitimacy page drafted</div>
+            <div class="dd">First 2–3 substantive Reddit / Quora answers under founder name.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 2 · Capture</div>
+            <div class="dh">Comparison cluster outlined</div>
+            <div class="dd">First 3 most-searched comparisons drafted. Creator shortlist drawn.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 3 · Reach</div>
+            <div class="dh">Concept work only</div>
+            <div class="dd">Free-tool concept scoped. Topic-library taxonomy decided. Index methodology drafted.</div>
+          </div>
+        </div>
 
-      <div class="footnote"><strong>Honest disclaimer.</strong> The blocks above are illustrative — designed to communicate the rhythm and the relative weight of each pillar across the quarter. Anyone who hands Quad a literal week-by-week Gantt chart at proposal stage is selling false confidence. Real sequencing happens after cohort lock + team constraints are known.</div>
+        <div class="day-col">
+          <div class="day-col-head">
+            <div class="dt">Days 31 — 60</div>
+            <div class="dn">Go wider.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 1 · Trust</div>
+            <div class="dh">Legitimacy page live</div>
+            <div class="dd">"Honest review" page drafted. Aggregator profiles on 3+ platforms with student outreach campaign live. Founder seeding cadence steady.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 2 · Capture</div>
+            <div class="dh">First 8 comparison pages live</div>
+            <div class="dd">Geo cluster (Patna · Mangalore · Bengaluru) drafted. First creator partnership signed.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 3 · Reach</div>
+            <div class="dh">Free-tool MVP in build</div>
+            <div class="dd">First 10–15 programmatic AI/ML pages drafted.</div>
+          </div>
+        </div>
+
+        <div class="day-col">
+          <div class="day-col-head">
+            <div class="dt">Days 61 — 90</div>
+            <div class="dn">Pick up speed.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 1 · Trust</div>
+            <div class="dh">Cohort profile published</div>
+            <div class="dd">Press / earned media outreach begins (intro conversations, not pitches). 30+ Reddit / Quora answers indexed.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 2 · Capture</div>
+            <div class="dh">Cluster at 15+ pages</div>
+            <div class="dd">Geo cluster live. 2–3 creator videos in production. First outreach to coaching / counsellor partners.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 3 · Reach</div>
+            <div class="dh">Free tool live in beta</div>
+            <div class="dd">First 30+ programmatic pages live. Issue 1 of the Quad AI Index drafted.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footnote"><strong>Honest disclaimer.</strong> The blocks above are illustrative — designed to communicate the rhythm. Real sequencing happens after cohort lock + team capacity is known. Anyone who hands Quad a literal week-by-week Gantt chart at proposal stage is selling false confidence.</div>
     </section>
 
     <!-- ░░░ 4.6 Months 4–12 ░░░ -->
     <section class="slide" id="s46">
-      <div class="slide-meta"><span>4.6 · The Plan</span><span class="right">25 / 28</span></div>
-      <h2>Months 4–12 · what the engine becomes.</h2>
-      <div class="lede">Three pillars, three quarters. The shape: Pillar 1 layers in PR by Month 7. Pillar 2 owns the creator surface through Q3 and turns into top-5 cohort placement by Q4. Pillar 3 starts compounding visibly only in the second half.</div>
+      <div class="slide-meta"><span>4.6 · The Plan</span><span class="right">31 / 44</span></div>
+      <h2>How months 4 to 12 build on the first 90.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 14px;">What this slide answers · What does the engine become across the rest of the year?</p>
 
-      <table class="data" style="margin-top: 6px;">
-        <tr>
-          <th style="width: 14%;"></th>
-          <th>Months 4–6 · Q2</th>
-          <th>Months 7–9 · Q3</th>
-          <th>Months 10–12 · Q4</th>
-        </tr>
-        <tr>
-          <td><strong>Pillar 1<br>Trust</strong></td>
-          <td>Reddit / Quora answers reach steady cadence. Aggregator review depth builds. Cohort profile becomes a recurring asset.</td>
-          <td><strong>Press / earned media kicks in.</strong> Real proof exists now to anchor it to. Founder bylines on 3+ publications.</td>
-          <td>First alumni / batch outcome data published. Story moves from "is this real" to "look at the receipts".</td>
-        </tr>
-        <tr>
-          <td><strong>Pillar 2<br>Capture</strong></td>
-          <td>Comparison cluster fully live (30+ pages). Geo cluster ranking in top 10 for 3–5 queries. <strong>Creator partnerships are the single biggest line item.</strong></td>
-          <td>Creator surface continues to scale. Paid amplification (Instagram + Meta) introduced as complement. First word-of-mouth signal in Reddit / Quora threads — students mentioning Quad unprompted.</td>
-          <td><strong>Year-end win condition: Quad shows up in the top 5 choices of any honest comparison inside the defined cohort.</strong> Comparison content ranking on page 1 for 5–10 queries.</td>
-        </tr>
-        <tr>
-          <td><strong>Pillar 3<br>Top-of-funnel</strong></td>
-          <td>Free tool grows past initial cohort. Programmatic library at 100+ pages. Index issues 1–3 published.</td>
-          <td>Programmatic surface starts ranking for non-branded category queries. AEO citation rate measurable — Quad appears in LLM responses to category questions.</td>
-          <td>Free tool is bookmark-grade. Programmatic surface compounds without weekly intervention. Index becomes a recurring media-cited artefact.</td>
-        </tr>
-      </table>
+      <div class="day-cols">
+        <div class="day-col">
+          <div class="day-col-head">
+            <div class="dt">Months 4 — 6 · Q2</div>
+            <div class="dn">Scale the surface.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 1 · Trust</div>
+            <div class="dh">Reddit / Quora at steady cadence</div>
+            <div class="dd">Aggregator review depth builds. Cohort profile becomes recurring asset.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 2 · Capture</div>
+            <div class="dh">Creator partnerships are the biggest line</div>
+            <div class="dd">Comparison cluster fully live (30+ pages). Geo cluster ranking in top 10 for 3–5 queries.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 3 · Reach</div>
+            <div class="dh">Free tool past initial cohort</div>
+            <div class="dd">Programmatic library at 100+ pages. Index issues 1–3 published.</div>
+          </div>
+        </div>
 
-      <div class="footnote"><strong>The shape, not the slope.</strong> The engine is back-loaded by design — most of the visible payoff lands in Q3 and Q4. This matches how the buyer journey works: Quad needs to be in the top 5 of the cohort during the evaluation window (typically Apr–Jul), not before.</div>
+        <div class="day-col">
+          <div class="day-col-head">
+            <div class="dt">Months 7 — 9 · Q3</div>
+            <div class="dn">Earn the press.</div>
+          </div>
+          <div class="day-row hi">
+            <div class="dl">Pillar 1 · Trust</div>
+            <div class="dh">Press + earned media land</div>
+            <div class="dd">Real proof exists now to anchor a story to. Founder bylines on 3+ publications.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 2 · Capture</div>
+            <div class="dh">Paid amplification introduced</div>
+            <div class="dd">Instagram + Meta added as complement to creator + comparison surfaces. First unprompted Reddit / Quora mentions.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 3 · Reach</div>
+            <div class="dh">Programmatic surface ranks</div>
+            <div class="dd">Non-branded category queries start landing. AEO citation rate becomes measurable.</div>
+          </div>
+        </div>
+
+        <div class="day-col">
+          <div class="day-col-head">
+            <div class="dt">Months 10 — 12 · Q4</div>
+            <div class="dn">Win the evaluation.</div>
+          </div>
+          <div class="day-row hi">
+            <div class="dl">Pillar 2 · Capture</div>
+            <div class="dh">Top-5 placement in the cohort</div>
+            <div class="dd">Year-end win condition. Quad in the top-5 of any honest comparison inside the defined cohort.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 1 · Trust</div>
+            <div class="dh">First batch outcome data live</div>
+            <div class="dd">Story moves from "is this real" to "look at the receipts".</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Pillar 3 · Reach</div>
+            <div class="dh">Compounding without weekly intervention</div>
+            <div class="dd">Free tool is bookmark-grade. Index becomes recurring media-cited artefact.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footnote"><strong>The shape, not the slope.</strong> The engine is back-loaded by design. Most of the visible payoff lands in Q3 and Q4. This matches how the buyer journey works — Quad needs to be in the top-5 of the cohort during the evaluation window, not before.</div>
     </section>
 
     <!-- ░░░ 4.7 Three universes ░░░ -->
     <section class="slide" id="s47">
-      <div class="slide-meta"><span>4.7 · The Plan</span><span class="right">26 / 28</span></div>
-      <h2>Content lives in three universes. The plan covers all three.</h2>
-      <div class="lede">Most marketing plans treat content as a single output that gets distributed everywhere. This plan separates three distinct universes — what gets created, where it lives, and how it earns its keep are different in each.</div>
+      <div class="slide-meta"><span>4.7 · The Plan</span><span class="right">32 / 44</span></div>
+      <h2>Where this content actually goes.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 14px;">What this slide answers · Every piece of content lives in one of three universes. The plan covers all three from Day 1, not chronologically.</p>
 
-      <div class="three-col" style="margin-top: 14px;">
-        <div class="col">
-          <div class="col-label">Universe 1 · Owned</div>
-          <h4 style="font-size: 20px;">Quad's own surfaces.</h4>
-          <p style="margin-bottom: 12px;">Website, app, owned channels (newsletter, LinkedIn page). Where every piece of comparison content, the legitimacy page, the cohort profile, the free tool, and the programmatic library live.</p>
+      <div class="uni-grid">
+        <div class="uni-tile">
+          <div class="glyph"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="6" y="10" width="36" height="28" stroke="#0a0a0a" stroke-width="2" fill="#fff"/><line x1="6" y1="18" x2="42" y2="18" stroke="#0a0a0a" stroke-width="2"/><circle cx="11" cy="14" r="1.2" fill="#0a0a0a"/><circle cx="15" cy="14" r="1.2" fill="#0a0a0a"/><circle cx="19" cy="14" r="1.2" fill="#0a0a0a"/></svg></div>
+          <div class="ul">Universe 1</div>
+          <h4>Owned · Quad's surfaces.</h4>
+          <div class="ud">Website, app, newsletter, LinkedIn page. Where comparison content, the legitimacy page, the cohort profile, the free tool, and the programmatic library live.</div>
           <ul class="tight">
             <li>Highest leverage on conversion</li>
             <li>Lowest cost per lifetime visit</li>
             <li>Quad controls the narrative completely</li>
           </ul>
         </div>
-        <div class="col">
-          <div class="col-label">Universe 2 · Topical / forum</div>
-          <h4 style="font-size: 20px;">Reddit, Quora, aggregators, third-party blogs.</h4>
-          <p style="margin-bottom: 12px;">Where legitimacy is verified, where ChatGPT and Gemini do their training, where parents go to fact-check. The single most under-invested surface in the category.</p>
+        <div class="uni-tile">
+          <div class="glyph"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="#0a0a0a" stroke-width="2" fill="#fff"/><circle cx="24" cy="24" r="11" stroke="#0a0a0a" stroke-width="1.5" fill="none"/><circle cx="24" cy="24" r="4" fill="#0a0a0a"/></svg></div>
+          <div class="ul">Universe 2</div>
+          <h4>Topical · forums + aggregators.</h4>
+          <div class="ud">Reddit, Quora, Shiksha, CollegeDunia, third-party blogs. Where legitimacy is verified, where ChatGPT and Gemini do their training, where parents fact-check.</div>
           <ul class="tight">
             <li>Highest impact on AEO and parent trust</li>
             <li>Cannot be paid for — only earned</li>
             <li>Founder + alumni voices, not brand voices</li>
           </ul>
         </div>
-        <div class="col">
-          <div class="col-label">Universe 3 · Earned media</div>
-          <h4 style="font-size: 20px;">Press, podcasts, creator videos.</h4>
-          <p style="margin-bottom: 12px;">Where category authority is built. Begins to layer in from Month 7 once there's enough proof to anchor a story to. Creator partnerships are the largest line in this universe.</p>
+        <div class="uni-tile">
+          <div class="glyph"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><polygon points="24,6 42,38 6,38" stroke="#0a0a0a" stroke-width="2" fill="#fff" stroke-linejoin="round"/><line x1="24" y1="14" x2="24" y2="28" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="33" r="1.5" fill="#0a0a0a"/></svg></div>
+          <div class="ul">Universe 3</div>
+          <h4>Earned · press + creators.</h4>
+          <div class="ud">Press articles, podcasts, creator videos. Where category authority is built. Begins to layer in from Month 7 once there's enough proof to anchor a story.</div>
           <ul class="tight">
             <li>Highest top-of-funnel reach per piece</li>
             <li>Compounds the other two universes</li>
-            <li>Needs Pillars 1 and 2 to work before it lands</li>
+            <li>Needs Pillars 1 and 2 to work first</li>
           </ul>
         </div>
       </div>
 
-      <div class="footnote"><strong>The trap to avoid.</strong> Most brands in this category have built Universe 1 and ignored 2 and 3. Scaler and Newton are the exceptions — they are roughly balanced across all three. Quad's plan should be balanced from the start, not chronological.</div>
+      <div class="footnote"><strong>The trap to avoid.</strong> Most brands in this category have built Universe 1 and ignored 2 and 3. Scaler and Newton are the exceptions — they're roughly balanced across all three. Quad's plan should be balanced from the start, not chronological.</div>
     </section>
 
     <!-- ░░░ 4.8 North Star ░░░ -->
     <section class="slide" id="s48">
-      <div class="slide-meta"><span>4.8 · The Plan</span><span class="right">27 / 28</span></div>
-      <h2>The north star.</h2>
-      <div class="lede">One number, twelve months out, with a believable curve. Plus the secondary metrics that show whether the curve is real or vanity.</div>
+      <div class="slide-meta"><span>4.8 · The Plan</span><span class="right">33 / 44</span></div>
+      <h2>The north star, twelve months out.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 14px;">What this slide answers · How will we know if any of this worked? Two numbers carry equal weight — traffic, and what that traffic converts into.</p>
 
-      <div class="three-col" style="margin-top: 14px;">
-        <div class="col">
-          <div class="col-label">North star · 12 months out</div>
-          <h4 style="font-size: 44px; line-height: 1.0; letter-spacing: -0.02em;">100,000+</h4>
-          <p style="margin-top: 6px;">monthly organic visits to quadcse.com — same month, next year. From <strong>&lt;10 today</strong>.</p>
-          <p style="margin-top: 14px; font-size: 12.5px;">Translating, at 0.5–1% conversion: <strong>500–1,000 inbound leads / month</strong> by year end.</p>
+      <div class="star-grid">
+        <div class="star-tile">
+          <div class="sl">Traffic · monthly organic visits</div>
+          <div class="sv">100,000+</div>
+          <div class="ss">Same month, next year. From <strong>&lt;10 today</strong>. Newton-level (610K/mo) is a 24–36 month build, not a 12-month one — so 100K is the believable line, not the boast.</div>
         </div>
-        <div class="col">
-          <div class="col-label">The curve, not the endpoint</div>
-          <table class="data" style="margin-top: 4px;">
+        <div class="star-tile dark">
+          <div class="sl">Bottom line · monthly inbound leads</div>
+          <div class="sv">500 — 1,000</div>
+          <div class="ss">At 0.5–1% conversion of organic traffic. This is what every other number on this slide is in service of. The traffic line and the leads line are designed to be read as equals.</div>
+        </div>
+      </div>
+
+      <div class="card-grid g2" style="margin-top: 16px;">
+        <div class="card">
+          <div class="ct">The curve, by half-year</div>
+          <table class="data" style="margin-top: 8px;">
             <tr><th>Window</th><th class="right">Monthly visits</th></tr>
             <tr><td>Today</td><td class="right">&lt;10</td></tr>
-            <tr><td>End of H1 (Month 6)</td><td class="right">30,000–40,000</td></tr>
-            <tr><td>End of Q3 (Month 9)</td><td class="right">60,000–75,000</td></tr>
-            <tr><td>End of H2 (Month 12)</td><td class="right" class="strong">100,000+</td></tr>
+            <tr><td>End of H1 · Month 6</td><td class="right strong">30,000 — 40,000</td></tr>
+            <tr><td>End of Q3 · Month 9</td><td class="right">60,000 — 75,000</td></tr>
+            <tr><td>End of H2 · Month 12</td><td class="right strong">100,000+</td></tr>
           </table>
-          <p style="margin-top: 12px; font-size: 12.5px;">The shape is back-loaded — H1 builds the surface, H2 compounds it. Front-loading the curve means trading compound for short-term flash.</p>
+          <p style="font-size: 12.5px; margin-top: 10px; color: var(--muted);">Back-loaded by design. H1 builds the surface, H2 compounds it. Front-loading flattens the curve in the second half.</p>
         </div>
-        <div class="col">
-          <div class="col-label">Secondary metrics</div>
-          <ul class="tight">
-            <li><strong>AEO citation rate.</strong> % of LLM responses (ChatGPT / Gemini / Perplexity) to category queries that mention Quad. Today: ~0%. Year-end target: ~20%</li>
-            <li>Branded search volume for "Quad AI" — from &lt;50/mo to 1,000+/mo</li>
-            <li>Top-5 placement in honest comparison content for the defined cohort, by Q4</li>
-            <li>Aggregator review depth across 4+ platforms</li>
-            <li>Number of substantive Reddit / Quora answers carrying founder / alumni attribution and indexed by Google</li>
+        <div class="card">
+          <div class="ct">Secondary metrics worth tracking</div>
+          <ul class="tight" style="margin-top: 4px;">
+            <li><strong>AEO citation rate</strong> · % of LLM responses to category queries that name Quad. Today ~0% → year-end ~20%. Always supported by aggregator + Reddit + creator corroboration</li>
+            <li><strong>Branded search volume</strong> for "Quad AI" — &lt;50/mo → 1,000+/mo</li>
+            <li><strong>Top-5 cohort placement</strong> in honest comparison content by Q4</li>
+            <li><strong>Substantive Reddit / Quora answers</strong> with founder / alumni attribution, indexed by Google</li>
           </ul>
         </div>
       </div>
 
-      <div class="footnote"><strong>On AEO citations.</strong> Citations don't stand alone — LLMs cite Quad when an aggregator, a Reddit thread, and a creator video all already mention it. AEO is the receipt; the work that earns it lives in Pillars 1 and 2. Track citation rate, but invest in the surface that creates it.</div>
+      <div class="footnote"><strong>Numbers are ballpark.</strong> The shape and the relationship between the metrics are what matter. Sharper numbers come after Day-1 cohort lock + audit of current site baseline + budget conversation. None of these targets work without parallel brand-side investment (PR, Meta, Instagram).</div>
     </section>
 
     <!-- ░░░ 4.9 What this plan is not ░░░ -->
     <section class="slide" id="s49">
-      <div class="slide-meta"><span>4.9 · The Plan</span><span class="right">28 / 28</span></div>
-      <h2>What this plan deliberately is not.</h2>
-      <div class="lede">A clean read of the boundary. None of these are wrong moves — they are simply other moves, that need to run alongside this one with their own budgets and their own owners.</div>
+      <div class="slide-meta"><span>4.9 · The Plan</span><span class="right">34 / 44</span></div>
+      <h2>And what this plan deliberately is not.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 14px;">A clean read of the boundary. None of these are wrong moves. They simply live in a different conversation, with different budgets and different owners.</p>
 
       <table class="data" style="margin-top: 6px;">
         <tr>
-          <th style="width: 30%;">Not in this plan</th>
-          <th>What it should be instead</th>
+          <th style="width: 28%;">Not in this plan</th>
+          <th>What it actually needs to be</th>
         </tr>
         <tr>
           <td><strong>The brand campaign.</strong></td>
-          <td>PR pushes, hero films, billboards, IPL ads — these are real, they matter, and they live in a separate brand-side investment. This plan covers inbound visibility only. None of inbound works without a parallel brand push, and vice versa.</td>
+          <td>PR pushes, hero films, billboards, IPL ads — these are real, they matter, and they live on the brand-side investment ledger. None of inbound works without a parallel brand push, and vice versa.</td>
         </tr>
         <tr>
           <td><strong>The paid funnel.</strong></td>
-          <td>Instagram, Meta, YouTube ads, Google search ads. Introduced as a complement to Pillar 2 in Q2 / Q3, but the budget number is set jointly with the brand-side and admissions teams — not assumed here.</td>
+          <td>Instagram, Meta, YouTube ads, Google search ads. Introduced as a Pillar-2 complement in Q2 / Q3, but the budget number is set jointly with the brand-side and admissions teams — not assumed here.</td>
         </tr>
         <tr>
           <td><strong>A Gantt chart.</strong></td>
@@ -1430,41 +1709,502 @@
         </tr>
         <tr>
           <td><strong>An ROI calculator (specifically).</strong></td>
-          <td>The earlier draft of this plan suggested an "ROI calculator" tool. On reflection, putting Quad's numbers into a public comparator — vs Scaler, Newton, Tier-2 BTech — risks the brand more than it builds it. The tool slot in Pillar 1 stays. The specific tool is to be designed in the sprint, with the brand's risk appetite as the first input.</td>
+          <td>An earlier draft suggested this as the Pillar-1 tool. On reflection, putting Quad's numbers into a public comparator vs Scaler / Newton / Tier-2 BTech risks the brand more than it builds it. The tool slot stays. The specific tool is to be designed in the sprint, with brand-risk appetite as the first input.</td>
         </tr>
         <tr>
           <td><strong>A promise of leads in 90 days.</strong></td>
-          <td>This is a 12-month compound. The first quarter is leak-fixing and surface-building, not flood-creation. The first month a Quad-authored Reddit answer shows up in a parent's ChatGPT response is the H1 win condition — not the traffic graph.</td>
+          <td>This is a 12-month compound. The first quarter is leak-fixing and surface-building. The first time a Quad-authored Reddit answer shows up in a parent's ChatGPT response is the H1 win condition — not the traffic graph.</td>
         </tr>
       </table>
     </section>
 
-    <!-- ░░░ Coming next ░░░ -->
-    <section class="slide" id="s50">
-      <div class="slide-meta"><span>What's coming</span><span class="right">→</span></div>
-      <h2 class="large">Sections 5–7. Coming separately.</h2>
-      <div class="lede" style="max-width: 760px; margin-top: 18px;">This document covers <strong>who, where, how</strong>, and <strong>what to do</strong>. The next document covers <strong>what to fix on the site, how to position the brand</strong>, and <strong>the full competitive matrix</strong>.</div>
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- ░░░░░░░░░░░░░░░░ §5 · THE SITE ░░░░░░░░░░░░░░░░░░░░ -->
+    <!-- ════════════════════════════════════════════════════ -->
 
-      <div class="three-col" style="margin-top: 32px;">
-        <div class="col">
-          <div class="col-label">§5 · The Site</div>
-          <h4 style="font-size: 18px;">Site critique, anxiety lens.</h4>
-          <p>Frame each issue as the fear it raises in the parent's head — and the fix that neutralises it. Not a font review.</p>
+    <!-- ░░░ 5.0 ░░░ -->
+    <section class="slide divider" id="s50">
+      <div class="slide-meta"><span style="color:rgba(255,255,255,0.6)">Section Five</span><span class="right">35 / 44</span></div>
+      <div class="num-big">05</div>
+      <h2>The website is the end of every internet journey we just mapped.</h2>
+      <div class="lede">It needs to handle the parent at peak skepticism, the student at peak comparison, and the LLM at peak indexing — all while running 100K+ monthly visits and hosting programmatic content. Today, it does none of that.</div>
+    </section>
+
+    <!-- ░░░ 5.1 What it is today ░░░ -->
+    <section class="slide" id="s51">
+      <div class="slide-meta"><span>5.1 · The Site</span><span class="right">36 / 44</span></div>
+      <h2>What the site is today — a logo dump.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 14px;">What this slide answers · What's actually wrong with quadcse.com in April 2026?</p>
+
+      <div class="card-grid g3">
+        <div class="card">
+          <div class="ci">01</div>
+          <div class="ct">Reads as a logo dump</div>
+          <div class="cd">Recruiter logos, mentor headshots, partner badges. Stacked. Six of seven incumbents have the same problem. None of it builds trust because all of it is unverifiable.</div>
         </div>
-        <div class="col">
-          <div class="col-label">§6 · Positioning</div>
-          <h4 style="font-size: 18px;">The category claim and the anxiety-killer block.</h4>
-          <p>"New age education" is not a claim — it's a category descriptor everyone uses. What Quad's sharper claim is, and how the geo + price wedges defend it.</p>
+        <div class="card">
+          <div class="ci">02</div>
+          <div class="ct">Heavily gated</div>
+          <div class="cd">Brochure downloads, application forms, and counsellor calls are foregrounded. The buyer reaches a form before they reach an answer.</div>
         </div>
-        <div class="col">
-          <div class="col-label">§7 · Matrix</div>
-          <h4 style="font-size: 18px;">Full competitor comparison.</h4>
-          <p>Structured comparison across all 17 players, not just the 10 in §3. Plus an appendix with the data tables, AEO query set, and source list.</p>
+        <div class="card">
+          <div class="ci">03</div>
+          <div class="ct">No programmatic readiness</div>
+          <div class="cd">No /topics/, no /tools/, no /compare/, no /journal/. The site cannot host the content the inbound plan requires. Adding these is a 4–6 week build, not a content task.</div>
+        </div>
+        <div class="card">
+          <div class="ci">04</div>
+          <div class="ct">SEO foundation is thin</div>
+          <div class="cd">Title tags shallow, schema absent, sitemap incomplete, page speed and Core Web Vitals untested. Google has no reason to surface anything.</div>
+        </div>
+        <div class="card">
+          <div class="ci">05</div>
+          <div class="ct">Legitimacy disclaimer is hidden</div>
+          <div class="cd">"Not a UGC HEI" is buried in the footer. The parent's #1 fear is met with an asterisk, not an answer.</div>
+        </div>
+        <div class="card">
+          <div class="ci">06</div>
+          <div class="ct">No editorial voice</div>
+          <div class="cd">No founder writing, no batch storytelling, no industry takes, no proof-of-thought. The brand has no personality on the page.</div>
         </div>
       </div>
 
-      <div class="footnote">April 2026 · Sections 1–4 of 7</div>
+      <div class="footnote"><strong>The honest read.</strong> The site looks fine for a brochure. It doesn't look like the home of a 100K-monthly-visit content engine. None of Pillar 1, 2, or 3 can be hosted here without rebuilding the chassis first.</div>
     </section>
+
+    <!-- ░░░ 5.2 End of every journey ░░░ -->
+    <section class="slide" id="s52">
+      <div class="slide-meta"><span>5.2 · The Site</span><span class="right">37 / 44</span></div>
+      <h2>Every Reddit answer, every YouTube review, every comparison page — they all end here.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 14px;">What this slide answers · How much weight does the site actually carry in this plan?</p>
+
+      <table class="data" style="margin-top: 6px;">
+        <tr>
+          <th style="width: 22%;">When the buyer arrives from</th>
+          <th>What they expect to find</th>
+          <th>What's there today</th>
+        </tr>
+        <tr>
+          <td><strong>A Reddit answer</strong></td>
+          <td>The "is this real" page. UGC partner. Outcomes. A founder voice that matches the Reddit answer's voice.</td>
+          <td>Logos, animated hero, brochure download form.</td>
+        </tr>
+        <tr>
+          <td><strong>A YouTube review</strong></td>
+          <td>Cohort profile. Real outcomes. The honest answer to "what's the 1st-year experience like?"</td>
+          <td>Generic curriculum tiles. Mentor photos.</td>
+        </tr>
+        <tr>
+          <td><strong>A comparison page</strong></td>
+          <td>The Quad-side of the comparison, in equal depth. Plus the geo angle (Bihar, Mangalore) front and centre.</td>
+          <td>None of this. The site has no comparison content.</td>
+        </tr>
+        <tr>
+          <td><strong>A ChatGPT / Gemini citation</strong></td>
+          <td>Structured pages with FAQ schema. Clear Q&amp;A blocks. A press / journal section the LLM can re-cite.</td>
+          <td>Schema-thin marketing copy. No on-domain Q&amp;A surface.</td>
+        </tr>
+        <tr>
+          <td><strong>A search for "best AI college Patna"</strong></td>
+          <td>A Patna-anchored landing page. Local proof. A reason this is the most credible AI school in Bihar.</td>
+          <td>Patna is mentioned, not made into a story.</td>
+        </tr>
+      </table>
+
+      <div class="footnote"><strong>The frame change.</strong> Stop thinking of the site as a marketing brochure. Start thinking of it as the destination of every internet journey in §2. The work in Pillars 1, 2, and 3 only converts if the site is built to receive that traffic.</div>
+    </section>
+
+    <!-- ░░░ 5.3 What it needs to become ░░░ -->
+    <section class="slide" id="s53">
+      <div class="slide-meta"><span>5.3 · The Site</span><span class="right">38 / 44</span></div>
+      <h2>What the site needs to become — a component checklist.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 14px;">What this slide answers · The minimum surface required for the inbound plan to work. Inventory only — design happens after.</p>
+
+      <div class="card-grid g3">
+        <div class="card">
+          <div class="ci">A</div>
+          <div class="ct">Structured legitimacy block on homepage</div>
+          <div class="cd">UGC partner, what the certificate enables, regulatory framing. Not a footer asterisk. Schema-marked for LLM ingestion.</div>
+        </div>
+        <div class="card">
+          <div class="ci">B</div>
+          <div class="ct">Cohort profile module</div>
+          <div class="cd">Per-batch stats (board %, cities, prior background). Pulled from a CMS, refreshed each intake. Becomes Stage-5 proof natively.</div>
+        </div>
+        <div class="card">
+          <div class="ci">C</div>
+          <div class="ct">/compare/ — comparison cluster</div>
+          <div class="cd">Programmatic template. One page per "Quad vs X". Honest matrices. The cluster is the SEO + AEO play.</div>
+        </div>
+        <div class="card">
+          <div class="ci">D</div>
+          <div class="ct">/topics/ — programmatic library</div>
+          <div class="cd">200–400 AI/ML concept pages over 12 months. Same architecture Scaler used to win the DSA layer.</div>
+        </div>
+        <div class="card">
+          <div class="ci">E</div>
+          <div class="ct">/tools/ — free-tool surface</div>
+          <div class="cd">A single tool's URL slot. Bookmark-grade. Captures email + signals confidence without endangering the brand.</div>
+        </div>
+        <div class="card">
+          <div class="ci">F</div>
+          <div class="ct">/journal/ — founder voice + index</div>
+          <div class="cd">Founder essays, alumni stories, monthly Quad AI Index issues. The press surface that earns earned-media in Q3.</div>
+        </div>
+        <div class="card">
+          <div class="ci">G</div>
+          <div class="ct">SEO foundations · clean</div>
+          <div class="cd">Titles, schema, sitemap, page speed, Core Web Vitals. Without these, none of the content surfaces above earn rank.</div>
+        </div>
+        <div class="card">
+          <div class="ci">H</div>
+          <div class="ct">Removal of unnecessary gates</div>
+          <div class="cd">Brochure download → optional, not gating. Form-before-content pattern → removed wherever it blocks search-intent users.</div>
+        </div>
+        <div class="card">
+          <div class="ci">!</div>
+          <div class="ct">A design that earns time</div>
+          <div class="cd">Editorial, not animated. Reads quickly, looks confident. Signals "we built this, we know what we're doing" inside three seconds.</div>
+        </div>
+      </div>
+
+      <div class="footnote"><strong>Build sequence (rough).</strong> SEO foundations + legitimacy block first (Weeks 1–3), then /compare/ template (Weeks 4–5), then /topics/ + /journal/ scaffolding (Weeks 6–8), then /tools/ (Weeks 8–12). Cohort module slots in alongside.</div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- ░░░░░░░░░░░░░░░ §6 · POSITIONING ░░░░░░░░░░░░░░░░░░ -->
+    <!-- ════════════════════════════════════════════════════ -->
+
+    <!-- ░░░ 6.0 ░░░ -->
+    <section class="slide divider" id="s60">
+      <div class="slide-meta"><span style="color:rgba(255,255,255,0.6)">Section Six</span><span class="right">39 / 44</span></div>
+      <div class="num-big">06</div>
+      <h2>Quad does not have a position. Every other player in the category does.</h2>
+      <div class="lede">Inbound visibility is hard to earn for a brand that does not stand for anything specific. Two slides on what's missing — and what the three honest paths forward look like.</div>
+    </section>
+
+    <!-- ░░░ 6.1 You don't have a position ░░░ -->
+    <section class="slide" id="s61">
+      <div class="slide-meta"><span>6.1 · Positioning</span><span class="right">40 / 44</span></div>
+      <h2>Every category leader has a one-line claim. Quad's slot is empty.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 14px;">What this slide answers · What is each player's position, and what gap does that leave Quad in?</p>
+
+      <table class="data">
+        <tr>
+          <th style="width: 22%;">Player</th>
+          <th style="width: 36%;">Their one-line claim</th>
+          <th>What it lets them own</th>
+        </tr>
+        <tr>
+          <td><strong>Scaler SST</strong></td>
+          <td>"India's Ivy League for the AI age"</td>
+          <td>Category leadership. The default brand named first.</td>
+        </tr>
+        <tr>
+          <td><strong>Newton SoT</strong></td>
+          <td>"India's first global B.Tech in CS &amp; AI"</td>
+          <td>Future-orientation + globally-stamped legitimacy.</td>
+        </tr>
+        <tr>
+          <td><strong>Masters Union</strong></td>
+          <td>"Learn by doing"</td>
+          <td>Pedagogy reinvention — the new university narrative.</td>
+        </tr>
+        <tr>
+          <td><strong>NxtWave NIAT</strong></td>
+          <td>Bharat-first · regional language · affordable elite</td>
+          <td>The Tier 2/3 student who doesn't see themselves at Scaler.</td>
+        </tr>
+        <tr>
+          <td><strong>PW IoI</strong></td>
+          <td>The Alakh Pandey institute · "Bharat-first BTech"</td>
+          <td>Trust transfer from PhysicsWallah's existing audience.</td>
+        </tr>
+        <tr>
+          <td><strong>100xDevs</strong></td>
+          <td>"Build like Harkirat" · builder-pedigree, creator-led</td>
+          <td>Apprenticeship to a recognisable senior engineer.</td>
+        </tr>
+        <tr>
+          <td><strong>Polaris</strong></td>
+          <td>"India's only 4-year CS program built for global careers"</td>
+          <td>Outbound / global-engineer narrative.</td>
+        </tr>
+        <tr>
+          <td><strong>Mesa SoB</strong></td>
+          <td>"The business school where you build real businesses"</td>
+          <td>Startup-leadership niche, not corporate-MBA.</td>
+        </tr>
+        <tr class="quad">
+          <td><strong>Quad AI</strong></td>
+          <td><em style="color: var(--muted);">— blank · this is the finding —</em></td>
+          <td><em style="color: var(--muted);">No claim → no recall → no inbound search behaviour to exploit</em></td>
+        </tr>
+      </table>
+
+      <div class="footnote"><strong>The mechanical consequence.</strong> A Class 12 student needs to be able to repeat your one-line claim to their parent in a single sentence — without prompting. Right now, that sentence does not exist for Quad. Every comparison page, every Reddit answer, every YouTube review needs that sentence to anchor to.</div>
+    </section>
+
+    <!-- ░░░ 6.2 Three paths ░░░ -->
+    <section class="slide" id="s62">
+      <div class="slide-meta"><span>6.2 · Positioning</span><span class="right">41 / 44</span></div>
+      <h2>Three honest paths Quad could pick.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 14px;">What this slide answers · This is a longer question than one slide can answer. We're naming the paths, not picking one. Picking happens in a working session.</p>
+
+      <div class="card-grid g3">
+        <div class="card">
+          <div class="ci">A</div>
+          <div class="ct">Outcome-led</div>
+          <div class="cd" style="margin-bottom: 10px;"><strong>"Accelerate your journey in tech."</strong></div>
+          <div class="cd" style="margin-bottom: 10px;">Tackle the new-business-model question head-on. Lean into ROI, employability, founder-track. The path most Tier-3 challengers default to.</div>
+          <div style="font-size: 11.5px; color: var(--muted); padding: 8px 10px; background: #f4f4f0; border-radius: 3px;"><strong>Risk:</strong> crowded — Polaris, Mesa, NIAT all gravitate here.</div>
+        </div>
+        <div class="card">
+          <div class="ci">B</div>
+          <div class="ct">Pedagogy-led</div>
+          <div class="cd" style="margin-bottom: 10px;"><strong>"A new way to learn tech."</strong></div>
+          <div class="cd" style="margin-bottom: 10px;">Claim a method, not an outcome. AI-native curriculum, real builds from Day 1, founder-network access. Masters Union played this brilliantly.</div>
+          <div style="font-size: 11.5px; color: var(--muted); padding: 8px 10px; background: #f4f4f0; border-radius: 3px;"><strong>Risk:</strong> needs a defensible pedagogical innovation, not just a tagline.</div>
+        </div>
+        <div class="card">
+          <div class="ci">C</div>
+          <div class="ct">Access-led</div>
+          <div class="cd" style="margin-bottom: 10px;"><strong>"The elite tech school where the IIT didn't reach."</strong></div>
+          <div class="cd" style="margin-bottom: 10px;">Lean into Bihar / Mangalore / Tier 2/3 geography. Defend price (₹8L) as the proof, not the apology. Most aligned to Quad's actual buyer.</div>
+          <div style="font-size: 11.5px; color: var(--muted); padding: 8px 10px; background: #f4f4f0; border-radius: 3px;"><strong>Risk:</strong> NIAT and PW IoI are circling the same territory.</div>
+        </div>
+      </div>
+
+      <div class="card warn" style="margin-top: 18px; padding: 16px 22px;">
+        <div class="ci">→</div>
+        <div class="ct" style="font-size: 16px;">Three things to decide together before any positioning ships.</div>
+        <ul class="tight" style="margin-top: 6px;">
+          <li><strong>Path</strong> — outcome, pedagogy, or access. Pick one. Sub-claims live underneath, but the headline is one path.</li>
+          <li><strong>The one-line claim</strong> — the sentence a Class 12 student repeats to their parent. Five to nine words. Memorable, defensible, true.</li>
+          <li><strong>Founder voice on Reddit + Quora as a positioning act</strong> — the position is asserted by what the founders publicly answer, not just by what the homepage says. Repeat of the Pillar-1 founder seeding move.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- ░░░░░░░░░░░░░░░░ §7 · MATRIX ░░░░░░░░░░░░░░░░░░░░░░ -->
+    <!-- ════════════════════════════════════════════════════ -->
+
+    <!-- ░░░ 7.0 ░░░ -->
+    <section class="slide divider" id="s70">
+      <div class="slide-meta"><span style="color:rgba(255,255,255,0.6)">Section Seven</span><span class="right">42 / 44</span></div>
+      <div class="num-big">07</div>
+      <h2>Full competitor matrix · for reference.</h2>
+      <div class="lede">All seventeen players, side by side. Facts, not opinions. Use this as a reference table when comparing to specific competitors during decision conversations.</div>
+    </section>
+
+    <!-- ░░░ 7.1 Full matrix ░░░ -->
+    <section class="slide" id="s71">
+      <div class="slide-meta"><span>7.1 · Reference</span><span class="right">43 / 44</span></div>
+      <h2>17 players, structured comparison.</h2>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 12px;">All figures from public sources · India SERP organic visits via DataForSEO, Apr 2026.</p>
+
+      <table class="data compact">
+        <tr>
+          <th>Player</th>
+          <th>Tier</th>
+          <th>HQ / city</th>
+          <th>Program</th>
+          <th class="right">Fee (₹L)</th>
+          <th>Degree partner</th>
+          <th>Test</th>
+          <th class="right">Ranked KW</th>
+          <th class="right">Visits / mo</th>
+        </tr>
+        <tr>
+          <td><strong>Scaler SST</strong></td>
+          <td>1</td>
+          <td>Bengaluru</td>
+          <td>4-yr CS &amp; AI / AI &amp; Business</td>
+          <td class="right">~22</td>
+          <td>BITS Pilani / IIT Madras / Woolf</td>
+          <td>NSET</td>
+          <td class="right">29,588</td>
+          <td class="right">646,500</td>
+        </tr>
+        <tr>
+          <td><strong>Newton SoT</strong></td>
+          <td>1</td>
+          <td>Sonepat / Pune</td>
+          <td>4-yr B.Tech CS &amp; AI</td>
+          <td class="right">22.85</td>
+          <td>Rishihood Univ. · Ajeenkya DY Patil</td>
+          <td>NSAT</td>
+          <td class="right">3,580</td>
+          <td class="right">610,800</td>
+        </tr>
+        <tr>
+          <td><strong>Masters Union</strong></td>
+          <td>1</td>
+          <td>Gurugram</td>
+          <td>UG Global · PG Mgmt · Family Biz</td>
+          <td class="right">~30</td>
+          <td>In-house · partner UGs</td>
+          <td>MU-SAT</td>
+          <td class="right">1,032</td>
+          <td class="right">33,200</td>
+        </tr>
+        <tr>
+          <td><strong>PW IoI</strong></td>
+          <td>2</td>
+          <td>Bengaluru</td>
+          <td>4-yr B.Tech CS / AI &amp; ML</td>
+          <td class="right">14.86</td>
+          <td>Medhavi Skills Univ.</td>
+          <td>JEE / KCET</td>
+          <td class="right">377</td>
+          <td class="right">78,400</td>
+        </tr>
+        <tr>
+          <td><strong>NxtWave NIAT</strong></td>
+          <td>2</td>
+          <td>Hyderabad · multi-campus</td>
+          <td>4-yr B.Tech CS · AI · DS</td>
+          <td class="right">8 — 18</td>
+          <td>10+ partner universities</td>
+          <td>NAT</td>
+          <td class="right">838</td>
+          <td class="right">36,300</td>
+        </tr>
+        <tr>
+          <td><strong>Polaris SoT</strong></td>
+          <td>2</td>
+          <td>Bengaluru</td>
+          <td>4-yr Integrated B.Tech CS · AI / PM / Cloud</td>
+          <td class="right">25</td>
+          <td>Medhavi Skills Univ.</td>
+          <td>PAT / JEE / SAT</td>
+          <td class="right">data thin</td>
+          <td class="right">data thin</td>
+        </tr>
+        <tr>
+          <td><strong>Mesa SoB</strong></td>
+          <td>2</td>
+          <td>Bengaluru</td>
+          <td>12-mo PGP Startup Leadership · UG</td>
+          <td class="right">~12 — 15</td>
+          <td>Certificate (own)</td>
+          <td>Mesa app</td>
+          <td class="right">439</td>
+          <td class="right">7,970</td>
+        </tr>
+        <tr>
+          <td><strong>Bower</strong></td>
+          <td>2</td>
+          <td>Hyderabad</td>
+          <td>3-yr BBA Entrepreneurship · K-12 · LEAD</td>
+          <td class="right">data thin</td>
+          <td>Partner UG</td>
+          <td>In-house</td>
+          <td class="right">data thin</td>
+          <td class="right">data thin</td>
+        </tr>
+        <tr>
+          <td><strong>Scaler SoM</strong></td>
+          <td>2</td>
+          <td>Bengaluru</td>
+          <td>Mgmt arm of SST</td>
+          <td class="right">~22 (within SST)</td>
+          <td>BITS Pilani / Woolf</td>
+          <td>NSET</td>
+          <td class="right">— inherits parent —</td>
+          <td class="right">— inherits parent —</td>
+        </tr>
+        <tr>
+          <td><strong>100xDevs</strong></td>
+          <td>3</td>
+          <td>Online · Delhi</td>
+          <td>Cohorts · Bootcamps · 100xCampus</td>
+          <td class="right">~0.5 — 2 / cohort</td>
+          <td>None (cert)</td>
+          <td>—</td>
+          <td class="right">88</td>
+          <td class="right">4,070</td>
+        </tr>
+        <tr>
+          <td><strong>upGrad SoT</strong></td>
+          <td>3</td>
+          <td>Multi-campus</td>
+          <td>4-yr B.Tech CS · GenAI / FSD / Quantum / Cloud</td>
+          <td class="right">19.5 — 20.5</td>
+          <td>SSAHE · Malla Reddy DTBU</td>
+          <td>UGNET</td>
+          <td class="right">2 (subdomain)</td>
+          <td class="right">~40</td>
+        </tr>
+        <tr>
+          <td><strong>Intellipaat IST</strong></td>
+          <td>3</td>
+          <td>Multi-campus</td>
+          <td>4-yr B.Tech CS / AI &amp; ML</td>
+          <td class="right">12</td>
+          <td>Yenepoya · DY Patil · GNU</td>
+          <td>ISTEE</td>
+          <td class="right">~0 (subpath)</td>
+          <td class="right">~0 (subpath)</td>
+        </tr>
+        <tr>
+          <td><strong>Mirai (Merai)</strong></td>
+          <td>3</td>
+          <td>Multi-campus</td>
+          <td>4-yr B.Tech CSE-AI</td>
+          <td class="right">10.8</td>
+          <td>AICTE-approved partner UGs</td>
+          <td>MAINS</td>
+          <td class="right">data thin</td>
+          <td class="right">data thin</td>
+        </tr>
+        <tr>
+          <td><strong>Zenith School of AI</strong></td>
+          <td>3</td>
+          <td>Delhi NCR</td>
+          <td>4-yr B.Tech AI + Mini-MBA</td>
+          <td class="right">data thin</td>
+          <td>K.R. Mangalam Univ.</td>
+          <td>ZAPT</td>
+          <td class="right">data thin</td>
+          <td class="right">data thin</td>
+        </tr>
+        <tr>
+          <td><strong>NEXIS</strong></td>
+          <td>3</td>
+          <td>Siliguri</td>
+          <td>3-yr UG Business Mgmt</td>
+          <td class="right">data thin</td>
+          <td>Certificate only · not UGC by choice</td>
+          <td>In-house</td>
+          <td class="right">data thin</td>
+          <td class="right">data thin</td>
+        </tr>
+        <tr>
+          <td><strong>Altera Institute</strong></td>
+          <td>3</td>
+          <td>Gurugram</td>
+          <td>15-mo PGP Applied Marketing</td>
+          <td class="right">data thin</td>
+          <td>In-house cert</td>
+          <td>In-house</td>
+          <td class="right">data thin</td>
+          <td class="right">data thin</td>
+        </tr>
+        <tr class="quad">
+          <td><strong>Quad AI</strong></td>
+          <td>3</td>
+          <td>Patna · Mangalore · Bengaluru</td>
+          <td>4-yr UG CS-AI/ML · 3-yr BCA · 3-yr UG Mgmt · 2-yr PGP Mgmt</td>
+          <td class="right">8 — 5.5</td>
+          <td>Mangalore Univ. · Trisha College · others</td>
+          <td>In-house</td>
+          <td class="right">1</td>
+          <td class="right">&lt;1</td>
+        </tr>
+      </table>
+
 
     </div>
   </main>
