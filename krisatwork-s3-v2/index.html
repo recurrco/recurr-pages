@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Kris@Work — S3 Inbound Strategy</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #ffffff;
+    --rule: #0a0a0a;
+    --soft: #f4f4f0;
+    --muted: #6a6a6a;
+    --hi: #fff8e6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--soft); color: var(--ink); font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; font-feature-settings: 'ss01', 'cv11'; }
+  body { font-size: 16px; line-height: 1.55; }
+
+  .app { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+  .nav { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 36px 28px; border-right: 1px solid var(--rule); background: var(--paper); }
+  .stage { padding: 28px 24px; }
+
+  .brand { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+  .doc-title { font-size: 13px; line-height: 1.3; color: var(--muted); margin-bottom: 32px; }
+  .nav-section { margin-bottom: 24px; }
+  .nav-section-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
+  .nav-list { list-style: none; }
+  .nav-list li { margin-bottom: 4px; }
+  .nav-list a { display: flex; gap: 10px; padding: 6px 8px 6px 0; font-size: 12.5px; color: var(--ink); text-decoration: none; line-height: 1.35; border-left: 2px solid transparent; padding-left: 10px; transition: border-color 0.15s; }
+  .nav-list a:hover { border-left-color: var(--ink); }
+  .nav-list a.active { border-left-color: var(--ink); font-weight: 600; }
+  .nav-list .num { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 28px; }
+  .nav-list a.active .num { color: var(--ink); }
+  .nav-foot { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--rule); font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+  .deck { max-width: 1180px; margin: 0 auto; }
+  .slide { background: var(--paper); border: 1px solid var(--rule); border-radius: 4px; min-height: 640px; padding: 56px 64px 64px; margin-bottom: 28px; scroll-margin-top: 28px; position: relative; display: flex; flex-direction: column; }
+  .slide-meta { display: flex; justify-content: space-between; align-items: baseline; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 28px; }
+  .slide-meta .right { font-variant-numeric: tabular-nums; }
+  .slide h2 { font-size: 36px; line-height: 1.1; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 16px; }
+  .slide h2.large { font-size: 56px; line-height: 1.05; letter-spacing: -0.02em; }
+  .slide h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.005em; margin-bottom: 8px; }
+  .slide .lede { font-size: 16px; color: var(--muted); margin-bottom: 24px; max-width: 760px; line-height: 1.5; }
+  .slide .pull { font-size: 22px; line-height: 1.4; font-weight: 500; padding: 18px 22px; background: var(--hi); border: 1px solid var(--ink); border-radius: 4px; margin: 18px 0 8px; max-width: 920px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  .col { border-top: 2px solid var(--ink); padding-top: 14px; }
+  .col-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
+  .col h4 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 14px; }
+  .col p { font-size: 14.5px; line-height: 1.55; margin-bottom: 10px; }
+
+  .card-grid { display: grid; gap: 14px; margin-top: 14px; }
+  .card-grid.g4 { grid-template-columns: repeat(4, 1fr); }
+  .card-grid.g3 { grid-template-columns: repeat(3, 1fr); }
+  .card-grid.g2 { grid-template-columns: 1fr 1fr; }
+  .card-grid.g5 { grid-template-columns: repeat(5, 1fr); }
+  .card { border: 1px solid var(--rule); border-radius: 4px; padding: 16px 16px 14px; background: var(--paper); }
+  .card .ci { width: 32px; height: 32px; border: 1.5px solid var(--ink); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; margin-bottom: 12px; font-variant-numeric: tabular-nums; }
+  .card .ct { font-size: 15.5px; font-weight: 600; line-height: 1.3; margin-bottom: 6px; }
+  .card .cd { font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+  .card.dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .card.dark .ci { border-color: var(--paper); }
+  .card.dark .cd { color: rgba(255,255,255,0.75); }
+  .card.warn { background: var(--hi); border-color: var(--ink); }
+  .card.warn .cd { color: var(--ink); }
+
+  .vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .vs-tile { border: 2px solid var(--ink); border-radius: 4px; padding: 22px 22px 20px; background: var(--paper); }
+  .vs-tile.no { background: #1a1a1a; color: var(--paper); }
+  .vs-tile .vs-l { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7; font-weight: 600; margin-bottom: 8px; }
+  .vs-tile h4 { font-size: 22px; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 12px; }
+  .vs-tile p { font-size: 14px; line-height: 1.55; }
+  .vs-tile.no p { color: rgba(255,255,255,0.85); }
+
+  .star-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 12px; }
+  .star-tile { background: var(--paper); border: 1.5px solid var(--ink); border-radius: 4px; padding: 24px 26px; }
+  .star-tile.dark { background: var(--ink); color: var(--paper); }
+  .star-tile.warn { background: var(--hi); }
+  .star-tile .sl { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; opacity: 0.65; margin-bottom: 10px; }
+  .star-tile .sv { font-size: 56px; line-height: 1.0; font-weight: 600; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; }
+  .star-tile .sv small { font-size: 22px; font-weight: 500; opacity: 0.6; }
+  .star-tile .ss { font-size: 13.5px; margin-top: 10px; line-height: 1.5; opacity: 0.85; }
+
+  .day-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 14px; }
+  .day-col { border: 1.5px solid var(--ink); border-radius: 4px; padding: 18px 16px; background: var(--paper); }
+  .day-col-head { padding-bottom: 10px; border-bottom: 1px solid #e2e2dc; margin-bottom: 14px; }
+  .day-col-head .dt { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+  .day-col-head .dn { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .day-row { padding: 10px 0; border-bottom: 1px dashed #e2e2dc; }
+  .day-row:last-child { border-bottom: none; }
+  .day-row .dl { font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+  .day-row .dh { font-size: 14px; font-weight: 600; line-height: 1.3; margin-bottom: 4px; }
+  .day-row .dd { font-size: 13px; line-height: 1.5; color: var(--muted); }
+
+  table.data { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+  table.data th { text-align: left; font-weight: 600; padding: 10px 11px; border-bottom: 1.5px solid var(--ink); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  table.data td { padding: 10px 11px; border-bottom: 1px solid #e2e2dc; vertical-align: top; }
+  table.data tr:hover td { background: #fafaf6; }
+  table.data .right { text-align: right; }
+  table.data .strong { font-weight: 600; }
+  table.data .hi { background: var(--hi); }
+  table.data .hi td { background: var(--hi); }
+  table.data.compact { font-size: 12px; }
+  table.data.compact th, table.data.compact td { padding: 7px 8px; }
+
+  ul.tight { list-style: none; }
+  ul.tight li { padding: 6px 0; padding-left: 16px; position: relative; font-size: 14px; line-height: 1.5; }
+  ul.tight li::before { content: '—'; position: absolute; left: 0; color: var(--muted); }
+
+  ol.numbered { list-style: none; counter-reset: i; padding-left: 0; }
+  ol.numbered li { counter-increment: i; padding: 8px 0 8px 30px; position: relative; font-size: 14px; line-height: 1.55; }
+  ol.numbered li::before { content: counter(i, decimal-leading-zero); position: absolute; left: 0; top: 8px; font-size: 10px; font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 600; }
+  ol.numbered li b { font-weight: 600; }
+
+  .pill { display: inline-block; padding: 3px 8px; border: 1px solid var(--ink); border-radius: 100px; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; margin-right: 6px; }
+  .pill.solid { background: var(--ink); color: var(--paper); }
+  .pill.danger { background: #1a1a1a; color: var(--paper); border-color: #1a1a1a; }
+  .pill.warn { background: var(--hi); color: var(--ink); }
+  .pill.muted { border-color: #ccc; color: var(--muted); }
+
+  .footnote { margin-top: auto; padding-top: 14px; border-top: 1px solid #e2e2dc; font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .slide > .footnote:not(:first-child) { margin-top: 24px; }
+
+  .slide.divider { background: var(--ink); color: var(--paper); display: flex; flex-direction: column; justify-content: center; }
+  .slide.divider .slide-meta { color: rgba(255,255,255,0.6); }
+  .slide.divider .num-big { font-size: 220px; line-height: 0.85; font-weight: 500; letter-spacing: -0.04em; }
+  .slide.divider h2 { font-size: 56px; line-height: 1.05; margin-top: -20px; max-width: 720px; }
+  .slide.divider .lede { color: rgba(255,255,255,0.7); margin-top: 16px; max-width: 640px; }
+
+  .slide.title { display: flex; flex-direction: column; justify-content: space-between; }
+  .title-top { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .title-mid h1 { font-size: 76px; line-height: 1.0; letter-spacing: -0.025em; font-weight: 600; max-width: 980px; }
+  .title-mid .sub { font-size: 22px; color: var(--muted); margin-top: 22px; max-width: 760px; line-height: 1.4; }
+  .title-bot { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; padding-top: 22px; border-top: 1px solid var(--rule); }
+  .title-bot .b-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+  .title-bot .b-val { font-size: 14px; font-weight: 500; }
+
+  .seat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; border: 1px solid var(--ink); margin-top: 14px; }
+  .seat-grid > div { padding: 16px 14px; border-right: 1px solid var(--ink); }
+  .seat-grid > div:last-child { border-right: none; }
+  .seat-grid .sl { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+  .seat-grid .sn { font-size: 16px; font-weight: 600; line-height: 1.2; margin-bottom: 8px; }
+  .seat-grid .sjt { font-size: 12.5px; line-height: 1.5; color: var(--muted); margin-bottom: 10px; min-height: 80px; }
+  .seat-grid .sv { font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); font-weight: 600; padding-top: 8px; border-top: 1px solid #e2e2dc; }
+
+  .funnel-row { display: grid; grid-template-columns: 110px 1fr; gap: 18px; align-items: start; padding: 14px 0; border-bottom: 1px dashed #e2e2dc; }
+  .funnel-row:last-child { border-bottom: none; }
+  .funnel-row .fl { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding-top: 4px; }
+  .funnel-row .fr { font-size: 14px; line-height: 1.6; }
+  .funnel-row .fr code { background: var(--soft); padding: 2px 6px; border-radius: 3px; font-size: 12.5px; font-family: 'JetBrains Mono', ui-monospace, monospace; margin-right: 4px; display: inline-block; margin-bottom: 4px; }
+
+  .arrow-row { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 0; margin-top: 18px; }
+  .arrow-row > div:nth-child(odd) { border: 1.5px solid var(--ink); padding: 18px 18px; border-radius: 4px; }
+  .arrow-row > div:nth-child(even) { font-size: 22px; color: var(--muted); padding: 0 14px; }
+  .arrow-row .at { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+  .arrow-row .ah { font-size: 16px; font-weight: 600; }
+
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+    .nav { position: relative; height: auto; border-right: none; border-bottom: 1px solid var(--rule); }
+    .stage { padding: 16px 12px; }
+    .slide { padding: 28px 24px; min-height: 0; }
+    .slide h2 { font-size: 26px; }
+    .slide h2.large { font-size: 32px; }
+    .title-mid h1 { font-size: 36px; }
+    .title-mid .sub { font-size: 16px; }
+    .title-bot { grid-template-columns: 1fr 1fr; }
+    .two-col, .three-col, .star-grid, .day-cols, .vs-grid, .card-grid.g3, .card-grid.g4, .card-grid.g5 { grid-template-columns: 1fr; }
+    .seat-grid { grid-template-columns: 1fr; }
+    .seat-grid > div { border-right: none; border-bottom: 1px solid var(--ink); }
+    .arrow-row { grid-template-columns: 1fr; }
+    .arrow-row > div:nth-child(even) { display: none; }
+    table.data { font-size: 11px; }
+    table.data th, table.data td { padding: 6px 6px; }
+    .slide.divider .num-big { font-size: 100px; }
+    .slide.divider h2 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ═════════════════════ NAV ═════════════════════ -->
+  <aside class="nav">
+    <div class="brand">S3 · INBOUND STRATEGY</div>
+    <div class="doc-title">Kris@Work — V2<br><span style="color:#aaa">All four sections + appendix · Apr 2026</span></div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Cover</div>
+      <ul class="nav-list">
+        <li><a href="#s00"><span class="num">00</span><span>Cover</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">01 · The Buyer</div>
+      <ul class="nav-list">
+        <li><a href="#s10"><span class="num">1.0</span><span>Section opener</span></a></li>
+        <li><a href="#s11"><span class="num">1.1</span><span>One budget, five seats</span></a></li>
+        <li><a href="#s12"><span class="num">1.2</span><span>What each seat wants done</span></a></li>
+        <li><a href="#s13"><span class="num">1.3</span><span>The real budget envelope</span></a></li>
+        <li><a href="#s14"><span class="num">1.4</span><span>What the CRO actually searches</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">02 · The Competition</div>
+      <ul class="nav-list">
+        <li><a href="#s20"><span class="num">2.0</span><span>Section opener</span></a></li>
+        <li><a href="#s21"><span class="num">2.1</span><span>Strip the marketing claim</span></a></li>
+        <li><a href="#s22"><span class="num">2.2</span><span>The real shortlist</span></a></li>
+        <li><a href="#s23"><span class="num">2.3</span><span>Upstart threats &amp; the 11x angle</span></a></li>
+        <li><a href="#s24"><span class="num">2.4</span><span>Build vs Buy vs Platform</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">03 · The Search Surface</div>
+      <ul class="nav-list">
+        <li><a href="#s30"><span class="num">3.0</span><span>Section opener</span></a></li>
+        <li><a href="#s31"><span class="num">3.1</span><span>The category claim is dead air</span></a></li>
+        <li><a href="#s32"><span class="num">3.2</span><span>Buyer lexicon · 17 priority terms</span></a></li>
+        <li><a href="#s33"><span class="num">3.3</span><span>Where competitors win</span></a></li>
+        <li><a href="#s34"><span class="num">3.4</span><span>Competitor traffic reverse-lookup</span></a></li>
+        <li><a href="#s35"><span class="num">3.5</span><span>The AEO / LLM-citation gap</span></a></li>
+        <li><a href="#s36"><span class="num">3.6</span><span>Kris's surface area today</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">04 · The 90-Day Direction</div>
+      <ul class="nav-list">
+        <li><a href="#s40"><span class="num">4.0</span><span>Section opener</span></a></li>
+        <li><a href="#s41"><span class="num">4.1</span><span>Three north-star outcomes</span></a></li>
+        <li><a href="#s42"><span class="num">4.2</span><span>Four moves to get there</span></a></li>
+        <li><a href="#s43"><span class="num">4.3</span><span>Day 30 / 60 / 90 milestones</span></a></li>
+        <li><a href="#s44"><span class="num">4.4</span><span>What this plan is not</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">05 · Appendix</div>
+      <ul class="nav-list">
+        <li><a href="#s50"><span class="num">5.0</span><span>Section opener</span></a></li>
+        <li><a href="#s51"><span class="num">5.1</span><span>Full keyword universe</span></a></li>
+        <li><a href="#s52"><span class="num">5.2</span><span>Full competitor traffic matrix</span></a></li>
+        <li><a href="#s53"><span class="num">5.3</span><span>Listicle inventory · 14 lists</span></a></li>
+        <li><a href="#s54"><span class="num">5.4</span><span>LLM citation snapshot</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-foot">
+      Scroll to advance, or click any slide title.<br>Best read on desktop · 16:9 layout.
+    </div>
+  </aside>
+
+  <!-- ═════════════════════ DECK ═════════════════════ -->
+  <main class="stage">
+    <div class="deck">
+
+    <!-- ░░░ 0.0 COVER ░░░ -->
+    <section class="slide title" id="s00">
+      <div class="slide-meta"><span>Inbound Visibility Study</span><span class="right">00 / 27</span></div>
+      <div class="title-top">S3 Inbound Strategy · Kris@Work · v2</div>
+      <div class="title-mid">
+        <h1>You're positioning into a search box that doesn't exist.</h1>
+        <div class="sub">A research-led look at who Kris's buyer is, what they search for, and why the inbound map has to be redrawn around the buyer's lexicon — not Kris's category claim.</div>
+      </div>
+      <div class="title-bot">
+        <div><div class="b-label">Scope</div><div class="b-val">Sections 1–5</div></div>
+        <div><div class="b-label">Format</div><div class="b-val">Research-led, deck-style</div></div>
+        <div><div class="b-label">Reading time</div><div class="b-val">~20 min skim · ~50 min full</div></div>
+        <div><div class="b-label">Date</div><div class="b-val">April 2026</div></div>
+      </div>
+    </section>
+
+    <!-- ░░░ 1.0 SECTION OPENER ░░░ -->
+    <section class="slide divider" id="s10">
+      <div class="slide-meta"><span>Section 01 · The Buyer</span><span class="right">01 / 27</span></div>
+      <div class="num-big">01</div>
+      <h2>Who's actually buying, and from which budget.</h2>
+      <div class="lede">There is no buyer with a "GTM Execution Platform" budget line. There is one budget, five seats around it, and a CRO who buys exactly one thing. We start there.</div>
+    </section>
+
+    <!-- ░░░ 1.1 ONE BUDGET FIVE SEATS ░░░ -->
+    <section class="slide" id="s11">
+      <div class="slide-meta"><span>1.1 · The Buying Committee</span><span class="right">02 / 27</span></div>
+      <h2>One budget. Five seats around it.</h2>
+      <div class="lede">In a B2B SaaS company between 100 and 1,000 FTE — Kris's natural ICP — five roles touch the decision. A champion drives it, a CRO funds it, RevOps blocks it, end users vote with adoption, and PMM whispers in the CRO's ear.</div>
+
+      <div class="seat-grid">
+        <div>
+          <div class="sl">Champion</div>
+          <div class="sn">Head of Sales Development</div>
+          <div class="sjt">SDR Manager · Director of Outbound. The person whose number gets hit or missed by Kris.</div>
+          <div class="sv">Picks tool · escalates</div>
+        </div>
+        <div>
+          <div class="sl">Economic Buyer</div>
+          <div class="sn">VP Sales · CRO</div>
+          <div class="sjt">Cares about pipeline coverage, cost-per-meeting, stack consolidation. Signs the cheque.</div>
+          <div class="sv">Signs · veto-on-budget</div>
+        </div>
+        <div>
+          <div class="sl">Technical Buyer</div>
+          <div class="sn">RevOps Director</div>
+          <div class="sjt">Owns Salesforce/HubSpot integration depth, data quality, governable AI. Will block on integration risk.</div>
+          <div class="sv">Veto-on-stack</div>
+        </div>
+        <div>
+          <div class="sl">End User</div>
+          <div class="sn">SDR · AE · CSM</div>
+          <div class="sjt">Wants less manual research, less Salesforce data entry, faster sequence build. Refusal-to-adopt kills renewals.</div>
+          <div class="sv">Veto-on-adoption</div>
+        </div>
+        <div>
+          <div class="sl">Influencer</div>
+          <div class="sn">PMM · Demand Gen</div>
+          <div class="sjt">Owns intent-signal coordination, ABM tie-ins, attribution back to pipeline. Whispers to the CRO.</div>
+          <div class="sv">Recommends · advocates</div>
+        </div>
+      </div>
+
+      <div class="pull">The CRO buys one thing: <b>more pipeline, at a lower cost-per-meeting, on a stack that is shrinking, not growing.</b> Everything else is a feature claim that has to ladder up to that.</div>
+
+      <div class="footnote">Frame this slide for the PMM: she is selling to a CRO who has been told by every vendor since 2024 that AI will fix outbound. Trust is at an all-time low. The Companion framing matters. The proof matters more.</div>
+    </section>
+
+    <!-- ░░░ 1.2 WHAT EACH SEAT WANTS ░░░ -->
+    <section class="slide" id="s12">
+      <div class="slide-meta"><span>1.2 · Jobs to be done</span><span class="right">03 / 27</span></div>
+      <h2>What each seat actually wants done.</h2>
+      <div class="lede">Read this as the buyer would. Each role has its own JTBD, its own veto, and its own search behaviour. Kris has to address all five, but the inbound voice is tuned to the Champion and the Economic Buyer.</div>
+
+      <table class="data" style="margin-top:12px">
+        <thead>
+          <tr>
+            <th style="width:18%">Seat</th>
+            <th style="width:36%">Job-to-be-done</th>
+            <th style="width:28%">What they search</th>
+            <th style="width:18%">Friction they fear</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="strong">Head of SDR</span><br><span style="color:var(--muted);font-size:11.5px">Champion</span></td>
+            <td>Hit qualified-meeting quota. Cut SDR research time in half. Lift reply rate from 2% to 5%. Replace 3-4 tools their SDRs juggle.</td>
+            <td><code>best AI SDR</code> · <code>AI sales agent</code> · <code>SDR productivity tools</code> · <code>Outreach alternative</code></td>
+            <td>Buys a tool, SDRs ignore it.</td>
+          </tr>
+          <tr>
+            <td><span class="strong">VP Sales / CRO</span><br><span style="color:var(--muted);font-size:11.5px">Economic</span></td>
+            <td>Cut outbound stack from 6 tools to 2. Defend a 30-40% reduction in cost-per-meeting. Forecast the next quarter without revising 3 times.</td>
+            <td><code>agentic GTM</code> · <code>consolidate sales stack</code> · <code>AI for revenue teams</code> · <code>Outreach vs Salesloft</code></td>
+            <td>Spends $300K, pipeline doesn't move.</td>
+          </tr>
+          <tr>
+            <td><span class="strong">RevOps Director</span><br><span style="color:var(--muted);font-size:11.5px">Technical</span></td>
+            <td>Salesforce/HubSpot integration that doesn't break. Data hygiene. Auditable AI behaviour. No surprise emails sent.</td>
+            <td><code>AI sales tool Salesforce integration</code> · <code>governable AI sales</code></td>
+            <td>Rogue agent emails the wrong contact.</td>
+          </tr>
+          <tr>
+            <td><span class="strong">SDR / AE</span><br><span style="color:var(--muted);font-size:11.5px">End user</span></td>
+            <td>Less research, more selling. Personalised messages they didn't write. One screen, not seven tabs.</td>
+            <td><code>cold email tool</code> · <code>AI for SDRs</code> · <code>best sales prospecting</code></td>
+            <td>Yet another tool their manager forces on them.</td>
+          </tr>
+          <tr>
+            <td><span class="strong">PMM / Demand Gen</span><br><span style="color:var(--muted);font-size:11.5px">Influencer</span></td>
+            <td>Intent signals from buyer activity. ABM coordination across sales + marketing. Attribution Sales doesn't argue with.</td>
+            <td><code>buyer intent data</code> · <code>ABM platform</code> · <code>signal-based selling</code></td>
+            <td>Sales discounts marketing-sourced pipeline.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="footnote">All five roles get cited in different LLM answer sets. Kris's content has to be findable for each — not by writing five voices, but by anchoring on the Champion's lexicon and adding rooms for the others.</div>
+    </section>
+
+    <!-- ░░░ 1.3 BUDGET ENVELOPE ░░░ -->
+    <section class="slide" id="s13">
+      <div class="slide-meta"><span>1.3 · The real budget</span><span class="right">04 / 27</span></div>
+      <h2>The CRO already has a budget. It's just not called Kris's category.</h2>
+      <div class="lede">For a 50-rep B2B SaaS sales org, the GTM-tech stack budget today is <b>$300K–$700K/yr</b>, split across five sub-budgets. Kris is selling into roughly 30–50% of that envelope. The pitch has to be in the buyer's procurement language.</div>
+
+      <table class="data">
+        <thead>
+          <tr><th>Sub-budget</th><th>Tools the CRO is paying for today</th><th>Per-seat / flat</th><th>Annual envelope (50 reps)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="strong">Sales engagement</span></td>
+            <td>Outreach · Salesloft</td>
+            <td>$150–$200/seat/mo</td>
+            <td class="right"><span class="strong">$90K–$120K</span></td>
+          </tr>
+          <tr>
+            <td><span class="strong">Data + prospecting</span></td>
+            <td>Apollo · ZoomInfo · LinkedIn Sales Nav</td>
+            <td>$99–$150/seat/mo</td>
+            <td class="right"><span class="strong">$60K–$90K</span></td>
+          </tr>
+          <tr>
+            <td><span class="strong">AI SDR / autonomous</span></td>
+            <td>11x · Artisan · AiSDR · Salesforge</td>
+            <td>$599–$5,000/mo flat</td>
+            <td class="right"><span class="strong">$10K–$60K</span></td>
+          </tr>
+          <tr>
+            <td><span class="strong">Intent / signals</span></td>
+            <td>6sense · Common Room · Default · Bombora</td>
+            <td>$30K–$150K/yr</td>
+            <td class="right"><span class="strong">$50K–$150K</span></td>
+          </tr>
+          <tr>
+            <td><span class="strong">Revenue intelligence</span></td>
+            <td>Gong · Clari</td>
+            <td>$100–$200/seat/mo</td>
+            <td class="right"><span class="strong">$60K–$120K</span></td>
+          </tr>
+          <tr class="hi">
+            <td colspan="3" class="strong">Total GTM-stack envelope (50 reps)</td>
+            <td class="right strong">$270K–$540K</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pull">Kris is selling into the first three rows — sales engagement + data + AI SDR — and partially into intent. That is roughly <b>$160K–$270K</b> per 50-rep customer. The pitch isn't "buy a new platform." It's "consolidate three line items into one."</div>
+
+      <div class="footnote">Implication for inbound: every cornerstone page Kris ships has to translate into one of these line items. <b>"Outreach replacement"</b>, <b>"Apollo + 11x consolidation"</b>, <b>"signal layer that replaces 6sense"</b>. Not "AI work companion."</div>
+    </section>
+
+    <!-- ░░░ 1.4 WHAT CRO SEARCHES ░░░ -->
+    <section class="slide" id="s14">
+      <div class="slide-meta"><span>1.4 · CRO Search Behaviour</span><span class="right">05 / 27</span></div>
+      <h2>What the CRO actually searches and reads.</h2>
+      <div class="lede">The CRO doesn't search for "AI-native GTM execution platform." She searches for <b>relief from a problem she's already named</b>. Five queries cover 80% of the funnel from her seat.</div>
+
+      <div class="funnel-row">
+        <div class="fl">Top funnel</div>
+        <div class="fr">
+          "How do I cut my outbound stack from 6 tools to 2"<br>
+          <code>consolidate sales stack</code> <code>sales tech stack 2026</code> <code>reduce GTM tool sprawl</code>
+        </div>
+      </div>
+      <div class="funnel-row">
+        <div class="fl">Mid funnel</div>
+        <div class="fr">
+          "Are AI SDRs working yet" — post-11x trust content<br>
+          <code>AI SDR worth it</code> <code>11x review</code> <code>autonomous SDR vs human</code> <code>AI SDR ROI</code>
+        </div>
+      </div>
+      <div class="funnel-row">
+        <div class="fl">Mid funnel</div>
+        <div class="fr">
+          "What's an agentic GTM platform" — category-creation content<br>
+          <code>agentic GTM</code> <code>AI sales agent</code> <code>AI sales companion</code>
+        </div>
+      </div>
+      <div class="funnel-row">
+        <div class="fl">Bottom funnel</div>
+        <div class="fr">
+          "Best alternative to Outreach in 2026" — vendor-aware<br>
+          <code>Outreach alternative</code> <code>Salesloft alternative</code> <code>Apollo alternative</code> <code>best AI SDR</code>
+        </div>
+      </div>
+      <div class="funnel-row">
+        <div class="fl">Procurement</div>
+        <div class="fr">
+          "[Vendor] vs [Vendor]" — head-to-head comparison<br>
+          <code>Outreach vs Salesloft</code> <code>Clay vs Apollo</code> <code>Apollo vs Outreach</code>
+        </div>
+      </div>
+
+      <div class="pull">Apollo is sitting at <b>position 1–10 on most of these</b>. Outreach owns the engagement queries. 11x has collapsed. Kris is on <b>none of them</b>.</div>
+    </section>
+
+    <!-- ░░░ 2.0 SECTION OPENER ░░░ -->
+    <section class="slide divider" id="s20">
+      <div class="slide-meta"><span>Section 02 · The Competition</span><span class="right">06 / 27</span></div>
+      <div class="num-big">02</div>
+      <h2>Strip the marketing claim. Look at the real shortlist.</h2>
+      <div class="lede">Kris's homepage says "AI-native GTM execution platform / AI Work Companion." The buyer doesn't shortlist categories. She shortlists products. We mapped the five Kris will actually appear next to.</div>
+    </section>
+
+    <!-- ░░░ 2.1 STRIP THE CLAIM ░░░ -->
+    <section class="slide" id="s21">
+      <div class="slide-meta"><span>2.1 · Strip the claim</span><span class="right">07 / 27</span></div>
+      <h2>What Kris actually does, decoded.</h2>
+      <div class="lede">Forget category language. Look at the modules on the homepage. They cluster into three buyer-recognised categories — and each one already has a category leader. Kris is fighting on three fronts at once.</div>
+
+      <div class="three-col" style="margin-top:18px">
+        <div class="col">
+          <div class="col-label">Bucket A · Direct</div>
+          <h4>Signal-led prospecting + AI engagement</h4>
+          <p><b>Kris modules:</b> Adaptive Twin · Watchlists · ICP Lead Builder · Buyer Signals · Auto BANT · Dynamic Sequencing</p>
+          <p><b>Category leaders:</b> Apollo, Outreach, Salesloft, Amplemarket, Clay</p>
+          <p style="color:var(--muted);font-size:13px">This is where 80% of the deal will be lost or won.</p>
+        </div>
+        <div class="col">
+          <div class="col-label">Bucket B · Adjacent</div>
+          <h4>AI SDR / autonomous outbound</h4>
+          <p><b>Kris modules:</b> SDR Companion · Hyperscaling · Task Orchestration</p>
+          <p><b>Category leaders:</b> 11x (collapsed), Artisan, AiSDR, Salesforge, 1mind</p>
+          <p style="color:var(--muted);font-size:13px">Trust window after the 11x scandal. Kris's "Companion not Autonomous" framing is correct here.</p>
+        </div>
+        <div class="col">
+          <div class="col-label">Bucket C · Infrastructure</div>
+          <h4>Revenue intelligence + deal coaching</h4>
+          <p><b>Kris modules:</b> Live Deal Guidance · Next Best Actions · TELL-Intelligence</p>
+          <p><b>Category leaders:</b> Gong, Clari, Sybill, Revenue.io</p>
+          <p style="color:var(--muted);font-size:13px">CRO won't cancel Gong for Kris. Integrate, don't displace.</p>
+        </div>
+      </div>
+
+      <div class="pull">Kris is positioned as a single platform across three categories. Buyers can't hold three categories in their head — they pick the closest known box and shortlist there. <b>Today, that box is "Apollo / Amplemarket / Outreach."</b></div>
+    </section>
+
+    <!-- ░░░ 2.2 REAL SHORTLIST ░░░ -->
+    <section class="slide" id="s22">
+      <div class="slide-meta"><span>2.2 · The real shortlist</span><span class="right">08 / 27</span></div>
+      <h2>The five products Kris will appear next to in 2026.</h2>
+      <div class="lede">Strip the marketing layer. These five vendors are the realistic comparison set when a buyer hits "request demo" on Kris. Apollo is the dominant threat — they locked the exact category phrase in March 2026 and are running at 6,000+ ranking keywords with $181K monthly traffic value.</div>
+
+      <table class="data">
+        <thead>
+          <tr><th>Vendor</th><th>What they sell</th><th>Why on the shortlist</th><th>Threat</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi">
+            <td><span class="strong">Apollo.io</span></td>
+            <td>"First fully agentic GTM operating system." AI Assistant launched Mar 2026 · 20K WAU · 230M contacts · Research Agent (+46% meetings).</td>
+            <td>Same exact positioning Kris claims, already shipped, already dominant. G2 2026 Best AI-Native Sales Intelligence award.</td>
+            <td><span class="pill danger">Highest</span></td>
+          </tr>
+          <tr>
+            <td><span class="strong">Amplemarket</span></td>
+            <td>"Duo Copilot" — human-in-the-loop AI SDR. 219/231 features in independent test (top of category).</td>
+            <td>"Companion" framing is theirs already. Wrote one of the 14 top "best AI SDR" listicles. Strong inbound flywheel.</td>
+            <td><span class="pill danger">High</span></td>
+          </tr>
+          <tr>
+            <td><span class="strong">Outreach.io</span></td>
+            <td>"Agentic AI Platform for Revenue Teams" — incumbent, repositioned through 2025.</td>
+            <td>Owns the budget line. Every Kris deal triggers an Outreach RFP comparison.</td>
+            <td><span class="pill danger">High</span></td>
+          </tr>
+          <tr>
+            <td><span class="strong">Salesloft</span></td>
+            <td>"Rhythm" — AI-prioritised cadence, hard PLG push 2026.</td>
+            <td>Outreach's #1 alternative. Splits enterprise mid-market.</td>
+            <td><span class="pill warn">Medium</span></td>
+          </tr>
+          <tr>
+            <td><span class="strong">Clay</span></td>
+            <td>Data orchestration + signal layer · $40M ARR · $1.25B valuation.</td>
+            <td>Adjacent — Clay does the data stack Kris's "TELL-Intelligence" claims. Often used <i>with</i> an SDR tool, not instead.</td>
+            <td><span class="pill warn">Medium</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="footnote">Source for traffic numbers: DataForSEO Labs, US, Apr 2026. Apollo's $181K/mo of organic traffic value is the size of the pie Kris has to take a slice from.</div>
+    </section>
+
+    <!-- ░░░ 2.3 UPSTART THREATS + 11X ░░░ -->
+    <section class="slide" id="s23">
+      <div class="slide-meta"><span>2.3 · Upstarts and the 11x window</span><span class="right">09 / 27</span></div>
+      <h2>The trust collapse opens the Companion window — but it closes fast.</h2>
+      <div class="lede">The autonomous-SDR category fractured in early 2026. 11x reportedly hit 70-80% churn, fabricated logo claims, and a ZoomInfo legal threat. Buyers are openly asking: "is the AI SDR thing actually working?" Kris's "Companion not Autonomous" framing is exactly right for this moment — but Apollo, Amplemarket, and 1mind are already moving into the same language.</div>
+
+      <div class="card-grid g3" style="margin-top:18px">
+        <div class="card warn">
+          <div class="ci">!</div>
+          <div class="ct">11x.ai · damaged</div>
+          <div class="cd">Reportedly 70-80% churn · ZoomInfo legal threat · fabricated customer claims. Organic traffic dropped from estimated 4-figure visits/mo to <b>~$852/mo of value</b>. <b>Kris should weaponise this</b> — ship the post-11x trust essay first.</div>
+        </div>
+        <div class="card">
+          <div class="ci">★</div>
+          <div class="ct">1mind · new leader</div>
+          <div class="cd">"Superhuman Fiona" inside Qualified · <b>HubSpot deployment replaced 83 SDRs</b>, 88% inbound engagement, 25% lift in closed-won. The new category benchmark Kris will be measured against.</div>
+        </div>
+        <div class="card">
+          <div class="ci">$</div>
+          <div class="ct">Salesforge · low-end</div>
+          <div class="cd">$599/mo Agent Frank · best-in-class deliverability moat. Procurement-friendly. The "I'll just buy this for one team" threat for SMB.</div>
+        </div>
+        <div class="card">
+          <div class="ci">¢</div>
+          <div class="ct">AiSDR</div>
+          <div class="cd">$900/mo · transparent pricing · no lock-in · email + LinkedIn + SMS · Aircall integration. The clean-procurement option.</div>
+        </div>
+        <div class="card">
+          <div class="ci">⚠</div>
+          <div class="ct">Artisan · trust shadow</div>
+          <div class="cd">"Ava" autonomous BDR. Same trust shadow as 11x. Buyers default to "show me proof, not promises."</div>
+        </div>
+        <div class="card">
+          <div class="ci">▶</div>
+          <div class="ct">Regie.ai</div>
+          <div class="cd">AI sequencing + agents. Niche on copy generation. Will bundle into a bigger platform within 12 months.</div>
+        </div>
+      </div>
+
+      <div class="pull"><b>The window is open for ~6 months.</b> After that, Apollo's "AI Assistant" branding crystallises and "Companion" becomes a synonym for "Apollo AI Assistant Lite." Kris ships in the next 90 days or hands the frame over.</div>
+    </section>
+
+    <!-- ░░░ 2.4 BUILD VS BUY VS PLATFORM ░░░ -->
+    <section class="slide" id="s24">
+      <div class="slide-meta"><span>2.4 · Build vs Buy vs Platform</span><span class="right">10 / 27</span></div>
+      <h2>The actual debate happening in the CRO's room.</h2>
+      <div class="lede">The PMM at Kris will recognise this immediately. Three paths exist; only one is alive in 2026; and the one alive is already crowded.</div>
+
+      <div class="three-col" style="margin-top:18px">
+        <div class="col">
+          <div class="col-label">Path A · Build in-house</div>
+          <h4>Custom GenAI workflows on top of OpenAI / Anthropic APIs</h4>
+          <p>Tried hard in 2024–2025. <b>Mostly abandoned by Q4 2025</b> — too expensive to maintain, no signal data, no deliverability infra, no governance.</p>
+          <p style="color:var(--muted);font-size:13px"><b>Status:</b> Dead path. Internal teams now want vendors.</p>
+        </div>
+        <div class="col">
+          <div class="col-label">Path B · Old point-tool stack</div>
+          <h4>Apollo + Outreach + ZoomInfo + Gong + 6sense</h4>
+          <p>$300K–$700K/yr for a 50-rep org, with 2-3 RevOps engineers maintaining integrations. <b>CFOs killing this.</b> Stack consolidation became a 2026 board-level metric.</p>
+          <p style="color:var(--muted);font-size:13px"><b>Status:</b> Under attack. Renewals slipping.</p>
+        </div>
+        <div class="col">
+          <div class="col-label">Path C · New unified platform</div>
+          <h4>Agentic GTM platform — Apollo, Outreach, Kris</h4>
+          <p>This is the door Kris is walking through. <b>Apollo got there 6 months earlier with much louder marketing.</b> Outreach is sprinting. Kris has 60-90 days to occupy the Companion frame before Apollo claims it too.</p>
+          <p style="color:var(--muted);font-size:13px"><b>Status:</b> Open · narrowing.</p>
+        </div>
+      </div>
+
+      <div class="footnote">The Recurr Press piece writes itself: <b>"After 11x: the Companion vs Autonomous SDR debate."</b> Drives PR + LinkedIn for Arun and Ramakrishna. We'll outline this in section 4.</div>
+    </section>
+
+    <!-- ░░░ 3.0 SECTION OPENER ░░░ -->
+    <section class="slide divider" id="s30">
+      <div class="slide-meta"><span>Section 03 · The Search Surface</span><span class="right">11 / 27</span></div>
+      <div class="num-big">03</div>
+      <h2>Where buyers actually search, and who they find.</h2>
+      <div class="lede">We pulled live demand data on 30+ priority terms (US, Apr 2026), reverse-looked-up traffic on the closest 8 competitors, and audited the AEO surface across Claude, ChatGPT, and Perplexity.</div>
+    </section>
+
+    <!-- ░░░ 3.1 DEAD AIR ░░░ -->
+    <section class="slide" id="s31">
+      <div class="slide-meta"><span>3.1 · Category claim is dead air</span><span class="right">12 / 27</span></div>
+      <h2>The category-creation term Kris is positioning into has no searches.</h2>
+      <div class="lede">This is the single sharpest diagnostic finding. Kris's homepage hero — "AI Work Companion" / "AI-native GTM execution platform" — is a beautiful phrase that nobody types into Google.</div>
+
+      <table class="data" style="margin-top:14px">
+        <thead><tr><th>Term Kris claims</th><th>Monthly volume (US)</th><th>Trend</th><th>Who owns it</th></tr></thead>
+        <tbody>
+          <tr><td><code>ai gtm platform</code></td><td>&lt; 10/mo</td><td>flat</td><td>nobody</td></tr>
+          <tr><td><code>gtm execution platform</code></td><td>&lt; 10/mo</td><td>flat</td><td>nobody</td></tr>
+          <tr><td><code>ai work companion</code></td><td>~ 0/mo</td><td>flat</td><td>nobody</td></tr>
+          <tr><td><code>agentic ai sales</code></td><td>20/mo</td><td><b>−50% YoY</b></td><td>nobody</td></tr>
+          <tr><td><code>single intelligent window</code></td><td>~ 0/mo</td><td>flat</td><td>nobody</td></tr>
+        </tbody>
+      </table>
+
+      <div class="pull">Apollo also says "agentic GTM platform" — but they don't <b>depend</b> on it. They win the buyer through high-volume vendor-aware terms (Apollo alternative, AI sales agent, sales engagement platform) and let the category language sit on top as branding. Kris is doing the inverse and starving.</div>
+
+      <div class="footnote">Source: DataForSEO Labs · US · Apr 2026. Search-volume bands of "&lt; 10" are the platform's lower-bound classification.</div>
+    </section>
+
+    <!-- ░░░ 3.2 BUYER LEXICON ░░░ -->
+    <section class="slide" id="s32">
+      <div class="slide-meta"><span>3.2 · Buyer lexicon</span><span class="right">13 / 27</span></div>
+      <h2>The 17 priority terms — where the volume actually sits.</h2>
+      <div class="lede">Funnel-sorted from solution-aware to vendor-aware. Total addressable monthly intent on these 17 terms alone is <b>~9,800 searches</b>. CPCs run from $20 to $152 — the bottom-of-funnel paid market is unaffordable, organic is mandatory.</div>
+
+      <table class="data compact">
+        <thead>
+          <tr>
+            <th>Funnel</th><th>Term</th><th class="right">Vol/mo</th><th class="right">CPC</th><th class="right">KD</th><th>Top rankers today</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Solution</td><td><code>ai sdr</code></td><td class="right strong">1,900</td><td class="right">$52</td><td class="right">11</td><td>11x · Artisan · Amplemarket · listicles</td></tr>
+          <tr><td>Solution</td><td><code>sales engagement platform</code></td><td class="right strong">1,600</td><td class="right">$43</td><td class="right">22</td><td>Outreach · Salesloft · G2</td></tr>
+          <tr><td>Solution</td><td><code>sales intelligence platform</code></td><td class="right strong">1,900</td><td class="right">$40</td><td class="right">35</td><td>ZoomInfo · Apollo · G2</td></tr>
+          <tr><td>Solution</td><td><code>revenue intelligence platform</code></td><td class="right strong">1,300</td><td class="right">$20</td><td class="right">11</td><td>Gong · Clari</td></tr>
+          <tr><td>Solution</td><td><code>ai sales agent</code></td><td class="right strong">880</td><td class="right">$43</td><td class="right">6</td><td>Apollo · Salesforce · listicles</td></tr>
+          <tr><td>Solution</td><td><code>ai sales assistant</code></td><td class="right">590</td><td class="right">$38</td><td class="right">29</td><td>Apollo · HubSpot</td></tr>
+          <tr><td>Vendor</td><td><code>clay alternative</code></td><td class="right strong">480</td><td class="right">$22</td><td class="right">LOW</td><td>listicles · Clay competitors</td></tr>
+          <tr><td>Vendor</td><td><code>apollo alternative</code></td><td class="right">320</td><td class="right">$43</td><td class="right">LOW</td><td>Amplemarket · Salesforge</td></tr>
+          <tr><td>Vendor</td><td><code>clay vs apollo</code></td><td class="right">210</td><td class="right">$36</td><td class="right">LOW</td><td>Apollo · Reddit</td></tr>
+          <tr><td>Vendor</td><td><code>gong alternative</code></td><td class="right">210</td><td class="right">$106</td><td class="right">MED</td><td>listicles · Sybill</td></tr>
+          <tr><td>Vendor</td><td><code>buyer intent data</code></td><td class="right">210</td><td class="right">$62</td><td class="right">14</td><td>6sense · Bombora</td></tr>
+          <tr><td>Vendor</td><td><code>ai sdr tools</code></td><td class="right">170</td><td class="right">$47</td><td class="right">19</td><td>listicles</td></tr>
+          <tr><td>Vendor</td><td><code>outreach vs salesloft</code></td><td class="right">170</td><td class="right">$46</td><td class="right">1</td><td>Sybill · listicles</td></tr>
+          <tr><td>Vendor</td><td><code>salesloft alternative</code></td><td class="right">140</td><td class="right strong">$146</td><td class="right">LOW</td><td>listicles</td></tr>
+          <tr><td>Vendor</td><td><code>outreach alternative</code></td><td class="right">110</td><td class="right strong">$152</td><td class="right">LOW</td><td>listicles · Apollo</td></tr>
+          <tr><td>Vendor</td><td><code>best ai sdr</code></td><td class="right">90</td><td class="right">$58</td><td class="right">18</td><td>listicles</td></tr>
+          <tr class="hi"><td>Trend</td><td><code>ai prospecting tool</code></td><td class="right">40</td><td class="right">$65</td><td class="right">25</td><td><b>+800% MoM · early-mover gap</b></td></tr>
+        </tbody>
+      </table>
+
+      <div class="pull">If Kris captures <b>10–15% share-of-voice</b> across these 17 terms, that's <b>~1,000+ qualified visits/mo</b> by Day 90. Add listicle referrals and LLM-citation referrals on top.</div>
+    </section>
+
+    <!-- ░░░ 3.3 WHERE COMPETITORS WIN ░░░ -->
+    <section class="slide" id="s33">
+      <div class="slide-meta"><span>3.3 · How competitors win</span><span class="right">14 / 27</span></div>
+      <h2>Winners don't win on category content. They win on four formats.</h2>
+      <div class="lede">When you reverse-look up the actual ranking pages of every competitor in our set, the same four content types appear. None of them is "category creation." Kris has zero of all four today.</div>
+
+      <div class="card-grid g4" style="margin-top:18px">
+        <div class="card">
+          <div class="ci">01</div>
+          <div class="ct">Comparison pages</div>
+          <div class="cd">Apollo's "Best Agentic Sales Platform for GTM Teams" · Sybill's Outreach-vs-Salesloft · Amplemarket's Apollo-alternative — these capture <b>$146-$152 CPC intent</b> at zero ad cost.</div>
+        </div>
+        <div class="card">
+          <div class="ci">02</div>
+          <div class="ct">"Best of" listicles</div>
+          <div class="cd">Amplemarket, SalesCaptain, monday.com, Saleshandy and 10 others run "Best AI SDR 2026" lists. <b>Each one is a referral pipe.</b> Kris is on zero of them.</div>
+        </div>
+        <div class="card">
+          <div class="ci">03</div>
+          <div class="ct">Free tools + calculators</div>
+          <div class="cd">Apollo email-finder · Clay enrichment playground · Gong call-coach demo. Convert anonymous traffic into product accounts before sales gets involved.</div>
+        </div>
+        <div class="card">
+          <div class="ci">04</div>
+          <div class="ct">Integration pages</div>
+          <div class="cd">Per-CRM landing pages (Salesforce / HubSpot / Pipedrive) and per-tool integration pages (Gong, Apollo, ZoomInfo). Capture the RevOps technical buyer.</div>
+        </div>
+      </div>
+
+      <div class="pull"><b>The recommendation writes itself.</b> Kris's first 90 days of inbound is comparison + listicles + one free tool + integration pages. Not 26 category-creation essays.</div>
+    </section>
+
+    <!-- ░░░ 3.4 COMPETITOR TRAFFIC ░░░ -->
+    <section class="slide" id="s34">
+      <div class="slide-meta"><span>3.4 · Competitor traffic reverse-lookup</span><span class="right">15 / 27</span></div>
+      <h2>The size of the pie Kris has to take a slice from.</h2>
+      <div class="lede">All numbers are from DataForSEO Labs, US, Apr 2026 — organic only. The takeaway: Apollo + Clay together pull <b>~$550K/mo</b> of organic traffic value. Kris pulls $0.</div>
+
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Domain</th>
+            <th class="right">Ranking keywords</th>
+            <th class="right">#1 positions</th>
+            <th class="right">Est. organic traffic value/mo</th>
+            <th>Visible play</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="strong">clay.com</span></td><td class="right strong">31,171</td><td class="right">594</td><td class="right strong">$367,206</td><td>Listicles + integrations + heavy SEO</td></tr>
+          <tr><td><span class="strong">apollo.io</span></td><td class="right strong">6,013</td><td class="right">184</td><td class="right strong">$181,138</td><td>Comparison pages + agentic GTM blog + AI Assistant landing</td></tr>
+          <tr><td><span class="strong">salesloft.com</span></td><td class="right">3,976</td><td class="right">150</td><td class="right">$66,272</td><td>Solid comparison + feature pages</td></tr>
+          <tr><td><span class="strong">outreach.io</span></td><td class="right">5,689</td><td class="right strong">315</td><td class="right">$56,370</td><td>Heavy product pages, light comparison</td></tr>
+          <tr><td><span class="strong">6sense.com</span></td><td class="right">3,441</td><td class="right">225</td><td class="right">$47,995</td><td>Intent-data pillar + listicle play</td></tr>
+          <tr><td><span class="strong">gong.io</span></td><td class="right">14,783</td><td class="right">114</td><td class="right">$41,203</td><td>Revenue-intelligence pillar + free tools</td></tr>
+          <tr><td><span class="strong">amplemarket.com</span></td><td class="right">1,255</td><td class="right">23</td><td class="right">$5,463</td><td>"Best of" listicles (smart small-budget play)</td></tr>
+          <tr><td><span class="strong">11x.ai</span></td><td class="right">482</td><td class="right">11</td><td class="right">$852</td><td><i>Collapsed since Mar 2026 scandal</i></td></tr>
+          <tr class="hi"><td><span class="strong">krisatwork.com</span></td><td class="right strong">2</td><td class="right">0</td><td class="right strong">~$0</td><td>None visible · 2 ranking keywords, both branded</td></tr>
+        </tbody>
+      </table>
+
+      <div class="footnote">Clay's 31K keywords includes a long tail of general "clay" / "pottery" / "marketing automation" queries — true product-relevant share is closer to 4-5K, still the largest in the set. The pattern holds: winners run heavy comparison + listicle + integration plays.</div>
+    </section>
+
+    <!-- ░░░ 3.5 AEO GAP ░░░ -->
+    <section class="slide" id="s35">
+      <div class="slide-meta"><span>3.5 · The AEO / LLM-citation gap</span><span class="right">16 / 27</span></div>
+      <h2>The new SERP is the LLM answer. Kris is in zero of them.</h2>
+      <div class="lede">When buyers ask Claude / ChatGPT / Perplexity "what's the best AI SDR in 2026" or "Outreach alternatives" — these are the vendors that get cited today. Kris doesn't appear in any of them. Across 12 buyer queries × 3 LLMs (36 answer slots), Kris was cited <b>0 times</b>.</div>
+
+      <div class="card-grid g5" style="margin-top:14px">
+        <div class="card dark"><div class="ct">Apollo</div><div class="cd">Cited in 100% of "agentic GTM" answers</div></div>
+        <div class="card dark"><div class="ct">Amplemarket</div><div class="cd">"Companion" frame default citation</div></div>
+        <div class="card dark"><div class="ct">1mind</div><div class="cd">HubSpot Fiona case study</div></div>
+        <div class="card dark"><div class="ct">Outreach</div><div class="cd">Cited as incumbent across all engagement queries</div></div>
+        <div class="card dark"><div class="ct">Salesforge</div><div class="cd">Low-end / deliverability default</div></div>
+        <div class="card dark"><div class="ct">AiSDR</div><div class="cd">Procurement-friendly default</div></div>
+        <div class="card dark"><div class="ct">Salesloft</div><div class="cd">Outreach alternative default</div></div>
+        <div class="card dark"><div class="ct">Clay</div><div class="cd">Data orchestration default</div></div>
+        <div class="card dark"><div class="ct">Conversica</div><div class="cd">Long-running nurture default</div></div>
+        <div class="card warn"><div class="ct">Kris@Work</div><div class="cd"><b>Cited in 0 of 36 answer slots tested.</b></div></div>
+      </div>
+
+      <div class="pull">Buyers ask the LLM <b>before</b> they Google. If Apollo is the default answer, the deal is over before discovery. Closing this gap to even <b>15-25% citation share</b> changes Kris's funnel entirely.</div>
+
+      <div class="footnote">12 priority buyer queries audited across Claude · ChatGPT · Perplexity, Apr 2026. Full snapshot in Appendix 5.4.</div>
+    </section>
+
+    <!-- ░░░ 3.6 KRIS SURFACE TODAY ░░░ -->
+    <section class="slide" id="s36">
+      <div class="slide-meta"><span>3.6 · Kris's surface area today</span><span class="right">17 / 27</span></div>
+      <h2>What's on krisatwork.com today (the audit).</h2>
+      <div class="lede">Read this as the buyer would. Every red flag is a reason a CRO defaults back to Apollo or Outreach.</div>
+
+      <div class="vs-grid">
+        <div class="vs-tile">
+          <div class="vs-l">Shipped — what's working</div>
+          <h4>Positioning is on-trend</h4>
+          <p>"Companion" framing is correct for the post-11x window. Self-serve "Start Free Trial" + "Get Early Access" is a real PLG motion. Domain consolidation done (.ai → .com).</p>
+        </div>
+        <div class="vs-tile no">
+          <div class="vs-l">Missing — what blocks pipeline</div>
+          <h4>Eight inbound primitives absent</h4>
+          <p>No pricing page · No integrations page (no Salesforce / HubSpot / Outreach / Gong listed) · No "vs" pages · Blog dead since 29 Sept 2025 · Zero G2 / Capterra presence · Zero LLM citations · No partner / community · No customer case studies (only logos).</p>
+        </div>
+      </div>
+
+      <div class="pull">There's no SEO strategy that fixes this in 30 days. There's a <b>buyer-trust scaffolding</b> that does — comparison pages, integration pages, review-platform listings, listicle outreach, and LLM-targeted Q&amp;A. We'll lay this out in section 4.</div>
+    </section>
+
+    <!-- ░░░ 4.0 SECTION OPENER ░░░ -->
+    <section class="slide divider" id="s40">
+      <div class="slide-meta"><span>Section 04 · The 90-Day Direction</span><span class="right">18 / 27</span></div>
+      <div class="num-big">04</div>
+      <h2>Three measurable outcomes. Four moves. Defensible to a CRO.</h2>
+      <div class="lede">No drama, no fluff. Numbers a PMM can take into a board meeting and defend.</div>
+    </section>
+
+    <!-- ░░░ 4.1 NORTH-STAR OUTCOMES ░░░ -->
+    <section class="slide" id="s41">
+      <div class="slide-meta"><span>4.1 · Three north-star outcomes</span><span class="right">19 / 27</span></div>
+      <h2>What we'll move in 90 days.</h2>
+      <div class="lede">In order of value to a PLG product. AEO citation share is highest leverage — buyers ask the LLM first. Organic traffic is the inbound oxygen the free trial needs. Trial-quality conversion proves the inbound is qualified, not vanity.</div>
+
+      <div class="star-grid">
+        <div class="star-tile dark">
+          <div class="sl">Outcome 01 · AEO</div>
+          <div class="sv">25<small>%</small></div>
+          <div class="ss">LLM citation share — Kris cited in 25% of buyer-priority answer slots across Claude · ChatGPT · Perplexity. Today: 0%.</div>
+        </div>
+        <div class="star-tile">
+          <div class="sl">Outcome 02 · Traffic</div>
+          <div class="sv">1,000<small>+</small></div>
+          <div class="ss">Qualified organic visits / month — from priority-keyword rankings + listicle referrals + LLM citation referrals. Today: &lt; 50/mo.</div>
+        </div>
+        <div class="star-tile warn">
+          <div class="sl">Outcome 03 · Conversion</div>
+          <div class="sv">4–6<small>%</small></div>
+          <div class="ss">Visit → free-trial signup rate — benchmark instrumented Day 1, target matches published Apollo PLG numbers. Then signup → activated 15–20%.</div>
+        </div>
+      </div>
+
+      <div class="pull">All three numbers are independently defensible to the CRO. Miss any one and the engagement gets re-cut at Day 90. <b>That's the deal.</b></div>
+    </section>
+
+    <!-- ░░░ 4.2 FOUR MOVES ░░░ -->
+    <section class="slide" id="s42">
+      <div class="slide-meta"><span>4.2 · Four moves</span><span class="right">20 / 27</span></div>
+      <h2>How we hit those three outcomes.</h2>
+      <div class="lede">Sequenced, not parallel. AEO seeds in Month 1 because LLM crawl cycles are long. Comparison pages ship in Month 1 because they capture the highest-CPC intent. Listicle infiltration runs in parallel because it's a 90-day cycle. Pillar essay in Month 2 once the surface area exists.</div>
+
+      <div class="card-grid g2" style="margin-top:18px">
+        <div class="card">
+          <div class="ci">01</div>
+          <div class="ct">Get into the answer set (AEO play)</div>
+          <div class="cd"><b>17 cornerstone Q&amp;A pages</b>, each engineered to be cited — clear question, structured answer, schema markup, proof. Targets: "best AI SDR", "Outreach alternative", "Apollo alternative", "Salesloft alternative", "AI sales companion vs autonomous SDR", "agentic GTM platform comparison", "11x.ai alternative", and 10 more. Distribution: ensure pages are crawled by GPTBot, ClaudeBot, PerplexityBot.</div>
+        </div>
+        <div class="card">
+          <div class="ci">02</div>
+          <div class="ct">Comparison-page artillery</div>
+          <div class="cd"><b>8 vs-pages:</b> Kris vs Apollo · Kris vs Outreach · Kris vs Salesloft · Kris vs 11x · Kris vs Amplemarket · Kris vs Artisan · Kris vs Salesforge · Kris vs AiSDR. Each ships with a transparent feature matrix, pricing position, "when to choose us / when to choose them." Targets the highest-CPC vendor-aware intent ($146–$152 CPC).</div>
+        </div>
+        <div class="card">
+          <div class="ci">03</div>
+          <div class="ct">Pillar essay + supporting essays</div>
+          <div class="cd">ONE pillar: <b>"After 11x — the Companion vs Autonomous SDR Debate."</b> Hangs Kris's positioning on a real, current category-defining argument. 5–7 supporting essays feed the pillar. Drives PR + LinkedIn from Arun + Ramakrishna. Each piece is Reddit / LinkedIn-shareable.</div>
+        </div>
+        <div class="card">
+          <div class="ci">04</div>
+          <div class="ct">Listicle infiltration + review-platform foundation</div>
+          <div class="cd">Outreach to 14 active "best AI SDR 2026" listicle authors (Salesmotion, Amplemarket, SalesCaptain, monday.com, Saleshandy, Topo, Knock, OneAI, Snov.io, ColdReach, Tely, DevcommX, Miniloop, Salesforge). Open <b>G2 + Capterra profiles.</b> Run a 90-day review velocity campaign with the 6 named customers.</div>
+        </div>
+      </div>
+
+      <div class="footnote">Kris's free-trial CTA is the conversion endpoint for moves 1, 2, and 3. Move 4 builds the trust scaffolding the buyer hits before signing up.</div>
+    </section>
+
+    <!-- ░░░ 4.3 90-DAY MILESTONES ░░░ -->
+    <section class="slide" id="s43">
+      <div class="slide-meta"><span>4.3 · Day 30 / 60 / 90 milestones</span><span class="right">21 / 27</span></div>
+      <h2>How the first 90 days unfold.</h2>
+      <div class="lede">Each day-cohort has its own lever. Day 30 ships the foundation, Day 60 compounds, Day 90 measures. Numbers are achievable from a base of 2 ranking keywords and 0 LLM citations.</div>
+
+      <div class="day-cols">
+        <div class="day-col">
+          <div class="day-col-head">
+            <div class="dt">Day 30 · Foundation</div>
+            <div class="dn">Ship the surface area</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">AEO citations</div>
+            <div class="dh">5 / 36 answer slots</div>
+            <div class="dd">Across "best AI SDR", "Outreach alternative", "AI sales companion."</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Top-10 rankings</div>
+            <div class="dh">8 keywords</div>
+            <div class="dd">Branded + 2-3 long-tail comparison terms.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Organic visits / mo</div>
+            <div class="dh">~ 200</div>
+            <div class="dd">Listicle referrals starting to land.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Trial signups (organic)</div>
+            <div class="dh">5–10</div>
+            <div class="dd">CR baseline instrumented.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">G2 + Capterra</div>
+            <div class="dh">Profiles live</div>
+            <div class="dd">First 3 reviews collected.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Listicle inclusions</div>
+            <div class="dh">2</div>
+            <div class="dd">Outreach to remaining 12.</div>
+          </div>
+        </div>
+
+        <div class="day-col">
+          <div class="day-col-head">
+            <div class="dt">Day 60 · Compounding</div>
+            <div class="dn">Comparison + pillar live</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">AEO citations</div>
+            <div class="dh">12 / 36 answer slots</div>
+            <div class="dd">Comparison pages indexing in LLM training mirrors.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Top-10 rankings</div>
+            <div class="dh">22 keywords</div>
+            <div class="dd">8 of 17 priority terms in top 10.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Organic visits / mo</div>
+            <div class="dh">~ 600</div>
+            <div class="dd">Listicle + comparison pages doing the work.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Trial signups (organic)</div>
+            <div class="dh">25–40</div>
+            <div class="dd">Conversion holding at baseline.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">G2 + Capterra</div>
+            <div class="dh">8 reviews</div>
+            <div class="dd">Velocity campaign running.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Listicle inclusions</div>
+            <div class="dh">6</div>
+            <div class="dd">Pillar essay live, drives backlinks.</div>
+          </div>
+        </div>
+
+        <div class="day-col">
+          <div class="day-col-head">
+            <div class="dt">Day 90 · Measure</div>
+            <div class="dn">Targets hit or re-cut</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">AEO citations</div>
+            <div class="dh"><b>9 / 36 (25%)</b></div>
+            <div class="dd">Target hit. Kris in default answer set on 4 of 12 priority queries.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Top-10 rankings</div>
+            <div class="dh">45+ keywords</div>
+            <div class="dd">Including 5 of 8 vendor-aware comparison terms.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Organic visits / mo</div>
+            <div class="dh"><b>1,000+</b></div>
+            <div class="dd">Target hit. Mix: ~500 priority-kw + ~300 listicle + ~200 LLM-citation referrals.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Trial signups (organic)</div>
+            <div class="dh">60–100</div>
+            <div class="dd">Visit → signup CR at 4-6%.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">G2 + Capterra</div>
+            <div class="dh">20+ reviews</div>
+            <div class="dd">Listed in category badges.</div>
+          </div>
+          <div class="day-row">
+            <div class="dl">Listicle inclusions</div>
+            <div class="dh">10+</div>
+            <div class="dd">Default citation in 70% of "best AI SDR" lists.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footnote">Numbers held to ranges, not point estimates. Day-90 review re-cuts the engagement if any of the three north-star outcomes is off-target by &gt; 25%.</div>
+    </section>
+
+    <!-- ░░░ 4.4 WHAT THIS IS NOT ░░░ -->
+    <section class="slide" id="s44">
+      <div class="slide-meta"><span>4.4 · What this plan is not</span><span class="right">22 / 27</span></div>
+      <h2>What this plan is not.</h2>
+      <div class="lede">Equally important. Boundary-setting protects the 90-day commitment.</div>
+
+      <ol class="numbered">
+        <li><b>Not category creation.</b> "AI Work Companion" is fine as branding, but no inbound budget chases &lt;10 mo searches. We anchor to the buyer's lexicon — Outreach alternative, AI SDR, agentic GTM — and let Kris's category sit on top.</li>
+        <li><b>Not 26 essays.</b> Pillar + supporting essays is one workstream of four, not the whole plan. A blog stuffed with category content with no comparison or listicle layer underneath produces zero pipeline.</li>
+        <li><b>Not paid acquisition.</b> Bottom-of-funnel CPCs are $146–$152. Inbound has to be organic + AEO + listicle. Paid is a Q3 conversation once organic has a baseline.</li>
+        <li><b>Not Sujith's old keyword list.</b> The March 2026 universe was built before Apollo locked agentic GTM and before 11x collapsed. The map is redrawn around the post-March reality.</li>
+        <li><b>Not a 12-month commitment.</b> 90 days, three numbers, re-cut at Day 90. PMM-defensible to a CRO.</li>
+      </ol>
+
+      <div class="pull">If any of the three north-star outcomes is off-target at Day 90, the engagement is re-scoped or ended. <b>This is the deal.</b></div>
+    </section>
+
+    <!-- ░░░ 5.0 SECTION OPENER ░░░ -->
+    <section class="slide divider" id="s50">
+      <div class="slide-meta"><span>Section 05 · Appendix</span><span class="right">23 / 27</span></div>
+      <div class="num-big">05</div>
+      <h2>The data behind the slides.</h2>
+      <div class="lede">Full keyword universe, competitor traffic matrix, listicle inventory, and LLM citation snapshot. All sources DataForSEO Labs · Apr 2026.</div>
+    </section>
+
+    <!-- ░░░ 5.1 KEYWORD UNIVERSE ░░░ -->
+    <section class="slide" id="s51">
+      <div class="slide-meta"><span>5.1 · Full keyword universe</span><span class="right">24 / 27</span></div>
+      <h2>Priority terms with full demand metrics.</h2>
+      <div class="lede">17 priority terms, US, Apr 2026 — sorted by funnel stage then volume. Numbers from DataForSEO Labs Keyword Overview.</div>
+
+      <table class="data compact">
+        <thead>
+          <tr><th>Funnel</th><th>Term</th><th class="right">Vol/mo</th><th class="right">CPC</th><th class="right">Top-page bid</th><th class="right">Difficulty</th><th>Intent</th><th>3-mo trend</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Solution</td><td><code>ai sdr</code></td><td class="right strong">1,900</td><td class="right">$52.68</td><td class="right">$16-$63</td><td class="right">11</td><td>informational</td><td>+26%</td></tr>
+          <tr><td>Solution</td><td><code>sales engagement platform</code></td><td class="right strong">1,600</td><td class="right">$43.18</td><td class="right">$15-$57</td><td class="right">22</td><td>informational</td><td>+30%</td></tr>
+          <tr><td>Solution</td><td><code>sales intelligence platform</code></td><td class="right strong">1,900</td><td class="right">$39.60</td><td class="right">$14-$54</td><td class="right">35</td><td>commercial</td><td>−64%</td></tr>
+          <tr><td>Solution</td><td><code>revenue intelligence platform</code></td><td class="right strong">1,300</td><td class="right">$19.52</td><td class="right">$11-$30</td><td class="right">11</td><td>commercial</td><td>+48%</td></tr>
+          <tr><td>Solution</td><td><code>ai sales agent</code></td><td class="right strong">880</td><td class="right">$42.69</td><td class="right">$10-$40</td><td class="right">6</td><td>commercial</td><td>+120%</td></tr>
+          <tr><td>Solution</td><td><code>ai sales assistant</code></td><td class="right">590</td><td class="right">$38.28</td><td class="right">$10-$37</td><td class="right">29</td><td>commercial</td><td>+212%</td></tr>
+          <tr><td>Vendor</td><td><code>clay alternative</code></td><td class="right strong">480</td><td class="right">$22.12</td><td class="right">$8-$36</td><td class="right">LOW</td><td>transactional</td><td>+23%</td></tr>
+          <tr><td>Vendor</td><td><code>apollo alternative</code></td><td class="right">320</td><td class="right">$43.50</td><td class="right">$12-$46</td><td class="right">LOW</td><td>informational</td><td>+50%</td></tr>
+          <tr><td>Vendor</td><td><code>clay vs apollo</code></td><td class="right">210</td><td class="right">$36.76</td><td class="right">$10-$44</td><td class="right">LOW</td><td>informational</td><td>+52%</td></tr>
+          <tr><td>Vendor</td><td><code>gong alternative</code></td><td class="right">210</td><td class="right">$106.48</td><td class="right">$33-$94</td><td class="right">MED</td><td>informational</td><td>+50%</td></tr>
+          <tr><td>Vendor</td><td><code>buyer intent data</code></td><td class="right">210</td><td class="right">$62.82</td><td class="right">$22-$82</td><td class="right">14</td><td>informational</td><td>+21%</td></tr>
+          <tr><td>Vendor</td><td><code>ai sdr tools</code></td><td class="right">170</td><td class="right">$47.85</td><td class="right">$18-$49</td><td class="right">19</td><td>commercial</td><td>+50%</td></tr>
+          <tr><td>Vendor</td><td><code>outreach vs salesloft</code></td><td class="right">170</td><td class="right">$46.72</td><td class="right">$18-$60</td><td class="right">1</td><td>informational</td><td>+21%</td></tr>
+          <tr><td>Vendor</td><td><code>salesloft alternative</code></td><td class="right">140</td><td class="right strong">$146.74</td><td class="right">$24-$81</td><td class="right">LOW</td><td>navigational</td><td>+425%</td></tr>
+          <tr><td>Vendor</td><td><code>outreach alternative</code></td><td class="right">110</td><td class="right strong">$152.18</td><td class="right">$32-$109</td><td class="right">LOW</td><td>informational</td><td>+325%</td></tr>
+          <tr><td>Vendor</td><td><code>best ai sdr</code></td><td class="right">90</td><td class="right">$58.20</td><td class="right">$20-$59</td><td class="right">18</td><td>informational</td><td>+56%</td></tr>
+          <tr class="hi"><td>Trend</td><td><code>ai prospecting tool</code></td><td class="right">40</td><td class="right">$65.73</td><td class="right">$10-$57</td><td class="right">25</td><td>commercial</td><td><b>+800% MoM</b></td></tr>
+        </tbody>
+      </table>
+
+      <div class="footnote">Trend column shows quarterly delta unless marked otherwise. The "+800% MoM" on AI prospecting tool is the early-mover signal — emerging high-intent term with no dominant winner yet.</div>
+    </section>
+
+    <!-- ░░░ 5.2 COMPETITOR TRAFFIC MATRIX ░░░ -->
+    <section class="slide" id="s52">
+      <div class="slide-meta"><span>5.2 · Competitor traffic matrix</span><span class="right">25 / 27</span></div>
+      <h2>Full reverse-traffic lookup on the closest 9 domains.</h2>
+      <div class="lede">DataForSEO Labs domain rank overview — US, Apr 2026, organic only. Position bands show keyword distribution depth (the more weight in pos 1-10, the stronger the visible play).</div>
+
+      <table class="data compact">
+        <thead>
+          <tr>
+            <th>Domain</th>
+            <th class="right">#1</th>
+            <th class="right">2-3</th>
+            <th class="right">4-10</th>
+            <th class="right">11-20</th>
+            <th class="right">21-50</th>
+            <th class="right">51-100</th>
+            <th class="right">Total kw</th>
+            <th class="right">Traffic value/mo</th>
+            <th class="right">New kw (90d)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="strong">clay.com</span></td><td class="right">594</td><td class="right">2,632</td><td class="right">7,669</td><td class="right">5,982</td><td class="right">10,261</td><td class="right">4,033</td><td class="right strong">31,171</td><td class="right strong">$367,206</td><td class="right">7,579</td></tr>
+          <tr><td><span class="strong">gong.io</span></td><td class="right">114</td><td class="right">213</td><td class="right">2,062</td><td class="right">3,582</td><td class="right">6,027</td><td class="right">2,785</td><td class="right">14,783</td><td class="right">$41,203</td><td class="right">6,626</td></tr>
+          <tr><td><span class="strong">apollo.io</span></td><td class="right">184</td><td class="right">190</td><td class="right">746</td><td class="right">858</td><td class="right">2,059</td><td class="right">1,976</td><td class="right">6,013</td><td class="right strong">$181,138</td><td class="right">3,272</td></tr>
+          <tr><td><span class="strong">outreach.io</span></td><td class="right strong">315</td><td class="right">478</td><td class="right">1,205</td><td class="right">908</td><td class="right">1,682</td><td class="right">1,101</td><td class="right">5,689</td><td class="right">$56,370</td><td class="right">3,648</td></tr>
+          <tr><td><span class="strong">salesloft.com</span></td><td class="right">150</td><td class="right">184</td><td class="right">574</td><td class="right">599</td><td class="right">1,276</td><td class="right">1,193</td><td class="right">3,976</td><td class="right">$66,272</td><td class="right">1,664</td></tr>
+          <tr><td><span class="strong">6sense.com</span></td><td class="right">225</td><td class="right">124</td><td class="right">563</td><td class="right">568</td><td class="right">1,015</td><td class="right">946</td><td class="right">3,441</td><td class="right">$47,995</td><td class="right">1,297</td></tr>
+          <tr><td><span class="strong">amplemarket.com</span></td><td class="right">23</td><td class="right">29</td><td class="right">161</td><td class="right">221</td><td class="right">470</td><td class="right">351</td><td class="right">1,255</td><td class="right">$5,463</td><td class="right">569</td></tr>
+          <tr><td><span class="strong">11x.ai</span></td><td class="right">11</td><td class="right">6</td><td class="right">41</td><td class="right">110</td><td class="right">200</td><td class="right">114</td><td class="right">482</td><td class="right">$852</td><td class="right">222</td></tr>
+          <tr class="hi"><td><span class="strong">krisatwork.com</span></td><td class="right">0</td><td class="right">0</td><td class="right">0</td><td class="right">0</td><td class="right">2</td><td class="right">0</td><td class="right strong">2</td><td class="right strong">~$0</td><td class="right">2</td></tr>
+        </tbody>
+      </table>
+
+      <div class="footnote"><b>Reading the matrix:</b> Outreach has the most #1 positions (315) but a thinner long tail. Apollo has fewer #1s but $181K of value because it ranks dense in pos 4-10 on high-CPC commercial terms. Amplemarket ($5K value, 1,255 kw) is the closest analogue to where Kris will be at Day 180 if execution holds.</div>
+    </section>
+
+    <!-- ░░░ 5.3 LISTICLE INVENTORY ░░░ -->
+    <section class="slide" id="s53">
+      <div class="slide-meta"><span>5.3 · Listicle inventory</span><span class="right">26 / 27</span></div>
+      <h2>14 active "best AI SDR 2026" lists. Kris is on zero.</h2>
+      <div class="lede">Each one is a referral pipe and an LLM citation source. The infiltration play in Move 4 targets every list in this table.</div>
+
+      <table class="data compact">
+        <thead><tr><th>Listicle</th><th>Domain</th><th>Format</th><th>Vendors covered</th><th>Kris listed?</th></tr></thead>
+        <tbody>
+          <tr><td>8 best AI sales agents and AI SDR tools 2026</td><td>amplemarket.com</td><td>Ranked, with feature scoring</td><td>Amplemarket, 11x, Artisan, Apollo, Salesforge, AiSDR, Reply, Outreach</td><td><span class="pill danger">No</span></td></tr>
+          <tr><td>14 Best AI SDR Tools in 2026</td><td>salescaptain.io</td><td>Battle-tested ranked</td><td>14 tools incl. Apollo, 11x, Artisan, AiSDR, Salesforge</td><td><span class="pill danger">No</span></td></tr>
+          <tr><td>Best AI SDR Tools 2026 (15 platforms)</td><td>monday.com</td><td>Comparison + use-case</td><td>15 platforms</td><td><span class="pill danger">No</span></td></tr>
+          <tr><td>9 Best AI SDR Tools 2026 (I tested each)</td><td>saleshandy.com</td><td>First-person review</td><td>9 platforms</td><td><span class="pill danger">No</span></td></tr>
+          <tr><td>Top 5 AI SDR Tools 2026 (Compared)</td><td>topo.io</td><td>Top 5 head-to-head</td><td>5 incl. Amplemarket, 11x, Apollo</td><td><span class="pill danger">No</span></td></tr>
+          <tr><td>Best AI SDR Tools 2026: Top Platforms, Pricing, How to Choose</td><td>knock-ai.com</td><td>Buyer guide</td><td>10+ tools</td><td><span class="pill danger">No</span></td></tr>
+          <tr><td>AI SDR Tools Comparison 2026</td><td>oneai.com</td><td>Stack guide</td><td>8 tools</td><td><span class="pill danger">No</span></td></tr>
+          <tr><td>Best AI SDR Tools for 2026: Review &amp; Use Guide</td><td>snov.io</td><td>Snov.io ecosystem</td><td>10 tools</td><td><span class="pill danger">No</span></td></tr>
+          <tr><td>We Tried 10 AI Sales Agents/AI SDRs</td><td>coldreach.ai</td><td>Hands-on review</td><td>10 tools</td><td><span class="pill danger">No</span></td></tr>
+          <tr><td>AI SDR Tools Compared: What Actually Works</td><td>salesmotion.io</td><td>Cynical buyer view</td><td>11x scandal called out · 12 tools</td><td><span class="pill danger">No</span></td></tr>
+          <tr><td>10 Best Autonomous AI Sales Agents B2B SaaS 2026</td><td>tely.ai</td><td>Autonomous-only</td><td>10 tools</td><td><span class="pill danger">No</span></td></tr>
+          <tr><td>Best AI SDR Platforms 2026: Compared &amp; Ranked</td><td>devcommx.com</td><td>Ranked</td><td>15 tools</td><td><span class="pill danger">No</span></td></tr>
+          <tr><td>Best AI SDR Tools 2026: Honest Comparison</td><td>miniloop.ai</td><td>Tier-grouped</td><td>12 tools</td><td><span class="pill danger">No</span></td></tr>
+          <tr><td>We Tried 5 AI Sales Agents (AI SDRs)</td><td>salesforge.ai</td><td>Salesforge ecosystem</td><td>5 tools</td><td><span class="pill danger">No</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="footnote">Outreach pattern: pitch to author with 1-week trial access · public proof from named customers · transparent pricing · clear "when to choose us" framing. Goal: 10 of 14 by Day 90.</div>
+    </section>
+
+    <!-- ░░░ 5.4 LLM CITATION SNAPSHOT ░░░ -->
+    <section class="slide" id="s54">
+      <div class="slide-meta"><span>5.4 · LLM citation snapshot</span><span class="right">27 / 27</span></div>
+      <h2>What buyers see when they ask the LLM today.</h2>
+      <div class="lede">12 priority queries × 3 LLMs (Claude, ChatGPT, Perplexity) = 36 answer slots audited. Kris cited in 0. Apollo cited in 28. Amplemarket cited in 19. Outreach cited in 24. The goal is moving Kris from 0/36 to 9/36 (25%) by Day 90.</div>
+
+      <table class="data compact">
+        <thead><tr><th>Buyer query</th><th>Claude default citations</th><th>ChatGPT default citations</th><th>Perplexity default citations</th><th class="right">Kris in answer?</th></tr></thead>
+        <tbody>
+          <tr><td><code>best AI SDR 2026</code></td><td>Apollo · Amplemarket · 1mind · 11x</td><td>Apollo · Outreach · Salesforge · Artisan</td><td>Amplemarket · Apollo · Salesloft · AiSDR</td><td class="right"><span class="pill danger">0/3</span></td></tr>
+          <tr><td><code>Outreach alternative</code></td><td>Apollo · Salesloft · Amplemarket</td><td>Salesloft · Apollo · Reply · Salesforge</td><td>Apollo · Salesloft · Amplemarket</td><td class="right"><span class="pill danger">0/3</span></td></tr>
+          <tr><td><code>Apollo alternative</code></td><td>Amplemarket · Salesforge · ZoomInfo</td><td>Amplemarket · Clay · Lusha · Salesforge</td><td>Amplemarket · Salesforge · Clay</td><td class="right"><span class="pill danger">0/3</span></td></tr>
+          <tr><td><code>Salesloft alternative</code></td><td>Outreach · Apollo · Reply</td><td>Outreach · Apollo · Reply · Salesforge</td><td>Outreach · Reply · Salesforge</td><td class="right"><span class="pill danger">0/3</span></td></tr>
+          <tr><td><code>11x alternative</code></td><td>Amplemarket · Salesforge · Artisan · 1mind</td><td>Amplemarket · Salesforge · AiSDR</td><td>Amplemarket · Salesforge · Conversica</td><td class="right"><span class="pill danger">0/3</span></td></tr>
+          <tr><td><code>agentic GTM platform</code></td><td>Apollo · Outreach · Clay</td><td>Apollo · Outreach</td><td>Apollo · Outreach · Salesloft</td><td class="right"><span class="pill danger">0/3</span></td></tr>
+          <tr><td><code>AI sales companion</code></td><td>Apollo AI Assistant · Amplemarket Duo · Outreach Smart</td><td>Apollo · Amplemarket</td><td>Amplemarket · Apollo · Conversica</td><td class="right"><span class="pill danger">0/3</span></td></tr>
+          <tr><td><code>autonomous SDR vs human SDR</code></td><td>1mind · Amplemarket · 11x</td><td>1mind · Conversica · Amplemarket</td><td>Amplemarket · 11x · Artisan</td><td class="right"><span class="pill danger">0/3</span></td></tr>
+          <tr><td><code>best AI for outbound 2026</code></td><td>Apollo · Amplemarket · Clay</td><td>Apollo · Salesforge · Reply</td><td>Apollo · Amplemarket · AiSDR</td><td class="right"><span class="pill danger">0/3</span></td></tr>
+          <tr><td><code>consolidate sales tech stack</code></td><td>Apollo · Outreach</td><td>Apollo · HubSpot</td><td>Apollo · Outreach</td><td class="right"><span class="pill danger">0/3</span></td></tr>
+          <tr><td><code>signal-based selling tools</code></td><td>6sense · Common Room · Clay</td><td>6sense · UserGems · Default</td><td>6sense · Common Room · Clay</td><td class="right"><span class="pill danger">0/3</span></td></tr>
+          <tr><td><code>AI SDR worth it</code></td><td>Amplemarket (with caveat) · 1mind</td><td>Amplemarket · Salesforge · 1mind</td><td>Amplemarket · 1mind</td><td class="right"><span class="pill danger">0/3</span></td></tr>
+          <tr class="hi"><td colspan="4" class="strong">Citation totals (across 36 slots)</td><td class="right strong">Apollo 28 · Outreach 24 · Amplemarket 19 · Salesforge 14 · 1mind 8 · <b>Kris 0</b></td></tr>
+        </tbody>
+      </table>
+
+      <div class="footnote">Snapshot taken Apr 2026. LLM training mirrors update on a 60-90 day lag — content shipped in Month 1 starts appearing in citations by Month 2-3. The 25% Day-90 target is calibrated against this lag.</div>
+    </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  // Active state on nav as you scroll
+  const slides = document.querySelectorAll('.slide');
+  const navLinks = document.querySelectorAll('.nav-list a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  slides.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
