@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Looker Studio Marketing Dashboards | Clarisights — Destination pSEO Template</title>
+<meta name="description" content="Destination page template for Clarisights pSEO. Sample row: Looker Studio. Every variable highlighted in yellow with hover-to-reveal variable name. Linked to Framer-import-ready Google Sheet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111827;
+    --ink-2: #374151;
+    --muted: #6b7280;
+    --muted-2: #9ca3af;
+    --line: #e5e7eb;
+    --line-2: #f3f4f6;
+    --bg: #ffffff;
+    --bg-soft: #f9fafb;
+    --blue: #2563eb;
+    --blue-soft: #dbeafe;
+    --red: #dc2626;
+    --red-soft: #fef2f2;
+    --red-line: #fecaca;
+    --green: #059669;
+    --green-soft: #f0fdf4;
+    --green-line: #bbf7d0;
+    --amber: #d97706;
+    --amber-soft: #fffbeb;
+    --amber-line: #fde68a;
+    --highlight: #fef08a;
+    --highlight-strong: #facc15;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+    --container: 1040px;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  a { color: inherit; }
+
+  /* Recurr work bar */
+  .work-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: #0b1220;
+    color: #e5e7eb;
+    padding: 10px 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #1f2937;
+  }
+  .work-bar .left { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .work-bar .tag {
+    background: rgba(255,255,255,0.08);
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .work-bar .tag.live { background: #16a34a; color: #fff; }
+  .work-bar .doc { color: #9ca3af; }
+  .work-bar .controls { display: flex; gap: 10px; align-items: center; }
+  .work-bar .toggle {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(250, 204, 21, 0.15);
+    border: 1px solid rgba(250, 204, 21, 0.4);
+    color: #fde68a;
+    padding: 5px 11px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    user-select: none;
+  }
+  .work-bar .toggle.off { background: rgba(255,255,255,0.05); border-color: #374151; color: #9ca3af; }
+  .work-bar .toggle .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--highlight-strong);
+    box-shadow: 0 0 0 3px rgba(250,204,21,0.2);
+  }
+  .work-bar .toggle.off .dot { background: #6b7280; box-shadow: none; }
+  .work-bar a.sheet-link {
+    color: #93c5fd;
+    text-decoration: underline;
+    text-decoration-color: #2563eb;
+    text-underline-offset: 3px;
+  }
+
+  /* Variable highlighting — applied to <mark.var> when body has .vars-on */
+  mark.var {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+    transition: background 120ms ease, padding 120ms ease, box-shadow 120ms ease;
+    position: relative;
+    cursor: help;
+  }
+  body.vars-on mark.var {
+    background: var(--highlight);
+    padding: 1px 4px;
+    border-radius: 3px;
+    box-shadow: inset 0 -2px 0 rgba(202, 138, 4, 0.35);
+  }
+  body.vars-on mark.var:hover {
+    background: var(--highlight-strong);
+    box-shadow: inset 0 -2px 0 rgba(120, 53, 15, 0.5);
+  }
+  body.vars-on mark.var::after {
+    content: attr(data-var);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #111827;
+    color: #fde68a;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 120ms ease, transform 120ms ease;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  body.vars-on mark.var:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  /* Cells in the sample report table — use compact tooltip style */
+  body.vars-on td mark.var,
+  body.vars-on th mark.var { padding: 0 3px; }
+
+  /* CS-style mock chrome */
+  .cs-nav {
+    border-bottom: 1px solid var(--line);
+    padding: 0 24px;
+    background: #fff;
+  }
+  .cs-nav-inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .cs-logo { font-size: 18px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+  .cs-logo span { color: var(--blue); }
+  .cs-links { display: flex; gap: 28px; font-size: 14px; color: var(--ink-2); font-weight: 500; }
+  .cs-links .active { color: var(--blue); border-bottom: 2px solid var(--blue); padding-bottom: 22px; }
+  .cs-cta {
+    background: var(--blue);
+    color: #fff;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  /* Section primitives */
+  .container { max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+  .section { padding: 64px 0; }
+  .section.tight { padding: 48px 0; }
+  .section.soft { background: var(--bg-soft); }
+  .section.dark { background: #0b1220; color: #e5e7eb; }
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    background: var(--blue-soft);
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+  }
+  h1, h2, h3, h4 { color: var(--ink); margin: 0; letter-spacing: -0.015em; }
+  h1 { font-size: 44px; font-weight: 800; line-height: 1.1; letter-spacing: -0.025em; }
+  h2 { font-size: 30px; font-weight: 700; line-height: 1.2; }
+  h3 { font-size: 17px; font-weight: 600; line-height: 1.4; }
+  h4 { font-size: 14px; font-weight: 600; line-height: 1.4; }
+  p { margin: 0; color: var(--ink-2); }
+  .lead { font-size: 18px; color: var(--muted); line-height: 1.65; }
+  .pill {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: var(--blue-soft);
+    color: var(--blue);
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 100ms ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--blue); color: #fff; }
+  .btn-secondary { border: 1px solid var(--line); color: var(--ink); background: #fff; }
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* FOLD 1: HERO */
+  .hero { padding: 64px 0 56px; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .hero h1 { margin: 14px 0 18px; }
+  .hero .lead { margin-bottom: 26px; }
+  .hero-visual {
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 28px;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .hero-bridge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 12px 0 8px;
+  }
+  .logo-tile {
+    width: 64px; height: 64px;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+  .logo-tile img { width: 36px; height: 36px; object-fit: contain; }
+  .logo-tile.cs { background: var(--ink); color: #fff; font-weight: 800; font-size: 22px; }
+  .bridge-arrow {
+    width: 28px; height: 2px; background: var(--muted-2); position: relative;
+  }
+  .bridge-arrow::after {
+    content: '';
+    position: absolute; right: -1px; top: -4px;
+    border: 5px solid transparent;
+    border-left-color: var(--muted-2);
+  }
+  /* Mini dashboard preview inside hero visual */
+  .mini-dash {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .mini-dash-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .mini-dash-title { font-size: 12px; font-weight: 600; color: var(--ink); }
+  .mini-dash-meta { font-size: 10px; color: var(--muted-2); font-family: var(--mono); }
+  .mini-dash-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .mini-stat {
+    background: var(--bg-soft);
+    padding: 8px 10px;
+    border-radius: 6px;
+  }
+  .mini-stat .lbl { font-size: 9px; color: var(--muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.04em; }
+  .mini-stat .val { font-size: 14px; font-weight: 700; color: var(--ink); margin-top: 2px; }
+  .mini-bars {
+    display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; height: 36px; align-items: end;
+    padding-top: 4px;
+  }
+  .mini-bars span {
+    background: var(--accent, var(--blue));
+    border-radius: 2px 2px 0 0;
+    opacity: 0.85;
+  }
+
+  /* FOLD 3: REPORTS */
+  .report-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .report-card {
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    border-left: 4px solid var(--accent, var(--blue));
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .report-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--blue-soft);
+    color: var(--blue);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .report-icon svg { width: 20px; height: 20px; }
+  .report-card h3 { font-size: 16px; }
+  .report-card p { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+  /* Sample report preview */
+  .sample-preview {
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-top: 24px;
+  }
+  .sample-preview-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 14px;
+  }
+  .sample-preview h3 { font-size: 15px; }
+  .sample-preview .meta { font-size: 11px; color: var(--muted-2); font-family: var(--mono); }
+  table.sample {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  table.sample thead th {
+    text-align: left;
+    padding: 10px 12px;
+    color: var(--muted);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    border-bottom: 2px solid var(--line);
+  }
+  table.sample tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-2);
+  }
+  table.sample tbody tr:last-child td { font-weight: 700; border-bottom: none; }
+  .sample-foot {
+    font-size: 11px;
+    color: var(--muted-2);
+    font-style: italic;
+    margin-top: 10px;
+  }
+
+  /* FOLD 4: 15 vs 1 */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .compare-col {
+    padding: 24px;
+    border-radius: var(--radius);
+  }
+  .compare-col.bad { background: var(--red-soft); border: 1px solid var(--red-line); }
+  .compare-col.good { background: var(--green-soft); border: 1px solid var(--green-line); }
+  .compare-col h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+  }
+  .compare-col.bad h4 { color: var(--red); }
+  .compare-col.good h4 { color: var(--green); }
+  .compare-col ul { list-style: none; padding: 0; margin: 0; }
+  .compare-col li {
+    padding: 8px 0 8px 28px;
+    position: relative;
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.55;
+  }
+  .compare-col li::before {
+    position: absolute;
+    left: 0; top: 8px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+  }
+  .compare-col.bad li::before { content: '×'; background: #fee2e2; color: var(--red); }
+  .compare-col.good li::before { content: '✓'; background: #dcfce7; color: var(--green); font-size: 10px; }
+
+  /* FOLD 5: SOURCES GRID */
+  .sources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .source-card {
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    background: #fff;
+    transition: border-color 120ms ease, transform 120ms ease;
+  }
+  .source-card:hover { border-color: var(--blue); transform: translateY(-1px); }
+  .source-logo {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .source-logo img { width: 22px; height: 22px; object-fit: contain; }
+  .source-meta .name { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .source-meta .cat { font-size: 11px; color: var(--muted); }
+
+  /* FOLD 6: INDUSTRIES */
+  .industry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .industry-card {
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #fff;
+  }
+  .industry-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--blue-soft);
+    color: var(--blue);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px;
+  }
+  .industry-icon svg { width: 20px; height: 20px; }
+  .industry-card h3 { font-size: 16px; margin-bottom: 8px; }
+  .industry-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* FOLD 7: SETUP */
+  .setup-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 28px;
+  }
+  .setup-step {
+    position: relative;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #fff;
+  }
+  .step-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px;
+    font-family: var(--mono);
+  }
+  .setup-step h3 { font-size: 15px; margin-bottom: 6px; }
+  .setup-step p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+  /* FOLD 8: SWITCHING */
+  .switch-card {
+    background: var(--amber-soft);
+    border: 1px solid var(--amber-line);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: center;
+  }
+  .switch-card .glyph {
+    width: 80px; height: 80px;
+    border-radius: 16px;
+    background: #fff;
+    border: 1px solid var(--amber-line);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--amber);
+  }
+  .switch-card .glyph svg { width: 36px; height: 36px; }
+  .switch-card h3 { color: #78350f; font-size: 18px; margin-bottom: 6px; }
+  .switch-card p { color: #92400e; font-size: 14px; line-height: 1.55; }
+  .switch-card a { color: var(--amber); font-weight: 600; }
+
+  /* FOLD 9: FAQ */
+  .faq-list { max-width: 720px; margin-top: 16px; }
+  .faq-item {
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+  }
+  .faq-q { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .faq-a { font-size: 15px; color: var(--muted); line-height: 1.65; }
+
+  /* FOLD 10: DARK CTA */
+  .section.dark { text-align: center; padding: 72px 24px; }
+  .section.dark h2 { color: #fff; font-size: 30px; margin-bottom: 10px; }
+  .section.dark p { color: #9ca3af; font-size: 16px; margin-bottom: 24px; }
+
+  /* VARIABLE MAP (work surface, after fold 10) */
+  .var-map-section {
+    background: #0b1220;
+    color: #e5e7eb;
+    padding: 64px 24px;
+    border-top: 4px solid var(--highlight-strong);
+  }
+  .var-map-head { max-width: var(--container); margin: 0 auto 28px; }
+  .var-map-head h2 { color: #fff; margin-bottom: 10px; font-size: 24px; }
+  .var-map-head p { color: #cbd5e1; max-width: 720px; }
+  .var-map-table-wrap {
+    max-width: var(--container);
+    margin: 0 auto;
+    background: #0f172a;
+    border: 1px solid #1f2937;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  table.var-map { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table.var-map thead th {
+    text-align: left;
+    padding: 12px 14px;
+    background: #1f2937;
+    color: #93c5fd;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+  table.var-map tbody td {
+    padding: 10px 14px;
+    border-top: 1px solid #1f2937;
+    color: #e5e7eb;
+    vertical-align: top;
+  }
+  table.var-map tbody td:first-child {
+    font-family: var(--mono);
+    color: #fde68a;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  table.var-map tbody td.fold {
+    color: #94a3b8;
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+  table.var-map tbody td.sample {
+    color: #cbd5e1;
+    max-width: 320px;
+  }
+  .var-map-footer {
+    max-width: var(--container);
+    margin: 24px auto 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .sheet-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--highlight-strong);
+    color: #422006;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  .sheet-cta:hover { background: #fde047; }
+  .var-count {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #94a3b8;
+  }
+
+  /* Footer */
+  .page-footer {
+    text-align: center;
+    padding: 28px 16px;
+    font-size: 12px;
+    color: var(--muted-2);
+    background: #fff;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+  }
+
+  @media (max-width: 880px) {
+    h1 { font-size: 32px; }
+    h2 { font-size: 24px; }
+    .hero-grid, .compare-grid, .report-grid, .industry-grid, .setup-grid {
+      grid-template-columns: 1fr;
+    }
+    .switch-card { grid-template-columns: 1fr; text-align: center; }
+    .switch-card .glyph { margin: 0 auto; }
+    .work-bar { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body class="vars-on">
+
+<!-- ====================================================== -->
+<!-- WORK BAR — only visible on this template page         -->
+<!-- ====================================================== -->
+<div class="work-bar" role="banner">
+  <div class="left">
+    <span class="tag live">Template</span>
+    <span class="doc">Clarisights · Destination pSEO · Sample row: <strong style="color:#fde68a">Looker Studio</strong></span>
+  </div>
+  <div class="controls">
+    <span class="var-count" id="var-count-bar">Counting variables…</span>
+    <button class="toggle" id="vars-toggle" type="button" aria-pressed="true">
+      <span class="dot"></span>
+      <span class="lbl">Variables: ON</span>
+    </button>
+    <a class="sheet-link" href="#variable-map">Jump to sheet ↓</a>
+  </div>
+</div>
+
+<!-- ====================================================== -->
+<!-- CS NAV (mock chrome — gives Yashika the visual frame)  -->
+<!-- ====================================================== -->
+<div class="cs-nav">
+  <div class="cs-nav-inner">
+    <span class="cs-logo">clari<span>sights</span></span>
+    <div class="cs-links">
+      <span>Product</span>
+      <span class="active">Integrations</span>
+      <span>Customers</span>
+      <span>Studio</span>
+    </div>
+    <a href="#" class="cs-cta">Get a Demo</a>
+  </div>
+</div>
+
+<!-- ====================================================== -->
+<!-- FOLD 1 — HERO                                          -->
+<!-- ====================================================== -->
+<section class="hero" style="--accent: #4285f4;">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="pill"><mark class="var" data-var="category">BI &amp; Dashboards</mark></span>
+        <h1 style="margin-top:14px;"><mark class="var" data-var="hero_headline">Build marketing dashboards in Looker Studio with unified data</mark></h1>
+        <p class="lead"><mark class="var" data-var="hero_subtitle">Export your entire marketing data stack to Looker Studio through one connection. Not 15 individual connectors — one unified, normalized data feed that keeps every dashboard in sync.</mark></p>
+        <div class="btn-row">
+          <a href="#" class="btn btn-primary"><mark class="var" data-var="cta_primary">Get a Demo</mark> →</a>
+          <a href="#" class="btn btn-secondary"><mark class="var" data-var="cta_secondary">See all destinations</mark></a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-bridge">
+          <div class="logo-tile cs">C</div>
+          <div class="bridge-arrow"></div>
+          <div class="logo-tile">
+            <img alt="" data-var="destination_logo_url" src="https://cdn.simpleicons.org/looker/4285f4">
+          </div>
+        </div>
+        <div class="mini-dash" style="--accent: #4285f4;">
+          <div class="mini-dash-head">
+            <span class="mini-dash-title"><mark class="var" data-var="hero_dashboard_title">Marketing Performance · Q3</mark></span>
+            <span class="mini-dash-meta">Live · 4m ago</span>
+          </div>
+          <div class="mini-dash-stats">
+            <div class="mini-stat">
+              <div class="lbl">Spend</div>
+              <div class="val"><mark class="var" data-var="hero_stat_1_value">$96.2K</mark></div>
+            </div>
+            <div class="mini-stat">
+              <div class="lbl">ROAS</div>
+              <div class="val"><mark class="var" data-var="hero_stat_2_value">3.4×</mark></div>
+            </div>
+            <div class="mini-stat">
+              <div class="lbl">Conv.</div>
+              <div class="val"><mark class="var" data-var="hero_stat_3_value">4,610</mark></div>
+            </div>
+          </div>
+          <div class="mini-bars">
+            <span style="height: 60%"></span>
+            <span style="height: 75%"></span>
+            <span style="height: 50%"></span>
+            <span style="height: 88%"></span>
+            <span style="height: 65%"></span>
+            <span style="height: 92%"></span>
+            <span style="height: 70%"></span>
+            <span style="height: 80%"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- FOLD 2 — WHAT [DESTINATION] IS                         -->
+<!-- ====================================================== -->
+<section class="section tight soft">
+  <div class="container">
+    <span class="eyebrow">What it is</span>
+    <h2>What <mark class="var" data-var="destination_name">Looker Studio</mark> is</h2>
+    <div style="max-width:780px;margin-top:14px;">
+      <p style="font-size:16px;line-height:1.7;color:var(--ink-2);">
+        <mark class="var" data-var="what_it_is">Looker Studio is Google's free, browser-based dashboard tool. Marketing teams use it to build shared reports that pull data from across the stack — Google Ads, GA4, Sheets, BigQuery — and embed them in everything from CMO updates to client deliverables.</mark>
+      </p>
+      <p style="font-size:16px;line-height:1.7;color:var(--ink-2);margin-top:14px;">
+        <mark class="var" data-var="why_clarisights_feeds_it">The catch: Looker Studio is only as good as the data flowing in. Most teams end up wiring 10-15 individual connectors, each with its own schema, its own bugs, and its own fees. Clarisights replaces that mess with one normalized, monitored feed — so every chart in Looker Studio reads from the same source of truth.</mark>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- FOLD 3 — REPORTS YOU CAN BUILD                         -->
+<!-- ====================================================== -->
+<section class="section" style="--accent: #4285f4;">
+  <div class="container">
+    <span class="eyebrow">Reports you can build</span>
+    <h2>Dashboards your team will actually open in <mark class="var" data-var="destination_name_2">Looker Studio</mark></h2>
+    <p class="lead" style="max-width:680px;margin-top:10px;">From CMO-level summaries to weekly business reviews — every chart pulls from the same Clarisights feed.</p>
+
+    <div class="report-grid">
+      <!-- Report card 1 -->
+      <div class="report-card">
+        <div class="report-icon">
+          <!-- bar-chart-3 -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+        </div>
+        <h3><mark class="var" data-var="report_1_name">Executive Marketing Overview</mark></h3>
+        <p><mark class="var" data-var="report_1_description">Total spend, blended ROAS, conversions, and channel mix on one shareable link. The CMO's home page.</mark></p>
+      </div>
+      <!-- Report card 2 -->
+      <div class="report-card">
+        <div class="report-icon">
+          <!-- calendar-clock -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><circle cx="16" cy="16" r="6"/><path d="M16 14v2l1 1"/></svg>
+        </div>
+        <h3><mark class="var" data-var="report_2_name">Weekly Business Review</mark></h3>
+        <p><mark class="var" data-var="report_2_description">Auto-generated WoW and MoM comparisons across paid, organic, and lifecycle. The format every performance team is rebuilding from scratch.</mark></p>
+      </div>
+      <!-- Report card 3 -->
+      <div class="report-card">
+        <div class="report-icon">
+          <!-- route -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
+        </div>
+        <h3><mark class="var" data-var="report_3_name">Cross-Channel Performance Mix</mark></h3>
+        <p><mark class="var" data-var="report_3_description">Compare ROAS, CPA, and spend share across Meta, Google, TikTok, and beyond — normalized so one row equals one definition.</mark></p>
+      </div>
+    </div>
+
+    <!-- Sample table preview -->
+    <div class="sample-preview">
+      <div class="sample-preview-head">
+        <h3><mark class="var" data-var="sample_title">Sample · Cross-Channel Overview</mark></h3>
+        <span class="meta">Auto-refreshed hourly</span>
+      </div>
+      <table class="sample">
+        <thead>
+          <tr>
+            <th>Channel</th><th>Spend</th><th>Conversions</th><th>ROAS</th><th>CPA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><mark class="var" data-var="sample_r1_channel">Facebook Ads</mark></td>
+            <td><mark class="var" data-var="sample_r1_spend">$45,200</mark></td>
+            <td><mark class="var" data-var="sample_r1_conv">1,890</mark></td>
+            <td><mark class="var" data-var="sample_r1_roas">3.2×</mark></td>
+            <td><mark class="var" data-var="sample_r1_cpa">$23.92</mark></td>
+          </tr>
+          <tr>
+            <td><mark class="var" data-var="sample_r2_channel">Google Ads</mark></td>
+            <td><mark class="var" data-var="sample_r2_spend">$38,600</mark></td>
+            <td><mark class="var" data-var="sample_r2_conv">2,100</mark></td>
+            <td><mark class="var" data-var="sample_r2_roas">4.1×</mark></td>
+            <td><mark class="var" data-var="sample_r2_cpa">$18.38</mark></td>
+          </tr>
+          <tr>
+            <td><mark class="var" data-var="sample_r3_channel">TikTok Ads</mark></td>
+            <td><mark class="var" data-var="sample_r3_spend">$12,400</mark></td>
+            <td><mark class="var" data-var="sample_r3_conv">620</mark></td>
+            <td><mark class="var" data-var="sample_r3_roas">2.8×</mark></td>
+            <td><mark class="var" data-var="sample_r3_cpa">$20.00</mark></td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td><mark class="var" data-var="sample_total_spend">$96,200</mark></td>
+            <td><mark class="var" data-var="sample_total_conv">4,610</mark></td>
+            <td><mark class="var" data-var="sample_total_roas">3.4×</mark></td>
+            <td><mark class="var" data-var="sample_total_cpa">$20.87</mark></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="sample-foot">Illustrative. All metrics normalized by Clarisights before they hit your dashboard.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- FOLD 4 — 15 vs 1 WEDGE                                 -->
+<!-- ====================================================== -->
+<section class="section soft">
+  <div class="container">
+    <span class="eyebrow">Why Clarisights → <mark class="var" data-var="destination_name_3">Looker Studio</mark></span>
+    <h2><mark class="var" data-var="wedge_headline">15 individual connectors, or one unified feed</mark></h2>
+    <p class="lead" style="max-width:680px;margin-top:10px;"><mark class="var" data-var="wedge_subhead">Most teams plumb each platform into Looker Studio one at a time. Then they spend the next year debugging schemas, paying connector fees, and explaining why ROAS doesn't match across charts.</mark></p>
+
+    <div class="compare-grid">
+      <div class="compare-col bad">
+        <h4><mark class="var" data-var="bad_col_label">15 individual connectors</mark></h4>
+        <ul>
+          <li><mark class="var" data-var="bad_point_1">Every platform needs its own connector — and its own login, OAuth, and quota</mark></li>
+          <li><mark class="var" data-var="bad_point_2">Different schemas mean hours blending data manually before the chart even works</mark></li>
+          <li><mark class="var" data-var="bad_point_3">Connectors break silently. Stale dashboards reach the CMO before you do.</mark></li>
+          <li><mark class="var" data-var="bad_point_4">$200–$500 / month in connector fees that compound with every new source</mark></li>
+        </ul>
+      </div>
+      <div class="compare-col good">
+        <h4><mark class="var" data-var="good_col_label">One Clarisights feed</mark></h4>
+        <ul>
+          <li><mark class="var" data-var="good_point_1">A single data source in Looker Studio — every channel already unified</mark></li>
+          <li><mark class="var" data-var="good_point_2">Pre-normalized fields. "ROAS" means the same thing across every chart.</mark></li>
+          <li><mark class="var" data-var="good_point_3">Monitored sync with proactive alerts the moment data goes stale</mark></li>
+          <li><mark class="var" data-var="good_point_4">A reporting layer included — calculated metrics, currency conversion, attribution windows</mark></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- FOLD 5 — SOURCES THAT FEED THIS DESTINATION            -->
+<!-- ====================================================== -->
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">Sources</span>
+    <h2>Connect these sources to <mark class="var" data-var="destination_name_4">Looker Studio</mark></h2>
+    <p class="lead" style="max-width:680px;margin-top:10px;"><mark class="var" data-var="sources_intro">Your most-used ad platforms, attribution tools, and revenue systems — unified into one feed and ready for any chart.</mark></p>
+
+    <div class="sources-grid">
+      <a href="#" class="source-card">
+        <div class="source-logo"><img alt="" data-var="source_1_logo" src="https://cdn.simpleicons.org/facebook/1877f2"></div>
+        <div class="source-meta">
+          <div class="name"><mark class="var" data-var="source_1_name">Facebook Ads</mark></div>
+          <div class="cat"><mark class="var" data-var="source_1_cat">Social</mark></div>
+        </div>
+      </a>
+      <a href="#" class="source-card">
+        <div class="source-logo"><img alt="" data-var="source_2_logo" src="https://cdn.simpleicons.org/googleads/4285f4"></div>
+        <div class="source-meta">
+          <div class="name"><mark class="var" data-var="source_2_name">Google Ads</mark></div>
+          <div class="cat"><mark class="var" data-var="source_2_cat">Search</mark></div>
+        </div>
+      </a>
+      <a href="#" class="source-card">
+        <div class="source-logo"><img alt="" data-var="source_3_logo" src="https://cdn.simpleicons.org/tiktok/000000"></div>
+        <div class="source-meta">
+          <div class="name"><mark class="var" data-var="source_3_name">TikTok Ads</mark></div>
+          <div class="cat"><mark class="var" data-var="source_3_cat">Social</mark></div>
+        </div>
+      </a>
+      <a href="#" class="source-card">
+        <div class="source-logo"><img alt="" data-var="source_4_logo" src="https://cdn.simpleicons.org/linkedin/0a66c2"></div>
+        <div class="source-meta">
+          <div class="name"><mark class="var" data-var="source_4_name">LinkedIn Ads</mark></div>
+          <div class="cat"><mark class="var" data-var="source_4_cat">Social</mark></div>
+        </div>
+      </a>
+      <a href="#" class="source-card">
+        <div class="source-logo"><img alt="" data-var="source_5_logo" src="https://cdn.simpleicons.org/googleanalytics/e37400"></div>
+        <div class="source-meta">
+          <div class="name"><mark class="var" data-var="source_5_name">Google Analytics</mark></div>
+          <div class="cat"><mark class="var" data-var="source_5_cat">Analytics</mark></div>
+        </div>
+      </a>
+      <a href="#" class="source-card">
+        <div class="source-logo"><img alt="" data-var="source_6_logo" src="https://cdn.simpleicons.org/appsflyer/00d1c1"></div>
+        <div class="source-meta">
+          <div class="name"><mark class="var" data-var="source_6_name">AppsFlyer</mark></div>
+          <div class="cat"><mark class="var" data-var="source_6_cat">Attribution</mark></div>
+        </div>
+      </a>
+      <a href="#" class="source-card">
+        <div class="source-logo"><img alt="" data-var="source_7_logo" src="https://cdn.simpleicons.org/shopify/95bf47"></div>
+        <div class="source-meta">
+          <div class="name"><mark class="var" data-var="source_7_name">Shopify</mark></div>
+          <div class="cat"><mark class="var" data-var="source_7_cat">Commerce</mark></div>
+        </div>
+      </a>
+      <a href="#" class="source-card">
+        <div class="source-logo"><img alt="" data-var="source_8_logo" src="https://cdn.simpleicons.org/snapchat/fffc00"></div>
+        <div class="source-meta">
+          <div class="name"><mark class="var" data-var="source_8_name">Snapchat Ads</mark></div>
+          <div class="cat"><mark class="var" data-var="source_8_cat">Social</mark></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- FOLD 6 — INDUSTRY USE CASES                            -->
+<!-- ====================================================== -->
+<section class="section soft">
+  <div class="container">
+    <span class="eyebrow">Industries</span>
+    <h2>How teams use <mark class="var" data-var="destination_name_5">Looker Studio</mark> with Clarisights</h2>
+    <p class="lead" style="max-width:680px;margin-top:10px;">Three patterns we see across the customer base. Each one starts in Clarisights and lands in a Looker Studio dashboard the team actually checks.</p>
+
+    <div class="industry-grid">
+      <div class="industry-card">
+        <div class="industry-icon">
+          <!-- shopping-bag -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </div>
+        <h3><mark class="var" data-var="industry_1_name">E-commerce &amp; DTC</mark></h3>
+        <p><mark class="var" data-var="industry_1_usecase">E-com teams build a blended ROAS dashboard combining Meta, Google, and TikTok spend with Shopify revenue — the version platforms can't show because each one only sees its own slice.</mark></p>
+      </div>
+      <div class="industry-card">
+        <div class="industry-icon">
+          <!-- gamepad-2 -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg>
+        </div>
+        <h3><mark class="var" data-var="industry_2_name">Gaming &amp; Apps</mark></h3>
+        <p><mark class="var" data-var="industry_2_usecase">Mobile teams pipe MMP data (AppsFlyer, Adjust) and SKAN attribution alongside paid spend — so the LTV dashboard the CFO sees uses the same numbers as the UA dashboard the growth team owns.</mark></p>
+      </div>
+      <div class="industry-card">
+        <div class="industry-icon">
+          <!-- briefcase -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        </div>
+        <h3><mark class="var" data-var="industry_3_name">B2B SaaS</mark></h3>
+        <p><mark class="var" data-var="industry_3_usecase">B2B teams blend LinkedIn, Google, and content spend with HubSpot pipeline — turning Looker Studio into the marketing-pipeline view the CRO checks before every board meeting.</mark></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- FOLD 7 — SETUP AT A GLANCE                             -->
+<!-- ====================================================== -->
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">Setup</span>
+    <h2>Going live in <mark class="var" data-var="destination_name_6">Looker Studio</mark></h2>
+    <p class="lead" style="max-width:680px;margin-top:10px;"><mark class="var" data-var="setup_intro">Three steps. No SQL. No connector wrangling. Most teams have their first dashboard live the same day.</mark></p>
+
+    <div class="setup-grid">
+      <div class="setup-step">
+        <div class="step-num">1</div>
+        <h3><mark class="var" data-var="setup_step_1_title">Connect your sources to Clarisights</mark></h3>
+        <p><mark class="var" data-var="setup_step_1_body">Authorize each ad platform once. Clarisights handles schema unification and historical backfill in the background.</mark></p>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">2</div>
+        <h3><mark class="var" data-var="setup_step_2_title">Add Clarisights as a Looker Studio data source</mark></h3>
+        <p><mark class="var" data-var="setup_step_2_body">Use the native Looker Studio connector. Pick the metrics and dimensions you need — they show up exactly the way Clarisights normalizes them.</mark></p>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">3</div>
+        <h3><mark class="var" data-var="setup_step_3_title">Build, share, and stop worrying about pipes</mark></h3>
+        <p><mark class="var" data-var="setup_step_3_body">Drop in any chart, table, or scorecard. Clarisights syncs hourly and pages your team if anything upstream breaks.</mark></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- FOLD 8 — SWITCHING FROM                                -->
+<!-- ====================================================== -->
+<section class="section tight">
+  <div class="container">
+    <span class="eyebrow">Switching</span>
+    <h2>Already piping data into <mark class="var" data-var="destination_name_7">Looker Studio</mark> with another tool?</h2>
+
+    <div class="switch-card">
+      <div class="glyph">
+        <!-- repeat-2 -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 3-3 3 3"/><path d="M13 18H7a2 2 0 0 1-2-2V6"/><path d="m22 15-3 3-3-3"/><path d="M11 6h6a2 2 0 0 1 2 2v10"/></svg>
+      </div>
+      <div>
+        <h3><mark class="var" data-var="switch_headline">Coming from Supermetrics, Funnel, or Datorama?</mark></h3>
+        <p><mark class="var" data-var="switch_body">Those tools are pipes — they shuttle data into Looker Studio and stop there. Clarisights ships the same pipe, then layers on normalization, calculated metrics, monitoring, and the reporting interface your team won't outgrow in six months.</mark> <a href="#"><mark class="var" data-var="switch_cta_text">See the side-by-side comparison →</mark></a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- FOLD 9 — FAQ                                           -->
+<!-- ====================================================== -->
+<section class="section soft">
+  <div class="container">
+    <span class="eyebrow">FAQ</span>
+    <h2>Frequently asked questions</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q"><mark class="var" data-var="faq_1_q">Do I still need individual Looker Studio connectors after I plug in Clarisights?</mark></div>
+        <div class="faq-a"><mark class="var" data-var="faq_1_a">No. The Clarisights connector replaces every per-platform connector you'd otherwise wire up — one feed instead of 15 to manage, debug, and pay for.</mark></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><mark class="var" data-var="faq_2_q">How does my data actually land in Looker Studio?</mark></div>
+        <div class="faq-a"><mark class="var" data-var="faq_2_a">Clarisights provides a native Looker Studio connector. Add it as a data source, choose the metrics and dimensions you want, and your unified marketing data is available in any chart, table, or scorecard.</mark></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><mark class="var" data-var="faq_3_q">Is the data always fresh, or do I have to refresh manually?</mark></div>
+        <div class="faq-a"><mark class="var" data-var="faq_3_a">Clarisights syncs from every source on an hourly schedule. Your Looker Studio dashboards pull the latest data on every load — no manual refresh, no scheduled extracts.</mark></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><mark class="var" data-var="faq_4_q">Why not just use Looker Studio's free native connectors?</mark></div>
+        <div class="faq-a"><mark class="var" data-var="faq_4_a">They cover one platform each, with raw fields and zero monitoring. The moment you need cross-channel ROAS or a metric Looker Studio doesn't ship out of the box, you're back to manual data prep. Clarisights handles all of that upstream so the dashboard layer stays clean.</mark></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><mark class="var" data-var="faq_5_q">What's the lift to migrate from a tool we're already paying for?</mark></div>
+        <div class="faq-a"><mark class="var" data-var="faq_5_a">For most teams, under a week. We help map your existing dashboards to Clarisights fields, run the two systems in parallel for a sprint, then cut over once parity is confirmed.</mark></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- FOLD 10 — DARK CTA                                     -->
+<!-- ====================================================== -->
+<section class="section dark">
+  <div class="container">
+    <h2><mark class="var" data-var="cta_headline">Build better marketing dashboards in Looker Studio</mark></h2>
+    <p><mark class="var" data-var="cta_subhead">300+ sources, one unified feed, zero connector management.</mark></p>
+    <a href="#" class="btn btn-primary" style="background:#fff;color:#0b1220;"><mark class="var" data-var="cta_button">Book a Demo</mark> →</a>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- VARIABLE MAP — work surface                            -->
+<!-- ====================================================== -->
+<section class="var-map-section" id="variable-map">
+  <div class="var-map-head">
+    <h2>Variable map · <span style="color:#fde68a;">Looker Studio sample row</span></h2>
+    <p>Every variable on the page above. Each row maps to one column in the Google Sheet. Headers match exactly — the import to Framer is a 1:1 column mapping.</p>
+  </div>
+
+  <div class="var-map-table-wrap">
+    <table class="var-map">
+      <thead>
+        <tr>
+          <th style="width:24%">variable_name</th>
+          <th style="width:18%">fold</th>
+          <th>sample value (Looker Studio)</th>
+        </tr>
+      </thead>
+      <tbody id="var-map-body">
+        <!-- Populated by JS — single source of truth = the DOM -->
+      </tbody>
+    </table>
+  </div>
+
+  <div class="var-map-footer">
+    <span class="var-count" id="var-count-foot">Counting variables…</span>
+    <a class="sheet-cta" id="sheet-link" href="#" target="_blank" rel="noopener">
+      <!-- table-2 icon -->
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0H5a2 2 0 0 1-2-2V9m6 12h10a2 2 0 0 0 2-2V9M3 9h18"/></svg>
+      Open the Google Sheet (Framer-import-ready) →
+    </a>
+  </div>
+</section>
+
+<footer class="page-footer">
+  Built by Recurr · Clarisights destination pSEO template · Sample row: Looker Studio · 5 destinations in scope (Looker Studio · Google Sheets · BigQuery · Snowflake · Amazon S3)
+</footer>
+
+<script>
+(function () {
+  // ===== Variable highlighting toggle =====
+  var body = document.body;
+  var toggle = document.getElementById('vars-toggle');
+  var label = toggle.querySelector('.lbl');
+  toggle.addEventListener('click', function () {
+    var on = body.classList.toggle('vars-on');
+    toggle.classList.toggle('off', !on);
+    toggle.setAttribute('aria-pressed', on ? 'true' : 'false');
+    label.textContent = 'Variables: ' + (on ? 'ON' : 'OFF');
+  });
+
+  // ===== Build the variable map from the live DOM =====
+  // Walks every <mark.var> + every [data-var] image attribute, in document order,
+  // de-duplicates by name (variables that appear multiple times only listed once),
+  // tags each with the fold it lives in.
+
+  var folds = [
+    { id: 'fold-1', label: '1 · Hero' },
+    { id: 'fold-2', label: '2 · What it is' },
+    { id: 'fold-3', label: '3 · Reports + sample' },
+    { id: 'fold-4', label: '4 · 15 vs 1 wedge' },
+    { id: 'fold-5', label: '5 · Sources grid' },
+    { id: 'fold-6', label: '6 · Industries' },
+    { id: 'fold-7', label: '7 · Setup' },
+    { id: 'fold-8', label: '8 · Switching' },
+    { id: 'fold-9', label: '9 · FAQ' },
+    { id: 'fold-10', label: '10 · CTA' }
+  ];
+
+  // Identify each fold by section index
+  var sections = document.querySelectorAll('section.hero, section.section');
+  // Filter out the var-map section
+  var contentSections = [];
+  sections.forEach(function (s) {
+    if (!s.classList.contains('var-map-section')) contentSections.push(s);
+  });
+
+  function foldFor(node) {
+    for (var i = 0; i < contentSections.length; i++) {
+      if (contentSections[i].contains(node)) {
+        return folds[i] ? folds[i].label : '—';
+      }
+    }
+    return '—';
+  }
+
+  var seen = Object.create(null);
+  var rows = [];
+
+  // <mark class="var" data-var="X">value</mark>
+  document.querySelectorAll('mark.var[data-var]').forEach(function (n) {
+    var name = n.getAttribute('data-var');
+    if (seen[name]) return;
+    seen[name] = true;
+    rows.push({
+      name: name,
+      fold: foldFor(n),
+      sample: n.textContent.trim()
+    });
+  });
+
+  // <img data-var="X" src="...">
+  document.querySelectorAll('img[data-var]').forEach(function (n) {
+    var name = n.getAttribute('data-var');
+    if (seen[name]) return;
+    seen[name] = true;
+    rows.push({
+      name: name,
+      fold: foldFor(n),
+      sample: n.getAttribute('src') || ''
+    });
+  });
+
+  var tbody = document.getElementById('var-map-body');
+  rows.forEach(function (r) {
+    var tr = document.createElement('tr');
+    var sample = r.sample.length > 140 ? r.sample.slice(0, 137) + '…' : r.sample;
+    tr.innerHTML =
+      '<td>' + r.name + '</td>' +
+      '<td class="fold">' + r.fold + '</td>' +
+      '<td class="sample">' + escapeHtml(sample) + '</td>';
+    tbody.appendChild(tr);
+  });
+
+  function escapeHtml(s) {
+    return s
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // Counts
+  var countText = rows.length + ' variables';
+  document.getElementById('var-count-bar').textContent = countText;
+  document.getElementById('var-count-foot').textContent = countText + ' · 1 sample row filled (Looker Studio) · 4 rows pending (Google Sheets, BigQuery, Snowflake, Amazon S3)';
+
+  // Google Sheet link — placeholder until Pratik creates and pastes the URL
+  // The sheet's column order = the rows array above, in order.
+  var SHEET_URL = 'https://docs.google.com/spreadsheets/d/PASTE_SHEET_ID_HERE/edit';
+  document.getElementById('sheet-link').setAttribute('href', SHEET_URL);
+})();
+</script>
+
+</body>
+</html>
