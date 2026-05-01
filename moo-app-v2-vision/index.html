@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>MOO App v2 — Membership, Multi-Kitchen, Nutrition</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --oat: #f3e9d7;
+      --ink: #1a1a1a;
+      --muted: #1a1a1a99;
+      --line: #1a1a1a18;
+      --red: #ff3d47;
+      --yellow: #ffd230;
+      --blue: #2937f0;
+      --green: #2f9e63;
+      --card: #ffffff;
+      --code-bg: #1a1a1a;
+      --code-ink: #f3e9d7;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--oat);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 24px 96px;
+    }
+
+    .wrap { max-width: 760px; margin: 0 auto; }
+
+    header.top {
+      padding: 56px 0 32px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 48px;
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    h1 {
+      font-size: 44px;
+      line-height: 1.05;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+    }
+    .subhead {
+      font-size: 17px;
+      color: var(--muted);
+      font-style: italic;
+      max-width: 580px;
+    }
+    .meta {
+      margin-top: 26px;
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .meta span::before {
+      content: '·';
+      margin-right: 18px;
+      opacity: 0.4;
+    }
+    .meta span:first-child::before { content: ''; margin: 0; }
+
+    h2 {
+      font-size: 26px;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin: 56px 0 16px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+    h2:first-of-type { border-top: none; padding-top: 0; }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 32px 0 10px;
+      letter-spacing: -0.005em;
+    }
+
+    p { margin-bottom: 14px; }
+
+    blockquote {
+      margin: 22px 0;
+      padding: 18px 22px;
+      border-left: 3px solid var(--red);
+      background: #ffffff70;
+      font-style: italic;
+      color: var(--ink);
+    }
+    blockquote cite {
+      display: block;
+      margin-top: 8px;
+      font-size: 12px;
+      font-style: normal;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, monospace;
+      font-size: 13px;
+      background: var(--ink);
+      color: var(--code-ink);
+      padding: 1px 7px;
+      border-radius: 4px;
+    }
+
+    pre {
+      background: var(--code-bg);
+      color: var(--code-ink);
+      padding: 22px;
+      border-radius: 10px;
+      overflow-x: auto;
+      margin: 20px 0 28px;
+      font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, monospace;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+    pre code { background: none; color: inherit; padding: 0; font-size: inherit; }
+
+    ul, ol { margin: 0 0 16px 22px; }
+    li { margin-bottom: 8px; }
+    li strong { color: var(--ink); }
+
+    a {
+      color: var(--blue);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 22px 0;
+      font-size: 14px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    th {
+      background: #ffffff70;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .callout {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin: 26px 0;
+    }
+    .callout h3 {
+      margin-top: 0;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    .pill {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--yellow);
+      margin-right: 6px;
+    }
+    .pill.green { background: var(--green); color: #fff; }
+    .pill.blue { background: var(--blue); color: #fff; }
+    .pill.red { background: var(--red); color: #fff; }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 40px 0;
+    }
+
+    footer.bottom {
+      margin-top: 72px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    footer.bottom a { color: var(--muted); }
+
+    @media (max-width: 640px) {
+      body { padding: 0 18px 64px; }
+      h1 { font-size: 34px; }
+      pre { font-size: 11px; padding: 16px; }
+      table { font-size: 13px; }
+      th, td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="top">
+      <div class="eyebrow">Internal · Milestone Spec</div>
+      <h1>MOO App v2 — Membership, Multi-Kitchen, Nutrition</h1>
+      <p class="subhead">Working title for the next major milestone of the MOO consumer app.</p>
+      <div class="meta">
+        <span>Owner: Pratik</span>
+        <span>Drafted 2026-05-01</span>
+        <span>Source: <code>~/recurrco/brain/projects/moo/moo-app-v2-vision.md</code></span>
+      </div>
+    </header>
+
+    <p>The current app (<code>moo.kitchen</code>) is a partner-led ordering tool: a customer arrives via a partner QR or invite, adopts that partner as their address, and orders from that menu. It's a strong v1 — Google auth, Razorpay, Slack-bridged chat, and a live order tracker that pulls Outpost fulfilment status — but its identity is "the partner's ordering app that happens to be MOO." The brand is the substrate, not the surface.</p>
+
+    <p>v2 inverts that. The app becomes the brand. A customer can install MOO from the App Store, set up a profile, and land in a place where they can engage with MOO without yet having a menu. Menu access becomes earned — either by being near a public MOO kitchen or by being invited into a partner kitchen. Once in, they get the full ordering surface plus a nutrition layer that turns each order into a logged event the customer can actually use.</p>
+
+    <p>This doc is the spec for that milestone — the user journey, the delta from today, and the strategic call to make first.</p>
+
+    <h2>The premise</h2>
+
+    <blockquote>
+      "I open the app, set up my profile, and land in a place where I do not have any menu accessible to me. I will need to either choose my location or be invited by someone to their kitchen to actually be able to access a menu. Without any menu I am just sitting there doing nothing — I can read about MOO, see coming events, and the latest Instagram story. The moment some kitchen invites me, I get access."
+      <cite>— Pratik, Apr 30 2026</cite>
+    </blockquote>
+
+    <p>Three things change about how the app behaves:</p>
+    <ol>
+      <li><strong>Distribution.</strong> App Store + Play Store, not just <code>moo.kitchen</code> PWA.</li>
+      <li><strong>Identity.</strong> Customer-first ("I'm a MOO member") instead of partner-first ("I'm ordering from Cult Fit"). Multi-membership baked in — one customer can be in their employer's kitchen, their gym's kitchen, and the public MOO HSR kitchen at the same time.</li>
+      <li><strong>Soft landing.</strong> A "no kitchen yet" state that's not a dead end — it's where the brand lives. About MOO, events, IG, find-a-kitchen.</li>
+    </ol>
+
+    <h2>User journey</h2>
+
+<pre>APP STORE  →  install  →  onboarding (3 screens)
+                              │
+                              ▼
+                    ┌─────────────────────┐
+                    │      LOBBY          │   ← no menu yet
+                    │  brand + lookout    │
+                    └─────────┬───────────┘
+                              │
+              ┌───────────────┼───────────────┐
+              ▼               ▼               ▼
+        About MOO       Coming up        Latest IG
+       (story, kitchens) (events)        (Behold feed)
+              │
+              ▼
+       FIND A KITCHEN    ───── two paths ─────
+              │                              │
+              ▼                              ▼
+       Geo-discover                   Invite code / QR
+   (MOO-owned 3 kitchens             (partner kitchens —
+    visible, partners                 Cult Fit, employer,
+    locked unless near                gym, etc.)
+    you AND walk-in
+    enabled)
+              │                              │
+              └──────────────┬───────────────┘
+                             │
+                             ▼
+                ┌──────────────────────────┐
+                │   MEMBER HOME            │   ← kitchen joined
+                │  greeting + active slot  │
+                │  Joined kitchens [·][·]  │   ← multi-membership
+                │  This week: kcal/protein │   ← nutrition strip
+                │  Coming up @ kitchens    │
+                │  [ ORDER NOW → ]         │
+                └────────────┬─────────────┘
+                             │
+                             ▼
+                         MENU  →  TRAY  →  CART  →  PAY
+                                                       │
+                                                       ▼
+                                          LIVE TRACKER + nutrition logged
+                                          ("420 kcal, 15g protein logged")
+                                                       │
+                                                       ▼
+                                                NUTRITION TAB
+                                          (daily / weekly / streak,
+                                           "what's missing today?"
+                                           menu suggestions filtered
+                                           by goal gap)</pre>
+
+    <h3>Stage by stage</h3>
+
+    <p><strong>1. Onboarding (3 screens, ~30s).</strong> Sign in (Google) → "What brings you here?" (diet, goal, allergens — the fields already on the customers table) → "Where do you order from?" (location permission OR "I have an invite" path).</p>
+
+    <p><strong>2. Lobby — no kitchen yet.</strong> Soft landing. Greeting, profile chip, four cards:</p>
+    <ul>
+      <li><strong>About MOO</strong> — story, three cloud kitchens, philosophy, the brand pyramid surfaced as content.</li>
+      <li><strong>Coming up</strong> — upcoming drops, retail launches, events. Driven by a new <code>events</code> table on moo-kitchen DB.</li>
+      <li><strong>Latest from Instagram</strong> — the existing Behold.so feed (<code>feeds.behold.so/HwwHIa1EJOgp95CAXCb2</code>) already rendering on ministryofoats.com.</li>
+      <li><strong>Find a kitchen</strong> — two paths from one card.</li>
+    </ul>
+    <p>A small footer line: <em>"Ordering today? Find us on Swiggy or Zomato."</em> deep-links to the aggregator listings. We don't pretend they don't exist; we just don't lead with them.</p>
+
+    <p><strong>3. Find a kitchen.</strong></p>
+    <ul>
+      <li><em>Geo path</em> — tap "Find a kitchen near me" → permission prompt → list of MOO kitchens within ~5 km (the three cloud kitchens are always public-discoverable; partner kitchens appear if they have walk-in enabled AND the customer is nearby).</li>
+      <li><em>Invite path</em> — enter a 6-character code or scan a QR → "You've been invited to Cult Fit's MOO kitchen by Pratik" → join.</li>
+    </ul>
+    <p>Both paths terminate in <em>kitchen membership</em>. A customer can hold many memberships at once.</p>
+
+    <p><strong>4. Member home — kitchen joined.</strong> The current <code>/home</code> evolves into a richer dashboard:</p>
+    <ul>
+      <li>Greeting + active slot ("Delivering by 9 AM @ Cult Fit Whitefield").</li>
+      <li>Stack of joined kitchens, switchable.</li>
+      <li>This-week nutrition strip ("4 meals · 1,840 kcal · 95 g protein").</li>
+      <li>Coming events @ your kitchens (e.g. an HSR pop-up, a sampling at Cult Fit).</li>
+      <li>Big <em>ORDER NOW</em> CTA → <code>/menu</code>.</li>
+    </ul>
+
+    <p><strong>5. Menu, tray, cart, pay.</strong> Same as today. The customer ordering flow is the strongest part of v1 and doesn't need to change to ship v2.</p>
+
+    <p><strong>6. Order tracker.</strong> Same as today, plus a one-line nutrition log ("420 kcal, 15 g protein logged for today").</p>
+
+    <p><strong>7. Nutrition tab.</strong> The new fourth tab. Daily / weekly view of consumption against the profile's health goal, derived from <code>order_items</code> × Outpost recipe-CMS nutrition. Streak counter. <em>"What's missing today?"</em> — menu suggestions filtered by the day's protein / fibre / kcal gap.</p>
+
+    <h2>Surface map (v2)</h2>
+
+<pre>/                       lobby (no membership)  OR  member home (membership exists)
+/auth/sign-in           Google OAuth (unchanged)
+/onboarding             new — 3-screen wizard
+/about                  new — brand story, kitchens, philosophy
+/events                 new — upcoming drops, events
+/find                   new — geo-discover OR invite code
+/menu                   unchanged surface, gated on having ≥ 1 membership
+/orders                 unchanged
+/orders/[id]            unchanged
+/profile                unchanged (multi-membership already supported in schema)
+/chat                   unchanged
+/eats                   new — nutrition tab + history + suggestions</pre>
+
+    <p>Tab bar grows from four to five: <strong>Menu · Orders · Eats · Chat · Profile</strong>. For lobby users (no membership), Menu + Eats are hidden — the tabs are <strong>Discover · Find · Chat · Profile</strong>.</p>
+
+    <h2>Delta from reality — what stays, what's new</h2>
+
+    <table>
+      <thead>
+        <tr><th>Area</th><th>Today</th><th>v2 needs</th><th>Δ</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Auth</td><td>Google OAuth via Supabase</td><td>Same</td><td><span class="pill green">none</span></td></tr>
+        <tr><td>Cart + slot picker</td><td>Working</td><td>Same</td><td><span class="pill green">none</span></td></tr>
+        <tr><td>Razorpay</td><td>Live</td><td>Same</td><td><span class="pill green">none</span></td></tr>
+        <tr><td>Order tracker</td><td>Live, polls Outpost</td><td>Same</td><td><span class="pill green">none</span></td></tr>
+        <tr><td>Slack chat</td><td>Live, persistent thread</td><td>Same</td><td><span class="pill green">none</span></td></tr>
+        <tr><td>Outpost push/poll</td><td>Live, hardened</td><td>Same</td><td><span class="pill green">none</span></td></tr>
+        <tr><td>Catalog</td><td>Outpost recipe CMS w/ nutrition</td><td>Same</td><td><span class="pill green">none</span></td></tr>
+        <tr><td><code>/[slug]</code> adoption</td><td>Single-active address</td><td>Multi-membership surface</td><td><span class="pill">small</span></td></tr>
+        <tr><td><code>/home</code></td><td>One active address card</td><td>Lobby vs member home branching</td><td><span class="pill blue">medium</span></td></tr>
+        <tr><td>Geo-find</td><td>None</td><td>New surface, partners need lat/lng + walk-in flag</td><td><span class="pill blue">medium</span></td></tr>
+        <tr><td>Invite codes</td><td>Partners have slugs</td><td>Expose 6-char codes + QR scanner</td><td><span class="pill">small</span></td></tr>
+        <tr><td>Events</td><td>None</td><td>New <code>events</code> table + UI</td><td><span class="pill blue">medium</span></td></tr>
+        <tr><td>Nutrition tab</td><td>None</td><td>New surface + aggregation</td><td><span class="pill blue">medium</span></td></tr>
+        <tr><td>Onboarding</td><td>None — drops to /home</td><td>3-screen wizard collecting profile fields</td><td><span class="pill">small</span></td></tr>
+        <tr><td>About MOO</td><td>None in-app</td><td>Static content shell, brand pyramid sourced</td><td><span class="pill">small</span></td></tr>
+        <tr><td>Native shell</td><td>PWA only</td><td>Capacitor wrap for App Store + Play</td><td><span class="pill red">large</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Effort estimate</h3>
+
+    <table>
+      <thead>
+        <tr><th>Bucket</th><th>Effort</th><th>Risk</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Lobby state + onboarding wizard</td><td>1 day</td><td>low</td></tr>
+        <tr><td>Multi-membership UX</td><td>1 day</td><td>low — schema already supports</td></tr>
+        <tr><td>Geo-find + <code>partners.lat/lng</code></td><td>2 days</td><td>medium — new map sheet, geocoding</td></tr>
+        <tr><td>Invite codes + QR scan</td><td>1 day</td><td>low</td></tr>
+        <tr><td>Events table + surface</td><td>2 days</td><td>low</td></tr>
+        <tr><td>Nutrition tab</td><td>3 days</td><td>medium — recipe-CMS aggregation</td></tr>
+        <tr><td>Instagram embed</td><td>0.5 day</td><td>low — Behold.so already wired</td></tr>
+        <tr><td>About MOO content shell</td><td>0.5 day</td><td>low</td></tr>
+        <tr><td>Native shell (Capacitor)</td><td>5–10 days</td><td>high — review process, deep links, push</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Total: ~10 dev-days as a PWA.</strong> Add ~2 weeks for native App Store / Play Store.</p>
+
+    <h2>The strategic call</h2>
+
+    <p>There are two interpretations of "kitchen invitation":</p>
+    <ol>
+      <li><strong>Strict invite-only.</strong> Every kitchen requires a partner-issued code. A walk-in customer in HSR cannot see the MOO HSR menu without an invite.</li>
+      <li><strong>Public + private kitchens.</strong> MOO-owned cloud kitchens (HSR, Domlur, Whitefield) are public-discoverable. Partner kitchens (Cult Fit @ X, employer cafeterias, gyms) require invite.</li>
+    </ol>
+
+    <div class="callout">
+      <h3>Recommendation — option 2</h3>
+      <p>Public + private maps cleanly onto what's already true:</p>
+      <ul>
+        <li>Direct + walk-in margins are 36 % vs aggregator's 25 %. The MOO brand app should own that direct relationship — finally a way to compete with Swiggy on owned distribution.</li>
+        <li>The embed flywheel stays intact. Partners get <em>exclusive locked kitchens</em> as their employee/member benefit — that's the offer that makes "MOO at X" valuable to them.</li>
+        <li>Walk-in becomes a real channel, not an afterthought.</li>
+        <li>The nutrition layer becomes the retention loop. Once a customer logs ten meals, the weekly trend is a habit and the suggestions get personalised.</li>
+      </ul>
+    </div>
+
+    <h2>Phased rollout</h2>
+
+    <h3>Phase 1 — Lobby + multi-membership (web/PWA, 1 week)</h3>
+    <ul>
+      <li>Lobby state when <code>addresses.length === 0</code>.</li>
+      <li>About MOO content shell.</li>
+      <li>Instagram embed.</li>
+      <li>Multi-membership in <code>/profile</code> + active-kitchen switcher in tab shell.</li>
+      <li>Surface invite codes per partner; QR generator on the partner side.</li>
+    </ul>
+    <p>Ships value to customers who already have the app — they can browse the brand even before joining a kitchen.</p>
+
+    <h3>Phase 2 — Find + Events (1 week)</h3>
+    <ul>
+      <li><code>partners.lat/lng</code> + <code>accepts_walkins</code> schema.</li>
+      <li>Geo-find sheet with map.</li>
+      <li>Events table + surface in lobby and member home.</li>
+    </ul>
+    <p>Phase 1 + 2 ship as web. The whole thing remains "Add to Home Screen" installable.</p>
+
+    <h3>Phase 3 — Nutrition (1 week)</h3>
+    <ul>
+      <li>Aggregate <code>order_items</code> × recipe-CMS macros into <code>customer_nutrition_daily</code>.</li>
+      <li>Eats tab with daily/weekly view + streak.</li>
+      <li>"What's missing today?" filtered menu suggestions.</li>
+    </ul>
+    <p>Big retention play — the first feature that gives a returning customer a reason to open the app on a non-ordering day.</p>
+
+    <h3>Phase 4 — Native shell (2 weeks)</h3>
+    <ul>
+      <li>Capacitor wrap around the existing Next.js app.</li>
+      <li>Push notifications for "your order is being made", "new event at your kitchen", "weekly nutrition recap".</li>
+      <li>Deep links from Slack, IG, partner QR.</li>
+      <li>Apple + Google review process.</li>
+    </ul>
+    <p>This is the milestone that turns "moo.kitchen on someone's home screen" into "a real app you find on the App Store." Worth doing only after phases 1–3 have moved retention metrics in the right direction.</p>
+
+    <h2>Risks + open questions</h2>
+    <ul>
+      <li><strong>Native vs PWA.</strong> Apple has gotten more permissive about PWAs recently, but no push notifications and a ceiling on perceived legitimacy. Capacitor is the safe pick if app-store presence matters more than time-to-market. Worth deciding before phase 4 starts.</li>
+      <li><strong>Geo + privacy.</strong> Asking for location on a food app is fine; storing it is the wrong move. Resolve to an approximate area (PIN code + 3 km radius) and forget the precise coordinate.</li>
+      <li><strong>Nutrition trust.</strong> The numbers in Outpost recipe CMS are CSV-driven by the Platform Admin. If the customer-facing nutrition tab is wrong, trust collapses fast. Need a pre-launch QA pass on every active SKU's macros.</li>
+      <li><strong>Walk-in mode for the kitchens.</strong> The cloud kitchens were designed for delivery. Turning them into walk-in destinations needs a small ops shift (front-of-house signage, pickup window, walk-in mode in the Outpost tablet UI). Doable, but a real change.</li>
+      <li><strong>Aggregator cannibalisation.</strong> If the app shifts even 5 % of aggregator volume to direct, that's a margin win — but it's a real conversation with Swiggy / Zomato about why we're sending traffic away. Worth being intentional about how the deep-links to aggregators are framed in the lobby.</li>
+    </ul>
+
+    <h2>What this is, what this isn't</h2>
+
+    <p>This is <strong>a milestone spec</strong>, not a sprint plan. It's the answer to "what should the MOO app feel like a year from now?" — written today, on May 1 2026, with the v1 backend already running. The phasing turns it into something shippable in roughly 5 weeks of focused dev work plus a 2-week native review window.</p>
+
+    <p>It is not a redesign of v1. The flows that work today (sign-in, slot, menu, cart, Razorpay, tracker, chat) carry forward unchanged. v2 is about adding the surfaces that make the app feel like a brand, not a checkout, and about turning the existing recipe-CMS data into a customer-facing nutrition layer that doesn't exist anywhere else in the Indian breakfast space.</p>
+
+    <footer class="bottom">
+      <p>Doc owner: Pratik · Last updated 2026-05-01 · Source: <code>brain/projects/moo/moo-app-v2-vision.md</code></p>
+      <p>Related — <a href="/moo-aop-fy27/">MOO AOP FY26-27</a> · <a href="/moo-rohit-prep/">Fundraise pre-read for Rohit</a> · current app at <a href="https://moo.kitchen">moo.kitchen</a></p>
+    </footer>
+
+  </div>
+</body>
+</html>
