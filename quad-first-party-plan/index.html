@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Quad AI — The First-Party Plan</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #ffffff;
+    --rule: #0a0a0a;
+    --soft: #f4f4f0;
+    --muted: #6a6a6a;
+    --hi: #fff8e6;
+    --line: #e2e2dc;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--soft); color: var(--ink); font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; font-feature-settings: 'ss01', 'cv11'; }
+  body { font-size: 16px; line-height: 1.55; }
+
+  .app { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  .nav { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 36px 24px; border-right: 1px solid var(--rule); background: var(--paper); }
+  .stage { padding: 28px 24px; }
+
+  .brand { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+  .doc-title { font-size: 13px; line-height: 1.3; color: var(--muted); margin-bottom: 32px; }
+  .nav-section-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
+  .nav-list { list-style: none; }
+  .nav-list li { margin-bottom: 4px; }
+  .nav-list a { display: flex; gap: 10px; padding: 6px 0 6px 10px; font-size: 12.5px; color: var(--ink); text-decoration: none; line-height: 1.35; border-left: 2px solid transparent; transition: border-color 0.15s; }
+  .nav-list a:hover { border-left-color: var(--ink); }
+  .nav-list a.active { border-left-color: var(--ink); font-weight: 600; }
+  .nav-list .num { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 22px; }
+  .nav-list a.active .num { color: var(--ink); }
+  .nav-foot { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--rule); font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+  .deck { max-width: 1180px; margin: 0 auto; }
+  .slide { background: var(--paper); border: 1px solid var(--rule); border-radius: 4px; min-height: 640px; padding: 56px 64px 64px; margin-bottom: 28px; scroll-margin-top: 28px; position: relative; display: flex; flex-direction: column; }
+  .slide-meta { display: flex; justify-content: space-between; align-items: baseline; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 28px; }
+  .slide h2 { font-size: 36px; line-height: 1.1; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 16px; }
+  .slide h2.large { font-size: 48px; line-height: 1.05; letter-spacing: -0.02em; }
+  .slide .lede { font-size: 16px; color: var(--muted); margin-bottom: 28px; max-width: 760px; line-height: 1.5; }
+
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 6px; }
+  .two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 6px; }
+
+  .tile { border: 1.5px solid var(--ink); border-radius: 4px; padding: 22px 22px 20px; background: var(--paper); display: flex; flex-direction: column; }
+  .tile.dark { background: var(--ink); color: var(--paper); }
+  .tile .tag { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: var(--muted); margin-bottom: 8px; }
+  .tile.dark .tag { color: rgba(255,255,255,0.6); }
+  .tile h4 { font-size: 22px; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .tile h4 small { display: block; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-top: 4px; }
+  .tile p { font-size: 13.5px; line-height: 1.55; color: var(--ink); }
+  .tile.dark p { color: rgba(255,255,255,0.85); }
+  .tile .ex { margin-top: 12px; padding-top: 12px; border-top: 1px dashed #d6d6cf; font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .tile.dark .ex { border-top-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.65); }
+
+  .pill { display: inline-block; padding: 3px 8px; border: 1px solid var(--ink); border-radius: 100px; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; }
+  .pill.solid { background: var(--ink); color: var(--paper); }
+  .pill.warn { background: var(--hi); }
+
+  .diag { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 8px; }
+  .diag-card { border: 1.5px solid var(--ink); border-radius: 4px; padding: 22px 24px; background: var(--paper); }
+  .diag-card.warn { background: var(--hi); }
+  .diag-card .dl { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 8px; }
+  .diag-card h4 { font-size: 24px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .diag-card p { font-size: 14px; color: var(--ink); line-height: 1.55; }
+  .diag-card .now { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--ink); }
+  .diag-card .now strong { font-weight: 600; }
+
+  /* Programme cards w/ cadence */
+  .prog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 6px; }
+  .prog { border: 1.5px solid var(--ink); border-radius: 4px; padding: 20px 22px; background: var(--paper); display: flex; flex-direction: column; }
+  .prog.flag { background: var(--hi); }
+  .prog .pn { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 8px; }
+  .prog .pn .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); margin-right: 6px; vertical-align: middle; }
+  .prog h4 { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .prog p { font-size: 13.5px; color: var(--ink); line-height: 1.55; margin-bottom: 12px; flex: 1; }
+  .prog .deliv { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 12px; border-top: 1px solid var(--line); margin-bottom: 8px; }
+  .prog .chip { display: inline-flex; align-items: baseline; gap: 5px; font-size: 11px; letter-spacing: 0.04em; padding: 4px 9px; background: var(--paper); border: 1px solid var(--ink); border-radius: 100px; font-weight: 500; }
+  .prog.flag .chip { background: #fffbe8; }
+  .prog .chip strong { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .prog .who { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding-top: 8px; }
+
+  /* Month 1 timeline rows */
+  .ws-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 6px; }
+  .ws-row { display: grid; grid-template-columns: 60px 1.1fr 1.6fr 0.9fr; gap: 18px; align-items: stretch; padding: 18px 20px; border: 1.5px solid var(--ink); border-radius: 4px; background: var(--paper); }
+  .ws-row.warn { background: var(--hi); }
+  .ws-row .ws-n { font-size: 36px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--ink); align-self: center; }
+  .ws-row .ws-h { font-size: 16px; font-weight: 600; letter-spacing: -0.005em; margin-bottom: 6px; }
+  .ws-row .ws-l { font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+  .ws-row .ws-d { font-size: 13px; line-height: 1.55; color: var(--ink); }
+  .ws-row ul.tight { list-style: none; }
+  .ws-row ul.tight li { padding: 3px 0 3px 14px; position: relative; font-size: 13px; line-height: 1.5; }
+  .ws-row ul.tight li::before { content: '—'; position: absolute; left: 0; color: var(--muted); }
+  .ws-row .ws-out { padding-left: 16px; border-left: 1px solid var(--line); font-size: 12.5px; line-height: 1.5; color: var(--muted); }
+  .ws-row .ws-out strong { color: var(--ink); font-weight: 600; display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
+
+  /* Funnel sequencing chart */
+  .seq-chart { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 8px; border: 1.5px solid var(--ink); border-radius: 4px; overflow: hidden; }
+  .seq-col { padding: 22px 22px 24px; border-right: 1px solid var(--ink); background: var(--paper); display: flex; flex-direction: column; }
+  .seq-col:last-child { border-right: none; }
+  .seq-col.highlight { background: var(--hi); }
+  .seq-col .seq-band { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+  .seq-col .seq-mo { font-size: 13px; font-weight: 600; letter-spacing: -0.005em; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: baseline; }
+  .seq-col .seq-mo .mo-tag { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .seq-col h4 { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 10px; }
+  .seq-col .seq-d { font-size: 13px; color: var(--ink); line-height: 1.55; margin-bottom: 14px; }
+  .seq-col .seq-list-l { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 8px; }
+  .seq-col ul.tight { list-style: none; margin-bottom: 14px; }
+  .seq-col ul.tight li { padding: 4px 0 4px 14px; position: relative; font-size: 12.5px; line-height: 1.45; color: var(--ink); }
+  .seq-col ul.tight li::before { content: '—'; position: absolute; left: 0; color: var(--muted); }
+  .seq-col .seq-why { margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--line); font-size: 11.5px; line-height: 1.5; color: var(--muted); font-style: italic; }
+  .seq-col .seq-why strong { color: var(--ink); font-style: normal; font-weight: 600; }
+
+  /* Bandwidth ask cards */
+  .ask-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 6px; }
+  .ask-card { border: 1.5px solid var(--ink); border-radius: 4px; padding: 24px 26px; background: var(--paper); display: flex; flex-direction: column; }
+  .ask-card.bonus { background: var(--ink); color: var(--paper); grid-column: 1 / -1; }
+  .ask-card .ask-l { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
+  .ask-card.bonus .ask-l { color: rgba(255,255,255,0.6); }
+  .ask-card h4 { font-size: 24px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 12px; }
+  .ask-card p { font-size: 14px; line-height: 1.6; color: var(--ink); margin-bottom: 12px; }
+  .ask-card.bonus p { color: rgba(255,255,255,0.85); }
+  .ask-card .ask-stat { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; }
+  .ask-card.bonus .ask-stat { border-top-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
+
+  /* Ownership table */
+  .own-table { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 14px; }
+  .own-table th { text-align: left; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 12px 14px; border-bottom: 1.5px solid var(--ink); }
+  .own-table td { padding: 16px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .own-table .layer { font-weight: 600; font-size: 16px; letter-spacing: -0.005em; }
+  .own-table .layer small { display: block; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-top: 4px; }
+  .own-table .own-pill { display: inline-block; padding: 4px 10px; border-radius: 100px; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; }
+  .own-table .own-pill.full { background: var(--ink); color: var(--paper); }
+  .own-table .own-pill.drive { background: var(--paper); border: 1.5px solid var(--ink); color: var(--ink); }
+  .own-table .own-pill.guide { background: var(--paper); border: 1.5px dashed var(--ink); color: var(--ink); }
+  .own-table .examples { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+  /* Outcome tiles */
+  .star-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 8px; }
+  .star-tile { background: var(--paper); border: 1.5px solid var(--ink); border-radius: 4px; padding: 28px 30px; }
+  .star-tile.dark { background: var(--ink); color: var(--paper); }
+  .star-tile .sl { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; opacity: 0.6; margin-bottom: 12px; }
+  .star-tile .sv { font-size: 60px; line-height: 1.0; font-weight: 600; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; margin-bottom: 14px; }
+  .star-tile .sv small { font-size: 22px; font-weight: 500; color: var(--muted); margin-left: 6px; letter-spacing: -0.01em; }
+  .star-tile.dark .sv small { color: rgba(255,255,255,0.55); }
+  .star-tile .ss { font-size: 14px; line-height: 1.55; opacity: 0.9; }
+  .star-tile .meas { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; }
+  .star-tile.dark .meas { border-top-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
+
+  .miles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+  .mile { border: 1px solid var(--ink); border-radius: 4px; padding: 14px 16px; background: var(--paper); }
+  .mile .ml { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+  .mile .mh { font-size: 14px; font-weight: 600; letter-spacing: -0.005em; margin-bottom: 4px; }
+  .mile .md { font-size: 12px; line-height: 1.5; color: var(--muted); }
+
+  .footnote { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .footnote strong { font-weight: 600; color: var(--ink); }
+
+  .slide.title { display: flex; flex-direction: column; justify-content: space-between; }
+  .title-top { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .title-mid h1 { font-size: 76px; line-height: 1.0; letter-spacing: -0.025em; font-weight: 600; max-width: 900px; }
+  .title-mid .sub { font-size: 22px; color: var(--muted); margin-top: 22px; max-width: 720px; line-height: 1.4; }
+  .title-bot { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; padding-top: 22px; border-top: 1px solid var(--rule); }
+  .title-bot .b-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+  .title-bot .b-val { font-size: 14px; font-weight: 500; }
+
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+    .nav { position: relative; height: auto; border-right: none; border-bottom: 1px solid var(--rule); }
+    .slide { padding: 36px 28px; min-height: 0; }
+    .three-col, .two-col, .diag, .prog-grid, .star-grid, .ask-grid, .seq-chart, .miles { grid-template-columns: 1fr; }
+    .ws-row { grid-template-columns: 1fr; }
+    .seq-col { border-right: none; border-bottom: 1px solid var(--ink); }
+    .seq-col:last-child { border-bottom: none; }
+    .title-mid h1 { font-size: 44px; }
+    .title-bot { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="nav">
+    <div class="brand">RECURR · QUAD</div>
+    <div class="doc-title">The First-Party Plan<br><span style="color:var(--muted)">Pre-call walkthrough · 9 slides</span></div>
+
+    <div class="nav-section-label">Slides</div>
+    <ul class="nav-list">
+      <li><a href="#s0"><span class="num">00</span><span>Cover</span></a></li>
+      <li><a href="#s1"><span class="num">01</span><span>The lens</span></a></li>
+      <li><a href="#s2"><span class="num">02</span><span>The diagnosis</span></a></li>
+      <li><a href="#s3"><span class="num">03</span><span>The programmes</span></a></li>
+      <li><a href="#s4"><span class="num">04</span><span>Month 1 — what ships</span></a></li>
+      <li><a href="#s5"><span class="num">05</span><span>Months 2 — 12 sequencing</span></a></li>
+      <li><a href="#s6"><span class="num">06</span><span>Who owns what</span></a></li>
+      <li><a href="#s7"><span class="num">07</span><span>What we need from you</span></a></li>
+      <li><a href="#s8"><span class="num">08</span><span>The outcome</span></a></li>
+    </ul>
+
+    <div class="nav-foot">
+      Internal walkthrough for a Quad founder call. Lens, diagnosis, the work, scope, sequencing, and the 12-month outcome on nine slides.
+    </div>
+  </aside>
+
+  <main class="stage">
+    <div class="deck">
+
+      <!-- 00 · COVER -->
+      <section class="slide title" id="s0">
+        <div class="title-top">RECURR · QUAD AI · INBOUND</div>
+        <div class="title-mid">
+          <h1>How Quad earns the&nbsp;internet.</h1>
+          <p class="sub">A simple lens for what to build, where to start, what each month delivers, and what good looks like twelve months out.</p>
+        </div>
+        <div class="title-bot">
+          <div><div class="b-label">Audience</div><div class="b-val">Founder, Quad</div></div>
+          <div><div class="b-label">Format</div><div class="b-val">9 slides · 15 min</div></div>
+          <div><div class="b-label">Reading time</div><div class="b-val">8 min skim</div></div>
+          <div><div class="b-label">Date</div><div class="b-val">May 2026</div></div>
+        </div>
+      </section>
+
+      <!-- 01 · LENS -->
+      <section class="slide" id="s1">
+        <div class="slide-meta"><span>01 · The lens</span><span>One frame, three layers</span></div>
+        <h2 class="large">The internet has three layers. You should think of them differently.</h2>
+        <p class="lede">A useful frame before we talk about the work. Every place a buyer can encounter Quad sits in one of these three layers — and each one demands a different kind of effort, ownership, and patience.</p>
+
+        <div class="three-col">
+          <div class="tile">
+            <div class="tag">Layer 01</div>
+            <h4>First-party<small>The internet you own.</small></h4>
+            <p>Your domain, your pages, your published content, your CMS, your database. You decide what goes up, when it goes up, and how it changes.</p>
+            <div class="ex">quad.ac.in · landing pages · long-form · programmatic SEO · alumni stories</div>
+          </div>
+          <div class="tile">
+            <div class="tag">Layer 02</div>
+            <h4>Second-party<small>The internet you lease.</small></h4>
+            <p>Surfaces where you have a profile and can publish directly — but the platform owns the audience and the rules. You rent the reach.</p>
+            <div class="ex">LinkedIn · YouTube · Instagram · Reddit (your account) · X · email lists</div>
+          </div>
+          <div class="tile dark">
+            <div class="tag">Layer 03</div>
+            <h4>Third-party<small>The internet you don't post on.</small></h4>
+            <p>Surfaces you cannot publish to directly. Someone else has to publish on your behalf — a journalist, a creator, a redditor, an alum. You influence; they execute.</p>
+            <div class="ex">Press · media coverage · creator videos · Quora answers · Reddit threads (others') · Shiksha / CollegeDunia</div>
+          </div>
+        </div>
+
+        <div class="footnote"><strong>Why this matters:</strong> Most institutes spend on layer 2 and hope layer 3 happens. Almost none take layer 1 seriously. Layer 1 is the only one you fully control — and it's the only one that compounds.</div>
+      </section>
+
+      <!-- 02 · DIAGNOSIS -->
+      <section class="slide" id="s2">
+        <div class="slide-meta"><span>02 · The diagnosis</span><span>Where Quad is weakest</span></div>
+        <span class="pill warn">Today's weakest arm</span>
+        <h2 class="large">First-party is the muscle to build first.</h2>
+        <p class="lede">It's where the gap is largest, where you have full control, and where every other layer eventually points back to. First-party has two parts. Quad is weak on both.</p>
+
+        <div class="diag">
+          <div class="diag-card warn">
+            <div class="dl">Part 01 · Infra</div>
+            <h4>The plumbing to publish at speed.</h4>
+            <p>A real CMS your team can actually use. Modular content models. Studio-style builds inside it so writing, editing, reviewing, and publishing don't bottleneck on engineering.</p>
+            <div class="now"><strong>The proposal:</strong> Stand up Sanity (or equivalent) with multiple studio surfaces — one per content programme — so the team can keep processing volume without blocking each other.</div>
+          </div>
+          <div class="diag-card warn">
+            <div class="dl">Part 02 · Content production</div>
+            <h4>Programmes, not posts.</h4>
+            <p>Not one-off articles. Standing programmes — each one with a defined audience, a defined cadence, and a defined outcome. Most institutes have zero. The category winners have three to five.</p>
+            <div class="now"><strong>The proposal:</strong> Four to five dedicated content programmes published directly on the Quad site. Detailed on the next slide.</div>
+          </div>
+        </div>
+
+        <div class="footnote"><strong>The order matters:</strong> Infra first, because every programme on the next slide assumes a publishing surface that today doesn't exist. Two to three weeks of plumbing buys twelve months of velocity.</div>
+      </section>
+
+      <!-- 03 · PROGRAMMES -->
+      <section class="slide" id="s3">
+        <div class="slide-meta"><span>03 · The programmes</span><span>Four-to-five angles · cadence below</span></div>
+        <h2 class="large">Four-to-five content programmes. All published on Quad.</h2>
+        <p class="lede">Every programme has one audience, one emotional job, and a defined monthly cadence. Together they cover the parent, the founder's voice, both student funnels, and the long tail of search.</p>
+
+        <div class="prog-grid">
+          <div class="prog flag">
+            <div class="pn"><span class="dot"></span>Programme A · Flagship</div>
+            <h4>Content for parents.</h4>
+            <p>Therapy for an anxious parent. The "is-this-real, is-this-safe, will-my-relatives-judge-us" content. Calm, generous, evidence-led. The single biggest lever in this category, and the one no competitor is doing well.</p>
+            <div class="deliv">
+              <span class="chip"><strong>8</strong>long-form / mo</span>
+              <span class="chip"><strong>4</strong>video / mo</span>
+              <span class="chip"><strong>1</strong>standing series</span>
+            </div>
+            <div class="who">Audience · Parent · Stage 3 vetting</div>
+          </div>
+          <div class="prog">
+            <div class="pn"><span class="dot"></span>Programme B</div>
+            <h4>Founder-led positioning.</h4>
+            <p>The founders on camera and on the page, explaining why this is a different business model — and why it's the right direction for India's education system. Establishes category authority and gives press something to quote.</p>
+            <div class="deliv">
+              <span class="chip"><strong>2</strong>essays / mo</span>
+              <span class="chip"><strong>1</strong>founder video / mo</span>
+              <span class="chip"><strong>1</strong>press pitch / mo</span>
+            </div>
+            <div class="who">Audience · Press, parents, ecosystem</div>
+          </div>
+          <div class="prog">
+            <div class="pn"><span class="dot"></span>Programme C</div>
+            <h4>Students · ages 8 — 12.</h4>
+            <p>Top of the school funnel. Build awareness and intent long before the application window opens. Curiosity-led, school-aware, parent-shareable.</p>
+            <div class="deliv">
+              <span class="chip"><strong>6</strong>articles / mo</span>
+              <span class="chip"><strong>4</strong>explainer videos / mo</span>
+              <span class="chip"><strong>1</strong>school-edu series</span>
+            </div>
+            <div class="who">Audience · School student · Top of funnel</div>
+          </div>
+          <div class="prog">
+            <div class="pn"><span class="dot"></span>Programme D</div>
+            <h4>Students · ages 12 and beyond.</h4>
+            <p>Application funnel. The "I didn't get IIT, what now" cohort. Comparison content, alumni stories, day-in-the-life, outcomes data — all the proof a 17-year-old needs to commit.</p>
+            <div class="deliv">
+              <span class="chip"><strong>10</strong>pieces / mo</span>
+              <span class="chip"><strong>4</strong>application videos / mo</span>
+              <span class="chip"><strong>20+</strong>comparison pages (Q1)</span>
+            </div>
+            <div class="who">Audience · Application-stage student</div>
+          </div>
+          <div class="prog" style="grid-column: 1 / -1;">
+            <div class="pn"><span class="dot"></span>Programme E · TBD</div>
+            <h4>Programmatic SEO.</h4>
+            <p>One templated page-set built once and indexed at scale — careers × cities, exams × outcomes, comparisons × alternatives, or similar. The exact axis is still to be picked. Lowest effort per page, highest long-tail upside, fully first-party.</p>
+            <div class="deliv">
+              <span class="chip"><strong>1</strong>template (M2)</span>
+              <span class="chip"><strong>200 — 500</strong>pages indexed (M3 — M4)</span>
+              <span class="chip"><strong>1,000+</strong>pages by M9</span>
+              <span class="chip">Axis locked in week 1</span>
+            </div>
+            <div class="who">Audience · Search-driven discovery · Long tail</div>
+          </div>
+        </div>
+
+        <div class="footnote"><strong>Total monthly first-party output (steady state):</strong> ~26 long-form pieces · ~13 videos · 1 founder essay set · pSEO scaling in the background. Cadences are floor, not ceiling.</div>
+      </section>
+
+      <!-- 04 · MONTH 1 SCOPE -->
+      <section class="slide" id="s4">
+        <div class="slide-meta"><span>04 · Month 1 scope</span><span>What ships by Day 30</span></div>
+        <h2 class="large">Month 1 builds the publishing engine.</h2>
+        <p class="lede">Three workstreams, all complete by Day 30. After this, the rest of the year is content velocity. We do not wait for "ready" — we are publishing inside the first month, just on the new infrastructure we are standing up alongside.</p>
+
+        <div class="ws-grid">
+          <div class="ws-row warn">
+            <div class="ws-n">01</div>
+            <div>
+              <div class="ws-l">Workstream</div>
+              <div class="ws-h">Site migration.</div>
+              <div class="ws-d">Move quad.ac.in onto a real CMS (Sanity or equivalent). Modular page templates, multiple studio surfaces — one per content programme — so contributors don't block each other.</div>
+            </div>
+            <div>
+              <div class="ws-l">What ships</div>
+              <ul class="tight">
+                <li>New CMS stood up, content models defined</li>
+                <li>Existing pages migrated, redirects mapped</li>
+                <li>Studio surfaces for parents, students, founder, pSEO</li>
+                <li>Editorial roles &amp; permissions configured</li>
+              </ul>
+            </div>
+            <div class="ws-out"><strong>Day-30 outcome</strong>quad.ac.in lives on a publishing surface anyone on the team can use. Engineering no longer bottlenecks publishing.</div>
+          </div>
+
+          <div class="ws-row">
+            <div class="ws-n">02</div>
+            <div>
+              <div class="ws-l">Workstream</div>
+              <div class="ws-h">Content operations &amp; workflows.</div>
+              <div class="ws-d">Briefs, calendars, review cycles, contributor onboarding — for both internal team and external contributors (students, teachers, alumni, marketing partners). The system has to absorb input from many directions without dropping anything.</div>
+            </div>
+            <div>
+              <div class="ws-l">What ships</div>
+              <ul class="tight">
+                <li>Brief templates per programme</li>
+                <li>Editorial calendar (Q1) locked</li>
+                <li>Review &amp; approval cycles defined</li>
+                <li>Contributor onboarding kit (student / teacher / alumni)</li>
+                <li>SLAs for internal vs. external loops</li>
+              </ul>
+            </div>
+            <div class="ws-out"><strong>Day-30 outcome</strong>30+ pieces a month achievable without ops becoming the bottleneck.</div>
+          </div>
+
+          <div class="ws-row">
+            <div class="ws-n">03</div>
+            <div>
+              <div class="ws-l">Workstream</div>
+              <div class="ws-h">SEO foundation &amp; assets.</div>
+              <div class="ws-d">Technical SEO baseline, keyword cluster lock for months 2–3, brand asset library, programmatic templates ready to fill. By Day 30 we know exactly what we're going after first.</div>
+            </div>
+            <div>
+              <div class="ws-l">What ships</div>
+              <ul class="tight">
+                <li>Sitemap, schema, internal linking, page-speed pass</li>
+                <li>Bottom-of-funnel keyword cluster locked (M2 — M3 plan)</li>
+                <li>10 — 20 keywords picked for AI-citation tracking</li>
+                <li>Asset library (photography, illustration, video stills)</li>
+                <li>pSEO template wireframe + axis decision</li>
+              </ul>
+            </div>
+            <div class="ws-out"><strong>Day-30 outcome</strong>Month 2 starts with a sharp BoFu target list, not a blank page.</div>
+          </div>
+        </div>
+
+        <div class="footnote"><strong>What also happens in parallel:</strong> first parent-content series begins drafting, founder-positioning interview is scheduled, and external contributor pipeline (students, teachers, alumni, partner marketing teams) is recruited. Ops are not separate from output — they are the precondition.</div>
+      </section>
+
+      <!-- 05 · SEQUENCING -->
+      <section class="slide" id="s5">
+        <div class="slide-meta"><span>05 · Sequencing</span><span>Months 2 — 12 · Bottoms-up, always</span></div>
+        <h2 class="large">We rank from the bottom up. Never the other way around.</h2>
+        <p class="lede">Top-of-funnel traffic without a converting funnel underneath is a leaky bucket. We start by ranking on the lowest-volume / highest-intent queries — proving the conversion path works — before we spend a single rupee of effort scaling reach. Once the bottom converts, we expand upward.</p>
+
+        <div class="seq-chart">
+          <div class="seq-col highlight">
+            <div class="seq-band">Phase 01</div>
+            <div class="seq-mo"><span>Bottom of funnel</span><span class="mo-tag">Months 2 — 3</span></div>
+            <h4>Rank where the buyer is already deciding.</h4>
+            <p class="seq-d">Lowest volume. Highest intent. If these don't convert, no amount of upstream traffic will save the model.</p>
+            <div class="seq-list-l">What we publish</div>
+            <ul class="tight">
+              <li>"Quad vs Scaler" / "Quad vs Newton" / "Quad vs NxtWave"</li>
+              <li>"Is Quad legit / accredited / worth it"</li>
+              <li>Parent-anxiety pages (fees, ROI, placements)</li>
+              <li>Alumni outcomes &amp; placement deep-dives</li>
+              <li>Application FAQs &amp; admissions clarity pages</li>
+            </ul>
+            <div class="seq-why"><strong>Why first:</strong> these are the people closest to writing the cheque. Cheapest to win, fastest to prove the bucket isn't leaky.</div>
+          </div>
+
+          <div class="seq-col">
+            <div class="seq-band">Phase 02</div>
+            <div class="seq-mo"><span>Mid-funnel</span><span class="mo-tag">Months 4 — 6</span></div>
+            <h4>Win the evaluation set.</h4>
+            <p class="seq-d">Mid volume. Decision-stage searches. We scale only after BoFu is converting — confidence earned, not assumed.</p>
+            <div class="seq-list-l">What we publish</div>
+            <ul class="tight">
+              <li>"Best CSE / tech-ed colleges in India 2026"</li>
+              <li>"Alternatives if I didn't get IIT / NIT"</li>
+              <li>"How to evaluate a new-age tech institute"</li>
+              <li>Programmatic SEO goes live (200 — 500 pages)</li>
+              <li>First press-driven third-party coverage lands</li>
+            </ul>
+            <div class="seq-why"><strong>Why second:</strong> by now we've proven Quad's pages convert. We earn the right to spend on volume.</div>
+          </div>
+
+          <div class="seq-col">
+            <div class="seq-band">Phase 03</div>
+            <div class="seq-mo"><span>Top of funnel</span><span class="mo-tag">Months 7 — 12</span></div>
+            <h4>Earn the reach.</h4>
+            <p class="seq-d">Highest volume. Lowest intent. The expensive layer. We only spend here once the bottom and middle are demonstrably working.</p>
+            <div class="seq-list-l">What we publish</div>
+            <ul class="tight">
+              <li>Founder-led essays · category-defining</li>
+              <li>Parent-therapy series at scale</li>
+              <li>pSEO scales to 1,000+ indexed pages</li>
+              <li>Tier-1 media &amp; creator coverage (third-party)</li>
+              <li>Ecosystem &amp; school-network content (8 — 12 cohort)</li>
+            </ul>
+            <div class="seq-why"><strong>Why last:</strong> top-of-funnel traffic compounds — but only when there is a converting bottom for it to land on.</div>
+          </div>
+        </div>
+
+        <div class="footnote"><strong>The discipline:</strong> at any review, the question is not "did traffic grow" — it's "did the lowest-funnel layer rank higher and convert better than last month." Volume is a lagging output, not a leading one.</div>
+      </section>
+
+      <!-- 06 · OWNERSHIP -->
+      <section class="slide" id="s6">
+        <div class="slide-meta"><span>06 · Who owns what</span><span>Recurr's role across the three layers</span></div>
+        <h2 class="large">Recurr's depth of ownership changes per layer.</h2>
+        <p class="lede">We are not pretending to execute everything. On first-party, we own end-to-end. On second-party, we ideate and you publish from your handles. On third-party, we ideate and the world publishes — we shape what gets distributed; we cannot guarantee distribution itself.</p>
+
+        <table class="own-table">
+          <thead>
+            <tr>
+              <th style="width: 26%">Layer</th>
+              <th style="width: 22%">Recurr's role</th>
+              <th>What this looks like</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="layer">First-party<small>Owned</small></td>
+              <td><span class="own-pill full">100% execution</span></td>
+              <td class="examples">All five content programmes, on quad.ac.in. We build the infra, run the studios, write, edit, publish, measure. Thinking and execution both sit with us.</td>
+            </tr>
+            <tr>
+              <td class="layer">Second-party<small>Leased</small></td>
+              <td><span class="own-pill drive">We drive</span></td>
+              <td class="examples">LinkedIn, Reddit (Quad's account), YouTube, X. We ideate, brief, draft. Your team publishes from your profiles. We can drive cadence; we don't own the channel.</td>
+            </tr>
+            <tr>
+              <td class="layer">Third-party<small>Earned</small></td>
+              <td><span class="own-pill guide">We guide</span></td>
+              <td class="examples">Press &amp; media coverage, creator videos, third-party Reddit / Quora threads. We brief, pitch, and shape what's worth publishing. The publishing itself happens through journalists, creators, and the broader internet.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="footnote"><strong>Read this honestly:</strong> First-party is where we're accountable end-to-end. Second-party is a partnership. Third-party is influence — high upside, lower certainty. The plan front-loads the layer where we have the most control.</div>
+      </section>
+
+      <!-- 07 · WHAT WE NEED FROM YOU -->
+      <section class="slide" id="s7">
+        <div class="slide-meta"><span>07 · Bandwidth ask</span><span>What we need from your side</span></div>
+        <h2 class="large">Recurr is end-to-end on first-party. Two things have to come from your side.</h2>
+        <p class="lede">Small in calendar terms, decisive in outcome terms. If these two are present, the engine runs at the cadence on slide 03. If they're missing, the work stalls regardless of how much we ship.</p>
+
+        <div class="ask-grid">
+          <div class="ask-card">
+            <div class="ask-l">Ask 01</div>
+            <h4>Subject-matter context.</h4>
+            <p>When we write about a programme, an alumnus, a placement number, a curriculum decision, or anything happening inside Quad — we need a fast way to validate facts with someone on your side. Not for everything; only where we can't get to the truth from public information.</p>
+            <p>One designated person, async by default, weekly review by exception.</p>
+            <div class="ask-stat">~2 hours per week · one named owner</div>
+          </div>
+
+          <div class="ask-card">
+            <div class="ask-l">Ask 02</div>
+            <h4>Last-mile distribution.</h4>
+            <p>We do not own distribution. We create first-party content; second-party distribution (LinkedIn, Reddit, YouTube, X) needs to publish from <em>your</em> handles. If you have a distribution team — even one person — we'll brief them precisely on what to post, where, and when. They run the last mile.</p>
+            <p>Without this, second-party reach is capped at what your founders post personally.</p>
+            <div class="ask-stat">1 distribution owner · ideally a small team</div>
+          </div>
+
+          <div class="ask-card bonus">
+            <div class="ask-l">Bonus · if you want it</div>
+            <h4>We will fill your distribution team's hands.</h4>
+            <p>Beyond just distributing first-party content, we can build a complete second-party content stream tailored to your team's capacity — daily LinkedIn posts, weekly YouTube shorts, Reddit-ready answers, X threads, comment-thread playbooks. One brief, structured library, ready to ship.</p>
+            <p>If your distribution team has extra hands, we will fill them with work. The output of one team becomes the firehose for the next, and second-party reach scales with team size — not just with our hours.</p>
+            <div class="ask-stat">Optional · activated on request · scales with your headcount</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 08 · OUTCOME -->
+      <section class="slide" id="s8">
+        <div class="slide-meta"><span>08 · The outcome</span><span>What good looks like at month twelve</span></div>
+        <h2 class="large">Two metrics. Twelve months. No vanity.</h2>
+        <p class="lede">We deliberately leave output volume out of this. Output is a three-week early indicator at best — useful for our team, not for yours. These two are the metrics that actually represent inbound visibility being earned.</p>
+
+        <div class="star-grid">
+          <div class="star-tile dark">
+            <div class="sl">Metric 01 · Traffic</div>
+            <div class="sv">100K<small>/ month</small></div>
+            <div class="ss">Monthly organic visits to quad.ac.in by the end of month 12. Almost entirely driven by the first-party programmes — long-form, parent content, programmatic SEO. The number compounds; the early months will look small.</div>
+            <div class="meas">Measured · Google Analytics + Search Console · monthly</div>
+          </div>
+          <div class="star-tile">
+            <div class="sl">Metric 02 · AI citation share</div>
+            <div class="sv">Top 5<small>· on 10–20 keywords</small></div>
+            <div class="ss">A defined set of 10–20 keywords Quad chooses to fully own. Target: Quad shows up in the top five cited sources when ChatGPT, Perplexity, Gemini, or Claude answer those queries. The exact keyword set is a week-one exercise.</div>
+            <div class="meas">Measured · LLM citation tracking · weekly</div>
+          </div>
+        </div>
+
+        <div class="miles">
+          <div class="mile">
+            <div class="ml">M3 checkpoint</div>
+            <div class="mh">Top-5 on BoFu cluster.</div>
+            <div class="md">"Quad vs Scaler / Newton / NxtWave" + 5 — 10 brand-direct queries ranking top-5 on Google. AI citation begins appearing.</div>
+          </div>
+          <div class="mile">
+            <div class="ml">M6 checkpoint</div>
+            <div class="mh">Mid-funnel base built.</div>
+            <div class="md">200 — 500 pSEO pages indexed. 25 — 40K monthly organic. AI citation share crosses 30% on the chosen keyword set.</div>
+          </div>
+          <div class="mile">
+            <div class="ml">M12 north star</div>
+            <div class="mh">Inbound at 100K / month.</div>
+            <div class="md">1,000+ indexed pages. Top-5 AI citation on the chosen 10 — 20 keywords. Inbound leads visibly compounding off organic.</div>
+          </div>
+        </div>
+
+        <div class="footnote"><strong>Why these two:</strong> Traffic is the cumulative test of every layer working together. AI citation is the leading test of whether the content is good enough to be quoted by the systems your buyers will increasingly start their search on. Both are visible to you, both are unfakeable, neither rewards busywork.</div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  const links = document.querySelectorAll('.nav-list a');
+  const sections = Array.from(links).map(a => document.querySelector(a.getAttribute('href')));
+  const setActive = () => {
+    const y = window.scrollY + 120;
+    let idx = 0;
+    sections.forEach((s, i) => { if (s && s.offsetTop <= y) idx = i; });
+    links.forEach(l => l.classList.remove('active'));
+    links[idx]?.classList.add('active');
+  };
+  window.addEventListener('scroll', setActive, { passive: true });
+  setActive();
+</script>
+</body>
+</html>
