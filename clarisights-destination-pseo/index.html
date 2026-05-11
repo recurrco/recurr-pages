@@ -153,6 +153,98 @@
   body.vars-on td mark.var,
   body.vars-on th mark.var { padding: 0 3px; }
 
+  /* NEW (May 11, 2026) — cross-link variables. Same mechanic as mark.var, but neon-green to flag what changed today. */
+  mark.var-new {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+    transition: background 120ms ease, padding 120ms ease, box-shadow 120ms ease;
+    position: relative;
+    cursor: help;
+  }
+  body.vars-on mark.var-new {
+    background: #d9f99d;
+    padding: 1px 4px;
+    border-radius: 3px;
+    box-shadow: inset 0 -2px 0 rgba(101, 163, 13, 0.55);
+  }
+  body.vars-on mark.var-new:hover {
+    background: #a3e635;
+    box-shadow: inset 0 -2px 0 rgba(63, 98, 18, 0.7);
+  }
+  body.vars-on mark.var-new[data-var]::after {
+    content: attr(data-var) ' · NEW';
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #14532d;
+    color: #d9f99d;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 120ms ease, transform 120ms ease;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  body.vars-on mark.var-new[data-var]:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Source card with new outbound URL — neon-green ring when vars-on */
+  body.vars-on a.source-card[data-var-new] {
+    box-shadow: 0 0 0 2px #a3e635, 0 6px 16px rgba(132, 204, 22, 0.22);
+  }
+  body.vars-on a.source-card[data-var-new]::before {
+    content: 'NEW';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #14532d;
+    color: #d9f99d;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    z-index: 2;
+  }
+  a.source-card { position: relative; }
+
+  /* Inline source-name link — subtle underline always, brighter when vars-on */
+  a.source-link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: #a3e635;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+  a.source-link:hover { text-decoration-color: #65a30d; }
+
+  /* New-row marker in the variable map */
+  table.var-map tbody td.is-new::before {
+    content: 'NEW';
+    display: inline-block;
+    background: #14532d;
+    color: #d9f99d;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
   /* CS-style mock chrome */
   .cs-nav {
     border-bottom: 1px solid var(--line);
@@ -657,7 +749,7 @@
 <div class="work-bar" role="banner">
   <div class="left">
     <span class="tag live">Template</span>
-    <span class="doc">Clarisights · Destination pSEO · Sample row: <strong style="color:#fde68a">Looker Studio</strong></span>
+    <span class="doc">Clarisights · Destination pSEO · Sample row: <strong style="color:#fde68a">Looker Studio</strong> · <span style="color:#a3e635">Updated May 11, 2026 — source cross-links added</span></span>
   </div>
   <div class="controls">
     <span class="var-count" id="var-count-bar">Counting variables…</span>
@@ -888,58 +980,61 @@
     <span class="eyebrow">Sources</span>
     <h2>Connect these sources to <mark class="var" data-var="destination_name_4">Looker Studio</mark></h2>
     <p class="lead" style="max-width:680px;margin-top:10px;"><mark class="var" data-var="sources_intro">Your most-used ad platforms, attribution tools, and revenue systems — unified into one feed and ready for any chart.</mark></p>
+    <p style="max-width:680px;margin-top:6px;color:#6b7280;font-size:14px;">
+      <mark class="var-new">Each source links to its live Clarisights page</mark> — same cross-link pattern as the rest of clarisights.com.
+    </p>
 
     <div class="sources-grid">
-      <a href="#" class="source-card">
+      <a href="https://clarisights.com/data-sources/facebook-ads" class="source-card" data-var-new="source_1_url" target="_blank" rel="noopener">
         <div class="source-logo"><img alt="" data-var="source_1_logo" src="https://cdn.simpleicons.org/facebook/1877f2"></div>
         <div class="source-meta">
           <div class="name"><mark class="var" data-var="source_1_name">Facebook Ads</mark></div>
           <div class="cat"><mark class="var" data-var="source_1_cat">Social</mark></div>
         </div>
       </a>
-      <a href="#" class="source-card">
+      <a href="https://clarisights.com/data-sources/google-ads" class="source-card" data-var-new="source_2_url" target="_blank" rel="noopener">
         <div class="source-logo"><img alt="" data-var="source_2_logo" src="https://cdn.simpleicons.org/googleads/4285f4"></div>
         <div class="source-meta">
           <div class="name"><mark class="var" data-var="source_2_name">Google Ads</mark></div>
           <div class="cat"><mark class="var" data-var="source_2_cat">Search</mark></div>
         </div>
       </a>
-      <a href="#" class="source-card">
+      <a href="https://clarisights.com/data-sources/tiktok-ads" class="source-card" data-var-new="source_3_url" target="_blank" rel="noopener">
         <div class="source-logo"><img alt="" data-var="source_3_logo" src="https://cdn.simpleicons.org/tiktok/000000"></div>
         <div class="source-meta">
           <div class="name"><mark class="var" data-var="source_3_name">TikTok Ads</mark></div>
           <div class="cat"><mark class="var" data-var="source_3_cat">Social</mark></div>
         </div>
       </a>
-      <a href="#" class="source-card">
+      <a href="https://clarisights.com/data-sources/linkedin-ads" class="source-card" data-var-new="source_4_url" target="_blank" rel="noopener">
         <div class="source-logo"><img alt="" data-var="source_4_logo" src="https://cdn.simpleicons.org/linkedin/0a66c2"></div>
         <div class="source-meta">
           <div class="name"><mark class="var" data-var="source_4_name">LinkedIn Ads</mark></div>
           <div class="cat"><mark class="var" data-var="source_4_cat">Social</mark></div>
         </div>
       </a>
-      <a href="#" class="source-card">
+      <a href="https://clarisights.com/data-sources/google-analytics-4" class="source-card" data-var-new="source_5_url" target="_blank" rel="noopener">
         <div class="source-logo"><img alt="" data-var="source_5_logo" src="https://cdn.simpleicons.org/googleanalytics/e37400"></div>
         <div class="source-meta">
           <div class="name"><mark class="var" data-var="source_5_name">Google Analytics</mark></div>
           <div class="cat"><mark class="var" data-var="source_5_cat">Analytics</mark></div>
         </div>
       </a>
-      <a href="#" class="source-card">
+      <a href="https://clarisights.com/data-sources/appsflyer" class="source-card" data-var-new="source_6_url" target="_blank" rel="noopener">
         <div class="source-logo"><img alt="" data-var="source_6_logo" src="https://cdn.simpleicons.org/appsflyer/00d1c1"></div>
         <div class="source-meta">
           <div class="name"><mark class="var" data-var="source_6_name">AppsFlyer</mark></div>
           <div class="cat"><mark class="var" data-var="source_6_cat">Attribution</mark></div>
         </div>
       </a>
-      <a href="#" class="source-card">
+      <a href="https://clarisights.com/data-sources/shopify" class="source-card" data-var-new="source_7_url" target="_blank" rel="noopener">
         <div class="source-logo"><img alt="" data-var="source_7_logo" src="https://cdn.simpleicons.org/shopify/95bf47"></div>
         <div class="source-meta">
           <div class="name"><mark class="var" data-var="source_7_name">Shopify</mark></div>
           <div class="cat"><mark class="var" data-var="source_7_cat">Commerce</mark></div>
         </div>
       </a>
-      <a href="#" class="source-card">
+      <a href="https://clarisights.com/data-sources/snapchat-ads" class="source-card" data-var-new="source_8_url" target="_blank" rel="noopener">
         <div class="source-logo"><img alt="" data-var="source_8_logo" src="https://cdn.simpleicons.org/snapchat/fffc00"></div>
         <div class="source-meta">
           <div class="name"><mark class="var" data-var="source_8_name">Snapchat Ads</mark></div>
@@ -966,7 +1061,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         </div>
         <h3><mark class="var" data-var="industry_1_name">E-commerce &amp; DTC</mark></h3>
-        <p><mark class="var" data-var="industry_1_usecase">E-com teams build a blended ROAS dashboard combining Meta, Google, and TikTok spend with Shopify revenue — the version platforms can't show because each one only sees its own slice.</mark></p>
+        <p><mark class="var" data-var="industry_1_usecase">E-com teams build a blended ROAS dashboard combining <a class="source-link" href="https://clarisights.com/data-sources/facebook-ads" target="_blank" rel="noopener"><mark class="var-new">Meta</mark></a>, <a class="source-link" href="https://clarisights.com/data-sources/google-ads" target="_blank" rel="noopener"><mark class="var-new">Google</mark></a>, and <a class="source-link" href="https://clarisights.com/data-sources/tiktok-ads" target="_blank" rel="noopener"><mark class="var-new">TikTok</mark></a> spend with <a class="source-link" href="https://clarisights.com/data-sources/shopify" target="_blank" rel="noopener"><mark class="var-new">Shopify</mark></a> revenue — the version platforms can't show because each one only sees its own slice.</mark></p>
       </div>
       <div class="industry-card">
         <div class="industry-icon">
@@ -974,7 +1069,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg>
         </div>
         <h3><mark class="var" data-var="industry_2_name">Gaming &amp; Apps</mark></h3>
-        <p><mark class="var" data-var="industry_2_usecase">Mobile teams pipe MMP data (AppsFlyer, Adjust) and SKAN attribution alongside paid spend — so the LTV dashboard the CFO sees uses the same numbers as the UA dashboard the growth team owns.</mark></p>
+        <p><mark class="var" data-var="industry_2_usecase">Mobile teams pipe MMP data (<a class="source-link" href="https://clarisights.com/data-sources/appsflyer" target="_blank" rel="noopener"><mark class="var-new">AppsFlyer</mark></a>, <a class="source-link" href="https://clarisights.com/data-sources/adjust" target="_blank" rel="noopener"><mark class="var-new">Adjust</mark></a>) and SKAN attribution alongside paid spend — so the LTV dashboard the CFO sees uses the same numbers as the UA dashboard the growth team owns.</mark></p>
       </div>
       <div class="industry-card">
         <div class="industry-icon">
@@ -982,7 +1077,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
         </div>
         <h3><mark class="var" data-var="industry_3_name">B2B SaaS</mark></h3>
-        <p><mark class="var" data-var="industry_3_usecase">B2B teams blend LinkedIn, Google, and content spend with HubSpot pipeline — turning Looker Studio into the marketing-pipeline view the CRO checks before every board meeting.</mark></p>
+        <p><mark class="var" data-var="industry_3_usecase">B2B teams blend <a class="source-link" href="https://clarisights.com/data-sources/linkedin-ads" target="_blank" rel="noopener"><mark class="var-new">LinkedIn</mark></a>, <a class="source-link" href="https://clarisights.com/data-sources/google-ads" target="_blank" rel="noopener"><mark class="var-new">Google</mark></a>, and content spend with <a class="source-link" href="https://clarisights.com/data-sources/hubspot" target="_blank" rel="noopener"><mark class="var-new">HubSpot</mark></a> pipeline — turning Looker Studio into the marketing-pipeline view the CRO checks before every board meeting.</mark></p>
       </div>
     </div>
   </div>
@@ -1089,6 +1184,12 @@
   <div class="var-map-head">
     <h2>Variable map · <span style="color:#fde68a;">Looker Studio sample row</span></h2>
     <p>Every variable on the page above. Each row maps to one column in the Google Sheet. Headers match exactly — the import to Framer is a 1:1 column mapping.</p>
+    <p style="margin-top:14px;font-size:13px;color:#94a3b8;">
+      <span style="display:inline-block;padding:2px 6px;background:#fef08a;color:#854d0e;border-radius:3px;font-family:var(--mono);font-size:11px;font-weight:600;">YELLOW</span>
+      = existing variables (already in Framer).
+      <span style="display:inline-block;margin-left:10px;padding:2px 6px;background:#a3e635;color:#14532d;border-radius:3px;font-family:var(--mono);font-size:11px;font-weight:600;">GREEN · NEW</span>
+      = added today (May 11, 2026) — cross-links from each destination page to the live <code style="color:#fde68a">/data-sources/*</code> pages on clarisights.com.
+    </p>
   </div>
 
   <div class="var-map-table-wrap">
@@ -1179,7 +1280,8 @@
     rows.push({
       name: name,
       fold: foldFor(n),
-      sample: n.textContent.trim()
+      sample: n.textContent.trim(),
+      isNew: false
     });
   });
 
@@ -1191,7 +1293,21 @@
     rows.push({
       name: name,
       fold: foldFor(n),
-      sample: n.getAttribute('src') || ''
+      sample: n.getAttribute('src') || '',
+      isNew: false
+    });
+  });
+
+  // <a class="source-card" data-var-new="X" href="..."> — NEW cross-link variables (May 11, 2026)
+  document.querySelectorAll('a[data-var-new]').forEach(function (n) {
+    var name = n.getAttribute('data-var-new');
+    if (seen[name]) return;
+    seen[name] = true;
+    rows.push({
+      name: name,
+      fold: foldFor(n),
+      sample: n.getAttribute('href') || '',
+      isNew: true
     });
   });
 
@@ -1199,8 +1315,9 @@
   rows.forEach(function (r) {
     var tr = document.createElement('tr');
     var sample = r.sample.length > 140 ? r.sample.slice(0, 137) + '…' : r.sample;
+    var nameClass = r.isNew ? ' class="is-new"' : '';
     tr.innerHTML =
-      '<td>' + r.name + '</td>' +
+      '<td' + nameClass + '>' + r.name + '</td>' +
       '<td class="fold">' + r.fold + '</td>' +
       '<td class="sample">' + escapeHtml(sample) + '</td>';
     tbody.appendChild(tr);
@@ -1215,13 +1332,13 @@
   }
 
   // Counts
-  var countText = rows.length + ' variables';
+  var newCount = rows.filter(function (r) { return r.isNew; }).length;
+  var countText = rows.length + ' variables · ' + newCount + ' NEW today';
   document.getElementById('var-count-bar').textContent = countText;
-  document.getElementById('var-count-foot').textContent = countText + ' · 1 sample row filled (Looker Studio) · 4 rows pending (Google Sheets, BigQuery, Snowflake, Amazon S3)';
+  document.getElementById('var-count-foot').textContent = rows.length + ' variables · ' + newCount + ' NEW today (green = added May 11, 2026 — source cross-links)';
 
-  // Google Sheet link — placeholder until Pratik creates and pastes the URL
-  // The sheet's column order = the rows array above, in order.
-  var SHEET_URL = 'https://docs.google.com/spreadsheets/d/PASTE_SHEET_ID_HERE/edit';
+  // Google Sheet link — connected to the live "Data Destinations - Framer CMS" sheet
+  var SHEET_URL = 'https://docs.google.com/spreadsheets/d/1j1E3xUvPmpoMn723tXpyESxCk8DkA8f7rGb_6JjYnFo/edit?usp=sharing';
   document.getElementById('sheet-link').setAttribute('href', SHEET_URL);
 })();
 </script>
