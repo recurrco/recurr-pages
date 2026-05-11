@@ -238,9 +238,56 @@
   </div>
 </section>
 
-<!-- ─────────────────  SECTION 5: ANNUAL CASH FLOW  ───────────────── -->
+<!-- ─────────────────  SECTION 5: ANNUAL CASH FLOW (cohort-scenario ramp)  ───────────────── -->
 <section>
-  <h2>5 · Annual cash flow (Base scenario) <span class="hint">Commission spreads as student pays semester fees</span></h2>
+  <h2>5 · Annual cash flow — cohort-scenario ramp <span class="hint">Conservative '26 → Base '27 → Stretch '28, retainer 25% YoY</span></h2>
+
+  <div class="controls" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 12px;">
+    <div class="control">
+      <label>2026 cohort scenario</label>
+      <div class="row"><select id="scen26" style="padding:6px 8px;width:100%">
+        <option value="con" selected>Conservative</option>
+        <option value="base">Base</option>
+        <option value="str">Stretch</option>
+      </select></div>
+    </div>
+    <div class="control">
+      <label>2027 cohort scenario</label>
+      <div class="row"><select id="scen27" style="padding:6px 8px;width:100%">
+        <option value="con">Conservative</option>
+        <option value="base" selected>Base</option>
+        <option value="str">Stretch</option>
+      </select></div>
+    </div>
+    <div class="control">
+      <label>2028 cohort scenario</label>
+      <div class="row"><select id="scen28" style="padding:6px 8px;width:100%">
+        <option value="con">Conservative</option>
+        <option value="base">Base</option>
+        <option value="str" selected>Stretch</option>
+      </select></div>
+    </div>
+    <div class="control">
+      <label>Retainer YoY growth</label>
+      <div class="row"><input type="number" id="retGrowth" step="5" value="25"> <span>% per year</span></div>
+    </div>
+  </div>
+
+  <table id="baseline28">
+    <thead>
+      <tr>
+        <th>Programme</th>
+        <th>Campus</th>
+        <th>2026 baseline</th>
+        <th>2027 baseline</th>
+        <th>Growth (27/26)</th>
+        <th>2028 baseline<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;color:var(--muted)">(auto = '27 × growth)</span></th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h2 style="margin-top: 22px;">Annual cash to Recurr <span class="hint">Commission spread across each cohort's course years</span></h2>
   <table id="cashflow">
     <thead>
       <tr>
@@ -250,7 +297,8 @@
         <th>2028</th>
         <th>2029</th>
         <th>2030</th>
-        <th>5Y total</th>
+        <th>2031</th>
+        <th>6Y total</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -440,53 +488,114 @@ function renderSummary(t) {
   $('#commStrMeta').textContent = fmtCr(strComm);
 }
 
-// ─── ANNUAL CASH FLOW (Base scenario, spread across course years) ─────
+// ─── BASELINE 2028 (auto-grown at 27/26 rate, per programme) ──────────
+function baseline28(p) {
+  if (!p.baseline26 || p.baseline26 === 0) return 0;
+  return p.baseline27 * (p.baseline27 / p.baseline26);
+}
+
+function renderBaseline28() {
+  const tbody = $('#baseline28 tbody');
+  tbody.innerHTML = programmes.map(p => {
+    const growth = p.baseline26 ? (p.baseline27 / p.baseline26) : 0;
+    const b28 = baseline28(p);
+    return `
+      <tr>
+        <td>${p.name}</td>
+        <td>${p.campus}</td>
+        <td class="num">${p.baseline26}</td>
+        <td class="num">${p.baseline27}</td>
+        <td class="num">${growth.toFixed(2)}×</td>
+        <td class="num calc"><strong>${Math.round(b28)}</strong></td>
+      </tr>`;
+  }).join('');
+}
+
+// ─── ANNUAL CASH FLOW (cohort-scenario ramp + retainer YoY) ───────────
 function renderCashFlow() {
   const scholPct = +$('#schol').value;
-  const lift = +$('#liftBase').value / 100;
-  const retainer = +$('#retainer').value;
-  const retYrs = +$('#retYrs').value;
-  const years = [2026, 2027, 2028, 2029, 2030];
+  const lifts = {
+    con:  +$('#liftCon').value / 100,
+    base: +$('#liftBase').value / 100,
+    str:  +$('#liftStr').value / 100,
+  };
+  const scens = {
+    2026: $('#scen26').value,
+    2027: $('#scen27').value,
+    2028: $('#scen28').value,
+  };
+  const retBase = +$('#retainer').value;
+  const retGrowth = +$('#retGrowth').value / 100;
+  const years = [2026, 2027, 2028, 2029, 2030, 2031];
   const recog = $('#recog').value;
-  const flows = { retainer: {}, commission: {} };
-  years.forEach(y => { flows.retainer[y] = 0; flows.commission[y] = 0; });
 
-  // retainer
-  for (let i = 0; i < retYrs && i < years.length; i++) flows.retainer[years[i]] = retainer;
+  // retainer: 25% YoY for 3 years (2026, 2027, 2028)
+  const retainers = {
+    2026: retBase,
+    2027: retBase * (1 + retGrowth),
+    2028: retBase * Math.pow(1 + retGrowth, 2),
+  };
 
-  // commission per cohort, spread over course
-  const cohorts = [{year:2026, key:'baseline26'}, {year:2027, key:'baseline27'}];
+  // initialise flow buckets
+  const flows = {
+    retainer: years.reduce((a,y) => (a[y]=0, a), {}),
+    coh26:    years.reduce((a,y) => (a[y]=0, a), {}),
+    coh27:    years.reduce((a,y) => (a[y]=0, a), {}),
+    coh28:    years.reduce((a,y) => (a[y]=0, a), {}),
+  };
+  flows.retainer[2026] = retainers[2026];
+  flows.retainer[2027] = retainers[2027];
+  flows.retainer[2028] = retainers[2028];
+
+  // commission per cohort × programme, spread across course years
   programmes.forEach(p => {
     const ps = perStudent(p, scholPct);
+    const cohorts = [
+      { year: 2026, baseline: p.baseline26,     bucket: 'coh26' },
+      { year: 2027, baseline: p.baseline27,     bucket: 'coh27' },
+      { year: 2028, baseline: baseline28(p),    bucket: 'coh28' },
+    ];
     cohorts.forEach(c => {
-      const incrStudents = p[c.key] * lift;
+      const lift = lifts[scens[c.year]];
+      const incrStudents = c.baseline * lift;
       const totalComm = incrStudents * ps;
       if (recog === 'upfront') {
-        if (years.includes(c.year)) flows.commission[c.year] += totalComm;
+        if (flows[c.bucket][c.year] !== undefined) flows[c.bucket][c.year] += totalComm;
       } else {
         const perYr = totalComm / p.duration;
         for (let y = c.year; y < c.year + p.duration && y <= years[years.length-1]; y++) {
-          flows.commission[y] += perYr;
+          flows[c.bucket][y] += perYr;
         }
       }
     });
   });
 
   const tbody = $('#cashflow tbody');
-  const sumRow = arr => arr.reduce((a,b) => a + b, 0);
-  const retArr = years.map(y => flows.retainer[y]);
-  const commArr = years.map(y => flows.commission[y]);
-  const totArr = years.map(y => flows.retainer[y] + flows.commission[y]);
+  const sum = arr => arr.reduce((a,b) => a + b, 0);
+  const row = (label, obj, cls = '') => {
+    const arr = years.map(y => obj[y]);
+    return `<tr><td>${label}</td>${arr.map(v => `<td class="num ${cls}">${fmtCr(v)}</td>`).join('')}<td class="num total">${fmtCr(sum(arr))}</td></tr>`;
+  };
+  const totals = years.reduce((a,y) => (a[y] = flows.retainer[y] + flows.coh26[y] + flows.coh27[y] + flows.coh28[y], a), {});
+  const scenName = { con: 'Conservative', base: 'Base', str: 'Stretch' };
+
   tbody.innerHTML = `
-    <tr><td>Retainer</td>${retArr.map(v => `<td class="num">${fmtCr(v)}</td>`).join('')}<td class="num total">${fmtCr(sumRow(retArr))}</td></tr>
-    <tr><td>Commission (Base ${$('#liftBase').value}%, ${recog === 'lifetime' ? 'spread over course' : 'booked on admission'})</td>${commArr.map(v => `<td class="num calc">${fmtCr(v)}</td>`).join('')}<td class="num total">${fmtCr(sumRow(commArr))}</td></tr>
-    <tr><td><strong>Total cash to Recurr</strong></td>${totArr.map(v => `<td class="num total">${fmtCr(v)}</td>`).join('')}<td class="num total"><strong>${fmtCr(sumRow(totArr))}</strong></td></tr>
+    ${row(`Retainer (${$('#retGrowth').value}% YoY, 3 yrs)`, flows.retainer)}
+    ${row(`2026 cohort — ${scenName[scens[2026]]} (+${$('#lift' + (scens[2026] === 'con' ? 'Con' : scens[2026] === 'base' ? 'Base' : 'Str')).value}%)`, flows.coh26, 'calc')}
+    ${row(`2027 cohort — ${scenName[scens[2027]]} (+${$('#lift' + (scens[2027] === 'con' ? 'Con' : scens[2027] === 'base' ? 'Base' : 'Str')).value}%)`, flows.coh27, 'calc')}
+    ${row(`2028 cohort — ${scenName[scens[2028]]} (+${$('#lift' + (scens[2028] === 'con' ? 'Con' : scens[2028] === 'base' ? 'Base' : 'Str')).value}%)`, flows.coh28, 'calc')}
+    <tr><td><strong>Total cash to Recurr</strong></td>${years.map(y => `<td class="num total"><strong>${fmtCr(totals[y])}</strong></td>`).join('')}<td class="num total"><strong>${fmtCr(years.reduce((a,y) => a + totals[y], 0))}</strong></td></tr>
   `;
+
+  renderBaseline28();
 }
 
 // ─── WIRE GLOBAL CONTROLS ─────────────────────────────────────────────
-['liftCon', 'liftBase', 'liftStr', 'schol', 'retainer', 'retYrs', 'recog'].forEach(id => {
-  $('#' + id).addEventListener('input', renderProjections);
+['liftCon', 'liftBase', 'liftStr', 'schol', 'retainer', 'retYrs', 'recog',
+ 'scen26', 'scen27', 'scen28', 'retGrowth'].forEach(id => {
+  const el = $('#' + id);
+  el.addEventListener('input', renderProjections);
+  el.addEventListener('change', renderProjections);
 });
 
 $('#resetEcon').addEventListener('click', () => {
@@ -503,6 +612,10 @@ $('#resetAll').addEventListener('click', () => {
   $('#retainer').value = 800000;
   $('#retYrs').value = 1;
   $('#recog').value = 'lifetime';
+  $('#scen26').value = 'con';
+  $('#scen27').value = 'base';
+  $('#scen28').value = 'str';
+  $('#retGrowth').value = 25;
   renderEconomics();
   renderProjections();
 });
