@@ -194,31 +194,103 @@ a { color: inherit; text-decoration: none; }
 .press-foot { display: flex; justify-content: space-between; margin-top: 56px; }
 .press-foot a.accent { color: var(--accent); }
 
-/* ────────── Studios (sector slabs with side art) ────────── */
-.studios { padding: 0 var(--gutter) clamp(80px, 12vh, 140px); }
-.studios-lede { font-family: var(--body); font-weight: 500; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.35; letter-spacing: -0.012em; max-width: 920px; margin-bottom: clamp(56px, 9vh, 96px); }
-.studio { display: grid; grid-template-columns: 380px 1fr; gap: 64px; align-items: stretch; padding: 56px 0; border-top: 1px solid var(--ink); }
-.studio:last-of-type { border-bottom: 1px solid var(--ink); }
-.studio-art { position: relative; min-height: 260px; aspect-ratio: 1.4/1; overflow: hidden; }
-.studio-art::before { content: ''; position: absolute; inset: 0; z-index: 0; transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1); }
-.studio:hover .studio-art::before { transform: scale(1.04); }
-.studio-art-label { position: absolute; left: 22px; top: 22px; color: var(--paper); z-index: 1; }
-.studio-art-num { position: absolute; right: 22px; bottom: 18px; color: var(--paper); font-family: var(--display); font-weight: 900; font-size: clamp(56px, 6vw, 88px); line-height: 0.9; letter-spacing: -0.04em; z-index: 1; }
-.studio-art.dark .studio-art-label, .studio-art.dark .studio-art-num { color: var(--paper); }
-.studio-art.light .studio-art-label, .studio-art.light .studio-art-num { color: var(--ink); }
-.studio-body { display: flex; flex-direction: column; gap: 28px; padding-top: 4px; }
-.studio-title { line-height: 1.0; }
-.studio-thesis { max-width: 720px; }
-.studio-roster { display: flex; flex-direction: column; gap: 0; margin-top: 12px; }
-.studio-row { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 18px 0; border-top: 1px solid rgba(10,10,10,0.18); align-items: baseline; transition: background 200ms ease; }
-.studio-row:hover { background: rgba(10,10,10,0.03); }
-.studio-row .name { font-family: var(--display); font-weight: 800; font-size: clamp(18px, 1.6vw, 22px); letter-spacing: -0.015em; }
-.studio-row .desc { font-family: var(--body); font-weight: 500; font-size: 15px; line-height: 1.45; color: rgba(10,10,10,0.78); }
-@media (max-width: 900px) {
-  .studio { grid-template-columns: 1fr; gap: 32px; }
-  .studio-art { aspect-ratio: 16/9; min-height: 200px; }
-  .studio-row { grid-template-columns: 1fr; gap: 4px; }
+/* ────────── Studios (Pentagram-style chapter panels) ────────── */
+.studios-intro { padding: 0 var(--gutter) clamp(40px, 6vh, 72px); }
+.studios-intro p {
+  font-family: var(--body); font-weight: 500;
+  font-size: clamp(20px, 2.2vw, 28px); line-height: 1.35; letter-spacing: -0.012em;
+  max-width: 920px;
 }
+
+.studio-block {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: clamp(80px, 12vh, 140px) 0;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.studio-block.dark { color: var(--paper); }
+.studio-block.light { color: var(--ink); }
+.studio-block.bg-slate { background: linear-gradient(135deg, #0E0E12 0%, #1C1C22 55%, #2C2C34 100%); }
+.studio-block.bg-warm  { background: linear-gradient(135deg, #F1E6CB 0%, #E8DAB2 55%, #DFCB94 100%); }
+.studio-block.bg-dusk  { background: linear-gradient(135deg, #1A1428 0%, #3A2E54 55%, #5C4880 100%); }
+.studio-block::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(120% 80% at 88% 112%, rgba(255,90,31,0.20) 0%, transparent 60%);
+}
+.studio-block.light::after {
+  background: radial-gradient(120% 80% at 88% 112%, rgba(255,90,31,0.14) 0%, transparent 60%);
+}
+.studio-block-inner {
+  position: relative; z-index: 1;
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex; flex-direction: column;
+  gap: clamp(32px, 5vh, 48px);
+}
+.studio-block-meta {
+  display: flex; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap; opacity: 0.88;
+}
+.studio-block-title { line-height: 0.95; }
+.studio-block-thesis {
+  font-family: var(--body); font-weight: 500;
+  font-size: clamp(20px, 2vw, 28px); line-height: 1.35; letter-spacing: -0.012em;
+  max-width: 920px;
+  opacity: 0.92;
+}
+.studio-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+  padding-top: clamp(16px, 2vh, 32px);
+}
+.venture-tile { display: flex; flex-direction: column; gap: 16px; }
+.venture-cover {
+  position: relative;
+  aspect-ratio: 4/4.6;
+  overflow: hidden;
+  cursor: pointer;
+}
+.venture-cover::before {
+  content: ''; position: absolute; inset: 0;
+  transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+.venture-tile:hover .venture-cover::before { transform: scale(1.04); }
+.venture-tag {
+  position: absolute; right: 14px; bottom: 14px; z-index: 1;
+  font-family: var(--mono); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 5px 9px;
+  background: rgba(247,245,240,0.16); color: var(--paper);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+}
+.venture-tag.invert { background: rgba(10,10,10,0.14); color: var(--ink); }
+.venture-info { display: flex; flex-direction: column; gap: 4px; }
+.venture-name {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(18px, 1.6vw, 22px); letter-spacing: -0.015em; line-height: 1.1;
+}
+.venture-desc {
+  font-family: var(--body); font-size: 14px; line-height: 1.45; opacity: 0.78;
+}
+.studio-block-also {
+  padding-top: 28px;
+  border-top: 1px solid rgba(247,245,240,0.18);
+  display: flex; flex-wrap: wrap; gap: 6px 22px;
+  align-items: baseline; opacity: 0.82;
+}
+.studio-block.light .studio-block-also { border-top-color: rgba(10,10,10,0.18); }
+.studio-block-also .name {
+  font-family: var(--display); font-weight: 600;
+  font-size: 15px; letter-spacing: -0.01em;
+}
+.studio-block-also .dot { opacity: 0.4; padding: 0 4px; }
+
+@media (max-width: 1100px) { .studio-grid { grid-template-columns: 1fr 1fr; gap: 20px; } }
+@media (max-width: 600px)  { .studio-grid { grid-template-columns: 1fr; } }
 
 /* ────────── Pullquote (full-width gradient block) ────────── */
 .pull { padding: 0 var(--gutter) clamp(120px, 16vh, 200px); }
@@ -242,13 +314,6 @@ a { color: inherit; text-decoration: none; }
 .pull-top { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; opacity: 0.86; }
 .pull-body { max-width: 1100px; }
 .pull-foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; opacity: 0.86; }
-
-/* ────────── Working with ────────── */
-.clients { padding: 0 var(--gutter) clamp(120px, 16vh, 200px); }
-.clients-head { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
-.clients-list { display: flex; flex-wrap: wrap; gap: 14px 36px; padding-top: 32px; border-top: 1px solid var(--ink); }
-.clients-list span { font-family: var(--display); font-weight: 700; font-size: clamp(20px, 2vw, 28px); letter-spacing: -0.018em; line-height: 1.1; padding: 8px 0; }
-.clients-list span.muted { opacity: 0.4; }
 
 /* ────────── Footer (back-of-the-book) ────────── */
 .footer-zone { padding-top: clamp(80px, 12vh, 140px); }
@@ -436,81 +501,189 @@ a { color: inherit; text-decoration: none; }
   </div>
   <h2 class="display-m">What we're building.</h2>
 </header>
-<section class="studios">
-  <p class="studios-lede reveal">We organise our work by industry, not by ownership. Each studio runs client engagements and our own ventures under the same thesis — because the work it takes to win a category is the same whether the cap table is ours or somebody else's.</p>
+<section class="studios-intro">
+  <p class="reveal">We organise our work by industry, not by ownership. Each studio runs client engagements and our own ventures under the same thesis — because the work it takes to win a category is the same whether the cap table is ours or somebody else's.</p>
+</section>
 
-  <div class="studio reveal">
-    <div class="studio-art dark var-ember">
-      <span class="studio-art-label mono-label">Studio / 01</span>
-      <span class="studio-art-num">ET</span>
+<!-- ──── Studio 01 · Enterprise Technology ──── -->
+<section class="studio-block dark bg-slate reveal">
+  <div class="studio-block-inner">
+    <div class="studio-block-meta">
+      <span class="mono-label">Studio / 01 — Enterprise Technology</span>
+      <span class="mono-label">06 active · 11 in archive</span>
     </div>
-    <div class="studio-body">
-      <h3 class="studio-title display-l">Enterprise Technology.</h3>
-      <p class="studio-thesis body-l">The decade of marketing software is ending. The decade of decision software is starting. We work with the firms building the next stack — and we are building inside it ourselves.</p>
-      <div class="studio-roster">
-        <div class="studio-row">
-          <span class="name">Clarisights</span>
-          <span class="desc">Decision engineering for marketing teams. Engaged.</span>
+    <h3 class="studio-block-title display-l">The decade of decision software.</h3>
+    <p class="studio-block-thesis">Enterprise teams have spent ten years building reporting tools and getting worse at decisions. The next stack — decision software, agentic workflows, internal AI — is starting to ship. We work with the firms building it, and we are building inside it ourselves.</p>
+
+    <div class="studio-grid">
+      <a class="venture-tile" href="#">
+        <div class="venture-cover var-teal">
+          <span class="venture-tag">Client</span>
         </div>
-        <div class="studio-row">
-          <span class="name">Carrots</span>
-          <span class="desc">Content marketing as a team game. Piloting with Quad and Clarisights.</span>
+        <div class="venture-info">
+          <span class="venture-name">Clarisights</span>
+          <span class="venture-desc">Decision engineering for marketing teams. Series A, Sequoia.</span>
         </div>
-        <div class="studio-row">
-          <span class="name">Goodera</span>
-          <span class="desc">Infrastructure for workplace culture. Long-time partner.</span>
+      </a>
+      <a class="venture-tile" href="#">
+        <div class="venture-cover var-ember">
+          <span class="venture-tag">Client</span>
         </div>
-        <div class="studio-row">
-          <span class="name">Glyph Social</span>
-          <span class="desc">Infrastructure for earned media. Building.</span>
+        <div class="venture-info">
+          <span class="venture-name">Goodera</span>
+          <span class="venture-desc">Infrastructure for workplace culture. Fortune 500 customers, India IPO bound.</span>
         </div>
-      </div>
+      </a>
+      <a class="venture-tile" href="#">
+        <div class="venture-cover var-sand">
+          <span class="venture-tag invert">Venture</span>
+        </div>
+        <div class="venture-info">
+          <span class="venture-name">Carrots</span>
+          <span class="venture-desc">Content marketing as a team game. Piloting with Quad and Clarisights.</span>
+        </div>
+      </a>
+      <a class="venture-tile" href="#">
+        <div class="venture-cover var-dusk">
+          <span class="venture-tag">Venture</span>
+        </div>
+        <div class="venture-info">
+          <span class="venture-name">Glyph Social</span>
+          <span class="venture-desc">Infrastructure for earned media. In build.</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="studio-block-also">
+      <span class="mono-label">Also in the file</span>
+      <span class="name">Kris@Work</span><span class="dot">·</span>
+      <span class="name">Exotel</span><span class="dot">·</span>
+      <span class="name">UserExperior</span><span class="dot">·</span>
+      <span class="name">Fyle</span><span class="dot">·</span>
+      <span class="name">Pazcare</span><span class="dot">·</span>
+      <span class="name">elevateHQ</span><span class="dot">·</span>
+      <span class="name">NestAway</span><span class="dot">·</span>
+      <span class="name">Storylane</span><span class="dot">·</span>
+      <span class="name">Pravar</span><span class="dot">·</span>
+      <span class="name">Uncharted AI</span>
     </div>
   </div>
+</section>
 
-  <div class="studio reveal">
-    <div class="studio-art light var-warm">
-      <span class="studio-art-label mono-label" style="color: var(--ink);">Studio / 02</span>
-      <span class="studio-art-num" style="color: var(--ink);">FB</span>
+<!-- ──── Studio 02 · Food & Beverage ──── -->
+<section class="studio-block light bg-warm reveal">
+  <div class="studio-block-inner">
+    <div class="studio-block-meta">
+      <span class="mono-label">Studio / 02 — Food &amp; Beverage</span>
+      <span class="mono-label">4 active · operator inside</span>
     </div>
-    <div class="studio-body">
-      <h3 class="studio-title display-l">Food &amp; Beverage.</h3>
-      <p class="studio-thesis body-l">Four years of operating a cloud kitchen brand changes how you see this industry. We know what works, what doesn't, and what the next decade of Indian F&amp;B looks like from inside the door.</p>
-      <div class="studio-roster">
-        <div class="studio-row">
-          <span class="name">Ministry of Oats</span>
-          <span class="desc">A cloud kitchen brand across three cities. Our own.</span>
+    <h3 class="studio-block-title display-l">An operator's view of Indian F&amp;B.</h3>
+    <p class="studio-block-thesis">Four years inside a cloud kitchen brand changes how you see this industry. We know what works, what doesn't, and what the next decade of Indian F&amp;B — DTC, embedded, retail, subscription — looks like from inside the door.</p>
+
+    <div class="studio-grid">
+      <a class="venture-tile" href="#">
+        <div class="venture-cover var-carbon">
+          <span class="venture-tag">Venture</span>
         </div>
-        <div class="studio-row">
-          <span class="name">Canteen</span>
-          <span class="desc">An AI-native service for India's F&amp;B owners. In build.</span>
+        <div class="venture-info">
+          <span class="venture-name">Ministry of Oats</span>
+          <span class="venture-desc">A cloud kitchen brand across three Bengaluru kitchens. Our own.</span>
         </div>
-      </div>
+      </a>
+      <a class="venture-tile" href="#">
+        <div class="venture-cover var-ember">
+          <span class="venture-tag">Venture</span>
+        </div>
+        <div class="venture-info">
+          <span class="venture-name">Canteen</span>
+          <span class="venture-desc">An AI-native service for India's F&amp;B owners. In build.</span>
+        </div>
+      </a>
+      <a class="venture-tile" href="#">
+        <div class="venture-cover var-dusk">
+          <span class="venture-tag">Series</span>
+        </div>
+        <div class="venture-info">
+          <span class="venture-name">Frozen Gardens</span>
+          <span class="venture-desc">A luxury smoothie-bowl line. Five SKUs. Premium gifting positioning.</span>
+        </div>
+      </a>
+      <a class="venture-tile" href="#">
+        <div class="venture-cover var-slate">
+          <span class="venture-tag">Series</span>
+        </div>
+        <div class="venture-info">
+          <span class="venture-name">DIY CPG</span>
+          <span class="venture-desc">A subscription-first hyperlocal CPG unit. Fresh + pantry.</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="studio-block-also">
+      <span class="mono-label" style="color: var(--ink); opacity: 0.6;">Adjacent surfaces</span>
+      <span class="name">Outpost Kitchen</span><span class="dot">·</span>
+      <span class="name">MOO at X</span><span class="dot">·</span>
+      <span class="name">moo.kitchen</span><span class="dot">·</span>
+      <span class="name">Recurr Press · F&amp;B file</span>
     </div>
   </div>
+</section>
 
-  <div class="studio reveal">
-    <div class="studio-art dark var-dusk">
-      <span class="studio-art-label mono-label">Studio / 03</span>
-      <span class="studio-art-num">ME</span>
+<!-- ──── Studio 03 · Media & Education ──── -->
+<section class="studio-block dark bg-dusk reveal">
+  <div class="studio-block-inner">
+    <div class="studio-block-meta">
+      <span class="mono-label">Studio / 03 — Media &amp; Education</span>
+      <span class="mono-label">4 active · partnerships open</span>
     </div>
-    <div class="studio-body">
-      <h3 class="studio-title display-l">Media &amp; Education.</h3>
-      <p class="studio-thesis body-l">India needs a generation of media properties that speak to its industrial reality, consumer ambition, and education stack. We're building three — and consulting on the ones we admire.</p>
-      <div class="studio-roster">
-        <div class="studio-row">
-          <span class="name">Quad AI</span>
-          <span class="desc">A new standard of technology education. Built for Bharat.</span>
+    <h3 class="studio-block-title display-l">India needs a new generation of media.</h3>
+    <p class="studio-block-thesis">India needs media properties that speak to its industrial reality, consumer ambition, and the next generation of its education stack. We're building three — and consulting on the ones we admire.</p>
+
+    <div class="studio-grid">
+      <a class="venture-tile" href="#">
+        <div class="venture-cover var-ember">
+          <span class="venture-tag">Venture</span>
         </div>
-        <div class="studio-row">
-          <span class="name">BLR Store</span>
-          <span class="desc">Retail therapy for India's new consumers. With Razorpay.</span>
+        <div class="venture-info">
+          <span class="venture-name">Vayam</span>
+          <span class="venture-desc">India's industrial identity, on the record. Seven sectors. With Sarvam.</span>
         </div>
-        <div class="studio-row">
-          <span class="name">Vayam</span>
-          <span class="desc">India's industrial identity, on the record. With Sarvam.</span>
+      </a>
+      <a class="venture-tile" href="#">
+        <div class="venture-cover var-warm">
+          <span class="venture-tag invert">Venture</span>
         </div>
-      </div>
+        <div class="venture-info">
+          <span class="venture-name">BLR Store</span>
+          <span class="venture-desc">Retail therapy for India's new consumers. With Razorpay.</span>
+        </div>
+      </a>
+      <a class="venture-tile" href="#">
+        <div class="venture-cover var-slate">
+          <span class="venture-tag">Client</span>
+        </div>
+        <div class="venture-info">
+          <span class="venture-name">Quad AI</span>
+          <span class="venture-desc">A new standard of technology education. Built for Bharat.</span>
+        </div>
+      </a>
+      <a class="venture-tile" href="#">
+        <div class="venture-cover var-carbon">
+          <span class="venture-tag">Series</span>
+        </div>
+        <div class="venture-info">
+          <span class="venture-name">Anthracite</span>
+          <span class="venture-desc">India's mineral destiny. A 15-essay editorial book inside Vayam.</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="studio-block-also">
+      <span class="mono-label">Adjacent surfaces</span>
+      <span class="name">Recurr Press</span><span class="dot">·</span>
+      <span class="name">SaaStitute · archive</span><span class="dot">·</span>
+      <span class="name">Sarvam · partner</span><span class="dot">·</span>
+      <span class="name">Razorpay · partner</span>
     </div>
   </div>
 </section>
@@ -529,28 +702,6 @@ a { color: inherit; text-decoration: none; }
       <span class="mono-label">— Read the full essay</span>
       <span class="mono-label">12 min</span>
     </div>
-  </div>
-</section>
-
-<!-- ────────── WORKING WITH ────────── -->
-<header class="section-head" id="about">
-  <div class="meta-row">
-    <span class="mono-label">Section / 03 — Working with</span>
-    <span class="mono-label">Active engagements + partners</span>
-  </div>
-  <h2 class="display-m">In the room.</h2>
-</header>
-<section class="clients">
-  <div class="clients-list reveal">
-    <span>Clarisights</span>
-    <span>Goodera</span>
-    <span>Kris@Work</span>
-    <span>Exotel</span>
-    <span>Quad AI</span>
-    <span class="muted">·</span>
-    <span>Razorpay</span>
-    <span>Sarvam</span>
-    <span>Urban Vault</span>
   </div>
 </section>
 
