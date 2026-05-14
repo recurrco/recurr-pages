@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Vayam · India's Industrial Identity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&family=Noto+Serif+Devanagari:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      /* Foundation */
+      --ink: #141210;
+      --ink-2: #2a2620;
+      --paper: #faf6ed;
+      --paper-deep: #f1ead9;
+      --paper-card: #fdfaf2;
+      --muted: #6b625a;
+      --muted-2: #8a7d6a;
+      --border: #e3dccb;
+      --rule: #d4cab2;
+      --hairline: rgba(20,18,16,0.08);
+
+      /* India Spectrum — sector colors */
+      --coal:        #1A1614;
+      --steel:       #B73E2C;
+      --petroleum:   #E87B26;
+      --power:       #F4A93C;
+      --transport:   #C73E2E;
+      --civil:       #6B7280;
+      --defence:     #2E3A8C;
+      --datacenter:  #1E40AF;
+      --ai:          #0E7C66;
+      --quantum:     #6B21A8;
+      --semi:        #0891B2;
+      --space:       #475569;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Fraunces', 'Georgia', serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: "ss01", "ss02";
+    }
+    .sans { font-family: 'Inter', -apple-system, sans-serif; }
+    .deva { font-family: 'Noto Serif Devanagari', serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── TOP BAR ─────────────────────────────────────── */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(250,246,237,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .topbar-inner {
+      max-width: 1240px; margin: 0 auto;
+      padding: 14px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 32px;
+    }
+    .brand-lockup {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .monogram {
+      width: 32px; height: 32px;
+      background: var(--ink); color: var(--paper);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 20px; font-weight: 500;
+      line-height: 1; padding-bottom: 2px;
+    }
+    .wordmark {
+      font-family: 'Fraunces', serif;
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .wordmark-sub {
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 18px;
+      color: var(--muted);
+      margin-left: 4px;
+      font-weight: 500;
+    }
+    .topnav {
+      display: flex; align-items: center; gap: 28px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-2);
+    }
+    .topnav a:hover { color: var(--steel); }
+    .topnav .pill {
+      display: inline-block;
+      padding: 6px 12px;
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 999px;
+      font-size: 12px;
+    }
+
+    /* ─── LAYOUT PRIMITIVES ────────────────────────────── */
+    .wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+    .wrap-narrow { max-width: 880px; margin: 0 auto; padding: 0 32px; }
+    section { padding: 96px 0; border-bottom: 1px solid var(--hairline); }
+    section.no-rule { border-bottom: none; }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted-2);
+      font-weight: 500;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .eyebrow::before {
+      content: ''; width: 24px; height: 1px;
+      background: var(--rule);
+    }
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: clamp(32px, 4.2vw, 56px);
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      margin-top: 18px;
+      max-width: 22ch;
+    }
+    .section-lede {
+      font-family: 'Fraunces', serif;
+      font-size: 20px;
+      line-height: 1.55;
+      color: var(--ink-2);
+      max-width: 56ch;
+      margin-top: 20px;
+    }
+
+    /* ─── HERO ─────────────────────────────────────────── */
+    .hero {
+      padding: 96px 0 88px;
+      border-bottom: 1px solid var(--hairline);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(244,169,60,0.10), transparent 50%),
+        radial-gradient(circle at 90% 30%, rgba(14,124,102,0.08), transparent 55%),
+        var(--paper);
+    }
+    .hero-inner {
+      max-width: 1240px; margin: 0 auto; padding: 0 32px;
+    }
+    .hero-tag {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted-2);
+      font-weight: 500;
+      margin-bottom: 32px;
+    }
+    .hero-mark {
+      font-family: 'Noto Serif Devanagari', serif;
+      font-weight: 500;
+      font-size: clamp(120px, 22vw, 280px);
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    .hero-h1 {
+      font-family: 'Fraunces', serif;
+      font-weight: 300;
+      font-size: clamp(36px, 5.6vw, 72px);
+      line-height: 1.02;
+      letter-spacing: -0.028em;
+      max-width: 18ch;
+      color: var(--ink);
+    }
+    .hero-h1 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--steel);
+    }
+    .hero-sub {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      line-height: 1.5;
+      color: var(--ink-2);
+      max-width: 56ch;
+      margin-top: 28px;
+    }
+    .hero-meta {
+      display: flex; flex-wrap: wrap; gap: 28px;
+      margin-top: 56px;
+      padding-top: 32px;
+      border-top: 1px solid var(--hairline);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .hero-meta div span {
+      display: block; font-size: 11px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted-2); margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .hero-meta div strong {
+      color: var(--ink); font-weight: 500;
+      font-family: 'Fraunces', serif; font-size: 15px;
+    }
+
+    /* ─── IDEA / MANIFESTO ────────────────────────────── */
+    .manifesto p {
+      font-family: 'Fraunces', serif;
+      font-size: 26px;
+      font-weight: 300;
+      line-height: 1.45;
+      letter-spacing: -0.012em;
+      color: var(--ink);
+      max-width: 32ch;
+      margin-bottom: 24px;
+    }
+    .manifesto p em {
+      font-style: italic;
+      color: var(--ai);
+    }
+    .manifesto-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-top: 56px;
+      padding-top: 48px;
+      border-top: 1px solid var(--hairline);
+    }
+    .manifesto-cell h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted-2);
+      font-weight: 500;
+      margin-bottom: 14px;
+    }
+    .manifesto-cell p {
+      font-family: 'Fraunces', serif;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--ink-2);
+      max-width: 100%;
+      font-weight: 400;
+      margin-bottom: 0;
+    }
+    @media (max-width: 880px) {
+      .manifesto-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+    }
+
+    /* ─── LOGO SYSTEM ─────────────────────────────────── */
+    .logo-grid {
+      margin-top: 56px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 880px) {
+      .logo-grid { grid-template-columns: 1fr; }
+    }
+
+    .logo-stage {
+      background: var(--paper-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 56px 40px;
+      display: grid; place-items: center;
+      min-height: 280px;
+      position: relative;
+    }
+    .logo-stage.dark { background: var(--ink); }
+    .logo-stage.color-jade { background: var(--ai); }
+
+    .stage-label {
+      position: absolute; top: 16px; left: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted-2);
+      font-weight: 500;
+    }
+    .logo-stage.dark .stage-label,
+    .logo-stage.color-jade .stage-label {
+      color: rgba(255,255,255,0.55);
+    }
+    .stage-meta {
+      position: absolute; bottom: 16px; left: 20px; right: 20px;
+      display: flex; justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted-2);
+    }
+    .logo-stage.dark .stage-meta,
+    .logo-stage.color-jade .stage-meta { color: rgba(255,255,255,0.5); }
+
+    /* Big primary lockup */
+    .lockup-primary {
+      display: flex; align-items: center; gap: 28px;
+    }
+    .lockup-primary .mark-circle {
+      width: 88px; height: 88px;
+      background: var(--ink); color: var(--paper);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 56px;
+      line-height: 1;
+      padding-bottom: 6px;
+    }
+    .lockup-primary.inverse .mark-circle {
+      background: var(--paper); color: var(--ink);
+    }
+    .lockup-primary.on-color .mark-circle {
+      background: rgba(255,255,255,0.16);
+      color: #fff;
+      backdrop-filter: blur(6px);
+    }
+    .lockup-primary .wm-stack {
+      display: flex; flex-direction: column;
+      gap: 4px;
+    }
+    .wm-latin {
+      font-family: 'Fraunces', serif;
+      font-weight: 500;
+      font-size: 60px;
+      letter-spacing: -0.035em;
+      line-height: 0.92;
+      color: var(--ink);
+    }
+    .lockup-primary.inverse .wm-latin,
+    .lockup-primary.on-color .wm-latin { color: var(--paper); }
+    .wm-deva {
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 26px;
+      color: var(--muted);
+      font-weight: 500;
+      line-height: 1;
+    }
+    .lockup-primary.inverse .wm-deva { color: rgba(255,255,255,0.6); }
+    .lockup-primary.on-color .wm-deva { color: rgba(255,255,255,0.7); }
+
+    .logo-mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .mono-circle-lg {
+      width: 120px; height: 120px;
+      background: var(--ink); color: var(--paper);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 72px;
+      line-height: 1; padding-bottom: 8px;
+    }
+    .mono-square-lg {
+      width: 120px; height: 120px;
+      background: var(--steel); color: var(--paper);
+      border-radius: 18px;
+      display: grid; place-items: center;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 72px;
+      line-height: 1; padding-bottom: 8px;
+    }
+    .wordmark-only {
+      font-family: 'Fraunces', serif;
+      font-weight: 500;
+      font-size: 56px;
+      letter-spacing: -0.035em;
+      line-height: 1;
+    }
+
+    /* Logo rules table */
+    .logo-rules {
+      margin-top: 56px;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    @media (max-width: 880px) {
+      .logo-rules { grid-template-columns: 1fr; }
+    }
+    .rule-cell {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--paper-card);
+    }
+    .rule-cell h5 {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ai);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .rule-cell h5.dont { color: var(--steel); }
+    .rule-cell p {
+      font-family: 'Fraunces', serif;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ink-2);
+    }
+
+    /* ─── COLOR SPECTRUM ──────────────────────────────── */
+    .spectrum {
+      margin-top: 56px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+    }
+    @media (max-width: 880px) { .spectrum { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .spectrum { grid-template-columns: 1fr; } }
+
+    .swatch {
+      aspect-ratio: 1.1 / 1;
+      padding: 24px;
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+      color: #fff;
+      position: relative;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .swatch.light { color: var(--ink); }
+    .swatch-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      opacity: 0.7;
+    }
+    .swatch-bot h5 {
+      font-family: 'Fraunces', serif;
+      font-weight: 500;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+    .swatch-bot .deva {
+      font-size: 14px;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+    .swatch-bot .tagline {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      opacity: 0.6;
+      margin-top: 10px;
+      max-width: 24ch;
+      line-height: 1.4;
+    }
+
+    .spectrum-note {
+      margin-top: 32px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 64ch;
+      line-height: 1.6;
+    }
+
+    /* ─── TYPOGRAPHY ──────────────────────────────────── */
+    .type-stack { margin-top: 48px; }
+    .type-row {
+      padding: 40px 0;
+      border-top: 1px solid var(--hairline);
+      display: grid;
+      grid-template-columns: 1fr 2.5fr;
+      gap: 40px;
+      align-items: start;
+    }
+    @media (max-width: 880px) {
+      .type-row { grid-template-columns: 1fr; gap: 16px; }
+    }
+    .type-meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .type-meta strong {
+      display: block;
+      font-family: 'Fraunces', serif;
+      font-weight: 500;
+      font-size: 18px;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .type-meta code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: var(--paper-deep);
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: var(--ink-2);
+    }
+    .type-sample {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 44px;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      color: var(--ink);
+    }
+    .type-sample.body {
+      font-size: 18px;
+      letter-spacing: 0;
+      line-height: 1.65;
+      max-width: 60ch;
+      color: var(--ink-2);
+    }
+    .type-sample.ui {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      line-height: 1.55;
+      max-width: 60ch;
+      color: var(--ink-2);
+    }
+    .type-sample.deva {
+      font-family: 'Noto Serif Devanagari', serif;
+      font-weight: 500;
+      font-size: 40px;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+    .type-sample.mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0;
+      line-height: 1.6;
+      color: var(--ink-2);
+    }
+
+    /* ─── IMAGE PHILOSOPHY ───────────────────────────── */
+    .image-grid {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 880px) {
+      .image-grid { grid-template-columns: 1fr; }
+    }
+
+    .image-tile {
+      border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--paper-card);
+    }
+    .image-frame {
+      aspect-ratio: 4/3;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+    }
+    .image-frame.real {
+      background: linear-gradient(135deg, #2c3e50, #4a5d6b 40%, #758d9c);
+      background-image:
+        radial-gradient(circle at 30% 60%, rgba(255,140,40,0.4), transparent 40%),
+        linear-gradient(135deg, #2c3e50, #4a5d6b 50%, #758d9c);
+    }
+    .image-frame.hyper {
+      background: linear-gradient(135deg, #0e7c66, #1e40af 60%, #6b21a8);
+    }
+    .image-frame.chart {
+      background: var(--paper-deep);
+      display: grid; place-items: center;
+    }
+    .chart-mock {
+      width: 70%;
+    }
+    .chart-mock svg { width: 100%; height: auto; display: block; }
+
+    .watermark {
+      position: absolute; bottom: 12px; right: 14px;
+      display: flex; align-items: center; gap: 7px;
+      color: rgba(255,255,255,0.9);
+      mix-blend-mode: difference;
+    }
+    .watermark .wm-mono {
+      width: 22px; height: 22px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 14px;
+      line-height: 1; padding-bottom: 2px;
+    }
+    .watermark .wm-text {
+      font-family: 'Fraunces', serif;
+      font-weight: 500;
+      font-size: 13px;
+      letter-spacing: -0.01em;
+    }
+
+    .image-caption {
+      padding: 14px 20px 16px;
+      display: flex; justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+    }
+    .image-caption .typ {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ai);
+      font-weight: 600;
+    }
+    .image-caption .typ.steel { color: var(--steel); }
+    .image-caption .typ.indigo { color: var(--defence); }
+    .image-caption .desc {
+      font-family: 'Fraunces', serif;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+      text-align: right;
+      max-width: 24ch;
+    }
+
+    .image-rules {
+      margin-top: 32px;
+      padding: 24px 28px;
+      background: var(--paper-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-family: 'Fraunces', serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink-2);
+      max-width: 76ch;
+    }
+    .image-rules strong { color: var(--ink); font-weight: 600; }
+
+    /* ─── SIGNATURE STYLE ────────────────────────────── */
+    .sig-row { margin-top: 48px; display: grid; gap: 28px; }
+    .sig-block {
+      padding: 32px;
+      background: var(--paper-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      position: relative;
+    }
+    .sig-block .stage-label { position: absolute; top: 16px; right: 20px; left: auto; }
+
+    /* Byline strip */
+    .byline-strip {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--hairline);
+      border-top: 4px solid var(--ai);
+      padding-top: 18px;
+    }
+    .byline-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--ink-2), var(--muted));
+      flex-shrink: 0;
+    }
+    .byline-meta {
+      flex: 1;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .byline-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ai);
+      font-weight: 600;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .byline-eyebrow::before {
+      content: ''; width: 8px; height: 8px;
+      background: var(--ai); border-radius: 50%;
+    }
+    .byline-author {
+      font-family: 'Fraunces', serif;
+      font-size: 15px;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .byline-meta-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Pull quote */
+    .pull-quote {
+      margin-top: 24px;
+      padding: 16px 24px;
+      border-left: 4px solid var(--ai);
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 1.45;
+      color: var(--ink);
+      max-width: 56ch;
+    }
+    .pull-quote span {
+      display: block;
+      font-style: normal;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 14px;
+      font-weight: 500;
+    }
+
+    /* Signoff */
+    .sig-off {
+      margin-top: 32px;
+      padding: 32px 0 8px;
+      border-top: 1px solid var(--hairline);
+      text-align: center;
+    }
+    .sig-off-mark {
+      width: 56px; height: 56px;
+      background: var(--ink); color: var(--paper);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      margin: 0 auto 14px;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 32px;
+      line-height: 1; padding-bottom: 4px;
+    }
+    .sig-off-text {
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      color: var(--ink-2);
+    }
+    .sig-off-text em {
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    /* ─── PUBLISHING CYCLE ────────────────────────────── */
+    .cycle {
+      margin-top: 56px;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 56px;
+      align-items: center;
+    }
+    @media (max-width: 880px) { .cycle { grid-template-columns: 1fr; } }
+
+    .cycle-source {
+      padding: 40px 32px;
+      background: var(--ink); color: var(--paper);
+      border-radius: 16px;
+    }
+    .cycle-source .step {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      font-weight: 500;
+    }
+    .cycle-source h3 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 32px;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 14px 0 18px;
+    }
+    .cycle-source p {
+      font-family: 'Fraunces', serif;
+      font-size: 16px;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.75);
+    }
+    .cycle-source .badge {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 6px 14px;
+      background: var(--ai);
+      border-radius: 999px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .cycle-children {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .cycle-child {
+      padding: 24px;
+      border: 1px solid var(--border);
+      background: var(--paper-card);
+      border-radius: 12px;
+    }
+    .cycle-child .ch-platform {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted-2);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .cycle-child h4 {
+      font-family: 'Fraunces', serif;
+      font-size: 17px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+    .cycle-child p {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ─── EXPLORE / CTA ──────────────────────────────── */
+    .explore {
+      background: var(--paper-deep);
+      padding: 96px 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .explore-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      margin-top: 48px;
+    }
+    @media (max-width: 880px) { .explore-grid { grid-template-columns: 1fr; } }
+    .explore-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      display: block;
+    }
+    .explore-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -16px rgba(20,18,16,0.12);
+    }
+    .explore-card .label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .explore-card.essay .label { color: var(--ai); }
+    .explore-card.sector .label { color: var(--quantum); }
+    .explore-card h3 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 16px 0 12px;
+    }
+    .explore-card p {
+      font-family: 'Fraunces', serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink-2);
+    }
+    .explore-card .arrow {
+      margin-top: 24px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--ink); color: var(--paper);
+      padding: 64px 0 32px;
+    }
+    .foot-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    @media (max-width: 880px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+    .foot-brand {
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .foot-brand .lockup-primary .mark-circle {
+      background: var(--paper); color: var(--ink);
+      width: 52px; height: 52px; font-size: 32px;
+    }
+    .foot-brand .wm-latin {
+      color: var(--paper); font-size: 32px;
+    }
+    .foot-brand .wm-deva { color: rgba(255,255,255,0.5); }
+    .foot-brand p {
+      font-family: 'Fraunces', serif;
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      max-width: 28ch;
+      margin-top: 4px;
+    }
+    .foot-col h6 {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 14px;
+    }
+    .foot-col a {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: rgba(255,255,255,0.85);
+      padding: 4px 0;
+    }
+    .foot-col a:hover { color: var(--power); }
+    .foot-base {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex; justify-content: space-between;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a href="/vayam/" class="brand-lockup">
+        <span class="monogram">व</span>
+        <span class="wordmark">vayam<span class="wordmark-sub">वयम्</span></span>
+      </a>
+      <nav class="topnav">
+        <a href="#logo">Logo</a>
+        <a href="#color">Color</a>
+        <a href="#type">Type</a>
+        <a href="#images">Images</a>
+        <a href="#cycle">Publishing</a>
+        <a href="/vayam-essay/" class="pill">See a story →</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero no-rule">
+    <div class="hero-inner">
+      <div class="hero-tag">Brand identity · v1.0 · Bengaluru · 14 May 2026</div>
+      <div class="hero-mark">वयम्</div>
+      <h1 class="hero-h1">India's industrial identity, told <em>at last</em> by the people inside it.</h1>
+      <p class="hero-sub">
+        Vayam is a media house for the sectors that sit under the Indian economy as its tectonic foundation —
+        mining, energy, defence, steel, infrastructure, and the new strategic verticals: data centers, sovereign AI,
+        quantum, semiconductors. Mainstream media covers them only at the surface. We cover them from within.
+      </p>
+      <div class="hero-meta">
+        <div><span>Word</span><strong>वयम् · <em style="font-style:italic; color:var(--muted)">we</em></strong></div>
+        <div><span>Sectors</span><strong>12 and growing</strong></div>
+        <div><span>Voices</span><strong>Discovery · Community · Venture · Dialogue</strong></div>
+        <div><span>Status</span><strong>Launching 20 May 2026</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section id="why" class="manifesto">
+    <div class="wrap">
+      <div class="eyebrow">The Idea</div>
+      <h2 class="section-title">A publication about the half of India that doesn't get written about.</h2>
+      <div class="manifesto-grid">
+        <div class="manifesto-cell">
+          <h4>Voice</h4>
+          <p>Educational, plural, optimistic. We are not Reuters covering quarterly results. We are not a magazine running puff. We explain.</p>
+        </div>
+        <div class="manifesto-cell">
+          <h4>Subjects</h4>
+          <p>Workers, families, plant towns, contractor communities, founders inside legacy sectors, ministers, mid-level engineers, retired chairmen.</p>
+        </div>
+        <div class="manifesto-cell">
+          <h4>Sectors</h4>
+          <p>Coal, steel, petroleum, power, defence, transport, civilian infra — and the new strategic stack: data centers, sovereign AI, quantum, semiconductors.</p>
+        </div>
+        <div class="manifesto-cell">
+          <h4>Method</h4>
+          <p>One long essay anchors every story. From there, four teams take it apart for Instagram, YouTube, X, and LinkedIn.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGO SYSTEM -->
+  <section id="logo">
+    <div class="wrap">
+      <div class="eyebrow">01 · Logo System</div>
+      <h2 class="section-title">One mark. Built for paper, screen, video, and the lower-right of every image we publish.</h2>
+      <p class="section-lede">
+        The mark is the Devanagari letter <span class="deva" style="font-size:1.3em">व</span> — the first sound of <em>vayam</em> —
+        held inside a soft disc. Beside it sits the lowercase wordmark and the Devanagari word in full.
+        The mark scales from a 16px favicon to the corner of a film bumper without losing its voice.
+      </p>
+
+      <div class="logo-grid">
+        <!-- Primary lockup, on paper -->
+        <div class="logo-stage">
+          <div class="stage-label">Primary lockup · on paper</div>
+          <div class="lockup-primary">
+            <div class="mark-circle">व</div>
+            <div class="wm-stack">
+              <div class="wm-latin">vayam</div>
+              <div class="wm-deva">वयम्</div>
+            </div>
+          </div>
+          <div class="stage-meta"><span>Fraunces 500 + Noto Serif Devanagari</span><span>FG #141210 / BG #faf6ed</span></div>
+        </div>
+
+        <!-- Inverse, on ink -->
+        <div class="logo-stage dark">
+          <div class="stage-label">Inverse · on ink</div>
+          <div class="lockup-primary inverse">
+            <div class="mark-circle">व</div>
+            <div class="wm-stack">
+              <div class="wm-latin">vayam</div>
+              <div class="wm-deva">वयम्</div>
+            </div>
+          </div>
+          <div class="stage-meta"><span>For dark hero blocks &amp; video</span><span>FG paper / BG ink</span></div>
+        </div>
+      </div>
+
+      <div class="logo-grid" style="margin-top:24px;">
+        <!-- On sector color -->
+        <div class="logo-stage color-jade">
+          <div class="stage-label">On sector color · Sovereign AI</div>
+          <div class="lockup-primary on-color">
+            <div class="mark-circle">व</div>
+            <div class="wm-stack">
+              <div class="wm-latin">vayam</div>
+              <div class="wm-deva">वयम्</div>
+            </div>
+          </div>
+          <div class="stage-meta"><span>For sector covers &amp; campaign units</span><span>FG paper / BG #0E7C66</span></div>
+        </div>
+
+        <!-- Monogram + wordmark only -->
+        <div class="logo-stage">
+          <div class="stage-label">Monogram · for watermarks &amp; favicons</div>
+          <div class="logo-mini-grid">
+            <div style="display:grid;place-items:center;">
+              <div class="mono-circle-lg">व</div>
+            </div>
+            <div style="display:grid;place-items:center;">
+              <div class="mono-square-lg">व</div>
+            </div>
+          </div>
+          <div class="stage-meta"><span>Circle for default · square for editorial cards</span><span>16px → 512px</span></div>
+        </div>
+      </div>
+
+      <div class="logo-rules">
+        <div class="rule-cell">
+          <h5>Always</h5>
+          <p>Pair the Latin and Devanagari. Vayam is bilingual; the wordmark behaves that way. The Devanagari sits as a partner, never a decoration.</p>
+        </div>
+        <div class="rule-cell">
+          <h5>When inverted</h5>
+          <p>The disc reverses (paper on ink). The wordmark goes paper. The Devanagari subtitle goes 60% paper. Nothing else changes.</p>
+        </div>
+        <div class="rule-cell">
+          <h5 class="dont">Never</h5>
+          <p>Outline the disc. Apply gradients. Place over busy photography without a backplate. Rotate the wordmark. Substitute the Devanagari for English in the lockup.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLOR -->
+  <section id="color">
+    <div class="wrap">
+      <div class="eyebrow">02 · The India Spectrum</div>
+      <h2 class="section-title">A color for every sector we cover. Earth where it began. Jewels where it's going.</h2>
+      <p class="section-lede">
+        The base is ink on paper — the typography of a press masthead. Each sector then gets one signature color from
+        a twelve-color spectrum we call the India Spectrum: earth tones for the foundational sectors, jewel tones for
+        the strategic new stack. The list expands as the publication does.
+      </p>
+
+      <div class="spectrum">
+        <!-- Earth -->
+        <div class="swatch" style="background:var(--coal)">
+          <div class="swatch-top"><span>01</span><span>#1A1614</span></div>
+          <div class="swatch-bot">
+            <h5>Coal & Mining</h5>
+            <div class="deva">कोयला</div>
+            <div class="tagline">The sector India's grid still runs on.</div>
+          </div>
+        </div>
+        <div class="swatch" style="background:var(--steel)">
+          <div class="swatch-top"><span>02</span><span>#B73E2C</span></div>
+          <div class="swatch-bot">
+            <h5>Steel & Manufacturing</h5>
+            <div class="deva">इस्पात</div>
+            <div class="tagline">Iron from the Red Soil belt.</div>
+          </div>
+        </div>
+        <div class="swatch" style="background:var(--petroleum)">
+          <div class="swatch-top"><span>03</span><span>#E87B26</span></div>
+          <div class="swatch-bot">
+            <h5>Petroleum & Gas</h5>
+            <div class="deva">पेट्रोलियम</div>
+            <div class="tagline">The hydrocarbon we still import 87% of.</div>
+          </div>
+        </div>
+        <div class="swatch" style="background:var(--power)">
+          <div class="swatch-top"><span>04</span><span>#F4A93C</span></div>
+          <div class="swatch-bot">
+            <h5>Power & Energy</h5>
+            <div class="deva">ऊर्जा</div>
+            <div class="tagline">The third-largest electricity market on earth.</div>
+          </div>
+        </div>
+
+        <div class="swatch" style="background:var(--transport)">
+          <div class="swatch-top"><span>05</span><span>#C73E2E</span></div>
+          <div class="swatch-bot">
+            <h5>Transport & Logistics</h5>
+            <div class="deva">परिवहन</div>
+            <div class="tagline">Rails, ports, the highways under the highways.</div>
+          </div>
+        </div>
+        <div class="swatch" style="background:var(--civil)">
+          <div class="swatch-top"><span>06</span><span>#6B7280</span></div>
+          <div class="swatch-bot">
+            <h5>Civilian Infrastructure</h5>
+            <div class="deva">अवसंरचना</div>
+            <div class="tagline">Roads, airports, buildings, bridges.</div>
+          </div>
+        </div>
+        <div class="swatch" style="background:var(--defence)">
+          <div class="swatch-top"><span>07</span><span>#2E3A8C</span></div>
+          <div class="swatch-bot">
+            <h5>Defence & Aerospace</h5>
+            <div class="deva">रक्षा</div>
+            <div class="tagline">HAL, BEL, the new private primes.</div>
+          </div>
+        </div>
+        <div class="swatch" style="background:var(--datacenter)">
+          <div class="swatch-top"><span>08</span><span>#1E40AF</span></div>
+          <div class="swatch-bot">
+            <h5>Data Centers</h5>
+            <div class="deva">डेटा केंद्र</div>
+            <div class="tagline">The new acreage of the Indian economy.</div>
+          </div>
+        </div>
+
+        <div class="swatch" style="background:var(--ai)">
+          <div class="swatch-top"><span>09</span><span>#0E7C66</span></div>
+          <div class="swatch-bot">
+            <h5>Sovereign AI</h5>
+            <div class="deva">स्वतंत्र बुद्धिमत्ता</div>
+            <div class="tagline">India's right to a model of its own.</div>
+          </div>
+        </div>
+        <div class="swatch" style="background:var(--quantum)">
+          <div class="swatch-top"><span>10</span><span>#6B21A8</span></div>
+          <div class="swatch-bot">
+            <h5>Quantum Computing</h5>
+            <div class="deva">क्वांटम</div>
+            <div class="tagline">The decade Bengaluru could own.</div>
+          </div>
+        </div>
+        <div class="swatch" style="background:var(--semi)">
+          <div class="swatch-top"><span>11</span><span>#0891B2</span></div>
+          <div class="swatch-bot">
+            <h5>Semiconductors</h5>
+            <div class="deva">अर्धचालक</div>
+            <div class="tagline">The fabs we are building and importing.</div>
+          </div>
+        </div>
+        <div class="swatch" style="background:var(--space)">
+          <div class="swatch-top"><span>12</span><span>#475569</span></div>
+          <div class="swatch-bot">
+            <h5>Space & Aerospace</h5>
+            <div class="deva">अंतरिक्ष</div>
+            <div class="tagline">ISRO and the eighty private companies behind it.</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="spectrum-note">
+        <strong>Use:</strong> One color per piece. A sector color claims the byline strip, the pull-quote rule,
+        the chart accent, and the social-card frame. It never claims body text. The base remains ink on paper.
+        New sectors get a new spectrum entry; we do not reassign existing ones.
+      </p>
+    </div>
+  </section>
+
+  <!-- TYPOGRAPHY -->
+  <section id="type">
+    <div class="wrap">
+      <div class="eyebrow">03 · Typography</div>
+      <h2 class="section-title">Four faces. One for gravitas, one for the screen, one for the language, one for the data.</h2>
+
+      <div class="type-stack">
+
+        <div class="type-row">
+          <div class="type-meta">
+            <strong>Fraunces — display &amp; body</strong>
+            Editorial serif. Variable. The voice of the masthead and the voice of the page. Used at 36–96px for display, 17–19px for body. <code>opsz auto · 300, 400, 500</code>
+          </div>
+          <div>
+            <div class="type-sample">India is not one economy. It is twelve, stacked.</div>
+            <div class="type-sample body" style="margin-top:18px;">
+              The thirteen Maharatnas together earned a profit larger than the entire Indian IT export industry in 2024.
+              And yet most newsrooms still treat them as wallpaper behind the quarterly result.
+            </div>
+          </div>
+        </div>
+
+        <div class="type-row">
+          <div class="type-meta">
+            <strong>Noto Serif Devanagari</strong>
+            For वयम् itself, for sector names in Hindi, and for pull-quotes from regional sources. Weights 400–600 to match Fraunces.
+          </div>
+          <div>
+            <div class="type-sample deva">वयम् · इस्पात · ऊर्जा · अंतरिक्ष</div>
+          </div>
+        </div>
+
+        <div class="type-row">
+          <div class="type-meta">
+            <strong>Inter — UI &amp; meta</strong>
+            Mechanical voice. Eyebrows, byline meta, captions, navigation, buttons. Tracked at 0.18–0.22em for all-caps eyebrows.
+          </div>
+          <div>
+            <div class="type-sample ui" style="font-weight:600; text-transform:uppercase; letter-spacing:0.22em; font-size:11px; color:var(--ai);">Sovereign AI · 18 min read · Discovery</div>
+            <div class="type-sample ui" style="margin-top:12px;">Photograph by Aman Kapoor for Vayam, Visakhapatnam, March 2026.</div>
+          </div>
+        </div>
+
+        <div class="type-row">
+          <div class="type-meta">
+            <strong>JetBrains Mono — data</strong>
+            For numerals in charts, source codes, datasets, footnote markers. Tabular. Used sparingly.
+          </div>
+          <div>
+            <div class="type-sample mono">
+              SAIL · FY24 revenue ₹1.05 lakh crore · EBITDA margin 14.2%<br>
+              Source: DPE Public Enterprises Survey · vayam.in/data/d-042
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- IMAGES -->
+  <section id="images">
+    <div class="wrap">
+      <div class="eyebrow">04 · Images &amp; Watermark</div>
+      <h2 class="section-title">Three kinds of image. Nothing else. Every one carries the mark.</h2>
+      <p class="section-lede">
+        A Vayam article is mostly type and image. Stock photography, decorative graphics, generic stock illustrations —
+        none of these appear. We use three kinds of image and we treat all three the same way.
+      </p>
+
+      <div class="image-grid">
+        <div class="image-tile">
+          <div class="image-frame real">
+            <div class="watermark">
+              <span class="wm-mono">व</span>
+              <span class="wm-text">vayam</span>
+            </div>
+          </div>
+          <div class="image-caption">
+            <span class="typ steel">Real Photograph</span>
+            <span class="desc">Rourkela Steel Plant, blast furnace 4, March 2026.</span>
+          </div>
+        </div>
+
+        <div class="image-tile">
+          <div class="image-frame hyper">
+            <div class="watermark">
+              <span class="wm-mono">व</span>
+              <span class="wm-text">vayam</span>
+            </div>
+          </div>
+          <div class="image-caption">
+            <span class="typ">Hyperreal Render</span>
+            <span class="desc">A rendering of India's first sovereign GPU cluster. Vayam, 2026.</span>
+          </div>
+        </div>
+
+        <div class="image-tile">
+          <div class="image-frame chart">
+            <div class="chart-mock">
+              <svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#0E7C66" stop-opacity="0.6"/>
+                    <stop offset="1" stop-color="#0E7C66" stop-opacity="0.02"/>
+                  </linearGradient>
+                </defs>
+                <line x1="0" y1="120" x2="240" y2="120" stroke="#d4cab2" stroke-width="0.8"/>
+                <line x1="0" y1="90" x2="240" y2="90" stroke="#d4cab2" stroke-width="0.5" stroke-dasharray="2 3"/>
+                <line x1="0" y1="60" x2="240" y2="60" stroke="#d4cab2" stroke-width="0.5" stroke-dasharray="2 3"/>
+                <line x1="0" y1="30" x2="240" y2="30" stroke="#d4cab2" stroke-width="0.5" stroke-dasharray="2 3"/>
+                <path d="M0,110 L24,108 L48,102 L72,96 L96,82 L120,72 L144,56 L168,42 L192,30 L216,22 L240,14 L240,120 L0,120 Z" fill="url(#cg)"/>
+                <path d="M0,110 L24,108 L48,102 L72,96 L96,82 L120,72 L144,56 L168,42 L192,30 L216,22 L240,14" stroke="#0E7C66" stroke-width="2" fill="none"/>
+                <text x="6" y="135" font-family="JetBrains Mono" font-size="6" fill="#8a7d6a">FY20</text>
+                <text x="220" y="135" font-family="JetBrains Mono" font-size="6" fill="#8a7d6a">FY26</text>
+              </svg>
+            </div>
+            <div class="watermark" style="mix-blend-mode:normal; color:var(--muted);">
+              <span class="wm-mono" style="background:rgba(20,18,16,0.08); border-color:rgba(20,18,16,0.2); color:var(--ink);">व</span>
+              <span class="wm-text" style="color:var(--ink-2);">vayam</span>
+            </div>
+          </div>
+          <div class="image-caption">
+            <span class="typ indigo">Chart · Data Viz</span>
+            <span class="desc">India's installed renewable capacity, FY20–FY26.</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="image-rules">
+        <strong>Watermark rule.</strong> The disc-mark + wordmark sits 14px from the bottom-right of every published image,
+        rendered in white at full opacity over photography (mix-blend-mode: difference) and ink over light surfaces.
+        It is the size of the caption beneath it. <strong>It is never optional.</strong>
+        On chart and illustration tiles, the watermark gets a tinted backplate to stay legible.
+      </p>
+    </div>
+  </section>
+
+  <!-- SIGNATURE STYLE -->
+  <section id="signature">
+    <div class="wrap">
+      <div class="eyebrow">05 · Signature Style</div>
+      <h2 class="section-title">The three places a reader notices Vayam first — and the three we get right every time.</h2>
+
+      <div class="sig-row">
+        <div class="sig-block">
+          <div class="stage-label">Byline strip · top of every essay</div>
+          <div class="byline-strip">
+            <div class="byline-avatar"></div>
+            <div class="byline-meta">
+              <div class="byline-eyebrow">Sovereign AI · Discovery · 18 min read</div>
+              <div class="byline-author">By Ananya Bhardwaj · with reporting from Bengaluru and Hyderabad</div>
+              <div class="byline-meta-sub">Published 12 May 2026 · Updated 14 May 2026</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sig-block">
+          <div class="stage-label">Pull-quote · sector-color rule</div>
+          <div class="pull-quote">
+            "We are not building an Indian ChatGPT. We are building the right to refuse one we did not build."
+            <span>— Dr. Aravind Srinivas, founder, Vihaan Compute · in conversation with Vayam</span>
+          </div>
+        </div>
+
+        <div class="sig-block">
+          <div class="stage-label">Sign-off · end of essay</div>
+          <div class="sig-off">
+            <div class="sig-off-mark">व</div>
+            <div class="sig-off-text">
+              <em>—वयम्</em><br>
+              We saw what they wouldn't show.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLISHING CYCLE -->
+  <section id="cycle">
+    <div class="wrap">
+      <div class="eyebrow">06 · The Publishing Cycle</div>
+      <h2 class="section-title">One essay is the source code. Four channels are the compile targets.</h2>
+      <p class="section-lede">
+        Every Vayam story begins as a long, deeply-reported essay on vayam.in. That essay is the master document.
+        From it, four channel teams adapt their own native cuts for Instagram, YouTube, X, and LinkedIn. The
+        essay is never a derivative of social. Social is always a derivative of the essay.
+      </p>
+
+      <div class="cycle">
+        <div class="cycle-source">
+          <div class="step">01 · Source</div>
+          <h3>The Long Essay on vayam.in</h3>
+          <p>2,500–6,000 words. Original reporting. Photography, hyperreal renders, or charts — never stock. One sector color. One signature style. One mark.</p>
+          <span class="badge">Master Document</span>
+        </div>
+
+        <div class="cycle-children">
+          <div class="cycle-child">
+            <div class="ch-platform">02 · Instagram</div>
+            <h4>Carousel + Reel</h4>
+            <p>A 10-slide carousel of the central argument plus a 60-second reel of the central image, voiced over.</p>
+          </div>
+          <div class="cycle-child">
+            <div class="ch-platform">02 · YouTube</div>
+            <h4>Long-form video</h4>
+            <p>An 18-minute documentary version. Same script, on-site shoot, watermark on every frame.</p>
+          </div>
+          <div class="cycle-child">
+            <div class="ch-platform">02 · X</div>
+            <h4>Thread + cuts</h4>
+            <p>One 12-tweet thread distilling the spine. Pull quotes as image cards in the sector color.</p>
+          </div>
+          <div class="cycle-child">
+            <div class="ch-platform">02 · LinkedIn</div>
+            <h4>Long post + decision-maker cut</h4>
+            <p>The same argument written for the policymaker and the operator. Carousel of the three biggest charts.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPLORE -->
+  <section class="explore no-rule">
+    <div class="wrap">
+      <div class="eyebrow">07 · See it in motion</div>
+      <h2 class="section-title">Two pages to see how the brand actually behaves.</h2>
+      <div class="explore-grid">
+        <a href="/vayam-essay/" class="explore-card essay">
+          <div class="label">Sample Essay · Sovereign AI</div>
+          <h3>The grid India built before it built the model.</h3>
+          <p>A 2,400-word essay on the construction of India's sovereign GPU stack — the typical Vayam long-read. Shows every component of the brand in real layout.</p>
+          <span class="arrow">Open the essay →</span>
+        </a>
+        <a href="/vayam-sovereign-ai/" class="explore-card sector">
+          <div class="label">Sector Landing · Sovereign AI</div>
+          <h3>The Sovereign AI desk.</h3>
+          <p>The sector page: a story panel, the editorial layers, a collection of articles, the people we cover. Shows how a sector lives on its own surface.</p>
+          <span class="arrow">Open the sector →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <div class="lockup-primary inverse">
+            <div class="mark-circle">व</div>
+            <div class="wm-stack">
+              <div class="wm-latin">vayam</div>
+              <div class="wm-deva">वयम्</div>
+            </div>
+          </div>
+          <p>India's industrial identity. A media house, told by the people inside the sectors mainstream media skips.</p>
+        </div>
+        <div class="foot-col">
+          <h6>Sectors</h6>
+          <a href="/vayam-sovereign-ai/">Sovereign AI</a>
+          <a href="/vayam-steel/">Steel</a>
+          <a href="#">Coal &amp; Mining</a>
+          <a href="#">Power &amp; Energy</a>
+          <a href="#">All sectors →</a>
+        </div>
+        <div class="foot-col">
+          <h6>Layers</h6>
+          <a href="#">Discovery</a>
+          <a href="#">Community</a>
+          <a href="#">Venture</a>
+          <a href="#">Dialogue</a>
+        </div>
+        <div class="foot-col">
+          <h6>Brand</h6>
+          <a href="/vayam/">Identity</a>
+          <a href="/vayam-essay/">Sample essay</a>
+          <a href="/vayam-mitti/">Soil palette (origin)</a>
+        </div>
+      </div>
+      <div class="foot-base">
+        <div>© 2026 Recurr Studio Pvt Ltd · Vayam is a Recurr initiative</div>
+        <div>Brand identity v1.0 · 14 May 2026</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>The grid India built before it built the model · Vayam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&family=Noto+Serif+Devanagari:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #141210;
+      --ink-2: #2a2620;
+      --paper: #faf6ed;
+      --paper-deep: #f1ead9;
+      --paper-card: #fdfaf2;
+      --muted: #6b625a;
+      --muted-2: #8a7d6a;
+      --border: #e3dccb;
+      --rule: #d4cab2;
+      --hairline: rgba(20,18,16,0.08);
+
+      /* Sovereign AI sector */
+      --sector: #0E7C66;
+      --sector-deep: #0a5c4c;
+      --sector-light: #1ea087;
+      --sector-pale: #d8eee7;
+      --on-sector: #eafaf3;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Fraunces', 'Georgia', serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    .sans { font-family: 'Inter', -apple-system, sans-serif; }
+    .deva { font-family: 'Noto Serif Devanagari', serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    a { color: inherit; text-decoration: none; }
+
+    /* TOP BAR */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(250,246,237,0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .topbar-inner {
+      max-width: 1240px; margin: 0 auto;
+      padding: 14px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 32px;
+    }
+    .brand-lockup { display: flex; align-items: center; gap: 12px; }
+    .monogram {
+      width: 32px; height: 32px;
+      background: var(--ink); color: var(--paper);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 20px; font-weight: 500;
+      line-height: 1; padding-bottom: 2px;
+    }
+    .wordmark {
+      font-family: 'Fraunces', serif;
+      font-weight: 500; font-size: 22px;
+      letter-spacing: -0.02em; line-height: 1;
+    }
+    .wordmark-sub {
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 18px; color: var(--muted);
+      margin-left: 4px; font-weight: 500;
+    }
+    .topnav {
+      display: flex; align-items: center; gap: 24px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px; font-weight: 500;
+      color: var(--ink-2);
+    }
+    .topnav a:hover { color: var(--sector); }
+    .topnav .pill {
+      display: inline-block;
+      padding: 6px 12px;
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 999px;
+      font-size: 12px;
+    }
+
+    /* PROGRESS BAR */
+    .progress-track {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 2px; z-index: 60;
+      background: transparent;
+    }
+    .progress-bar {
+      height: 100%; width: 0;
+      background: var(--sector);
+      transition: width 0.05s linear;
+    }
+
+    /* BREADCRUMB */
+    .crumb {
+      max-width: 880px; margin: 0 auto;
+      padding: 32px 32px 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+    }
+    .crumb a:hover { color: var(--sector); }
+    .crumb .sep { margin: 0 8px; opacity: 0.5; }
+
+    /* COVER */
+    .cover {
+      max-width: 880px; margin: 0 auto;
+      padding: 32px 32px 0;
+    }
+    .cover-sector-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sector);
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+    .cover-sector-tag::before {
+      content: ''; width: 10px; height: 10px;
+      background: var(--sector); border-radius: 50%;
+    }
+    .cover h1 {
+      font-family: 'Fraunces', serif;
+      font-weight: 300;
+      font-size: clamp(38px, 5.4vw, 64px);
+      line-height: 1.04;
+      letter-spacing: -0.028em;
+      color: var(--ink);
+      max-width: 22ch;
+    }
+    .cover h1 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--sector);
+    }
+    .cover-deva {
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 24px;
+      color: var(--muted);
+      margin-top: 18px;
+      font-weight: 500;
+    }
+    .cover-dek {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      line-height: 1.55;
+      color: var(--ink-2);
+      max-width: 60ch;
+      margin-top: 28px;
+      font-weight: 400;
+    }
+    .cover-dek em { color: var(--sector); font-style: italic; }
+
+    /* BYLINE STRIP */
+    .byline-strip {
+      max-width: 880px; margin: 56px auto 0;
+      padding: 0 32px;
+    }
+    .byline-inner {
+      display: flex; align-items: center; gap: 16px;
+      padding: 22px 0;
+      border-top: 4px solid var(--sector);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .byline-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2a2620, #6b625a);
+      flex-shrink: 0;
+      border: 2px solid var(--sector);
+    }
+    .byline-meta {
+      flex: 1;
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .byline-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sector);
+      font-weight: 600;
+    }
+    .byline-author {
+      font-family: 'Fraunces', serif;
+      font-size: 16px;
+      color: var(--ink); font-weight: 500;
+    }
+    .byline-meta-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px; color: var(--muted);
+    }
+    .byline-actions {
+      display: flex; gap: 8px;
+    }
+    .byline-actions button {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--paper);
+      cursor: pointer;
+      display: grid; place-items: center;
+      transition: all 0.15s;
+    }
+    .byline-actions button:hover {
+      background: var(--sector); color: #fff; border-color: var(--sector);
+    }
+    .byline-actions svg { width: 16px; height: 16px; }
+
+    /* HERO IMAGE */
+    .hero-image {
+      max-width: 1240px; margin: 56px auto 0;
+      padding: 0 32px;
+    }
+    .hero-frame {
+      aspect-ratio: 16/9;
+      border-radius: 16px; overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, #0a1f2e 0%, #0E7C66 45%, #1ea087 100%);
+      background-image:
+        radial-gradient(circle at 25% 30%, rgba(244,169,60,0.25), transparent 35%),
+        radial-gradient(circle at 80% 70%, rgba(107,33,168,0.4), transparent 45%),
+        linear-gradient(135deg, #0a1f2e 0%, #0E7C66 45%, #1ea087 100%);
+    }
+    .hero-frame::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 38px, rgba(255,255,255,0.04) 38px, rgba(255,255,255,0.04) 39px),
+        repeating-linear-gradient(90deg, transparent, transparent 38px, rgba(255,255,255,0.04) 38px, rgba(255,255,255,0.04) 39px);
+    }
+    .hero-watermark {
+      position: absolute; bottom: 20px; right: 24px;
+      display: flex; align-items: center; gap: 9px;
+      color: rgba(255,255,255,0.92);
+      z-index: 2;
+    }
+    .hero-watermark .wm-mono {
+      width: 28px; height: 28px;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 18px;
+      line-height: 1; padding-bottom: 3px;
+      backdrop-filter: blur(6px);
+    }
+    .hero-watermark .wm-text {
+      font-family: 'Fraunces', serif;
+      font-weight: 500; font-size: 16px;
+      letter-spacing: -0.01em;
+    }
+    .hero-cap {
+      max-width: 1240px; margin: 16px auto 0;
+      padding: 0 32px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      display: flex; justify-content: space-between;
+      gap: 24px;
+    }
+    .hero-cap em {
+      font-style: italic;
+      color: var(--muted-2);
+    }
+
+    /* BODY */
+    .body-wrap {
+      max-width: 720px; margin: 0 auto;
+      padding: 80px 32px 96px;
+    }
+    .body-wrap > * + * { margin-top: 26px; }
+    .body-wrap p {
+      font-family: 'Fraunces', serif;
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+    .body-wrap p:first-of-type::first-letter {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 72px;
+      float: left;
+      line-height: 0.9;
+      margin: 6px 12px 0 0;
+      color: var(--sector);
+    }
+    .body-wrap h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 34px;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-top: 56px !important;
+      margin-bottom: -4px;
+    }
+    .body-wrap h2 .num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      color: var(--sector);
+      font-weight: 500;
+      display: block; margin-bottom: 14px;
+    }
+    .body-wrap h3 {
+      font-family: 'Fraunces', serif;
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+      color: var(--ink);
+      margin-top: 32px !important;
+    }
+
+    /* PULL QUOTE */
+    .pull {
+      margin: 48px 0 !important;
+      padding: 24px 0 24px 28px;
+      border-left: 4px solid var(--sector);
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 26px;
+      line-height: 1.45;
+      color: var(--ink);
+    }
+    .pull span {
+      display: block;
+      font-style: normal;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 18px;
+      font-weight: 500;
+    }
+
+    /* INLINE FIGURE */
+    .figure {
+      margin: 56px 0 !important;
+    }
+    .figure.wide {
+      margin-left: -80px !important;
+      margin-right: -80px !important;
+    }
+    @media (max-width: 1000px) { .figure.wide { margin-left: 0 !important; margin-right: 0 !important; } }
+    .figure.bleed {
+      margin-left: calc(50% - 50vw) !important;
+      margin-right: calc(50% - 50vw) !important;
+      max-width: 100vw;
+    }
+
+    .fig-frame {
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      background: var(--paper-deep);
+    }
+    .figure.bleed .fig-frame { border-radius: 0; }
+    .fig-frame.photo {
+      aspect-ratio: 16/10;
+      background: linear-gradient(135deg, #1a2638 0%, #2c3e50 40%, #4a5d6b 100%);
+      background-image:
+        radial-gradient(circle at 35% 65%, rgba(255,120,40,0.5), transparent 35%),
+        radial-gradient(circle at 70% 30%, rgba(255,210,140,0.3), transparent 30%),
+        linear-gradient(135deg, #1a2638 0%, #2c3e50 40%, #4a5d6b 100%);
+    }
+    .fig-frame.hyper {
+      aspect-ratio: 16/10;
+      background:
+        radial-gradient(circle at 30% 50%, rgba(14,124,102,0.6), transparent 50%),
+        radial-gradient(circle at 75% 60%, rgba(107,33,168,0.5), transparent 45%),
+        linear-gradient(135deg, #0a0a1a 0%, #1a1632 50%, #2a1e4a 100%);
+    }
+    .fig-frame .wm {
+      position: absolute; bottom: 14px; right: 16px;
+      display: flex; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.9);
+      z-index: 2;
+    }
+    .fig-frame .wm-mono {
+      width: 24px; height: 24px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 16px;
+      line-height: 1; padding-bottom: 2px;
+      backdrop-filter: blur(6px);
+    }
+    .fig-frame .wm-text {
+      font-family: 'Fraunces', serif;
+      font-weight: 500; font-size: 14px;
+    }
+    .fig-cap {
+      margin-top: 14px !important;
+      padding: 0 4px;
+      display: flex; justify-content: space-between;
+      align-items: baseline; gap: 24px;
+    }
+    .fig-cap .typ {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sector);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .fig-cap .desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 60ch;
+    }
+    .fig-cap .desc em {
+      color: var(--muted-2);
+      font-style: italic;
+    }
+
+    /* CHART */
+    .chart-figure {
+      margin: 56px 0 !important;
+      padding: 32px;
+      background: var(--paper-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+    .chart-figure .chart-title {
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .chart-figure .chart-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .chart-figure svg { width: 100%; height: auto; display: block; }
+    .chart-figure .chart-foot {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--hairline);
+      display: flex; justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--muted-2);
+      letter-spacing: 0.04em;
+    }
+    .chart-figure .chart-foot .wm-inline {
+      display: flex; align-items: center; gap: 6px;
+      color: var(--muted);
+    }
+    .chart-figure .chart-foot .wm-inline span:first-child {
+      width: 18px; height: 18px;
+      background: var(--ink); color: var(--paper);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 11px; padding-bottom: 1px; line-height: 1;
+    }
+    .chart-figure .chart-foot .wm-inline span:last-child {
+      font-family: 'Fraunces', serif;
+      font-weight: 500; font-size: 11px;
+      color: var(--ink);
+    }
+
+    /* DATA STRIP */
+    .data-strip {
+      margin: 56px 0 !important;
+      padding: 32px;
+      background: var(--ink); color: var(--paper);
+      border-radius: 14px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    @media (max-width: 600px) { .data-strip { grid-template-columns: 1fr; gap: 20px; } }
+    .data-strip h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sector-light);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .data-strip .big {
+      font-family: 'Fraunces', serif;
+      font-size: 36px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .data-strip .sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    /* SIGN OFF */
+    .signoff {
+      margin: 80px 0 0 !important;
+      padding: 48px 0 0;
+      border-top: 1px solid var(--hairline);
+      text-align: center;
+    }
+    .signoff-mark {
+      width: 56px; height: 56px;
+      background: var(--ink); color: var(--paper);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      margin: 0 auto 16px;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 32px; padding-bottom: 4px; line-height: 1;
+    }
+    .signoff-text {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 20px;
+      color: var(--ink-2);
+    }
+    .signoff-tag {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 16px;
+      font-weight: 500;
+    }
+    .signoff-tag .sector-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--sector);
+      border-radius: 50%;
+      vertical-align: middle;
+      margin: 0 8px 2px;
+    }
+
+    /* DISTRIBUTION CTA */
+    .dist {
+      max-width: 1240px; margin: 0 auto;
+      padding: 80px 32px;
+      border-top: 1px solid var(--hairline);
+    }
+    .dist .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted-2);
+      font-weight: 500;
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+    }
+    .dist .eyebrow::before {
+      content: ''; width: 24px; height: 1px; background: var(--rule);
+    }
+    .dist h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 36px;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      max-width: 26ch;
+    }
+    .dist-grid {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 880px) { .dist-grid { grid-template-columns: repeat(2, 1fr); } }
+    .dist-card {
+      padding: 24px;
+      background: var(--paper-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .dist-card h5 {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted-2);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .dist-card p {
+      font-family: 'Fraunces', serif;
+      font-size: 16px;
+      line-height: 1.45;
+      color: var(--ink-2);
+      font-weight: 400;
+    }
+
+    /* READ NEXT */
+    .next {
+      background: var(--paper-deep);
+      padding: 80px 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .next-wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+    .next h3 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 32px;
+      letter-spacing: -0.022em;
+      margin-bottom: 32px;
+    }
+    .next-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 880px) { .next-grid { grid-template-columns: 1fr; } }
+    .next-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      transition: transform 0.18s, box-shadow 0.18s;
+      display: block;
+    }
+    .next-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -16px rgba(20,18,16,0.12);
+    }
+    .next-card .tag {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .next-card .tag::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+    }
+    .next-card.s-coal .tag { color: #1A1614; }
+    .next-card.s-coal .tag::before { background: #1A1614; }
+    .next-card.s-power .tag { color: #F4A93C; }
+    .next-card.s-power .tag::before { background: #F4A93C; }
+    .next-card.s-quantum .tag { color: #6B21A8; }
+    .next-card.s-quantum .tag::before { background: #6B21A8; }
+    .next-card h4 {
+      font-family: 'Fraunces', serif;
+      font-weight: 500;
+      font-size: 20px;
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+      margin: 14px 0 12px;
+    }
+    .next-card p {
+      font-family: 'Fraunces', serif;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ink-2);
+    }
+    .next-card .meta {
+      margin-top: 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink); color: var(--paper);
+      padding: 64px 0 32px;
+    }
+    .foot-grid {
+      max-width: 1240px; margin: 0 auto; padding: 0 32px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+    @media (max-width: 880px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+    .foot-brand { display: flex; flex-direction: column; gap: 14px; }
+    .foot-brand .lockup {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .foot-brand .mark-circle {
+      width: 52px; height: 52px;
+      background: var(--paper); color: var(--ink);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 32px; padding-bottom: 4px; line-height: 1;
+    }
+    .foot-brand .wm-stack { display: flex; flex-direction: column; gap: 2px; }
+    .foot-brand .wm-latin {
+      font-family: 'Fraunces', serif;
+      font-weight: 500; font-size: 32px;
+      letter-spacing: -0.03em; line-height: 1;
+      color: var(--paper);
+    }
+    .foot-brand .wm-deva {
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 16px; color: rgba(255,255,255,0.5);
+    }
+    .foot-brand p {
+      font-family: 'Fraunces', serif;
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      max-width: 32ch;
+    }
+    .foot-col h6 {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 14px;
+    }
+    .foot-col a {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: rgba(255,255,255,0.85);
+      padding: 4px 0;
+    }
+    .foot-col a:hover { color: var(--sector-light); }
+    .foot-base {
+      max-width: 1240px; margin: 56px auto 0;
+      padding: 24px 32px 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex; justify-content: space-between;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="progress-track"><div class="progress-bar" id="bar"></div></div>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a href="/vayam/" class="brand-lockup">
+        <span class="monogram">व</span>
+        <span class="wordmark">vayam<span class="wordmark-sub">वयम्</span></span>
+      </a>
+      <nav class="topnav">
+        <a href="/vayam-sovereign-ai/">Sovereign AI</a>
+        <a href="#">Discovery</a>
+        <a href="#">Dialogue</a>
+        <a href="/vayam/">Brand</a>
+        <a href="#" class="pill">Subscribe →</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <div class="crumb">
+    <a href="/vayam/">Vayam</a><span class="sep">/</span>
+    <a href="/vayam-sovereign-ai/">Sovereign AI</a><span class="sep">/</span>
+    <a href="#">Discovery</a><span class="sep">/</span>
+    <span style="color:var(--ink-2);">May 2026</span>
+  </div>
+
+  <!-- COVER -->
+  <article class="cover">
+    <div class="cover-sector-tag">Sovereign AI · Discovery</div>
+    <h1>The grid India built <em>before</em> it built the model.</h1>
+    <div class="cover-deva">स्वतंत्र बुद्धिमत्ता · खंड १</div>
+    <p class="cover-dek">
+      Across three states and seven sites, India is quietly assembling 35,000 GPUs into a single sovereign compute fabric.
+      No Indian foundation model exists yet. The grid does. <em>This is the story of building the road before the car.</em>
+    </p>
+  </article>
+
+  <!-- BYLINE -->
+  <div class="byline-strip">
+    <div class="byline-inner">
+      <div class="byline-avatar"></div>
+      <div class="byline-meta">
+        <div class="byline-eyebrow">Sovereign AI · Discovery · 18 min read</div>
+        <div class="byline-author">By Ananya Bhardwaj · with reporting from Bengaluru, Hyderabad, and Visakhapatnam</div>
+        <div class="byline-meta-sub">Published 12 May 2026 · Updated 14 May 2026 · Fact-checked by Vayam Desk</div>
+      </div>
+      <div class="byline-actions">
+        <button aria-label="Save"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        <button aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO IMAGE -->
+  <div class="hero-image">
+    <div class="hero-frame">
+      <div class="hero-watermark">
+        <span class="wm-mono">व</span>
+        <span class="wm-text">vayam</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-cap">
+    <span><em>Hyperreal Render · Vayam, May 2026.</em></span>
+    <span>A rendering of the sovereign GPU cluster at the Visakhapatnam data-center cluster, India's first 12,500-GPU site.</span>
+  </div>
+
+  <!-- BODY -->
+  <div class="body-wrap">
+
+    <p>
+      In a low rectangular building on the outskirts of Visakhapatnam, six kilometers from the coast,
+      a thousand cubic feet of refrigerated air moves through 1,200 server racks every minute. The racks
+      hold 12,500 Nvidia H200 GPUs. None of them are training an Indian foundation model. Not yet. The
+      building is two years old. It has been waiting.
+    </p>
+
+    <p>
+      Eight hundred kilometers north-west, in a smaller cluster outside Hyderabad, another 7,500 GPUs sit
+      in a similar state of readiness. In Pune, 5,000 more. In Bengaluru, 4,000. By the end of FY27, the
+      Government of India's "Sovereign Compute Mission" — an initiative the Department of Electronics and
+      Information Technology announced quietly in March 2025 and has since refused to brief on — will have
+      35,000 high-end GPUs distributed across seven Indian sites, networked into a single sovereign compute
+      fabric. By any measure, this is the largest piece of public AI infrastructure built outside the
+      United States and China.
+    </p>
+
+    <p>
+      India does not have a competitive Indian foundation model. The country's largest research labs —
+      Sarvam, Krutrim, Yotta — have trained capable but second-tier systems on imported compute. What the
+      country does have, increasingly, is the road. The grid. The land, the cooling, the power supply,
+      the chips. The Sovereign Compute Mission has built the car park before the car.
+    </p>
+
+    <div class="pull">
+      "We are not building an Indian ChatGPT. We are building the right to refuse one we did not build."
+      <span>— Dr. Aravind Srinivas, founder, Vihaan Compute · in conversation with Vayam</span>
+    </div>
+
+    <p>
+      This story is about that bet. About why a country with no model decided to build the largest piece of
+      sovereign AI infrastructure outside the two superpowers. About who is paying for it, who is running it,
+      who is supposed to use it, and what happens if no one does. It is also, in places, about the lights.
+      About how much electricity it takes to keep 35,000 GPUs alive through an Andhra Pradesh summer.
+    </p>
+
+    <h2>
+      <span class="num">PART 01 · 2,400 WORDS</span>
+      The geography of the bet.
+    </h2>
+
+    <p>
+      The seven Sovereign Compute Mission sites form a triangle. Visakhapatnam, on the east coast, holds the
+      largest cluster — the one with 12,500 GPUs, the one we will return to. Hyderabad and Bengaluru, both
+      inland and both already dense with private data-center capacity, host the second tier. Pune, Chennai,
+      Mumbai, and a yet-unnamed Greenfield site in Sangareddy district make up the remaining four.
+    </p>
+
+    <p>
+      Each site was chosen for a different reason. Visakhapatnam for its existing port access to imported
+      cooling equipment and its coastline electricity grid. Hyderabad for its proximity to two of the country's
+      three semiconductor research centers. Bengaluru for the engineers. Pune for tier-2 cost and the
+      proximity to NTPC's coal supply.
+    </p>
+
+    <div class="figure">
+      <div class="fig-frame photo">
+        <div class="wm">
+          <span class="wm-mono">व</span>
+          <span class="wm-text">vayam</span>
+        </div>
+      </div>
+      <div class="fig-cap">
+        <span class="typ">Real Photograph</span>
+        <span class="desc">The cooling intake at the Visakhapatnam site, March 2026. <em>Photograph: Aman Kapoor for Vayam.</em></span>
+      </div>
+    </div>
+
+    <p>
+      The cooling problem is the one no one wants to talk about. An H200 GPU at full load generates roughly
+      700 watts of heat. A rack of 32 GPUs at full load is a small space heater. Twelve thousand five hundred
+      of them, networked and training at scale, is a small thermal power station running in reverse — pumping
+      heat out instead of generating it. The Visakhapatnam site uses seawater-assisted closed-loop cooling.
+      It is the only one of the seven sites with the geographic permission to do so.
+    </p>
+
+    <h2>
+      <span class="num">PART 02 · 1,100 WORDS</span>
+      The grid before the model.
+    </h2>
+
+    <p>
+      A Western reader will ask: why build the compute before the model is ready to use it? Surely the model
+      is the hard part. The chips are commodity. The answer Indian policymakers gave us, off the record across
+      three interviews, was the same in each case. The compute is the part that cannot be bought back later.
+      If we wait, China will buy it. If we wait, the United States will restrict it. If we wait, the moment passes.
+    </p>
+
+    <div class="chart-figure">
+      <div class="chart-title">India's sovereign GPU capacity, FY24–FY27 (estimated)</div>
+      <div class="chart-sub">Total H100/H200/B200-class units deployed across the seven Sovereign Compute Mission sites.</div>
+      <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gA" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0E7C66" stop-opacity="0.55"/>
+            <stop offset="1" stop-color="#0E7C66" stop-opacity="0.02"/>
+          </linearGradient>
+        </defs>
+        <!-- gridlines -->
+        <line x1="60" y1="240" x2="680" y2="240" stroke="#d4cab2" stroke-width="1"/>
+        <line x1="60" y1="190" x2="680" y2="190" stroke="#d4cab2" stroke-width="0.6" stroke-dasharray="2 4"/>
+        <line x1="60" y1="140" x2="680" y2="140" stroke="#d4cab2" stroke-width="0.6" stroke-dasharray="2 4"/>
+        <line x1="60" y1="90" x2="680" y2="90" stroke="#d4cab2" stroke-width="0.6" stroke-dasharray="2 4"/>
+        <line x1="60" y1="40" x2="680" y2="40" stroke="#d4cab2" stroke-width="0.6" stroke-dasharray="2 4"/>
+        <!-- area + line -->
+        <path d="M60,228 L210,210 L360,160 L510,80 L680,32 L680,240 L60,240 Z" fill="url(#gA)"/>
+        <path d="M60,228 L210,210 L360,160 L510,80 L680,32" stroke="#0E7C66" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- points -->
+        <circle cx="60"  cy="228" r="4" fill="#0E7C66"/>
+        <circle cx="210" cy="210" r="4" fill="#0E7C66"/>
+        <circle cx="360" cy="160" r="4" fill="#0E7C66"/>
+        <circle cx="510" cy="80"  r="4" fill="#0E7C66"/>
+        <circle cx="680" cy="32"  r="5" fill="#0E7C66" stroke="#faf6ed" stroke-width="2"/>
+        <!-- labels -->
+        <text x="60"  y="262" font-family="JetBrains Mono" font-size="10" fill="#6b625a">FY23</text>
+        <text x="200" y="262" font-family="JetBrains Mono" font-size="10" fill="#6b625a">FY24</text>
+        <text x="350" y="262" font-family="JetBrains Mono" font-size="10" fill="#6b625a">FY25</text>
+        <text x="500" y="262" font-family="JetBrains Mono" font-size="10" fill="#6b625a">FY26</text>
+        <text x="652" y="262" font-family="JetBrains Mono" font-size="10" fill="#0E7C66" font-weight="500">FY27 ▲</text>
+        <text x="30" y="245" font-family="JetBrains Mono" font-size="10" fill="#8a7d6a">0</text>
+        <text x="20" y="195" font-family="JetBrains Mono" font-size="10" fill="#8a7d6a">10K</text>
+        <text x="20" y="145" font-family="JetBrains Mono" font-size="10" fill="#8a7d6a">20K</text>
+        <text x="20" y="95"  font-family="JetBrains Mono" font-size="10" fill="#8a7d6a">30K</text>
+        <text x="20" y="45"  font-family="JetBrains Mono" font-size="10" fill="#8a7d6a">40K</text>
+        <!-- annotation -->
+        <text x="520" y="60" font-family="Fraunces" font-size="13" fill="#0E7C66" font-style="italic">35,000 GPUs</text>
+      </svg>
+      <div class="chart-foot">
+        <span>Source: DeitY Sovereign Compute Mission disclosures, Vayam reporting</span>
+        <span class="wm-inline"><span>व</span><span>vayam</span></span>
+      </div>
+    </div>
+
+    <p>
+      The math here is unforgiving. An H200 GPU costs roughly $32,000 at list price. A rack-ready cluster of
+      12,500 GPUs — chips, networking, cooling, the building itself — runs to approximately ₹6,200 crore. The
+      Sovereign Compute Mission's total publicly-disclosed budget through FY27 is ₹10,372 crore. Visakhapatnam
+      alone accounts for sixty percent of it. The remaining ₹4,000 crore covers six other sites, fewer chips
+      per site, more shared infrastructure.
+    </p>
+
+    <div class="data-strip">
+      <div>
+        <h4>Total sites</h4>
+        <div class="big">7</div>
+        <div class="sub">Across Andhra Pradesh, Telangana, Karnataka, Maharashtra, Tamil Nadu.</div>
+      </div>
+      <div>
+        <h4>GPU target FY27</h4>
+        <div class="big">35,000</div>
+        <div class="sub">H200 and B200-class. Largest sovereign cluster outside the US and China.</div>
+      </div>
+      <div>
+        <h4>Disclosed budget</h4>
+        <div class="big">₹10,372 cr</div>
+        <div class="sub">Through FY27. Visakhapatnam consumes 60% of it.</div>
+      </div>
+    </div>
+
+    <h2>
+      <span class="num">PART 03 · 1,900 WORDS</span>
+      Who will actually use it?
+    </h2>
+
+    <p>
+      The hardest question for the Sovereign Compute Mission is the one its planners are most reluctant to answer.
+      Who is going to use 35,000 GPUs? India's largest AI labs combined have used, across their entire training
+      runs, fewer than 4,000 GPU-equivalents. The largest single training run by an Indian-incorporated company
+      was Sarvam's 7B-parameter Sarvam-1 last December — a run that consumed roughly 800 H100s for 14 days.
+    </p>
+
+    <p>
+      The Mission has answered this with three lever-pulls. First, a research-allocation program that gives
+      Indian academic institutions free compute time. Second, a startup-allocation program that subsidizes
+      compute for Indian-incorporated AI labs at one-fifth of cloud market rates. Third, a strategic-use
+      allocation reserved for the defence, healthcare, and language-tech sectors — the part of the program
+      no one will discuss on the record.
+    </p>
+
+    <div class="figure">
+      <div class="fig-frame hyper">
+        <div class="wm">
+          <span class="wm-mono">व</span>
+          <span class="wm-text">vayam</span>
+        </div>
+      </div>
+      <div class="fig-cap">
+        <span class="typ">Hyperreal Render</span>
+        <span class="desc">A rendering of the Hyderabad cluster's network fabric at full load. <em>Vayam, May 2026.</em></span>
+      </div>
+    </div>
+
+    <p>
+      What the planners will say, on record, is that the mission is not really about today. The 35,000 GPUs are
+      a five-year option. If India produces a serious foundation model in 2027 or 2028, the compute is there.
+      If it does not, the compute supports the second-best outcome: a country that can host, fine-tune, and run
+      foreign models on sovereign infrastructure. The car park, in other words, works without the car.
+    </p>
+
+    <h2>
+      <span class="num">PART 04 · 1,600 WORDS</span>
+      The lights.
+    </h2>
+
+    <p>
+      A fully-loaded 12,500-GPU cluster pulls roughly 14 megawatts of continuous power. The Visakhapatnam site
+      currently draws from the Andhra Pradesh state grid, supplemented by an on-site 8-megawatt solar
+      installation completed in February. The supplementation matters. India's power generation mix is still
+      sixty-eight percent thermal. Every GPU-hour at Visakhapatnam, after solar offset, is, in net carbon terms,
+      a coal-hour at the Krishnapatnam thermal station forty kilometers down the coast.
+    </p>
+
+    <p>
+      The Sovereign Compute Mission's stated commitment is to net-zero operation by FY30. The road there runs
+      through three projects: a 200-megawatt dedicated solar-and-storage facility in Anantapur, a green-hydrogen
+      pilot at the Visakhapatnam site itself, and a long-term off-take agreement with the Adani-promoted
+      pumped-hydro station coming online in 2028 at Sileru.
+    </p>
+
+    <p>
+      Whether any of this happens on the stated timeline is the second-hardest question. The first is whether
+      India produces a model worth running on the road it is building.
+    </p>
+
+    <div class="signoff">
+      <div class="signoff-mark">व</div>
+      <div class="signoff-text">
+        We saw what they wouldn't show.
+      </div>
+      <div class="signoff-tag">Sovereign AI <span class="sector-dot"></span> Vayam · Discovery</div>
+    </div>
+
+  </div>
+
+  <!-- DISTRIBUTION -->
+  <div class="dist">
+    <div class="eyebrow">How this essay travels</div>
+    <h2>This story is the source. Four channels are running their own cut.</h2>
+    <div class="dist-grid">
+      <div class="dist-card">
+        <h5>Instagram</h5>
+        <p>10-slide carousel on the Sovereign Compute Mission, plus a 60s reel inside the Visakhapatnam cluster.</p>
+      </div>
+      <div class="dist-card">
+        <h5>YouTube</h5>
+        <p>18-minute documentary version. Site visit, three founder interviews, the same chart, in motion.</p>
+      </div>
+      <div class="dist-card">
+        <h5>X</h5>
+        <p>A 12-tweet thread distilling the spine. Pull quotes as jade-colored image cards. Chart in the middle.</p>
+      </div>
+      <div class="dist-card">
+        <h5>LinkedIn</h5>
+        <p>Long post written for the policymaker and the operator. Carousel of the three biggest charts.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- READ NEXT -->
+  <section class="next">
+    <div class="next-wrap">
+      <h3>Read next.</h3>
+      <div class="next-grid">
+        <a href="#" class="next-card s-coal">
+          <div class="tag">Coal &amp; Mining</div>
+          <h4>The new acreage: Coal India's land bank, and what the AI economy might do with it.</h4>
+          <p>The state's largest landowner is sitting on 64,000 hectares of inactive mine area. Three of them are being studied for data-center conversion.</p>
+          <div class="meta">14 min read · Discovery · Apr 2026</div>
+        </a>
+        <a href="#" class="next-card s-power">
+          <div class="tag">Power &amp; Energy</div>
+          <h4>14 megawatts, multiplied by seven: the power demand the GPU grid will add to India.</h4>
+          <p>By FY27 the Sovereign Compute Mission will draw the equivalent of a small city. Here's where that electricity comes from — and the projects that haven't broken ground yet.</p>
+          <div class="meta">12 min read · Dialogue · May 2026</div>
+        </a>
+        <a href="#" class="next-card s-quantum">
+          <div class="tag">Quantum Computing</div>
+          <h4>The other compute India is building, quietly: nine quantum laboratories across three Institutes of National Importance.</h4>
+          <p>The National Quantum Mission committed ₹6,000 crore in 2023. We visited four of the nine labs to see what ₹6,000 crore looks like, two years in.</p>
+          <div class="meta">22 min read · Discovery · Mar 2026</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="lockup">
+          <div class="mark-circle">व</div>
+          <div class="wm-stack">
+            <div class="wm-latin">vayam</div>
+            <div class="wm-deva">वयम्</div>
+          </div>
+        </div>
+        <p>India's industrial identity, told by the people inside the sectors mainstream media skips.</p>
+      </div>
+      <div class="foot-col">
+        <h6>Sectors</h6>
+        <a href="/vayam-sovereign-ai/">Sovereign AI</a>
+        <a href="/vayam-steel/">Steel</a>
+        <a href="#">Coal &amp; Mining</a>
+        <a href="#">All sectors →</a>
+      </div>
+      <div class="foot-col">
+        <h6>Layers</h6>
+        <a href="#">Discovery</a>
+        <a href="#">Community</a>
+        <a href="#">Venture</a>
+        <a href="#">Dialogue</a>
+      </div>
+      <div class="foot-col">
+        <h6>Brand</h6>
+        <a href="/vayam/">Identity</a>
+        <a href="/vayam-mitti/">Soil palette</a>
+        <a href="#">Subscribe</a>
+      </div>
+    </div>
+    <div class="foot-base">
+      <div>© 2026 Recurr Studio Pvt Ltd · Vayam is a Recurr initiative</div>
+      <div>Vayam Essay v1 · 14 May 2026</div>
+    </div>
+  </footer>
+
+  <script>
+    // Read progress
+    const bar = document.getElementById('bar');
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+      bar.style.width = Math.min(100, Math.max(0, pct)) + '%';
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
