@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F7F5F0">
+<title>Recurr — We design ventures and narratives.</title>
+<meta name="description" content="A sector-led studio working at the intersection of software, food, and media. Based in Bengaluru.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('has-reveals');</script>
+<style>
+/* ────────── Tokens (design.md v1.0) ────────── */
+:root {
+  --ink: #0A0A0A;
+  --paper: #F7F5F0;
+  --paper-pure: #FFFFFF;
+  --rule: #0A0A0A;
+  --accent: #FF5A1F;
+  --accent-ink: #FFFFFF;
+  --display: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --body: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --serif: 'New York', 'Source Serif 4', Charter, Georgia, serif;
+  --gutter: clamp(20px, 3vw, 40px);
+  --max: 1440px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; background: var(--paper); }
+body {
+  font-family: var(--body);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 500;
+  overflow-x: hidden;
+  max-width: 1680px;
+  margin-inline: auto;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ────────── Type ────────── */
+.display-xxl { font-family: var(--display); font-weight: 900; font-size: clamp(56px, 9vw, 128px); line-height: 0.88; letter-spacing: -0.035em; }
+.display-xl  { font-family: var(--display); font-weight: 900; font-size: clamp(40px, 6.5vw, 88px);  line-height: 0.92; letter-spacing: -0.03em; }
+.display-l   { font-family: var(--display); font-weight: 900; font-size: clamp(32px, 4vw, 56px);    line-height: 0.95; letter-spacing: -0.025em; }
+.display-m   { font-family: var(--display); font-weight: 800; font-size: clamp(24px, 2.6vw, 40px);  line-height: 1.0;  letter-spacing: -0.02em; }
+.display-s   { font-family: var(--display); font-weight: 800; font-size: clamp(20px, 1.8vw, 28px);  line-height: 1.05; letter-spacing: -0.018em; }
+.body-l      { font-family: var(--body); font-weight: 500; font-size: clamp(18px, 1.5vw, 22px); line-height: 1.45; letter-spacing: -0.005em; }
+.body-m      { font-family: var(--body); font-weight: 500; font-size: 16px; line-height: 1.55; }
+.serif-pull  { font-family: var(--serif); font-weight: 400; font-style: italic; font-size: clamp(28px, 3.4vw, 48px); line-height: 1.18; letter-spacing: -0.012em; }
+.mono-label  { font-family: var(--mono); font-weight: 500; font-size: 11px; line-height: 1.2; letter-spacing: 0.04em; text-transform: uppercase; }
+.mono-cap    { font-family: var(--mono); font-weight: 400; font-size: 12px; line-height: 1.4; }
+.mono-foot   { font-family: var(--mono); font-weight: 400; font-size: 10.5px; line-height: 1.4; letter-spacing: 0.03em; }
+
+/* ────────── Reveal motion ────────── */
+.reveal { opacity: 1; transform: none; }
+.has-reveals .reveal { opacity: 0; transform: translateY(8px); transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
+.has-reveals .reveal.in { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) { .has-reveals .reveal { transition: none; transform: none; opacity: 1; } }
+
+/* ────────── Nav ────────── */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  background: rgba(247, 245, 240, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1), background 200ms ease;
+  will-change: transform;
+}
+.nav-inner {
+  max-width: 1680px;
+  margin-inline: auto;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px var(--gutter);
+}
+.nav.scrolled { background: rgba(247, 245, 240, 0.95); }
+.nav.hidden { transform: translateY(-100%); }
+.nav-l { display: flex; align-items: center; gap: 16px; }
+.nav-logo { width: 96px; height: auto; display: block; }
+.nav-r { display: flex; align-items: center; gap: 28px; }
+.nav-link { transition: color 150ms ease; }
+.nav-link:hover { color: var(--accent); }
+.cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 14px; border: 1px solid var(--ink);
+  font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em;
+  background: transparent; color: var(--ink);
+  transition: background 150ms ease, color 150ms ease;
+}
+.cta:hover { background: var(--ink); color: var(--paper); }
+
+/* ────────── Hero ────────── */
+.hero { padding: clamp(48px, 9vh, 120px) var(--gutter) clamp(64px, 10vh, 120px); }
+.hero-kick { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 56px; flex-wrap: wrap; }
+.hero-kick-l { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+.hero-kick-r { display: flex; gap: 12px; align-items: center; }
+.live-dot { width: 8px; height: 8px; background: var(--accent); display: inline-block; animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.55; transform: scale(0.9); } }
+.hero h1 { margin-bottom: 36px; max-width: 1280px; }
+.hero-lede { font-family: var(--body); font-weight: 500; font-size: clamp(20px, 2.2vw, 30px); line-height: 1.35; letter-spacing: -0.012em; max-width: 920px; color: var(--ink); }
+
+/* ────────── Featured cover (full-width essay) ────────── */
+.featured { padding: 0 var(--gutter) clamp(80px, 12vh, 140px); }
+.featured-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; gap: 16px; flex-wrap: wrap; }
+.cover {
+  position: relative;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 36px 40px;
+  height: clamp(440px, 72vh, 760px);
+  overflow: hidden;
+  cursor: pointer;
+  background:
+    linear-gradient(135deg,
+      #1A1A1A 0%,
+      #4A2618 38%,
+      #C95E2D 74%,
+      #FF5A1F 100%);
+  isolation: isolate;
+}
+.cover::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(120% 100% at 78% 110%, rgba(255, 90, 31, 0.42) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cover-top { display: flex; justify-content: space-between; align-items: flex-start; color: var(--paper); position: relative; z-index: 1; }
+.cover-bot { color: var(--paper); position: relative; z-index: 1; }
+.cover-kick { margin-bottom: 14px; opacity: 0.92; }
+.cover-title { max-width: 1100px; }
+.cover-foot { display: flex; justify-content: space-between; margin-top: 28px; opacity: 0.85; }
+.cover-foot a { transition: opacity 150ms ease; }
+.cover-foot a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+
+/* ────────── Section head ────────── */
+.section-head {
+  padding: clamp(80px, 12vh, 160px) var(--gutter) clamp(40px, 6vh, 64px);
+  display: flex; flex-direction: column; gap: 28px;
+}
+.section-head .meta-row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 24px; flex-wrap: wrap;
+}
+.section-head h2 { line-height: 0.95; }
+@media (max-width: 700px) {
+  .section-head .meta-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+}
+
+/* ────────── Press tile grid (3-up) ────────── */
+.press-grid { padding: 0 var(--gutter) clamp(120px, 16vh, 200px); }
+.press-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.press-tile { display: flex; flex-direction: column; gap: 18px; }
+.press-cover {
+  position: relative;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 26px;
+  aspect-ratio: 4/4.6;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.press-cover::before {
+  content: ''; position: absolute; inset: 0;
+  transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+.press-cover:hover::before { transform: scale(1.04); }
+.press-cover > * { position: relative; z-index: 1; }
+.press-cover-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.press-cover-bot { display: flex; flex-direction: column; gap: 10px; }
+.press-cover-title { font-family: var(--display); font-weight: 900; font-size: clamp(22px, 2.4vw, 30px); line-height: 1.02; letter-spacing: -0.025em; }
+.press-cover.dark .press-cover-title, .press-cover.dark .mono-label { color: var(--paper); }
+.press-cover.light .press-cover-title, .press-cover.light .mono-label { color: var(--ink); }
+.press-meta { display: flex; justify-content: space-between; gap: 12px; }
+
+/* Gradient variants (the "image" system) */
+.var-slate::before  { background: linear-gradient(135deg, #0A0A0A 0%, #34343A 55%, #66666E 100%); }
+.var-warm::before   { background: linear-gradient(135deg, #F7F5F0 0%, #E8DAB2 55%, #FFC957 100%); }
+.var-teal::before   { background: linear-gradient(135deg, #0D1A1E 0%, #1A4D52 55%, #8CC7B7 100%); }
+.var-ember::before  { background: linear-gradient(135deg, #1A1A1A 0%, #732E18 50%, #FF5A1F 100%); }
+.var-carbon::before { background: linear-gradient(135deg, #050505 0%, #1A1A1F 55%, #2E3038 100%); }
+.var-sand::before   { background: linear-gradient(135deg, #C7B89A 0%, #EBDFC0 55%, #F7F5F0 100%); }
+.var-wash::before   { background: linear-gradient(135deg, #D9D7D2 0%, #F7F5F0 50%, #E8DAB2 100%); }
+.var-dusk::before   { background: linear-gradient(135deg, #261F33 0%, #664D80 55%, #D9A68C 100%); }
+.var-forest::before { background: linear-gradient(135deg, #0E1A0E 0%, #2A4D32 55%, #8FA98E 100%); }
+
+@media (max-width: 900px) { .press-row { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .press-row { grid-template-columns: 1fr; } }
+
+.press-foot { display: flex; justify-content: space-between; margin-top: 56px; }
+.press-foot a.accent { color: var(--accent); }
+
+/* ────────── Studios (sector slabs with side art) ────────── */
+.studios { padding: 0 var(--gutter) clamp(80px, 12vh, 140px); }
+.studios-lede { font-family: var(--body); font-weight: 500; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.35; letter-spacing: -0.012em; max-width: 920px; margin-bottom: clamp(56px, 9vh, 96px); }
+.studio { display: grid; grid-template-columns: 380px 1fr; gap: 64px; align-items: stretch; padding: 56px 0; border-top: 1px solid var(--ink); }
+.studio:last-of-type { border-bottom: 1px solid var(--ink); }
+.studio-art { position: relative; min-height: 260px; aspect-ratio: 1.4/1; overflow: hidden; }
+.studio-art::before { content: ''; position: absolute; inset: 0; z-index: 0; transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1); }
+.studio:hover .studio-art::before { transform: scale(1.04); }
+.studio-art-label { position: absolute; left: 22px; top: 22px; color: var(--paper); z-index: 1; }
+.studio-art-num { position: absolute; right: 22px; bottom: 18px; color: var(--paper); font-family: var(--display); font-weight: 900; font-size: clamp(56px, 6vw, 88px); line-height: 0.9; letter-spacing: -0.04em; z-index: 1; }
+.studio-art.dark .studio-art-label, .studio-art.dark .studio-art-num { color: var(--paper); }
+.studio-art.light .studio-art-label, .studio-art.light .studio-art-num { color: var(--ink); }
+.studio-body { display: flex; flex-direction: column; gap: 28px; padding-top: 4px; }
+.studio-title { line-height: 1.0; }
+.studio-thesis { max-width: 720px; }
+.studio-roster { display: flex; flex-direction: column; gap: 0; margin-top: 12px; }
+.studio-row { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 18px 0; border-top: 1px solid rgba(10,10,10,0.18); align-items: baseline; transition: background 200ms ease; }
+.studio-row:hover { background: rgba(10,10,10,0.03); }
+.studio-row .name { font-family: var(--display); font-weight: 800; font-size: clamp(18px, 1.6vw, 22px); letter-spacing: -0.015em; }
+.studio-row .desc { font-family: var(--body); font-weight: 500; font-size: 15px; line-height: 1.45; color: rgba(10,10,10,0.78); }
+@media (max-width: 900px) {
+  .studio { grid-template-columns: 1fr; gap: 32px; }
+  .studio-art { aspect-ratio: 16/9; min-height: 200px; }
+  .studio-row { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* ────────── Pullquote (full-width gradient block) ────────── */
+.pull { padding: 0 var(--gutter) clamp(120px, 16vh, 200px); }
+.pull-block {
+  position: relative;
+  padding: clamp(72px, 12vh, 140px) clamp(40px, 7vw, 120px);
+  min-height: 480px;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(135deg, #0F0F0F 0%, #2A1610 30%, #4A2618 55%, #C95E2D 82%, #FF5A1F 100%);
+  color: var(--paper);
+  display: flex; flex-direction: column; justify-content: space-between; gap: 48px;
+}
+.pull-block::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 80% at 18% -10%, rgba(255,90,31,0.30) 0%, transparent 55%),
+              radial-gradient(120% 80% at 92% 110%, rgba(255,90,31,0.42) 0%, transparent 60%);
+  z-index: 0;
+}
+.pull-block > * { position: relative; z-index: 1; }
+.pull-top { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; opacity: 0.86; }
+.pull-body { max-width: 1100px; }
+.pull-foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; opacity: 0.86; }
+
+/* ────────── Working with ────────── */
+.clients { padding: 0 var(--gutter) clamp(120px, 16vh, 200px); }
+.clients-head { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
+.clients-list { display: flex; flex-wrap: wrap; gap: 14px 36px; padding-top: 32px; border-top: 1px solid var(--ink); }
+.clients-list span { font-family: var(--display); font-weight: 700; font-size: clamp(20px, 2vw, 28px); letter-spacing: -0.018em; line-height: 1.1; padding: 8px 0; }
+.clients-list span.muted { opacity: 0.4; }
+
+/* ────────── Footer (back-of-the-book) ────────── */
+.footer-zone { padding-top: clamp(80px, 12vh, 140px); }
+.footer { max-width: 1680px; margin: 0 auto; padding: 0 var(--gutter); }
+.footer-block { position: relative; overflow: hidden; isolation: isolate; padding: 56px 48px 48px; min-height: 760px; color: var(--paper); background: linear-gradient(135deg, #0F0F0F 0%, #2A1610 32%, #4A2618 55%, #C95E2D 82%, #FF5A1F 100%); display: flex; flex-direction: column; gap: 48px; }
+.footer-block::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 80% at 82% 108%, rgba(255,90,31,0.42) 0%, transparent 60%); z-index: 0; }
+.footer-block > * { position: relative; z-index: 1; }
+.footer-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding: 0; }
+.footer-top .mono-label { color: rgba(247,245,240,0.72); }
+.footer-center { flex: 1; display: flex; align-items: center; justify-content: center; padding: 32px 0; }
+.orbit { position: relative; width: 320px; height: 320px; }
+.orbit-svg { width: 100%; height: 100%; display: block; }
+.orbit-arm { position: absolute; inset: 0; transform-origin: 50% 50%; pointer-events: none; }
+.orbit-arm-1 { animation: orbit-rot 14s linear infinite; }
+.orbit-arm-2 { animation: orbit-rot 22s linear infinite reverse; }
+.orbit-arm-3 { animation: orbit-rot 36s linear infinite; }
+.orbit-dot { position: absolute; left: 50%; width: 9px; height: 9px; background: var(--accent); border-radius: 50%; transform: translateX(-50%); box-shadow: 0 0 18px rgba(255,90,31,0.7); }
+.orbit-dot-1 { top: 22px; }
+.orbit-dot-2 { top: 62px; width: 5px; height: 5px; background: rgba(247,245,240,0.85); box-shadow: 0 0 8px rgba(247,245,240,0.55); }
+.orbit-dot-3 { top: 102px; width: 4px; height: 4px; background: rgba(247,245,240,0.5); box-shadow: 0 0 6px rgba(247,245,240,0.35); }
+@keyframes orbit-rot { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .orbit-arm-1, .orbit-arm-2, .orbit-arm-3 { animation: none; } }
+.orbit-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 8px; pointer-events: none; }
+.orbit-mark { font-family: var(--display); font-weight: 900; font-size: 24px; letter-spacing: 0.16em; line-height: 1; color: var(--paper); }
+.orbit-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(247,245,240,0.55); }
+.footer-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; padding-top: 32px; border-top: 1px solid rgba(247,245,240,0.18); }
+.footer-col { display: flex; flex-direction: column; gap: 12px; }
+.footer-col-head { color: var(--paper); margin-bottom: 4px; }
+.footer-col a { font-family: var(--display); font-weight: 500; font-size: 15px; letter-spacing: -0.01em; color: rgba(247,245,240,0.75); transition: color 150ms ease; opacity: 1; }
+.footer-col a:hover { color: var(--accent); opacity: 1; }
+.footer-subscribe { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; padding-top: 32px; border-top: 1px solid rgba(247,245,240,0.18); align-items: end; }
+.footer-sub-l { display: flex; flex-direction: column; gap: 10px; max-width: 520px; }
+.footer-sub-l .display-s { color: var(--paper); font-weight: 700; }
+.footer-sub-l p { font-family: var(--serif); font-size: 15px; line-height: 1.5; color: rgba(247,245,240,0.72); margin: 0; }
+.footer-form { display: flex; gap: 0; align-items: stretch; min-width: 420px; }
+.footer-form input { flex: 1; padding: 14px 16px; background: transparent; border: 1px solid rgba(247,245,240,0.4); border-right: 0; font-family: var(--mono); font-size: 12px; color: var(--paper); letter-spacing: 0.02em; }
+.footer-form input::placeholder { color: rgba(247,245,240,0.45); }
+.footer-form input:focus { outline: none; border-color: var(--paper); }
+.footer-form button { padding: 14px 22px; background: var(--accent); border: 1px solid var(--accent); color: var(--accent-ink); font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: background 150ms ease, color 150ms ease, border-color 150ms ease; }
+.footer-form button:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.footer-meta { padding: 24px var(--gutter) 64px; max-width: 1680px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.footer-meta .mono-foot { color: rgba(10,10,10,0.55); }
+@media (max-width: 900px) { .footer-block { padding: 40px 24px; min-height: 0; gap: 32px; } .footer-cols { grid-template-columns: repeat(2, 1fr); gap: 24px; } .footer-subscribe { grid-template-columns: 1fr; } .footer-form { min-width: 0; } .orbit { width: 240px; height: 240px; } .orbit-mark { font-size: 18px; } }
+
+@media (max-width: 700px) {
+  .nav-r .nav-link { display: none; }
+  .nav-r .nav-link.show-mobile { display: inline; }
+}
+</style>
+</head>
+<body>
+
+<!-- ────────── NAV ────────── -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="nav-l">
+      <a href="/recurr-atelier/" aria-label="Recurr home">
+        <svg class="nav-logo" viewBox="60 80 520 105" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+          <path d="M98.6666 82.8662V105.195C109.745 89.6997 118.569 82.385 127.784 82.385C135.921 82.385 139.255 88.0635 139.255 94.6083C139.255 97.8807 138.372 101.153 137.196 102.885C134.941 102.212 135.098 101.634 126.02 101.634C115.333 101.634 103.961 105.099 99.0588 110.2V163.136C99.0588 170.45 100.725 171.99 113.667 173.434V179.979H62V173.434C73.5686 172.087 75.1372 170.45 75.1372 164.291V103.174C75.1372 97.7844 74.3529 96.437 68.8627 94.897L62 93.1646V87.1973L98.6666 82.8662Z"/>
+          <path d="M132.098 132.529C132.098 102.789 151.51 82.0962 180.137 82.0962C206.804 82.0962 222.098 98.1694 222.098 123.001C222.098 125.503 221.902 128.102 221.706 129.738H156.412C157.98 154.089 172.882 169.392 194.941 169.392C204.843 169.392 214.157 165.927 219.843 160.537V167.178C212.784 175.936 199.059 182 181.902 182C153.667 182 132.098 163.136 132.098 132.529ZM180.039 90.9509C166.314 90.9509 157.196 101.442 156.314 122.135L199.941 122.038C199.941 121.269 199.941 120.499 199.941 119.536C199.941 101.827 193.078 90.9509 180.039 90.9509Z"/>
+          <path d="M273.341 182C245.596 182 224.028 162.751 224.028 132.529C224.028 101.827 247.165 82 275.498 82C298.537 82 310.106 92.8758 310.106 105.58C310.106 112.991 304.616 118.092 297.753 118.092C290.792 118.092 285.498 112.895 285.498 106.254C285.498 100.576 289.322 95.9557 294.322 94.8008C290.596 92.4909 285.694 91.4321 279.714 91.4321C261.773 91.4321 249.028 105.484 249.028 128.102C249.028 153.8 264.518 169.295 285.89 169.295C295.694 169.295 305.008 165.831 310.792 160.537V167.178C303.831 175.936 290.204 182 273.341 182Z"/>
+          <path d="M347.027 82.8662V146.389C347.027 161.5 354.674 169.392 368.106 169.392C377.616 169.392 384.576 164.964 388.106 159.19V103.174C388.106 97.7844 387.321 96.437 381.831 94.897L374.969 93.1646V87.1973L412.027 82.8662V160.922C412.027 166.312 411.996 171.247 417.584 172.787C423.172 174.327 427.273 173.251 427.273 173.251L425.902 179.979L388.498 181.038V165.157C383.008 174.782 371.635 182 356.047 182C336.537 182 323.106 171.124 323.106 150.816V103.174C323.106 97.7844 322.223 96.437 316.733 94.897L309.969 93.1646V87.1973L347.027 82.8662Z"/>
+          <path d="M462.316 82.8662V105.195C473.395 89.6997 482.218 82.385 491.434 82.385C499.571 82.385 502.905 88.0635 502.905 94.6083C502.905 97.8807 502.022 101.153 500.846 102.885C498.591 102.212 494.179 101.634 489.669 101.634C478.983 101.634 467.611 105.099 462.709 110.2V163.136C462.709 170.45 464.375 171.99 477.316 173.434V179.979H425.65V173.434C437.218 172.087 438.787 170.45 438.787 164.291V103.174C438.787 97.7844 438.003 96.437 432.513 94.897L425.65 93.1646V87.1973L462.316 82.8662Z"/>
+          <path d="M535.412 82.8662V105.195C546.49 89.6997 555.314 82.385 564.529 82.385C572.667 82.385 576 88.0635 576 94.6083C576 97.8807 575.118 101.153 573.941 102.885C571.686 102.212 567.275 101.634 562.765 101.634C552.078 101.634 540.706 105.099 535.804 110.2V163.136C535.804 170.45 537.471 171.99 550.412 173.434V179.979H498.745V173.434C510.314 172.087 511.882 170.45 511.882 164.291V103.174C511.882 97.7844 511.098 96.437 505.608 94.897L498.745 93.1646V87.1973L535.412 82.8662Z"/>
+        </svg>
+      </a>
+    </div>
+    <div class="nav-r">
+      <a href="#studios" class="nav-link mono-label">Studios</a>
+      <a href="#press" class="nav-link mono-label">Press</a>
+      <a href="#about" class="nav-link mono-label">About</a>
+      <a href="#reach" class="cta">Reach us →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ────────── HERO ────────── -->
+<section class="hero">
+  <div class="hero-kick reveal">
+    <div class="hero-kick-l">
+      <span class="mono-label">Surface / 001 / Home</span>
+      <span class="mono-label">Bengaluru · 12.97°N 77.59°E</span>
+    </div>
+    <div class="hero-kick-r">
+      <span class="live-dot" aria-hidden="true"></span>
+      <span class="mono-label">Spring catalogue · FY27</span>
+    </div>
+  </div>
+  <h1 class="display-xxl reveal">We design ventures and narratives.</h1>
+  <p class="hero-lede reveal">A sector-led studio working at the intersection of software, food, and media. We run client engagements and our own ventures under the same conviction — and we publish what we learn along the way.</p>
+</section>
+
+<!-- ────────── FEATURED ESSAY ────────── -->
+<section class="featured" id="press">
+  <div class="featured-meta reveal">
+    <span class="mono-label">Featured — Recurr Press · Issue 03 · May 2026</span>
+    <span class="mono-label">01 / 12</span>
+  </div>
+  <a href="#" class="cover reveal" aria-label="Read essay">
+    <div class="cover-top">
+      <span class="mono-label">Essay · Pratik Mishra · 2026-05-10</span>
+      <span class="mono-label">12 min read</span>
+    </div>
+    <div class="cover-bot">
+      <div class="cover-kick mono-label">AI will eat SaaS — the four-layer turnover</div>
+      <h2 class="cover-title display-xl">Interface → Workflow → Data → Business model. Each layer of the stack dies on its own clock.</h2>
+      <div class="cover-foot">
+        <span class="mono-label">Four essays · One unfolding argument</span>
+        <span class="mono-label">Read the series →</span>
+      </div>
+    </div>
+  </a>
+</section>
+
+<!-- ────────── FROM THE PRESS ────────── -->
+<header class="section-head">
+  <div class="meta-row">
+    <span class="mono-label">Section / 01 — From the Press</span>
+    <a href="#" class="mono-label" style="color: var(--accent);">View all →</a>
+  </div>
+  <h2 class="display-m">Latest thinking.</h2>
+</header>
+<section class="press-grid">
+  <div class="press-row">
+    <a class="press-tile reveal" href="#">
+      <div class="press-cover dark var-slate">
+        <div class="press-cover-top">
+          <span class="mono-label">Essay</span>
+          <span class="mono-label">2026-05-09</span>
+        </div>
+        <div class="press-cover-bot">
+          <span class="mono-label">On enterprise software</span>
+          <h3 class="press-cover-title">Reporting is dead. Decisioning is the work.</h3>
+        </div>
+      </div>
+      <div class="press-meta">
+        <span class="mono-label">Pratik Mishra</span>
+        <span class="mono-label">9 min</span>
+      </div>
+    </a>
+    <a class="press-tile reveal" href="#">
+      <div class="press-cover light var-warm">
+        <div class="press-cover-top">
+          <span class="mono-label">Framework</span>
+          <span class="mono-label">2026-05-04</span>
+        </div>
+        <div class="press-cover-bot">
+          <span class="mono-label">On building media</span>
+          <h3 class="press-cover-title">Vayam — designing a national publication for a country that doesn't read.</h3>
+        </div>
+      </div>
+      <div class="press-meta">
+        <span class="mono-label">Recurr Press</span>
+        <span class="mono-label">14 min</span>
+      </div>
+    </a>
+    <a class="press-tile reveal" href="#">
+      <div class="press-cover dark var-teal">
+        <div class="press-cover-top">
+          <span class="mono-label">Note</span>
+          <span class="mono-label">2026-04-29</span>
+        </div>
+        <div class="press-cover-bot">
+          <span class="mono-label">On operating</span>
+          <h3 class="press-cover-title">Four years inside a cloud kitchen. What we'd build differently.</h3>
+        </div>
+      </div>
+      <div class="press-meta">
+        <span class="mono-label">Pratik &amp; team</span>
+        <span class="mono-label">11 min</span>
+      </div>
+    </a>
+  </div>
+  <div class="press-foot reveal">
+    <span class="mono-label">Library — 38 published · weekly cadence</span>
+    <a href="#" class="mono-label accent">Browse the Press →</a>
+  </div>
+</section>
+
+<!-- ────────── STUDIOS ────────── -->
+<header class="section-head" id="studios">
+  <div class="meta-row">
+    <span class="mono-label">Section / 02 — Studios</span>
+    <span class="mono-label">Three industry theses</span>
+  </div>
+  <h2 class="display-m">What we're building.</h2>
+</header>
+<section class="studios">
+  <p class="studios-lede reveal">We organise our work by industry, not by ownership. Each studio runs client engagements and our own ventures under the same thesis — because the work it takes to win a category is the same whether the cap table is ours or somebody else's.</p>
+
+  <div class="studio reveal">
+    <div class="studio-art dark var-ember">
+      <span class="studio-art-label mono-label">Studio / 01</span>
+      <span class="studio-art-num">ET</span>
+    </div>
+    <div class="studio-body">
+      <h3 class="studio-title display-l">Enterprise Technology.</h3>
+      <p class="studio-thesis body-l">The decade of marketing software is ending. The decade of decision software is starting. We work with the firms building the next stack — and we are building inside it ourselves.</p>
+      <div class="studio-roster">
+        <div class="studio-row">
+          <span class="name">Clarisights</span>
+          <span class="desc">Decision engineering for marketing teams. Engaged.</span>
+        </div>
+        <div class="studio-row">
+          <span class="name">Carrots</span>
+          <span class="desc">Content marketing as a team game. Piloting with Quad and Clarisights.</span>
+        </div>
+        <div class="studio-row">
+          <span class="name">Goodera</span>
+          <span class="desc">Infrastructure for workplace culture. Long-time partner.</span>
+        </div>
+        <div class="studio-row">
+          <span class="name">Glyph Social</span>
+          <span class="desc">Infrastructure for earned media. Building.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="studio reveal">
+    <div class="studio-art light var-warm">
+      <span class="studio-art-label mono-label" style="color: var(--ink);">Studio / 02</span>
+      <span class="studio-art-num" style="color: var(--ink);">FB</span>
+    </div>
+    <div class="studio-body">
+      <h3 class="studio-title display-l">Food &amp; Beverage.</h3>
+      <p class="studio-thesis body-l">Four years of operating a cloud kitchen brand changes how you see this industry. We know what works, what doesn't, and what the next decade of Indian F&amp;B looks like from inside the door.</p>
+      <div class="studio-roster">
+        <div class="studio-row">
+          <span class="name">Ministry of Oats</span>
+          <span class="desc">A cloud kitchen brand across three cities. Our own.</span>
+        </div>
+        <div class="studio-row">
+          <span class="name">Canteen</span>
+          <span class="desc">An AI-native service for India's F&amp;B owners. In build.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="studio reveal">
+    <div class="studio-art dark var-dusk">
+      <span class="studio-art-label mono-label">Studio / 03</span>
+      <span class="studio-art-num">ME</span>
+    </div>
+    <div class="studio-body">
+      <h3 class="studio-title display-l">Media &amp; Education.</h3>
+      <p class="studio-thesis body-l">India needs a generation of media properties that speak to its industrial reality, consumer ambition, and education stack. We're building three — and consulting on the ones we admire.</p>
+      <div class="studio-roster">
+        <div class="studio-row">
+          <span class="name">Quad AI</span>
+          <span class="desc">A new standard of technology education. Built for Bharat.</span>
+        </div>
+        <div class="studio-row">
+          <span class="name">BLR Store</span>
+          <span class="desc">Retail therapy for India's new consumers. With Razorpay.</span>
+        </div>
+        <div class="studio-row">
+          <span class="name">Vayam</span>
+          <span class="desc">India's industrial identity, on the record. With Sarvam.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── PULLQUOTE ────────── -->
+<section class="pull">
+  <div class="pull-block reveal">
+    <div class="pull-top">
+      <span class="mono-label">Excerpt · From the Clarisights file · May 2026</span>
+      <span class="mono-label">Recurr Press · Issue 03</span>
+    </div>
+    <div class="pull-body">
+      <p class="serif-pull">"Software companies have spent a decade building reporting tools. Marketing teams have spent the same decade getting worse at decisions. That gap — between what the data can say and what an operator can do with it — is the work."</p>
+    </div>
+    <div class="pull-foot">
+      <span class="mono-label">— Read the full essay</span>
+      <span class="mono-label">12 min</span>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── WORKING WITH ────────── -->
+<header class="section-head" id="about">
+  <div class="meta-row">
+    <span class="mono-label">Section / 03 — Working with</span>
+    <span class="mono-label">Active engagements + partners</span>
+  </div>
+  <h2 class="display-m">In the room.</h2>
+</header>
+<section class="clients">
+  <div class="clients-list reveal">
+    <span>Clarisights</span>
+    <span>Goodera</span>
+    <span>Kris@Work</span>
+    <span>Exotel</span>
+    <span>Quad AI</span>
+    <span class="muted">·</span>
+    <span>Razorpay</span>
+    <span>Sarvam</span>
+    <span>Urban Vault</span>
+  </div>
+</section>
+
+<!-- ────────── FOOTER ────────── -->
+<div class="footer-zone" id="reach">
+  <footer class="footer">
+    <div class="footer-block">
+      <div class="footer-top">
+        <span class="mono-label">Recurr</span>
+        <span class="mono-label">FY27 · Spring catalogue</span>
+        <span class="mono-label">Compiled in Bengaluru</span>
+      </div>
+      <div class="footer-center">
+        <div class="orbit" aria-hidden="true">
+          <svg class="orbit-svg" viewBox="0 0 320 320">
+            <circle cx="160" cy="160" r="140" stroke="rgba(247,245,240,0.18)" stroke-width="1" fill="none"/>
+            <circle cx="160" cy="160" r="100" stroke="rgba(247,245,240,0.10)" stroke-width="1" fill="none" stroke-dasharray="2 5"/>
+            <circle cx="160" cy="160" r="60" stroke="rgba(247,245,240,0.06)" stroke-width="1" fill="none"/>
+          </svg>
+          <div class="orbit-arm orbit-arm-1"><span class="orbit-dot orbit-dot-1"></span></div>
+          <div class="orbit-arm orbit-arm-2"><span class="orbit-dot orbit-dot-2"></span></div>
+          <div class="orbit-arm orbit-arm-3"><span class="orbit-dot orbit-dot-3"></span></div>
+          <div class="orbit-center">
+            <span class="orbit-mark">RECURR</span>
+            <span class="orbit-tag">A studio · Bengaluru</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <span class="mono-label footer-col-head">Studios</span>
+          <a href="#studios">Enterprise Technology</a>
+          <a href="#studios">Food &amp; Beverage</a>
+          <a href="#studios">Media &amp; Education</a>
+        </div>
+        <div class="footer-col">
+          <span class="mono-label footer-col-head">Press</span>
+          <a href="#press">Latest</a>
+          <a href="#">Authors</a>
+          <a href="#">Signals</a>
+          <a href="#">Archive</a>
+        </div>
+        <div class="footer-col">
+          <span class="mono-label footer-col-head">Recurr</span>
+          <a href="#about">About</a>
+          <a href="#">Team</a>
+          <a href="#">Press kit</a>
+        </div>
+        <div class="footer-col">
+          <span class="mono-label footer-col-head">Reach</span>
+          <a href="mailto:hello@recurr.co">hello@recurr.co</a>
+          <a href="#">X / @recurrco</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+      <div class="footer-subscribe">
+        <div class="footer-sub-l">
+          <span class="display-s">A weekly note from the Press desk.</span>
+          <p>One drop a week. Mental models for venture builders. No tracking, no growth hacks.</p>
+        </div>
+        <form class="footer-form" onsubmit="event.preventDefault();">
+          <input type="email" placeholder="you@yourcompany.com" aria-label="Email address" required/>
+          <button type="submit">Subscribe →</button>
+        </form>
+      </div>
+    </div>
+  </footer>
+  <div class="footer-meta">
+    <span class="mono-foot">© 2026 Recurr Studio Pvt Ltd</span>
+    <span class="mono-foot" id="ts">Compiled 2026-05-14 · v4 · Atelier</span>
+    <span class="mono-foot">Bengaluru · 12.97°N 77.59°E</span>
+  </div>
+</div>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  if (window.Lenis && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const lenis = new Lenis({ duration: 1.15, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id.length > 1) {
+        const target = document.querySelector(id);
+        if (target) { e.preventDefault(); lenis.scrollTo(target, { offset: -64 }); }
+      }
+    }));
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  setTimeout(() => { document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in')); }, 1500);
+
+  const nav = document.getElementById('nav');
+  let lastY = 0;
+  let pendingFrame = false;
+  const HIDE_AFTER = 80;
+  function updateNav() {
+    pendingFrame = false;
+    const y = window.scrollY || document.documentElement.scrollTop;
+    const delta = y - lastY;
+    nav.classList.toggle('scrolled', y > 16);
+    if (y < 4) { nav.classList.remove('hidden'); }
+    else if (delta > 2 && y > HIDE_AFTER) { nav.classList.add('hidden'); }
+    else if (delta < -2) { nav.classList.remove('hidden'); }
+    lastY = y;
+  }
+  function onScroll() { if (!pendingFrame) { pendingFrame = true; requestAnimationFrame(updateNav); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  updateNav();
+})();
+</script>
+</body>
+</html>
