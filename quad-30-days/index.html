@@ -113,18 +113,44 @@
   .delivr.solo h4 { font-size: 40px; }
   .delivr.solo p { font-size: 16px; max-width: 580px; }
 
-  /* ───────── Funnel ───────── */
-  .funnel { margin: 22px auto 0; display: flex; flex-direction: column; align-items: stretch; gap: 4px; max-width: 720px; }
-  .fstep { border: 1.5px solid var(--ink); padding: 12px 22px; display: flex; justify-content: space-between; align-items: center; background: var(--paper); border-radius: 2px; margin: 0 auto; }
-  .fstep .fname { font-size: 14.5px; font-weight: 600; letter-spacing: -0.005em; }
-  .fstep .fq { font-size: 12px; color: var(--muted); letter-spacing: 0.02em; font-style: italic; }
-  .fstep.f1 { width: 100%; background: var(--ink); color: var(--paper); border-color: var(--ink); }
-  .fstep.f1 .fq { color: rgba(255,255,255,0.55); }
-  .fstep.f2 { width: 86%; }
-  .fstep.f3 { width: 72%; }
-  .fstep.f4 { width: 58%; }
-  .fstep.f5 { width: 44%; }
-  .fstep.f6 { width: 30%; }
+  /* ───────── Funnel with real data ───────── */
+  .funnel-data { display: flex; flex-direction: column; align-items: center; gap: 5px; margin-top: 4px; }
+  .fd-stage { padding: 14px 18px; border: 1.5px solid var(--ink); border-radius: 4px; text-align: center; background: var(--paper); }
+  .fd-stage.s1 { width: 100%; background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .fd-stage.s2 { width: 82%; }
+  .fd-stage.s3 { width: 66%; }
+  .fd-stage.s4 { width: 52%; }
+  .fd-stage.s5 { width: 36%; background: #fff8e6; }
+  .fd-num { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.018em; line-height: 1; margin-bottom: 4px; }
+  .fd-label { font-size: 11.5px; font-weight: 600; letter-spacing: 0.05em; opacity: 0.9; text-transform: uppercase; }
+  .fd-drop { font-size: 10.5px; color: var(--muted); font-weight: 600; padding: 2px 0; letter-spacing: 0.08em; text-transform: uppercase; }
+  .fd-drop.bad { color: var(--accent); font-weight: 700; }
+
+  /* ───────── Channels table ───────── */
+  .ch-table { border: 1.5px solid var(--ink); border-radius: 4px; overflow: hidden; }
+  .ch-head { display: grid; grid-template-columns: 1.4fr 1fr 1fr; background: var(--ink); color: var(--paper); }
+  .ch-head div { padding: 11px 14px; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; }
+  .ch-head div:not(:first-child) { text-align: right; }
+  .ch-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr; border-top: 1px solid var(--faint); }
+  .ch-row div { padding: 10px 14px; font-size: 13px; }
+  .ch-row div:first-child { font-weight: 600; }
+  .ch-row div:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
+  .ch-row .pct { color: var(--muted); font-size: 11.5px; margin-left: 4px; }
+  .ch-row.conv { background: var(--soft); }
+  .ch-row.conv div:last-child { color: var(--accent); font-weight: 700; }
+  .ch-row.conv div:last-child .pct { color: var(--accent); opacity: 0.8; }
+
+  /* ───────── Insight cards ───────── */
+  .insight-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 28px; }
+  .insight { border: 1.5px solid var(--ink); border-radius: 4px; padding: 18px 20px 16px; }
+  .insight.dark { background: var(--ink); color: var(--paper); }
+  .insight .il { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; color: var(--muted); margin-bottom: 10px; }
+  .insight.dark .il { color: rgba(255,255,255,0.55); }
+  .insight h4 { font-size: 16px; font-weight: 600; line-height: 1.3; letter-spacing: -0.005em; margin-bottom: 8px; }
+  .insight p { font-size: 13px; line-height: 1.55; color: var(--muted); }
+  .insight p strong { color: var(--ink); font-weight: 700; }
+  .insight.dark p { color: rgba(255,255,255,0.8); }
+  .insight.dark p strong { color: var(--paper); }
 
   /* ───────── Card grids ───────── */
   .card-grid { display: grid; gap: 14px; margin-top: 14px; }
@@ -584,33 +610,122 @@
       <section class="slide" id="s09">
         <div class="slide-meta"><span>Channel mix · Funnel</span><span class="right">09 / 17</span></div>
         <h2>Demystifying the funnel.</h2>
-        <p class="lede">Before we decide where to scale, we read the scorecard together. Six stages, three questions
-          we want to leave today with answers to.</p>
+        <p class="lede">Current admission-season data, Feb 19 → May 15, 2026. Two stories the data tells once you read it.</p>
 
-        <div class="funnel">
-          <div class="fstep f1"><span class="fname">Awareness</span><span class="fq">channels driving it?</span></div>
-          <div class="fstep f2"><span class="fname">Visit / Engagement</span><span class="fq">traffic by source?</span></div>
-          <div class="fstep f3"><span class="fname">Enquiry</span><span class="fq">form + phone count?</span></div>
-          <div class="fstep f4"><span class="fname">Counsellor stage</span><span class="fq">qualified rate?</span></div>
-          <div class="fstep f5"><span class="fname">Application</span><span class="fq">paid apps?</span></div>
-          <div class="fstep f6"><span class="fname">Admission</span><span class="fq">joined?</span></div>
+        <div style="display: grid; grid-template-columns: 38% 1fr; gap: 36px; margin-top: 14px;">
+          <!-- LEFT: Funnel -->
+          <div>
+            <div class="kicker" style="margin-bottom: 14px;">Lead funnel</div>
+            <div class="funnel-data">
+              <div class="fd-stage s1">
+                <div class="fd-num">51,519</div>
+                <div class="fd-label">Total Leads</div>
+              </div>
+              <div class="fd-drop bad">↓ 1.37% &nbsp;·&nbsp; major leak</div>
+              <div class="fd-stage s2">
+                <div class="fd-num">706</div>
+                <div class="fd-label">Application Started</div>
+              </div>
+              <div class="fd-drop">↓ 85.1%</div>
+              <div class="fd-stage s3">
+                <div class="fd-num">601</div>
+                <div class="fd-label">Paid Applications</div>
+              </div>
+              <div class="fd-drop">↓ 100% &nbsp;·&nbsp; same as paid?</div>
+              <div class="fd-stage s4">
+                <div class="fd-num">601</div>
+                <div class="fd-label">Submitted</div>
+              </div>
+              <div class="fd-drop">↓ in-flight</div>
+              <div class="fd-stage s5">
+                <div class="fd-num">0</div>
+                <div class="fd-label">Enrolments</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Channels table -->
+          <div>
+            <div class="kicker" style="margin-bottom: 14px;">Top performing channels</div>
+            <div class="ch-table">
+              <div class="ch-head">
+                <div>Channel</div>
+                <div>Leads</div>
+                <div>Applications</div>
+              </div>
+              <div class="ch-row">
+                <div>Collegedunia</div>
+                <div>26,935<span class="pct">52.3%</span></div>
+                <div>49<span class="pct">8.1%</span></div>
+              </div>
+              <div class="ch-row">
+                <div>Kollege Apply</div>
+                <div>12,020<span class="pct">23.3%</span></div>
+                <div>14<span class="pct">2.3%</span></div>
+              </div>
+              <div class="ch-row">
+                <div>Zollege</div>
+                <div>5,906<span class="pct">11.5%</span></div>
+                <div>3<span class="pct">0.5%</span></div>
+              </div>
+              <div class="ch-row">
+                <div>Not Mapped</div>
+                <div>3,612<span class="pct">7.0%</span></div>
+                <div>0<span class="pct">0%</span></div>
+              </div>
+              <div class="ch-row">
+                <div>Facebook</div>
+                <div>1,311<span class="pct">2.5%</span></div>
+                <div>17<span class="pct">2.8%</span></div>
+              </div>
+              <div class="ch-row conv">
+                <div>Website Leads</div>
+                <div>708<span class="pct">1.4%</span></div>
+                <div>26<span class="pct">4.3%</span></div>
+              </div>
+              <div class="ch-row conv">
+                <div>Google Ads</div>
+                <div>349<span class="pct">0.7%</span></div>
+                <div>132<span class="pct">22.0%</span></div>
+              </div>
+              <div class="ch-row conv">
+                <div>Vedantu</div>
+                <div>301<span class="pct">0.6%</span></div>
+                <div>220<span class="pct">36.6%</span></div>
+              </div>
+              <div class="ch-row conv">
+                <div>Direct</div>
+                <div>139<span class="pct">0.3%</span></div>
+                <div>68<span class="pct">11.3%</span></div>
+              </div>
+              <div class="ch-row conv">
+                <div>Influencer</div>
+                <div>127<span class="pct">0.3%</span></div>
+                <div>53<span class="pct">8.8%</span></div>
+              </div>
+            </div>
+            <div style="font-size: 11px; color: var(--muted); margin-top: 10px; letter-spacing: 0.02em; line-height: 1.5;">
+              Highlighted rows: channels where application share &gt; lead share. The converters.
+            </div>
+          </div>
         </div>
 
-        <div class="card-grid g3" style="margin-top: 28px;">
-          <div class="card">
-            <div class="ci">Q1</div>
-            <div class="ct">What does each stage look like today?</div>
-            <div class="cd">Top-of-funnel through admission. Real numbers, not estimates.</div>
+        <!-- INSIGHTS -->
+        <div class="insight-grid">
+          <div class="insight">
+            <div class="il">Story 01</div>
+            <h4>Aggregator volume is mostly noise.</h4>
+            <p>Collegedunia + Kollege Apply + Zollege drive <strong>87% of leads</strong> — and <strong>11% of applications</strong>. The cost is real. The conversion isn't.</p>
           </div>
-          <div class="card">
-            <div class="ci">Q2</div>
-            <div class="ct">Where are we leaking?</div>
-            <div class="cd">Biggest drop-off stage. Geography mix. Time-to-first-touch.</div>
+          <div class="insight dark">
+            <div class="il">Story 02</div>
+            <h4>The real winners are buried.</h4>
+            <p>Google Ads + Vedantu + Direct + Influencer = <strong>1.8% of leads</strong>, <strong>79% of applications</strong>. These are where the money sits.</p>
           </div>
-          <div class="card">
-            <div class="ci">Q3</div>
-            <div class="ct">What's not even instrumented?</div>
-            <div class="cd">GA / GTM / CRM gaps. Phone DB. Counsellor pipeline visibility.</div>
+          <div class="insight">
+            <div class="il">Story 03</div>
+            <h4>The biggest leak is at the top.</h4>
+            <p>51,519 → 706 is a <strong>98.6% drop</strong>. Source quality, landing pages, follow-up speed, counsellor pipeline — one or more is broken.</p>
           </div>
         </div>
       </section>
