@@ -12,7 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('has-reveals');</script>
 <style>
-/* ────────── Tokens (design.md v1.0) ────────── */
+/* ────────── Tokens ────────── */
 :root {
   --ink: #0A0A0A;
   --paper: #F7F5F0;
@@ -47,7 +47,7 @@ button { font-family: inherit; }
 /* ────────── Type ────────── */
 .display-xxl { font-family: var(--display); font-weight: 900; font-size: clamp(48px, 7vw, 96px);  line-height: 0.92; letter-spacing: -0.03em; }
 .display-xl  { font-family: var(--display); font-weight: 900; font-size: clamp(40px, 5.6vw, 72px); line-height: 0.95; letter-spacing: -0.028em; }
-.display-l   { font-family: var(--display); font-weight: 900; font-size: clamp(36px, 4.8vw, 60px); line-height: 0.98; letter-spacing: -0.025em; }
+.display-l   { font-family: var(--display); font-weight: 900; font-size: clamp(34px, 4.4vw, 56px); line-height: 0.98; letter-spacing: -0.025em; }
 .display-m   { font-family: var(--display); font-weight: 800; font-size: clamp(24px, 2.6vw, 36px); line-height: 1.05; letter-spacing: -0.02em; }
 .display-s   { font-family: var(--display); font-weight: 800; font-size: clamp(20px, 1.8vw, 26px); line-height: 1.1;  letter-spacing: -0.018em; }
 .body-l      { font-family: var(--body); font-weight: 500; font-size: clamp(18px, 1.4vw, 22px); line-height: 1.5; letter-spacing: -0.005em; }
@@ -66,13 +66,10 @@ button { font-family: inherit; }
 .meta-bar {
   display: flex; flex-wrap: wrap; align-items: center;
   gap: 14px;
-  padding: 0;
 }
 .meta-bar > .sep { opacity: 0.35; }
-.meta-bar .live-dot { width: 7px; height: 7px; background: var(--accent); display: inline-block; animation: pulse 2.4s ease-in-out infinite; border-radius: 50%; margin-left: 4px; }
 .meta-bar a.meta-cta { color: var(--accent); transition: opacity 150ms ease; margin-left: auto; }
 .meta-bar a.meta-cta:hover { opacity: 0.7; }
-@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.55; transform: scale(0.9); } }
 
 /* ────────── Nav ────────── */
 .nav {
@@ -108,22 +105,192 @@ button { font-family: inherit; }
 }
 .cta:hover { background: var(--ink); color: var(--paper); }
 
-/* ────────── Hero (fold 01) ────────── */
+/* ────────── Hero (fold 01) — content-sized, no meta scatter ────────── */
 .hero {
-  min-height: 88vh;
-  padding: clamp(40px, 8vh, 96px) var(--gutter) clamp(40px, 8vh, 80px);
-  display: flex; flex-direction: column; justify-content: space-between;
+  padding: clamp(64px, 12vh, 140px) var(--gutter) clamp(72px, 14vh, 160px);
+  display: flex; flex-direction: column;
+  gap: clamp(20px, 3vh, 36px);
+  max-width: 1100px;
 }
-.hero-top { display: flex; flex-direction: column; gap: 48px; }
-.hero-body { display: flex; flex-direction: column; gap: 32px; max-width: 1100px; }
 .hero h1 { max-width: 1100px; }
-.hero-sub { font-family: var(--body); font-weight: 500; font-size: clamp(18px, 1.6vw, 24px); line-height: 1.4; letter-spacing: -0.01em; max-width: 760px; color: var(--ink); opacity: 0.78; }
-.hero-foot { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; opacity: 0.55; }
-.hero-foot .scroll-hint { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 10px; }
-.hero-foot .scroll-hint::before { content: ''; width: 30px; height: 1px; background: currentColor; display: inline-block; }
+.hero-sub {
+  font-family: var(--body); font-weight: 500;
+  font-size: clamp(18px, 1.6vw, 24px); line-height: 1.4; letter-spacing: -0.01em;
+  max-width: 760px;
+  color: var(--ink); opacity: 0.74;
+}
 
-/* ────────── Press carousel (fold 02) ────────── */
-.press { padding: clamp(60px, 10vh, 120px) 0 clamp(80px, 12vh, 140px); }
+/* ────────── Studios pinned horizontal — snap transitions, paper tabs ────────── */
+.studios-pin {
+  position: relative;
+  height: 320vh; /* ~73vh of dwell per panel + transition windows */
+}
+.studios-pin-inner {
+  position: sticky; top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  background: var(--paper);
+}
+
+/* Header sits in paper, flex 0 0 auto. Tabs + meta only. */
+.studios-header {
+  flex: 0 0 auto;
+  padding: clamp(24px, 4vh, 40px) var(--gutter) clamp(14px, 2vh, 20px);
+  background: var(--paper);
+  z-index: 5;
+}
+.studios-meta {
+  color: rgba(10,10,10,0.62);
+  margin-bottom: 16px;
+}
+.studios-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.studio-tab {
+  font-family: var(--mono); font-size: 10.5px; font-weight: 500;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 9px 14px;
+  background: transparent;
+  color: rgba(10,10,10,0.55);
+  border: 1px solid rgba(10,10,10,0.18);
+  cursor: pointer;
+  transition: color 250ms ease, border-color 250ms ease, background 250ms ease;
+}
+.studio-tab:hover { color: var(--ink); border-color: rgba(10,10,10,0.40); }
+.studio-tab.active {
+  color: var(--paper); background: var(--ink); border-color: var(--ink);
+}
+
+/* Stage = remaining height under tabs. Coloured cards live in here. */
+.studios-stage {
+  flex: 1 1 auto;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: clamp(20px, 3vh, 32px);
+}
+.studios-track {
+  position: absolute; top: 0; left: 0; right: 0; bottom: clamp(20px, 3vh, 32px);
+  display: flex;
+  width: 400%;
+  /* SLICK SNAP — only animates when activeIdx changes (translateX changes) */
+  transition: transform 620ms cubic-bezier(0.22, 1, 0.32, 1);
+  will-change: transform;
+}
+.studio-panel {
+  flex: 0 0 25%; width: 25%; height: 100%;
+  padding: 0 1.75%; /* 3.5% each side → ~7% gap between cards, 93% card width */
+}
+.panel-card {
+  width: 100%; height: 100%;
+  position: relative; overflow: hidden; isolation: isolate;
+}
+.panel-card::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(120% 80% at 88% 112%, rgba(255,90,31,0.18) 0%, transparent 60%);
+}
+.panel-bg-slate { background: linear-gradient(135deg, #0E0E12 0%, #1C1C22 55%, #2C2C34 100%); }
+.panel-bg-india { background: linear-gradient(135deg, #1A0E0A 0%, #4F1E14 50%, #8C2E20 100%); }
+.panel-bg-dusk  { background: linear-gradient(135deg, #1A1428 0%, #3A2E54 55%, #5C4880 100%); }
+.panel-bg-umber { background: linear-gradient(135deg, #1A0F08 0%, #3A2010 55%, #6E4A28 100%); }
+
+.panel-inner {
+  position: relative; z-index: 1;
+  width: 100%; height: 100%;
+  padding: clamp(32px, 5vh, 56px) clamp(28px, 4vw, 56px);
+  display: flex; flex-direction: column;
+  gap: clamp(16px, 2.5vh, 28px);
+  color: var(--paper);
+}
+.panel-top { display: flex; flex-direction: column; gap: 12px; max-width: 880px; }
+.panel-meta { color: rgba(247,245,240,0.66); }
+.panel-title { line-height: 0.98; }
+.panel-thesis {
+  font-family: var(--body); font-weight: 500;
+  font-size: clamp(15px, 1.3vw, 18px); line-height: 1.45; letter-spacing: -0.008em;
+  max-width: 760px;
+  opacity: 0.86;
+}
+.panel-grid { display: grid; gap: 18px; flex: 1 1 auto; align-content: end; }
+.panel-grid-4 { grid-template-columns: repeat(4, 1fr); }
+.panel-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.panel-grid-2 { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.venture-tile { display: flex; flex-direction: column; gap: 12px; cursor: pointer; }
+.venture-cover {
+  position: relative;
+  height: clamp(150px, 22vh, 220px);
+  overflow: hidden;
+  isolation: isolate;
+}
+.venture-cover::before {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.venture-tile:hover .venture-cover::before { transform: scale(1.04); }
+.venture-tag {
+  position: absolute; right: 12px; bottom: 12px; z-index: 1;
+  font-family: var(--mono); font-size: 9.5px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 5px 8px;
+  background: rgba(247,245,240,0.16); color: var(--paper);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+}
+.venture-tag.invert { background: rgba(10,10,10,0.18); color: var(--ink); }
+.venture-info { display: flex; flex-direction: column; gap: 3px; }
+.venture-name {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(16px, 1.4vw, 20px); letter-spacing: -0.015em; line-height: 1.1;
+}
+.venture-desc {
+  font-family: var(--body); font-size: 13px; line-height: 1.4; opacity: 0.74;
+}
+.panel-also {
+  padding-top: 12px;
+  border-top: 1px solid rgba(247,245,240,0.16);
+  display: flex; flex-wrap: wrap; gap: 4px 12px;
+  align-items: baseline; opacity: 0.62;
+  font-size: 12px;
+}
+.panel-also .also-name { font-family: var(--display); font-weight: 500; }
+.panel-also .also-dot { opacity: 0.4; }
+
+/* Gradient variants (tile covers) */
+.var-slate::before  { background: linear-gradient(135deg, #0A0A0A 0%, #34343A 55%, #66666E 100%); }
+.var-warm::before   { background: linear-gradient(135deg, #F7F5F0 0%, #E8DAB2 55%, #FFC957 100%); }
+.var-teal::before   { background: linear-gradient(135deg, #0D1A1E 0%, #1A4D52 55%, #8CC7B7 100%); }
+.var-ember::before  { background: linear-gradient(135deg, #1A1A1A 0%, #732E18 50%, #FF5A1F 100%); }
+.var-carbon::before { background: linear-gradient(135deg, #050505 0%, #1A1A1F 55%, #2E3038 100%); }
+.var-sand::before   { background: linear-gradient(135deg, #C7B89A 0%, #EBDFC0 55%, #F7F5F0 100%); }
+.var-dusk::before   { background: linear-gradient(135deg, #261F33 0%, #664D80 55%, #D9A68C 100%); }
+.var-forest::before { background: linear-gradient(135deg, #0E1A0E 0%, #2A4D32 55%, #8FA98E 100%); }
+.var-india::before  { background: linear-gradient(135deg, #1A0E0A 0%, #6B2418 55%, #B73E2C 100%); }
+.var-ochre::before  { background: linear-gradient(135deg, #2A1A0E 0%, #6E4218 55%, #C77A2A 100%); }
+.var-umber::before  { background: linear-gradient(135deg, #1A0F08 0%, #3A2010 55%, #6E4A28 100%); }
+
+/* Mobile fallback — stack vertically, no horizontal pinning */
+@media (max-width: 900px) {
+  .studios-pin { height: auto; }
+  .studios-pin-inner { position: relative; height: auto; overflow: visible; }
+  .studios-stage {
+    position: relative;
+    padding-bottom: 0;
+  }
+  .studios-track {
+    position: relative;
+    display: flex; flex-direction: column;
+    width: 100%; inset: auto;
+    transform: none !important;
+    transition: none;
+  }
+  .studio-panel { flex: 1 1 auto; width: 100%; height: auto; padding: 12px var(--gutter); }
+  .panel-card { min-height: 80vh; }
+  .panel-inner { padding: 36px 28px; }
+  .panel-grid-4, .panel-grid-3, .panel-grid-2 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .panel-grid-4, .panel-grid-3, .panel-grid-2 { grid-template-columns: 1fr; }
+}
+
+/* ────────── Press carousel (fold 03 — after studios) ────────── */
+.press { padding: clamp(80px, 14vh, 160px) 0 clamp(80px, 12vh, 140px); }
 .press-meta { padding: 0 var(--gutter); margin-bottom: clamp(20px, 3vh, 32px); }
 .press-carousel {
   display: flex; gap: 20px;
@@ -161,162 +328,12 @@ button { font-family: inherit; }
 .press-card-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
 .press-card-title { font-family: var(--display); font-weight: 800; font-size: clamp(20px, 1.8vw, 24px); line-height: 1.08; letter-spacing: -0.022em; max-width: 95%; }
 .press-card-meta { display: flex; justify-content: space-between; gap: 12px; padding: 0 2px; }
-.press-carousel-hint { padding: 0 var(--gutter); display: flex; gap: 8px; align-items: center; opacity: 0.55; }
+.press-carousel-hint { padding: 0 var(--gutter); display: flex; gap: 8px; align-items: center; opacity: 0.45; }
 .press-carousel-hint::before { content: '←'; }
 .press-carousel-hint::after  { content: '→'; }
 .press-carousel-hint span { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; }
 
-/* Gradient variants */
-.var-slate::before  { background: linear-gradient(135deg, #0A0A0A 0%, #34343A 55%, #66666E 100%); }
-.var-warm::before   { background: linear-gradient(135deg, #F7F5F0 0%, #E8DAB2 55%, #FFC957 100%); }
-.var-teal::before   { background: linear-gradient(135deg, #0D1A1E 0%, #1A4D52 55%, #8CC7B7 100%); }
-.var-ember::before  { background: linear-gradient(135deg, #1A1A1A 0%, #732E18 50%, #FF5A1F 100%); }
-.var-carbon::before { background: linear-gradient(135deg, #050505 0%, #1A1A1F 55%, #2E3038 100%); }
-.var-sand::before   { background: linear-gradient(135deg, #C7B89A 0%, #EBDFC0 55%, #F7F5F0 100%); }
-.var-dusk::before   { background: linear-gradient(135deg, #261F33 0%, #664D80 55%, #D9A68C 100%); }
-.var-forest::before { background: linear-gradient(135deg, #0E1A0E 0%, #2A4D32 55%, #8FA98E 100%); }
-.var-india::before  { background: linear-gradient(135deg, #1A0E0A 0%, #6B2418 55%, #B73E2C 100%); }
-.var-ochre::before  { background: linear-gradient(135deg, #2A1A0E 0%, #6E4218 55%, #C77A2A 100%); }
-.var-umber::before  { background: linear-gradient(135deg, #1A0F08 0%, #3A2010 55%, #6E4A28 100%); }
-
-/* ────────── Studios pinned horizontal scroll (fold 03) ────────── */
-.studios-pin {
-  position: relative;
-  height: 320vh;
-}
-.studios-pin-inner {
-  position: sticky; top: 0;
-  height: 100vh;
-  overflow: hidden;
-}
-.studios-header {
-  position: absolute; top: 0; left: 0; right: 0;
-  z-index: 10;
-  padding: clamp(20px, 3vh, 32px) var(--gutter) 16px;
-  background: linear-gradient(180deg, rgba(10,10,10,0.36) 0%, rgba(10,10,10,0) 100%);
-  pointer-events: none;
-}
-.studios-header > * { pointer-events: auto; }
-.studios-meta { color: rgba(247,245,240,0.78); margin-bottom: 14px; }
-.studios-tabs { display: flex; gap: 4px; flex-wrap: wrap; }
-.studio-tab {
-  font-family: var(--mono); font-size: 10.5px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;
-  padding: 9px 14px;
-  background: transparent;
-  color: rgba(247,245,240,0.55);
-  border: 1px solid rgba(247,245,240,0.20);
-  cursor: pointer;
-  transition: color 200ms ease, border-color 200ms ease, background 200ms ease;
-}
-.studio-tab:hover { color: rgba(247,245,240,0.85); border-color: rgba(247,245,240,0.45); }
-.studio-tab.active { color: var(--ink); background: var(--paper); border-color: var(--paper); }
-.studios-track {
-  position: absolute; top: 0; left: 0;
-  display: flex;
-  width: 400%;
-  height: 100%;
-  will-change: transform;
-}
-.studio-panel {
-  flex: 0 0 25%; width: 25%; height: 100%;
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-}
-.studio-panel::after {
-  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
-  background: radial-gradient(120% 80% at 88% 112%, rgba(255,90,31,0.18) 0%, transparent 60%);
-}
-.panel-bg-slate { background: linear-gradient(135deg, #0E0E12 0%, #1C1C22 55%, #2C2C34 100%); }
-.panel-bg-india { background: linear-gradient(135deg, #1A0E0A 0%, #4F1E14 50%, #8C2E20 100%); }
-.panel-bg-dusk  { background: linear-gradient(135deg, #1A1428 0%, #3A2E54 55%, #5C4880 100%); }
-.panel-bg-umber { background: linear-gradient(135deg, #1A0F08 0%, #3A2010 55%, #6E4A28 100%); }
-.panel-inner {
-  position: relative; z-index: 1;
-  width: 100%; height: 100%;
-  padding: clamp(120px, 18vh, 180px) var(--gutter) clamp(36px, 6vh, 64px);
-  display: flex; flex-direction: column;
-  gap: clamp(20px, 3vh, 32px);
-  color: var(--paper);
-}
-.panel-top { display: flex; flex-direction: column; gap: 14px; max-width: 880px; }
-.panel-meta { color: rgba(247,245,240,0.66); }
-.panel-title { line-height: 0.98; }
-.panel-thesis {
-  font-family: var(--body); font-weight: 500;
-  font-size: clamp(16px, 1.4vw, 19px); line-height: 1.45; letter-spacing: -0.008em;
-  max-width: 760px;
-  opacity: 0.86;
-}
-.panel-grid { display: grid; gap: 18px; flex: 1 1 auto; align-content: end; }
-.panel-grid-4 { grid-template-columns: repeat(4, 1fr); }
-.panel-grid-3 { grid-template-columns: repeat(3, 1fr); }
-.panel-grid-2 { grid-template-columns: repeat(2, 1fr); gap: 28px; }
-.venture-tile { display: flex; flex-direction: column; gap: 12px; cursor: pointer; }
-.venture-cover {
-  position: relative;
-  height: clamp(180px, 26vh, 280px);
-  overflow: hidden;
-  isolation: isolate;
-}
-.venture-cover::before {
-  content: ''; position: absolute; inset: 0; z-index: 0;
-  transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-.venture-tile:hover .venture-cover::before { transform: scale(1.04); }
-.venture-tag {
-  position: absolute; right: 12px; bottom: 12px; z-index: 1;
-  font-family: var(--mono); font-size: 9.5px; font-weight: 500;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  padding: 5px 8px;
-  background: rgba(247,245,240,0.16); color: var(--paper);
-  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-}
-.venture-tag.invert { background: rgba(10,10,10,0.18); color: var(--ink); }
-.venture-info { display: flex; flex-direction: column; gap: 3px; }
-.venture-name {
-  font-family: var(--display); font-weight: 800;
-  font-size: clamp(16px, 1.4vw, 20px); letter-spacing: -0.015em; line-height: 1.1;
-}
-.venture-desc {
-  font-family: var(--body); font-size: 13px; line-height: 1.4; opacity: 0.74;
-}
-.panel-also {
-  padding-top: 14px;
-  border-top: 1px solid rgba(247,245,240,0.16);
-  display: flex; flex-wrap: wrap; gap: 4px 12px;
-  align-items: baseline; opacity: 0.65;
-  font-size: 12px;
-}
-.panel-also .also-name { font-family: var(--display); font-weight: 500; }
-.panel-also .also-dot { opacity: 0.4; }
-
-/* Mobile fallback — stack vertically */
-@media (max-width: 900px) {
-  .studios-pin { height: auto; }
-  .studios-pin-inner { position: relative; height: auto; overflow: visible; }
-  .studios-header {
-    position: relative;
-    background: var(--paper);
-  }
-  .studios-meta { color: var(--ink); opacity: 0.7; }
-  .studio-tab { color: var(--ink); border-color: rgba(10,10,10,0.18); opacity: 0.5; }
-  .studio-tab.active { background: var(--ink); color: var(--paper); border-color: var(--ink); opacity: 1; }
-  .studios-track {
-    position: relative;
-    display: flex; flex-direction: column;
-    width: 100%; height: auto;
-    transform: none !important;
-  }
-  .studio-panel { flex: 1 1 auto; width: 100%; height: auto; min-height: 90vh; }
-  .panel-inner { padding: 64px var(--gutter) 64px; }
-  .panel-grid-4, .panel-grid-3, .panel-grid-2 { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 560px) {
-  .panel-grid-4, .panel-grid-3, .panel-grid-2 { grid-template-columns: 1fr; }
-}
-
-/* ────────── Footer (back-of-the-book) ────────── */
+/* ────────── Footer ────────── */
 .footer-zone { padding-top: clamp(80px, 12vh, 140px); }
 .footer { max-width: 1400px; margin: 0 auto; padding: 0 var(--gutter); }
 .footer-block { position: relative; overflow: hidden; isolation: isolate; padding: 56px 48px 48px; min-height: 760px; color: var(--paper); background: linear-gradient(135deg, #0F0F0F 0%, #2A1610 32%, #4A2618 55%, #C95E2D 82%, #FF5A1F 100%); display: flex; flex-direction: column; gap: 48px; }
@@ -392,29 +409,220 @@ button { font-family: inherit; }
 
 <!-- ────────── FOLD 01 · HERO ────────── -->
 <section class="hero">
-  <div class="hero-top">
-    <div class="meta-bar reveal">
-      <span class="mono-label">Recurr</span>
-      <span class="sep">·</span>
-      <span class="mono-label">A studio · Bengaluru</span>
-      <span class="sep">·</span>
-      <span class="mono-label">12.97°N 77.59°E</span>
-      <span class="sep">·</span>
-      <span class="mono-label">FY27 · Spring catalogue</span>
-      <span class="live-dot" aria-hidden="true"></span>
+  <h1 class="display-l reveal">We are a design-led venture studio.</h1>
+  <p class="hero-sub reveal">We design systems with technology and media — Narratives, products and services.</p>
+</section>
+
+<!-- ────────── FOLD 02 · STUDIOS (pinned, snap transitions) ────────── -->
+<section class="studios-pin" id="studios">
+  <div class="studios-pin-inner">
+
+    <div class="studios-header">
+      <div class="studios-meta meta-bar">
+        <span class="mono-label">Our studios</span>
+        <span class="sep">·</span>
+        <span class="mono-label">Four sector theses · FY27</span>
+      </div>
+      <div class="studios-tabs">
+        <button class="studio-tab active" data-index="0">01 — Enterprise Tech</button>
+        <button class="studio-tab" data-index="1">02 — Industrial India</button>
+        <button class="studio-tab" data-index="2">03 — Education &amp; Impact</button>
+        <button class="studio-tab" data-index="3">04 — Food &amp; Beverage</button>
+      </div>
     </div>
-  </div>
-  <div class="hero-body">
-    <h1 class="display-l reveal">We are a design-led venture studio.</h1>
-    <p class="hero-sub reveal">We design systems with technology and media — Narratives, products and services.</p>
-  </div>
-  <div class="hero-foot reveal">
-    <span class="scroll-hint">Scroll</span>
-    <span class="mono-label">Surface / 001 / Home</span>
+
+    <div class="studios-stage">
+      <div class="studios-track" id="studios-track">
+
+        <!-- ── Panel 01 · Enterprise Tech ── -->
+        <div class="studio-panel">
+          <div class="panel-card panel-bg-slate">
+            <div class="panel-inner">
+              <div class="panel-top">
+                <div class="panel-meta meta-bar">
+                  <span class="mono-label">01 — Enterprise Tech</span>
+                  <span class="sep">·</span>
+                  <span class="mono-label">Practice lead · Sujith</span>
+                </div>
+                <h2 class="panel-title display-l">The decade of decision software.</h2>
+                <p class="panel-thesis">Enterprise teams have spent ten years building reporting tools and getting worse at decisions. The next stack — decision software, agentic workflows, internal AI — is starting to ship. We work with the firms building it, and we are building inside it ourselves.</p>
+              </div>
+
+              <div class="panel-grid panel-grid-4">
+                <a class="venture-tile" href="#">
+                  <div class="venture-cover var-teal"><span class="venture-tag">Client</span></div>
+                  <div class="venture-info">
+                    <span class="venture-name">Clarisights</span>
+                    <span class="venture-desc">Decision engineering for marketing teams.</span>
+                  </div>
+                </a>
+                <a class="venture-tile" href="#">
+                  <div class="venture-cover var-ember"><span class="venture-tag">Client</span></div>
+                  <div class="venture-info">
+                    <span class="venture-name">Weekday</span>
+                    <span class="venture-desc">A new engagement in scoping.</span>
+                  </div>
+                </a>
+                <a class="venture-tile" href="#">
+                  <div class="venture-cover var-dusk"><span class="venture-tag">Series</span></div>
+                  <div class="venture-info">
+                    <span class="venture-name">Glyph Social</span>
+                    <span class="venture-desc">Infrastructure for earned media.</span>
+                  </div>
+                </a>
+                <a class="venture-tile" href="#">
+                  <div class="venture-cover var-sand"><span class="venture-tag invert">Venture</span></div>
+                  <div class="venture-info">
+                    <span class="venture-name">Rabbit</span>
+                    <span class="venture-desc">A B2B growth intelligence engine.</span>
+                  </div>
+                </a>
+              </div>
+
+              <div class="panel-also">
+                <span class="mono-label" style="opacity:0.7;">Also in the file</span>
+                <span class="also-name">Kris@Work</span><span class="also-dot">·</span>
+                <span class="also-name">Exotel</span><span class="also-dot">·</span>
+                <span class="also-name">UserExperior</span><span class="also-dot">·</span>
+                <span class="also-name">Fyle</span><span class="also-dot">·</span>
+                <span class="also-name">Pazcare</span><span class="also-dot">·</span>
+                <span class="also-name">elevateHQ</span><span class="also-dot">·</span>
+                <span class="also-name">NestAway</span><span class="also-dot">·</span>
+                <span class="also-name">Storylane</span><span class="also-dot">·</span>
+                <span class="also-name">Pravar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Panel 02 · Industrial India ── -->
+        <div class="studio-panel">
+          <div class="panel-card panel-bg-india">
+            <div class="panel-inner">
+              <div class="panel-top">
+                <div class="panel-meta meta-bar">
+                  <span class="mono-label">02 — Industrial India</span>
+                  <span class="sep">·</span>
+                  <span class="mono-label">Practice lead · Ankita</span>
+                </div>
+                <h2 class="panel-title display-l">A media house and a stack for the country that builds.</h2>
+                <p class="panel-thesis">Heavy industry, frontier-sector startups, the institutions inside India's tectonic foundation — rarely covered with the depth they deserve, rarely served with software built for them. We publish about them, and we build for them.</p>
+              </div>
+
+              <div class="panel-grid panel-grid-3">
+                <a class="venture-tile" href="#">
+                  <div class="venture-cover var-ember"><span class="venture-tag">Venture</span></div>
+                  <div class="venture-info">
+                    <span class="venture-name">Vayam</span>
+                    <span class="venture-desc">India's industrial identity, on the record. Seven sectors. Launching May 20.</span>
+                  </div>
+                </a>
+                <a class="venture-tile" href="#">
+                  <div class="venture-cover var-slate"><span class="venture-tag">Client</span></div>
+                  <div class="venture-info">
+                    <span class="venture-name">Uncharted AI</span>
+                    <span class="venture-desc">Autonomous exploration robotics. ARTPARK @ IISc.</span>
+                  </div>
+                </a>
+                <a class="venture-tile" href="#">
+                  <div class="venture-cover var-ochre"><span class="venture-tag">Venture</span></div>
+                  <div class="venture-info">
+                    <span class="venture-name">TNT</span>
+                    <span class="venture-desc">Tone &amp; Timber — a timber procurement platform for India.</span>
+                  </div>
+                </a>
+              </div>
+
+              <div class="panel-also">
+                <span class="mono-label" style="opacity:0.7;">Also in the file</span>
+                <span class="also-name">Gemco · media intelligence</span><span class="also-dot">·</span>
+                <span class="also-name">Gainwell · website + IA</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Panel 03 · Education & Impact ── -->
+        <div class="studio-panel">
+          <div class="panel-card panel-bg-dusk">
+            <div class="panel-inner">
+              <div class="panel-top">
+                <div class="panel-meta meta-bar">
+                  <span class="mono-label">03 — Education &amp; Impact</span>
+                  <span class="sep">·</span>
+                  <span class="mono-label">Practice lead · Pratik</span>
+                </div>
+                <h2 class="panel-title display-l">For the institutions that change lives.</h2>
+                <p class="panel-thesis">Education and impact organisations carry the work of mobility — they decide who gets a seat at the table, and how. We work with the institutions building this layer of India, and the foundations that fund it.</p>
+              </div>
+
+              <div class="panel-grid panel-grid-3">
+                <a class="venture-tile" href="#">
+                  <div class="venture-cover var-ember"><span class="venture-tag">Client</span></div>
+                  <div class="venture-info">
+                    <span class="venture-name">Goodera</span>
+                    <span class="venture-desc">Workplace social impact platform. Fortune 500. India IPO bound.</span>
+                  </div>
+                </a>
+                <a class="venture-tile" href="#">
+                  <div class="venture-cover var-slate"><span class="venture-tag">Client</span></div>
+                  <div class="venture-info">
+                    <span class="venture-name">Quad AI</span>
+                    <span class="venture-desc">A new standard of technology education. Built for Bharat.</span>
+                  </div>
+                </a>
+                <a class="venture-tile" href="#">
+                  <div class="venture-cover var-forest"><span class="venture-tag">Pro bono</span></div>
+                  <div class="venture-info">
+                    <span class="venture-name">Purva Foundation</span>
+                    <span class="venture-desc">Adopt a tree. Watch it grow. One thousand acres.</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Panel 04 · Food & Beverage ── -->
+        <div class="studio-panel">
+          <div class="panel-card panel-bg-umber">
+            <div class="panel-inner">
+              <div class="panel-top">
+                <div class="panel-meta meta-bar">
+                  <span class="mono-label">04 — Food &amp; Beverage</span>
+                  <span class="sep">·</span>
+                  <span class="mono-label">Practice lead · Rushil</span>
+                </div>
+                <h2 class="panel-title display-l">An operator's view of Indian F&amp;B.</h2>
+                <p class="panel-thesis">Four years inside a cloud kitchen brand changes how you see this industry. We know what works, what doesn't, and what the next decade of Indian F&amp;B — DTC, embedded, retail, subscription — looks like from inside the door. We are building both a brand and a service for it.</p>
+              </div>
+
+              <div class="panel-grid panel-grid-2">
+                <a class="venture-tile" href="#">
+                  <div class="venture-cover var-carbon"><span class="venture-tag">Venture</span></div>
+                  <div class="venture-info">
+                    <span class="venture-name">Ministry of Oats</span>
+                    <span class="venture-desc">A cloud kitchen brand across three Bengaluru kitchens. Our own.</span>
+                  </div>
+                </a>
+                <a class="venture-tile" href="#">
+                  <div class="venture-cover var-ember"><span class="venture-tag">Venture</span></div>
+                  <div class="venture-info">
+                    <span class="venture-name">Canteen</span>
+                    <span class="venture-desc">An AI-native service for India's F&amp;B owners. In build.</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ────────── FOLD 02 · PRESS CAROUSEL ────────── -->
+<!-- ────────── FOLD 03 · PRESS CAROUSEL ────────── -->
 <section class="press" id="press">
   <div class="press-meta reveal">
     <div class="meta-bar">
@@ -516,229 +724,6 @@ button { font-family: inherit; }
   </div>
 </section>
 
-<!-- ────────── FOLD 03 · STUDIOS (pinned horizontal) ────────── -->
-<section class="studios-pin" id="studios">
-  <div class="studios-pin-inner">
-
-    <div class="studios-header">
-      <div class="studios-meta meta-bar">
-        <span class="mono-label">Our studios</span>
-        <span class="sep">·</span>
-        <span class="mono-label">Four sector theses · FY27</span>
-      </div>
-      <div class="studios-tabs">
-        <button class="studio-tab active" data-index="0">01 — Enterprise Tech</button>
-        <button class="studio-tab" data-index="1">02 — Industrial India</button>
-        <button class="studio-tab" data-index="2">03 — Education &amp; Impact</button>
-        <button class="studio-tab" data-index="3">04 — Food &amp; Beverage</button>
-      </div>
-    </div>
-
-    <div class="studios-track" id="studios-track">
-
-      <!-- ── Panel 01 · Enterprise Tech ── -->
-      <div class="studio-panel panel-bg-slate">
-        <div class="panel-inner">
-          <div class="panel-top">
-            <div class="panel-meta meta-bar">
-              <span class="mono-label">01 — Enterprise Tech</span>
-              <span class="sep">·</span>
-              <span class="mono-label">Practice lead · Sujith</span>
-            </div>
-            <h2 class="panel-title display-l">The decade of decision software.</h2>
-            <p class="panel-thesis">Enterprise teams have spent ten years building reporting tools and getting worse at decisions. The next stack — decision software, agentic workflows, internal AI — is starting to ship. We work with the firms building it, and we are building inside it ourselves.</p>
-          </div>
-
-          <div class="panel-grid panel-grid-4">
-            <a class="venture-tile" href="#">
-              <div class="venture-cover var-teal">
-                <span class="venture-tag">Client</span>
-              </div>
-              <div class="venture-info">
-                <span class="venture-name">Clarisights</span>
-                <span class="venture-desc">Decision engineering for marketing teams.</span>
-              </div>
-            </a>
-            <a class="venture-tile" href="#">
-              <div class="venture-cover var-ember">
-                <span class="venture-tag">Client</span>
-              </div>
-              <div class="venture-info">
-                <span class="venture-name">Weekday</span>
-                <span class="venture-desc">A new engagement in scoping.</span>
-              </div>
-            </a>
-            <a class="venture-tile" href="#">
-              <div class="venture-cover var-dusk">
-                <span class="venture-tag">Series</span>
-              </div>
-              <div class="venture-info">
-                <span class="venture-name">Glyph Social</span>
-                <span class="venture-desc">Infrastructure for earned media.</span>
-              </div>
-            </a>
-            <a class="venture-tile" href="#">
-              <div class="venture-cover var-sand">
-                <span class="venture-tag invert">Venture</span>
-              </div>
-              <div class="venture-info">
-                <span class="venture-name">Rabbit</span>
-                <span class="venture-desc">A B2B growth intelligence engine.</span>
-              </div>
-            </a>
-          </div>
-
-          <div class="panel-also">
-            <span class="mono-label" style="opacity:0.7;">Also in the file</span>
-            <span class="also-name">Kris@Work</span><span class="also-dot">·</span>
-            <span class="also-name">Exotel</span><span class="also-dot">·</span>
-            <span class="also-name">UserExperior</span><span class="also-dot">·</span>
-            <span class="also-name">Fyle</span><span class="also-dot">·</span>
-            <span class="also-name">Pazcare</span><span class="also-dot">·</span>
-            <span class="also-name">elevateHQ</span><span class="also-dot">·</span>
-            <span class="also-name">NestAway</span><span class="also-dot">·</span>
-            <span class="also-name">Storylane</span><span class="also-dot">·</span>
-            <span class="also-name">Pravar</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── Panel 02 · Industrial India ── -->
-      <div class="studio-panel panel-bg-india">
-        <div class="panel-inner">
-          <div class="panel-top">
-            <div class="panel-meta meta-bar">
-              <span class="mono-label">02 — Industrial India</span>
-              <span class="sep">·</span>
-              <span class="mono-label">Practice lead · Ankita</span>
-            </div>
-            <h2 class="panel-title display-l">A media house and a stack for the country that builds.</h2>
-            <p class="panel-thesis">Heavy industry, frontier-sector startups, the institutions inside India's tectonic foundation — rarely covered with the depth they deserve, rarely served with software built for them. We publish about them, and we build for them.</p>
-          </div>
-
-          <div class="panel-grid panel-grid-3">
-            <a class="venture-tile" href="#">
-              <div class="venture-cover var-ember">
-                <span class="venture-tag">Venture</span>
-              </div>
-              <div class="venture-info">
-                <span class="venture-name">Vayam</span>
-                <span class="venture-desc">India's industrial identity, on the record. Seven sectors. Launching May 20.</span>
-              </div>
-            </a>
-            <a class="venture-tile" href="#">
-              <div class="venture-cover var-slate">
-                <span class="venture-tag">Client</span>
-              </div>
-              <div class="venture-info">
-                <span class="venture-name">Uncharted AI</span>
-                <span class="venture-desc">Autonomous exploration robotics. ARTPARK @ IISc.</span>
-              </div>
-            </a>
-            <a class="venture-tile" href="#">
-              <div class="venture-cover var-ochre">
-                <span class="venture-tag">Venture</span>
-              </div>
-              <div class="venture-info">
-                <span class="venture-name">TNT</span>
-                <span class="venture-desc">Tone &amp; Timber — a timber procurement platform for India.</span>
-              </div>
-            </a>
-          </div>
-
-          <div class="panel-also">
-            <span class="mono-label" style="opacity:0.7;">Also in the file</span>
-            <span class="also-name">Gemco · media intelligence</span><span class="also-dot">·</span>
-            <span class="also-name">Gainwell · website + IA</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── Panel 03 · Education & Impact ── -->
-      <div class="studio-panel panel-bg-dusk">
-        <div class="panel-inner">
-          <div class="panel-top">
-            <div class="panel-meta meta-bar">
-              <span class="mono-label">03 — Education &amp; Impact</span>
-              <span class="sep">·</span>
-              <span class="mono-label">Practice lead · Pratik</span>
-            </div>
-            <h2 class="panel-title display-l">For the institutions that change lives.</h2>
-            <p class="panel-thesis">Education and impact organisations carry the work of mobility — they decide who gets a seat at the table, and how. We work with the institutions building this layer of India, and the foundations that fund it.</p>
-          </div>
-
-          <div class="panel-grid panel-grid-3">
-            <a class="venture-tile" href="#">
-              <div class="venture-cover var-ember">
-                <span class="venture-tag">Client</span>
-              </div>
-              <div class="venture-info">
-                <span class="venture-name">Goodera</span>
-                <span class="venture-desc">Workplace social impact platform. Fortune 500. India IPO bound.</span>
-              </div>
-            </a>
-            <a class="venture-tile" href="#">
-              <div class="venture-cover var-slate">
-                <span class="venture-tag">Client</span>
-              </div>
-              <div class="venture-info">
-                <span class="venture-name">Quad AI</span>
-                <span class="venture-desc">A new standard of technology education. Built for Bharat.</span>
-              </div>
-            </a>
-            <a class="venture-tile" href="#">
-              <div class="venture-cover var-forest">
-                <span class="venture-tag">Pro bono</span>
-              </div>
-              <div class="venture-info">
-                <span class="venture-name">Purva Foundation</span>
-                <span class="venture-desc">Adopt a tree. Watch it grow. One thousand acres.</span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── Panel 04 · Food & Beverage ── -->
-      <div class="studio-panel panel-bg-umber">
-        <div class="panel-inner">
-          <div class="panel-top">
-            <div class="panel-meta meta-bar">
-              <span class="mono-label">04 — Food &amp; Beverage</span>
-              <span class="sep">·</span>
-              <span class="mono-label">Practice lead · Rushil</span>
-            </div>
-            <h2 class="panel-title display-l">An operator's view of Indian F&amp;B.</h2>
-            <p class="panel-thesis">Four years inside a cloud kitchen brand changes how you see this industry. We know what works, what doesn't, and what the next decade of Indian F&amp;B — DTC, embedded, retail, subscription — looks like from inside the door. We are building both a brand and a service for it.</p>
-          </div>
-
-          <div class="panel-grid panel-grid-2">
-            <a class="venture-tile" href="#">
-              <div class="venture-cover var-carbon">
-                <span class="venture-tag">Venture</span>
-              </div>
-              <div class="venture-info">
-                <span class="venture-name">Ministry of Oats</span>
-                <span class="venture-desc">A cloud kitchen brand across three Bengaluru kitchens. Our own.</span>
-              </div>
-            </a>
-            <a class="venture-tile" href="#">
-              <div class="venture-cover var-ember">
-                <span class="venture-tag">Venture</span>
-              </div>
-              <div class="venture-info">
-                <span class="venture-name">Canteen</span>
-                <span class="venture-desc">An AI-native service for India's F&amp;B owners. In build.</span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- ────────── FOOTER ────────── -->
 <div class="footer-zone" id="reach">
   <footer class="footer">
@@ -803,7 +788,7 @@ button { font-family: inherit; }
   </footer>
   <div class="footer-meta">
     <span class="mono-foot">© 2026 Recurr Studio Pvt Ltd</span>
-    <span class="mono-foot" id="ts">Compiled 2026-05-16 · v6 · Atelier · pinned studios</span>
+    <span class="mono-foot" id="ts">Compiled 2026-05-16 · v7 · Atelier · snap studios</span>
     <span class="mono-foot">Bengaluru · 12.97°N 77.59°E</span>
   </div>
 </div>
@@ -853,37 +838,49 @@ button { font-family: inherit; }
     lastY = y;
   }
 
-  /* ───── Studios pinned horizontal scroll ───── */
+  /* ───── Studios — SNAP horizontal scroll ─────
+     Each panel dwells through its own 25% slice of the scroll progress.
+     The track only translates when activeIdx crosses a boundary, so the
+     CSS transition on .studios-track fires once per snap — feels slick. */
   const studiosPin = document.getElementById('studios');
   const track = document.getElementById('studios-track');
   const tabs = document.querySelectorAll('.studio-tab');
   const PANELS = 4;
-  const TRANSLATE_MAX = (PANELS - 1) / PANELS * 100; // 75% for 4 panels
+  let lastIdx = -1;
 
   function isPinDisabled() {
     return window.innerWidth < 900 || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  function getActiveIdx() {
+    if (!studiosPin) return 0;
+    const rect = studiosPin.getBoundingClientRect();
+    const total = studiosPin.offsetHeight - window.innerHeight;
+    if (total <= 0) return 0;
+    const scrolled = -rect.top;
+    let progress = scrolled / total;
+    progress = Math.max(0, Math.min(0.9999, progress));
+    return Math.floor(progress * PANELS);
+  }
+
+  function setActive(idx) {
+    if (!track) return;
+    if (idx === lastIdx) return;
+    lastIdx = idx;
+    const tx = idx * (100 / PANELS); /* 0, 25, 50, 75 for 4 panels */
+    track.style.transform = `translateX(-${tx}%)`;
+    tabs.forEach((t, i) => t.classList.toggle('active', i === idx));
   }
 
   function updateStudios() {
     if (!studiosPin || !track) return;
     if (isPinDisabled()) {
       track.style.transform = '';
+      track.style.transition = 'none';
       return;
     }
-    const rect = studiosPin.getBoundingClientRect();
-    const total = studiosPin.offsetHeight - window.innerHeight;
-    if (total <= 0) return;
-    const scrolled = -rect.top;
-    let progress = scrolled / total;
-    progress = Math.max(0, Math.min(1, progress));
-
-    const tx = progress * TRANSLATE_MAX;
-    track.style.transform = `translateX(-${tx}%)`;
-
-    // Tab active state — divide progress into N equal segments
-    const idx = Math.min(PANELS - 1, Math.floor(progress * PANELS - 0.0001));
-    const activeIdx = Math.max(0, idx);
-    tabs.forEach((t, i) => t.classList.toggle('active', i === activeIdx));
+    track.style.transition = ''; /* re-enable in case it was off */
+    setActive(getActiveIdx());
   }
 
   tabs.forEach((tab, i) => {
@@ -894,13 +891,14 @@ button { font-family: inherit; }
         return;
       }
       const total = studiosPin.offsetHeight - window.innerHeight;
-      const targetProgress = (i + 0.05) / PANELS;
+      /* Place scroll mid-dwell of the target panel */
+      const targetProgress = (i + 0.5) / PANELS;
       const targetY = studiosPin.offsetTop + (targetProgress * total);
       scrollToY(targetY);
     });
   });
 
-  /* ───── Combined scroll handler ───── */
+  /* Combined scroll handler */
   function onScroll() {
     if (!pendingFrame) {
       pendingFrame = true;
@@ -911,7 +909,7 @@ button { font-family: inherit; }
     }
   }
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', updateStudios, { passive: true });
+  window.addEventListener('resize', () => { lastIdx = -1; updateStudios(); }, { passive: true });
   updateNav();
   updateStudios();
 })();
