@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#F7F5F0">
-<title>Recurr — We design ventures and narratives.</title>
-<meta name="description" content="A sector-led studio working across enterprise tech, industrial India, education & impact, and food & beverage. Based in Bengaluru.">
+<title>Recurr — A design-led venture studio.</title>
+<meta name="description" content="We design systems with technology and media — narratives, products and services. Based in Bengaluru.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +25,7 @@
   --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   --serif: 'New York', 'Source Serif 4', Charter, Georgia, serif;
   --gutter: clamp(20px, 3vw, 40px);
-  --max: 1440px;
+  --max: 1400px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,20 +38,20 @@ body {
   line-height: 1.5;
   font-weight: 500;
   overflow-x: hidden;
-  max-width: 1680px;
+  max-width: 1400px;
   margin-inline: auto;
 }
 a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
 
 /* ────────── Type ────────── */
-.display-xxl { font-family: var(--display); font-weight: 900; font-size: clamp(56px, 9vw, 128px); line-height: 0.88; letter-spacing: -0.035em; }
-.display-xl  { font-family: var(--display); font-weight: 900; font-size: clamp(40px, 6.5vw, 88px);  line-height: 0.92; letter-spacing: -0.03em; }
-.display-l   { font-family: var(--display); font-weight: 900; font-size: clamp(32px, 4vw, 56px);    line-height: 0.95; letter-spacing: -0.025em; }
-.display-m   { font-family: var(--display); font-weight: 800; font-size: clamp(24px, 2.6vw, 40px);  line-height: 1.0;  letter-spacing: -0.02em; }
-.display-s   { font-family: var(--display); font-weight: 800; font-size: clamp(20px, 1.8vw, 28px);  line-height: 1.05; letter-spacing: -0.018em; }
-.body-l      { font-family: var(--body); font-weight: 500; font-size: clamp(18px, 1.5vw, 22px); line-height: 1.45; letter-spacing: -0.005em; }
+.display-xxl { font-family: var(--display); font-weight: 900; font-size: clamp(48px, 7vw, 96px);  line-height: 0.92; letter-spacing: -0.03em; }
+.display-xl  { font-family: var(--display); font-weight: 900; font-size: clamp(40px, 5.6vw, 72px); line-height: 0.95; letter-spacing: -0.028em; }
+.display-l   { font-family: var(--display); font-weight: 900; font-size: clamp(36px, 4.8vw, 60px); line-height: 0.98; letter-spacing: -0.025em; }
+.display-m   { font-family: var(--display); font-weight: 800; font-size: clamp(24px, 2.6vw, 36px); line-height: 1.05; letter-spacing: -0.02em; }
+.display-s   { font-family: var(--display); font-weight: 800; font-size: clamp(20px, 1.8vw, 26px); line-height: 1.1;  letter-spacing: -0.018em; }
+.body-l      { font-family: var(--body); font-weight: 500; font-size: clamp(18px, 1.4vw, 22px); line-height: 1.5; letter-spacing: -0.005em; }
 .body-m      { font-family: var(--body); font-weight: 500; font-size: 16px; line-height: 1.55; }
-.serif-pull  { font-family: var(--serif); font-weight: 400; font-style: italic; font-size: clamp(28px, 3.4vw, 48px); line-height: 1.18; letter-spacing: -0.012em; }
 .mono-label  { font-family: var(--mono); font-weight: 500; font-size: 11px; line-height: 1.2; letter-spacing: 0.04em; text-transform: uppercase; }
 .mono-cap    { font-family: var(--mono); font-weight: 400; font-size: 12px; line-height: 1.4; }
 .mono-foot   { font-family: var(--mono); font-weight: 400; font-size: 10.5px; line-height: 1.4; letter-spacing: 0.03em; }
@@ -62,9 +62,21 @@ a { color: inherit; text-decoration: none; }
 .has-reveals .reveal.in { opacity: 1; transform: translateY(0); }
 @media (prefers-reduced-motion: reduce) { .has-reveals .reveal { transition: none; transform: none; opacity: 1; } }
 
+/* ────────── Meta bar (one container per fold) ────────── */
+.meta-bar {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 14px;
+  padding: 0;
+}
+.meta-bar > .sep { opacity: 0.35; }
+.meta-bar .live-dot { width: 7px; height: 7px; background: var(--accent); display: inline-block; animation: pulse 2.4s ease-in-out infinite; border-radius: 50%; margin-left: 4px; }
+.meta-bar a.meta-cta { color: var(--accent); transition: opacity 150ms ease; margin-left: auto; }
+.meta-bar a.meta-cta:hover { opacity: 0.7; }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.55; transform: scale(0.9); } }
+
 /* ────────── Nav ────────── */
 .nav {
-  position: sticky; top: 0; z-index: 50;
+  position: sticky; top: 0; z-index: 60;
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
@@ -75,7 +87,7 @@ a { color: inherit; text-decoration: none; }
   will-change: transform;
 }
 .nav-inner {
-  max-width: 1680px;
+  max-width: 1400px;
   margin-inline: auto;
   display: flex; justify-content: space-between; align-items: center;
   padding: 20px var(--gutter);
@@ -96,267 +108,217 @@ a { color: inherit; text-decoration: none; }
 }
 .cta:hover { background: var(--ink); color: var(--paper); }
 
-/* ────────── Hero ────────── */
-.hero { padding: clamp(48px, 9vh, 120px) var(--gutter) clamp(64px, 10vh, 120px); }
-.hero-kick { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 56px; flex-wrap: wrap; }
-.hero-kick-l { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
-.hero-kick-r { display: flex; gap: 12px; align-items: center; }
-.live-dot { width: 8px; height: 8px; background: var(--accent); display: inline-block; animation: pulse 2.4s ease-in-out infinite; }
-@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.55; transform: scale(0.9); } }
-.hero h1 { margin-bottom: 36px; max-width: 1280px; }
-.hero-lede { font-family: var(--body); font-weight: 500; font-size: clamp(20px, 2.2vw, 30px); line-height: 1.35; letter-spacing: -0.012em; max-width: 920px; color: var(--ink); }
-
-/* ────────── Featured cover (full-width essay) ────────── */
-.featured { padding: 0 var(--gutter) clamp(80px, 12vh, 140px); }
-.featured-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; gap: 16px; flex-wrap: wrap; }
-.cover {
-  position: relative;
+/* ────────── Hero (fold 01) ────────── */
+.hero {
+  min-height: 88vh;
+  padding: clamp(40px, 8vh, 96px) var(--gutter) clamp(40px, 8vh, 80px);
   display: flex; flex-direction: column; justify-content: space-between;
-  padding: 36px 40px;
-  height: clamp(440px, 72vh, 760px);
-  overflow: hidden;
+}
+.hero-top { display: flex; flex-direction: column; gap: 48px; }
+.hero-body { display: flex; flex-direction: column; gap: 32px; max-width: 1100px; }
+.hero h1 { max-width: 1100px; }
+.hero-sub { font-family: var(--body); font-weight: 500; font-size: clamp(18px, 1.6vw, 24px); line-height: 1.4; letter-spacing: -0.01em; max-width: 760px; color: var(--ink); opacity: 0.78; }
+.hero-foot { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; opacity: 0.55; }
+.hero-foot .scroll-hint { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 10px; }
+.hero-foot .scroll-hint::before { content: ''; width: 30px; height: 1px; background: currentColor; display: inline-block; }
+
+/* ────────── Press carousel (fold 02) ────────── */
+.press { padding: clamp(60px, 10vh, 120px) 0 clamp(80px, 12vh, 140px); }
+.press-meta { padding: 0 var(--gutter); margin-bottom: clamp(20px, 3vh, 32px); }
+.press-carousel {
+  display: flex; gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: var(--gutter);
+  scroll-padding-right: var(--gutter);
+  padding: 8px var(--gutter) 28px;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.press-carousel::-webkit-scrollbar { display: none; }
+.press-card {
+  flex: 0 0 clamp(280px, 28vw, 380px);
+  scroll-snap-align: start;
+  display: flex; flex-direction: column; gap: 14px;
   cursor: pointer;
-  background:
-    linear-gradient(135deg,
-      #1A1A1A 0%,
-      #4A2618 38%,
-      #C95E2D 74%,
-      #FF5A1F 100%);
-  isolation: isolate;
 }
-.cover::after {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(120% 100% at 78% 110%, rgba(255, 90, 31, 0.42) 0%, transparent 60%);
-  pointer-events: none;
-}
-.cover-top { display: flex; justify-content: space-between; align-items: flex-start; color: var(--paper); position: relative; z-index: 1; }
-.cover-bot { color: var(--paper); position: relative; z-index: 1; }
-.cover-kick { margin-bottom: 14px; opacity: 0.92; }
-.cover-title { max-width: 1100px; }
-.cover-foot { display: flex; justify-content: space-between; margin-top: 28px; opacity: 0.85; }
-.cover-foot a { transition: opacity 150ms ease; }
-.cover-foot a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
-
-/* ────────── Section head ────────── */
-.section-head {
-  padding: clamp(80px, 12vh, 160px) var(--gutter) clamp(40px, 6vh, 64px);
-  display: flex; flex-direction: column; gap: 28px;
-}
-.section-head .meta-row {
-  display: flex; justify-content: space-between; align-items: baseline; gap: 24px; flex-wrap: wrap;
-}
-.section-head h2 { line-height: 0.95; }
-@media (max-width: 700px) {
-  .section-head .meta-row { flex-direction: column; align-items: flex-start; gap: 4px; }
-}
-
-/* ────────── Press tile grid (3-up) ────────── */
-.press-grid { padding: 0 var(--gutter) clamp(120px, 16vh, 200px); }
-.press-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.press-tile { display: flex; flex-direction: column; gap: 18px; }
-.press-cover {
+.press-card-cover {
   position: relative;
-  display: flex; flex-direction: column; justify-content: space-between;
-  padding: 26px;
   aspect-ratio: 4/4.6;
   overflow: hidden;
-  cursor: pointer;
+  isolation: isolate;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 22px;
+  color: var(--paper);
   transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
 }
-.press-cover::before {
-  content: ''; position: absolute; inset: 0;
+.press-card-cover::before {
+  content: ''; position: absolute; inset: 0; z-index: 0;
   transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 0;
 }
-.press-cover:hover::before { transform: scale(1.04); }
-.press-cover > * { position: relative; z-index: 1; }
-.press-cover-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-.press-cover-bot { display: flex; flex-direction: column; gap: 10px; }
-.press-cover-title { font-family: var(--display); font-weight: 900; font-size: clamp(22px, 2.4vw, 30px); line-height: 1.02; letter-spacing: -0.025em; }
-.press-cover.dark .press-cover-title, .press-cover.dark .mono-label { color: var(--paper); }
-.press-cover.light .press-cover-title, .press-cover.light .mono-label { color: var(--ink); }
-.press-meta { display: flex; justify-content: space-between; gap: 12px; }
+.press-card:hover .press-card-cover::before { transform: scale(1.04); }
+.press-card-cover > * { position: relative; z-index: 1; }
+.press-card-cover.light { color: var(--ink); }
+.press-card-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+.press-card-title { font-family: var(--display); font-weight: 800; font-size: clamp(20px, 1.8vw, 24px); line-height: 1.08; letter-spacing: -0.022em; max-width: 95%; }
+.press-card-meta { display: flex; justify-content: space-between; gap: 12px; padding: 0 2px; }
+.press-carousel-hint { padding: 0 var(--gutter); display: flex; gap: 8px; align-items: center; opacity: 0.55; }
+.press-carousel-hint::before { content: '←'; }
+.press-carousel-hint::after  { content: '→'; }
+.press-carousel-hint span { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; }
 
-/* Gradient variants (the "image" system) */
+/* Gradient variants */
 .var-slate::before  { background: linear-gradient(135deg, #0A0A0A 0%, #34343A 55%, #66666E 100%); }
 .var-warm::before   { background: linear-gradient(135deg, #F7F5F0 0%, #E8DAB2 55%, #FFC957 100%); }
 .var-teal::before   { background: linear-gradient(135deg, #0D1A1E 0%, #1A4D52 55%, #8CC7B7 100%); }
 .var-ember::before  { background: linear-gradient(135deg, #1A1A1A 0%, #732E18 50%, #FF5A1F 100%); }
 .var-carbon::before { background: linear-gradient(135deg, #050505 0%, #1A1A1F 55%, #2E3038 100%); }
 .var-sand::before   { background: linear-gradient(135deg, #C7B89A 0%, #EBDFC0 55%, #F7F5F0 100%); }
-.var-wash::before   { background: linear-gradient(135deg, #D9D7D2 0%, #F7F5F0 50%, #E8DAB2 100%); }
 .var-dusk::before   { background: linear-gradient(135deg, #261F33 0%, #664D80 55%, #D9A68C 100%); }
 .var-forest::before { background: linear-gradient(135deg, #0E1A0E 0%, #2A4D32 55%, #8FA98E 100%); }
 .var-india::before  { background: linear-gradient(135deg, #1A0E0A 0%, #6B2418 55%, #B73E2C 100%); }
 .var-ochre::before  { background: linear-gradient(135deg, #2A1A0E 0%, #6E4218 55%, #C77A2A 100%); }
+.var-umber::before  { background: linear-gradient(135deg, #1A0F08 0%, #3A2010 55%, #6E4A28 100%); }
 
-@media (max-width: 900px) { .press-row { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 600px) { .press-row { grid-template-columns: 1fr; } }
-
-.press-foot { display: flex; justify-content: space-between; margin-top: 56px; }
-.press-foot a.accent { color: var(--accent); }
-
-/* ────────── The Show (Podcast track) ────────── */
-.show-section { padding: 0 var(--gutter) clamp(120px, 16vh, 200px); }
-.show-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.show-tile {
+/* ────────── Studios pinned horizontal scroll (fold 03) ────────── */
+.studios-pin {
   position: relative;
-  display: flex; flex-direction: column; justify-content: space-between;
-  aspect-ratio: 16/9;
-  padding: 30px;
+  height: 320vh;
+}
+.studios-pin-inner {
+  position: sticky; top: 0;
+  height: 100vh;
   overflow: hidden;
+}
+.studios-header {
+  position: absolute; top: 0; left: 0; right: 0;
+  z-index: 10;
+  padding: clamp(20px, 3vh, 32px) var(--gutter) 16px;
+  background: linear-gradient(180deg, rgba(10,10,10,0.36) 0%, rgba(10,10,10,0) 100%);
+  pointer-events: none;
+}
+.studios-header > * { pointer-events: auto; }
+.studios-meta { color: rgba(247,245,240,0.78); margin-bottom: 14px; }
+.studios-tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+.studio-tab {
+  font-family: var(--mono); font-size: 10.5px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 9px 14px;
+  background: transparent;
+  color: rgba(247,245,240,0.55);
+  border: 1px solid rgba(247,245,240,0.20);
   cursor: pointer;
-  color: var(--paper);
-  isolation: isolate;
+  transition: color 200ms ease, border-color 200ms ease, background 200ms ease;
 }
-.show-tile::after {
-  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background: radial-gradient(120% 80% at 88% 112%, rgba(255,90,31,0.30) 0%, transparent 60%);
+.studio-tab:hover { color: rgba(247,245,240,0.85); border-color: rgba(247,245,240,0.45); }
+.studio-tab.active { color: var(--ink); background: var(--paper); border-color: var(--paper); }
+.studios-track {
+  position: absolute; top: 0; left: 0;
+  display: flex;
+  width: 400%;
+  height: 100%;
+  will-change: transform;
 }
-.show-tile > * { position: relative; z-index: 1; }
-.show-top { display: flex; justify-content: space-between; gap: 12px; opacity: 0.92; }
-.show-bot { display: flex; flex-direction: column; gap: 10px; }
-.show-byline { opacity: 0.85; }
-.show-title { font-family: var(--display); font-weight: 800; font-size: clamp(22px, 2.4vw, 32px); line-height: 1.05; letter-spacing: -0.02em; max-width: 560px; }
-.show-bg-teal { background: linear-gradient(135deg, #0D1A1E 0%, #1A4D52 55%, #4F8C82 100%); }
-.show-bg-dusk { background: linear-gradient(135deg, #1A1428 0%, #3A2E54 55%, #5C4880 100%); }
-.show-foot { display: flex; justify-content: space-between; margin-top: 56px; }
-.show-foot a.accent { color: var(--accent); }
-@media (max-width: 800px) { .show-row { grid-template-columns: 1fr; } }
-
-/* ────────── Studios (Pentagram-style chapter panels) ────────── */
-.studios-intro { padding: 0 var(--gutter) clamp(40px, 6vh, 72px); }
-.studios-intro p {
-  font-family: var(--body); font-weight: 500;
-  font-size: clamp(20px, 2.2vw, 28px); line-height: 1.35; letter-spacing: -0.012em;
-  max-width: 920px;
-}
-
-.studio-block {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  padding: clamp(80px, 12vh, 140px) 0;
+.studio-panel {
+  flex: 0 0 25%; width: 25%; height: 100%;
   position: relative;
-  overflow: hidden;
   isolation: isolate;
+  overflow: hidden;
 }
-.studio-block.dark { color: var(--paper); }
-.studio-block.light { color: var(--ink); }
-.studio-block.bg-slate { background: linear-gradient(135deg, #0E0E12 0%, #1C1C22 55%, #2C2C34 100%); }
-.studio-block.bg-warm  { background: linear-gradient(135deg, #F1E6CB 0%, #E8DAB2 55%, #DFCB94 100%); }
-.studio-block.bg-dusk  { background: linear-gradient(135deg, #1A1428 0%, #3A2E54 55%, #5C4880 100%); }
-.studio-block.bg-india { background: linear-gradient(135deg, #1A0E0A 0%, #4F1E14 50%, #8C2E20 100%); }
-.studio-block::after {
+.studio-panel::after {
   content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
-  background: radial-gradient(120% 80% at 88% 112%, rgba(255,90,31,0.20) 0%, transparent 60%);
+  background: radial-gradient(120% 80% at 88% 112%, rgba(255,90,31,0.18) 0%, transparent 60%);
 }
-.studio-block.light::after {
-  background: radial-gradient(120% 80% at 88% 112%, rgba(255,90,31,0.14) 0%, transparent 60%);
-}
-.studio-block-inner {
+.panel-bg-slate { background: linear-gradient(135deg, #0E0E12 0%, #1C1C22 55%, #2C2C34 100%); }
+.panel-bg-india { background: linear-gradient(135deg, #1A0E0A 0%, #4F1E14 50%, #8C2E20 100%); }
+.panel-bg-dusk  { background: linear-gradient(135deg, #1A1428 0%, #3A2E54 55%, #5C4880 100%); }
+.panel-bg-umber { background: linear-gradient(135deg, #1A0F08 0%, #3A2010 55%, #6E4A28 100%); }
+.panel-inner {
   position: relative; z-index: 1;
-  max-width: 1680px;
-  margin: 0 auto;
-  padding: 0 var(--gutter);
+  width: 100%; height: 100%;
+  padding: clamp(120px, 18vh, 180px) var(--gutter) clamp(36px, 6vh, 64px);
   display: flex; flex-direction: column;
-  gap: clamp(32px, 5vh, 48px);
+  gap: clamp(20px, 3vh, 32px);
+  color: var(--paper);
 }
-.studio-block-meta {
-  display: flex; justify-content: space-between;
-  gap: 16px; flex-wrap: wrap; opacity: 0.88;
-}
-.studio-block-title { line-height: 0.95; }
-.studio-block-thesis {
+.panel-top { display: flex; flex-direction: column; gap: 14px; max-width: 880px; }
+.panel-meta { color: rgba(247,245,240,0.66); }
+.panel-title { line-height: 0.98; }
+.panel-thesis {
   font-family: var(--body); font-weight: 500;
-  font-size: clamp(20px, 2vw, 28px); line-height: 1.35; letter-spacing: -0.012em;
-  max-width: 920px;
-  opacity: 0.92;
+  font-size: clamp(16px, 1.4vw, 19px); line-height: 1.45; letter-spacing: -0.008em;
+  max-width: 760px;
+  opacity: 0.86;
 }
-.studio-grid {
-  display: grid; gap: 24px;
-  padding-top: clamp(16px, 2vh, 32px);
-}
-.studio-grid-4 { grid-template-columns: repeat(4, 1fr); }
-.studio-grid-3 { grid-template-columns: repeat(3, 1fr); }
-.studio-grid-2 { grid-template-columns: repeat(2, 1fr); gap: 32px; }
-
-.venture-tile { display: flex; flex-direction: column; gap: 16px; }
+.panel-grid { display: grid; gap: 18px; flex: 1 1 auto; align-content: end; }
+.panel-grid-4 { grid-template-columns: repeat(4, 1fr); }
+.panel-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.panel-grid-2 { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.venture-tile { display: flex; flex-direction: column; gap: 12px; cursor: pointer; }
 .venture-cover {
   position: relative;
-  aspect-ratio: 4/4.6;
+  height: clamp(180px, 26vh, 280px);
   overflow: hidden;
-  cursor: pointer;
+  isolation: isolate;
 }
 .venture-cover::before {
-  content: ''; position: absolute; inset: 0;
+  content: ''; position: absolute; inset: 0; z-index: 0;
   transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 0;
 }
 .venture-tile:hover .venture-cover::before { transform: scale(1.04); }
 .venture-tag {
-  position: absolute; right: 14px; bottom: 14px; z-index: 1;
-  font-family: var(--mono); font-size: 10px; font-weight: 500;
+  position: absolute; right: 12px; bottom: 12px; z-index: 1;
+  font-family: var(--mono); font-size: 9.5px; font-weight: 500;
   letter-spacing: 0.08em; text-transform: uppercase;
-  padding: 5px 9px;
+  padding: 5px 8px;
   background: rgba(247,245,240,0.16); color: var(--paper);
   backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
 }
-.venture-tag.invert { background: rgba(10,10,10,0.14); color: var(--ink); }
-.venture-info { display: flex; flex-direction: column; gap: 4px; }
+.venture-tag.invert { background: rgba(10,10,10,0.18); color: var(--ink); }
+.venture-info { display: flex; flex-direction: column; gap: 3px; }
 .venture-name {
   font-family: var(--display); font-weight: 800;
-  font-size: clamp(18px, 1.6vw, 22px); letter-spacing: -0.015em; line-height: 1.1;
+  font-size: clamp(16px, 1.4vw, 20px); letter-spacing: -0.015em; line-height: 1.1;
 }
 .venture-desc {
-  font-family: var(--body); font-size: 14px; line-height: 1.45; opacity: 0.78;
+  font-family: var(--body); font-size: 13px; line-height: 1.4; opacity: 0.74;
 }
-.studio-block-also {
-  padding-top: 28px;
-  border-top: 1px solid rgba(247,245,240,0.18);
-  display: flex; flex-wrap: wrap; gap: 6px 22px;
-  align-items: baseline; opacity: 0.82;
+.panel-also {
+  padding-top: 14px;
+  border-top: 1px solid rgba(247,245,240,0.16);
+  display: flex; flex-wrap: wrap; gap: 4px 12px;
+  align-items: baseline; opacity: 0.65;
+  font-size: 12px;
 }
-.studio-block.light .studio-block-also { border-top-color: rgba(10,10,10,0.18); }
-.studio-block-also .name {
-  font-family: var(--display); font-weight: 600;
-  font-size: 15px; letter-spacing: -0.01em;
-}
-.studio-block-also .dot { opacity: 0.4; padding: 0 4px; }
+.panel-also .also-name { font-family: var(--display); font-weight: 500; }
+.panel-also .also-dot { opacity: 0.4; }
 
-@media (max-width: 1100px) {
-  .studio-grid-4, .studio-grid-3 { grid-template-columns: 1fr 1fr; gap: 20px; }
+/* Mobile fallback — stack vertically */
+@media (max-width: 900px) {
+  .studios-pin { height: auto; }
+  .studios-pin-inner { position: relative; height: auto; overflow: visible; }
+  .studios-header {
+    position: relative;
+    background: var(--paper);
+  }
+  .studios-meta { color: var(--ink); opacity: 0.7; }
+  .studio-tab { color: var(--ink); border-color: rgba(10,10,10,0.18); opacity: 0.5; }
+  .studio-tab.active { background: var(--ink); color: var(--paper); border-color: var(--ink); opacity: 1; }
+  .studios-track {
+    position: relative;
+    display: flex; flex-direction: column;
+    width: 100%; height: auto;
+    transform: none !important;
+  }
+  .studio-panel { flex: 1 1 auto; width: 100%; height: auto; min-height: 90vh; }
+  .panel-inner { padding: 64px var(--gutter) 64px; }
+  .panel-grid-4, .panel-grid-3, .panel-grid-2 { grid-template-columns: 1fr 1fr; }
 }
-@media (max-width: 600px) {
-  .studio-grid-4, .studio-grid-3, .studio-grid-2 { grid-template-columns: 1fr; }
+@media (max-width: 560px) {
+  .panel-grid-4, .panel-grid-3, .panel-grid-2 { grid-template-columns: 1fr; }
 }
-
-/* ────────── Pullquote (full-width gradient block) ────────── */
-.pull { padding: 0 var(--gutter) clamp(120px, 16vh, 200px); }
-.pull-block {
-  position: relative;
-  padding: clamp(72px, 12vh, 140px) clamp(40px, 7vw, 120px);
-  min-height: 480px;
-  overflow: hidden;
-  isolation: isolate;
-  background: linear-gradient(135deg, #0F0F0F 0%, #2A1610 30%, #4A2618 55%, #C95E2D 82%, #FF5A1F 100%);
-  color: var(--paper);
-  display: flex; flex-direction: column; justify-content: space-between; gap: 48px;
-}
-.pull-block::after {
-  content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(120% 80% at 18% -10%, rgba(255,90,31,0.30) 0%, transparent 55%),
-              radial-gradient(120% 80% at 92% 110%, rgba(255,90,31,0.42) 0%, transparent 60%);
-  z-index: 0;
-}
-.pull-block > * { position: relative; z-index: 1; }
-.pull-top { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; opacity: 0.86; }
-.pull-body { max-width: 1100px; }
-.pull-foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; opacity: 0.86; }
 
 /* ────────── Footer (back-of-the-book) ────────── */
 .footer-zone { padding-top: clamp(80px, 12vh, 140px); }
-.footer { max-width: 1680px; margin: 0 auto; padding: 0 var(--gutter); }
+.footer { max-width: 1400px; margin: 0 auto; padding: 0 var(--gutter); }
 .footer-block { position: relative; overflow: hidden; isolation: isolate; padding: 56px 48px 48px; min-height: 760px; color: var(--paper); background: linear-gradient(135deg, #0F0F0F 0%, #2A1610 32%, #4A2618 55%, #C95E2D 82%, #FF5A1F 100%); display: flex; flex-direction: column; gap: 48px; }
 .footer-block::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 80% at 82% 108%, rgba(255,90,31,0.42) 0%, transparent 60%); z-index: 0; }
 .footer-block > * { position: relative; z-index: 1; }
@@ -393,7 +355,7 @@ a { color: inherit; text-decoration: none; }
 .footer-form input:focus { outline: none; border-color: var(--paper); }
 .footer-form button { padding: 14px 22px; background: var(--accent); border: 1px solid var(--accent); color: var(--accent-ink); font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: background 150ms ease, color 150ms ease, border-color 150ms ease; }
 .footer-form button:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
-.footer-meta { padding: 24px var(--gutter) 64px; max-width: 1680px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.footer-meta { padding: 24px var(--gutter) 64px; max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
 .footer-meta .mono-foot { color: rgba(10,10,10,0.55); }
 @media (max-width: 900px) { .footer-block { padding: 40px 24px; min-height: 0; gap: 32px; } .footer-cols { grid-template-columns: repeat(2, 1fr); gap: 24px; } .footer-subscribe { grid-template-columns: 1fr; } .footer-form { min-width: 0; } .orbit { width: 240px; height: 240px; } .orbit-mark { font-size: 18px; } }
 
@@ -428,360 +390,351 @@ a { color: inherit; text-decoration: none; }
   </div>
 </nav>
 
-<!-- ────────── HERO ────────── -->
+<!-- ────────── FOLD 01 · HERO ────────── -->
 <section class="hero">
-  <div class="hero-kick reveal">
-    <div class="hero-kick-l">
-      <span class="mono-label">Surface / 001 / Home</span>
-      <span class="mono-label">Bengaluru · 12.97°N 77.59°E</span>
-    </div>
-    <div class="hero-kick-r">
+  <div class="hero-top">
+    <div class="meta-bar reveal">
+      <span class="mono-label">Recurr</span>
+      <span class="sep">·</span>
+      <span class="mono-label">A studio · Bengaluru</span>
+      <span class="sep">·</span>
+      <span class="mono-label">12.97°N 77.59°E</span>
+      <span class="sep">·</span>
+      <span class="mono-label">FY27 · Spring catalogue</span>
       <span class="live-dot" aria-hidden="true"></span>
-      <span class="mono-label">Spring catalogue · FY27</span>
     </div>
   </div>
-  <h1 class="display-xxl reveal">We design ventures and narratives.</h1>
-  <p class="hero-lede reveal">A sector-led studio working across enterprise tech, industrial India, education &amp; impact, and food &amp; beverage. We run client engagements and our own ventures under the same thesis — and we publish what we learn along the way.</p>
+  <div class="hero-body">
+    <h1 class="display-l reveal">We are a design-led venture studio.</h1>
+    <p class="hero-sub reveal">We design systems with technology and media — Narratives, products and services.</p>
+  </div>
+  <div class="hero-foot reveal">
+    <span class="scroll-hint">Scroll</span>
+    <span class="mono-label">Surface / 001 / Home</span>
+  </div>
 </section>
 
-<!-- ────────── FEATURED ESSAY ────────── -->
-<section class="featured" id="press">
-  <div class="featured-meta reveal">
-    <span class="mono-label">Featured — Recurr Press · May 2026</span>
-    <span class="mono-label">01 / latest</span>
+<!-- ────────── FOLD 02 · PRESS CAROUSEL ────────── -->
+<section class="press" id="press">
+  <div class="press-meta reveal">
+    <div class="meta-bar">
+      <span class="mono-label">Latest from Press</span>
+      <span class="sep">·</span>
+      <span class="mono-label">Essays · Frameworks · The Show · Dispatches</span>
+      <a href="#" class="meta-cta mono-label">Browse all →</a>
+    </div>
   </div>
-  <a href="#" class="cover reveal" aria-label="Read essay">
-    <div class="cover-top">
-      <span class="mono-label">Essay · Pratik Mishra · 2026-05-10</span>
-      <span class="mono-label">12 min read</span>
-    </div>
-    <div class="cover-bot">
-      <div class="cover-kick mono-label">AI will eat SaaS — the four-layer turnover</div>
-      <h2 class="cover-title display-xl">Interface → Workflow → Data → Business model. Each layer of the stack dies on its own clock.</h2>
-      <div class="cover-foot">
-        <span class="mono-label">Four essays · One unfolding argument</span>
-        <span class="mono-label">Read the series →</span>
-      </div>
-    </div>
-  </a>
-</section>
 
-<!-- ────────── FROM THE PRESS ────────── -->
-<header class="section-head">
-  <div class="meta-row">
-    <span class="mono-label">Section / 01 — From the Press</span>
-    <a href="#" class="mono-label" style="color: var(--accent);">View all →</a>
-  </div>
-  <h2 class="display-m">Latest thinking.</h2>
-</header>
-<section class="press-grid">
-  <div class="press-row">
-    <a class="press-tile reveal" href="#">
-      <div class="press-cover dark var-slate">
-        <div class="press-cover-top">
-          <span class="mono-label">Essay</span>
-          <span class="mono-label">2026-05-09</span>
+  <div class="press-carousel reveal">
+    <a class="press-card" href="#">
+      <div class="press-card-cover var-ember">
+        <div class="press-card-top">
+          <span class="mono-label">Essay · Featured</span>
+          <span class="mono-label">12 min</span>
         </div>
-        <div class="press-cover-bot">
-          <span class="mono-label">On enterprise software</span>
-          <h3 class="press-cover-title">Reporting is dead. Decisioning is the work.</h3>
-        </div>
+        <h3 class="press-card-title">AI will eat SaaS — the four-layer turnover.</h3>
       </div>
-      <div class="press-meta">
+      <div class="press-card-meta">
         <span class="mono-label">Pratik Mishra</span>
-        <span class="mono-label">9 min</span>
+        <span class="mono-label">2026-05-10</span>
       </div>
     </a>
-    <a class="press-tile reveal" href="#">
-      <div class="press-cover light var-warm">
-        <div class="press-cover-top">
+
+    <a class="press-card" href="#">
+      <div class="press-card-cover var-slate">
+        <div class="press-card-top">
+          <span class="mono-label">Essay</span>
+          <span class="mono-label">9 min</span>
+        </div>
+        <h3 class="press-card-title">Reporting is dead. Decisioning is the work.</h3>
+      </div>
+      <div class="press-card-meta">
+        <span class="mono-label">Pratik Mishra</span>
+        <span class="mono-label">2026-05-09</span>
+      </div>
+    </a>
+
+    <a class="press-card" href="#">
+      <div class="press-card-cover light var-warm">
+        <div class="press-card-top">
           <span class="mono-label">Framework</span>
-          <span class="mono-label">2026-05-04</span>
+          <span class="mono-label">14 min</span>
         </div>
-        <div class="press-cover-bot">
-          <span class="mono-label">On building media</span>
-          <h3 class="press-cover-title">Vayam — designing a national publication for a country that doesn't read.</h3>
-        </div>
+        <h3 class="press-card-title">Vayam — designing a national publication for a country that doesn't read.</h3>
       </div>
-      <div class="press-meta">
+      <div class="press-card-meta">
         <span class="mono-label">Recurr Press</span>
-        <span class="mono-label">14 min</span>
+        <span class="mono-label">2026-05-04</span>
       </div>
     </a>
-    <a class="press-tile reveal" href="#">
-      <div class="press-cover dark var-teal">
-        <div class="press-cover-top">
+
+    <a class="press-card" href="#">
+      <div class="press-card-cover var-teal">
+        <div class="press-card-top">
           <span class="mono-label">Note</span>
-          <span class="mono-label">2026-04-29</span>
+          <span class="mono-label">11 min</span>
         </div>
-        <div class="press-cover-bot">
-          <span class="mono-label">On operating</span>
-          <h3 class="press-cover-title">Four years inside a cloud kitchen. What we'd build differently.</h3>
-        </div>
+        <h3 class="press-card-title">Four years inside a cloud kitchen. What we'd build differently.</h3>
       </div>
-      <div class="press-meta">
+      <div class="press-card-meta">
         <span class="mono-label">Pratik &amp; team</span>
-        <span class="mono-label">11 min</span>
+        <span class="mono-label">2026-04-29</span>
+      </div>
+    </a>
+
+    <a class="press-card" href="#">
+      <div class="press-card-cover var-dusk">
+        <div class="press-card-top">
+          <span class="mono-label">The Show · Ep 01</span>
+          <span class="mono-label">~45 min</span>
+        </div>
+        <h3 class="press-card-title">Inside Enfra — building software for India's industrial floor.</h3>
+      </div>
+      <div class="press-card-meta">
+        <span class="mono-label">Pratik · Siddharth Deswal</span>
+        <span class="mono-label">Coming soon</span>
+      </div>
+    </a>
+
+    <a class="press-card" href="#">
+      <div class="press-card-cover var-carbon">
+        <div class="press-card-top">
+          <span class="mono-label">The Show · Ep 02</span>
+          <span class="mono-label">~45 min</span>
+        </div>
+        <h3 class="press-card-title">Operating in early-stage Indian capital.</h3>
+      </div>
+      <div class="press-card-meta">
+        <span class="mono-label">Pratik · Rohit Salim</span>
+        <span class="mono-label">Coming soon</span>
       </div>
     </a>
   </div>
-  <div class="press-foot reveal">
-    <span class="mono-label">A feed of essays, frameworks, dispatches, landing pages.</span>
-    <a href="#" class="mono-label accent">Browse the Press →</a>
+
+  <div class="press-carousel-hint reveal">
+    <span>Scroll the row</span>
   </div>
 </section>
 
-<!-- ────────── THE SHOW (Podcast track) ────────── -->
-<header class="section-head">
-  <div class="meta-row">
-    <span class="mono-label">Section / 02 — The Show</span>
-    <span class="mono-label">A separate track · launching May 2026</span>
-  </div>
-  <h2 class="display-m">Conversations, weekly.</h2>
-</header>
-<section class="show-section">
-  <div class="show-row">
-    <a class="show-tile reveal show-bg-teal" href="#">
-      <div class="show-top">
-        <span class="mono-label">Episode 01 · Coming soon</span>
-        <span class="mono-label">~45 min</span>
+<!-- ────────── FOLD 03 · STUDIOS (pinned horizontal) ────────── -->
+<section class="studios-pin" id="studios">
+  <div class="studios-pin-inner">
+
+    <div class="studios-header">
+      <div class="studios-meta meta-bar">
+        <span class="mono-label">Our studios</span>
+        <span class="sep">·</span>
+        <span class="mono-label">Four sector theses · FY27</span>
       </div>
-      <div class="show-bot">
-        <span class="mono-label show-byline">Host: Pratik Mishra · Guest: Siddharth Deswal · Enfra</span>
-        <h3 class="show-title">Inside Enfra — what it takes to build software for India's industrial floor.</h3>
+      <div class="studios-tabs">
+        <button class="studio-tab active" data-index="0">01 — Enterprise Tech</button>
+        <button class="studio-tab" data-index="1">02 — Industrial India</button>
+        <button class="studio-tab" data-index="2">03 — Education &amp; Impact</button>
+        <button class="studio-tab" data-index="3">04 — Food &amp; Beverage</button>
       </div>
-    </a>
-    <a class="show-tile reveal show-bg-dusk" href="#">
-      <div class="show-top">
-        <span class="mono-label">Episode 02 · Coming soon</span>
-        <span class="mono-label">~45 min</span>
+    </div>
+
+    <div class="studios-track" id="studios-track">
+
+      <!-- ── Panel 01 · Enterprise Tech ── -->
+      <div class="studio-panel panel-bg-slate">
+        <div class="panel-inner">
+          <div class="panel-top">
+            <div class="panel-meta meta-bar">
+              <span class="mono-label">01 — Enterprise Tech</span>
+              <span class="sep">·</span>
+              <span class="mono-label">Practice lead · Sujith</span>
+            </div>
+            <h2 class="panel-title display-l">The decade of decision software.</h2>
+            <p class="panel-thesis">Enterprise teams have spent ten years building reporting tools and getting worse at decisions. The next stack — decision software, agentic workflows, internal AI — is starting to ship. We work with the firms building it, and we are building inside it ourselves.</p>
+          </div>
+
+          <div class="panel-grid panel-grid-4">
+            <a class="venture-tile" href="#">
+              <div class="venture-cover var-teal">
+                <span class="venture-tag">Client</span>
+              </div>
+              <div class="venture-info">
+                <span class="venture-name">Clarisights</span>
+                <span class="venture-desc">Decision engineering for marketing teams.</span>
+              </div>
+            </a>
+            <a class="venture-tile" href="#">
+              <div class="venture-cover var-ember">
+                <span class="venture-tag">Client</span>
+              </div>
+              <div class="venture-info">
+                <span class="venture-name">Weekday</span>
+                <span class="venture-desc">A new engagement in scoping.</span>
+              </div>
+            </a>
+            <a class="venture-tile" href="#">
+              <div class="venture-cover var-dusk">
+                <span class="venture-tag">Series</span>
+              </div>
+              <div class="venture-info">
+                <span class="venture-name">Glyph Social</span>
+                <span class="venture-desc">Infrastructure for earned media.</span>
+              </div>
+            </a>
+            <a class="venture-tile" href="#">
+              <div class="venture-cover var-sand">
+                <span class="venture-tag invert">Venture</span>
+              </div>
+              <div class="venture-info">
+                <span class="venture-name">Rabbit</span>
+                <span class="venture-desc">A B2B growth intelligence engine.</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="panel-also">
+            <span class="mono-label" style="opacity:0.7;">Also in the file</span>
+            <span class="also-name">Kris@Work</span><span class="also-dot">·</span>
+            <span class="also-name">Exotel</span><span class="also-dot">·</span>
+            <span class="also-name">UserExperior</span><span class="also-dot">·</span>
+            <span class="also-name">Fyle</span><span class="also-dot">·</span>
+            <span class="also-name">Pazcare</span><span class="also-dot">·</span>
+            <span class="also-name">elevateHQ</span><span class="also-dot">·</span>
+            <span class="also-name">NestAway</span><span class="also-dot">·</span>
+            <span class="also-name">Storylane</span><span class="also-dot">·</span>
+            <span class="also-name">Pravar</span>
+          </div>
+        </div>
       </div>
-      <div class="show-bot">
-        <span class="mono-label show-byline">Host: Pratik Mishra · Guest: Rohit Salim</span>
-        <h3 class="show-title">Operating in early-stage Indian capital — the founder-investor conversation we don't have enough.</h3>
+
+      <!-- ── Panel 02 · Industrial India ── -->
+      <div class="studio-panel panel-bg-india">
+        <div class="panel-inner">
+          <div class="panel-top">
+            <div class="panel-meta meta-bar">
+              <span class="mono-label">02 — Industrial India</span>
+              <span class="sep">·</span>
+              <span class="mono-label">Practice lead · Ankita</span>
+            </div>
+            <h2 class="panel-title display-l">A media house and a stack for the country that builds.</h2>
+            <p class="panel-thesis">Heavy industry, frontier-sector startups, the institutions inside India's tectonic foundation — rarely covered with the depth they deserve, rarely served with software built for them. We publish about them, and we build for them.</p>
+          </div>
+
+          <div class="panel-grid panel-grid-3">
+            <a class="venture-tile" href="#">
+              <div class="venture-cover var-ember">
+                <span class="venture-tag">Venture</span>
+              </div>
+              <div class="venture-info">
+                <span class="venture-name">Vayam</span>
+                <span class="venture-desc">India's industrial identity, on the record. Seven sectors. Launching May 20.</span>
+              </div>
+            </a>
+            <a class="venture-tile" href="#">
+              <div class="venture-cover var-slate">
+                <span class="venture-tag">Client</span>
+              </div>
+              <div class="venture-info">
+                <span class="venture-name">Uncharted AI</span>
+                <span class="venture-desc">Autonomous exploration robotics. ARTPARK @ IISc.</span>
+              </div>
+            </a>
+            <a class="venture-tile" href="#">
+              <div class="venture-cover var-ochre">
+                <span class="venture-tag">Venture</span>
+              </div>
+              <div class="venture-info">
+                <span class="venture-name">TNT</span>
+                <span class="venture-desc">Tone &amp; Timber — a timber procurement platform for India.</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="panel-also">
+            <span class="mono-label" style="opacity:0.7;">Also in the file</span>
+            <span class="also-name">Gemco · media intelligence</span><span class="also-dot">·</span>
+            <span class="also-name">Gainwell · website + IA</span>
+          </div>
+        </div>
       </div>
-    </a>
-  </div>
-  <div class="show-foot reveal">
-    <span class="mono-label">One guest a week. YouTube primary.</span>
-    <a href="#" class="mono-label accent">Subscribe to The Show →</a>
-  </div>
-</section>
 
-<!-- ────────── STUDIOS ────────── -->
-<header class="section-head" id="studios">
-  <div class="meta-row">
-    <span class="mono-label">Section / 03 — Studios</span>
-    <span class="mono-label">Four industry theses</span>
-  </div>
-  <h2 class="display-m">What we're building.</h2>
-</header>
-<section class="studios-intro">
-  <p class="reveal">We organise our work by industry, not by ownership. Each studio runs client engagements and our own ventures under the same thesis — because the work it takes to win a category is the same whether the cap table is ours or somebody else's.</p>
-</section>
+      <!-- ── Panel 03 · Education & Impact ── -->
+      <div class="studio-panel panel-bg-dusk">
+        <div class="panel-inner">
+          <div class="panel-top">
+            <div class="panel-meta meta-bar">
+              <span class="mono-label">03 — Education &amp; Impact</span>
+              <span class="sep">·</span>
+              <span class="mono-label">Practice lead · Pratik</span>
+            </div>
+            <h2 class="panel-title display-l">For the institutions that change lives.</h2>
+            <p class="panel-thesis">Education and impact organisations carry the work of mobility — they decide who gets a seat at the table, and how. We work with the institutions building this layer of India, and the foundations that fund it.</p>
+          </div>
 
-<!-- ──── Studio 01 · Enterprise Tech ──── -->
-<section class="studio-block dark bg-slate reveal">
-  <div class="studio-block-inner">
-    <div class="studio-block-meta">
-      <span class="mono-label">Studio / 01 — Enterprise Tech</span>
-      <span class="mono-label">Practice lead · Sujith</span>
-    </div>
-    <h3 class="studio-block-title display-l">The decade of decision software.</h3>
-    <p class="studio-block-thesis">Enterprise teams have spent ten years building reporting tools and getting worse at decisions. The next stack — decision software, agentic workflows, internal AI — is starting to ship. We work with the firms building it, and we are building inside it ourselves.</p>
+          <div class="panel-grid panel-grid-3">
+            <a class="venture-tile" href="#">
+              <div class="venture-cover var-ember">
+                <span class="venture-tag">Client</span>
+              </div>
+              <div class="venture-info">
+                <span class="venture-name">Goodera</span>
+                <span class="venture-desc">Workplace social impact platform. Fortune 500. India IPO bound.</span>
+              </div>
+            </a>
+            <a class="venture-tile" href="#">
+              <div class="venture-cover var-slate">
+                <span class="venture-tag">Client</span>
+              </div>
+              <div class="venture-info">
+                <span class="venture-name">Quad AI</span>
+                <span class="venture-desc">A new standard of technology education. Built for Bharat.</span>
+              </div>
+            </a>
+            <a class="venture-tile" href="#">
+              <div class="venture-cover var-forest">
+                <span class="venture-tag">Pro bono</span>
+              </div>
+              <div class="venture-info">
+                <span class="venture-name">Purva Foundation</span>
+                <span class="venture-desc">Adopt a tree. Watch it grow. One thousand acres.</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
 
-    <div class="studio-grid studio-grid-4">
-      <a class="venture-tile" href="#">
-        <div class="venture-cover var-teal">
-          <span class="venture-tag">Client</span>
-        </div>
-        <div class="venture-info">
-          <span class="venture-name">Clarisights</span>
-          <span class="venture-desc">Decision engineering for marketing teams. Series A, Sequoia.</span>
-        </div>
-      </a>
-      <a class="venture-tile" href="#">
-        <div class="venture-cover var-ember">
-          <span class="venture-tag">Client</span>
-        </div>
-        <div class="venture-info">
-          <span class="venture-name">Weekday</span>
-          <span class="venture-desc">A new engagement, in scoping.</span>
-        </div>
-      </a>
-      <a class="venture-tile" href="#">
-        <div class="venture-cover var-dusk">
-          <span class="venture-tag">Series</span>
-        </div>
-        <div class="venture-info">
-          <span class="venture-name">Glyph Social</span>
-          <span class="venture-desc">Infrastructure for earned media. In build.</span>
-        </div>
-      </a>
-      <a class="venture-tile" href="#">
-        <div class="venture-cover var-sand">
-          <span class="venture-tag invert">Venture</span>
-        </div>
-        <div class="venture-info">
-          <span class="venture-name">Rabbit</span>
-          <span class="venture-desc">A B2B growth intelligence engine. Powering Clarisights graph work.</span>
-        </div>
-      </a>
-    </div>
+      <!-- ── Panel 04 · Food & Beverage ── -->
+      <div class="studio-panel panel-bg-umber">
+        <div class="panel-inner">
+          <div class="panel-top">
+            <div class="panel-meta meta-bar">
+              <span class="mono-label">04 — Food &amp; Beverage</span>
+              <span class="sep">·</span>
+              <span class="mono-label">Practice lead · Rushil</span>
+            </div>
+            <h2 class="panel-title display-l">An operator's view of Indian F&amp;B.</h2>
+            <p class="panel-thesis">Four years inside a cloud kitchen brand changes how you see this industry. We know what works, what doesn't, and what the next decade of Indian F&amp;B — DTC, embedded, retail, subscription — looks like from inside the door. We are building both a brand and a service for it.</p>
+          </div>
 
-    <div class="studio-block-also">
-      <span class="mono-label">Also in the file</span>
-      <span class="name">Kris@Work</span><span class="dot">·</span>
-      <span class="name">Exotel</span><span class="dot">·</span>
-      <span class="name">UserExperior</span><span class="dot">·</span>
-      <span class="name">Fyle</span><span class="dot">·</span>
-      <span class="name">Pazcare</span><span class="dot">·</span>
-      <span class="name">elevateHQ</span><span class="dot">·</span>
-      <span class="name">NestAway</span><span class="dot">·</span>
-      <span class="name">Storylane</span><span class="dot">·</span>
-      <span class="name">Pravar</span><span class="dot">·</span>
-      <span class="name">SonicLinker</span><span class="dot">·</span>
-      <span class="name">Bitscale</span>
-    </div>
-  </div>
-</section>
+          <div class="panel-grid panel-grid-2">
+            <a class="venture-tile" href="#">
+              <div class="venture-cover var-carbon">
+                <span class="venture-tag">Venture</span>
+              </div>
+              <div class="venture-info">
+                <span class="venture-name">Ministry of Oats</span>
+                <span class="venture-desc">A cloud kitchen brand across three Bengaluru kitchens. Our own.</span>
+              </div>
+            </a>
+            <a class="venture-tile" href="#">
+              <div class="venture-cover var-ember">
+                <span class="venture-tag">Venture</span>
+              </div>
+              <div class="venture-info">
+                <span class="venture-name">Canteen</span>
+                <span class="venture-desc">An AI-native service for India's F&amp;B owners. In build.</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
 
-<!-- ──── Studio 02 · Industrial India ──── -->
-<section class="studio-block dark bg-india reveal">
-  <div class="studio-block-inner">
-    <div class="studio-block-meta">
-      <span class="mono-label">Studio / 02 — Industrial India</span>
-      <span class="mono-label">Practice lead · Ankita</span>
-    </div>
-    <h3 class="studio-block-title display-l">A media house — and a stack — for the country that builds.</h3>
-    <p class="studio-block-thesis">Heavy industry, frontier-sector startups, the institutions inside India's tectonic foundation. The firms here rarely get covered with the depth they deserve, and the software they need is barely being built. We publish about them, and we build for them.</p>
-
-    <div class="studio-grid studio-grid-3">
-      <a class="venture-tile" href="#">
-        <div class="venture-cover var-ember">
-          <span class="venture-tag">Venture</span>
-        </div>
-        <div class="venture-info">
-          <span class="venture-name">Vayam</span>
-          <span class="venture-desc">India's industrial identity, on the record. Seven sectors. Launching May 20.</span>
-        </div>
-      </a>
-      <a class="venture-tile" href="#">
-        <div class="venture-cover var-slate">
-          <span class="venture-tag">Client</span>
-        </div>
-        <div class="venture-info">
-          <span class="venture-name">Uncharted AI</span>
-          <span class="venture-desc">Autonomous exploration robotics. ARTPARK @ IISc.</span>
-        </div>
-      </a>
-      <a class="venture-tile" href="#">
-        <div class="venture-cover var-ochre">
-          <span class="venture-tag">Venture</span>
-        </div>
-        <div class="venture-info">
-          <span class="venture-name">TNT</span>
-          <span class="venture-desc">Tone &amp; Timber — a timber procurement platform for India. WMS live.</span>
-        </div>
-      </a>
-    </div>
-
-    <div class="studio-block-also">
-      <span class="mono-label">Also in the file</span>
-      <span class="name">Gemco · media intelligence</span><span class="dot">·</span>
-      <span class="name">Gainwell · website + IA</span>
-    </div>
-  </div>
-</section>
-
-<!-- ──── Studio 03 · Education & Impact ──── -->
-<section class="studio-block dark bg-dusk reveal">
-  <div class="studio-block-inner">
-    <div class="studio-block-meta">
-      <span class="mono-label">Studio / 03 — Education &amp; Impact</span>
-      <span class="mono-label">Practice lead · Pratik</span>
-    </div>
-    <h3 class="studio-block-title display-l">For the institutions that change lives.</h3>
-    <p class="studio-block-thesis">Education and impact organisations carry the work of mobility — they decide who gets a seat at the table, and how. We work with the institutions building this layer of India, and with the foundations that fund it.</p>
-
-    <div class="studio-grid studio-grid-3">
-      <a class="venture-tile" href="#">
-        <div class="venture-cover var-ember">
-          <span class="venture-tag">Client</span>
-        </div>
-        <div class="venture-info">
-          <span class="venture-name">Goodera</span>
-          <span class="venture-desc">Workplace social impact platform. Fortune 500 customers. India IPO bound.</span>
-        </div>
-      </a>
-      <a class="venture-tile" href="#">
-        <div class="venture-cover var-slate">
-          <span class="venture-tag">Client</span>
-        </div>
-        <div class="venture-info">
-          <span class="venture-name">Quad AI</span>
-          <span class="venture-desc">A new standard of technology education. Built for Bharat.</span>
-        </div>
-      </a>
-      <a class="venture-tile" href="#">
-        <div class="venture-cover var-forest">
-          <span class="venture-tag">Pro bono</span>
-        </div>
-        <div class="venture-info">
-          <span class="venture-name">Purva Foundation</span>
-          <span class="venture-desc">Adopt a tree. Watch it grow. One thousand acres outside Bengaluru.</span>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ──── Studio 04 · Food & Beverage ──── -->
-<section class="studio-block light bg-warm reveal">
-  <div class="studio-block-inner">
-    <div class="studio-block-meta">
-      <span class="mono-label">Studio / 04 — Food &amp; Beverage</span>
-      <span class="mono-label">Practice lead · Rushil</span>
-    </div>
-    <h3 class="studio-block-title display-l">An operator's view of Indian F&amp;B.</h3>
-    <p class="studio-block-thesis">Four years inside a cloud kitchen brand changes how you see this industry. We know what works, what doesn't, and what the next decade of Indian F&amp;B — DTC, embedded, retail, subscription — looks like from inside the door. We are building both a brand and a service for it.</p>
-
-    <div class="studio-grid studio-grid-2">
-      <a class="venture-tile" href="#">
-        <div class="venture-cover var-carbon">
-          <span class="venture-tag">Venture</span>
-        </div>
-        <div class="venture-info">
-          <span class="venture-name">Ministry of Oats</span>
-          <span class="venture-desc">A cloud kitchen brand across three Bengaluru kitchens. Our own.</span>
-        </div>
-      </a>
-      <a class="venture-tile" href="#">
-        <div class="venture-cover var-ember">
-          <span class="venture-tag">Venture</span>
-        </div>
-        <div class="venture-info">
-          <span class="venture-name">Canteen</span>
-          <span class="venture-desc">An AI-native service for India's F&amp;B owners. In build.</span>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ────────── PULLQUOTE ────────── -->
-<section class="pull">
-  <div class="pull-block reveal">
-    <div class="pull-top">
-      <span class="mono-label">Excerpt · From the Clarisights file · May 2026</span>
-      <span class="mono-label">Recurr Press</span>
-    </div>
-    <div class="pull-body">
-      <p class="serif-pull">"Software companies have spent a decade building reporting tools. Marketing teams have spent the same decade getting worse at decisions. That gap — between what the data can say and what an operator can do with it — is the work."</p>
-    </div>
-    <div class="pull-foot">
-      <span class="mono-label">— Read the full essay</span>
-      <span class="mono-label">12 min</span>
     </div>
   </div>
 </section>
@@ -850,7 +803,7 @@ a { color: inherit; text-decoration: none; }
   </footer>
   <div class="footer-meta">
     <span class="mono-foot">© 2026 Recurr Studio Pvt Ltd</span>
-    <span class="mono-foot" id="ts">Compiled 2026-05-16 · v5 · Atelier · four studios</span>
+    <span class="mono-foot" id="ts">Compiled 2026-05-16 · v6 · Atelier · pinned studios</span>
     <span class="mono-foot">Bengaluru · 12.97°N 77.59°E</span>
   </div>
 </div>
@@ -858,25 +811,33 @@ a { color: inherit; text-decoration: none; }
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 (function(){
+  /* ───── Lenis smooth scroll ───── */
+  let lenis = null;
   if (window.Lenis && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const lenis = new Lenis({ duration: 1.15, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    lenis = new Lenis({ duration: 1.1, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
     function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
-    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
-      const id = a.getAttribute('href');
-      if (id.length > 1) {
-        const target = document.querySelector(id);
-        if (target) { e.preventDefault(); lenis.scrollTo(target, { offset: -64 }); }
-      }
-    }));
   }
+  function scrollToY(y) {
+    if (lenis) lenis.scrollTo(y, { duration: 1.2 });
+    else window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (id && id.length > 1) {
+      const target = document.querySelector(id);
+      if (target) { e.preventDefault(); scrollToY(target.offsetTop - 64); }
+    }
+  }));
 
+  /* ───── Reveal on scroll ───── */
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   setTimeout(() => { document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in')); }, 1500);
 
+  /* ───── Nav hide-on-scroll ───── */
   const nav = document.getElementById('nav');
   let lastY = 0;
   let pendingFrame = false;
@@ -891,9 +852,68 @@ a { color: inherit; text-decoration: none; }
     else if (delta < -2) { nav.classList.remove('hidden'); }
     lastY = y;
   }
-  function onScroll() { if (!pendingFrame) { pendingFrame = true; requestAnimationFrame(updateNav); } }
+
+  /* ───── Studios pinned horizontal scroll ───── */
+  const studiosPin = document.getElementById('studios');
+  const track = document.getElementById('studios-track');
+  const tabs = document.querySelectorAll('.studio-tab');
+  const PANELS = 4;
+  const TRANSLATE_MAX = (PANELS - 1) / PANELS * 100; // 75% for 4 panels
+
+  function isPinDisabled() {
+    return window.innerWidth < 900 || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  function updateStudios() {
+    if (!studiosPin || !track) return;
+    if (isPinDisabled()) {
+      track.style.transform = '';
+      return;
+    }
+    const rect = studiosPin.getBoundingClientRect();
+    const total = studiosPin.offsetHeight - window.innerHeight;
+    if (total <= 0) return;
+    const scrolled = -rect.top;
+    let progress = scrolled / total;
+    progress = Math.max(0, Math.min(1, progress));
+
+    const tx = progress * TRANSLATE_MAX;
+    track.style.transform = `translateX(-${tx}%)`;
+
+    // Tab active state — divide progress into N equal segments
+    const idx = Math.min(PANELS - 1, Math.floor(progress * PANELS - 0.0001));
+    const activeIdx = Math.max(0, idx);
+    tabs.forEach((t, i) => t.classList.toggle('active', i === activeIdx));
+  }
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => {
+      if (isPinDisabled()) {
+        const panel = document.querySelectorAll('.studio-panel')[i];
+        if (panel) scrollToY(panel.getBoundingClientRect().top + window.scrollY - 80);
+        return;
+      }
+      const total = studiosPin.offsetHeight - window.innerHeight;
+      const targetProgress = (i + 0.05) / PANELS;
+      const targetY = studiosPin.offsetTop + (targetProgress * total);
+      scrollToY(targetY);
+    });
+  });
+
+  /* ───── Combined scroll handler ───── */
+  function onScroll() {
+    if (!pendingFrame) {
+      pendingFrame = true;
+      requestAnimationFrame(() => {
+        updateNav();
+        updateStudios();
+      });
+    }
+  }
   window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', updateStudios, { passive: true });
   updateNav();
+  updateStudios();
 })();
 </script>
 </body>
