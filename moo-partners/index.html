@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Ministry of Oats — The Partner Pipeline</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <style>
+    :root {
+      --ink: #111;
+      --paper: #fafaf7;
+      --rule: #111;
+      --soft: #6b6b66;
+      --hair: rgba(17,17,17,0.12);
+
+      /* Lane palette — cool to warm across the journey */
+      --l1: #6b7280;
+      --l1-soft: #eef0f2;
+      --l2: #3f6f8e;
+      --l2-soft: #e7eef3;
+      --l3: #2f8276;
+      --l3-soft: #e3f0ed;
+      --l4: #c08a2a;
+      --l4-soft: #f6ecd5;
+      --l5: #b8541f;
+      --l5-soft: #f7ece2;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: var(--paper); color: var(--ink); }
+    body {
+      font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+      font-size: 17px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    .wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 72px 32px 120px;
+    }
+    .narrow { max-width: 760px; }
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-family: 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--soft);
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 56px;
+    }
+    h1.masthead {
+      font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+      font-size: 56px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      margin-bottom: 24px;
+      max-width: 900px;
+    }
+    .deck {
+      font-size: 22px;
+      line-height: 1.45;
+      color: var(--ink);
+      max-width: 760px;
+      margin-bottom: 48px;
+    }
+    .deck em { color: var(--soft); font-style: italic; }
+    .anchor {
+      padding: 20px 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 72px;
+      max-width: 900px;
+    }
+    .anchor-label {
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 8px;
+    }
+    .anchor-line { font-size: 18px; line-height: 1.5; }
+    .anchor-line strong { font-weight: 600; }
+
+    /* Section label */
+    .section-label {
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 14px;
+    }
+    h2 {
+      font-family: 'Iowan Old Style', Georgia, serif;
+      font-size: 36px;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      font-weight: 400;
+      margin-bottom: 32px;
+      max-width: 800px;
+    }
+
+    /* PIPELINE VISUAL */
+    .pipeline {
+      margin-bottom: 96px;
+    }
+    .pipeline-bar {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+      margin-bottom: 24px;
+    }
+    .pipeline-step {
+      position: relative;
+      padding: 24px 18px 22px;
+      color: #fff;
+      text-align: left;
+      min-height: 130px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .pipeline-step::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: -16px;
+      width: 0;
+      height: 0;
+      border-top: 65px solid transparent;
+      border-bottom: 65px solid transparent;
+      border-left-style: solid;
+      border-left-width: 16px;
+      z-index: 2;
+    }
+    .pipeline-step:last-child::after { display: none; }
+    .pipeline-step.s1 { background: var(--l1); }
+    .pipeline-step.s1::after { border-left-color: var(--l1); }
+    .pipeline-step.s2 { background: var(--l2); }
+    .pipeline-step.s2::after { border-left-color: var(--l2); }
+    .pipeline-step.s3 { background: var(--l3); }
+    .pipeline-step.s3::after { border-left-color: var(--l3); }
+    .pipeline-step.s4 { background: var(--l4); }
+    .pipeline-step.s4::after { border-left-color: var(--l4); }
+    .pipeline-step.s5 { background: var(--l5); }
+    .pipeline-step-num {
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+    .pipeline-step-name {
+      font-family: 'Iowan Old Style', Georgia, serif;
+      font-size: 22px;
+      line-height: 1.15;
+      letter-spacing: -0.005em;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .pipeline-step-desc {
+      font-size: 13px;
+      line-height: 1.4;
+      opacity: 0.92;
+    }
+    .pipeline-axis {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--soft);
+    }
+    .pipeline-axis div { padding: 0 18px; }
+    @media (max-width: 900px) {
+      .pipeline-bar { grid-template-columns: 1fr; gap: 8px; }
+      .pipeline-step { min-height: auto; }
+      .pipeline-step::after { display: none; }
+      .pipeline-axis { display: none; }
+    }
+
+    /* DETAIL CARDS */
+    .lane-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 96px;
+    }
+    @media (max-width: 900px) {
+      .lane-detail { grid-template-columns: 1fr; }
+    }
+    .card {
+      padding: 32px 28px 32px;
+      background: #fff;
+      border: 1px solid var(--hair);
+      border-top-width: 4px;
+      position: relative;
+    }
+    .card.c1 { border-top-color: var(--l1); }
+    .card.c2 { border-top-color: var(--l2); }
+    .card.c3 { border-top-color: var(--l3); }
+    .card.c4 { border-top-color: var(--l4); }
+    .card.c5 { border-top-color: var(--l5); grid-column: 1 / -1; }
+    .card-pill {
+      display: inline-block;
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+      margin-bottom: 14px;
+      color: #fff;
+    }
+    .card.c1 .card-pill { background: var(--l1); }
+    .card.c2 .card-pill { background: var(--l2); }
+    .card.c3 .card-pill { background: var(--l3); }
+    .card.c4 .card-pill { background: var(--l4); }
+    .card.c5 .card-pill { background: var(--l5); }
+    .card h3 {
+      font-family: 'Iowan Old Style', Georgia, serif;
+      font-size: 30px;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .card .card-tag {
+      font-style: italic;
+      color: var(--soft);
+      font-size: 16px;
+      line-height: 1.45;
+      margin-bottom: 22px;
+    }
+    .card h4 {
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin: 22px 0 8px;
+      font-weight: 400;
+    }
+    .card p { font-size: 16px; line-height: 1.55; margin-bottom: 12px; }
+    .card ul { margin: 4px 0 12px 0; padding: 0; list-style: none; }
+    .card ul li {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--hair);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    .card ul li:last-child { border-bottom: none; }
+    .advance {
+      font-size: 15px;
+      padding: 12px 14px;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+    .card.c1 .advance { background: var(--l1-soft); color: var(--l1); }
+    .card.c2 .advance { background: var(--l2-soft); color: var(--l2); }
+    .card.c3 .advance { background: var(--l3-soft); color: var(--l3); }
+    .card.c4 .advance { background: var(--l4-soft); color: var(--l4); }
+    .card.c5 .advance { background: var(--l5-soft); color: var(--l5); }
+    .advance strong { display: block; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-family: 'SF Mono', Menlo, monospace; font-weight: 400; margin-bottom: 4px; }
+
+    /* L5 special callout style */
+    .card.c5 .bridge-note {
+      background: var(--l5-soft);
+      color: var(--l5);
+      padding: 18px 20px;
+      margin-top: 20px;
+      font-size: 16px;
+      line-height: 1.5;
+      border-left: 3px solid var(--l5);
+    }
+    .card.c5 .bridge-note strong {
+      display: block;
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* Categories matrix */
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+      margin-bottom: 96px;
+    }
+    .matrix thead th {
+      text-align: left;
+      padding: 14px 14px;
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--soft);
+      font-weight: 400;
+      border-bottom: 1px solid var(--rule);
+    }
+    .matrix thead th.h-l1 { color: var(--l1); }
+    .matrix thead th.h-l2 { color: var(--l2); }
+    .matrix thead th.h-l3 { color: var(--l3); }
+    .matrix thead th.h-l4 { color: var(--l4); }
+    .matrix thead th.h-l5 { color: var(--l5); }
+    .matrix tbody td {
+      padding: 14px 14px;
+      border-bottom: 1px solid var(--hair);
+      vertical-align: top;
+      line-height: 1.4;
+    }
+    .matrix tbody td.cat {
+      font-weight: 600;
+      width: 22%;
+    }
+    .matrix td.dot { text-align: center; font-size: 14px; }
+    .matrix td.dot.on-l1 { color: var(--l1); }
+    .matrix td.dot.on-l2 { color: var(--l2); }
+    .matrix td.dot.on-l3 { color: var(--l3); }
+    .matrix td.dot.on-l4 { color: var(--l4); }
+    .matrix td.dot.on-l5 { color: var(--l5); }
+
+    /* The progression / operating model section */
+    .progression {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 96px;
+    }
+    @media (max-width: 900px) {
+      .progression { grid-template-columns: 1fr; gap: 32px; }
+    }
+    .progression-block { }
+    .progression-block h3 {
+      font-family: 'Iowan Old Style', Georgia, serif;
+      font-size: 24px;
+      line-height: 1.15;
+      letter-spacing: -0.005em;
+      font-weight: 400;
+      margin-bottom: 14px;
+    }
+    .progression-block p {
+      font-size: 16px;
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+    .progression-block ul {
+      margin: 12px 0;
+      padding-left: 0;
+      list-style: none;
+    }
+    .progression-block ul li {
+      padding: 8px 0;
+      border-top: 1px solid var(--hair);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    .progression-block ul li strong {
+      display: inline-block;
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--soft);
+      font-weight: 400;
+      margin-right: 8px;
+    }
+
+    /* Replaces box */
+    .replaces {
+      max-width: 760px;
+      padding: 32px 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 64px;
+    }
+    .replaces h2 {
+      font-family: 'Iowan Old Style', Georgia, serif;
+      font-size: 28px;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      font-weight: 400;
+      margin-bottom: 18px;
+    }
+    .replaces p {
+      font-size: 17px;
+      line-height: 1.55;
+      margin-bottom: 14px;
+    }
+    .replaces ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 16px;
+    }
+    .replaces ul li {
+      padding: 10px 0;
+      border-top: 1px solid var(--hair);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    footer.endnote {
+      max-width: 760px;
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--soft);
+      padding-top: 24px;
+      border-top: 1px solid var(--hair);
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="meta-row">
+    <span>Ministry of Oats — The Partner Pipeline</span>
+    <span>Internal · Operating model · May 20, 2026</span>
+  </div>
+
+  <h1 class="masthead">Five lanes. One partner pipeline.</h1>
+  <p class="deck">
+    Every MOO partner has a stage. They move up the lanes over time. The deepest lane bridges into
+    the chain's own store expansion — meaning the partner pipeline is not just B2B2C distribution,
+    it's <em>a discovery path for new walk-in locations</em>.
+  </p>
+
+  <div class="anchor">
+    <div class="anchor-label">Why a pipeline, not a partnerships list</div>
+    <p class="anchor-line">
+      Until now, partner work has been ad-hoc — "MOO at X" pages, Fridges, events, kiosks, all
+      living in the same overflowing folder. The pipeline gives every partner a stage, a clear
+      next move, and a measurable velocity. Same way a B2B sales team runs a CRM. <strong>Partners
+      are a deal pipeline.</strong>
+    </p>
+  </div>
+
+  <!-- PIPELINE VISUAL -->
+  <div class="pipeline">
+    <div class="section-label">The five lanes</div>
+    <div class="pipeline-bar">
+      <div class="pipeline-step s1">
+        <div>
+          <div class="pipeline-step-num">L1</div>
+          <div class="pipeline-step-name">In touch</div>
+        </div>
+        <div class="pipeline-step-desc">Discovery, intro calls, expressions of interest. No transaction yet.</div>
+      </div>
+      <div class="pipeline-step s2">
+        <div>
+          <div class="pipeline-step-num">L2</div>
+          <div class="pipeline-step-name">Activated</div>
+        </div>
+        <div class="pipeline-step-desc">First transaction. Event, kiosk, bulk order, sampling.</div>
+      </div>
+      <div class="pipeline-step s3">
+        <div>
+          <div class="pipeline-step-num">L3</div>
+          <div class="pipeline-step-name">Custom menu</div>
+        </div>
+        <div class="pipeline-step-desc">MOO at X — partner-specific menu, recurring ordering.</div>
+      </div>
+      <div class="pipeline-step s4">
+        <div>
+          <div class="pipeline-step-num">L4</div>
+          <div class="pipeline-step-name">Fridge</div>
+        </div>
+        <div class="pipeline-step-desc">MOO Fridge placed in their space. Stocked daily.</div>
+      </div>
+      <div class="pipeline-step s5">
+        <div>
+          <div class="pipeline-step-num">L5</div>
+          <div class="pipeline-step-name">Retail at venue</div>
+        </div>
+        <div class="pipeline-step-desc">A MOO walk-in store inside the partner's footprint.</div>
+      </div>
+    </div>
+    <div class="pipeline-axis">
+      <div>Discovery</div>
+      <div>First transaction</div>
+      <div>Recurring</div>
+      <div>Physical presence</div>
+      <div>Co-location</div>
+    </div>
+  </div>
+
+  <!-- LANE DETAILS -->
+  <div class="section-label">Lane by lane</div>
+  <h2>What each lane looks like in practice.</h2>
+
+  <div class="lane-detail">
+
+    <!-- L1 -->
+    <div class="card c1">
+      <span class="card-pill">Lane 1</span>
+      <h3>In touch</h3>
+      <p class="card-tag">Discovery. We're talking, nothing has happened yet.</p>
+
+      <h4>What it looks like</h4>
+      <ul>
+        <li>Cold or warm intro call with a partner contact</li>
+        <li>Brand-side interest expressed — "we'd love to do something with MOO"</li>
+        <li>Initial brief shared — what they might want, what fits</li>
+        <li>No commercials, no transactions</li>
+      </ul>
+
+      <h4>Where MOO shows up</h4>
+      <p>A deck, an intro page, a sample menu. Sometimes a coffee meeting.</p>
+
+      <div class="advance">
+        <strong>Advance signal — L1 → L2</strong>
+        First real transaction agreed: a sampling session, a single event, a one-off bulk order.
+      </div>
+    </div>
+
+    <!-- L2 -->
+    <div class="card c2">
+      <span class="card-pill">Lane 2</span>
+      <h3>Activated</h3>
+      <p class="card-tag">One transaction done. We have proof we can work together.</p>
+
+      <h4>What it looks like</h4>
+      <ul>
+        <li>Took a kiosk to their venue for an event</li>
+        <li>Processed a bulk order and delivered to their location</li>
+        <li>Ran a sampling Sunday at their gym / club / society</li>
+        <li>Catered a partnership event</li>
+      </ul>
+
+      <h4>Where MOO shows up</h4>
+      <p>Physically present, briefly. Their members or staff have tasted MOO. Photos, social tags, follow-up nudges.</p>
+
+      <div class="advance">
+        <strong>Advance signal — L2 → L3</strong>
+        Three or more transactions in six months, OR an explicit request for a recurring custom-menu relationship.
+      </div>
+    </div>
+
+    <!-- L3 -->
+    <div class="card c3">
+      <span class="card-pill">Lane 3</span>
+      <h3>Custom menu (MOO at X)</h3>
+      <p class="card-tag">A partner-specific menu, a branded link, an ongoing relationship.</p>
+
+      <h4>What it looks like</h4>
+      <ul>
+        <li>Custom menu built for the partner — usually a curated subset of MOO with partner-relevant additions (post-workout for a gym, family-friendly for a society, etc.)</li>
+        <li>Branded link / page on ministryofoats.com (e.g., /partner-slug)</li>
+        <li>Recurring ordering — weekly, monthly, or on-demand</li>
+        <li>Internal account opened on Outpost ops for fulfilment tracking</li>
+      </ul>
+
+      <h4>Where MOO shows up</h4>
+      <p>A regular feature in their orbit. Their members order from MOO often enough that we're part of the routine.</p>
+
+      <div class="advance">
+        <strong>Advance signal — L3 → L4</strong>
+        Stable monthly recurring volume, partner-side appetite for an on-site presence, physical space available for a Fridge.
+      </div>
+    </div>
+
+    <!-- L4 -->
+    <div class="card c4">
+      <span class="card-pill">Lane 4</span>
+      <h3>Fridge</h3>
+      <p class="card-tag">A MOO Fridge inside their space. Stocked daily. Members order via wallet.</p>
+
+      <h4>What it looks like</h4>
+      <ul>
+        <li>Physical Fridge placed at the partner location — gym lobby, club, society common area, corporate pantry</li>
+        <li>Stocked daily by MOO ops (delivery 7-11 AM, fits the breakfast window)</li>
+        <li>Members order via QR / MOO wallet at the Fridge or via the membership site</li>
+        <li>Partner gets co-branded visibility + share-of-foot-traffic value</li>
+        <li>MOO gets a daily-touch surface in someone else's high-traffic space</li>
+      </ul>
+
+      <h4>Where MOO shows up</h4>
+      <p>A permanent fixture. Every morning, MOO is on display in their space. The Fridge is the brand's face inside the partnership.</p>
+
+      <div class="advance">
+        <strong>Advance signal — L4 → L5</strong>
+        High Fridge throughput at a single partner site, partner-side appetite for a deeper co-located brand presence, foot traffic that justifies a dedicated retail format.
+      </div>
+    </div>
+
+    <!-- L5 — full width -->
+    <div class="card c5">
+      <span class="card-pill">Lane 5</span>
+      <h3>Retail at venue</h3>
+      <p class="card-tag">A MOO walk-in store, inside the partner's footprint.</p>
+
+      <h4>What it looks like</h4>
+      <ul>
+        <li>A dedicated MOO retail outlet at the partner's venue — could be a kiosk (Urban Vault format, ~350 sft) or a small QSR-format store</li>
+        <li>Co-branded, but MOO-run (staff, menu, brand)</li>
+        <li>Open to the partner's members + the general public</li>
+        <li>Partner provides space (often at favourable terms — anchor tenant economics); MOO provides the brand + footfall</li>
+        <li>Operates as one of the chain's regular walk-in locations</li>
+      </ul>
+
+      <h4>Where MOO shows up</h4>
+      <p>This is the chain meeting the partnership. A MOO store with a partner address. The partner gets a premium amenity; MOO gets a walk-in location with the lease + anchor-tenant economics already de-risked.</p>
+
+      <div class="bridge-note">
+        <strong>L5 = the chain expansion bridge</strong>
+        Lane 5 partners can become walk-in stores for the chain <em>without MOO landing its own lease</em>. The Urban Vault partnership currently sits between L4 (Fridges in UV buildings) and L5 (a MOO kiosk at a UV space). When we open kiosks 1 and 2 at UV, we're shipping the first L5s. The math: every L5 we ship is one less new lease we have to land for the chain's 3 → 8 store expansion.
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES MATRIX -->
+  <div class="section-label">Partner categories × lanes</div>
+  <h2>Different partner types reach different depths.</h2>
+
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th></th>
+        <th class="h-l1">L1 In touch</th>
+        <th class="h-l2">L2 Activated</th>
+        <th class="h-l3">L3 Custom menu</th>
+        <th class="h-l4">L4 Fridge</th>
+        <th class="h-l5">L5 Retail</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="cat">Gyms + fitness studios</td>
+        <td class="dot on-l1">●</td>
+        <td class="dot on-l2">●</td>
+        <td class="dot on-l3">●</td>
+        <td class="dot on-l4">●</td>
+        <td class="dot on-l5">●</td>
+      </tr>
+      <tr>
+        <td class="cat">Sports &amp; run clubs</td>
+        <td class="dot on-l1">●</td>
+        <td class="dot on-l2">●</td>
+        <td class="dot on-l3">●</td>
+        <td class="dot on-l4">●</td>
+        <td class="dot on-l5">○</td>
+      </tr>
+      <tr>
+        <td class="cat">Apartments + societies</td>
+        <td class="dot on-l1">●</td>
+        <td class="dot on-l2">●</td>
+        <td class="dot on-l3">●</td>
+        <td class="dot on-l4">●</td>
+        <td class="dot on-l5">○</td>
+      </tr>
+      <tr>
+        <td class="cat">Supermarts</td>
+        <td class="dot on-l1">●</td>
+        <td class="dot on-l2">●</td>
+        <td class="dot on-l3">○</td>
+        <td class="dot on-l4">●</td>
+        <td class="dot on-l5">●</td>
+      </tr>
+      <tr>
+        <td class="cat">Co-working spaces (e.g. Urban Vault)</td>
+        <td class="dot on-l1">●</td>
+        <td class="dot on-l2">●</td>
+        <td class="dot on-l3">●</td>
+        <td class="dot on-l4">●</td>
+        <td class="dot on-l5">●</td>
+      </tr>
+      <tr>
+        <td class="cat">Corporate offices / campuses</td>
+        <td class="dot on-l1">●</td>
+        <td class="dot on-l2">●</td>
+        <td class="dot on-l3">●</td>
+        <td class="dot on-l4">●</td>
+        <td class="dot on-l5">○</td>
+      </tr>
+      <tr>
+        <td class="cat">Hotels + resorts</td>
+        <td class="dot on-l1">●</td>
+        <td class="dot on-l2">●</td>
+        <td class="dot on-l3">●</td>
+        <td class="dot on-l4">○</td>
+        <td class="dot on-l5">○</td>
+      </tr>
+      <tr>
+        <td class="cat">Events + sports federations</td>
+        <td class="dot on-l1">●</td>
+        <td class="dot on-l2">●</td>
+        <td class="dot on-l3">○</td>
+        <td class="dot on-l4">○</td>
+        <td class="dot on-l5">○</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- PROGRESSION + OPERATING MODEL -->
+  <div class="section-label">How the pipeline moves</div>
+  <h2>Progression + operating model.</h2>
+
+  <div class="progression">
+    <div class="progression-block">
+      <h3>What it takes to advance a lane</h3>
+      <ul>
+        <li><strong>L1 → L2</strong> First transaction agreed — a sampling, a single event, a one-off bulk order.</li>
+        <li><strong>L2 → L3</strong> 3+ transactions in 6 months OR an explicit custom-menu ask.</li>
+        <li><strong>L3 → L4</strong> Stable monthly recurring volume + space for a Fridge + partner buy-in.</li>
+        <li><strong>L4 → L5</strong> High single-site Fridge throughput + partner appetite for retail + a footprint that supports a walk-in format.</li>
+      </ul>
+      <p>
+        Lane <em>velocity</em> — how fast partners move up — becomes a key metric.
+        A partner stuck at L1 for 6 months is dead weight; a partner at L4 in 4 months is a story we need to tell.
+      </p>
+    </div>
+
+    <div class="progression-block">
+      <h3>How the pipeline runs operationally</h3>
+      <ul>
+        <li><strong>Tooling</strong> CRM-style view of every partner record, current lane, history, owner. Lives inside the Outpost ops platform OR a dedicated tool (Attio is the existing stack and an obvious candidate).</li>
+        <li><strong>Ownership</strong> L1–L3 likely lives with the brand/partnerships team (Rushil). L4–L5 escalates to ops + leadership (Pratik, Manjunath). Lane assignment + lane transitions are explicit hand-offs.</li>
+        <li><strong>Cadence</strong> Weekly pipeline standup. Monthly velocity review. Quarterly pipeline-shape review (are we top-heavy at L1, or moving partners through?).</li>
+        <li><strong>Capacity</strong> Each lane has limited slots — Fridges (L4) cost capital; retail (L5) needs ops bandwidth. Pipeline prioritisation matters more than pipeline volume.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- WHAT THIS REPLACES -->
+  <div class="replaces">
+    <div class="section-label">What this replaces</div>
+    <h2>The "MOO at X" mess collapses into a clean operating model.</h2>
+    <p>
+      Until today, partner work has lived under loose labels — "MOO at X" / "Partner Gangs" / "the Fridge motion" /
+      "events business" / "the Urban Vault thing." The 5-lane pipeline puts them all on one map.
+    </p>
+    <ul>
+      <li>"MOO at X" is <strong>L3</strong> — the custom-menu stage.</li>
+      <li>"Partner Gangs / Fridge motion" is <strong>L4</strong> — the on-site Fridge stage.</li>
+      <li>The Urban Vault partnership currently sits between L4 and L5 — Fridges in UV buildings (L4), with the first kiosks at UV spaces shipping as our first L5s.</li>
+      <li>"Events business" is <strong>L2</strong> — single-transaction activations that may or may not turn into recurring relationships.</li>
+      <li>Stalled deals everyone forgot about — that's <strong>L1</strong>, where partners go to die unless we work them.</li>
+    </ul>
+  </div>
+
+  <footer class="endnote">
+    Source — chain thesis v2 §4.3 (locked 2026-05-20). Operating model for the partner business.
+    Internal use + partner pitches.
+  </footer>
+
+</div>
+</body>
+</html>
