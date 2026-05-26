@@ -4,86 +4,164 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Marketing Data MCP — Connect Claude, ChatGPT, Gemini to your ad data | Clarisights</title>
-  <meta name="description" content="Ask Claude, ChatGPT, Gemini, or any MCP client questions about your live ad data — grounded in Clarisights' semantic layer, with your team's metric definitions and permissions intact." />
 
+  <!-- SEO -->
+  <title>Marketing Data MCP for Enterprise Marketing Teams | Clarisights</title>
+  <meta name="description" content="The marketing MCP purpose-built for enterprise scale. Connect Clarisights to Claude, ChatGPT, Cursor, or Gemini. Cross-channel data, your custom metrics, your team's permissions. Eleven ad channels, two years of history, ACL-governed." />
+  <meta name="keywords" content="marketing data MCP, marketing MCP, enterprise marketing analytics MCP, MCP for marketing, semantic layer MCP, AI marketing reporting, Claude marketing data, ChatGPT marketing analytics, cross-channel marketing AI" />
+  <meta property="og:title" content="Marketing Data MCP for Enterprise Marketing Teams | Clarisights" />
+  <meta property="og:description" content="The MCP you choose when you run paid media at scale. Eleven ad channels, your custom metrics, your team's permissions, wired into Claude, ChatGPT, Cursor, or any MCP-compatible AI tool." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://clarisights.com/marketing-data-mcp" />
+
+  <link rel="icon" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Schema.org FAQ + Product -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"What is the Marketing Data MCP?","acceptedAnswer":{"@type":"Answer","text":"A Model Context Protocol server that connects Clarisights to any MCP-compatible AI tool like Claude, ChatGPT, Cursor, or Gemini. The AI gets six tools to discover your data sources, query your metrics, and read your reports. Every call runs under your team's Clarisights permissions."}},
+      {"@type":"Question","name":"Which channels does the Marketing Data MCP support?","acceptedAnswer":{"@type":"Answer","text":"Every channel and source connected to your Clarisights workspace. Facebook/Meta, Google, TikTok, Snapchat, LinkedIn, Pinterest, Reddit, Microsoft Advertising, plus GA4, AppsFlyer, Adjust, Singular, and warehouse sources."}},
+      {"@type":"Question","name":"How is access to the Marketing Data MCP governed?","acceptedAnswer":{"@type":"Answer","text":"Every MCP query runs under the logged-in user's Clarisights ACL. No separate tokens. Workspace admins control AI access with a single global toggle in Settings."}},
+      {"@type":"Question","name":"Are custom metrics and dimensions supported?","acceptedAnswer":{"@type":"Answer","text":"Yes. Custom metrics are surfaced first, ranked by your team's usage. Custom dimensions, saved segments, and account groupings are all addressable through the MCP."}},
+      {"@type":"Question","name":"How far back can the AI query?","acceptedAnswer":{"@type":"Answer","text":"As far back as your data goes in Clarisights. Typically two full years per workspace."}}
+    ]
+  }
+  </script>
 
   <style>
-    /* ============ Reset + Base ============ */
-    *,
-    *::before,
-    *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* ============================================================
+       Reset
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    img, svg { max-width: 100%; display: block; }
+    button { font: inherit; cursor: pointer; background: none; border: none; color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
 
+    /* ============================================================
+       Tokens · Clarisights brand
+    ============================================================ */
     :root {
-      --teal: #098477;
-      --teal-dark: #066358;
-      --teal-soft: #e8f5f2;
-      --ink: #0a0a0a;
-      --ink-2: #1a1a1a;
-      --ink-3: #4a4a4a;
-      --ink-4: #6e6e6e;
-      --line: #e6e6e4;
-      --line-soft: #f0f0ee;
-      --bg: #ffffff;
-      --bg-soft: #fafaf8;
-      --bg-cream: #faf8f3;
-      --placeholder: #fff3a8;
-      --placeholder-text: #6b5b00;
+      --yellow: #E8B14A;
+      --yellow-soft: #F4D58A;
+      --yellow-pale: #FBEFCB;
+      --burgundy: #8E2C36;
+      --burgundy-dark: #6E1F26;
+      --burgundy-soft: #F4E4E5;
+      --teal: #1F6F5C;
+      --teal-dark: #155747;
+      --teal-soft: #E2EEEA;
+      --ink: #1A1A1A;
+      --ink-2: #2E2E2E;
+      --ink-3: #5A5A5A;
+      --ink-4: #8C8C8C;
+      --cream: #FAF7F2;
+      --cream-2: #F2EDE3;
+      --line: #E6DFD0;
+      --line-soft: #ECE6D8;
+      --white: #FFFFFF;
+
+      --serif: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+      --container: 1180px;
+      --prose: 720px;
     }
 
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: var(--sans);
       color: var(--ink);
-      background: var(--bg);
+      background: var(--cream);
       line-height: 1.55;
       font-size: 17px;
       font-feature-settings: 'ss01', 'cv11';
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+      overflow-x: hidden;
     }
 
-    /* ============ Placeholder marker ============ */
-    .placeholder {
-      background: var(--placeholder);
-      color: var(--placeholder-text);
-      padding: 2px 6px;
-      border-radius: 3px;
-      font-size: 0.92em;
+    /* ============================================================
+       Layout primitives
+    ============================================================ */
+    .container { max-width: var(--container); margin: 0 auto; padding: 0 32px; }
+    .prose     { max-width: var(--prose); margin: 0 auto; padding: 0 32px; }
+    .section   { padding: 96px 0; }
+    .divider { border-top: 1px solid var(--line); }
+    @media (max-width: 720px) {
+      .container, .prose { padding: 0 20px; }
+      .section { padding: 64px 0; }
+    }
+
+    /* ============================================================
+       Type
+    ============================================================ */
+    .display-1 {
+      font-family: var(--serif);
       font-weight: 500;
-      border-bottom: 1px dashed #d4b800;
+      font-size: clamp(42px, 5.8vw, 72px);
+      line-height: 1.04;
+      letter-spacing: -0.022em;
+      font-variation-settings: 'opsz' 144;
     }
-    .placeholder::before {
-      content: "⚑ ";
-      font-size: 0.85em;
-      opacity: 0.8;
+    .display-2 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.1;
+      letter-spacing: -0.018em;
+      font-variation-settings: 'opsz' 120;
     }
-    .placeholder-block {
-      background: #fffbe6;
-      border-left: 3px solid #d4b800;
-      padding: 14px 18px;
-      margin: 16px 0;
-      font-size: 14px;
-      color: var(--placeholder-text);
-      border-radius: 4px;
+    .display-3 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(24px, 2.6vw, 32px);
+      line-height: 1.15;
+      letter-spacing: -0.012em;
+      font-variation-settings: 'opsz' 80;
     }
-    .placeholder-block strong { color: #9b8300; }
+    .eyebrow {
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--burgundy);
+    }
+    .lede {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(19px, 1.6vw, 22px);
+      line-height: 1.45;
+      letter-spacing: -0.003em;
+      color: var(--ink-2);
+      font-variation-settings: 'opsz' 24;
+    }
+    .small { font-size: 14px; line-height: 1.55; color: var(--ink-3); }
+    .mono  { font-family: var(--mono); font-size: 14px; }
+    .em-yellow {
+      background: linear-gradient(180deg, transparent 62%, var(--yellow-soft) 62%);
+      padding: 0 0.05em;
+    }
 
-    /* ============ Layout ============ */
-    .container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
-    .container-narrow { max-width: 780px; margin: 0 auto; padding: 0 32px; }
-
-    /* ============ Top nav ============ */
+    /* ============================================================
+       Nav
+    ============================================================ */
     .nav {
-      border-bottom: 1px solid var(--line);
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: saturate(180%) blur(12px);
       position: sticky;
       top: 0;
       z-index: 50;
+      background: rgba(250, 247, 242, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line-soft);
     }
     .nav-inner {
       display: flex;
@@ -92,1010 +170,2134 @@
       height: 64px;
     }
     .logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 18px;
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 22px;
+      letter-spacing: -0.02em;
       color: var(--ink);
-      text-decoration: none;
-      letter-spacing: -0.01em;
     }
-    .logo-mark {
-      width: 22px; height: 22px;
+    .logo-dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      background: var(--burgundy);
       border-radius: 50%;
-      background: conic-gradient(from 220deg, var(--teal), #ffb74d, #ef6c5a, var(--teal));
-      flex-shrink: 0;
+      margin: 0 4px 2px 0;
+      vertical-align: middle;
     }
     .nav-links {
       display: flex;
       gap: 28px;
-      list-style: none;
-      font-size: 15px;
-      color: var(--ink-3);
+      align-items: center;
     }
     .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
       color: var(--ink-3);
-      text-decoration: none;
-      transition: color 0.15s;
+      transition: color .15s ease;
     }
     .nav-links a:hover { color: var(--ink); }
-    .nav-cta {
-      background: var(--ink);
-      color: white;
-      padding: 9px 18px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: background 0.15s;
-    }
-    .nav-cta:hover { background: var(--teal-dark); }
-
-    /* ============ Hero ============ */
-    .hero { padding: 88px 0 72px; }
-    .eyebrow {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--teal);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-    }
-    h1 {
-      font-size: clamp(40px, 5.5vw, 64px);
-      line-height: 1.04;
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      max-width: 920px;
-      margin-bottom: 28px;
-    }
-    h1 .accent { color: var(--teal); }
-    .hero-sub {
-      font-size: 20px;
-      line-height: 1.5;
-      color: var(--ink-3);
-      max-width: 720px;
-      margin-bottom: 40px;
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
     }
 
-    .connector-card {
-      display: inline-flex;
-      align-items: center;
-      gap: 16px;
-      background: var(--bg-cream);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 18px 22px;
-      margin-bottom: 40px;
-    }
-    .connector-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--ink-4);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .connector-url {
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 16px;
-      color: var(--ink);
-      font-weight: 500;
-    }
-    .copy-btn {
-      background: white;
-      border: 1px solid var(--line);
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 13px;
-      color: var(--ink-3);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .copy-btn:hover { border-color: var(--ink); color: var(--ink); }
-
-    .tool-strip {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 32px;
-      margin-top: 56px;
-      padding-top: 32px;
-      border-top: 1px solid var(--line);
-    }
-    .tool-strip-label {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--ink-4);
-      letter-spacing: 0.04em;
-    }
-    .tool-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border: 1px solid var(--line);
-      border-radius: 100px;
-      font-size: 14px;
-      color: var(--ink-2);
-      background: white;
-    }
-    .tool-pill-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--teal);
-    }
-
-    /* ============ Sections ============ */
-    section { padding: 80px 0; border-top: 1px solid var(--line); }
-    section.tight { padding: 64px 0; }
-
-    h2 {
-      font-size: clamp(28px, 3.4vw, 40px);
-      line-height: 1.15;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 24px;
-      max-width: 820px;
-    }
-    h3 {
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      margin-bottom: 16px;
-      margin-top: 36px;
-    }
-    h4 {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      letter-spacing: -0.005em;
-    }
-    .section-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--teal);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    .lede {
-      font-size: 19px;
-      line-height: 1.6;
-      color: var(--ink-2);
-      max-width: 720px;
-      margin-bottom: 32px;
-    }
-    p {
-      max-width: 720px;
-      margin-bottom: 18px;
-      color: var(--ink-2);
-    }
-    ul, ol {
-      max-width: 720px;
-      margin-bottom: 20px;
-      padding-left: 22px;
-    }
-    li {
-      margin-bottom: 10px;
-      color: var(--ink-2);
-    }
-    strong { color: var(--ink); font-weight: 600; }
-    a { color: var(--teal); }
-
-    /* ============ Decision table ============ */
-    .decision-table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      margin: 32px 0;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      overflow: hidden;
-      font-size: 15px;
-    }
-    .decision-table th {
-      background: var(--bg-soft);
-      padding: 14px 18px;
-      text-align: left;
-      font-weight: 600;
-      font-size: 13px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--ink-4);
-      border-bottom: 1px solid var(--line);
-    }
-    .decision-table td {
-      padding: 16px 18px;
-      border-bottom: 1px solid var(--line-soft);
-      vertical-align: top;
-    }
-    .decision-table tr:last-child td { border-bottom: none; }
-    .decision-table td.scenario { font-weight: 500; }
-    .pick-native { color: var(--ink-4); }
-    .pick-clarisights { color: var(--teal); font-weight: 600; }
-
-    /* ============ Setup section ============ */
-    .setup-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin: 32px 0;
-    }
-    @media (max-width: 760px) {
-      .setup-grid { grid-template-columns: 1fr; }
-    }
-    .setup-card {
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 28px;
-      background: var(--bg);
-      transition: border-color 0.15s;
-    }
-    .setup-card:hover { border-color: var(--ink-4); }
-    .setup-card-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--line-soft);
-    }
-    .setup-card-title {
-      font-size: 18px;
-      font-weight: 600;
-      letter-spacing: -0.005em;
-    }
-    .setup-card-time {
-      font-size: 12px;
-      color: var(--ink-4);
-      background: var(--bg-soft);
-      padding: 4px 10px;
-      border-radius: 100px;
-    }
-    .setup-card ol {
-      margin: 12px 0;
-      padding-left: 20px;
-      font-size: 14.5px;
-    }
-    .setup-card li { margin-bottom: 8px; }
-    .code-block {
-      background: #0a0a0a;
-      color: #e8e8e8;
-      padding: 14px 16px;
-      border-radius: 6px;
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 13px;
-      line-height: 1.55;
-      margin: 12px 0;
-      overflow-x: auto;
-      white-space: pre;
-    }
-    .code-block .comment { color: #888; }
-    .code-block .accent { color: #6fdcc7; }
-
-    /* ============ Prompt cards ============ */
-    .prompts-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-      margin: 36px 0;
-    }
-    @media (max-width: 760px) { .prompts-grid { grid-template-columns: 1fr; } }
-    .prompt-card {
-      background: var(--bg-cream);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 22px 24px;
-    }
-    .prompt-card-job {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--teal);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .prompt-card h4 { margin-bottom: 14px; margin-top: 0; }
-    .prompt-card .prompt-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .prompt-card .prompt-list li {
-      font-style: italic;
-      color: var(--ink-2);
-      font-size: 14.5px;
-      padding: 10px 0;
-      border-top: 1px dashed var(--line);
-      line-height: 1.45;
-      margin: 0;
-    }
-    .prompt-card .prompt-list li:first-child { border-top: none; }
-    .prompt-card .prompt-list li::before {
-      content: "→ ";
-      color: var(--teal);
-      font-weight: 600;
-      font-style: normal;
-      margin-right: 4px;
-    }
-
-    /* ============ Compare panel ============ */
-    .compare-panel {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      margin: 36px 0;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    @media (max-width: 760px) { .compare-panel { grid-template-columns: 1fr; } }
-    .compare-col {
-      padding: 32px 28px;
-    }
-    .compare-col + .compare-col {
-      border-left: 1px solid var(--line);
-      background: var(--teal-soft);
-    }
-    @media (max-width: 760px) {
-      .compare-col + .compare-col {
-        border-left: none;
-        border-top: 1px solid var(--line);
-      }
-    }
-    .compare-col h4 { font-size: 18px; margin-bottom: 18px; }
-    .compare-list {
-      list-style: none;
-      padding: 0;
-    }
-    .compare-list li {
-      padding: 10px 0 10px 28px;
-      position: relative;
-      font-size: 15px;
-      color: var(--ink-2);
-      border-top: 1px dashed var(--line);
-      margin: 0;
-    }
-    .compare-list li:first-child { border-top: none; }
-    .compare-list li::before {
-      position: absolute;
-      left: 0;
-      top: 10px;
-      font-weight: 700;
-      font-size: 14px;
-    }
-    .compare-list.con li::before { content: "✕"; color: #c44; }
-    .compare-list.pro li::before { content: "✓"; color: var(--teal); }
-
-    /* ============ Wedge block ============ */
-    .wedge {
-      background: var(--ink);
-      color: white;
-      padding: 80px 0;
-      margin-top: 80px;
-    }
-    .wedge .container-narrow { color: white; }
-    .wedge .section-label { color: #6fdcc7; }
-    .wedge h2 { color: white; max-width: 780px; }
-    .wedge p { color: #c8c8c8; }
-    .wedge strong { color: white; }
-
-    /* ============ Limits ============ */
-    .limits-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin: 28px 0;
-    }
-    @media (max-width: 760px) { .limits-grid { grid-template-columns: 1fr 1fr; } }
-    .limit-card {
-      background: var(--bg-soft);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 22px;
-    }
-    .limit-card-value {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--ink);
-      letter-spacing: -0.02em;
-      margin-bottom: 6px;
-    }
-    .limit-card-label {
-      font-size: 13px;
-      color: var(--ink-4);
-    }
-
-    /* ============ FAQ ============ */
-    .faq-item {
-      border-top: 1px solid var(--line);
-      padding: 24px 0;
-    }
-    .faq-item:last-child { border-bottom: 1px solid var(--line); }
-    .faq-q {
-      font-size: 18px;
-      font-weight: 600;
-      letter-spacing: -0.005em;
-      margin-bottom: 12px;
-      color: var(--ink);
-    }
-    .faq-a {
-      color: var(--ink-3);
-      font-size: 16px;
-      line-height: 1.6;
-      max-width: 720px;
-    }
-
-    /* ============ CTA footer ============ */
-    .cta-footer {
-      background: var(--bg-cream);
-      padding: 96px 0;
-      text-align: center;
-    }
-    .cta-footer h2 {
-      max-width: 720px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .cta-footer .lede {
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: 36px;
-    }
-    .cta-buttons {
-      display: inline-flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+    /* ============================================================
+       Buttons
+    ============================================================ */
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 14px 24px;
-      border-radius: 8px;
-      font-weight: 500;
+      padding: 12px 22px;
+      border-radius: 999px;
       font-size: 15px;
-      text-decoration: none;
-      transition: all 0.15s;
-      border: 1px solid transparent;
+      font-weight: 600;
+      letter-spacing: -0.005em;
+      transition: all .15s ease;
+      white-space: nowrap;
     }
     .btn-primary {
-      background: var(--ink);
-      color: white;
+      background: var(--burgundy);
+      color: var(--cream);
     }
-    .btn-primary:hover { background: var(--teal-dark); }
-    .btn-secondary {
-      background: white;
+    .btn-primary:hover {
+      background: var(--burgundy-dark);
+      transform: translateY(-1px);
+    }
+    .btn-ghost {
       color: var(--ink);
-      border-color: var(--line);
+      border: 1px solid var(--line);
+      background: transparent;
     }
-    .btn-secondary:hover { border-color: var(--ink); }
+    .btn-ghost:hover { border-color: var(--ink); }
+    .btn-sm { padding: 8px 16px; font-size: 13px; }
+    .btn-arrow svg { width: 16px; height: 16px; transition: transform .15s ease; }
+    .btn-arrow:hover svg { transform: translateX(3px); }
 
-    /* ============ Footer ============ */
-    footer.site {
-      border-top: 1px solid var(--line);
-      padding: 40px 0;
-      font-size: 14px;
+    /* ============================================================
+       Chip
+    ============================================================ */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--cream-2);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--ink-2);
+    }
+    .chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 0 3px var(--teal-soft);
+    }
+
+    /* ============================================================
+       HERO · one column, centered
+    ============================================================ */
+    .hero {
+      padding: 80px 0 56px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 85% -10%, var(--yellow-pale) 0%, transparent 45%),
+        radial-gradient(circle at -5% 30%, var(--burgundy-soft) 0%, transparent 35%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+    .hero h1 { margin-top: 24px; }
+    .hero .lede {
+      margin: 26px auto 0;
+      max-width: 720px;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .hero-meta {
+      margin-top: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .hero-meta-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 600;
       color: var(--ink-4);
     }
-    footer.site .row {
+    .ai-tools { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .ai-tool {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--ink-2);
+    }
+    .ai-tool-icon { width: 13px; height: 13px; border-radius: 3px; }
+
+    /* ============================================================
+       MARQUEE · wall of prompts (auto-scrolling)
+    ============================================================ */
+    .marquee-wrap {
+      padding: 16px 0 40px;
+      position: relative;
+      mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+    }
+    .marquee-row {
+      display: flex;
+      gap: 16px;
+      width: max-content;
+      padding: 12px 0;
+    }
+    .marquee-row.row-1 { animation: marquee-l 75s linear infinite; }
+    .marquee-row.row-2 { animation: marquee-r 90s linear infinite; }
+    .marquee-wrap:hover .marquee-row { animation-play-state: paused; }
+    @keyframes marquee-l {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes marquee-r {
+      0%   { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
+    .prompt-tile {
+      width: 340px;
+      flex-shrink: 0;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: 0 12px 24px -20px rgba(26, 26, 26, 0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: all .2s ease;
+    }
+    .prompt-tile:hover {
+      transform: translateY(-2px);
+      border-color: var(--burgundy);
+    }
+    .prompt-tile-text {
+      font-family: var(--serif);
+      font-size: 15.5px;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--ink);
+      letter-spacing: -0.005em;
+      min-height: 60px;
+    }
+    .prompt-tile-result {
+      padding: 12px;
+      background: var(--cream);
+      border-radius: 8px;
+      border: 1px solid var(--line-soft);
+      flex: 1;
+      min-height: 80px;
+    }
+    .prompt-tile-foot {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .prompt-tool {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--burgundy);
+      background: var(--burgundy-soft);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    /* Mini result components */
+    .rp-title {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      margin-bottom: 6px;
+    }
+    .rp-bars {
+      display: grid;
+      grid-template-columns: 60px 1fr 40px;
+      row-gap: 6px;
+      align-items: center;
+      font-size: 11.5px;
+    }
+    .rp-bars .rp-l { color: var(--ink-3); font-weight: 500; }
+    .rp-bars .rp-b {
+      height: 7px;
+      background: var(--cream-2);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .rp-bars .rp-b span {
+      display: block;
+      height: 100%;
+      background: var(--burgundy);
+      border-radius: 4px;
+    }
+    .rp-bars .rp-v { font-family: var(--mono); font-size: 11px; color: var(--ink); text-align: right; }
+
+    .rp-line {
+      height: 50px;
+      width: 100%;
+      display: block;
+    }
+    .rp-line path {
+      fill: none;
+      stroke: var(--burgundy);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .rp-line .area {
+      fill: rgba(142, 44, 54, 0.08);
+      stroke: none;
+    }
+
+    .rp-text {
+      font-size: 12.5px;
+      line-height: 1.45;
+      color: var(--ink-2);
+    }
+    .rp-text strong { color: var(--ink); font-weight: 600; }
+
+    .rp-num {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+    }
+    .rp-num-item .rp-num-v {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .rp-num-item .rp-num-l {
+      font-size: 10.5px;
+      color: var(--ink-4);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+    .rp-num-item .rp-num-d { font-size: 11px; color: var(--teal); font-weight: 600; margin-top: 2px; }
+    .rp-num-item .rp-num-d.is-bad { color: var(--burgundy); }
+
+    .rp-rows {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      line-height: 1.7;
+    }
+    .rp-rows .rp-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      border-bottom: 1px dashed var(--line);
+      padding: 2px 0;
+    }
+    .rp-rows .rp-row:last-child { border-bottom: none; }
+    .rp-rows .rp-k { color: var(--ink-2); }
+    .rp-rows .rp-vv { color: var(--ink-3); }
+
+    /* ============================================================
+       Section heads
+    ============================================================ */
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 56px;
+    }
+    .section-head.is-center {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .section-head .eyebrow + h2 { margin-top: 12px; }
+    .section-head h2 + p { margin-top: 20px; }
+
+    /* ============================================================
+       F2 · What is the semantic layer? (3 pillars)
+    ============================================================ */
+    .pillar {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      padding: 48px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .pillar:last-child { border-bottom: none; }
+    .pillar:nth-child(even) > div:first-child { order: 2; }
+    @media (max-width: 960px) {
+      .pillar { grid-template-columns: 1fr; gap: 40px; padding: 36px 0; }
+      .pillar:nth-child(even) > div:first-child { order: initial; }
+    }
+    .pillar-num {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 60px;
+      color: var(--yellow);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .pillar h3 {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3vw, 38px);
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.015em;
+      margin: 16px 0 20px;
+    }
+    .pillar p {
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--ink-2);
+    }
+    .pillar p + p { margin-top: 14px; }
+    .pillar-viz {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .channel-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .channel-tile {
+      padding: 12px 8px;
+      background: var(--cream);
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-2);
+    }
+    .channel-tile .ch-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      margin: 0 auto 6px;
+      background: var(--cream-2);
+    }
+    .join-line {
+      height: 1px;
+      background: var(--burgundy);
+      margin: 18px auto;
+      width: 80%;
+      position: relative;
+    }
+    .join-line::before, .join-line::after {
+      content: "";
+      position: absolute;
+      top: -3px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--burgundy);
+    }
+    .join-line::before { left: 0; }
+    .join-line::after  { right: 0; }
+    .semantic-label {
+      text-align: center;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--burgundy);
+      letter-spacing: -0.005em;
+    }
+    .compare-rows { display: flex; flex-direction: column; gap: 16px; }
+    .compare-row {
+      padding: 16px;
+      border-radius: 10px;
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+    .compare-row-bad {
+      background: var(--cream);
+      border: 1px solid var(--line);
+      color: var(--ink-3);
+    }
+    .compare-row-good {
+      background: var(--yellow-pale);
+      border: 1px solid var(--yellow);
+      color: var(--ink);
+    }
+    .compare-row-label {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      opacity: 0.7;
+    }
+    .compare-row-good .compare-row-label { color: var(--burgundy); opacity: 1; }
+    .compare-arrow {
+      text-align: center;
+      font-size: 18px;
+      color: var(--ink-4);
+      margin: -4px 0;
+    }
+    .acl-viz { display: flex; flex-direction: column; gap: 14px; }
+    .acl-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+    .acl-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 7px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .acl-icon svg { width: 16px; height: 16px; color: var(--burgundy); }
+    .acl-body { flex: 1; }
+    .acl-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+    .acl-sub { font-size: 12.5px; color: var(--ink-3); }
+    .acl-status {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 9px;
+      border-radius: 5px;
+    }
+    .acl-status-ok { background: var(--teal-soft); color: var(--teal-dark); }
+    .acl-status-no { background: var(--burgundy-soft); color: var(--burgundy-dark); }
+
+    /* ============================================================
+       F3 · How it works
+    ============================================================ */
+    .how-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 56px;
+      align-items: start;
+    }
+    @media (max-width: 960px) { .how-grid { grid-template-columns: 1fr; gap: 40px; } }
+    .diagram {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 32px;
+    }
+    .diagram-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .diagram-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      margin: 6px 0;
+    }
+    .diagram-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      max-width: 320px;
+    }
+    .diagram-pill {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      color: var(--ink-2);
+    }
+    .diagram-core {
+      background: var(--burgundy);
+      color: var(--cream);
+      padding: 14px 22px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: -0.005em;
+      box-shadow: 0 8px 16px -8px rgba(142, 44, 54, 0.4);
+    }
+    .diagram-mcp {
+      background: var(--yellow);
+      color: var(--ink);
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .diagram-arrow {
+      width: 1.5px;
+      height: 22px;
+      background: var(--line);
+      margin: 4px 0;
+      position: relative;
+    }
+    .diagram-arrow::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 0);
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 6px solid var(--ink-4);
+    }
+    .tools-list { display: flex; flex-direction: column; gap: 20px; }
+    .tool-group {
+      padding: 24px 28px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    .tool-group-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .tool-group-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: var(--cream-2);
+      color: var(--burgundy);
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tool-group-title {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+    .tool-row {
+      display: flex;
+      gap: 14px;
+      padding: 10px 0;
+      border-top: 1px solid var(--line-soft);
+      align-items: baseline;
+    }
+    .tool-row:first-child { border-top: none; padding-top: 4px; }
+    .tool-name {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--burgundy);
+      flex-shrink: 0;
+      min-width: 150px;
+    }
+    .tool-desc { font-size: 14px; color: var(--ink-2); line-height: 1.5; }
+
+    .possible-grid {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 720px) { .possible-grid { grid-template-columns: 1fr; } }
+    .possible-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 24px 28px;
+    }
+    .possible-card.is-no { background: var(--cream-2); }
+    .possible-card-h {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .possible-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .possible-tag.is-ok { background: var(--teal-soft); color: var(--teal-dark); }
+    .possible-tag.is-no { background: var(--burgundy-soft); color: var(--burgundy-dark); }
+    .possible-card h4 {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+    .possible-card ul { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+    .possible-card li {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--ink-2);
+      padding-left: 18px;
+      position: relative;
+    }
+    .possible-card li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 8px;
+      height: 1.5px;
+      background: var(--burgundy);
+    }
+    .possible-card.is-no li::before { background: var(--ink-4); }
+    .possible-card.is-no li { color: var(--ink-3); }
+
+    /* ============================================================
+       F4 · Three kinds of marketing MCPs (replaces synergy)
+    ============================================================ */
+    .wedge-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+    @media (max-width: 960px) { .wedge-grid { grid-template-columns: 1fr; } }
+    .wedge-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+    }
+    .wedge-card.is-us {
+      background: var(--ink);
+      color: var(--cream);
+      border-color: var(--ink);
+      position: relative;
+    }
+    .wedge-card.is-us .wedge-kicker { color: var(--yellow); }
+    .wedge-card.is-us h3 { color: var(--cream); }
+    .wedge-card.is-us p,
+    .wedge-card.is-us li { color: rgba(250, 247, 242, 0.78); }
+    .wedge-card.is-us .wedge-mark {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--yellow);
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+    .wedge-kicker {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--burgundy);
+      margin-bottom: 6px;
+    }
+    .wedge-job {
+      font-family: var(--serif);
+      font-size: 14.5px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--ink-3);
+      margin-bottom: 16px;
+    }
+    .wedge-card.is-us .wedge-job { color: rgba(250, 247, 242, 0.6); }
+    .wedge-card h3 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+      color: var(--ink);
+    }
+    .wedge-card > p {
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: var(--ink-2);
+      margin-bottom: 16px;
+    }
+    .wedge-card ul {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+    .wedge-card.is-us ul { border-top-color: rgba(250, 247, 242, 0.18); }
+    .wedge-card li {
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: var(--ink-3);
+      padding-left: 18px;
+      position: relative;
+    }
+    .wedge-card li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 8px;
+      height: 1.5px;
+      background: var(--ink-4);
+    }
+    .wedge-card.is-us li::before { background: var(--yellow); }
+    .wedge-examples {
+      font-size: 11.5px;
+      color: var(--ink-4);
+      font-weight: 500;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--line);
+    }
+    .wedge-card.is-us .wedge-examples {
+      color: rgba(250, 247, 242, 0.5);
+      border-top-color: rgba(250, 247, 242, 0.15);
+    }
+    .wedge-examples-label {
+      display: block;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 10px;
+      margin-bottom: 4px;
+    }
+
+    /* ============================================================
+       F5 · Setup
+    ============================================================ */
+    .setup-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 960px) { .setup-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 540px) { .setup-grid { grid-template-columns: 1fr; } }
+    .setup-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .setup-card.is-optional {
+      background: var(--cream-2);
+      border-style: dashed;
+    }
+    .setup-num {
+      font-family: var(--serif);
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 1;
+      color: var(--burgundy);
+      letter-spacing: -0.02em;
+    }
+    .setup-card.is-optional .setup-num { color: var(--ink-3); }
+    .setup-card h3 {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+    .setup-card p {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--ink-3);
+    }
+    .setup-card .setup-mono {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--burgundy);
+      background: var(--cream);
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      margin-top: auto;
+    }
+    .setup-optional-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      margin-bottom: -2px;
+    }
+
+    /* ============================================================
+       F6 · Trust grid
+    ============================================================ */
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 960px) { .trust-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 540px) { .trust-grid { grid-template-columns: 1fr; } }
+    .trust-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 24px;
+    }
+    .trust-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--burgundy-soft);
+      color: var(--burgundy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .trust-icon svg { width: 18px; height: 18px; }
+    .trust-card h4 {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+    .trust-card p {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--ink-3);
+    }
+    .roadmap-note {
+      margin-top: 32px;
+      padding: 22px 28px;
+      background: var(--yellow-pale);
+      border: 1px solid var(--yellow);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    @media (max-width: 720px) { .roadmap-note { flex-direction: column; align-items: flex-start; } }
+    .roadmap-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--yellow);
+      padding: 4px 10px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .roadmap-text {
+      font-size: 14.5px;
+      color: var(--ink-2);
+      line-height: 1.5;
+    }
+    .roadmap-text strong { color: var(--ink); font-weight: 600; }
+
+    /* ============================================================
+       F7 · Access band
+    ============================================================ */
+    .access-band {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (max-width: 960px) { .access-band { grid-template-columns: 1fr; padding: 36px; } }
+    .access-band h3 {
+      font-family: var(--serif);
+      font-size: clamp(26px, 3vw, 34px);
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+      margin-bottom: 16px;
+    }
+    .access-band p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink-2);
+    }
+    .access-list { display: flex; flex-direction: column; gap: 14px; }
+    .access-row { display: flex; gap: 12px; align-items: baseline; }
+    .access-check {
+      color: var(--teal);
+      flex-shrink: 0;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .access-row p { font-size: 14.5px; color: var(--ink-2); }
+    .access-row strong { color: var(--ink); font-weight: 600; }
+    .access-cta {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    /* ============================================================
+       F8 · FAQ
+    ============================================================ */
+    .faq-list { max-width: 820px; margin: 0 auto; }
+    .faq-item {
+      border-top: 1px solid var(--line);
+      padding: 20px 0;
+    }
+    .faq-item:last-child { border-bottom: 1px solid var(--line); }
+    .faq-q {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      text-align: left;
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      color: var(--ink);
+    }
+    .faq-q-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--cream-2);
+      color: var(--burgundy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform .2s ease;
+      margin-top: 4px;
+    }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .25s ease;
+    }
+    .faq-item.is-open .faq-a { max-height: 800px; }
+    .faq-a-inner {
+      padding-top: 16px;
+      font-size: 15.5px;
+      line-height: 1.65;
+      color: var(--ink-2);
+    }
+    .faq-a-inner p + p { margin-top: 12px; }
+    .faq-a-inner code {
+      font-family: var(--mono);
+      font-size: 13.5px;
+      background: var(--cream);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--burgundy);
+    }
+
+    /* ============================================================
+       Footer
+    ============================================================ */
+    footer {
+      padding: 56px 0 40px;
+      border-top: 1px solid var(--line);
+    }
+    .footer-inner {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 32px;
       flex-wrap: wrap;
-      gap: 16px;
     }
+    .footer-meta { font-size: 13px; color: var(--ink-4); }
+    .footer-meta a { color: var(--ink-3); margin-left: 18px; }
+    .footer-meta a:hover { color: var(--ink); }
 
-    /* ============ Page banner (mock label) ============ */
+    /* Mock banner */
     .mock-banner {
-      background: #fff3a8;
-      color: #6b5b00;
-      padding: 10px 32px;
-      font-size: 13px;
-      font-weight: 500;
+      background: var(--ink);
+      color: var(--cream);
       text-align: center;
-      border-bottom: 1px solid #d4b800;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 500;
     }
-    .mock-banner strong { color: #6b5b00; }
+    .mock-banner .tag {
+      display: inline-block;
+      background: var(--yellow);
+      color: var(--ink);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-right: 10px;
+      font-size: 10.5px;
+    }
   </style>
 </head>
 <body>
 
-  <!-- ============ Mock banner ============ -->
+  <!-- Mock banner -->
   <div class="mock-banner">
-    <strong>⚑ Recurr mock</strong> — hosted at pages.recurr.co for Clarisights review. Yellow highlights mark placeholders awaiting Clarisights input.
+    <span class="tag">MOCK</span>
+    pages.recurr.co preview · final destination clarisights.com/marketing-data-mcp
   </div>
 
-  <!-- ============ Nav ============ -->
-  <nav class="nav">
+  <!-- ============================================================
+       NAV
+  ============================================================ -->
+  <header class="nav">
     <div class="container nav-inner">
-      <a href="#" class="logo">
-        <span class="logo-mark"></span>
-        clarisights
-      </a>
-      <ul class="nav-links">
-        <li><a href="#what">What it is</a></li>
-        <li><a href="#setup">Setup</a></li>
-        <li><a href="#ask">What to ask</a></li>
-        <li><a href="#vs-native">Vs. native</a></li>
-        <li><a href="#faq">FAQ</a></li>
-      </ul>
-      <a href="#cta" class="nav-cta">Connect now →</a>
+      <a class="logo" href="#"><span class="logo-dot"></span>Clarisights</a>
+      <nav class="nav-links">
+        <a href="#semantic">Semantic layer</a>
+        <a href="#how">How it works</a>
+        <a href="#categories">Comparison</a>
+        <a href="#trust">Security</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn btn-primary btn-sm" href="#demo">Book a demo</a>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <!-- ============ Hero ============ -->
-  <section class="hero" style="border-top: none;">
-    <div class="container">
-      <div class="eyebrow">Marketing Data MCP · Just shipped</div>
-      <h1>Ask Claude, ChatGPT, and Gemini about your <span class="accent">live ad data.</span></h1>
-      <p class="hero-sub">Clarisights now exposes a remote Model Context Protocol server. Plug it into the AI assistant you already use and ask the questions you'd normally open six dashboards for. Your metric definitions, your permissions, your channels — answered in chat, grounded in live data.</p>
+  <!-- ============================================================
+       F1 · HERO (one column, centered) + PROMPT WALL
+  ============================================================ -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="chip">
+        <span class="chip-dot"></span>
+        New · Marketing Data MCP · Beta with existing customers
+      </div>
 
-      <div class="connector-card">
-        <div>
-          <div class="connector-label">Connector URL</div>
-          <div class="connector-url">https://app.clarisights.com/mcp</div>
+      <h1 class="display-1">
+        The marketing MCP, purpose-built for
+        <span class="em-yellow">enterprise marketing teams.</span>
+      </h1>
+
+      <p class="lede">
+        The MCP you reach for when you operate at scale. Eleven ad channels. Hundreds of custom metrics. Two years of history. Wired into Claude, ChatGPT, Cursor, and any MCP-compatible AI tool, under your workspace's permissions.
+      </p>
+
+      <div class="hero-ctas">
+        <a class="btn btn-primary btn-arrow" href="#demo">
+          Book a demo
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#setup">See setup</a>
+      </div>
+
+      <div class="hero-meta">
+        <div class="hero-meta-label">Works with</div>
+        <div class="ai-tools">
+          <span class="ai-tool"><span class="ai-tool-icon" style="background: #DA7757;"></span>Claude</span>
+          <span class="ai-tool"><span class="ai-tool-icon" style="background: #10A37F;"></span>ChatGPT</span>
+          <span class="ai-tool"><span class="ai-tool-icon" style="background: #4285F4;"></span>Gemini</span>
+          <span class="ai-tool"><span class="ai-tool-icon" style="background: #1A1A1A;"></span>Cursor</span>
         </div>
-        <button class="copy-btn" onclick="navigator.clipboard.writeText('https://app.clarisights.com/mcp'); this.textContent='Copied ✓';">Copy</button>
-      </div>
-
-      <div class="tool-strip">
-        <span class="tool-strip-label">Works with</span>
-        <span class="tool-pill"><span class="tool-pill-dot"></span>Claude</span>
-        <span class="tool-pill"><span class="tool-pill-dot"></span>ChatGPT</span>
-        <span class="tool-pill"><span class="tool-pill-dot"></span>Gemini Enterprise</span>
-        <span class="tool-pill"><span class="tool-pill-dot"></span>Cursor</span>
-        <span class="tool-pill"><span class="tool-pill-dot"></span>Claude Code</span>
-        <span class="tool-pill"><span class="tool-pill-dot"></span>Codex</span>
-        <span class="tool-pill" style="color: var(--ink-4);">+ any MCP client</span>
       </div>
     </div>
-  </section>
 
-  <!-- ============ What it is ============ -->
-  <section id="what">
-    <div class="container-narrow">
-      <div class="section-label">What this is</div>
-      <h2>A direct line between your AI assistant and your full Clarisights setup.</h2>
-      <p class="lede">The Marketing Data MCP is a remote Model Context Protocol server hosted by Clarisights. Once your team adds it to Claude, ChatGPT, Gemini, or any MCP-compatible assistant, that assistant can browse the same data you can — your channels, your dashboards, your custom metrics, your saved segments — and answer questions about live performance in plain language.</p>
+    <!-- Prompt wall: auto-scrolling marquee, 2 rows -->
+    <div class="marquee-wrap" style="margin-top: 56px;" aria-label="Examples of questions you can ask any AI tool through Clarisights">
+      <div class="marquee-row row-1">
 
-      <p>There's no CSV export step. No "let me copy this into the prompt." No re-explaining your CAC formula every conversation. The AI uses your team's definitions, scoped to your team's permissions, across every channel Clarisights is wired into — <span class="placeholder">[CONFIRM channel list: Facebook/Meta, Google Ads, TikTok Ads, Snapchat Ads, Pinterest, LinkedIn Ads, Reddit Ads, Microsoft Advertising, + analytics + others]</span>.</p>
+        <!-- Tile 1: CPA trend by region -->
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"How has channel-level CPA trended across our top regions this quarter?"</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">CPA · top regions · Q2</div>
+            <div class="rp-bars">
+              <span class="rp-l">Meta · EU</span>
+              <span class="rp-b"><span style="width: 72%;"></span></span>
+              <span class="rp-v">$22</span>
+              <span class="rp-l">Google · US</span>
+              <span class="rp-b"><span style="width: 48%;"></span></span>
+              <span class="rp-v">$14</span>
+              <span class="rp-l">TikTok · APAC</span>
+              <span class="rp-b"><span style="width: 90%;"></span></span>
+              <span class="rp-v">$29</span>
+            </div>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">list_data_sources</span>
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
 
-      <p>Authentication is OAuth 2.0. The first time your assistant calls a Clarisights tool, you sign in with your Clarisights account in a browser window. There's nothing to manage — no API tokens, no developer accounts, no rotating credentials. Disconnecting from your AI tool's settings revokes access immediately.</p>
+        <!-- Tile 2: Top creative concepts -->
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"Top 10 creative concepts by ROAS launched this quarter."</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">ROAS · creative concepts · Q2</div>
+            <div class="rp-rows">
+              <div class="rp-row"><span class="rp-k">UGC-Athlete-v3</span><span class="rp-vv">5.8×</span></div>
+              <div class="rp-row"><span class="rp-k">Holiday-Bundle-2</span><span class="rp-vv">4.6×</span></div>
+              <div class="rp-row"><span class="rp-k">Founder-Story-EU</span><span class="rp-vv">4.1×</span></div>
+              <div class="rp-row"><span class="rp-k">Spring-Comparison</span><span class="rp-vv">3.7×</span></div>
+            </div>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">list_dimensions</span>
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+        <!-- Tile 3: Pacing -->
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"How are we pacing toward this month's Spend and Revenue goals?"</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">May pacing · day 18 of 31</div>
+            <div class="rp-num">
+              <div class="rp-num-item">
+                <div class="rp-num-v">63%</div>
+                <div class="rp-num-l">Spend</div>
+                <div class="rp-num-d">on track</div>
+              </div>
+              <div class="rp-num-item">
+                <div class="rp-num-v">54%</div>
+                <div class="rp-num-l">Revenue</div>
+                <div class="rp-num-d is-bad">-4 pts</div>
+              </div>
+              <div class="rp-num-item">
+                <div class="rp-num-v">3.9×</div>
+                <div class="rp-num-l">Blended ROAS</div>
+                <div class="rp-num-d is-bad">vs 4.2 tgt</div>
+              </div>
+            </div>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">list_metrics</span>
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+        <!-- Tile 4: Leadership summary -->
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"Summarize last week's performance for the leadership update."</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">Week 21 · summary</div>
+            <p class="rp-text">
+              <strong>Spend</strong> $1.84M (+8% WoW). <strong>ROAS</strong> 3.6× (-0.2). Wins: <strong>TikTok APAC</strong> +41% revenue on UGC-Athlete-v3. Drops: <strong>Meta US</strong> CAC up 22% on bundle creatives.
+            </p>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">list_reports</span>
+            <span class="prompt-tool">get_report</span>
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+        <!-- Tile 5: Facebook campaign -->
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"How is the Q2-Holiday-EU campaign performing on Facebook?"</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">Q2-Holiday-EU · daily ROAS</div>
+            <svg class="rp-line" viewBox="0 0 300 50" preserveAspectRatio="none">
+              <path class="area" d="M0,38 L20,30 L40,32 L60,22 L80,18 L100,25 L120,20 L140,15 L160,12 L180,10 L200,14 L220,8 L240,12 L260,6 L280,10 L300,4 L300,50 L0,50 Z"/>
+              <path d="M0,38 L20,30 L40,32 L60,22 L80,18 L100,25 L120,20 L140,15 L160,12 L180,10 L200,14 L220,8 L240,12 L260,6 L280,10 L300,4"/>
+            </svg>
+            <p class="small" style="font-size: 11.5px; margin-top: 6px;">$94k spend · 4.6× ROAS · trending up</p>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+        <!-- Tile 6: Affiliate AOV -->
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"Which affiliates drive the lowest AOV purchases by market?"</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">AOV by affiliate · bottom 4</div>
+            <div class="rp-rows">
+              <div class="rp-row"><span class="rp-k">CouponHub · UK</span><span class="rp-vv">$32</span></div>
+              <div class="rp-row"><span class="rp-k">DealNest · DE</span><span class="rp-vv">$38</span></div>
+              <div class="rp-row"><span class="rp-k">SaveLink · FR</span><span class="rp-vv">$41</span></div>
+              <div class="rp-row"><span class="rp-k">Quidco · UK</span><span class="rp-vv">$46</span></div>
+            </div>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">list_data_sources</span>
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+        <!-- Duplicate row for seamless loop -->
+
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"How has channel-level CPA trended across our top regions this quarter?"</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">CPA · top regions · Q2</div>
+            <div class="rp-bars">
+              <span class="rp-l">Meta · EU</span>
+              <span class="rp-b"><span style="width: 72%;"></span></span>
+              <span class="rp-v">$22</span>
+              <span class="rp-l">Google · US</span>
+              <span class="rp-b"><span style="width: 48%;"></span></span>
+              <span class="rp-v">$14</span>
+              <span class="rp-l">TikTok · APAC</span>
+              <span class="rp-b"><span style="width: 90%;"></span></span>
+              <span class="rp-v">$29</span>
+            </div>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">list_data_sources</span>
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"Top 10 creative concepts by ROAS launched this quarter."</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">ROAS · creative concepts · Q2</div>
+            <div class="rp-rows">
+              <div class="rp-row"><span class="rp-k">UGC-Athlete-v3</span><span class="rp-vv">5.8×</span></div>
+              <div class="rp-row"><span class="rp-k">Holiday-Bundle-2</span><span class="rp-vv">4.6×</span></div>
+              <div class="rp-row"><span class="rp-k">Founder-Story-EU</span><span class="rp-vv">4.1×</span></div>
+              <div class="rp-row"><span class="rp-k">Spring-Comparison</span><span class="rp-vv">3.7×</span></div>
+            </div>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">list_dimensions</span>
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"How are we pacing toward this month's Spend and Revenue goals?"</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">May pacing · day 18 of 31</div>
+            <div class="rp-num">
+              <div class="rp-num-item">
+                <div class="rp-num-v">63%</div>
+                <div class="rp-num-l">Spend</div>
+                <div class="rp-num-d">on track</div>
+              </div>
+              <div class="rp-num-item">
+                <div class="rp-num-v">54%</div>
+                <div class="rp-num-l">Revenue</div>
+                <div class="rp-num-d is-bad">-4 pts</div>
+              </div>
+              <div class="rp-num-item">
+                <div class="rp-num-v">3.9×</div>
+                <div class="rp-num-l">Blended ROAS</div>
+                <div class="rp-num-d is-bad">vs 4.2 tgt</div>
+              </div>
+            </div>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">list_metrics</span>
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="marquee-row row-2" style="margin-top: 8px;">
+
+        <!-- Row 2 tiles -->
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"Which Search keywords are expensive but we already rank for organically?"</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">Overlap candidates · Google Search</div>
+            <div class="rp-rows">
+              <div class="rp-row"><span class="rp-k">"acme reviews"</span><span class="rp-vv">$4.20 · pos 2</span></div>
+              <div class="rp-row"><span class="rp-k">"acme pricing"</span><span class="rp-vv">$3.10 · pos 1</span></div>
+              <div class="rp-row"><span class="rp-k">"acme vs comp"</span><span class="rp-vv">$2.80 · pos 3</span></div>
+            </div>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">list_dimensions</span>
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"Break down creative X performance by region."</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">UGC-Athlete-v3 · regional ROAS</div>
+            <div class="rp-bars">
+              <span class="rp-l">APAC</span>
+              <span class="rp-b"><span style="width: 92%;"></span></span>
+              <span class="rp-v">5.8×</span>
+              <span class="rp-l">EU</span>
+              <span class="rp-b"><span style="width: 65%;"></span></span>
+              <span class="rp-v">3.4×</span>
+              <span class="rp-l">NAM</span>
+              <span class="rp-b"><span style="width: 42%;"></span></span>
+              <span class="rp-v">2.1×</span>
+            </div>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"Compare LinkedIn vs Reddit B2B campaigns YoY."</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">B2B paid · YoY · CPL</div>
+            <div class="rp-num">
+              <div class="rp-num-item">
+                <div class="rp-num-v">$48</div>
+                <div class="rp-num-l">LinkedIn</div>
+                <div class="rp-num-d is-bad">+18%</div>
+              </div>
+              <div class="rp-num-item">
+                <div class="rp-num-v">$22</div>
+                <div class="rp-num-l">Reddit</div>
+                <div class="rp-num-d">-31%</div>
+              </div>
+            </div>
+            <p class="small" style="font-size: 11.5px; margin-top: 8px;">Reddit closing the gap on B2B SaaS.</p>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"Find EU creatives spending &gt;$5k with ROAS below 2×."</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">EU underperformers</div>
+            <div class="rp-rows">
+              <div class="rp-row"><span class="rp-k">Spring-Bundle-DE</span><span class="rp-vv">$8.4k · 1.6×</span></div>
+              <div class="rp-row"><span class="rp-k">Founder-Story-FR</span><span class="rp-vv">$6.1k · 1.8×</span></div>
+              <div class="rp-row"><span class="rp-k">Discount-Banner-UK</span><span class="rp-vv">$5.7k · 1.4×</span></div>
+            </div>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">list_dimensions</span>
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"How did our blended ROAS shift after the iOS 18 update?"</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">Blended ROAS · pre/post iOS 18</div>
+            <svg class="rp-line" viewBox="0 0 300 50" preserveAspectRatio="none">
+              <path class="area" d="M0,12 L40,14 L80,16 L120,20 L160,32 L200,28 L240,24 L280,22 L300,20 L300,50 L0,50 Z"/>
+              <path d="M0,12 L40,14 L80,16 L120,20 L160,32 L200,28 L240,24 L280,22 L300,20"/>
+            </svg>
+            <p class="small" style="font-size: 11.5px; margin-top: 6px;">Dipped 14% week-of; recovered to -3% by week 6.</p>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"Draft a 5-slide Q2 wrap for the board using our latest data."</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">Slides drafted · paired with Slides MCP</div>
+            <p class="rp-text">
+              <strong>1.</strong> Spend & revenue · <strong>2.</strong> Channel ROAS · <strong>3.</strong> Top creatives · <strong>4.</strong> Regional cuts · <strong>5.</strong> Forward look. <em>Data verified against your Q2 dashboard.</em>
+            </p>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">get_report</span>
+            <span class="prompt-tool">query_data</span>
+            <span class="prompt-tool">+ Slides MCP</span>
+          </div>
+        </div>
+
+        <!-- Duplicates -->
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"Which Search keywords are expensive but we already rank for organically?"</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">Overlap candidates · Google Search</div>
+            <div class="rp-rows">
+              <div class="rp-row"><span class="rp-k">"acme reviews"</span><span class="rp-vv">$4.20 · pos 2</span></div>
+              <div class="rp-row"><span class="rp-k">"acme pricing"</span><span class="rp-vv">$3.10 · pos 1</span></div>
+              <div class="rp-row"><span class="rp-k">"acme vs comp"</span><span class="rp-vv">$2.80 · pos 3</span></div>
+            </div>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">list_dimensions</span>
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"Break down creative X performance by region."</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">UGC-Athlete-v3 · regional ROAS</div>
+            <div class="rp-bars">
+              <span class="rp-l">APAC</span>
+              <span class="rp-b"><span style="width: 92%;"></span></span>
+              <span class="rp-v">5.8×</span>
+              <span class="rp-l">EU</span>
+              <span class="rp-b"><span style="width: 65%;"></span></span>
+              <span class="rp-v">3.4×</span>
+              <span class="rp-l">NAM</span>
+              <span class="rp-b"><span style="width: 42%;"></span></span>
+              <span class="rp-v">2.1×</span>
+            </div>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+        <div class="prompt-tile">
+          <div class="prompt-tile-text">"Compare LinkedIn vs Reddit B2B campaigns YoY."</div>
+          <div class="prompt-tile-result">
+            <div class="rp-title">B2B paid · YoY · CPL</div>
+            <div class="rp-num">
+              <div class="rp-num-item">
+                <div class="rp-num-v">$48</div>
+                <div class="rp-num-l">LinkedIn</div>
+                <div class="rp-num-d is-bad">+18%</div>
+              </div>
+              <div class="rp-num-item">
+                <div class="rp-num-v">$22</div>
+                <div class="rp-num-l">Reddit</div>
+                <div class="rp-num-d">-31%</div>
+              </div>
+            </div>
+            <p class="small" style="font-size: 11.5px; margin-top: 8px;">Reddit closing the gap on B2B SaaS.</p>
+          </div>
+          <div class="prompt-tile-foot">
+            <span class="prompt-tool">query_data</span>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
-  <!-- ============ When to use ============ -->
-  <section id="vs-native" style="background: var(--bg-soft);">
-    <div class="container-narrow">
-      <div class="section-label">When this is the right tool</div>
-      <h2>Use the Marketing Data MCP when you need an analyst. Use a native MCP when you need an operator.</h2>
-      <p class="lede">There's a fast-growing ecosystem of native MCP servers — open-source connectors that wrap the Meta Marketing API or the Google Ads API and hand the keys directly to an AI assistant. They're useful for what they do. They're not what we are. Here's the decision frame.</p>
-
-      <table class="decision-table">
-        <thead>
-          <tr>
-            <th style="width: 38%;">If you want to…</th>
-            <th>Reach for</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="scenario">Ask "how is spend pacing this week vs. last week, blended across all channels?"</td>
-            <td class="pick-clarisights">→ Marketing Data MCP</td>
-          </tr>
-          <tr>
-            <td class="scenario">Have the AI launch a new Meta campaign with a draft creative</td>
-            <td class="pick-native">→ Native Meta Ads MCP (e.g. Pipeboard, Meta's official MCP)</td>
-          </tr>
-          <tr>
-            <td class="scenario">Compare CPM across Facebook, TikTok, and Snapchat in one prompt</td>
-            <td class="pick-clarisights">→ Marketing Data MCP</td>
-          </tr>
-          <tr>
-            <td class="scenario">Pull a raw GAQL query result from Google Ads for engineering debugging</td>
-            <td class="pick-native">→ Native Google Ads MCP</td>
-          </tr>
-          <tr>
-            <td class="scenario">Get answers using your team's custom CAC, blended ROAS, or NTR definitions</td>
-            <td class="pick-clarisights">→ Marketing Data MCP</td>
-          </tr>
-          <tr>
-            <td class="scenario">Let the AI mutate budgets, pause campaigns, or change bids</td>
-            <td class="pick-native">→ Native MCP (and a careful approval flow)</td>
-          </tr>
-          <tr>
-            <td class="scenario">Share an answer with a colleague who has different permissions</td>
-            <td class="pick-clarisights">→ Marketing Data MCP (permissions are inherited)</td>
-          </tr>
-          <tr>
-            <td class="scenario">Build a one-off internal tool against a single ad platform</td>
-            <td class="pick-native">→ Native MCP</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p style="margin-top: 28px;"><strong>The simple rule:</strong> if the question is about <em>understanding</em> performance across your full marketing stack, this is the right surface. If the question is about <em>executing</em> a single-channel change, a native MCP plus a human approval flow makes more sense. Most paid-media teams need the first kind of answer ten times more often than the second.</p>
-    </div>
-  </section>
-
-  <!-- ============ Setup ============ -->
-  <section id="setup">
+  <!-- ============================================================
+       F2 · WHY THIS IS DIFFERENT (no big heading)
+       framed as "What is the semantic layer?" + 3 pillars
+  ============================================================ -->
+  <section class="section divider" id="semantic">
     <div class="container">
-      <div class="container-narrow" style="padding-left: 0; padding-right: 0;">
-        <div class="section-label">Setup — by tool</div>
-        <h2>Under a minute per tool. OAuth, no API keys.</h2>
-        <p class="lede">Pick the assistant you already use. Each flow opens Clarisights in a browser window, you sign in, you approve access. That's it.</p>
+      <div class="section-head">
+        <div class="eyebrow">Why this is different</div>
+        <h2 class="display-2">What is the semantic layer?</h2>
+        <p class="lede">
+          The version of your marketing data your team actually trusts. Eleven ad channels, three attribution platforms, and your warehouse, all joined at deepest granularity inside Clarisights, expressed in your team's metric definitions, governed by your workspace's ACL. Connectors hand the AI raw fields. The semantic layer hands it answers.
+        </p>
+      </div>
+
+      <!-- Pillar 1 -->
+      <div class="pillar">
+        <div>
+          <div class="pillar-num">01</div>
+          <h3>Cross-channel by default.</h3>
+          <p>Eleven ad channels, three attribution platforms, and your data warehouse, joined at deepest granularity inside Clarisights before the AI sees the query.</p>
+          <p>The AI doesn't stitch numbers from four API calls. It asks one question against one semantic layer. Cross-channel CPA, blended ROAS, MER arrive as single columns. Not math problems.</p>
+        </div>
+        <div class="pillar-viz">
+          <div class="channel-grid">
+            <div class="channel-tile"><div class="ch-icon" style="background: #1877F2;"></div>Meta</div>
+            <div class="channel-tile"><div class="ch-icon" style="background: #4285F4;"></div>Google</div>
+            <div class="channel-tile"><div class="ch-icon" style="background: #1A1A1A;"></div>TikTok</div>
+            <div class="channel-tile"><div class="ch-icon" style="background: #FFFC00;"></div>Snap</div>
+            <div class="channel-tile"><div class="ch-icon" style="background: #0A66C2;"></div>LinkedIn</div>
+            <div class="channel-tile"><div class="ch-icon" style="background: #E60023;"></div>Pinterest</div>
+            <div class="channel-tile"><div class="ch-icon" style="background: #FF4500;"></div>Reddit</div>
+            <div class="channel-tile"><div class="ch-icon" style="background: #00A4EF;"></div>MS Ads</div>
+            <div class="channel-tile"><div class="ch-icon" style="background: #F9AB00;"></div>GA4</div>
+            <div class="channel-tile"><div class="ch-icon" style="background: #2E5BFF;"></div>AppsFlyer</div>
+            <div class="channel-tile"><div class="ch-icon" style="background: #00C7B7;"></div>Adjust</div>
+            <div class="channel-tile"><div class="ch-icon" style="background: #5A5A5A;"></div>Warehouse</div>
+          </div>
+          <div class="join-line"></div>
+          <div class="semantic-label">Joined at deepest granularity</div>
+        </div>
+      </div>
+
+      <!-- Pillar 2 -->
+      <div class="pillar">
+        <div>
+          <div class="pillar-num">02</div>
+          <h3>Your KPIs, not raw API fields.</h3>
+          <p>"ROAS" in your dashboard is not "ROAS" in Meta's API. Your team has built definitions the rest of the company actually trusts: blended CAC, contribution-margin ROAS, MER, target-CPI.</p>
+          <p>The MCP surfaces those definitions first. The AI talks in your team's vocabulary on day one, without anyone writing a prompt about how to translate <code style="background: var(--cream); padding: 1px 6px; border-radius: 3px; font-family: var(--mono); font-size: 0.9em;">ads_action_values</code>.</p>
+        </div>
+        <div class="pillar-viz">
+          <div class="compare-rows">
+            <div class="compare-row compare-row-bad">
+              <div class="compare-row-label">Raw API field</div>
+              ads_action_values<br/>{ action_type:"omni_purchase",<br/>&nbsp;&nbsp;value:0 }
+            </div>
+            <div class="compare-arrow">↓</div>
+            <div class="compare-row compare-row-good">
+              <div class="compare-row-label">Your team's metric</div>
+              blended_cac
+              <div style="font-family: var(--sans); font-size: 12.5px; margin-top: 6px; color: var(--ink-3);">
+                Cross-channel · attribution-adjusted · region-eligible · already in your dashboards
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pillar 3 -->
+      <div class="pillar">
+        <div>
+          <div class="pillar-num">03</div>
+          <h3>Same ACL as your team.</h3>
+          <p>The AI authenticates as the user. Whatever that user can see in Clarisights, the AI can see: accounts, regions, brands, reports. Nothing more.</p>
+          <p>No separate token to manage. No secondary permission tree. Workspace admins keep a single global toggle for AI access. Revoke access in Clarisights and every downstream AI tool is locked out instantly.</p>
+        </div>
+        <div class="pillar-viz">
+          <div class="acl-viz">
+            <div class="acl-row">
+              <div class="acl-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"/></svg>
+              </div>
+              <div class="acl-body">
+                <div class="acl-title">EU Performance · Sarah</div>
+                <div class="acl-sub">Sees: EU accounts, brand A, B</div>
+              </div>
+              <span class="acl-status acl-status-ok">Allowed</span>
+            </div>
+            <div class="acl-row">
+              <div class="acl-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"/></svg>
+              </div>
+              <div class="acl-body">
+                <div class="acl-title">Sarah asks AI: "APAC CPA last quarter?"</div>
+                <div class="acl-sub">APAC not in her workspace scope</div>
+              </div>
+              <span class="acl-status acl-status-no">Blocked</span>
+            </div>
+            <div class="acl-row">
+              <div class="acl-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </div>
+              <div class="acl-body">
+                <div class="acl-title">Admin toggle</div>
+                <div class="acl-sub">Settings → Workspace → AI access</div>
+              </div>
+              <span class="acl-status acl-status-ok">On</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       F3 · HOW IT WORKS
+  ============================================================ -->
+  <section class="section divider" id="how">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">How it works</div>
+        <h2 class="display-2">Six tools. Plain English. Cross-channel by default.</h2>
+        <p class="lede">
+          Once Clarisights is connected to your AI tool, the AI gets six tools it can call on its own. Discovery tools tell it what data exists. The query tool runs the analysis. Report tools let it browse what your team has already built.
+        </p>
+      </div>
+
+      <div class="how-grid">
+        <div class="diagram">
+          <div class="diagram-row">
+            <div class="diagram-label">Your AI tool</div>
+            <div class="diagram-stack">
+              <span class="diagram-pill">Claude</span>
+              <span class="diagram-pill">ChatGPT</span>
+              <span class="diagram-pill">Gemini</span>
+              <span class="diagram-pill">Cursor</span>
+            </div>
+            <div class="diagram-arrow"></div>
+            <div class="diagram-mcp">Marketing Data MCP</div>
+            <div class="diagram-arrow"></div>
+            <div class="diagram-core">Clarisights semantic layer</div>
+            <div class="diagram-arrow"></div>
+            <div class="diagram-label">Your data</div>
+            <div class="diagram-stack">
+              <span class="diagram-pill">Meta</span>
+              <span class="diagram-pill">Google</span>
+              <span class="diagram-pill">TikTok</span>
+              <span class="diagram-pill">Snap</span>
+              <span class="diagram-pill">LinkedIn</span>
+              <span class="diagram-pill">Pinterest</span>
+              <span class="diagram-pill">Reddit</span>
+              <span class="diagram-pill">MS Ads</span>
+              <span class="diagram-pill">GA4</span>
+              <span class="diagram-pill">AppsFlyer</span>
+              <span class="diagram-pill">Adjust</span>
+              <span class="diagram-pill">Warehouse</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tools-list">
+          <div class="tool-group">
+            <div class="tool-group-head">
+              <span class="tool-group-num">01</span>
+              <span class="tool-group-title">Discover</span>
+            </div>
+            <div class="tool-row">
+              <span class="tool-name">list_data_sources</span>
+              <span class="tool-desc">Channels, analytics, and your saved cross-channel segments.</span>
+            </div>
+            <div class="tool-row">
+              <span class="tool-name">list_metrics</span>
+              <span class="tool-desc">Your KPIs (CPA, ROAS, blended CAC), ranked by your team's actual usage. Custom metrics surfaced first.</span>
+            </div>
+            <div class="tool-row">
+              <span class="tool-name">list_dimensions</span>
+              <span class="tool-desc">Breakdowns the AI can group by: channel, country, campaign, creative concept, audience.</span>
+            </div>
+          </div>
+
+          <div class="tool-group">
+            <div class="tool-group-head">
+              <span class="tool-group-num">02</span>
+              <span class="tool-group-title">Query</span>
+            </div>
+            <div class="tool-row">
+              <span class="tool-name">query_data</span>
+              <span class="tool-desc">Aggregate, group, or trend queries with filters, date ranges, and currency conversion. Returns clean CSV the AI can reason over.</span>
+            </div>
+          </div>
+
+          <div class="tool-group">
+            <div class="tool-group-head">
+              <span class="tool-group-num">03</span>
+              <span class="tool-group-title">Navigate</span>
+            </div>
+            <div class="tool-row">
+              <span class="tool-name">list_reports</span>
+              <span class="tool-desc">Every Clarisights report the user has access to, surfaced to the AI for context.</span>
+            </div>
+            <div class="tool-row">
+              <span class="tool-name">get_report</span>
+              <span class="tool-desc">Tab-level and widget-level structure of a report, so the AI can summarize or recreate.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- What's possible / not possible today -->
+      <div class="possible-grid">
+        <div class="possible-card">
+          <div class="possible-card-h">
+            <span class="possible-tag is-ok">Possible today</span>
+          </div>
+          <h4>Read across your entire marketing stack.</h4>
+          <ul>
+            <li>Cross-channel diagnostics and trend analysis</li>
+            <li>Custom-metric queries (your blended CAC, MER, contribution ROAS)</li>
+            <li>Summaries of reports your team has already built</li>
+            <li>Chained workflows: pull data, draft slides, send to leadership</li>
+            <li>Two full years of historical data</li>
+          </ul>
+        </div>
+        <div class="possible-card is-no">
+          <div class="possible-card-h">
+            <span class="possible-tag is-no">Coming next</span>
+          </div>
+          <h4>Write operations and admin tasks.</h4>
+          <ul>
+            <li>Create new analyses and reports inside Clarisights</li>
+            <li>Draft summaries pinned to a dashboard</li>
+            <li>Update custom dimension descriptions</li>
+            <li>Refine metric definitions through the AI</li>
+            <li>Read-only is the v1 design. Write ops follow once read is trusted at scale</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       F4 · THREE KINDS OF MARKETING MCPs
+       (replaces the synergy band: single, simpler comparison)
+  ============================================================ -->
+  <section class="section divider" id="categories">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Stack, don't replace</div>
+        <h2 class="display-2">Three kinds of marketing MCPs. Three different jobs.</h2>
+        <p class="lede">
+          A wave of marketing MCPs has shipped this year. They look similar from the outside. They're built for very different jobs. Use them together. The execution layer pauses campaigns. The data layer answers questions about what those campaigns produced.
+        </p>
+      </div>
+
+      <div class="wedge-grid">
+        <div class="wedge-card">
+          <div class="wedge-kicker">Channel MCPs</div>
+          <div class="wedge-job">Pull data from one platform.</div>
+          <h3>Built for one channel.</h3>
+          <p>The vanilla MCPs shipped by Meta, Google, and the rest. Single-channel, raw API surface. Useful when you want your AI to pull a single ad set's spend or pause a Meta campaign.</p>
+          <ul>
+            <li>One platform per server</li>
+            <li>Raw metric names. Your AI translates every time</li>
+            <li>No cross-channel join</li>
+          </ul>
+          <div class="wedge-examples">
+            <span class="wedge-examples-label">Examples</span>
+            Meta MCP · Google MCP · channel-specific servers
+          </div>
+        </div>
+
+        <div class="wedge-card">
+          <div class="wedge-kicker">Operator MCPs</div>
+          <div class="wedge-job">Take actions across platforms.</div>
+          <h3>Built for execution.</h3>
+          <p>Pipeboard, AdKit, Synter, and friends. Wrap multiple ad channels in an action layer: pause, scale, adjust budgets. Made for performance ops, not "how are we doing?"</p>
+          <ul>
+            <li>Action-first, not analysis-first</li>
+            <li>Limited semantic context</li>
+            <li>Designed for in-platform execution</li>
+          </ul>
+          <div class="wedge-examples">
+            <span class="wedge-examples-label">Examples</span>
+            Pipeboard · AdKit · Synter
+          </div>
+        </div>
+
+        <div class="wedge-card is-us">
+          <span class="wedge-mark">Clarisights</span>
+          <div class="wedge-kicker">Marketing Data MCP</div>
+          <div class="wedge-job">Analyze performance with your semantic layer.</div>
+          <h3>Built for enterprise analysis.</h3>
+          <p>Eleven ad channels, three attribution platforms, and your data warehouse, joined at deepest granularity. Your team's custom KPIs. Your team's ACL. The semantic layer your analysts have curated, exposed to every AI tool you use.</p>
+          <ul>
+            <li>Cross-channel, joined at source</li>
+            <li>Your custom metrics + dimensions + segments</li>
+            <li>Same governance as your Clarisights workspace</li>
+          </ul>
+          <div class="wedge-examples">
+            <span class="wedge-examples-label">Why this one</span>
+            The MCP you choose when you operate at scale.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       F5 · SETUP
+       (accurate per Avisek's PDF, no invented details)
+  ============================================================ -->
+  <section class="section divider" id="setup">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Setup</div>
+        <h2 class="display-2">Three steps to connect. One step to personalize.</h2>
+        <p class="lede">
+          Existing Clarisights customers can enable the MCP from their workspace. There's nothing new to provision and no separate tokens to manage. The AI client signs in with the user's own Clarisights credentials.
+        </p>
       </div>
 
       <div class="setup-grid">
-        <!-- Claude -->
         <div class="setup-card">
-          <div class="setup-card-head">
-            <div class="setup-card-title">Claude (web, desktop, mobile)</div>
-            <div class="setup-card-time">~45s</div>
-          </div>
-          <p style="font-size: 14px; color: var(--ink-4); margin-bottom: 16px;">Pro, Max, Team, or Enterprise plan.</p>
-          <ol>
-            <li>Open Claude → <strong>Settings → Connectors</strong>.</li>
-            <li>Click <strong>Add custom connector</strong>.</li>
-            <li>Name: <em>Clarisights</em>. URL:
-              <div class="code-block">https://app.clarisights.com/mcp</div>
-            </li>
-            <li>Click <strong>Add</strong>, sign in to Clarisights.</li>
-            <li>In any chat: + → Connectors → enable Clarisights.</li>
-          </ol>
+          <div class="setup-num">01</div>
+          <h3>Admin turns on AI access.</h3>
+          <p>Workspace admin flips the global toggle at Settings → Workspace → AI access.</p>
+          <div class="setup-mono">Settings → Workspace → AI access</div>
         </div>
-
-        <!-- ChatGPT -->
         <div class="setup-card">
-          <div class="setup-card-head">
-            <div class="setup-card-title">ChatGPT</div>
-            <div class="setup-card-time">~60s</div>
-          </div>
-          <p style="font-size: 14px; color: var(--ink-4); margin-bottom: 16px;">Business, Enterprise, Edu, or Pro plan with Developer mode.</p>
-          <ol>
-            <li>Settings → Connectors → Advanced settings → enable <strong>Developer mode</strong>.</li>
-            <li>Settings → Connectors → <strong>Create</strong>.</li>
-            <li>Name: <em>Clarisights</em>. URL: <code>https://app.clarisights.com/mcp</code>. Auth: <strong>OAuth</strong>.</li>
-            <li>Save, sign in to Clarisights.</li>
-            <li>In a new chat: tools menu → toggle Clarisights on.</li>
-          </ol>
+          <div class="setup-num">02</div>
+          <h3>Open MCP settings in your account.</h3>
+          <p>Sign in to Clarisights and visit your MCP settings page to retrieve the connection URL for your workspace.</p>
+          <div class="setup-mono">clarisights.com/dashboard/mcp-settings</div>
         </div>
-
-        <!-- Gemini -->
         <div class="setup-card">
-          <div class="setup-card-head">
-            <div class="setup-card-title">Gemini Enterprise</div>
-            <div class="setup-card-time">~45s</div>
-          </div>
-          <p style="font-size: 14px; color: var(--ink-4); margin-bottom: 16px;">Workspace / Enterprise plans only.</p>
-          <ol>
-            <li>Settings → Apps & connectors → <strong>Custom connectors</strong>.</li>
-            <li>Click <strong>Add connector</strong>.</li>
-            <li>URL: <code>https://app.clarisights.com/mcp</code>. Auth method: <strong>OAuth 2.0</strong>.</li>
-            <li>Save, sign in to Clarisights.</li>
-          </ol>
-          <p style="font-size: 13.5px; color: var(--ink-4); margin-top: 12px; margin-bottom: 0;">Consumer Gemini doesn't support custom connectors today.</p>
+          <div class="setup-num">03</div>
+          <h3>Add the MCP to your AI tool.</h3>
+          <p>Paste the URL into Claude, ChatGPT, Cursor, Gemini, or any MCP-compatible client. Sign in with your Clarisights account. Your existing ACL applies.</p>
         </div>
-
-        <!-- Cursor -->
-        <div class="setup-card">
-          <div class="setup-card-head">
-            <div class="setup-card-title">Cursor</div>
-            <div class="setup-card-time">~30s</div>
-          </div>
-          <p style="font-size: 14px; color: var(--ink-4); margin-bottom: 16px;">Cursor Settings → MCP & Integrations → Add new MCP server. Paste the JSON below into the editor and save.</p>
-          <div class="code-block">{
-  "mcpServers": {
-    "clarisights": {
-      "url": <span class="accent">"https://app.clarisights.com/mcp"</span>
-    }
-  }
-}</div>
-        </div>
-
-        <!-- Claude Code -->
-        <div class="setup-card">
-          <div class="setup-card-head">
-            <div class="setup-card-title">Claude Code</div>
-            <div class="setup-card-time">~10s</div>
-          </div>
-          <p style="font-size: 14px; color: var(--ink-4); margin-bottom: 16px;">One command:</p>
-          <div class="code-block">claude mcp add --transport http \
-  clarisights <span class="accent">https://app.clarisights.com/mcp</span></div>
-          <p style="font-size: 13.5px; color: var(--ink-4); margin-top: 12px; margin-bottom: 0;">Sign-in is triggered on first Clarisights tool call.</p>
-        </div>
-
-        <!-- Codex -->
-        <div class="setup-card">
-          <div class="setup-card-head">
-            <div class="setup-card-title">OpenAI Codex CLI</div>
-            <div class="setup-card-time">~20s</div>
-          </div>
-          <p style="font-size: 14px; color: var(--ink-4); margin-bottom: 16px;">Add to <code>~/.codex/config.toml</code>:</p>
-          <div class="code-block">[mcp_servers.clarisights]
-url = <span class="accent">"https://app.clarisights.com/mcp"</span></div>
-          <p style="font-size: 13.5px; color: var(--ink-4); margin-top: 12px; margin-bottom: 0;">Restart Codex; first tool call triggers OAuth.</p>
+        <div class="setup-card is-optional">
+          <div class="setup-optional-tag">Optional · personalize</div>
+          <div class="setup-num">04</div>
+          <h3>Add a SKILL.md for team context.</h3>
+          <p>The MCP exposes vanilla tools. Domain and team context come through your AI client. Pair the MCP with a SKILL.md (template provided) to teach the AI your team's vocabulary, naming conventions, and default lenses.</p>
         </div>
       </div>
-
-      <p style="margin-top: 20px; max-width: 820px;"><strong>Any other MCP client</strong> that supports remote HTTP servers will work — point it at <code>https://app.clarisights.com/mcp</code> and use OAuth 2.0. For older stdio-only clients, you can bridge with <code>npx mcp-remote</code>.</p>
     </div>
   </section>
 
-  <!-- ============ What to ask ============ -->
-  <section id="ask" style="background: var(--bg-cream);">
+  <!-- ============================================================
+       F6 · TRUST
+  ============================================================ -->
+  <section class="section divider" id="trust">
     <div class="container">
-      <div class="container-narrow" style="padding-left: 0; padding-right: 0;">
-        <div class="section-label">What you can ask</div>
-        <h2>The questions a senior analyst would answer — in chat, in seconds.</h2>
-        <p class="lede">Five jobs the Marketing Data MCP handles well. These are real prompts you can paste into Claude or ChatGPT once connected.</p>
+      <div class="section-head">
+        <div class="eyebrow">Built for enterprise</div>
+        <h2 class="display-2">Governed by the same rules as your workspace.</h2>
+        <p class="lede">
+          The MCP server is an interface, not a store. Your data stays in Clarisights. The MCP routes requests on the logged-in user's behalf, using their auth, their permissions, their history.
+        </p>
       </div>
 
-      <div class="prompts-grid">
-        <div class="prompt-card">
-          <div class="prompt-card-job">Pacing & alerting</div>
-          <h4>Is the spend healthy this week?</h4>
-          <ul class="prompt-list">
-            <li>What was my Facebook spend yesterday vs. the same day last week?</li>
-            <li>Which campaigns went over their daily budget last weekend?</li>
-            <li>Flag any account where weekly spend has dropped &gt;20% vs. the trailing 4-week average.</li>
-          </ul>
+      <div class="trust-grid">
+        <div class="trust-card">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 6v6c0 5.5 3.5 10 8 12 4.5-2 8-6.5 8-12V6l-8-4z"/></svg>
+          </div>
+          <h4>Same ACL as the user.</h4>
+          <p>Auth = Clarisights login. The AI sees what you see. No separate tokens, no parallel permission tree.</p>
         </div>
-
-        <div class="prompt-card">
-          <div class="prompt-card-job">Cross-channel performance</div>
-          <h4>Blended view across paid channels.</h4>
-          <ul class="prompt-list">
-            <li>What's my blended CAC across all paid channels this quarter?</li>
-            <li>Compare CPM across Facebook, TikTok, and Snapchat for the last 30 days.</li>
-            <li>Show me top 10 Google Ads campaigns by ROAS in March, broken down by week.</li>
-          </ul>
+        <div class="trust-card">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+          </div>
+          <h4>Admin toggle.</h4>
+          <p>AI access is a global on/off in Workspace Settings. Flip it once for the whole org.</p>
         </div>
-
-        <div class="prompt-card">
-          <div class="prompt-card-job">Performance Q&A</div>
-          <h4>Why did this thing change?</h4>
-          <ul class="prompt-list">
-            <li>Our overall CTR fell 12% last week — where is that coming from? Break it down by channel and campaign type.</li>
-            <li>Compare creative-set performance between our August and September Meta campaigns.</li>
-            <li>Which audiences are showing the steepest CAC inflation month-over-month?</li>
-          </ul>
+        <div class="trust-card">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>
+          </div>
+          <h4>Two years of history.</h4>
+          <p>Query as far back as your Clarisights history goes. Typically two full years per workspace.</p>
         </div>
-
-        <div class="prompt-card">
-          <div class="prompt-card-job">Reports & dashboards</div>
-          <h4>Read what's already built.</h4>
-          <ul class="prompt-list">
-            <li>List the dashboards I have access to.</li>
-            <li>Open the Q1 Acquisition Review dashboard and summarize what each tab is tracking.</li>
-            <li>Which of our saved segments are underperforming this month?</li>
-          </ul>
-        </div>
-
-        <div class="prompt-card">
-          <div class="prompt-card-job">Discovery</div>
-          <h4>What's even available to me?</h4>
-          <ul class="prompt-list">
-            <li>What metrics do I have available for LinkedIn Ads?</li>
-            <li>Which segments has my company set up?</li>
-            <li>Which channels are connected, and what's the freshest data for each?</li>
-          </ul>
-        </div>
-
-        <div class="prompt-card">
-          <div class="prompt-card-job">Weekly reporting</div>
-          <h4>Draft the email I'd otherwise spend two hours writing.</h4>
-          <ul class="prompt-list">
-            <li>Draft a weekly performance summary for the leadership team, covering spend, CAC, ROAS, and the top three notable shifts.</li>
-            <li>Compare this week to the same week last quarter — what's improved, what's slipped?</li>
-            <li>Pull anything anomalous from the last 7 days that I should flag in tomorrow's standup.</li>
-          </ul>
+        <div class="trust-card">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <h4>GDPR-compliant.</h4>
+          <p>No region-specific data residency wrinkles. The MCP doesn't store user-level data. It routes queries to Clarisights and returns the result.</p>
         </div>
       </div>
 
-      <div class="placeholder-block">
-        <strong>Placeholder:</strong> the exact set of tools exposed by the MCP and the precise vocabulary the LLM uses (e.g. <em>list_channels</em>, <em>query_metrics</em>, <em>get_dashboard</em>, <em>get_segments</em>) needs to be confirmed by Clarisights engineering. Once we have the live tool surface, we'll publish a "prompt cookbook" appendix on this page tuned to those exact names so prompts work first-try.
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ Why this beats raw API ============ -->
-  <section>
-    <div class="container-narrow">
-      <div class="section-label">Why this beats a raw API MCP</div>
-      <h2>The semantic layer is the product. The MCP is just how it gets to your assistant.</h2>
-      <p class="lede">A native Meta Ads MCP gives Claude a steering wheel attached to a raw v25 API. The Marketing Data MCP gives Claude a steering wheel attached to your business — your metric definitions, your account groupings, your permissions, your saved views.</p>
-
-      <div class="compare-panel">
-        <div class="compare-col">
-          <h4>What you inherit with a native API MCP</h4>
-          <ul class="compare-list con">
-            <li><strong>One OAuth flow per platform.</strong> Six ad accounts means six setups. Meta + Google + TikTok means three different auth dances.</li>
-            <li><strong>Token rotation is your problem.</strong> Meta tokens expire in ~60 days. System-user tokens require Business Manager setup. Refresh logic ends up in your prompts.</li>
-            <li><strong>Rate-limit collisions.</strong> One LLM prompt can fan out into 30 sub-queries. Meta's per-account, per-BUC, rolling 1h rate limits aren't designed for that.</li>
-            <li><strong>Schema instability tax.</strong> Meta removed 100+ metrics from Ads Insights in late 2024. Attribution windows changed in Jan 2026. Google sunsets API versions on a 3-month cycle. Your prompts break with the API.</li>
-            <li><strong>Re-derive every metric, every conversation.</strong> What does <em>your</em> team mean by CAC? Media-only? Plus agency? Plus creative? Claude doesn't know — unless you tell it, every time.</li>
-            <li><strong>No cross-channel anything.</strong> A Meta-only MCP can't compare Meta to TikTok. A Google-only MCP can't see your blended ROAS.</li>
-            <li><strong>No permission inheritance.</strong> The MCP either has full account access or none. There's no "this person only sees the EU accounts."</li>
-          </ul>
-        </div>
-        <div class="compare-col">
-          <h4>What you get with the Marketing Data MCP</h4>
-          <ul class="compare-list pro">
-            <li><strong>One identity, all channels.</strong> Your Clarisights account is the only credential. Every connected platform is reachable in one prompt.</li>
-            <li><strong>No token plumbing.</strong> Clarisights handles platform-side auth, refresh, and version migration. You never see a Meta access token.</li>
-            <li><strong>Your team's metric definitions.</strong> The CAC, ROAS, MER, and custom metrics your team has built in Clarisights are the metrics the LLM uses. Same numbers as the dashboards.</li>
-            <li><strong>Stable schema across platform changes.</strong> When Meta sunsets a field or Google ships v18, Clarisights absorbs it. Your prompts keep working.</li>
-            <li><strong>Cross-channel by default.</strong> Blended views, attribution comparisons, cross-platform pacing — first-class concepts, not workarounds.</li>
-            <li><strong>Permissions inherited from the UI.</strong> The assistant only sees what the signed-in user can see. No accidental leakage of accounts outside scope.</li>
-            <li><strong>Dashboards & saved segments are addressable.</strong> "Open the Q1 review dashboard" works. Years of saved internal IP becomes prompt-accessible.</li>
-            <li><strong>One rate-limit budget.</strong> 1,000 queries per user per day, governed centrally, not per-platform.</li>
-          </ul>
+      <div class="roadmap-note">
+        <span class="roadmap-tag">Roadmap</span>
+        <div class="roadmap-text">
+          <strong>Read-only today.</strong> Write operations next: creating analyses, drafting reports, generating summaries in Clarisights. Plus admin ops like updating custom dimensions and metric descriptions through the AI.
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ The wedge ============ -->
-  <section class="wedge">
-    <div class="container-narrow">
-      <div class="section-label">The position</div>
-      <h2>The analyst, not the operator.</h2>
-      <p>There's a vocal debate inside paid-media teams right now about how much an AI assistant should be allowed to actually <em>do</em>. Should it pause campaigns when CPA spikes? Should it shift budget between ad sets? Should it write new copy and ship it?</p>
-      <p>The cautious answer is the right one. A bot flipping bids every 15 minutes isn't a superpower — it's a way to confuse the algorithm you're already paying to optimize. And the cost of an AI making the wrong write-back decision is asymmetric: a bad query wastes a chat turn; a bad bid change wastes a week of budget.</p>
-      <p>The Marketing Data MCP <strong>does not write back to ad platforms</strong>. By design. This isn't a limitation we'd patch later — it's the position. We think the highest-leverage use of an AI assistant in a paid-media team is to give every person on the team an on-call senior analyst. Not a co-pilot you have to babysit. An analyst who answers when you ask.</p>
-      <p>If and when you want execution, you reach for a different tool — a native MCP with a real approval workflow, an automation platform like Smartly or Pencil, or a human. The Marketing Data MCP makes sure the question that <em>triggered</em> that decision was answered with the right data, on the right metric definition, in the right amount of time.</p>
-    </div>
-  </section>
-
-  <!-- ============ Semantic layer ============ -->
-  <section>
-    <div class="container-narrow">
-      <div class="section-label">Connected to your full Clarisights setup</div>
-      <h2>Everything your team has built becomes addressable in chat.</h2>
-      <p class="lede">The MCP isn't a separate product surface. It's a window into the same Clarisights instance your team already uses. Whatever lives in the UI is what the assistant can browse.</p>
-
-      <h3>Channels & accounts</h3>
-      <p>Every paid channel you have connected — <span class="placeholder">[CONFIRM: Facebook, Google, TikTok, Snapchat, LinkedIn, Pinterest, Reddit, Microsoft, plus analytics + warehouse sources]</span> — is queryable. Account groupings (by brand, by region, by team) are respected.</p>
-
-      <h3>Metrics & dimensions</h3>
-      <p>Standard metrics across platforms (impressions, clicks, CPM, CPC, ROAS) plus your team's custom metrics (blended CAC, MER, custom ROAS definitions, contribution margin). The assistant can list what's available per channel so prompts use the right names.</p>
-
-      <h3>Dashboards & saved segments</h3>
-      <p>Dashboards your team has built are listable and summarizable. Saved segments — your audiences, your funnel cuts, your geo splits — are addressable in prompts.</p>
-
-      <h3>Permissions, governed centrally</h3>
-      <p>The assistant only sees what the signed-in user can see. It cannot reach other users' private dashboards, data outside the user's assigned scope, or anything from other companies. Disconnecting from the AI tool revokes access immediately.</p>
-
-      <h3>Admin controls</h3>
-      <p>Company admins can disable MCP access company-wide from Settings → Workspace → AI access. Connected apps and last-used dates are visible in account settings. <span class="placeholder">[CONFIRM: audit logging, usage reports per user, and any enterprise-grade controls available]</span>.</p>
-    </div>
-  </section>
-
-  <!-- ============ Limits ============ -->
-  <section style="background: var(--bg-soft);" class="tight">
-    <div class="container-narrow">
-      <div class="section-label">Limits & guardrails</div>
-      <h2>Fast, safe defaults. Lifts available for power users.</h2>
-      <p>To keep responses fast and protect your account, the MCP server applies the following limits. Most teams never hit them. If you do, talk to your CSM — limits can be raised.</p>
-
-      <div class="limits-grid">
-        <div class="limit-card">
-          <div class="limit-card-value">10 / 100 / 1,000</div>
-          <div class="limit-card-label">Requests per user (min / hour / day)</div>
-        </div>
-        <div class="limit-card">
-          <div class="limit-card-value">30 / 300 / 3,000</div>
-          <div class="limit-card-label">Requests per company (min / hour / day)</div>
-        </div>
-        <div class="limit-card">
-          <div class="limit-card-value">1,000</div>
-          <div class="limit-card-label">Maximum rows per query</div>
-        </div>
-        <div class="limit-card">
-          <div class="limit-card-value">120s</div>
-          <div class="limit-card-label">Query timeout</div>
-        </div>
-        <div class="limit-card">
-          <div class="limit-card-value">OAuth 2.0</div>
-          <div class="limit-card-label">Auth method (no API keys to manage)</div>
-        </div>
-        <div class="limit-card">
-          <div class="limit-card-value">Revoke anytime</div>
-          <div class="limit-card-label">From AI tool settings or Clarisights account</div>
-        </div>
-      </div>
-
-      <p style="font-size: 14.5px; color: var(--ink-4); margin-top: 24px;">If a query times out or hits the row cap, narrow the date range, reduce the number of dimensions, or add account filters. Cross-channel queries with many dimensions are the most expensive.</p>
-    </div>
-  </section>
-
-  <!-- ============ FAQ ============ -->
-  <section id="faq">
-    <div class="container-narrow">
-      <div class="section-label">FAQ</div>
-      <h2>Questions that come up first.</h2>
-
-      <div class="faq-item">
-        <div class="faq-q">Which Clarisights plan includes the MCP server?</div>
-        <div class="faq-a"><span class="placeholder">[CONFIRM with Clarisights — included on all plans? Specific tier? Trial-available?]</span></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">Which AI assistants does this work with?</div>
-        <div class="faq-a">Claude (Pro, Max, Team, Enterprise), ChatGPT (Business, Enterprise, Edu, Pro with Developer mode), Gemini Enterprise, Cursor, Claude Code, and OpenAI's Codex CLI. Any MCP-compatible client that supports remote HTTP servers will work. For older stdio-only clients, you can bridge with <code>mcp-remote</code>.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">Can the AI change campaigns, budgets, or bids in my ad accounts?</div>
-        <div class="faq-a">No, and that's by design. The Marketing Data MCP is read-only. If you want an AI assistant that can write back to Meta or Google Ads, use a native MCP (with a careful approval workflow). The MCP is built to give you a fast, accurate analyst — not an autonomous operator.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">How is this different from Supermetrics' MCP or Polar's MCP?</div>
-        <div class="faq-a"><span class="placeholder">[NEED Clarisights' direct positioning here. Working hypothesis: depth of programmatic-team-grade modeling — channels + analytics + warehouse joined at asset level — plus enterprise-grade permissions/governance, plus the deliberate read-only stance. Get the team's preferred phrasing before publishing.]</span></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">What channels are supported?</div>
-        <div class="faq-a"><span class="placeholder">[CONFIRM the canonical channel list. Working draft: Facebook/Meta Ads, Google Ads, TikTok Ads, Snapchat Ads, LinkedIn Ads, Pinterest Ads, Reddit Ads, Microsoft Advertising, plus connected analytics (GA4, AppsFlyer, Adjust) and any data-warehouse sources. List + roadmap please.]</span></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">What does the AI actually see when it connects?</div>
-        <div class="faq-a">The same data the signed-in user sees in the Clarisights UI: channels and accounts assigned to that user, dashboards shared with them, and segments/metrics defined for the company. It cannot see other users' private dashboards, data outside the user's scope, or anything from other companies.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">How is authentication handled?</div>
-        <div class="faq-a">OAuth 2.0. When you add the connector, your AI tool opens a browser window, you sign in with your Clarisights account, and you approve access. There are no API keys or tokens to manage. Sign-in stays valid in the AI tool until you revoke it from Clarisights → Settings → Connected apps, or from your AI tool's connector settings.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">Can a company admin disable MCP access for the whole company?</div>
-        <div class="faq-a">Yes. Company admins can disable MCP access company-wide from Settings → Workspace → AI access. Individual users can be paused without disabling the feature for everyone.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">What are the rate limits?</div>
-        <div class="faq-a">10 requests per minute, 100 per hour, 1,000 per day per user. 30 / 300 / 3,000 at the company level. 1,000 rows per query. 120-second query timeout. Lifts available for power users — ask your CSM.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">Where does the data live during a query?</div>
-        <div class="faq-a"><span class="placeholder">[CONFIRM data-handling specifics for the FAQ. Likely points: queries hit the Clarisights warehouse, results stream back to the user's AI tool over the MCP transport, no model-vendor training on the data. Get the official wording.]</span></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">What's the roadmap after this?</div>
-        <div class="faq-a"><span class="placeholder">[NEED a roadmap line from Clarisights. Insights agents? Scheduled summaries pushed to Slack? Cross-tool workflows? Write-back somewhere safer than ad platforms? The page implicitly promises something; we need to know what.]</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ CTA ============ -->
-  <section id="cta" class="cta-footer" style="border-top: none;">
-    <div class="container-narrow">
-      <div class="section-label">Connect in under a minute</div>
-      <h2>Your next ad-performance question shouldn't need six dashboards.</h2>
-      <p class="lede">Sign in to your Clarisights account, add the connector to the AI tool you already use, and ask it the question on your mind.</p>
-      <div class="cta-buttons">
-        <a href="https://app.clarisights.com/mcp" class="btn btn-primary">Connect Clarisights to your AI assistant</a>
-        <a href="https://clarisights.support.site/article/connect-your-ai-assistant-to-clarisights" class="btn btn-secondary">Read the setup docs</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ Footer ============ -->
-  <footer class="site">
+  <!-- ============================================================
+       F7 · ACCESS / PLANS
+  ============================================================ -->
+  <section class="section" id="demo">
     <div class="container">
-      <div class="row">
-        <div>© Clarisights · Marketing Data MCP</div>
-        <div><span class="placeholder">[Footer links: product · pricing · docs · status · contact — populate from Clarisights site]</span></div>
+      <div class="access-band">
+        <div>
+          <div class="eyebrow">Access</div>
+          <h3>Included on every plan. Currently in beta with existing customers.</h3>
+          <p style="margin-top: 16px;">The Marketing Data MCP isn't an add-on. It's a workspace feature available across every Clarisights plan. We're rolling it out to existing customers first while we sharpen the beta. New teams can see it in a demo.</p>
+        </div>
+        <div>
+          <div class="access-list">
+            <div class="access-row">
+              <span class="access-check">✓</span>
+              <p><strong>No tier restriction.</strong> Pro, Enterprise, every plan.</p>
+            </div>
+            <div class="access-row">
+              <span class="access-check">✓</span>
+              <p><strong>No add-on price.</strong> Included with your existing Clarisights subscription.</p>
+            </div>
+            <div class="access-row">
+              <span class="access-check">✓</span>
+              <p><strong>Generous limits.</strong> Enterprise rate limits out of the box.</p>
+            </div>
+            <div class="access-row">
+              <span class="access-check">✓</span>
+              <p><strong>Beta access.</strong> Existing customers can enable at <span class="mono" style="font-size: 13px; color: var(--burgundy);">/dashboard/mcp-settings</span></p>
+            </div>
+          </div>
+          <div class="access-cta">
+            <a class="btn btn-primary btn-arrow" href="#contact">
+              Book a demo
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="#faq">Read the FAQ</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       F8 · FAQ
+  ============================================================ -->
+  <section class="section divider" id="faq">
+    <div class="container">
+      <div class="section-head is-center">
+        <div class="eyebrow">Frequently asked</div>
+        <h2 class="display-2">Questions, answered.</h2>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('is-open')">
+            <span>What is the Marketing Data MCP?</span>
+            <span class="faq-q-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>An MCP (Model Context Protocol) server that connects Clarisights to any MCP-compatible AI tool: Claude, ChatGPT, Cursor, Gemini. The AI gets six tools it can call on its own to discover your data sources, query your metrics, and read your reports. Every call respects your team's Clarisights permissions.</p>
+            <p>Think of it as the analyst interface for your marketing data, exposed to whichever AI client your team has already adopted.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('is-open')">
+            <span>Why is Clarisights' MCP different from Supermetrics, Windsor, Polar, or Adverity?</span>
+            <span class="faq-q-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Adjacent MCPs are connectors-first. They move data from many sources and expose a query API on top. Clarisights' MCP exposes a semantic layer your team has been building for years: custom KPIs, governed dimensions, saved cross-channel segments, dashboards. The AI talks in your team's vocabulary on day one, governed by your workspace ACL. That's the difference.</p>
+            <p>It also scales further. The MCP is designed for programmatic teams running eleven channels with hundreds of custom metrics and complex account groupings, not five-source setups.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('is-open')">
+            <span>Which AI tools can I connect?</span>
+            <span class="faq-q-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Anything that speaks MCP. Claude, ChatGPT (with the connector framework), Cursor, Gemini, and the rest of the growing MCP ecosystem. If a client supports custom MCP servers, the Marketing Data MCP works there.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('is-open')">
+            <span>Which channels are supported today?</span>
+            <span class="faq-q-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Every ad channel and attribution source you've connected to Clarisights, including Facebook/Meta, Google, TikTok, Snapchat, LinkedIn, Pinterest, Reddit, Microsoft Advertising, plus connected analytics like GA4, AppsFlyer, Adjust, and Singular. Custom report segments you've saved in Clarisights are addressable too.</p>
+            <p>If it's in your Clarisights workspace, the MCP can see it.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('is-open')">
+            <span>Are my custom metrics and dimensions supported?</span>
+            <span class="faq-q-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Yes. Custom metrics are surfaced first by the <code>list_metrics</code> tool, ranked by your team's usage. Custom dimensions, saved segments, account groupings, and dashboard structures are all addressable through the MCP's discovery surface.</p>
+            <p>The MCP exposes the semantic layer your team has already curated. That's the difference from connectors-first MCPs that hand the AI raw API fields.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('is-open')">
+            <span>How far back can the AI query?</span>
+            <span class="faq-q-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>As far back as your data goes in Clarisights. Typically two full years per workspace.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('is-open')">
+            <span>How is access governed?</span>
+            <span class="faq-q-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Every MCP query is bound by the same ACL as the logged-in Clarisights user. There are no separate tokens to manage. Admins control AI access through a single global toggle at Workspace → Settings → AI access.</p>
+            <p>Revoke a user's Clarisights access and every downstream AI client loses access on the next request.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('is-open')">
+            <span>Does the AI vendor train on my data?</span>
+            <span class="faq-q-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>The Marketing Data MCP is a server, not an AI model. Data leaves Clarisights only in response to a user's prompt, returned to that user's AI client. Whatever data-use policy you've negotiated with your AI vendor (Anthropic, OpenAI, Google) applies on their side. That contract is between your team and them.</p>
+            <p>Clarisights does not retain user-level query data, and never trains anything.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('is-open')">
+            <span>What's the rate limit?</span>
+            <span class="faq-q-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>1,000 queries per user per day. An enterprise-tier limit out of the box. We've sized it so a heavy analyst-mode user runs comfortably without thinking about caps.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('is-open')">
+            <span>Which plan do I need?</span>
+            <span class="faq-q-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>The MCP is included on every Clarisights plan. It's not an add-on, and there's no tier restriction. Currently rolling out in beta to existing customers. New teams can see it through a demo.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('is-open')">
+            <span>Can the AI take actions, or just read?</span>
+            <span class="faq-q-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Read-only today. Write operations are on the roadmap: creating analyses, drafting reports, generating summaries inside Clarisights, plus admin operations like updating custom dimensions through the AI. We're shipping read first because we want every answer trusted before we let the AI write.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('is-open')">
+            <span>How does this stack with my AI tool's other connectors?</span>
+            <span class="faq-q-icon">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>The Marketing Data MCP is one tool among many your AI can use. Chain it with Slides MCP, Notion MCP, Email MCP: get your data, draft a deck, send it to the leadership channel. The AI orchestrates. Marketing Data MCP just makes sure the data layer is right.</p>
+          </div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <div class="container footer-inner">
+      <a class="logo" href="#"><span class="logo-dot"></span>Clarisights</a>
+      <div class="footer-meta">
+        Marketing Data MCP · mock for <span style="color: var(--ink-2); font-weight: 500;">pages.recurr.co</span>
+        <a href="#how">How it works</a>
+        <a href="#faq">FAQ</a>
+        <a href="#demo">Book demo</a>
       </div>
     </div>
   </footer>
