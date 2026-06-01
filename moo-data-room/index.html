@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>MOO Data Room — Warehouse Health</title>
+<style>
+  :root{
+    --paper:#FAF7F2; --ink:#15130F; --muted:#6B655B; --line:#E7E1D6; --card:#FFFFFF;
+    --ok:#1F7A4D; --ok-bg:#E6F2EA; --stale:#B8791C; --stale-bg:#FBF0DD;
+    --miss:#B23A2E; --miss-bg:#F8E4E1; --none:#7A746A; --none-bg:#EFEBE3;
+    --setup:#3457A6; --setup-bg:#E5ECF8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto;padding:48px 24px 80px}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+  header{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:28px}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  h1{font-size:30px;margin:8px 0 6px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:14px}
+  .banner{margin:18px 0 0;background:var(--setup-bg);border:1px solid #cdd9f1;color:#22386e;
+    border-radius:10px;padding:10px 14px;font-size:13px}
+  .tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:28px 0 32px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .tile .n{font-size:28px;font-weight:700;letter-spacing:-.02em}
+  .tile .l{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:2px}
+  .tile.ok .n{color:var(--ok)} .tile.stale .n{color:var(--stale)} .tile.miss .n{color:var(--miss)}
+  .tile.none .n{color:var(--none)} .tile.setup .n{color:var(--setup)}
+  .group{margin:26px 0 8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:middle}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;background:#FCFAF6}
+  tr:last-child td{border-bottom:none}
+  td.name{font-weight:600}
+  td .src{display:block;font-size:12px;color:var(--muted);font-weight:400}
+  .badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:4px 9px;border-radius:999px}
+  .b-ok{background:var(--ok-bg);color:var(--ok)} .b-stale{background:var(--stale-bg);color:var(--stale)}
+  .b-miss{background:var(--miss-bg);color:var(--miss)} .b-none{background:var(--none-bg);color:var(--none)}
+  .b-setup{background:var(--setup-bg);color:var(--setup)}
+  .stale-n{color:var(--miss);font-weight:600}
+  footer{margin-top:36px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:18px}
+  @media(max-width:720px){.tiles{grid-template-columns:repeat(2,1fr)} td .hide,th .hide{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">MOO Data Room</div>
+    <h1>Warehouse Health</h1>
+    <div class="sub mono">Snapshot · 2026-06-01 · source: <code>public.stream_health()</code> on the live warehouse</div>
+    <div class="banner">Interim preview. The live, invite-only Data Room ships at <strong>data.ministryofoats.com</strong> — this board is the same data, rendered.</div>
+  </header>
+
+  <div class="tiles">
+    <div class="tile ok"><div class="n">3</div><div class="l">Healthy</div></div>
+    <div class="tile stale"><div class="n">1</div><div class="l">Stale</div></div>
+    <div class="tile miss"><div class="n">4</div><div class="l">Missing</div></div>
+    <div class="tile none"><div class="n">2</div><div class="l">No data</div></div>
+    <div class="tile setup"><div class="n">2</div><div class="l">Not set up</div></div>
+  </div>
+
+  <div class="group">Needs attention</div>
+  <table>
+    <thead><tr><th>Stream</th><th>Cadence</th><th class="hide">Latest data</th><th>Rows</th><th>Stale</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td class="name">Magicpin Payout<span class="src">Magicpin · file</span></td><td class="mono">per&nbsp;settlement</td><td class="mono hide">2026-02-28</td><td class="mono">581</td><td class="mono stale-n">93d</td><td><span class="badge b-miss">Missing</span></td></tr>
+      <tr><td class="name">Ownly Payout<span class="src">Ownly · file</span></td><td class="mono">per&nbsp;settlement</td><td class="mono hide">2026-02-28</td><td class="mono">581</td><td class="mono stale-n">93d</td><td><span class="badge b-miss">Missing</span></td></tr>
+      <tr><td class="name">Aggregator Listing Visibility<span class="src">Aggregator export · file</span></td><td class="mono">weekly</td><td class="mono hide">2026-04-28</td><td class="mono">812</td><td class="mono stale-n">34d</td><td><span class="badge b-miss">Missing</span></td></tr>
+      <tr><td class="name">Aggregator Item Unavailability<span class="src">Aggregator export · file</span></td><td class="mono">weekly</td><td class="mono hide">2026-04-30</td><td class="mono">15,872</td><td class="mono stale-n">32d</td><td><span class="badge b-miss">Missing</span></td></tr>
+      <tr><td class="name">Swiggy Payout<span class="src">Swiggy · file</span></td><td class="mono">weekly</td><td class="mono hide">2026-05-23</td><td class="mono">8,857</td><td class="mono stale-n">9d</td><td><span class="badge b-stale">Stale</span></td></tr>
+      <tr><td class="name">Aggregator Ratings<span class="src">Dashboard export · file</span></td><td class="mono">weekly</td><td class="mono hide">—</td><td class="mono">0</td><td class="mono">—</td><td><span class="badge b-none">No data</span></td></tr>
+      <tr><td class="name">Central Kitchen Costs<span class="src">Manual · file</span></td><td class="mono">weekly</td><td class="mono hide">—</td><td class="mono">0</td><td class="mono">—</td><td><span class="badge b-none">No data</span></td></tr>
+      <tr><td class="name">Ad Spend (Swiggy/Zomato)<span class="src">Manual · file · true-CM denominator</span></td><td class="mono">weekly</td><td class="mono hide">—</td><td class="mono">—</td><td class="mono">—</td><td><span class="badge b-setup">Not set up</span></td></tr>
+      <tr><td class="name">HungerBox Payout<span class="src">HungerBox · file</span></td><td class="mono">per&nbsp;settlement</td><td class="mono hide">—</td><td class="mono">—</td><td class="mono">—</td><td><span class="badge b-setup">Not set up</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="group">Healthy</div>
+  <table>
+    <thead><tr><th>Stream</th><th>Cadence</th><th class="hide">Latest data</th><th>Rows</th><th>Stale</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td class="name">Sales (Rista)<span class="src">Rista · auto</span></td><td class="mono">daily</td><td class="mono hide">2026-05-31</td><td class="mono">86,668</td><td class="mono">1d</td><td><span class="badge b-ok">OK</span></td></tr>
+      <tr><td class="name">Inventory (Rista)<span class="src">Rista · auto</span></td><td class="mono">daily</td><td class="mono hide">2026-06-01</td><td class="mono">81,617</td><td class="mono">0d</td><td><span class="badge b-ok">OK</span></td></tr>
+      <tr><td class="name">Zomato Payout<span class="src">Zomato · file</span></td><td class="mono">weekly</td><td class="mono hide">2026-05-24</td><td class="mono">8,934</td><td class="mono">8d</td><td><span class="badge b-ok">OK</span></td></tr>
+    </tbody>
+  </table>
+
+  <footer>
+    <strong>What this is:</strong> every data stream the warehouse depends on, with how fresh it is. Auto streams (Rista) flow on their own; file streams need a human to upload — the live app surfaces exactly which are outstanding and lets the team drop the file in.<br><br>
+    <strong>What it already caught:</strong> Magicpin & Ownly payouts haven’t landed since Feb 28 (~3 months); aggregator listing/availability exports went quiet ~a month ago; ratings & CK costs were never captured. Sales & inventory are healthy and current.
+  </footer>
+</div>
+</body>
+</html>
