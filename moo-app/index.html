@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MOO App — Steady-State Wireframe</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --mut:#6b6b6b; --line:#e2e0db; --bg:#f6f4ef;
+    --card:#ffffff; --accent:#c9622b; --accent-soft:#f3e3d8;
+    --good:#2e7d52; --skip:#b9b6af;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#dad7d0;color:var(--ink);display:flex;justify-content:center;min-height:100vh}
+  .label{position:fixed;top:14px;left:14px;font-size:11px;color:#777;letter-spacing:.04em}
+
+  /* phone shell */
+  .phone{width:100%;max-width:412px;background:var(--bg);min-height:100vh;position:relative;display:flex;flex-direction:column;box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+  @media(min-width:460px){.phone{margin:24px 0;min-height:auto;height:860px;border-radius:32px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25)}}
+
+  /* status + app bar */
+  .statusbar{height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:12px;font-weight:600;color:var(--ink);flex:0 0 auto}
+  .appbar{padding:8px 18px 14px;flex:0 0 auto}
+  .appbar h1{font-size:21px;font-weight:700}
+  .appbar .sub{font-size:13px;color:var(--mut);margin-top:2px}
+
+  /* scroll area */
+  .screen{flex:1 1 auto;overflow-y:auto;padding:0 16px 96px;display:none}
+  .screen.active{display:block}
+
+  /* generic bits */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .pill{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
+  .pill.on{background:#e2f0e8;color:var(--good)}
+  .pill.off{background:#eceae5;color:var(--skip)}
+  .muted{color:var(--mut);font-size:13px}
+  .kicker{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);font-weight:600;margin:18px 2px 8px}
+  .big{font-size:28px;font-weight:700}
+  .btn{display:block;width:100%;text-align:center;background:var(--accent);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn.sm{padding:9px 14px;width:auto;font-size:13px;border-radius:10px}
+  .chip{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 6px;text-align:center;font-weight:600;font-size:14px;cursor:pointer;flex:1}
+  .chip.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+  .thumb{width:46px;height:46px;border-radius:10px;background:var(--accent-soft);flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:20px}
+  .vdot{width:12px;height:12px;border:1.5px solid var(--good);border-radius:3px;display:inline-flex;align-items:center;justify-content:center}
+  .vdot::after{content:"";width:6px;height:6px;background:var(--good);border-radius:50%}
+  .divider{height:1px;background:var(--line);margin:12px 0}
+  .listitem{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .listitem:last-child{border-bottom:none}
+  .day{display:flex;align-items:center;gap:12px;padding:13px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+  .day .dno{width:42px;flex:0 0 auto}
+  .day .dno b{font-size:14px}.day .dno span{display:block;font-size:11px;color:var(--mut)}
+  .day.skipped .dish{color:var(--skip);text-decoration:line-through}
+  .linkrow{display:flex;align-items:center;justify-content:space-between;padding:15px 2px;border-bottom:1px solid var(--line);cursor:pointer}
+  .linkrow:last-child{border-bottom:none}
+  .chev{color:#c0bdb6}
+
+  /* toggle */
+  .tog{width:44px;height:26px;border-radius:99px;background:#d8d5ce;position:relative;flex:0 0 auto;cursor:pointer;transition:.15s}
+  .tog.on{background:var(--good)}
+  .tog::after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;top:2px;left:2px;transition:.15s}
+  .tog.on::after{left:20px}
+
+  /* tab bar */
+  .tabbar{position:absolute;bottom:0;left:0;right:0;height:72px;background:#fff;border-top:1px solid var(--line);display:flex;flex:0 0 auto}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;color:var(--mut);cursor:pointer}
+  .tab .ic{font-size:20px;line-height:1}
+  .tab.active{color:var(--accent);font-weight:600}
+
+  /* sheet */
+  .sheetwrap{position:absolute;inset:0;background:rgba(0,0,0,.35);display:none;align-items:flex-end;z-index:20}
+  .sheetwrap.open{display:flex}
+  .sheet{background:#fff;width:100%;border-radius:18px 18px 0 0;padding:18px 18px 28px;max-height:80%;overflow-y:auto}
+  .grab{width:38px;height:4px;border-radius:99px;background:#ddd;margin:2px auto 14px}
+  .opt{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);cursor:pointer}
+  .radio{width:20px;height:20px;border-radius:50%;border:2px solid #cfccc5;flex:0 0 auto}
+  .opt.sel .radio{border-color:var(--accent);background:radial-gradient(var(--accent) 40%,#fff 45%)}
+</style>
+</head>
+<body>
+<div class="label">MOO · steady-state wireframe · tap around</div>
+<div class="phone">
+
+  <div class="statusbar"><span>9:41</span><span>● ▮▮ ⌗</span></div>
+
+  <!-- ============ TODAY ============ -->
+  <div class="screen active" id="today">
+    <div class="appbar"><h1>Good morning, Pratik</h1><div class="sub">Oatmeal Gang · member since Mar ’26</div></div>
+
+    <div class="card" style="background:var(--ink);color:#fff;border:none">
+      <div class="row"><span class="muted" style="color:#bbb">MOO Wallet</span><span class="pill">Gang</span></div>
+      <div class="big" style="color:#fff;margin-top:4px">₹2,340</div>
+      <button class="btn ghost sm" style="margin-top:12px" onclick="go('wallet')">Load wallet</button>
+    </div>
+
+    <div class="kicker">Your next breakfast</div>
+    <div class="card">
+      <div class="listitem" style="border:none;padding-top:0">
+        <div class="thumb">🥣</div>
+        <div style="flex:1">
+          <b>Berry Bircher</b>
+          <div class="muted">Tomorrow · 8:00 AM · delivered to Home</div>
+        </div>
+      </div>
+      <div class="row" style="gap:8px">
+        <button class="btn ghost sm" style="flex:1" onclick="openDay(0)">Edit</button>
+        <button class="btn ghost sm" style="flex:1" onclick="alert('Tomorrow skipped (mock)')">Skip</button>
+      </div>
+    </div>
+
+    <div class="kicker">Today’s plans</div>
+    <div class="card" onclick="go('plans')" style="cursor:pointer">
+      <div class="row"><b>🍳 Breakfast at Home</b><span class="pill on">On</span></div>
+      <div class="muted" style="margin-top:6px">7 days planned · delivered to Home</div>
+    </div>
+    <div class="card" onclick="goPW()" style="cursor:pointer">
+      <div class="row"><b>💪 Post-Workout</b><span class="pill on">On</span></div>
+      <div class="muted" style="margin-top:6px">Protein Oats Bowl · Cult Fit, HSR · Mon/Wed/Fri</div>
+    </div>
+
+    <button class="btn ghost" onclick="go('menu')">Browse the menu</button>
+  </div>
+
+  <!-- ============ PLANS HUB ============ -->
+  <div class="screen" id="plans">
+    <div class="appbar"><h1>Plans</h1><div class="sub">Set it once. Breakfast shows up.</div></div>
+
+    <div class="card" onclick="go('bah')" style="cursor:pointer">
+      <div class="row"><b>🍳 Breakfast at Home</b><span class="pill on">On</span></div>
+      <div class="muted" style="margin:8px 0 4px">Your next 7 days, delivered to Home at 8:00 AM</div>
+      <div class="row"><span class="muted">Mon–Sun · 5 of 7 days set</span><span class="chev">›</span></div>
+    </div>
+
+    <div class="card" onclick="go('pw')" style="cursor:pointer">
+      <div class="row"><b>💪 Post-Workout</b><span class="pill on">On</span></div>
+      <div class="muted" style="margin:8px 0 4px">Recovery meal, timed to your session</div>
+      <div class="row"><span class="muted">Cult Fit, HSR · 60 min ahead</span><span class="chev">›</span></div>
+    </div>
+
+    <div class="muted" style="text-align:center;margin-top:24px;padding:0 20px">More plans coming — for now, these two cover the mornings that matter.</div>
+  </div>
+
+  <!-- ============ BREAKFAST AT HOME ============ -->
+  <div class="screen" id="bah">
+    <div class="appbar">
+      <div class="row"><span class="muted" onclick="go('plans')" style="cursor:pointer">‹ Plans</span><div class="tog on" id="bahTog" onclick="this.classList.toggle('on')"></div></div>
+      <h1 style="margin-top:8px">Breakfast at Home</h1>
+    </div>
+
+    <div class="card">
+      <div class="linkrow" style="border-bottom:1px solid var(--line)" onclick="alert('Pick delivery location (mock)')">
+        <span>📍 Deliver to <b>Home</b></span><span class="chev">›</span>
+      </div>
+      <div class="linkrow" style="border:none" onclick="alert('Pick time (mock)')">
+        <span>⏰ Arrive by <b>8:00 AM</b></span><span class="chev">›</span>
+      </div>
+    </div>
+
+    <div class="kicker">Next 7 days · tap a day to edit</div>
+    <div class="card" id="weekList"></div>
+  </div>
+
+  <!-- ============ POST-WORKOUT ============ -->
+  <div class="screen" id="pw">
+    <div class="appbar">
+      <div class="row"><span class="muted" onclick="go('plans')" style="cursor:pointer">‹ Plans</span><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+      <h1 style="margin-top:8px">Post-Workout</h1>
+      <div class="sub">We prompt you ~60 min before you finish, so it lands when you do.</div>
+    </div>
+
+    <div class="card">
+      <div class="linkrow" onclick="alert('Change SKU (mock)')">
+        <span>🥣 Meal · <b>Protein Oats Bowl</b></span><span class="chev">›</span>
+      </div>
+      <div class="linkrow" onclick="alert('Change location (mock)')">
+        <span>📍 At <b>Cult Fit, HSR</b></span><span class="chev">›</span>
+      </div>
+      <div class="linkrow" style="border:none" onclick="alert('Timing rule (mock)')">
+        <span>⏰ <b>60 min ahead</b> prompt</span><span class="chev">›</span>
+      </div>
+    </div>
+
+    <div class="kicker">On these days</div>
+    <div class="card">
+      <div class="row" style="gap:6px" id="pwDays"></div>
+    </div>
+  </div>
+
+  <!-- ============ MENU ============ -->
+  <div class="screen" id="menu">
+    <div class="appbar"><div class="row"><span class="muted" onclick="go('today')" style="cursor:pointer">‹ Back</span></div><h1 style="margin-top:8px">Menu</h1></div>
+    <div class="card" id="menuList"></div>
+  </div>
+
+  <!-- ============ WALLET ============ -->
+  <div class="screen" id="wallet">
+    <div class="appbar"><h1>Wallet</h1></div>
+    <div class="card" style="background:var(--ink);color:#fff;border:none;text-align:center">
+      <div class="muted" style="color:#bbb">Balance</div>
+      <div class="big" style="color:#fff" id="balDisp">₹2,340</div>
+    </div>
+    <div class="kicker">Add money · get a little extra</div>
+    <div class="card">
+      <div class="row" style="gap:8px;margin-bottom:10px">
+        <div class="chip" onclick="loadAmt(this,500)">₹500</div>
+        <div class="chip sel" onclick="loadAmt(this,1000)">₹1,000</div>
+        <div class="chip" onclick="loadAmt(this,2000)">₹2,000</div>
+      </div>
+      <div class="muted" style="text-align:center;margin-bottom:8px" id="bonusNote">+ ₹50 bonus on ₹1,000</div>
+      <button class="btn" onclick="doLoad()">Add to wallet</button>
+    </div>
+
+    <div class="kicker">Activity</div>
+    <div class="card" id="walletHist">
+      <div class="listitem"><div style="flex:1"><b>Berry Bircher</b><div class="muted">Yesterday · Breakfast at Home</div></div><span style="color:var(--mut)">– ₹180</span></div>
+      <div class="listitem"><div style="flex:1"><b>Protein Oats Bowl</b><div class="muted">Mon · Post-Workout</div></div><span style="color:var(--mut)">– ₹220</span></div>
+      <div class="listitem"><div style="flex:1"><b>Wallet load</b><div class="muted">Mar 28 · +₹100 bonus</div></div><span style="color:var(--good)">+ ₹2,100</span></div>
+    </div>
+  </div>
+
+  <!-- ============ YOU ============ -->
+  <div class="screen" id="you">
+    <div class="appbar"><h1>You</h1></div>
+    <div class="card">
+      <div class="row"><div><b style="font-size:17px">Pratik Mishra</b><div class="muted">+91 81050 07607</div></div><span class="pill">Gang</span></div>
+    </div>
+    <div class="kicker">Preferences</div>
+    <div class="card">
+      <div class="linkrow"><span>🥗 Dietary · <b>Vegetarian</b></span><span class="chev">›</span></div>
+      <div class="linkrow"><span>⚠️ Allergies · <b>Nuts</b></span><span class="chev">›</span></div>
+      <div class="linkrow" style="border:none"><span>📍 Saved locations · <b>2</b></span><span class="chev">›</span></div>
+    </div>
+    <div class="kicker">Account</div>
+    <div class="card">
+      <div class="linkrow" onclick="go('wallet')"><span>💳 Wallet & history</span><span class="chev">›</span></div>
+      <div class="linkrow"><span>🧾 Order history</span><span class="chev">›</span></div>
+      <div class="linkrow"><span>⭐ Ratings & reviews</span><span class="chev">›</span></div>
+      <div class="linkrow" style="border:none"><span>💬 Help & support</span><span class="chev">›</span></div>
+    </div>
+  </div>
+
+  <!-- ============ DAY EDITOR SHEET ============ -->
+  <div class="sheetwrap" id="sheet">
+    <div class="sheet">
+      <div class="grab"></div>
+      <div class="row"><h1 style="font-size:18px" id="sheetDay">Tomorrow · Tue</h1><span class="muted" onclick="closeSheet()" style="cursor:pointer">Done</span></div>
+      <div class="kicker" style="margin-top:14px">Choose your dish</div>
+      <div id="sheetDishes"></div>
+      <div class="divider"></div>
+      <div class="linkrow" onclick="alert('Change time for this day (mock)')"><span>⏰ Arrive by <b>8:00 AM</b></span><span class="chev">›</span></div>
+      <button class="btn ghost" style="margin-top:14px" onclick="skipDay()">Skip this day</button>
+    </div>
+  </div>
+
+  <!-- ============ TAB BAR ============ -->
+  <div class="tabbar">
+    <div class="tab active" data-s="today" onclick="go('today')"><span class="ic">🏠</span>Today</div>
+    <div class="tab" data-s="plans" onclick="go('plans')"><span class="ic">📅</span>Plans</div>
+    <div class="tab" data-s="wallet" onclick="go('wallet')"><span class="ic">💳</span>Wallet</div>
+    <div class="tab" data-s="you" onclick="go('you')"><span class="ic">👤</span>You</div>
+  </div>
+
+</div>
+
+<script>
+  const DISHES = ["Berry Bircher","Banana Peanut Oats","Masala Oats Bowl","Mango Overnight Oats","Protein Oats Bowl","Apple Cinnamon Porridge"];
+  const WEEK = [
+    {d:"Tomorrow",dow:"Tue",dish:"Berry Bircher",skip:false},
+    {d:"Wed",dow:"",dish:"Banana Peanut Oats",skip:false},
+    {d:"Thu",dow:"",dish:"Masala Oats Bowl",skip:false},
+    {d:"Fri",dow:"",dish:"",skip:true},
+    {d:"Sat",dow:"",dish:"Mango Overnight Oats",skip:false},
+    {d:"Sun",dow:"",dish:"",skip:true},
+    {d:"Mon",dow:"",dish:"Protein Oats Bowl",skip:false},
+  ];
+  let editIdx = 0;
+
+  function go(id){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.s===id));
+    document.querySelector('.phone').scrollTop=0;
+    document.querySelectorAll('.screen').forEach(s=>s.scrollTop=0);
+  }
+  function goPW(){ go('plans'); setTimeout(()=>go('pw'),0); }
+
+  function renderWeek(){
+    document.getElementById('weekList').innerHTML = WEEK.map((w,i)=>`
+      <div class="day ${w.skip?'skipped':''}" onclick="openDay(${i})">
+        <div class="dno"><b>${w.d}</b><span>${w.dow}</span></div>
+        <div class="thumb">${w.skip?'—':'🥣'}</div>
+        <div style="flex:1"><div class="dish">${w.skip?'Skipped':w.dish}</div></div>
+        <span class="chev">›</span>
+      </div>`).join('');
+  }
+  function renderPWDays(){
+    const days=["M","T","W","T","F","S","S"]; const on=[0,2,4];
+    document.getElementById('pwDays').innerHTML = days.map((d,i)=>
+      `<div class="chip ${on.includes(i)?'sel':''}">${d}</div>`).join('');
+  }
+  function renderMenu(){
+    const m=[["Berry Bircher",320,12,180],["Banana Peanut Oats",410,16,170],["Masala Oats Bowl",290,11,160],["Protein Oats Bowl",380,28,220],["Mango Overnight Oats",300,10,180],["Cold Brew",15,0,150]];
+    document.getElementById('menuList').innerHTML = m.map(x=>`
+      <div class="listitem"><div class="thumb">🥣</div>
+      <div style="flex:1"><div class="row"><b>${x[0]}</b><span class="vdot"></span></div>
+      <div class="muted">${x[1]} kcal · ${x[2]}g protein</div></div>
+      <span>₹${x[3]}</span></div>`).join('');
+  }
+
+  function openDay(i){
+    editIdx=i; const w=WEEK[i];
+    document.getElementById('sheetDay').textContent = `${w.d}${w.dow?' · '+w.dow:''}`;
+    document.getElementById('sheetDishes').innerHTML = DISHES.map(d=>`
+      <div class="opt ${d===w.dish?'sel':''}" onclick="pickDish('${d}')">
+        <div class="radio"></div><div>${d}</div></div>`).join('');
+    document.getElementById('sheet').classList.add('open');
+  }
+  function pickDish(d){ WEEK[editIdx].dish=d; WEEK[editIdx].skip=false; renderWeek(); openDay(editIdx); }
+  function skipDay(){ WEEK[editIdx].skip=true; renderWeek(); closeSheet(); }
+  function closeSheet(){ document.getElementById('sheet').classList.remove('open'); }
+
+  let bal=2340, sel=1000;
+  const bonus={500:20,1000:50,2000:120};
+  function loadAmt(el,a){ sel=a; document.querySelectorAll('#wallet .chip').forEach(c=>c.classList.remove('sel')); el.classList.add('sel'); document.getElementById('bonusNote').textContent=`+ ₹${bonus[a]} bonus on ₹${a.toLocaleString()}`; }
+  function doLoad(){ bal += sel + bonus[sel]; document.getElementById('balDisp').textContent='₹'+bal.toLocaleString(); document.getElementById('today').querySelector('.big').textContent='₹'+bal.toLocaleString(); alert('Added ₹'+(sel+bonus[sel]).toLocaleString()+' (incl. bonus) — mock'); }
+
+  renderWeek(); renderPWDays(); renderMenu();
+</script>
+</body>
+</html>
