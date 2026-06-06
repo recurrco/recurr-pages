@@ -4,614 +4,403 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Clarisights — Early Access</title>
+  <title>next.clarisights.com — working wireframe</title>
+  <!--
+    ═══════════════════════════════════════════════════════════════════════
+    next.clarisights.com — WORKING WIREFRAME (v1, manifesto reframe)
+    ───────────────────────────────────────────────────────────────────────
+    PURPOSE   Home of the MDP module. A proxy for a new brand + product +
+              website launch. Primary job: BELIEF SHIFT (category), with
+              BRAND ARRIVAL a close second. Built problem-first — the
+              category NAME arrives as the payoff, not the premise.
+
+    SPINE     Frame-setter → Fold 1 (today's generation + 3 surfaces)
+              → Fold 2 (next gen, posed as a question) → Fold 3 (the deeper
+              problem: marketing data ≠ other data; the planning surface)
+              → Fold 4 (the reveal: purpose-built marketing data architecture
+              → unlocks the planning surface) → Arun coda → "follow the build".
+
+    VOICE     Hybrid — institutional "we" spine + Arun signed anchor.
+
+    EVOLUTION HOMEPAGE-IN-WAITING. This same page hardens into the future
+              clarisights.com root: manifesto folds COMPRESS over time, the
+              proof/product blocks GROW, and a nav forms around it. Keep every
+              block self-contained so it can be reordered or lifted.
+
+    DESIGN    Minimal / monochrome / wireframe-grade. ASSUME NOTHING:
+              the category name, all article titles, Arun's line, any hard
+              numbers, and the new brand identity are SLOTS, marked visibly
+              with the .slot / .tbd treatment. Nothing invented as fact.
+    ═══════════════════════════════════════════════════════════════════════
+  -->
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --ink: #000;
-      --paper: #fff;
-      --rule: #000;
+      --ink: #111111;
+      --paper: #ffffff;
+      --grey-1: #6b6b6b;
+      --grey-2: #9a9a9a;
+      --hair: #e4e4e4;
+      --hair-strong: #111111;
+      --slot: #b06a00;          /* annotation only — NOT a brand color */
+      --slot-bg: #fbf4e8;
       --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-      --display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      --wrap: 1080px;
+      --read: 680px;
     }
-    html { background: var(--paper); }
-    body { font-family: var(--display); color: var(--ink); background: var(--paper); -webkit-font-smoothing: antialiased; line-height: 1.3; }
+    html { background: var(--paper); -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--sans); color: var(--ink); line-height: 1.5; }
+    a { color: inherit; text-decoration: none; }
 
-    a { color: var(--ink); text-decoration: none; }
+    .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 32px; }
+    .read { max-width: var(--read); }
 
-    /* ─── Primitives ──────────────────────────────────────────────── */
-    .mono { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .mono-small { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .hr { border-bottom: 1.5px solid var(--rule); }
+    /* ── primitives ─────────────────────────────────────────────── */
+    .mono { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-1); }
+    .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey-2); margin-bottom: 22px; display: block; }
 
-    .section-head {
-      padding: 28px 40px 16px;
-      display: grid; grid-template-columns: 180px 1fr; gap: 40px;
-      align-items: baseline;
-      border-bottom: 1.5px solid var(--rule);
-    }
-    .section-head .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .section-head .title { font-weight: 900; font-size: clamp(28px, 3.2vw, 44px); line-height: 1; letter-spacing: -0.025em; padding-bottom: 8px; }
-    .section-head .sub { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; padding-bottom: 12px; opacity: 0.6; }
+    h1, h2, h3 { font-weight: 680; letter-spacing: -0.02em; line-height: 1.08; }
+    h1 { font-size: clamp(34px, 5.4vw, 64px); font-weight: 720; }
+    h2 { font-size: clamp(26px, 3.4vw, 40px); }
+    h3 { font-size: clamp(18px, 2vw, 22px); letter-spacing: -0.01em; }
+    p.lede { font-size: clamp(17px, 1.7vw, 20px); color: #2a2a2a; }
+    p.body { font-size: 16.5px; color: #2f2f2f; margin-top: 16px; }
+    p.body + p.body { margin-top: 14px; }
 
-    /* ─── Masthead ────────────────────────────────────────────────── */
-    .masthead {
-      padding: 20px 40px;
-      display: grid;
-      grid-template-columns: auto 1fr auto auto auto;
-      gap: 40px;
-      align-items: center;
-      border-bottom: 1.5px solid var(--rule);
-      position: sticky; top: 0; background: var(--paper); z-index: 50;
-    }
-    .wordmark { font-weight: 900; font-size: 28px; letter-spacing: -0.03em; line-height: 1; display: inline-flex; align-items: baseline; }
-    .wordmark .caret { display: inline-block; width: 0.45em; height: 0.85em; background: var(--ink); margin-left: 0.08em; animation: blink 1.05s steps(2) infinite; }
-    @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+    /* slot / placeholder treatment — anything undecided ───────────── */
+    .slot { color: var(--slot); background: var(--slot-bg); border: 1px dashed var(--slot);
+            border-radius: 4px; padding: 1px 7px; font-weight: 600; white-space: nowrap; }
+    .tbd  { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--slot); border: 1px solid var(--slot); border-radius: 3px; padding: 1px 5px; vertical-align: middle; margin-left: 6px; }
+    .placeholder-block { border: 1px dashed var(--slot); background: var(--slot-bg); border-radius: 6px; padding: 16px 18px; color: #6a4a13; font-size: 15px; }
 
-    nav.nav ul { list-style: none; display: flex; gap: 32px; }
-    nav.nav a { color: var(--ink); font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1.5px solid transparent; padding-bottom: 2px; }
-    nav.nav a:hover { border-bottom-color: var(--ink); }
+    /* ── section frame ──────────────────────────────────────────── */
+    section { border-top: 1px solid var(--hair); padding: 84px 0; }
+    section.fold { padding: 92px 0; }
+    .fold-label { display: flex; gap: 14px; align-items: baseline; margin-bottom: 26px; }
+    .fold-label .n { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--ink); border: 1px solid var(--ink); border-radius: 3px; padding: 2px 7px; }
+    .fold-label .k { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey-2); }
 
-    .mh-clock { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; text-align: right; line-height: 1.5; }
-    .mh-pulse { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
-    .pulse-dot { position: relative; width: 8px; height: 8px; display: block; }
-    .pulse-dot::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--ink); }
-    .pulse-dot::after { content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 1.2px solid var(--ink); animation: pulse 1.6s ease-out infinite; }
-    @keyframes pulse { 0% { transform: scale(0.6); opacity: 1; } 100% { transform: scale(3.2); opacity: 0; } }
+    /* ── masthead ───────────────────────────────────────────────── */
+    .masthead { border-top: none; padding: 22px 0; }
+    .masthead .wrap { display: flex; align-items: center; justify-content: space-between; }
+    .wordmark { font-weight: 720; font-size: 19px; letter-spacing: -0.02em; }
+    .wordmark .sub { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-2); margin-left: 8px; vertical-align: middle; }
+    /* NAV LATENT — appears as this page hardens into a homepage. Kept as a hint. */
+    .nav-latent { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--hair); border: 1px dashed var(--hair); border-radius: 3px; padding: 4px 9px; }
 
-    .mh-cta {
-      font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-      background: var(--ink); color: var(--paper); padding: 10px 14px; border: 1.5px solid var(--ink); font-weight: 700;
-    }
-    .mh-cta:hover { background: var(--paper); color: var(--ink); }
+    /* ── hero / cold open ───────────────────────────────────────── */
+    .hero { padding: 120px 0 104px; border-top: 1px solid var(--hair); }
+    .hero h1 { max-width: 940px; }
+    .hero .lede { margin-top: 30px; max-width: var(--read); }
 
-    /* ─── Hero ────────────────────────────────────────────────────── */
-    .hero { padding: 120px 40px 120px; border-bottom: 1.5px solid var(--rule); }
-    .hero-coord { display: flex; justify-content: space-between; padding-bottom: 60px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .hero-title {
-      font-weight: 900; font-size: clamp(48px, 9vw, 152px); line-height: 0.9; letter-spacing: -0.035em;
-      max-width: 17ch;
-    }
-    .hero-sub {
-      margin-top: 56px;
-      display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end;
-    }
-    .hero-sub p { font-size: clamp(18px, 2vw, 22px); font-weight: 500; max-width: 54ch; line-height: 1.4; }
-    .hero-sub .stamp { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; text-align: right; line-height: 1.8; }
-    .hero-sub .stamp a { border-bottom: 1.5px solid var(--ink); font-weight: 700; }
+    /* ── diagram (wireframe) ────────────────────────────────────── */
+    .diagram { border: 1px solid var(--hair); border-radius: 8px; padding: 28px; margin-top: 40px; }
+    .diagram .cap { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-2); margin-bottom: 22px; }
+    .node { border: 1.5px solid var(--ink); border-radius: 6px; padding: 14px 16px; text-align: center; }
+    .node .t { font-weight: 640; font-size: 14px; }
+    .node .d { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--grey-1); margin-top: 5px; }
+    .node.soft { border-style: dashed; border-color: var(--grey-2); }
+    .pipe-row { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .pipe-row .arrow { font-family: var(--mono); color: var(--grey-2); font-size: 18px; }
+    .surfaces { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 26px; }
+    .surface { border: 1px solid var(--hair); border-radius: 6px; padding: 18px; }
+    .surface .role { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slot); margin-bottom: 8px; }
+    .surface .name { font-weight: 660; font-size: 16px; }
+    .surface .note { font-size: 13.5px; color: var(--grey-1); margin-top: 6px; }
+    .split-cap { text-align: center; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-2); margin-top: 20px; }
 
-    /* ─── Instruments band ────────────────────────────────────────── */
-    .band {
-      background: var(--ink); color: var(--paper);
-      padding: 22px 40px;
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
-      border-bottom: 1.5px solid var(--rule);
-      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
-    }
-    .band dt { opacity: 0.55; font-size: 10px; margin-bottom: 6px; }
-    .band dd { font-family: var(--mono); font-weight: 700; font-size: 22px; letter-spacing: -0.01em; text-transform: none; display: flex; align-items: center; gap: 10px; }
-    .band .pulse-dot::before { background: var(--paper); }
-    .band .pulse-dot::after { border-color: var(--paper); }
+    /* layered diagram (observed/planned/executed) */
+    .layers { display: grid; gap: 10px; margin-top: 6px; }
+    .layer { border: 1px solid var(--hair); border-radius: 6px; padding: 16px 18px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .layer.heavy { border: 2px solid var(--ink); background: #fafafa; }
+    .layer .lt { font-weight: 640; font-size: 15px; }
+    .layer .ld { font-size: 13px; color: var(--grey-1); }
+    .layer .tag { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--slot); }
 
-    /* ─── Principles ──────────────────────────────────────────────── */
-    .principle {
-      padding: 52px 40px;
-      display: grid; grid-template-columns: 180px 2fr 2.4fr; gap: 40px;
-      border-bottom: 1px solid var(--ink);
-      align-items: start;
-    }
-    .principle .p-coord { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.6; }
-    .principle .p-coord b { font-weight: 700; font-size: 14px; display: block; margin-top: 2px; }
-    .principle .p-body h3 { font-weight: 900; font-size: clamp(30px, 3.5vw, 48px); line-height: 1; letter-spacing: -0.03em; margin-bottom: 18px; }
-    .principle .p-body p { font-size: 16px; line-height: 1.55; max-width: 56ch; }
-    .principle .p-body p + p { margin-top: 14px; }
-    .principle .p-body .tagline {
-      margin-top: 22px; padding-top: 16px;
-      border-top: 1.5px solid var(--ink);
-      font-weight: 700; font-size: 17px; letter-spacing: -0.01em;
-      max-width: 42ch;
-    }
+    /* stack diagram (the reveal) */
+    .stack { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .stack .part { border: 1.5px solid var(--ink); border-radius: 6px; padding: 16px 18px; }
+    .stack .part .pt { font-weight: 660; font-size: 15px; }
+    .stack .part .pd { font-size: 13.5px; color: var(--grey-1); margin-top: 4px; }
+    .unlock { text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-2); margin: 6px 0; }
+    .surface-reveal { border: 2px dashed var(--slot); background: var(--slot-bg); border-radius: 8px; padding: 22px; text-align: center; }
+    .surface-reveal .big { font-weight: 700; font-size: 20px; letter-spacing: -0.01em; color: #1a1a1a; }
+    .surface-reveal .small { font-size: 14px; color: #6a4a13; margin-top: 8px; }
 
-    /* ─── Visual mocks (all ASCII/mono, pure B/W) ────────────────── */
-    .mock-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.55; margin-bottom: 12px; }
+    /* ── embedded article card ──────────────────────────────────── */
+    .article { margin-top: 40px; border: 1px solid var(--hair); border-left: 3px solid var(--ink); border-radius: 0 8px 8px 0; padding: 22px 24px; max-width: var(--read); }
+    .article .k { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-2); margin-bottom: 10px; }
+    .article .title { font-weight: 660; font-size: 18px; letter-spacing: -0.01em; }
+    .article .dek { font-size: 14.5px; color: var(--grey-1); margin-top: 8px; }
+    .article .meta { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--slot); margin-top: 14px; }
 
-    /* Connector grid */
-    .conn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .conn {
-      border: 1.5px solid var(--ink);
-      padding: 12px 14px;
-      font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; line-height: 1.5;
-    }
-    .conn .c-name { font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; display: block; margin-bottom: 6px; }
-    .conn .c-row { display: flex; justify-content: space-between; align-items: center; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; }
-    .conn .live::before, .conn .paused::before {
-      content: '●'; margin-right: 5px; font-size: 10px; display: inline-block;
-    }
-    .conn .paused::before { content: '○'; }
-    .conn.off { opacity: 0.55; }
+    /* ── reveal fold ────────────────────────────────────────────── */
+    .name-line { font-size: clamp(22px, 3vw, 32px); font-weight: 660; letter-spacing: -0.02em; margin-top: 30px; line-height: 1.25; }
 
-    /* Search table */
-    .search-mock {
-      border: 1.5px solid var(--ink);
-      font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em;
-    }
-    .search-mock .head {
-      background: var(--ink); color: var(--paper);
-      padding: 8px 12px; display: flex; justify-content: space-between;
-      font-weight: 700; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
-    }
-    .search-mock table { width: 100%; border-collapse: collapse; }
-    .search-mock th {
-      font-family: var(--mono); font-size: 9.5px; font-weight: 700;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--ink);
-      opacity: 0.6;
-    }
-    .search-mock td {
-      font-family: var(--mono); font-size: 11px;
-      padding: 10px; border-bottom: 1px dashed var(--ink);
-    }
-    .search-mock tr:last-child td { border-bottom: none; }
-    .search-mock th.n, .search-mock td.n { text-align: right; font-variant-numeric: tabular-nums; }
-    .search-mock td.q { font-family: var(--display); font-size: 13px; font-weight: 500; letter-spacing: -0.01em; }
-    .search-mock td.tag b { font-weight: 700; }
+    /* ── roadmap ────────────────────────────────────────────────── */
+    .roadmap { display: grid; gap: 0; margin-top: 28px; max-width: var(--read); }
+    .road-item { display: grid; grid-template-columns: 120px 1fr; gap: 20px; padding: 16px 0; border-top: 1px solid var(--hair); align-items: baseline; }
+    .road-item .when { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-2); }
+    .road-item .what { font-size: 15.5px; }
 
-    /* EDN code */
-    pre.code {
-      border: 1.5px solid var(--ink);
-      padding: 18px 20px;
-      font-family: var(--mono); font-size: 11.5px; line-height: 1.65;
-      white-space: pre; overflow-x: auto;
-      background: var(--paper); color: var(--ink);
-    }
-    pre.code .kw { font-weight: 700; }
-    pre.code .cmt { opacity: 0.55; font-style: italic; }
+    /* ── coda (Arun) ────────────────────────────────────────────── */
+    .coda { padding: 96px 0; }
+    .coda blockquote { font-size: clamp(22px, 2.8vw, 30px); font-weight: 640; letter-spacing: -0.02em; line-height: 1.25; max-width: 820px; }
+    .coda .sig { margin-top: 26px; display: flex; align-items: center; gap: 12px; }
+    .coda .sig .avatar { width: 38px; height: 38px; border-radius: 50%; border: 1px dashed var(--grey-2); display: grid; place-items: center; font-family: var(--mono); font-size: 9px; color: var(--grey-2); }
+    .coda .sig .who { font-size: 14px; }
+    .coda .sig .who b { font-weight: 640; }
+    .coda .sig .who span { color: var(--grey-1); }
 
-    /* MCP flow */
-    .mcp {
-      margin-top: 12px;
-      border: 1.5px solid var(--ink);
-      padding: 14px;
-      font-family: var(--mono); font-size: 12px; line-height: 1.6;
-      white-space: pre;
-      letter-spacing: 0;
-    }
+    /* ── CTA ────────────────────────────────────────────────────── */
+    .cta { padding: 100px 0; background: var(--ink); color: var(--paper); }
+    .cta .eyebrow { color: rgba(255,255,255,0.5); }
+    .cta h2 { color: var(--paper); max-width: 640px; }
+    .cta p { color: rgba(255,255,255,0.72); margin-top: 18px; max-width: 520px; font-size: 17px; }
+    .cta form { margin-top: 34px; display: flex; gap: 10px; max-width: 480px; flex-wrap: wrap; }
+    .cta input { flex: 1 1 240px; padding: 14px 16px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.3); background: transparent; color: var(--paper); font-size: 15px; font-family: var(--sans); }
+    .cta input::placeholder { color: rgba(255,255,255,0.4); }
+    .cta button { padding: 14px 24px; border-radius: 6px; border: none; background: var(--paper); color: var(--ink); font-weight: 640; font-size: 15px; cursor: pointer; font-family: var(--sans); }
+    .cta .fineprint { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 16px; }
 
-    /* Notebook frame */
-    .nb {
-      border: 1.5px solid var(--ink);
-      display: grid; grid-template-columns: 200px 1fr;
-      min-height: 420px;
-    }
-    .nb-side { border-right: 1px solid var(--ink); padding: 14px; }
-    .nb-side .t { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px; opacity: 0.55; }
-    .nb-side ul { list-style: none; }
-    .nb-side li { padding: 6px 0; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.02em; border-bottom: 1px dashed var(--ink); }
-    .nb-side li:last-child { border-bottom: none; }
-    .nb-side li.on { font-weight: 700; position: relative; padding-left: 16px; }
-    .nb-side li.on::before { content: '▸'; position: absolute; left: 2px; }
-    .nb-main { padding: 20px 24px; }
-    .nb-crumb { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.55; margin-bottom: 6px; }
-    .nb-title { font-weight: 900; font-size: 28px; letter-spacing: -0.025em; line-height: 1.05; margin-bottom: 4px; }
-    .nb-meta { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--ink); padding-bottom: 12px; margin-bottom: 16px; opacity: 0.6; }
-    .nb-h { font-weight: 800; font-size: 15px; margin: 16px 0 6px; letter-spacing: -0.01em; }
-    .nb-p { font-size: 14px; line-height: 1.55; max-width: 62ch; }
-    .nb-alert {
-      border: 1.5px solid var(--ink);
-      padding: 10px 14px;
-      margin-top: 14px;
-      font-size: 13px; line-height: 1.5;
-    }
-    .nb-alert b { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; margin-right: 8px; }
-    .nb-chart { font-family: var(--mono); font-size: 11px; line-height: 1.2; margin: 10px 0; white-space: pre; opacity: 0.85; }
+    /* ── footer ─────────────────────────────────────────────────── */
+    footer { padding: 40px 0; }
+    footer .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    footer .mono { color: var(--grey-2); }
 
-    @media (max-width: 900px) {
-      .nb { grid-template-columns: 1fr; min-height: 0; }
-      .nb-side { border-right: 0; border-bottom: 1px solid var(--ink); }
-    }
+    /* working-draft banner */
+    .draft-banner { background: var(--slot-bg); border-bottom: 1px solid var(--slot); color: #6a4a13; }
+    .draft-banner .wrap { padding: 8px 32px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 
-    /* ─── Questions list ──────────────────────────────────────────── */
-    .qlist { padding: 8px 40px 40px; border-bottom: 1.5px solid var(--rule); }
-    .qlist ul { list-style: none; }
-    .qlist li {
-      display: grid; grid-template-columns: 120px 180px 1fr 140px; gap: 24px;
-      padding: 28px 0; border-bottom: 1px solid var(--ink);
-      align-items: baseline;
-    }
-    .qlist li:last-child { border-bottom: none; }
-    .qlist .q-num, .qlist .q-cat, .qlist .q-how { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .qlist .q-cat { opacity: 0.55; }
-    .qlist .q-how { text-align: right; opacity: 0.55; }
-    .qlist .q-title { font-weight: 700; font-size: clamp(18px, 2vw, 26px); line-height: 1.25; letter-spacing: -0.015em; max-width: 52ch; }
-
-    /* ─── Surface section ─────────────────────────────────────────── */
-    .surface { padding: 40px; border-bottom: 1.5px solid var(--rule); }
-
-    /* ─── Request ─────────────────────────────────────────────────── */
-    .request { padding: 120px 40px; border-bottom: 1.5px solid var(--rule); }
-    .request-inner { display: grid; grid-template-columns: 180px 1fr auto; gap: 40px; align-items: end; }
-    .request-title { font-weight: 900; font-size: clamp(48px, 7vw, 128px); line-height: 0.9; letter-spacing: -0.035em; max-width: 12ch; }
-    .request-cta { display: flex; flex-direction: column; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; text-align: right; }
-    .request-cta a { border-bottom: 1.5px solid var(--ink); padding-bottom: 2px; font-weight: 700; font-size: 14px; letter-spacing: 0.08em; }
-
-    /* ─── GTM footnote (inverted) ─────────────────────────────────── */
-    .gtm { background: var(--ink); color: var(--paper); padding: 0; border-bottom: 1.5px solid var(--rule); }
-    .gtm .section-head { border-color: var(--paper); }
-    .gtm .section-head .label, .gtm .section-head .sub { color: var(--paper); }
-    .gtm .section-head .sub { opacity: 0.55; }
-    .gtm .section-head .title { color: var(--paper); }
-
-    .plays {
-      padding: 48px 40px;
-      display: grid; grid-template-columns: 180px 1fr 1fr 1fr; gap: 40px;
-      align-items: start;
-    }
-    .plays .plays-intro { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.6; opacity: 0.7; }
-    .play .p-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; margin-bottom: 12px; opacity: 0.7; }
-    .play h4 { font-weight: 900; font-size: 22px; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 12px; }
-    .play p { font-size: 14px; line-height: 1.55; margin-bottom: 14px; opacity: 0.85; }
-    .play p strong { font-weight: 700; opacity: 1; }
-    .play .p-meta {
-      border-top: 1px solid var(--paper);
-      padding-top: 10px;
-      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
-      line-height: 1.6;
-      opacity: 0.65;
-    }
-    .play .p-meta .k { opacity: 0.5; margin-right: 4px; }
-    .play.tentative h4 { font-weight: 500; }
-
-    /* ─── Footer ──────────────────────────────────────────────────── */
-    footer { padding: 32px 40px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.8; }
-    footer a { border-bottom: 1px solid var(--ink); }
-    footer .foot-right { text-align: right; }
-
-    /* ─── Responsive ──────────────────────────────────────────────── */
-    @media (max-width: 1000px) {
-      .masthead, .hero, .band, .principle, .qlist, .surface, .request, .plays, footer, .section-head { padding-left: 20px; padding-right: 20px; }
-      .masthead { grid-template-columns: auto auto 1fr; gap: 16px; }
-      nav.nav, .mh-clock { display: none; }
-      .hero { padding-top: 64px; padding-bottom: 64px; }
-      .hero-sub { grid-template-columns: 1fr; }
-      .hero-sub .stamp { text-align: left; }
-      .band { grid-template-columns: repeat(2, 1fr); }
-      .principle { grid-template-columns: 1fr; gap: 24px; }
-      .qlist li { grid-template-columns: 1fr; gap: 6px; }
-      .qlist .q-how { text-align: left; }
-      .request-inner { grid-template-columns: 1fr; gap: 24px; }
-      .plays { grid-template-columns: 1fr; gap: 32px; }
-      footer { grid-template-columns: 1fr; }
-      footer .foot-right { text-align: left; }
-      .section-head { grid-template-columns: 1fr; gap: 12px; }
+    @media (max-width: 720px) {
+      .surfaces { grid-template-columns: 1fr; }
+      .road-item { grid-template-columns: 1fr; gap: 4px; }
+      section, section.fold { padding: 64px 0; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ═══ Masthead ═══════════════════════════════════════════════════ -->
-  <header class="masthead">
-    <div class="wordmark">clarisights<span class="caret"></span></div>
-    <nav class="nav"><ul>
-      <li><a href="#principles">Principles</a></li>
-      <li><a href="#questions">Questions</a></li>
-      <li><a href="#surface">Surface</a></li>
-    </ul></nav>
-    <div class="mh-clock">
-      <span id="mh-time">--:--:--</span> UTC<br>
-      <span id="mh-date">---</span>
+  <!-- WORKING-DRAFT BANNER — remove on real launch -->
+  <div class="draft-banner">
+    <div class="wrap">
+      <span>Working wireframe · next.clarisights.com</span>
+      <span>Amber = undecided slot (name / articles / brand / numbers)</span>
     </div>
-    <div class="mh-pulse"><span class="pulse-dot"></span>Early access · Open</div>
-    <a href="#request" class="mh-cta">Request access →</a>
+  </div>
+
+  <!-- MASTHEAD — nav latent (forms as page hardens into homepage) -->
+  <header class="masthead">
+    <div class="wrap">
+      <div class="wordmark">Clarisights<span class="sub">next</span></div>
+      <div class="nav-latent">nav — later</div>
+    </div>
   </header>
 
-  <!-- ═══ Hero ═══════════════════════════════════════════════════════ -->
+  <!-- ════ FRAME-SETTER / COLD OPEN ════════════════════════════════ -->
   <section class="hero">
-    <div class="hero-coord">
-      <span>Canvas / 001 / Early Access</span>
-      <span>Berlin · New York · Bengaluru</span>
-    </div>
-    <h1 class="hero-title">A canvas for performance marketing.</h1>
-    <div class="hero-sub">
-      <p>Data flows in from everywhere. Intelligence flows out to everyone who needs it.</p>
-      <div class="stamp">
-        Early Access · Open<br>
-        Compiled 2026-04-20 · v0.1<br>
-        <a href="#request">Request access →</a>
-      </div>
+    <div class="wrap">
+      <span class="eyebrow">A working thesis · on the evolution of marketing reporting</span>
+      <h1>Marketing reporting has evolved before. It's about to again.</h1>
+      <p class="lede">Spreadsheets gave way to warehouses. Warehouses gave way to dashboards. Each leg solved the last one's pain — and quietly introduced its own. This is an argument about the next leg, and the one problem it has to fix that none of the others did.</p>
     </div>
   </section>
 
-  <!-- ═══ Instruments band ═══════════════════════════════════════════ -->
-  <section class="band">
-    <div><dt>Status</dt><dd><span class="pulse-dot"></span>Live</dd></div>
-    <div><dt>Unified sources</dt><dd>Paid · Organic · App · Web</dd></div>
-    <div><dt>Native</dt><dd>LTV · Cohorts · Payback · MMM</dd></div>
-    <div><dt>Machine-readable</dt><dd>MCP · Claude · ChatGPT · Gemini</dd></div>
-  </section>
-
-  <!-- ═══ Principles ═════════════════════════════════════════════════ -->
-  <div class="section-head" id="principles">
-    <div><div class="label">Section / 01</div><h2 class="title">Three principles.</h2></div>
-    <div class="sub">The product rests on three pillars. Each is load-bearing.</div>
-  </div>
-
-  <!-- Principle 01 -->
-  <article class="principle">
-    <div class="p-coord">
-      Principle / 01<br>
-      <b>Data</b>
-    </div>
-    <div class="p-body">
-      <h3>Any data in, any data out.</h3>
-      <p>One data model carries paid, organic, app, web, product catalog, competitive, AI search, and affiliates. Built flexible so new channels slot in as they arrive.</p>
-      <p><strong>Inside Clarisights</strong>, the model powers LTV curves, payback periods, cohort analysis, modeled revenue, and variable payouts natively. No configuration, no joins on the fly.</p>
-      <p><strong>Outside Clarisights</strong>, the same model is your measurement team's source of truth. Pre-harmonised, versioned, incrementally updated. It feeds an MMM or an incrementality test without anyone building a pipeline.</p>
-      <div class="tagline">Data in from everywhere. Intelligence out to everyone who needs it.</div>
-    </div>
-    <div class="p-visual">
-      <div class="mock-label">Connectors · Live</div>
-      <div class="conn-grid">
-        <div class="conn"><span class="c-name">Facebook Ads</span><div class="c-row"><span class="live">Active</span><span>346.0K rows</span></div></div>
-        <div class="conn"><span class="c-name">Google Ads</span><div class="c-row"><span class="live">Active</span><span>350.0K rows</span></div></div>
-        <div class="conn"><span class="c-name">TikTok Ads</span><div class="c-row"><span class="live">Active</span><span>15.0K rows</span></div></div>
-        <div class="conn"><span class="c-name">Apple Search Ads</span><div class="c-row"><span class="live">Active</span><span>64.0K rows</span></div></div>
-        <div class="conn"><span class="c-name">AppsFlyer Cohort</span><div class="c-row"><span class="live">Active</span><span>1.27M rows</span></div></div>
-        <div class="conn off"><span class="c-name">Moloco</span><div class="c-row"><span class="paused">Paused</span><span>27.0K rows</span></div></div>
-      </div>
-    </div>
-  </article>
-
-  <!-- Principle 02 -->
-  <article class="principle">
-    <div class="p-coord">
-      Principle / 02<br>
-      <b>Intelligence</b>
-    </div>
-    <div class="p-body">
-      <h3>Intelligence, not just reporting.</h3>
-      <p>Every question a performance team asks cuts across sources. Clarisights answers across sources natively.</p>
-      <p><strong>Your product catalog is a first-class analytical dimension.</strong> Which categories win on which channels. Which creative formats convert for which segments. Where the catalog has zero ad coverage.</p>
-      <p><strong>Search is a unified surface.</strong> Paid, organic, competitive, and AI search visibility in one view. See cannibalisation. Find gaps. Track how the brand appears in LLM-generated answers next to the traditional rankings.</p>
-      <div class="tagline">Catalog and search live in the data model, not on top of a dashboard.</div>
-    </div>
-    <div class="p-visual">
-      <div class="mock-label">Unified search · "running shoes"</div>
-      <div class="search-mock">
-        <div class="head"><span>Query cluster</span><span>3 gaps · 1 cannibal</span></div>
-        <table>
-          <thead><tr><th>Query</th><th class="n">Paid</th><th class="n">Org</th><th class="n">AI</th><th>Result</th></tr></thead>
-          <tbody>
-            <tr><td class="q">trail runners men</td><td class="n">#1</td><td class="n">#3</td><td class="n">—</td><td class="tag"><b>Win</b></td></tr>
-            <tr><td class="q">best marathon shoes 2026</td><td class="n">—</td><td class="n">#2</td><td class="n">cited</td><td class="tag"><b>Mixed</b></td></tr>
-            <tr><td class="q">carbon plate running shoes</td><td class="n">#4</td><td class="n">—</td><td class="n">—</td><td class="tag"><b>Gap</b></td></tr>
-            <tr><td class="q">shoes for flat feet</td><td class="n">#2</td><td class="n">#1</td><td class="n">—</td><td class="tag"><b>Cannibal</b></td></tr>
-            <tr><td class="q">what shoes does kipchoge wear</td><td class="n">—</td><td class="n">#8</td><td class="n">cited</td><td class="tag"><b>LLM win</b></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </article>
-
-  <!-- Principle 03 -->
-  <article class="principle">
-    <div class="p-coord">
-      Principle / 03<br>
-      <b>Surface</b>
-    </div>
-    <div class="p-body">
-      <h3>Built for humans and machines.</h3>
-      <p>Clarisights treats your team and your AI as equal users of the same surface.</p>
-      <p><strong>For practitioners.</strong> Reports are documents. A blank canvas — tables, charts, annotations, text on one page. Collaboration inline, next to the data. Clean for a first-time user; flexible for a power user building custom cohort windows and modeled coefficients.</p>
-      <p><strong>For machines.</strong> The data model, the report structure, the UI — all readable by an LLM. Through the Model Context Protocol, your harmonised cross-channel metrics are available from Claude, ChatGPT, Gemini.</p>
-      <div class="tagline">Build a report on Monday. Ask your AI to extend it on Tuesday.</div>
-    </div>
-    <div class="p-visual">
-      <div class="mock-label">Query DSL · Creative Score</div>
-<pre class="code">{<span class="kw">:type</span>  "totals"
- <span class="kw">:query</span> [
-   [<span class="kw">:sources</span>   "creative_performance"]
-   [<span class="kw">:aggregate</span>]
-   [<span class="kw">:select</span>    "concept" "country"]
-   [[<span class="kw">:add</span>
-     [<span class="kw">:multiply</span> [<span class="kw">:divide</span> "ctr"       4.0] 0.30]
-     [<span class="kw">:multiply</span> [<span class="kw">:divide</span> 1.0        "cpm"] 0.20]
-     [<span class="kw">:multiply</span> [<span class="kw">:divide</span> "hook_rate" 100] 0.30]
-     [<span class="kw">:multiply</span> [<span class="kw">:divide</span> 1.0        "cpa"] 0.20]]
-    <span class="kw">:as</span> "creative_score"]]}
-<span class="cmt">;; 30% CTR, 20% 1/CPM, 30% Hook, 20% 1/CPA</span></pre>
-
-<pre class="mcp">  CLAUDE ───┐
-            │
-  CHATGPT ──┼──→  MCP · CLARISIGHTS  ──→ data · reports · edits
-            │
-  GEMINI  ──┘</pre>
-    </div>
-  </article>
-
-  <!-- ═══ Questions ══════════════════════════════════════════════════ -->
-  <div class="section-head" id="questions">
-    <div><div class="label">Section / 02</div><h2 class="title">Questions the canvas answers.</h2></div>
-    <div class="sub">The ones that used to need a data-team ticket · A representative six</div>
-  </div>
-  <section class="qlist">
-    <ul>
-      <li>
-        <span class="q-num">Q / 01</span>
-        <span class="q-cat">Cohort · Payback</span>
-        <span class="q-title">How long until this cohort pays back — and how does that change if we move $500K into CTV?</span>
-        <span class="q-how">Answered inline</span>
-      </li>
-      <li>
-        <span class="q-num">Q / 02</span>
-        <span class="q-cat">Paid × Organic</span>
-        <span class="q-title">Is paid search cannibalising our organic brand rankings, and by how much per query cluster?</span>
-        <span class="q-how">Unified search</span>
-      </li>
-      <li>
-        <span class="q-num">Q / 03</span>
-        <span class="q-cat">Catalog × Channel</span>
-        <span class="q-title">Which product categories win on which channels — and where does our catalog have zero ad coverage?</span>
-        <span class="q-how">Catalog dimension</span>
-      </li>
-      <li>
-        <span class="q-num">Q / 04</span>
-        <span class="q-cat">AI Search</span>
-        <span class="q-title">How does our brand appear in LLM-generated answers, and against which competitors?</span>
-        <span class="q-how">Native tracking</span>
-      </li>
-      <li>
-        <span class="q-num">Q / 05</span>
-        <span class="q-cat">Creative × Velocity</span>
-        <span class="q-title">Is this creative format fatiguing, or is our audience saturating? Same question, two very different answers.</span>
-        <span class="q-how">Segment × velocity</span>
-      </li>
-      <li>
-        <span class="q-num">Q / 06</span>
-        <span class="q-cat">AI · MCP</span>
-        <span class="q-title">Can my AI assistant extend last week's report, pull fresh data, and post the summary to Slack — without leaving the chat?</span>
-        <span class="q-how">Yes</span>
-      </li>
-    </ul>
-  </section>
-
-  <!-- ═══ The Surface ════════════════════════════════════════════════ -->
-  <div class="section-head" id="surface">
-    <div><div class="label">Section / 03</div><h2 class="title">The surface.</h2></div>
-    <div class="sub">A notebook. Tables, charts, annotations, text — on one canvas.</div>
-  </div>
-  <section class="surface">
-    <div class="nb">
-      <aside class="nb-side">
-        <div class="t">Notebooks</div>
-        <ul>
-          <li>Cohort Analysis · TP</li>
-          <li>Avatar ROAS Deep Dive</li>
-          <li>Portfolio LTV Heatmap</li>
-          <li class="on">Source Efficiency</li>
-          <li>App Benchmarking</li>
-          <li>Marketing Mix</li>
-          <li>Creative Analysis</li>
-          <li>D1 Performance</li>
-        </ul>
-      </aside>
-      <div class="nb-main">
-        <div class="nb-crumb">Home · Source Efficiency</div>
-        <div class="nb-title">Source Efficiency & Fatigue</div>
-        <div class="nb-meta">Context · Apps Prioritised &nbsp;·&nbsp; Jul 23 2025 → Feb 7 2026</div>
-
-        <div class="nb-h">Investment Efficiency</div>
-        <div class="nb-p">Each source earning its share of revenue relative to its share of spend. Revenue bar above cost bar is efficient. Reverse signals over-investment.</div>
-<pre class="nb-chart">Source            Spend share     Revenue share
-─────────────────────────────────────────────────────
-Meta              ████████████    ██████████████
-Google            ██████████      ████████████
-TikTok            ██████          ████
-AppsFlyer (MMP)   ████            █████████
-Apple SA          ██              █████
-Moloco (off)      ░░              ░░</pre>
-
-        <div class="nb-h">LTV Velocity — Fatigue</div>
-        <div class="nb-p">Each line shows incremental revenue added between consecutive cohort days. A flattening line signals the source's users are monetising slower over time.</div>
-
-        <div class="nb-alert"><b>Fatigue</b>Sources with flat velocity past D14 have spent their monetisation window. Shift budget to sources with steeper D30+ curves.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ Request ════════════════════════════════════════════════════ -->
-  <section class="request" id="request">
-    <div class="request-inner">
-      <div class="mono">Section / 04</div>
-      <h2 class="request-title">Request early access.</h2>
-      <div class="request-cta">
-        <span class="mono-small">Open to performance teams at the largest digital spenders</span>
-        <a href="mailto:early-access@clarisights.com?subject=Request%20early%20access">early-access@clarisights.com →</a>
-        <span class="mono-small" style="margin-top:12px;">Or book a walk-through</span>
-        <a href="#">cal.com/clarisights →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ GTM footnote (INTERNAL) ════════════════════════════════════ -->
-  <section class="gtm">
-    <div class="section-head">
-      <div><div class="label">Internal / GTM</div><h2 class="title">Three plays.</h2></div>
-      <div class="sub">How the launch goes to market · For Apr 22 review · Confidential</div>
-    </div>
-    <div class="plays">
-      <div class="plays-intro">
-        Layered launch<br><br>
-        Warmest audience first, then pruned nurture, then a selective amplifier.<br><br>
-        Each play compounds on the one before. No broadcasts.
+  <!-- ════ FOLD 1 — THE GENERATION WE'RE IN TODAY ══════════════════ -->
+  <section class="fold">
+    <div class="wrap">
+      <div class="fold-label"><span class="n">01</span><span class="k">The generation we're in today</span></div>
+      <div class="read">
+        <h2>Capable — and quietly cracked.</h2>
+        <p class="body">Today's stack is genuinely good. A central data warehouse. A full ETL pipeline feeding it. A transformation layer — dbt and its kin — cleaning and modelling on the way out. Marketers consume from the result. By any measure, it's a leap past where we were.</p>
+        <p class="body">But look at <em>how</em> marketers actually consume. Not from one place — from three, each doing a job it was never designed for.</p>
       </div>
 
-      <div class="play">
-        <div class="p-num">Play / 01</div>
-        <h4>Seed it with every current customer.</h4>
-        <p>Every existing customer hears this first. Exec briefing, early-access credentials, CSM-led walk-through. Their teams are the highest-signal cohort — they find the edges, and their quotes shape the first-party narrative.</p>
-        <div class="p-meta">
-          <div><span class="k">Owner</span>Clarisights CS</div>
-          <div><span class="k">Window</span>Launch week</div>
-          <div><span class="k">Surface</span>1:1 briefing · email · in-app</div>
+      <!-- DIAGRAM: today's architecture + the three consumption surfaces -->
+      <div class="diagram">
+        <div class="cap">Fig. 1 — How marketing reporting is built and consumed today</div>
+        <div class="pipe-row">
+          <div class="node"><div class="t">Sources</div><div class="d">ad platforms · CRM · web</div></div>
+          <span class="arrow">→</span>
+          <div class="node"><div class="t">ETL</div><div class="d">ingestion</div></div>
+          <span class="arrow">→</span>
+          <div class="node"><div class="t">Warehouse</div><div class="d">central store</div></div>
+          <span class="arrow">→</span>
+          <div class="node"><div class="t">Transformation</div><div class="d">dbt · semantic cleaning</div></div>
+          <span class="arrow">→</span>
+          <div class="node soft"><div class="t">Marketer</div><div class="d">consumes</div></div>
+        </div>
+        <div class="split-cap">↓ &nbsp; and the marketer's work splits across three surfaces &nbsp; ↓</div>
+        <div class="surfaces">
+          <div class="surface">
+            <div class="role">where data is explored</div>
+            <div class="name">Excel</div>
+            <div class="note">The dirty secret every team carries. The real analysis happens here, off-platform.</div>
+          </div>
+          <div class="surface">
+            <div class="role">where you see what's going on</div>
+            <div class="name">The "dashboard"</div>
+            <div class="note">Not a reporting tool — a presentation tool. It shows state. It doesn't decide.</div>
+          </div>
+          <div class="surface">
+            <div class="role">where decisions are made</div>
+            <div class="name">Slides</div>
+            <div class="note">Where a call gets argued and justified to everyone who wasn't in the data.</div>
+          </div>
         </div>
       </div>
 
-      <div class="play">
-        <div class="p-num">Play / 02</div>
-        <h4>Open the nurture on May 1.</h4>
-        <p>Launch becomes the <strong>opening event</strong> of the CR and nurturing program. By April 30 the list is pruned and analysed — <strong>~2,000–2,500 people across ~300–400 unique companies</strong>. Targeted, warm, in the Clarisights voice, one clear path to request access.</p>
-        <div class="p-meta">
-          <div><span class="k">Owner</span>Recurr + Clarisights</div>
-          <div><span class="k">Launch</span>May 1, 2026</div>
-          <div><span class="k">Reach</span>~2.5K people · ~400 companies</div>
-        </div>
-      </div>
-
-      <div class="play tentative">
-        <div class="p-num">Play / 03</div>
-        <h4>Selective publication placement.</h4>
-        <p>Tentative — <strong>open for Arun's call.</strong> Mid-May, a targeted push into 1–2 newsletters or publications where the buyers actually read (MarTech, Modern Retail, AdExchanger, select Substacks). Only if the ROI case holds. Not a broadcast, a surgical amplifier.</p>
-        <div class="p-meta">
-          <div><span class="k">Owner</span>TBD · Arun call</div>
-          <div><span class="k">Window</span>Mid-May (contingent)</div>
-          <div><span class="k">Reach</span>1–2 selected outlets</div>
-        </div>
+      <!-- EMBEDDED ARTICLE — fit for this fold -->
+      <div class="article">
+        <div class="k">Read alongside · Fold 01</div>
+        <div class="title">The Failed Marriage of Marketing and Data Teams</div>
+        <div class="dek">Data's pursuit of one central source of truth is well-intentioned. For marketing, it quietly doesn't fit — and marketing ends up paying the bill for an obsession with centralisation it never asked for.</div>
+        <div class="meta">Article — draft <span class="tbd">to write</span></div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ Footer ═════════════════════════════════════════════════════ -->
+  <!-- ════ FOLD 2 — THE NEXT GENERATION, AS A QUESTION ═════════════ -->
+  <section class="fold">
+    <div class="wrap">
+      <div class="fold-label"><span class="n">02</span><span class="k">The next generation — posed as a question</span></div>
+      <div class="read">
+        <h2>Everyone agrees an LLM belongs here. Almost no one agrees on its job.</h2>
+        <p class="body">The next generation will be shaped by language models — that part is settled. What's not settled is the question that actually matters: <em>what do we want the model to do?</em> Three answers are on the table, and they are very different bets.</p>
+      </div>
+
+      <div class="diagram">
+        <div class="cap">Fig. 2 — Three things we could ask the model to do</div>
+        <div class="stack">
+          <div class="part" style="border-style:dashed;border-color:var(--grey-2)"><div class="pt">A · Answer questions</div><div class="pd">Ask the data a question, get an immediate answer back. The chat-on-your-warehouse bet.</div></div>
+          <div class="part" style="border-style:dashed;border-color:var(--grey-2)"><div class="pt">B · Simplify the surface</div><div class="pd">Make the dashboard easier to drive. Smooth the existing consumption layer.</div></div>
+          <div class="part"><div class="pt">C · Help engineer the setup underneath</div><div class="pd">Fix the layer the marketer never sees — the one that decides whether A and B are even possible.</div></div>
+        </div>
+        <p class="body" style="margin-top:20px"><strong>Most of the market is building A and B.</strong> We think the real leg of evolution is C — and the next two folds are why.</p>
+      </div>
+
+      <div class="article">
+        <div class="k">Read alongside · Fold 02</div>
+        <div class="title"><span class="slot">[ Article title — TBD ]</span></div>
+        <div class="dek">On why "chat with your data" answers the wrong question for marketing — and what asking the right one looks like.</div>
+        <div class="meta">Article — draft <span class="tbd">to write</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FOLD 3 — THE DEEPER PROBLEM EVERYONE SKIPPED ════════════ -->
+  <section class="fold">
+    <div class="wrap">
+      <div class="fold-label"><span class="n">03</span><span class="k">The deeper problem everyone skipped</span></div>
+      <div class="read">
+        <h2>Marketing data is not like other data.</h2>
+        <p class="body">There's a reason marketing reporting keeps breaking in ways finance and operations reporting don't. The data itself is a different animal — and every general-purpose stack treats it as if it weren't.</p>
+        <p class="body"><strong>It's mostly third-party performance data.</strong> You don't own it. It arrives on someone else's schedule, in someone else's schema, and it changes shape constantly — new channels, new campaigns, new dimensions, every quarter.</p>
+        <p class="body"><strong>And its centre of gravity sits where other data's doesn't.</strong> Every reporting system has three layers — observed, planned, executed. For finance and ops, the plan is simple. For marketing, the plan layer is the heaviest thing in the system.</p>
+      </div>
+
+      <div class="diagram">
+        <div class="cap">Fig. 3 — The three layers, and where marketing's weight actually sits</div>
+        <div class="layers">
+          <div class="layer"><div><div class="lt">Observed</div><div class="ld">what actually happened — spend, impressions, conversions</div></div></div>
+          <div class="layer heavy">
+            <div><div class="lt">Planned <span class="tag">marketing's heavy layer</span></div><div class="ld">many campaigns, many dimensions, plans that branch in ways finance and ops never face</div></div>
+          </div>
+          <div class="layer"><div><div class="lt">Executed</div><div class="ld">what was actually shipped against the plan</div></div></div>
+        </div>
+        <p class="body" style="margin-top:20px">The weight is in the centre: <strong>the planning surface.</strong> Get that right and the surface problems — the Excel, the dashboards, the slides — start to dissolve. But you cannot bolt a planning surface onto a stack that was never engineered for marketing's reality.</p>
+      </div>
+
+      <div class="article">
+        <div class="k">Read alongside · Fold 03</div>
+        <div class="title"><span class="slot">[ Article title — TBD ]</span></div>
+        <div class="dek">Why marketing's plan layer breaks general-purpose data modelling — observed vs planned vs executed, and the one that's quietly impossible today.</div>
+        <div class="meta">Article — draft <span class="tbd">to write</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FOLD 4 — WHAT THE NEXT GENERATION LOOKS LIKE (THE REVEAL) ═ -->
+  <section class="fold">
+    <div class="wrap">
+      <div class="fold-label"><span class="n">04</span><span class="k">What the next generation looks like</span></div>
+      <div class="read">
+        <h2>It starts one layer down.</h2>
+        <p class="body">Not a general warehouse with marketing data poured into it. A data architecture built <em>specifically</em> for marketing reporting — one that expects third-party, shape-shifting performance data and treats the plan layer as a first-class citizen. Three parts, each rebuilt for how marketing data actually behaves:</p>
+      </div>
+
+      <div class="diagram">
+        <div class="cap">Fig. 4 — A purpose-built marketing data architecture → the unlock</div>
+        <div class="stack">
+          <div class="part"><div class="pt">ETL</div><div class="pd">Ingestion that assumes third-party, constantly-reshaping performance data — not a one-time clean schema.</div></div>
+          <div class="part"><div class="pt">Transformation</div><div class="pd">Modelling that treats observed / planned / executed as the core, with the plan layer first-class.</div></div>
+          <div class="part"><div class="pt">Storage &amp; Semantics</div><div class="pd">A semantic layer that speaks marketing — campaigns, channels, dimensions — not generic SQL.</div></div>
+        </div>
+        <div class="unlock">↓ &nbsp; unlocks &nbsp; ↓</div>
+        <div class="surface-reveal">
+          <div class="big">The planning surface marketers have never actually had</div>
+          <div class="small">where exploring, deciding, and presenting finally happen in one place — not across Excel, dashboards, and slides</div>
+        </div>
+      </div>
+
+      <!-- THE NAME ARRIVES — as payoff, not premise. SLOT until locked. -->
+      <p class="name-line">A data architecture built for marketing is what unlocks the planning surface. That architecture, and the surface it makes possible, is what we're calling <span class="slot">[ category name — TBD ]</span>.</p>
+
+      <!-- ROADMAP-AS-VISION — placeholder beats -->
+      <div style="margin-top:48px">
+        <span class="mono">Roadmap as vision</span>
+        <div class="roadmap">
+          <div class="road-item"><div class="when">Shipping now</div><div class="what"><span class="slot">[ first proof — e.g. MCP, the first shipped piece of the new architecture ]</span> <span class="tbd">confirm</span></div></div>
+          <div class="road-item"><div class="when">Next</div><div class="what"><span class="slot">[ roadmap beat — TBD ]</span></div></div>
+          <div class="road-item"><div class="when">The horizon</div><div class="what"><span class="slot">[ the full planning surface — TBD ]</span></div></div>
+        </div>
+      </div>
+
+      <div class="article">
+        <div class="k">Read alongside · Fold 04</div>
+        <div class="title"><span class="slot">[ Article title — TBD ]</span></div>
+        <div class="dek">The case for a purpose-built marketing data stack — ETL, transformation, storage &amp; semantics, rebuilt — and the planning surface it makes possible.</div>
+        <div class="meta">Article — draft <span class="tbd">to write</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ ARUN — SIGNED CONVICTION ANCHOR (hybrid voice) ══════════ -->
+  <section class="coda">
+    <div class="wrap">
+      <span class="eyebrow">From the founder</span>
+      <blockquote><span class="slot">[ Arun's conviction line — to be written with Arun ]</span> <span class="tbd">draft</span></blockquote>
+      <div class="placeholder-block" style="max-width:680px;margin-top:20px">Draft direction (not final): "We didn't set out to build another dashboard. We set out to fix the layer underneath it — the one everyone learned to work around."</div>
+      <div class="sig">
+        <div class="avatar">AS</div>
+        <div class="who"><b>Arun Srinivasan</b> · <span>Founder &amp; CEO, Clarisights</span> <span class="tbd">confirm title</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ CTA — FOLLOW THE BUILD ══════════════════════════════════ -->
+  <section class="cta">
+    <div class="wrap">
+      <span class="eyebrow">Follow the build</span>
+      <h2>We're building this in the open.</h2>
+      <p>The architecture is being rebuilt and the surface is taking shape. Leave an email and we'll show you what ships, as it ships — no pitch, just the build.</p>
+      <form onsubmit="return false;">
+        <input type="email" placeholder="you@company.com" aria-label="email">
+        <button type="submit">Follow the build</button>
+      </form>
+      <div class="fineprint">Early access · wireframe — form not wired yet</div>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ══════════════════════════════════════════════════ -->
   <footer>
-    <div>
-      Clarisights<br>
-      Berlin · New York · Bengaluru<br>
-      <span id="foot-time">--:--:--</span> · <span id="foot-date">---</span>
-    </div>
-    <div>
-      <a href="#principles">Principles</a> ·
-      <a href="#questions">Questions</a> ·
-      <a href="#surface">Surface</a><br>
-      <a href="#request">Request access</a>
-    </div>
-    <div class="foot-right">
-      Early Access · Open<br>
-      Compiled 2026-04-20 · v0.1<br>
-      Prototype · confidential
+    <div class="wrap">
+      <div class="mono">Clarisights · next.clarisights.com — working wireframe</div>
+      <div class="mono">Built by Recurr · v1 manifesto</div>
     </div>
   </footer>
 
-  <script>
-    function updateTime() {
-      const now = new Date();
-      const fmtTime = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-      const fmtDate = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' });
-      const t = fmtTime.format(now);
-      const d = fmtDate.format(now).toUpperCase();
-      ['mh-time', 'foot-time'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = t; });
-      ['mh-date', 'foot-date'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = d; });
-    }
-    updateTime();
-    setInterval(updateTime, 1000);
-  </script>
 </body>
 </html>
