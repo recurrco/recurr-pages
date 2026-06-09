@@ -2,330 +2,356 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>MOO App — Steady-State Wireframe</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>moo.kitchen — App Wireframe</title>
 <style>
   :root{
-    --ink:#1a1a1a; --mut:#6b6b6b; --line:#e2e0db; --bg:#f6f4ef;
-    --card:#ffffff; --accent:#c9622b; --accent-soft:#f3e3d8;
-    --good:#2e7d52; --skip:#b9b6af;
+    --ink:#1a1a1a; --mut:#6f6a62; --line:#e4e1da; --bg:#f6f4ef; --card:#fff;
+    --accent:#c9622b; --accent-soft:#f4e4d8; --good:#2e7d52; --good-soft:#e2f0e8;
+    --skip:#b9b6af; --blue:#2f5d8c;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#dad7d0;color:var(--ink);display:flex;justify-content:center;min-height:100vh}
-  .label{position:fixed;top:14px;left:14px;font-size:11px;color:#777;letter-spacing:.04em}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#dcd9d2;color:var(--ink);display:flex;justify-content:center;min-height:100vh}
+  .corner{position:fixed;top:12px;left:14px;font-size:11px;color:#888;z-index:50}
 
-  /* phone shell */
-  .phone{width:100%;max-width:412px;background:var(--bg);min-height:100vh;position:relative;display:flex;flex-direction:column;box-shadow:0 0 0 1px rgba(0,0,0,.06)}
-  @media(min-width:460px){.phone{margin:24px 0;min-height:auto;height:860px;border-radius:32px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25)}}
+  .app{width:100%;max-width:540px;background:var(--bg);min-height:100vh;position:relative;display:flex;flex-direction:column}
+  @media(min-width:580px){.app{margin:20px 0;min-height:auto;height:900px;border-radius:26px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.22)}}
 
-  /* status + app bar */
-  .statusbar{height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:12px;font-weight:600;color:var(--ink);flex:0 0 auto}
-  .appbar{padding:8px 18px 14px;flex:0 0 auto}
-  .appbar h1{font-size:21px;font-weight:700}
-  .appbar .sub{font-size:13px;color:var(--mut);margin-top:2px}
+  /* top bar */
+  .topbar{flex:0 0 auto;background:#fff;border-bottom:1px solid var(--line);padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+  .brand{font-weight:700;font-size:16px}.brand span{color:var(--accent)}
+  .who{font-size:11px;border:1px solid var(--line);border-radius:99px;padding:4px 10px;color:var(--mut);cursor:pointer}
 
-  /* scroll area */
-  .screen{flex:1 1 auto;overflow-y:auto;padding:0 16px 96px;display:none}
+  /* scroll */
+  .screen{flex:1 1 auto;overflow-y:auto;padding:16px 16px 92px;display:none}
   .screen.active{display:block}
+  h1{font-size:21px;font-weight:700;margin-bottom:2px}
+  .sub{font-size:13px;color:var(--mut);margin-bottom:14px}
+  .kicker{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);font-weight:700;margin:20px 2px 10px}
 
-  /* generic bits */
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
-  .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
-  .pill{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
-  .pill.on{background:#e2f0e8;color:var(--good)}
-  .pill.off{background:#eceae5;color:var(--skip)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
   .muted{color:var(--mut);font-size:13px}
-  .kicker{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);font-weight:600;margin:18px 2px 8px}
-  .big{font-size:28px;font-weight:700}
-  .btn{display:block;width:100%;text-align:center;background:var(--accent);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px}
+  .pill{font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+  .pill.on{background:var(--good-soft);color:var(--good)}
+  .pill.blue{background:#e2ebf4;color:var(--blue)}
+  .chev{color:#c3c0b9}
+  .btn{display:block;width:100%;text-align:center;background:var(--accent);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px}
   .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
-  .btn.sm{padding:9px 14px;width:auto;font-size:13px;border-radius:10px}
-  .chip{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 6px;text-align:center;font-weight:600;font-size:14px;cursor:pointer;flex:1}
-  .chip.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
-  .thumb{width:46px;height:46px;border-radius:10px;background:var(--accent-soft);flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:20px}
-  .vdot{width:12px;height:12px;border:1.5px solid var(--good);border-radius:3px;display:inline-flex;align-items:center;justify-content:center}
-  .vdot::after{content:"";width:6px;height:6px;background:var(--good);border-radius:50%}
-  .divider{height:1px;background:var(--line);margin:12px 0}
-  .listitem{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
-  .listitem:last-child{border-bottom:none}
-  .day{display:flex;align-items:center;gap:12px;padding:13px 4px;border-bottom:1px solid var(--line);cursor:pointer}
-  .day .dno{width:42px;flex:0 0 auto}
-  .day .dno b{font-size:14px}.day .dno span{display:block;font-size:11px;color:var(--mut)}
-  .day.skipped .dish{color:var(--skip);text-decoration:line-through}
-  .linkrow{display:flex;align-items:center;justify-content:space-between;padding:15px 2px;border-bottom:1px solid var(--line);cursor:pointer}
-  .linkrow:last-child{border-bottom:none}
-  .chev{color:#c0bdb6}
+  .btn.sm{padding:9px 13px;width:auto;font-size:13px;border-radius:10px}
+  .thumb{width:42px;height:42px;border-radius:10px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:19px;flex:0 0 auto}
+  .toggle2{display:flex;background:#eceae4;border-radius:11px;padding:3px;margin-bottom:14px}
+  .toggle2 div{flex:1;text-align:center;padding:8px;border-radius:9px;font-size:13px;font-weight:600;color:var(--mut);cursor:pointer}
+  .toggle2 div.sel{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
 
-  /* toggle */
-  .tog{width:44px;height:26px;border-radius:99px;background:#d8d5ce;position:relative;flex:0 0 auto;cursor:pointer;transition:.15s}
+  /* calendar */
+  .day{margin-bottom:14px}
+  .dayhead{display:flex;align-items:baseline;gap:8px;margin:0 2px 8px;cursor:pointer}
+  .dayhead b{font-size:15px}.dayhead .dt{font-size:12px;color:var(--mut)}
+  .dayhead .nutri{margin-left:auto;font-size:12px;color:var(--good);font-weight:600}
+  .slot{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px;cursor:pointer}
+  .slot.empty{border-style:dashed;background:transparent;color:var(--mut);justify-content:center;font-weight:600;font-size:13px}
+  .slot .t{font-size:11px;color:var(--mut);font-weight:600}
+  .barwrap{height:6px;background:#eceae4;border-radius:9px;overflow:hidden;margin-top:8px}
+  .bar{height:100%;background:var(--good)}
+
+  /* generic list rows */
+  .linkrow{display:flex;align-items:center;justify-content:space-between;padding:14px 2px;border-bottom:1px solid var(--line);cursor:pointer}
+  .linkrow:last-child{border-bottom:none}
+  .tog{width:42px;height:25px;border-radius:99px;background:#d6d3cc;position:relative;flex:0 0 auto;cursor:pointer;transition:.15s}
   .tog.on{background:var(--good)}
-  .tog::after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;top:2px;left:2px;transition:.15s}
-  .tog.on::after{left:20px}
+  .tog::after{content:"";position:absolute;width:21px;height:21px;border-radius:50%;background:#fff;top:2px;left:2px;transition:.15s}
+  .tog.on::after{left:19px}
+  .chip{display:inline-block;border:1px solid var(--line);background:#fff;border-radius:99px;padding:9px 13px;font-size:13px;font-weight:600;cursor:pointer;margin:0 6px 8px 0}
+  .chip.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+  .back{font-size:13px;color:var(--mut);cursor:pointer;display:inline-block;margin-bottom:10px}
 
   /* tab bar */
-  .tabbar{position:absolute;bottom:0;left:0;right:0;height:72px;background:#fff;border-top:1px solid var(--line);display:flex;flex:0 0 auto}
-  .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;color:var(--mut);cursor:pointer}
-  .tab .ic{font-size:20px;line-height:1}
-  .tab.active{color:var(--accent);font-weight:600}
+  .tabs{position:absolute;bottom:0;left:0;right:0;height:70px;background:#fff;border-top:1px solid var(--line);display:flex;flex:0 0 auto}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10.5px;color:var(--mut);cursor:pointer}
+  .tab .ic{font-size:19px}.tab.active{color:var(--accent);font-weight:700}
 
   /* sheet */
-  .sheetwrap{position:absolute;inset:0;background:rgba(0,0,0,.35);display:none;align-items:flex-end;z-index:20}
+  .sheetwrap{position:absolute;inset:0;background:rgba(0,0,0,.4);display:none;align-items:flex-end;z-index:30}
   .sheetwrap.open{display:flex}
-  .sheet{background:#fff;width:100%;border-radius:18px 18px 0 0;padding:18px 18px 28px;max-height:80%;overflow-y:auto}
-  .grab{width:38px;height:4px;border-radius:99px;background:#ddd;margin:2px auto 14px}
-  .opt{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);cursor:pointer}
-  .radio{width:20px;height:20px;border-radius:50%;border:2px solid #cfccc5;flex:0 0 auto}
-  .opt.sel .radio{border-color:var(--accent);background:radial-gradient(var(--accent) 40%,#fff 45%)}
+  .sheet{background:#fff;width:100%;border-radius:18px 18px 0 0;padding:18px 18px 26px;max-height:86%;overflow-y:auto}
+  .grab{width:38px;height:4px;border-radius:9px;background:#ddd;margin:0 auto 14px}
+  .toast{position:absolute;bottom:84px;left:16px;right:16px;background:var(--ink);color:#fff;padding:13px 16px;border-radius:12px;font-size:13px;text-align:center;z-index:40;display:none}
+  .note{background:var(--accent-soft);border-radius:10px;padding:10px 12px;font-size:12px;color:#8a4a22;margin-bottom:12px}
 </style>
 </head>
 <body>
-<div class="label">MOO · steady-state wireframe · tap around</div>
-<div class="phone">
+<div class="corner">moo.kitchen · web app wireframe · tap around</div>
+<div class="app">
 
-  <div class="statusbar"><span>9:41</span><span>● ▮▮ ⌗</span></div>
-
-  <!-- ============ TODAY ============ -->
-  <div class="screen active" id="today">
-    <div class="appbar"><h1>Good morning, Pratik</h1><div class="sub">Oatmeal Gang · member since Mar ’26</div></div>
-
-    <div class="card" style="background:var(--ink);color:#fff;border:none">
-      <div class="row"><span class="muted" style="color:#bbb">MOO Wallet</span><span class="pill">Gang</span></div>
-      <div class="big" style="color:#fff;margin-top:4px">₹2,340</div>
-      <button class="btn ghost sm" style="margin-top:12px" onclick="go('wallet')">Load wallet</button>
-    </div>
-
-    <div class="kicker">Your next breakfast</div>
-    <div class="card">
-      <div class="listitem" style="border:none;padding-top:0">
-        <div class="thumb">🥣</div>
-        <div style="flex:1">
-          <b>Berry Bircher</b>
-          <div class="muted">Tomorrow · 8:00 AM · delivered to Home</div>
-        </div>
-      </div>
-      <div class="row" style="gap:8px">
-        <button class="btn ghost sm" style="flex:1" onclick="openDay(0)">Edit</button>
-        <button class="btn ghost sm" style="flex:1" onclick="alert('Tomorrow skipped (mock)')">Skip</button>
-      </div>
-    </div>
-
-    <div class="kicker">Today’s plans</div>
-    <div class="card" onclick="go('plans')" style="cursor:pointer">
-      <div class="row"><b>🍳 Breakfast at Home</b><span class="pill on">On</span></div>
-      <div class="muted" style="margin-top:6px">7 days planned · delivered to Home</div>
-    </div>
-    <div class="card" onclick="goPW()" style="cursor:pointer">
-      <div class="row"><b>💪 Post-Workout</b><span class="pill on">On</span></div>
-      <div class="muted" style="margin-top:6px">Protein Oats Bowl · Cult Fit, HSR · Mon/Wed/Fri</div>
-    </div>
-
-    <button class="btn ghost" onclick="go('menu')">Browse the menu</button>
+  <div class="topbar">
+    <div class="brand">moo<span>.kitchen</span></div>
+    <div class="who" onclick="alert('Login types: Team · Partner · Consumer.\\nYou are viewing the Consumer app (mock).')">Consumer ▾</div>
   </div>
 
-  <!-- ============ PLANS HUB ============ -->
+  <!-- ============ CALENDAR (home) ============ -->
+  <div class="screen active" id="calendar">
+    <h1>Your week</h1>
+    <div class="sub">Set your habits once — food shows up on your calendar.</div>
+    <div class="toggle2">
+      <div class="sel" id="tgMenu" onclick="calView('menu')">Menu</div>
+      <div id="tgNutri" onclick="calView('nutrition')">Nutrition</div>
+    </div>
+    <div id="calBody"></div>
+  </div>
+
+  <!-- ============ DAY DETAIL (Calendar 3) ============ -->
+  <div class="screen" id="day">
+    <div class="back" onclick="go('calendar')">‹ Back to week</div>
+    <h1 id="dayTitle">Today</h1>
+    <div class="sub" id="dayNutri"></div>
+    <div id="dayBody"></div>
+  </div>
+
+  <!-- ============ NEW ORDER (contextual menu) ============ -->
+  <div class="screen" id="order">
+    <div class="back" onclick="cancelOrder()">‹ Cancel</div>
+    <h1 id="orderTitle">Add an order</h1>
+    <div class="sub" id="orderCtx"></div>
+    <div class="note" id="orderNote">We picked these for your slot &amp; location — based on how you like to eat. This isn't the full menu.</div>
+    <div id="orderItems"></div>
+  </div>
+
+  <!-- ============ PLANS (habits / meal plans) ============ -->
   <div class="screen" id="plans">
-    <div class="appbar"><h1>Plans</h1><div class="sub">Set it once. Breakfast shows up.</div></div>
-
-    <div class="card" onclick="go('bah')" style="cursor:pointer">
-      <div class="row"><b>🍳 Breakfast at Home</b><span class="pill on">On</span></div>
-      <div class="muted" style="margin:8px 0 4px">Your next 7 days, delivered to Home at 8:00 AM</div>
-      <div class="row"><span class="muted">Mon–Sun · 5 of 7 days set</span><span class="chev">›</span></div>
-    </div>
-
-    <div class="card" onclick="go('pw')" style="cursor:pointer">
-      <div class="row"><b>💪 Post-Workout</b><span class="pill on">On</span></div>
-      <div class="muted" style="margin:8px 0 4px">Recovery meal, timed to your session</div>
-      <div class="row"><span class="muted">Cult Fit, HSR · 60 min ahead</span><span class="chev">›</span></div>
-    </div>
-
-    <div class="muted" style="text-align:center;margin-top:24px;padding:0 20px">More plans coming — for now, these two cover the mornings that matter.</div>
-  </div>
-
-  <!-- ============ BREAKFAST AT HOME ============ -->
-  <div class="screen" id="bah">
-    <div class="appbar">
-      <div class="row"><span class="muted" onclick="go('plans')" style="cursor:pointer">‹ Plans</span><div class="tog on" id="bahTog" onclick="this.classList.toggle('on')"></div></div>
-      <h1 style="margin-top:8px">Breakfast at Home</h1>
-    </div>
-
+    <h1>Habits</h1>
+    <div class="sub">A habit = a time + a place. We match the food and keep your calendar full.</div>
+    <div id="plansBody"></div>
+    <button class="btn" onclick="startBuilder()">+ New habit</button>
+    <div class="kicker">Your locations</div>
     <div class="card">
-      <div class="linkrow" style="border-bottom:1px solid var(--line)" onclick="alert('Pick delivery location (mock)')">
-        <span>📍 Deliver to <b>Home</b></span><span class="chev">›</span>
-      </div>
-      <div class="linkrow" style="border:none" onclick="alert('Pick time (mock)')">
-        <span>⏰ Arrive by <b>8:00 AM</b></span><span class="chev">›</span>
-      </div>
+      <div class="linkrow"><span>🏠 Home <span class="muted">· breakfast · 7–11 AM · doorstep · 10% off</span></span><span class="chev">›</span></div>
+      <div class="linkrow"><span>🏢 Office <span class="muted">· desk meals · partner-set · 11–5</span></span><span class="chev">›</span></div>
+      <div class="linkrow"><span>💪 Gym <span class="muted">· post-workout · +60 min · pickup</span></span><span class="chev">›</span></div>
+      <div class="linkrow" style="border:none"><span>🏪 Store <span class="muted">· walk-in · full open menu</span></span><span class="chev">›</span></div>
     </div>
-
-    <div class="kicker">Next 7 days · tap a day to edit</div>
-    <div class="card" id="weekList"></div>
-  </div>
-
-  <!-- ============ POST-WORKOUT ============ -->
-  <div class="screen" id="pw">
-    <div class="appbar">
-      <div class="row"><span class="muted" onclick="go('plans')" style="cursor:pointer">‹ Plans</span><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
-      <h1 style="margin-top:8px">Post-Workout</h1>
-      <div class="sub">We prompt you ~60 min before you finish, so it lands when you do.</div>
-    </div>
-
-    <div class="card">
-      <div class="linkrow" onclick="alert('Change SKU (mock)')">
-        <span>🥣 Meal · <b>Protein Oats Bowl</b></span><span class="chev">›</span>
-      </div>
-      <div class="linkrow" onclick="alert('Change location (mock)')">
-        <span>📍 At <b>Cult Fit, HSR</b></span><span class="chev">›</span>
-      </div>
-      <div class="linkrow" style="border:none" onclick="alert('Timing rule (mock)')">
-        <span>⏰ <b>60 min ahead</b> prompt</span><span class="chev">›</span>
-      </div>
-    </div>
-
-    <div class="kicker">On these days</div>
-    <div class="card">
-      <div class="row" style="gap:6px" id="pwDays"></div>
-    </div>
-  </div>
-
-  <!-- ============ MENU ============ -->
-  <div class="screen" id="menu">
-    <div class="appbar"><div class="row"><span class="muted" onclick="go('today')" style="cursor:pointer">‹ Back</span></div><h1 style="margin-top:8px">Menu</h1></div>
-    <div class="card" id="menuList"></div>
+    <button class="btn ghost" onclick="alert('Acquisition path (mock):\\nScan a partner QR / open a location link → land straight in a contextual order, log in if new.')">Scan a location QR / link</button>
   </div>
 
   <!-- ============ WALLET ============ -->
   <div class="screen" id="wallet">
-    <div class="appbar"><h1>Wallet</h1></div>
+    <h1>Wallet</h1>
     <div class="card" style="background:var(--ink);color:#fff;border:none;text-align:center">
       <div class="muted" style="color:#bbb">Balance</div>
-      <div class="big" style="color:#fff" id="balDisp">₹2,340</div>
+      <div style="font-size:30px;font-weight:700" id="balDisp">₹2,340</div>
     </div>
-    <div class="kicker">Add money · get a little extra</div>
+    <div class="kicker">Top up · get a little extra</div>
     <div class="card">
       <div class="row" style="gap:8px;margin-bottom:10px">
-        <div class="chip" onclick="loadAmt(this,500)">₹500</div>
-        <div class="chip sel" onclick="loadAmt(this,1000)">₹1,000</div>
-        <div class="chip" onclick="loadAmt(this,2000)">₹2,000</div>
+        <div class="chip" style="flex:1;text-align:center;margin:0" onclick="pick(this,500)">₹500</div>
+        <div class="chip sel" style="flex:1;text-align:center;margin:0" onclick="pick(this,1000)">₹1,000</div>
+        <div class="chip" style="flex:1;text-align:center;margin:0" onclick="pick(this,2000)">₹2,000</div>
       </div>
-      <div class="muted" style="text-align:center;margin-bottom:8px" id="bonusNote">+ ₹50 bonus on ₹1,000</div>
-      <button class="btn" onclick="doLoad()">Add to wallet</button>
+      <div class="muted" style="text-align:center" id="bonusNote">+ ₹50 bonus on ₹1,000</div>
+      <button class="btn" onclick="topup()">Top up</button>
     </div>
-
+    <div class="kicker">Payment methods</div>
+    <div class="card"><div class="linkrow" style="border:none"><span>＋ Add a payment method</span><span class="chev">›</span></div></div>
     <div class="kicker">Activity</div>
-    <div class="card" id="walletHist">
-      <div class="listitem"><div style="flex:1"><b>Berry Bircher</b><div class="muted">Yesterday · Breakfast at Home</div></div><span style="color:var(--mut)">– ₹180</span></div>
-      <div class="listitem"><div style="flex:1"><b>Protein Oats Bowl</b><div class="muted">Mon · Post-Workout</div></div><span style="color:var(--mut)">– ₹220</span></div>
-      <div class="listitem"><div style="flex:1"><b>Wallet load</b><div class="muted">Mar 28 · +₹100 bonus</div></div><span style="color:var(--good)">+ ₹2,100</span></div>
+    <div class="card" id="walletHist"></div>
+  </div>
+
+  <!-- ============ CHAT ============ -->
+  <div class="screen" id="chat">
+    <h1>Chat</h1>
+    <div class="sub">Notifications &amp; support, as threads. (Wired to our Slack bot.)</div>
+    <div class="card">
+      <div class="linkrow" onclick="openThread()"><div style="flex:1"><b>Tomorrow's breakfast</b><div class="muted">We swapped to Banana Peanut Oats — out of berries</div></div><span class="pill blue">1</span></div>
+      <div class="linkrow"><div style="flex:1"><b>Wallet topped up</b><div class="muted">₹2,100 added · Mar 28</div></div><span class="chev">›</span></div>
+      <div class="linkrow" style="border:none"><div style="flex:1"><b>Help &amp; support</b><div class="muted">Ask us anything</div></div><span class="chev">›</span></div>
     </div>
   </div>
 
   <!-- ============ YOU ============ -->
   <div class="screen" id="you">
-    <div class="appbar"><h1>You</h1></div>
-    <div class="card">
-      <div class="row"><div><b style="font-size:17px">Pratik Mishra</b><div class="muted">+91 81050 07607</div></div><span class="pill">Gang</span></div>
-    </div>
-    <div class="kicker">Preferences</div>
-    <div class="card">
-      <div class="linkrow"><span>🥗 Dietary · <b>Vegetarian</b></span><span class="chev">›</span></div>
-      <div class="linkrow"><span>⚠️ Allergies · <b>Nuts</b></span><span class="chev">›</span></div>
-      <div class="linkrow" style="border:none"><span>📍 Saved locations · <b>2</b></span><span class="chev">›</span></div>
-    </div>
+    <h1>You</h1>
+    <div class="card"><div class="row"><div><b style="font-size:16px">Pratik Mishra</b><div class="muted">+91 81050 07607</div></div><span class="pill on">Oatmeal Gang</span></div></div>
+    <div class="kicker">Personal preferences</div>
+    <div class="card"><div class="muted" style="padding:6px 2px">Diet, allergies, macro targets — feeds the contextual menus. <i>(Not designed yet — placeholder.)</i></div></div>
     <div class="kicker">Account</div>
     <div class="card">
-      <div class="linkrow" onclick="go('wallet')"><span>💳 Wallet & history</span><span class="chev">›</span></div>
-      <div class="linkrow"><span>🧾 Order history</span><span class="chev">›</span></div>
-      <div class="linkrow"><span>⭐ Ratings & reviews</span><span class="chev">›</span></div>
-      <div class="linkrow" style="border:none"><span>💬 Help & support</span><span class="chev">›</span></div>
+      <div class="linkrow" onclick="go('wallet')"><span>💳 Wallet &amp; history</span><span class="chev">›</span></div>
+      <div class="linkrow"><span>📍 Locations</span><span class="chev">›</span></div>
+      <div class="linkrow" style="border:none"><span>💬 Support threads</span><span class="chev">›</span></div>
     </div>
   </div>
 
-  <!-- ============ DAY EDITOR SHEET ============ -->
-  <div class="sheetwrap" id="sheet">
-    <div class="sheet">
-      <div class="grab"></div>
-      <div class="row"><h1 style="font-size:18px" id="sheetDay">Tomorrow · Tue</h1><span class="muted" onclick="closeSheet()" style="cursor:pointer">Done</span></div>
-      <div class="kicker" style="margin-top:14px">Choose your dish</div>
-      <div id="sheetDishes"></div>
-      <div class="divider"></div>
-      <div class="linkrow" onclick="alert('Change time for this day (mock)')"><span>⏰ Arrive by <b>8:00 AM</b></span><span class="chev">›</span></div>
-      <button class="btn ghost" style="margin-top:14px" onclick="skipDay()">Skip this day</button>
-    </div>
-  </div>
+  <!-- ============ BUILDER SHEET ============ -->
+  <div class="sheetwrap" id="builder"><div class="sheet" id="builderBody"></div></div>
 
-  <!-- ============ TAB BAR ============ -->
-  <div class="tabbar">
-    <div class="tab active" data-s="today" onclick="go('today')"><span class="ic">🏠</span>Today</div>
-    <div class="tab" data-s="plans" onclick="go('plans')"><span class="ic">📅</span>Plans</div>
+  <div class="toast" id="toast"></div>
+
+  <!-- ============ TABS ============ -->
+  <div class="tabs">
+    <div class="tab active" data-s="calendar" onclick="go('calendar')"><span class="ic">🗓️</span>Calendar</div>
+    <div class="tab" data-s="plans" onclick="go('plans')"><span class="ic">🔁</span>Habits</div>
     <div class="tab" data-s="wallet" onclick="go('wallet')"><span class="ic">💳</span>Wallet</div>
+    <div class="tab" data-s="chat" onclick="go('chat')"><span class="ic">💬</span>Chat</div>
     <div class="tab" data-s="you" onclick="go('you')"><span class="ic">👤</span>You</div>
   </div>
-
 </div>
 
 <script>
-  const DISHES = ["Berry Bircher","Banana Peanut Oats","Masala Oats Bowl","Mango Overnight Oats","Protein Oats Bowl","Apple Cinnamon Porridge"];
-  const WEEK = [
-    {d:"Tomorrow",dow:"Tue",dish:"Berry Bircher",skip:false},
-    {d:"Wed",dow:"",dish:"Banana Peanut Oats",skip:false},
-    {d:"Thu",dow:"",dish:"Masala Oats Bowl",skip:false},
-    {d:"Fri",dow:"",dish:"",skip:true},
-    {d:"Sat",dow:"",dish:"Mango Overnight Oats",skip:false},
-    {d:"Sun",dow:"",dish:"",skip:true},
-    {d:"Mon",dow:"",dish:"Protein Oats Bowl",skip:false},
-  ];
-  let editIdx = 0;
+/* ---------- state ---------- */
+const LOC_ICON={Home:'🏠',Office:'🏢',Gym:'💪',Store:'🏪'};
+const CONTEXT_MENU={
+  Home:[["Berry Bircher",320,12,180],["Banana Peanut Oats",410,16,170],["Apple Cinnamon Porridge",300,10,180]],
+  Office:[["Masala Oats Bowl",290,11,160],["Savoury Veggie Oats",340,14,175],["Overnight Oats — Mango",300,10,180]],
+  Gym:[["Protein Oats Bowl",380,28,220],["Whey Smoothie",260,30,210],["Peanut Recovery Bowl",420,24,230]],
+  Store:[["Berry Bircher",320,12,180],["Protein Oats Bowl",380,28,220],["Cold Brew",15,0,150],["Granola Jar",480,9,260]]
+};
+let days=[
+  {id:0,label:"Today",dt:"Mon 9",slots:[
+    {time:"8:00 AM",loc:"Home",item:"Berry Bircher",habit:"Breakfast at Home",kcal:320,p:12},
+    {time:"1:30 PM",loc:"Office",item:null,habit:"Office Desk"},
+    {time:"Post-workout",loc:"Gym",item:"Protein Oats Bowl",habit:"Post-Workout",kcal:380,p:28},
+  ]},
+  {id:1,label:"Tomorrow",dt:"Tue 10",slots:[
+    {time:"8:00 AM",loc:"Home",item:"Banana Peanut Oats",habit:"Breakfast at Home",kcal:410,p:16},
+    {time:"1:30 PM",loc:"Office",item:null,habit:"Office Desk"},
+  ]},
+  {id:2,label:"Wed",dt:"11",slots:[
+    {time:"8:00 AM",loc:"Home",item:"Masala Oats Bowl",habit:"Breakfast at Home",kcal:290,p:11},
+  ]},
+  {id:3,label:"Thu",dt:"12",slots:[
+    {time:"8:00 AM",loc:"Home",item:null,habit:"Breakfast at Home"},
+  ]},
+];
+let habits=[
+  {name:"Breakfast at Home",loc:"Home",when:"Every day · 8:00 AM",type:"Your plan",on:true},
+  {name:"Office Desk",loc:"Office",when:"Weekdays · 1:30 PM",type:"Partner-led",on:true},
+  {name:"Post-Workout",loc:"Gym",when:"Mon · Wed · Fri",type:"Partner-led",on:true},
+];
+let calMode="menu", curDay=0, pending=null;
 
-  function go(id){
-    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.s===id));
-    document.querySelector('.phone').scrollTop=0;
-    document.querySelectorAll('.screen').forEach(s=>s.scrollTop=0);
-  }
-  function goPW(){ go('plans'); setTimeout(()=>go('pw'),0); }
+/* ---------- nav ---------- */
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.s===id));
+  document.querySelectorAll('.screen').forEach(s=>s.scrollTop=0);
+  if(id==='calendar')renderCal();
+}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2200);}
 
-  function renderWeek(){
-    document.getElementById('weekList').innerHTML = WEEK.map((w,i)=>`
-      <div class="day ${w.skip?'skipped':''}" onclick="openDay(${i})">
-        <div class="dno"><b>${w.d}</b><span>${w.dow}</span></div>
-        <div class="thumb">${w.skip?'—':'🥣'}</div>
-        <div style="flex:1"><div class="dish">${w.skip?'Skipped':w.dish}</div></div>
-        <span class="chev">›</span>
-      </div>`).join('');
-  }
-  function renderPWDays(){
-    const days=["M","T","W","T","F","S","S"]; const on=[0,2,4];
-    document.getElementById('pwDays').innerHTML = days.map((d,i)=>
-      `<div class="chip ${on.includes(i)?'sel':''}">${d}</div>`).join('');
-  }
-  function renderMenu(){
-    const m=[["Berry Bircher",320,12,180],["Banana Peanut Oats",410,16,170],["Masala Oats Bowl",290,11,160],["Protein Oats Bowl",380,28,220],["Mango Overnight Oats",300,10,180],["Cold Brew",15,0,150]];
-    document.getElementById('menuList').innerHTML = m.map(x=>`
-      <div class="listitem"><div class="thumb">🥣</div>
-      <div style="flex:1"><div class="row"><b>${x[0]}</b><span class="vdot"></span></div>
-      <div class="muted">${x[1]} kcal · ${x[2]}g protein</div></div>
-      <span>₹${x[3]}</span></div>`).join('');
-  }
+/* ---------- calendar ---------- */
+function calView(m){calMode=m;document.getElementById('tgMenu').classList.toggle('sel',m==='menu');document.getElementById('tgNutri').classList.toggle('sel',m==='nutrition');renderCal();}
+function dayKcal(d){return d.slots.reduce((s,x)=>s+(x.kcal||0),0);}
+function dayProtein(d){return d.slots.reduce((s,x)=>s+(x.p||0),0);}
+function renderCal(){
+  document.getElementById('calBody').innerHTML=days.map(d=>{
+    const nutri = calMode==='nutrition' ? `<span class="nutri">${dayKcal(d)} kcal · ${dayProtein(d)}g P</span>` : '';
+    const slots=d.slots.map((s,i)=>{
+      if(!s.item){
+        return `<div class="slot empty" onclick="addOrder(${d.id},${i})">＋ Add order · ${s.time} · ${LOC_ICON[s.loc]} ${s.loc}</div>`;
+      }
+      if(calMode==='nutrition'){
+        const goal=Math.min(100,Math.round((s.p||0)/30*100));
+        return `<div class="slot" onclick="openDay(${d.id})"><div class="thumb">🥣</div><div style="flex:1"><div class="t">${s.time} · ${s.loc}</div><b>${s.item}</b><div class="muted">${s.kcal} kcal · ${s.p}g protein</div><div class="barwrap"><div class="bar" style="width:${goal}%"></div></div></div></div>`;
+      }
+      return `<div class="slot" onclick="openDay(${d.id})"><div class="thumb">🥣</div><div style="flex:1"><div class="t">${s.time} · ${LOC_ICON[s.loc]} ${s.loc}</div><b>${s.item}</b></div><span class="pill">${s.habit}</span></div>`;
+    }).join('');
+    return `<div class="day"><div class="dayhead" onclick="openDay(${d.id})"><b>${d.label}</b><span class="dt">${d.dt}</span>${nutri}</div>${slots}</div>`;
+  }).join('');
+}
 
-  function openDay(i){
-    editIdx=i; const w=WEEK[i];
-    document.getElementById('sheetDay').textContent = `${w.d}${w.dow?' · '+w.dow:''}`;
-    document.getElementById('sheetDishes').innerHTML = DISHES.map(d=>`
-      <div class="opt ${d===w.dish?'sel':''}" onclick="pickDish('${d}')">
-        <div class="radio"></div><div>${d}</div></div>`).join('');
-    document.getElementById('sheet').classList.add('open');
+/* ---------- day detail (Calendar 3) ---------- */
+function openDay(id){
+  curDay=id;const d=days.find(x=>x.id===id);
+  document.getElementById('dayTitle').textContent=d.label+' · '+d.dt;
+  document.getElementById('dayNutri').textContent=`${dayKcal(d)} kcal · ${dayProtein(d)}g protein · ~${Math.min(100,Math.round(dayProtein(d)/60*100))}% of your daily goal on auto-pilot`;
+  document.getElementById('dayBody').innerHTML=d.slots.map((s,i)=>{
+    if(!s.item)return `<div class="slot empty" onclick="addOrder(${d.id},${i})">＋ Add order · ${s.time} · ${LOC_ICON[s.loc]} ${s.loc}</div>`;
+    return `<div class="card"><div class="row"><div><div class="t" style="font-size:11px;color:var(--mut);font-weight:600">${s.time} · ${LOC_ICON[s.loc]} ${s.loc}</div><b>${s.item}</b></div><span class="pill">${s.habit}</span></div><div class="muted" style="margin-top:8px">Meal · ${s.kcal} kcal · ${s.p}g protein · ${s.p>=20?'high protein':'balanced'}</div></div>`;
+  }).join('');
+  go('day');
+}
+
+/* ---------- new order (contextual menu) ---------- */
+function addOrder(dayId,slotIdx){
+  const d=days.find(x=>x.id===dayId);const s=d.slots[slotIdx];
+  pending={dayId,slotIdx,loc:s.loc};
+  document.getElementById('orderTitle').textContent=(s.loc==='Store'?'Store menu':'Add an order');
+  document.getElementById('orderCtx').textContent=`${s.time} · ${LOC_ICON[s.loc]} ${s.loc}`;
+  document.getElementById('orderNote').style.display = s.loc==='Store' ? 'none':'block';
+  let extra = s.loc==='Gym' ? `<div class="note" style="background:#e2ebf4;color:#2f5d8c">Pick up from <b>Fridge A · Slot B</b> when you finish — or get it delivered.</div>`:'';
+  document.getElementById('orderItems').innerHTML = extra + CONTEXT_MENU[s.loc].map(x=>`
+    <div class="card" style="cursor:pointer" onclick="placeOrder('${x[0].replace(/'/g,"")}',${x[1]},${x[2]},${x[3]})">
+      <div class="row"><div style="display:flex;gap:11px;align-items:center"><div class="thumb">🥣</div><div><b>${x[0]}</b><div class="muted">${x[1]} kcal · ${x[2]}g protein</div></div></div>
+      <div style="text-align:right"><div style="font-weight:600">₹${x[3]}</div><div class="muted" style="font-size:11px">Pay with wallet</div></div></div>
+    </div>`).join('');
+  go('order');
+}
+function placeOrder(item,kcal,p,price){
+  const d=days.find(x=>x.id===pending.dayId);const s=d.slots[pending.slotIdx];
+  s.item=item;s.kcal=kcal;s.p=p;
+  bal-=price;syncBal();
+  pending=null;toast('Added to your calendar · ₹'+price+' from wallet');
+  renderCal();go('calendar');
+}
+function cancelOrder(){pending=null;go('calendar');}
+
+/* ---------- habits ---------- */
+function renderPlans(){
+  document.getElementById('plansBody').innerHTML=habits.map((h,i)=>`
+    <div class="card">
+      <div class="row"><div style="display:flex;gap:10px;align-items:center"><div class="thumb">${LOC_ICON[h.loc]}</div><div><b>${h.name}</b><div class="muted">${h.when}</div></div></div>
+      <div class="tog ${h.on?'on':''}" onclick="this.classList.toggle('on')"></div></div>
+      <div class="row" style="margin-top:10px"><span class="pill ${h.type==='Your plan'?'on':'blue'}">${h.type}</span><span class="muted">auto-fills your calendar</span></div>
+    </div>`).join('');
+}
+
+/* ---------- builder ---------- */
+let bStep=0, bLoc='Home', bPrefs=[];
+const PREFS=["High protein","Vegetarian","Low sugar","More fibre","Smoothies only","Calorie target"];
+function startBuilder(){bStep=0;bLoc='Home';bPrefs=[];renderBuilder();document.getElementById('builder').classList.add('open');}
+function closeBuilder(){document.getElementById('builder').classList.remove('open');}
+function renderBuilder(){
+  const b=document.getElementById('builderBody');
+  let html='<div class="grab"></div>';
+  if(bStep===0){
+    html+=`<h1>Where?</h1><div class="sub">Location sets the context — slots and the menu follow.</div>`;
+    html+=['Home','Office','Gym'].map(l=>`<div class="linkrow" onclick="bLoc='${l}';bStep=1;renderBuilder()"><span>${LOC_ICON[l]} ${l}</span><span class="chev">›</span></div>`).join('');
+    html+=`<button class="btn ghost" onclick="closeBuilder()">Cancel</button>`;
+  } else if(bStep===1){
+    const t = bLoc==='Home'?'Every day · 7–11 AM':bLoc==='Office'?'Weekdays · 11–5 slots':'After each workout · +60 min';
+    html+=`<h1>When?</h1><div class="sub">${LOC_ICON[bLoc]} ${bLoc}</div><div class="card"><div class="row"><span>⏰ ${t}</span><span class="pill on">suggested</span></div></div><button class="btn" onclick="bStep=2;renderBuilder()">Next</button><button class="btn ghost" onclick="bStep=0;renderBuilder()">Back</button>`;
+  } else if(bStep===2){
+    html+=`<h1>What matters to you?</h1><div class="sub">We use this + your history to plan the week.</div><div style="margin:6px 0">`+PREFS.map(p=>`<span class="chip ${bPrefs.includes(p)?'sel':''}" onclick="togPref('${p}')">${p}</span>`).join('')+`</div><button class="btn" onclick="bStep=3;renderBuilder()">Plan my week</button>`;
+  } else if(bStep===3){
+    const menu=CONTEXT_MENU[bLoc];
+    html+=`<h1>Here's your week</h1><div class="sub">Auto-generated · ${bPrefs.length?bPrefs.join(' · '):'balanced'}</div>`;
+    html+=['Mon','Tue','Wed','Thu','Fri'].map((d,i)=>{const m=menu[i%menu.length];return `<div class="slot"><div class="thumb">🥣</div><div style="flex:1"><div class="t">${d}</div><b>${m[0]}</b><div class="muted">${m[1]} kcal · ${m[2]}g P</div></div></div>`}).join('');
+    html+=`<button class="btn ghost" onclick="renderBuilder()">🔀 Shuffle</button><button class="btn" onclick="lockPlan()">Lock it in</button>`;
   }
-  function pickDish(d){ WEEK[editIdx].dish=d; WEEK[editIdx].skip=false; renderWeek(); openDay(editIdx); }
-  function skipDay(){ WEEK[editIdx].skip=true; renderWeek(); closeSheet(); }
-  function closeSheet(){ document.getElementById('sheet').classList.remove('open'); }
+  b.innerHTML=html;
+}
+function togPref(p){bPrefs.includes(p)?bPrefs=bPrefs.filter(x=>x!==p):bPrefs.push(p);renderBuilder();}
+function lockPlan(){
+  const name=bLoc==='Home'?'Breakfast at Home':bLoc==='Office'?'Office Desk':'Post-Workout';
+  if(!habits.find(h=>h.name===name)) habits.unshift({name,loc:bLoc,when:bLoc==='Home'?'Every day · 8:00 AM':bLoc==='Office'?'Weekdays':'Mon · Wed · Fri',type:bLoc==='Home'?'Your plan':'Partner-led',on:true});
+  // populate the empty Thu home slot as a demo of auto-fill
+  if(bLoc==='Home'){const d=days.find(x=>x.id===3);if(d&&!d.slots[0].item){const m=CONTEXT_MENU.Home[0];d.slots[0].item=m[0];d.slots[0].kcal=m[1];d.slots[0].p=m[2];}}
+  closeBuilder();renderPlans();renderCal();toast('Habit locked — your calendar is filling up');go('calendar');
+}
 
-  let bal=2340, sel=1000;
-  const bonus={500:20,1000:50,2000:120};
-  function loadAmt(el,a){ sel=a; document.querySelectorAll('#wallet .chip').forEach(c=>c.classList.remove('sel')); el.classList.add('sel'); document.getElementById('bonusNote').textContent=`+ ₹${bonus[a]} bonus on ₹${a.toLocaleString()}`; }
-  function doLoad(){ bal += sel + bonus[sel]; document.getElementById('balDisp').textContent='₹'+bal.toLocaleString(); document.getElementById('today').querySelector('.big').textContent='₹'+bal.toLocaleString(); alert('Added ₹'+(sel+bonus[sel]).toLocaleString()+' (incl. bonus) — mock'); }
+/* ---------- wallet ---------- */
+let bal=2340, sel=1000;const bonus={500:20,1000:50,2000:120};
+function syncBal(){const v='₹'+bal.toLocaleString();document.getElementById('balDisp').textContent=v;}
+function pick(el,a){sel=a;document.querySelectorAll('#wallet .chip').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');document.getElementById('bonusNote').textContent=`+ ₹${bonus[a]} bonus on ₹${a.toLocaleString()}`;}
+function topup(){bal+=sel+bonus[sel];syncBal();toast('Added ₹'+(sel+bonus[sel]).toLocaleString()+' incl. bonus');}
+document.getElementById('walletHist').innerHTML=[["Berry Bircher","Yesterday · Breakfast at Home","– ₹180",0],["Protein Oats Bowl","Mon · Post-Workout","– ₹220",0],["Top up","Mar 28 · +₹100 bonus","+ ₹2,100",1]].map(x=>`<div class="linkrow"><div style="flex:1"><b>${x[0]}</b><div class="muted">${x[1]}</div></div><span style="color:${x[3]?'var(--good)':'var(--mut)'}">${x[2]}</span></div>`).join('');
 
-  renderWeek(); renderPWDays(); renderMenu();
+/* ---------- chat thread ---------- */
+function openThread(){alert('Thread: Tomorrow\\'s breakfast (mock)\\n\\nMOO: Heads up — out of berries, so we swapped tomorrow to Banana Peanut Oats. Want something else?\\n[ Keep it ]  [ Change ]');}
+
+/* init */
+renderCal();renderPlans();
 </script>
 </body>
 </html>
