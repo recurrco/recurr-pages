@@ -1008,6 +1008,49 @@
     }
 
     /* ============================================================
+       F4b · Comparison table (Jun 12 — replaces the 3 wedge cards)
+    ============================================================ */
+    .cmp-table {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--white);
+    }
+    .cmp-row {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1.15fr;
+      align-items: stretch;
+    }
+    .cmp-row + .cmp-row { border-top: 1px solid var(--line); }
+    .cmp-cell {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      font-size: 14.5px;
+      color: var(--ink-2);
+    }
+    .cmp-cell.cmp-feat { font-weight: 500; color: var(--ink); }
+    .cmp-row:not(.cmp-head) .cmp-cell:not(.cmp-feat) { justify-content: center; }
+    .cmp-head .cmp-cell {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      background: var(--cream-2);
+    }
+    .cmp-head .cmp-cell:not(.cmp-feat) { justify-content: center; text-align: center; }
+    .cmp-us { background: rgba(142, 44, 54, 0.045); }
+    .cmp-row .cmp-us { box-shadow: inset 1px 0 0 var(--line), inset -1px 0 0 var(--line); }
+    .cmp-head .cmp-us { background: var(--ink); color: var(--yellow); }
+    .cmp-y { color: var(--teal-dark); font-weight: 700; }
+    .cmp-n { color: var(--ink-4); font-weight: 500; }
+    @media (max-width: 720px) {
+      .cmp-row { grid-template-columns: 1.5fr 0.8fr 0.8fr 0.95fr; }
+      .cmp-cell { padding: 12px 10px; font-size: 12px; }
+    }
+
+    /* ============================================================
        F5 · Setup
     ============================================================ */
     .setup-grid {
@@ -1771,62 +1814,71 @@
         </p>
       </div>
 
-      <!-- Jun 12: restructured to 2 columns — our MCP (left) vs the other two, stacked (right) -->
-      <div class="wedge-grid is-2col">
-
-        <!-- LEFT · our MCP -->
-        <div class="wedge-card is-us">
-          <span class="wedge-mark">Clarisights</span>
-          <div class="wedge-kicker">Marketing Data MCP</div>
-          <div class="wedge-job">Analyze performance with your semantic layer.</div>
-          <h3>Built for enterprise analysis.</h3>
-          <p><span class="chg">Every channel, attribution platform, and your warehouse — 50+ connectors —</span> joined at deepest granularity. Your team's custom KPIs. Your team's ACL. The semantic layer your analysts have curated, exposed to every AI tool you use.</p>
-          <ul>
-            <li>Cross-channel, joined at source</li>
-            <li>Your custom metrics + dimensions + segments</li>
-            <li>Same governance as your Clarisights workspace</li>
-          </ul>
-          <div class="wedge-examples">
-            <span class="wedge-examples-label">Why this one</span>
-            The MCP you choose when you operate at scale.
-          </div>
+      <!-- Jun 12: comparison rebuilt from 3 cards into a capability table -->
+      <p class="small" style="margin-bottom: 20px;"><span class="chg">Rebuilt as a comparison table (was 3 cards) &mdash; Jun 12</span></p>
+      <div class="cmp-table">
+        <div class="cmp-row cmp-head">
+          <div class="cmp-cell cmp-feat">Capability</div>
+          <div class="cmp-cell">Channel MCPs</div>
+          <div class="cmp-cell">Operator MCPs</div>
+          <div class="cmp-cell cmp-us">Marketing Data MCP</div>
         </div>
-
-        <!-- RIGHT · the other two, stacked -->
-        <div class="wedge-col-right">
-          <div class="wedge-card">
-            <div class="wedge-kicker">Channel MCPs</div>
-            <div class="wedge-job">Pull data from one platform.</div>
-            <h3>Built for one channel.</h3>
-            <p><span class="chg">Vanilla MCPs from Meta, Google, and the rest. One channel, raw API surface.</span></p>
-            <ul>
-              <li>One platform per server</li>
-              <li>Raw metric names. Your AI translates every time</li>
-              <li>No cross-channel join</li>
-            </ul>
-            <div class="wedge-examples">
-              <span class="wedge-examples-label">Examples</span>
-              Meta MCP · Google MCP · channel-specific servers
-            </div>
-          </div>
-
-          <div class="wedge-card">
-            <div class="wedge-kicker">Operator MCPs</div>
-            <div class="wedge-job">Take actions across platforms.</div>
-            <h3>Built for execution.</h3>
-            <p><span class="chg">Wrap channels in an action layer — pause, scale, adjust budgets. Built for performance ops, not "how are we doing?"</span></p>
-            <ul>
-              <li>Action-first, not analysis-first</li>
-              <li>Limited semantic context</li>
-              <li>Designed for in-platform execution</li>
-            </ul>
-            <div class="wedge-examples">
-              <span class="wedge-examples-label">Examples</span>
-              Pipeboard · AdKit · Synter
-            </div>
-          </div>
+        <div class="cmp-row">
+          <div class="cmp-cell cmp-feat">Cross-channel analytics</div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell cmp-us"><span class="cmp-y">&#10003; Yes</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-cell cmp-feat">Your custom KPIs &amp; metric definitions</div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell cmp-us"><span class="cmp-y">&#10003; Yes</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-cell cmp-feat">Custom dimensions</div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell cmp-us"><span class="cmp-y">&#10003; Yes</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-cell cmp-feat">Saved cross-channel segments</div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell cmp-us"><span class="cmp-y">&#10003; Yes</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-cell cmp-feat">Governed semantic layer</div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell cmp-us"><span class="cmp-y">&#10003; Yes</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-cell cmp-feat">Same ACL as your workspace</div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell cmp-us"><span class="cmp-y">&#10003; Yes</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-cell cmp-feat">Years of reporting history</div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell cmp-us"><span class="cmp-y">&#10003; Yes</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-cell cmp-feat">Browse &amp; summarize existing reports</div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell"><span class="cmp-n">No</span></div>
+          <div class="cmp-cell cmp-us"><span class="cmp-y">&#10003; Yes</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-cell cmp-feat">Execute campaigns &mdash; pause, scale, change budgets</div>
+          <div class="cmp-cell"><span class="cmp-y">&#10003; Yes</span></div>
+          <div class="cmp-cell"><span class="cmp-y">&#10003; Yes</span></div>
+          <div class="cmp-cell cmp-us"><span class="cmp-n">Read-only</span></div>
         </div>
       </div>
+      <p class="small" style="margin-top: 16px; color: var(--ink-4);">Channel and operator MCPs handle execution. The Marketing Data MCP handles analysis. Use them together.</p>
     </div>
   </section>
 
