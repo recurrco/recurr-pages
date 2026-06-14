@@ -1,401 +1,228 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#E5E8E8">
-  <title>Refound — We run your SEO function</title>
-  <meta name="description" content="Refound designs, builds, and operates the SEO function for your team. An always-on system for internet discovery — from Recurr Studio.">
-  <link rel="stylesheet" href="/recurr-system/style.css">
-  <style>
-    /* -- Refound-specific overrides -- */
-    .pillar-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: var(--space-s);
-    }
-    .pillar-card {
-      background: var(--whiteboard);
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      padding: clamp(1.5rem, 1.2rem + 1vw, 2.2rem);
-      display: flex; flex-direction: column; gap: var(--space-xs);
-      position: relative;
-      transition: background 0.35s var(--ease);
-    }
-    @media (hover:hover) {
-      .pillar-card:hover { background: var(--notebook); }
-      .pillar-card:hover .card-corner { opacity: 1; }
-    }
-    .pillar-num {
-      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase; color: var(--pencil);
-    }
-    .pillar-title {
-      font-family: var(--serif); font-size: var(--fs-h3); font-weight: 700;
-      line-height: 1.15; letter-spacing: -0.02em;
-    }
-    .pillar-sub {
-      font-family: var(--serif); font-size: var(--fs-body); font-style: italic;
-      color: var(--graphite); line-height: 1.5;
-    }
-    .pillar-list {
-      list-style: none; padding: 0; margin: 0;
-      display: flex; flex-direction: column; gap: 6px;
-    }
-    .pillar-list li {
-      font-family: var(--serif); font-size: var(--fs-small);
-      color: var(--graphite); line-height: 1.55;
-      padding-left: 1.2em; position: relative;
-    }
-    .pillar-list li::before {
-      content: '~'; position: absolute; left: 0;
-      font-family: var(--mono); color: var(--faint);
-    }
-    .compare-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 0; border: 1px solid var(--border-color); border-radius: 4px;
-      overflow: hidden;
-    }
-    .compare-col { padding: clamp(1.5rem, 1.2rem + 1vw, 2.2rem); }
-    .compare-col:first-child {
-      background: var(--whiteboard);
-      border-right: 1px solid var(--border-color);
-    }
-    .compare-col:last-child { background: var(--notebook); }
-    .compare-label {
-      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase; color: var(--pencil);
-      margin-bottom: var(--space-s);
-    }
-    .compare-list {
-      list-style: none; padding: 0; margin: 0;
-      display: flex; flex-direction: column; gap: 10px;
-    }
-    .compare-list li {
-      font-family: var(--serif); font-size: var(--fs-small);
-      color: var(--graphite); line-height: 1.5;
-      padding-left: 1.4em; position: relative;
-    }
-    .compare-list li::before {
-      position: absolute; left: 0;
-      font-family: var(--mono); font-size: var(--fs-small);
-    }
-    .compare-col:first-child .compare-list li::before {
-      content: '\2013'; color: var(--faint);
-    }
-    .compare-col:last-child .compare-list li::before {
-      content: '+'; color: var(--green); font-weight: 700;
-    }
-    .step-row {
-      display: grid; grid-template-columns: auto 1fr;
-      gap: var(--space-m); align-items: start;
-      padding: var(--space-m) 0;
-      border-bottom: 1px dashed var(--border-faint);
-    }
-    .step-row:last-child { border-bottom: none; }
-    .step-num {
-      font-family: var(--mono); font-size: var(--fs-h1); font-weight: 700;
-      color: var(--faint); line-height: 1; min-width: 3ch;
-    }
-    .step-content { display: flex; flex-direction: column; gap: 4px; }
-    .step-title {
-      font-family: var(--serif); font-size: var(--fs-h3); font-weight: 700;
-      line-height: 1.2; letter-spacing: -0.01em;
-    }
-    .step-desc {
-      font-family: var(--serif); font-size: var(--fs-small);
-      color: var(--graphite); line-height: 1.55;
-    }
-    .icp-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: var(--space-s);
-    }
-    .icp-card {
-      background: var(--whiteboard);
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      padding: clamp(1.2rem, 1rem + 0.8vw, 1.8rem);
-      display: flex; flex-direction: column; gap: 4px;
-    }
-    .icp-label {
-      font-family: var(--mono); font-size: var(--fs-label); font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil);
-    }
-    .icp-text {
-      font-family: var(--serif); font-size: var(--fs-small);
-      color: var(--graphite); line-height: 1.55;
-    }
-    @media (max-width: 700px) {
-      .pillar-grid { grid-template-columns: 1fr; }
-      .compare-grid { grid-template-columns: 1fr; }
-      .compare-col:first-child { border-right: none; border-bottom: 1px solid var(--border-color); }
-      .icp-grid { grid-template-columns: 1fr; }
-      .step-row { grid-template-columns: 1fr; gap: var(--space-xs); }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#ffffff">
+<title>ReFound — be the answer your buyers find</title>
+<meta name="description" content="ReFound makes you the answer your buyers find — on Google, ChatGPT, Reddit, everywhere they search. Buyer Search, run as a platform. From Recurr.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ffffff; --ink:#0a0a0a; --mute:#6b6b6b; --line:#e6e6e6; --faint:#a3a3a3;
+    --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;font-size:17px}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:920px;margin:0 auto;padding:0 32px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+
+  nav{border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .mark{font-weight:700;letter-spacing:-.01em;font-size:18px}
+  .mark span{font-family:var(--mono);font-weight:400;color:var(--mute);font-size:13px;margin-left:10px;letter-spacing:.04em}
+  .mark span:hover{color:var(--ink)}
+
+  header{padding:120px 0 96px}
+  header h1{font-size:clamp(32px,5vw,56px);line-height:1.08;font-weight:700;letter-spacing:-.02em;max-width:20ch}
+  header .lede{margin-top:26px;font-size:clamp(17px,2vw,20px);color:var(--mute);max-width:52ch;font-weight:400}
+
+  section{padding:72px 0;border-top:1px solid var(--line)}
+  .sec-head{margin-bottom:36px}
+  .sec-head h2{font-size:13px;font-family:var(--mono);letter-spacing:.16em;text-transform:uppercase;font-weight:500;color:var(--mute)}
+  .sec-head .note{margin-top:14px;color:var(--ink);max-width:54ch;font-size:clamp(18px,2.1vw,21px);line-height:1.45}
+  .sec-head .note .mut{color:var(--mute)}
+
+  /* ascii panels */
+  .ascii{border:1px solid var(--line);border-radius:4px;padding:26px 22px;margin-top:40px;overflow-x:auto;background:var(--paper)}
+  .ascii pre{font-family:var(--mono);font-size:13px;line-height:1.5;color:var(--ink);white-space:pre;min-width:max-content}
+  .ascii .cap{font-family:var(--mono);font-size:12px;color:var(--mute);margin-top:18px;letter-spacing:.02em;white-space:normal}
+  .ascii.center pre{display:inline-block}
+  @media(max-width:560px){.ascii pre{font-size:11px}}
+
+  /* hairline card grid (matches parent) */
+  .cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:8px}
+  .card{background:var(--paper);padding:34px 30px;display:flex;flex-direction:column;min-height:210px}
+  .card .tag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+  .card h3{font-size:24px;font-weight:700;letter-spacing:-.02em;margin:12px 0 12px}
+  .card p{color:var(--mute);font-size:15.5px;flex:1}
+  .card .when{margin-top:18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--faint);text-transform:uppercase}
+
+  /* steps */
+  .steps{border-top:1px solid var(--line)}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:baseline;padding:24px 0;border-bottom:1px solid var(--line)}
+  .step .n{font-family:var(--mono);font-size:13px;color:var(--faint);letter-spacing:.1em;padding-top:4px}
+  .step .t{font-weight:600;font-size:18px;letter-spacing:-.01em}
+  .step .d{color:var(--mute);font-size:15.5px;margin-top:5px;max-width:56ch}
+
+  .cta{padding:80px 0 96px;border-top:1px solid var(--ink)}
+  .cta h3{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-.02em;max-width:18ch}
+  .cta p{margin-top:18px;color:var(--mute);max-width:50ch;font-size:17px}
+  .btn{display:inline-block;margin-top:28px;font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:13px 22px;border:1px solid var(--ink);transition:all .15s}
+  .btn:hover{background:var(--ink);color:var(--paper)}
+
+  footer{border-top:1px solid var(--line);padding:48px 0 64px}
+  .foot-top{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:flex-start}
+  .foot-links{display:flex;gap:22px;font-family:var(--mono);font-size:13px;color:var(--mute)}
+  .foot-links a:hover{color:var(--ink)}
+  .legal{margin-top:36px;padding-top:24px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:28px;font-family:var(--mono);font-size:12px;color:var(--mute);line-height:1.7}
+  .legal b{color:var(--ink);font-weight:500}
+  .copy{margin-top:20px;font-family:var(--mono);font-size:12px;color:var(--mute)}
+
+  @media(max-width:680px){
+    .wrap{padding:0 22px}
+    header{padding:80px 0 56px}
+    .cards{grid-template-columns:1fr}
+    .step{grid-template-columns:1fr;gap:6px}
+  }
+</style>
 </head>
 <body>
 
-<canvas class="dot-grid-canvas" id="dot-grid"></canvas>
-
-<!-- Nav -->
-<nav>
-  <div class="nav-inner">
-    <a href="/recurr-co/" class="nav-logo">recurr</a>
-    <div class="nav-right">
-      <span class="nav-clock" id="clock"></span>
-      <a href="/recurr-co-studio/">studio</a>
-      <a href="/recurr-co-events/">events</a>
-      <a href="https://www.linkedin.com/newsletters/">subscribe</a>
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9681;</button>
+  <nav>
+    <div class="wrap">
+      <div class="mark">ReFound<a href="/recurr-home/"><span>by Recurr</span></a></div>
+      <div class="eyebrow">Buyer Search</div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<!-- Hero -->
-<section class="hero">
-  <h1 id="hero-h1">We design, build, and operate the SEO function for your team.</h1>
-  <div class="hero-bottom">
-    <p class="hero-sub">The internet changed. User journeys are fuzzy, destinations keep shifting, and the old playbook stopped working. Refound is an always-on system that helps your brand be discovered by people on the internet.</p>
-    <pre class="hero-ascii" id="hero-ascii">
- ┌───────────────────────────┐
- │                           │
- │    r e f o u n d          │
- │                           │
- │   ~ technical seo         │
- │   ~ content development   │
- │   ~ link building         │
- │                           │
- │   from recurr studio      │
- └───────────────────────────┘
-    </pre>
-  </div>
-</section>
+  <header>
+    <div class="wrap">
+      <h1>Be the answer your buyers find — everywhere they search.</h1>
+      <p class="lede">Your buyers don't search in one place anymore. They bounce between Google, AI chat, Reddit threads and comparison lists before they ever reach you. ReFound maps that journey, finds every place an opinion gets formed, and makes you the answer there.</p>
 
-<hr class="divider">
-
-<!-- The Problem -->
-<section class="section-wide" data-reveal>
-  <div class="section-label dot-red">The Internet Changed</div>
-  <p class="section-desc" style="max-width:var(--wide-w)">Every brand wants to be found by their customer. The biggest channels on the planet are still search engines &mdash; and now a growing wave of LLMs. The other big channel is user-generated content: more ephemeral, but it converts better. Search is more lasting. It has a sense of permanence.</p>
-  <p class="section-desc" style="max-width:var(--wide-w);margin-top:var(--space-xs)">But the internet has become much fuzzier in the last decade. It&rsquo;s not simply search or social anymore. Traffic is fuzzy, it crosses platforms, and the entropy is very high. We can&rsquo;t afford to think linearly &mdash; search <em>or</em> social &mdash; we need to think: <strong>internet.</strong></p>
-
-  <div class="callout callout-blue" style="margin-top:var(--space-m);max-width:var(--wide-w)">
-    <div class="callout-label">The shift</div>
-    User journeys are fuzzier. The destinations where people spend time and traverse the internet through are disrupted and not the same anymore. Think of the internet as a constantly shape-shifting graph. Refound maximises your share of voice in that graph.
-  </div>
-</section>
-
-<hr class="divider">
-
-<!-- What We Actually Do -->
-<section class="section-wide" data-reveal>
-  <div class="section-label dot-green">What We Do</div>
-  <p class="section-desc" style="max-width:var(--wide-w)">Refound is an evolved version of what an SEO agency used to do. Not a few pages and a few backlinks. We programmatically build and update content. We programmatically distribute links. We continuously monitor and fix your web infrastructure.</p>
-  <p class="section-desc" style="max-width:var(--wide-w);margin-top:var(--space-xs)">Three arms. One operated service.</p>
-</section>
-
-<!-- Three Pillars -->
-<section class="section-wide" style="padding-top:0" data-reveal>
-  <div class="pillar-grid">
-
-    <div class="pillar-card" data-reveal>
-      <span class="card-corner card-corner-tl">+</span>
-      <span class="card-corner card-corner-tr">+</span>
-      <span class="card-corner card-corner-bl">+</span>
-      <span class="card-corner card-corner-br">+</span>
-      <div class="pillar-num">01 &middot; Reimagined</div>
-      <div class="pillar-title">Technical SEO</div>
-      <div class="pillar-sub">The traditional pillar, rebuilt with AI.</div>
-      <ul class="pillar-list">
-        <li>Automated link audits and redirect management</li>
-        <li>Indexing health, crawlability, and coverage monitoring</li>
-        <li>HTML-to-text ratios, page speed, structured data</li>
-        <li>LLM readability &mdash; how well AI systems can parse and cite your content</li>
-        <li>Live reporting dashboard, not a quarterly PDF</li>
-      </ul>
-      <p class="marginalia">Framework-based. Custom-built for your site.</p>
+      <div class="ascii">
+<pre>   ┌─ google     ─┐
+   ├─ ai chat    ─┤
+   ├─ reddit     ─┼──▶  [ ReFound ]  ──▶  you, the answer
+   ├─ listicles  ─┤
+   └─ everywhere ─┘</pre>
+        <div class="cap">the buyer's research journey — collapsed into the few places that decide it</div>
+      </div>
     </div>
+  </header>
 
-    <div class="pillar-card" data-reveal>
-      <span class="card-corner card-corner-tl">+</span>
-      <span class="card-corner card-corner-tr">+</span>
-      <span class="card-corner card-corner-bl">+</span>
-      <span class="card-corner card-corner-br">+</span>
-      <div class="pillar-num">02 &middot; Reimagined</div>
-      <div class="pillar-title">Content Development</div>
-      <div class="pillar-sub">The traditional pillar, rebuilt with AI.</div>
-      <ul class="pillar-list">
-        <li>Auto-built content calendars from keyword gaps and traffic data</li>
-        <li>Drafts pushed to your content team on cadence</li>
-        <li>Blog posts, backlink articles, Reddit contributions, product listings</li>
-        <li>Programmatic SEO projects &mdash; template-driven pages at scale</li>
-        <li>Content age, freshness, and decay tracking</li>
-      </ul>
-      <p class="marginalia">Runs continuously. Not in quarterly sprints.</p>
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>The shift</h2>
+        <p class="note">Search used to be one box. Now the research journey is scattered across search engines, AI assistants, communities, and the lists people trust. <span class="mut">We call that whole journey Buyer Search. Winning it is no longer about ranking one page — it's about being present everywhere the decision actually forms.</span></p>
+      </div>
     </div>
+  </section>
 
-    <div class="pillar-card" data-reveal>
-      <span class="card-corner card-corner-tl">+</span>
-      <span class="card-corner card-corner-tr">+</span>
-      <span class="card-corner card-corner-bl">+</span>
-      <span class="card-corner card-corner-br">+</span>
-      <div class="pillar-num">03 &middot; Reimagined</div>
-      <div class="pillar-title">Link Building</div>
-      <div class="pillar-sub">The traditional pillar, rebuilt with AI.</div>
-      <ul class="pillar-list">
-        <li>Content syndication to UGC platforms, forums, and communities</li>
-        <li>Product listings and profiles on comparison sites</li>
-        <li>Relevant conversation monitoring and participation</li>
-        <li>Referral traffic tracking from every distribution channel</li>
-        <li>Brand mention monitoring across the web</li>
-      </ul>
-      <p class="marginalia">Every piece of content gets a distribution plan.</p>
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>What ReFound does</h2>
+        <p class="note">You give us what's true about you. The engine does the rest — it finds every place your buyers form an opinion and systematically makes you the answer there. <span class="mut">You never operate it. You just watch the results.</span></p>
+      </div>
+
+      <div class="ascii center">
+<pre>        ┌────────────────────────────┐
+        │ ██████████████████████████ │
+        │ ██████████████████████████ │
+        │ ██████████████████████████ │
+        └────────────────────────────┘
+                 the ReFound engine
+               you never operate it
+
+   IN    your product · positioning · proof · customers · research
+   OUT   ranked on google · cited in AI answers · recommended in
+         the communities and lists your buyers actually trust</pre>
+        <div class="cap">Powered by Rabbit Hole — our proprietary engine. It's a black box by design: you bring the truth, it returns the outcomes.</div>
+      </div>
     </div>
+  </section>
 
-  </div>
-</section>
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>What you get</h2>
+        <p class="note">One story, three speeds — so there's always a number moving, long before the slow one pays off.</p>
+      </div>
 
-<hr class="divider">
+      <div class="ascii">
+<pre>   coverage  ──▶  mentions  ──▶  traffic
+   (weeks)        (weeks–months)  (quarters)</pre>
+      </div>
 
-<!-- Before / After -->
-<section class="section-wide" data-reveal>
-  <div class="section-label dot-yellow">Old SEO vs. Refound</div>
-  <div class="compare-grid">
-    <div class="compare-col">
-      <div class="compare-label">The Old Way</div>
-      <ul class="compare-list">
-        <li>Project-based audits, once a quarter</li>
-        <li>Manual link building outreach</li>
-        <li>Static content calendars</li>
-        <li>Monthly PDF reports</li>
-        <li>&ldquo;We&rsquo;ll improve your SEO&rdquo;</li>
-        <li>One-off pages, manually maintained</li>
-        <li>Ignores LLMs entirely</li>
-      </ul>
+      <div class="cards" style="margin-top:32px">
+        <div class="card">
+          <span class="tag">01 · the proof</span>
+          <h3>Coverage</h3>
+          <p>We map every place your buyers research and get you present across it — a number you can watch climb from the first week.</p>
+          <span class="when">moves in weeks</span>
+        </div>
+        <div class="card">
+          <span class="tag">02 · the signal</span>
+          <h3>Mentions</h3>
+          <p>You start showing up — ranked on Google, cited in AI answers, recommended in the threads and lists buyers trust.</p>
+          <span class="when">weeks – months</span>
+        </div>
+        <div class="card">
+          <span class="tag">03 · the payoff</span>
+          <h3>Traffic</h3>
+          <p>All of it compounds into qualified buyer traffic — the lasting kind that keeps paying off after the work is done.</p>
+          <span class="when">compounds over quarters</span>
+        </div>
+      </div>
     </div>
-    <div class="compare-col">
-      <div class="compare-label">Refound</div>
-      <ul class="compare-list">
-        <li>Always-on operations, every day</li>
-        <li>Programmatic link distribution</li>
-        <li>Continuous content engine with auto-calendars</li>
-        <li>Live dashboards, real-time health</li>
-        <li>&ldquo;We run your SEO function&rdquo;</li>
-        <li>Programmatic pages at scale</li>
-        <li>Optimises for AI readability and LLM citations</li>
-      </ul>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head"><h2>How it starts</h2></div>
+      <div class="steps">
+        <div class="step">
+          <span class="n">01</span>
+          <div><div class="t">Request a demo</div><div class="d">We show you your map — the places your buyers already research, and where your competitors own the conversation and you don't.</div></div>
+        </div>
+        <div class="step">
+          <span class="n">02</span>
+          <div><div class="t">Setup</div><div class="d">A one-time setup fee. We build your engine — tuned to your product, your buyers, and the journeys that matter to you.</div></div>
+        </div>
+        <div class="step">
+          <span class="n">03</span>
+          <div><div class="t">Live in 10 working days</div><div class="d">First work shipped, first outcomes visible. From here it runs continuously — every week, new ground won, on a simple monthly engine.</div></div>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<hr class="divider">
-
-<!-- How It Works -->
-<section class="section-wide" data-reveal>
-  <div class="section-label dot-blue">How It Works</div>
-
-  <div class="step-row" data-reveal>
-    <div class="step-num">01</div>
-    <div class="step-content">
-      <div class="step-title">Setup</div>
-      <div class="step-desc">Full site audit &mdash; technical health, content inventory, backlink profile. We deploy our framework: a custom webmaster dashboard, content engine, and distribution playbook built around your site. You get a 90-day roadmap with baseline metrics and clear priorities. One-time fee.</div>
+  <div class="cta">
+    <div class="wrap">
+      <h3>If organic discovery decides your business, we should talk.</h3>
+      <p>ReFound is for teams where buyers research hard before they buy — B2B software, fintech, edtech, and the like. One-time setup, then an always-on engine. You watch two numbers go up.</p>
+      <a class="btn" href="mailto:team@recurr.co?subject=ReFound%20%E2%80%94%20Request%20a%20demo">Request a demo →</a>
     </div>
   </div>
 
-  <div class="step-row" data-reveal>
-    <div class="step-num">02</div>
-    <div class="step-content">
-      <div class="step-title">Operations</div>
-      <div class="step-desc">Webmaster monitoring runs continuously. Content drafts are pushed to your team on a weekly or bi-weekly cadence. Programmatic projects launch as opportunities are identified. Distribution is ongoing. You see everything in live dashboards &mdash; not in a report that arrives 30 days late. Easy-on-the-wallet monthly retainer.</div>
+  <footer>
+    <div class="wrap">
+      <div class="foot-top">
+        <div class="mark">ReFound<span>by Recurr</span></div>
+        <div class="foot-links">
+          <a href="/recurr-home/">Recurr</a>
+          <a href="https://blr.studio">BLR</a>
+          <a href="https://www.linkedin.com/company/recurr">LinkedIn</a>
+        </div>
+      </div>
+      <div class="legal">
+        <span><b>Category</b> &nbsp;Buyer Search</span>
+        <span><b>Engine</b> &nbsp;Powered by Rabbit Hole</span>
+        <span><b>Studio</b> &nbsp;Recurr Studio Private Limited · Bengaluru, India</span>
+      </div>
+      <div class="copy">© Recurr Studio Private Limited</div>
     </div>
-  </div>
+  </footer>
 
-  <div class="step-row" data-reveal>
-    <div class="step-num">03</div>
-    <div class="step-content">
-      <div class="step-title">Compound</div>
-      <div class="step-desc">SEO compounds. Every page indexed, every link built, every programmatic template deployed &mdash; they stack. The longer the system runs, the harder it is for competitors to catch up. This is not a one-time project. It&rsquo;s infrastructure.</div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<!-- Who It's For -->
-<section class="section-wide" data-reveal>
-  <div class="section-label dot-ink">Who It&rsquo;s For</div>
-  <p class="section-desc" style="max-width:var(--wide-w)">Refound is most exciting for brands where internet journeys have high entropy &mdash; more people searching, more competitive keywords, larger voice to capture, larger tickets at stake. That&rsquo;s when investing in a continuous, always-on discovery system makes sense.</p>
-
-  <div class="icp-grid" style="margin-top:var(--space-m)">
-    <div class="icp-card" data-reveal>
-      <div class="icp-label">Best Fit</div>
-      <div class="icp-text">B2B SaaS, D2C, fintech, edtech, healthtech &mdash; companies where organic traffic is a real business channel, not a vanity metric.</div>
-    </div>
-    <div class="icp-card" data-reveal>
-      <div class="icp-label">Buyer</div>
-      <div class="icp-text">Content marketers and content team leads who already know SEO matters but are frustrated with agencies that deliver reports instead of results.</div>
-    </div>
-    <div class="icp-card" data-reveal>
-      <div class="icp-label">Stage</div>
-      <div class="icp-text">You&rsquo;ve outgrown one-off SEO audits. You need someone to actually run the function &mdash; not advise you on it.</div>
-    </div>
-    <div class="icp-card" data-reveal>
-      <div class="icp-label">Not For</div>
-      <div class="icp-text">If you need one landing page optimised or you&rsquo;re looking for a tool with a login &mdash; we&rsquo;re not that. This is an operated service.</div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<!-- Recurr Ecosystem -->
-<section class="section-wide" data-reveal>
-  <div class="callout callout-yellow">
-    <div class="callout-label">Part of Recurr Studio</div>
-    Refound clients get content coverage and backlinks on recurr.co &mdash; a trusted B2B publication. It&rsquo;s a small side benefit of being in the studio ecosystem, but it compounds over time.
-  </div>
-</section>
-
-<!-- First Client Banner -->
-<div class="ascii-full" data-reveal>
-  <div class="ascii-inner">
-    <div class="section-label">Our First Client</div>
-    <p style="font-family:var(--serif);font-size:var(--fs-h2);font-weight:700;color:#E8ECEC;line-height:1.15;letter-spacing:-0.02em;margin-bottom:var(--space-xs)">Outpost Kitchen</p>
-    <p style="font-family:var(--serif);font-size:var(--fs-body);color:#A8AEAD;line-height:1.6;max-width:var(--content-w)">We&rsquo;re building Refound&rsquo;s first complete deployment for Outpost Kitchen &mdash; India&rsquo;s multi-brand breakfast company with 88,000+ orders served across Bangalore. Technical SEO, content development, and link building &mdash; all three pillars, live, from day one.</p>
-    <p style="font-family:var(--mono);font-size:var(--fs-label);color:#7A8282;letter-spacing:0.08em;margin-top:var(--space-s)">OUTPOST.KITCHEN &middot; MINISTRY OF OATS &middot; THE WHOLE FRUIT &middot; PROTEIN POLICE</p>
-  </div>
-</div>
-
-<!-- CTA -->
-<section class="section-wide" data-reveal>
-  <div class="cta-card">
-    <h3>Let&rsquo;s talk.</h3>
-    <p>If organic discovery matters to your business and you want someone to actually run it &mdash; not just audit it &mdash; we should talk. One-time setup, easy monthly retainer, clear output commitments.</p>
-    <div style="margin-top:var(--space-xs)">
-      <a href="mailto:pratik@recurr.co" class="btn btn-primary">GET IN TOUCH</a>
-      <a href="/recurr-co-studio/" class="btn btn-ghost" style="margin-left:var(--space-xs)">BACK TO STUDIO <span class="arrow">&rarr;</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer>
-  <div class="footer-inner">
-    <div>
-      <div class="footer-entity">Recurr Studio Private Limited</div>
-      <div class="footer-loc">Bengaluru, India</div>
-    </div>
-    <div class="footer-links">
-      <a href="https://www.linkedin.com/company/recurrco/">LinkedIn</a>
-      <a href="https://twitter.com/pikiishra">Twitter</a>
-      <a href="https://www.linkedin.com/newsletters/">Subscribe</a>
-    </div>
-  </div>
-</footer>
-
-<script src="/recurr-system/engine.js"></script>
 </body>
 </html>
