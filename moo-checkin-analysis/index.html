@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>MOO Daily Check-in — Teardown</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0a0a; --paper:#ffffff; --grey:#6b6b6b; --line:#e4e4e4;
+    --faint:#f6f6f6; --red:#b3261e;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:'IBM Plex Sans',sans-serif;
+    color:var(--ink); background:var(--paper);
+    -webkit-font-smoothing:antialiased; line-height:1.55;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+
+  /* Masthead */
+  header.top{border-bottom:2px solid var(--ink);padding:64px 0 28px;margin-bottom:0;}
+  .kicker{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);}
+  h1{font-size:clamp(34px,6vw,58px);line-height:1.02;font-weight:700;letter-spacing:-.02em;margin:18px 0 16px;}
+  .dek{font-size:19px;color:#2a2a2a;max-width:680px;}
+  .src{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--grey);margin-top:22px;line-height:1.7;}
+
+  /* Verdict */
+  .verdict{border:2px solid var(--ink);padding:34px 34px;margin:46px 0;}
+  .verdict .lbl{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:14px;}
+  .verdict p{font-size:24px;line-height:1.4;font-weight:500;letter-spacing:-.01em;}
+  .verdict strong{font-weight:700;}
+
+  /* Section */
+  section{padding:48px 0;border-top:1px solid var(--line);}
+  .sec-no{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--grey);letter-spacing:.1em;}
+  h2{font-size:27px;font-weight:700;letter-spacing:-.015em;margin:6px 0 10px;}
+  .lead{font-size:16.5px;color:#333;max-width:660px;margin-bottom:26px;}
+
+  /* Stat grid */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .stat{background:var(--paper);padding:22px 18px;}
+  .stat .n{font-family:'IBM Plex Mono',monospace;font-size:38px;font-weight:600;letter-spacing:-.03em;line-height:1;}
+  .stat .n.red{color:var(--red);}
+  .stat .c{font-size:13px;color:var(--grey);margin-top:8px;line-height:1.4;}
+
+  /* Workload bar */
+  .bar{display:flex;height:54px;border:1px solid var(--ink);margin:8px 0 16px;overflow:hidden;}
+  .bar span{display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#fff;border-right:1px solid #fff;}
+  .seg-r{background:#0a0a0a;}
+  .seg-m{background:#3d3d3d;}
+  .seg-a{background:#666;}
+  .seg-ab{background:#909090;}
+  .seg-o{background:#c4c4c4;color:#0a0a0a;}
+  .legend{display:flex;flex-wrap:wrap;gap:18px;font-size:13px;color:#333;}
+  .legend i{display:inline-block;width:11px;height:11px;margin-right:7px;vertical-align:middle;}
+
+  /* Zombie threads */
+  .zombie{border:1px solid var(--line);margin-bottom:14px;}
+  .zombie .zh{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:16px 20px;background:var(--faint);border-bottom:1px solid var(--line);flex-wrap:wrap;}
+  .zombie .zt{font-size:17px;font-weight:600;}
+  .zombie .zm{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--red);white-space:nowrap;}
+  .zombie .zb{padding:14px 20px 16px;font-size:14.5px;color:#333;}
+  .trail{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--grey);margin-top:10px;line-height:1.9;word-spacing:.04em;}
+  .trail b{color:var(--ink);font-weight:600;}
+
+  /* Tables */
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  th{text-align:left;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);font-weight:500;padding:10px 12px;border-bottom:2px solid var(--ink);}
+  td{padding:13px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  td.p{font-weight:600;white-space:nowrap;}
+  .tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border:1px solid;border-radius:2px;}
+  .t-live{border-color:#1a7a3c;color:#1a7a3c;}
+  .t-drag{border-color:var(--red);color:var(--red);}
+  .t-loop{border-color:#9a6b00;color:#9a6b00;}
+  .t-done{border-color:#999;color:#777;}
+
+  /* People */
+  .people{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+  .person{background:var(--paper);padding:22px;}
+  .person h3{font-size:18px;font-weight:700;display:flex;justify-content:space-between;align-items:baseline;}
+  .person .role{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--grey);letter-spacing:.06em;text-transform:uppercase;margin:4px 0 12px;}
+  .person .load{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);font-weight:600;}
+  .person p{font-size:14px;color:#333;margin-bottom:9px;}
+  .person .risk{font-size:13px;color:var(--red);border-top:1px solid var(--line);padding-top:10px;margin-top:4px;}
+  .person .risk b{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;}
+
+  ul.find{list-style:none;}
+  ul.find li{padding:14px 0 14px 30px;border-bottom:1px solid var(--line);position:relative;font-size:15.5px;color:#1f1f1f;}
+  ul.find li:before{content:"→";position:absolute;left:0;color:var(--red);font-family:'IBM Plex Mono',monospace;}
+  ul.find li b{font-weight:600;}
+
+  .fix{background:var(--ink);color:#fff;padding:40px 34px;margin:48px 0 0;}
+  .fix .lbl{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9a9a9a;margin-bottom:18px;}
+  .fix h2{color:#fff;margin-bottom:18px;}
+  .fix ol{margin-left:20px;}
+  .fix li{font-size:15.5px;margin-bottom:14px;color:#eaeaea;}
+  .fix li b{color:#fff;}
+
+  footer{padding:40px 0 80px;border-top:1px solid var(--line);margin-top:48px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--grey);line-height:1.8;}
+
+  @media(max-width:680px){
+    .stats{grid-template-columns:1fr 1fr;}
+    .people{grid-template-columns:1fr;}
+    .verdict p{font-size:20px;}
+    .bar span{font-size:10px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="kicker">Ministry of Oats · Operating Diagnostic</div>
+    <h1>27 standups.<br>297 promises.<br>No closing loop.</h1>
+    <p class="dek">A teardown of six weeks of the MOO daily check-in (May 1 – Jun 15, 2026), structured into the four things a standup is supposed to produce: tasks, status, programs, and people.</p>
+    <p class="src">SOURCE — 29 Gemini-transcribed call notes · 27 with usable content · 2 failed (May 14 no speech, Jun 10 audio).<br>NOTE — transcription is lossy; names &amp; figures are approximate. This is a prototype of the output a daily ops system would generate automatically.</p>
+  </header>
+
+  <div class="verdict">
+    <div class="lbl">The finding</div>
+    <p>The call is excellent at <strong>generating commitments</strong> and almost incapable of <strong>closing them</strong>. In 27 calls, not one opens by asking whether yesterday's tasks got done. Work isn't tracked — it's <strong>re-announced</strong> until it quietly disappears.</p>
+  </div>
+
+  <!-- 01 NUMBERS -->
+  <section>
+    <div class="sec-no">01 / THE SHAPE</div>
+    <h2>What six weeks produced</h2>
+    <p class="lead">Volume is high. The problem isn't effort — it's that nothing has a finish line.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">27</div><div class="c">calls with content (of 29)</div></div>
+      <div class="stat"><div class="n">297</div><div class="c">commitments logged as "next steps"</div></div>
+      <div class="stat"><div class="n red">56%</div><div class="c">of all tasks owned by one person</div></div>
+      <div class="stat"><div class="n red">0</div><div class="c">calls that reviewed yesterday's tasks</div></div>
+      <div class="stat"><div class="n">~11</div><div class="c">new commitments per call, on average</div></div>
+      <div class="stat"><div class="n red">6 wks</div><div class="c">longest a single task has stayed open</div></div>
+      <div class="stat"><div class="n">5</div><div class="c">threads restated 8+ times, never closed</div></div>
+      <div class="stat"><div class="n">2</div><div class="c">decisions reversed weeks later (Sunday menu, combos)</div></div>
+    </div>
+  </section>
+
+  <!-- 02 WORKLOAD -->
+  <section>
+    <div class="sec-no">02 / OWNERSHIP</div>
+    <h2>One throat, four roles, no slack</h2>
+    <p class="lead">Of 297 commitments, Rushil carries 165 — marketing, design, events, ads, content and partnerships all funnel through him. He is simultaneously the busiest node and the most common bottleneck. The "team" is, on paper, one person plus a finance chair.</p>
+    <div class="bar">
+      <span class="seg-r" style="width:55.6%">Rushil 165</span>
+      <span class="seg-m" style="width:15.2%">Manju 45</span>
+      <span class="seg-a" style="width:13.1%">Ankita 39</span>
+      <span class="seg-ab" style="width:11.1%">Abhi 33</span>
+      <span class="seg-o" style="width:5%">+15</span>
+    </div>
+    <div class="legend">
+      <span><i class="seg-r" style="background:#0a0a0a"></i>Rushil — marketing/design/events/ads (56%)</span>
+      <span><i class="seg-m" style="background:#3d3d3d"></i>Manjunath — kitchens/ops/staffing (15%)</span>
+      <span><i class="seg-a" style="background:#666"></i>Ankita — finance/HR/chairs the call (13%)</span>
+      <span><i class="seg-ab" style="background:#909090"></i>Abhi — category/aggregators/data (11%)</span>
+      <span><i class="seg-o" style="background:#c4c4c4"></i>Disha · Ravi · Pratik · group (5%)</span>
+    </div>
+  </section>
+
+  <!-- 03 ZOMBIES -->
+  <section>
+    <div class="sec-no">03 / THE ACCOUNTABILITY GAP</div>
+    <h2>Zombie threads</h2>
+    <p class="lead">These items were committed to again and again across weeks. Because no call tracks closure, each restatement reads as "new work" — masking the fact that the same thing has been open since the first week.</p>
+
+    <div class="zombie">
+      <div class="zh"><span class="zt">Run Club / marathon partnership</span><span class="zm">15+ restatements · 6 weeks · never executed</span></div>
+      <div class="zb">A collaboration "pitch deck" first appears May 6. It becomes a call, then a no-reply follow-up, then a sticker design, then a co-branded packaging review — still awaiting feedback on Jun 15. The deliverable mutated five times; the event never happened.
+        <div class="trail"><b>May 06</b> create pitch deck → <b>May 07</b> pitch founders → <b>May 08</b> prep call → <b>May 11</b> founder not responding → <b>May 20–26</b> marathon deck → <b>May 28</b> chase founder → <b>Jun 02</b> "no urgency, later" → <b>Jun 11</b> AVG sticker → <b>Jun 12</b> founders slow → <b>Jun 15</b> still awaiting design feedback</div>
+      </div>
+    </div>
+
+    <div class="zombie">
+      <div class="zh"><span class="zt">Indiranagar trade license</span><span class="zm">open since May 1 · unresolved</span></div>
+      <div class="zb">Starts as "the contact isn't answering." Six weeks later it's a residential-zoning wall with no path. A structural blocker was treated as a daily to-do.
+        <div class="trail"><b>May 01</b> contact won't pick up → <b>May 20</b> owner hasn't paid tax receipt → <b>May 27</b> residential zone, can't issue → <b>Jun</b> still no resolution</div>
+      </div>
+    </div>
+
+    <div class="zombie">
+      <div class="zh"><span class="zt">Google Business listings</span><span class="zm">recurring · still broken</span></div>
+      <div class="zb">Remove JP Nagar, mark HSR closed, fix Indiranagar. Restated almost daily in June; on Jun 15 the listing is still un-editable because it's "claimed by another owner" — a fact discoverable on day one.
+        <div class="trail"><b>Jun 02</b> remove listings → <b>Jun 03</b> maps rejects input → <b>Jun 04</b> still stuck → <b>Jun 15</b> claimed by another owner, unresolved</div>
+      </div>
+    </div>
+
+    <div class="zombie">
+      <div class="zh"><span class="zt">Offer-letter signing</span><span class="zm">10 restatements · May 4 → Jun 8</span></div>
+      <div class="zb">Draft → sign → upload → "still pending" → "one unsigned" → slipped to the 16th. A 30-minute admin task spread across five weeks of standups.
+        <div class="trail"><b>May 04</b> draft → <b>May 05</b> sign &amp; upload → <b>May 06</b> send all → <b>May 15/20/27</b> still signing → <b>May 28</b> one unsigned → <b>Jun 01</b> "all except Minal" → <b>Jun 08</b> slipped to 16th</div>
+      </div>
+    </div>
+
+    <div class="zombie">
+      <div class="zh"><span class="zt">Whole Fruit → MOO brand assets</span><span class="zm">multi-week design churn</span></div>
+      <div class="zb">"Finalize branding" becomes "one more iteration" becomes "ship 50 anyway" becomes "re-edit all the influencer videos." The brand never lands; it just keeps getting another round.
+        <div class="trail"><b>May 04</b> finalize w/ Ravi → <b>May 05–06</b> "one more iteration" → <b>May 06</b> "stop iterating, print 50" → <b>May 08</b> animated video +5 days late → <b>May 18</b> rebrand to MOO, re-edit content</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 PROGRAMS -->
+  <section>
+    <div class="sec-no">04 / PROGRAMS &amp; PROJECTS</div>
+    <h2>What's actually being built</h2>
+    <p class="lead">Strip the noise and the calls are really driving eight workstreams. Half are genuinely moving; half are looping or dragging. The standup format hides which is which.</p>
+    <table>
+      <thead><tr><th style="width:30%">Workstream</th><th style="width:14%">Status</th><th>Where it actually is</th></tr></thead>
+      <tbody>
+        <tr><td class="p">Staffing &amp; HR</td><td><span class="tag t-live">Moving</span></td><td>Early-May walkout (4–5 quit) recovered; hires trained at Central; PagarBook + Passcare insurance live.</td></tr>
+        <tr><td class="p">Aggregator economics</td><td><span class="tag t-loop">Looping</span></td><td>Koramangala rating stuck ~4.0→4.1 for 6 wks; "free clicks vs discount" debated weekly, never settled.</td></tr>
+        <tr><td class="p">Whole Fruit → MOO brand</td><td><span class="tag t-drag">Dragging</span></td><td>Endless design iteration; "ship 50 and move on" decided but assets still unsettled.</td></tr>
+        <tr><td class="p">Menu launches</td><td><span class="tag t-drag">Slipping</span></td><td>Warm grain bowls: introduced Jun 4 → "before the 15th" → now targeting <b>late July</b>.</td></tr>
+        <tr><td class="p">Events engine</td><td><span class="tag t-loop">Looping</span></td><td>6+ parallel event threads (Run Club, Something's Brewing, pickleball, Yoga Day, Tenzi, Un Grind); most slip or fizzle.</td></tr>
+        <tr><td class="p">Ops / inventory / COGS</td><td><span class="tag t-live">Moving</span></td><td>COGS spiked 26%→35% on data-entry errors, then fixed; Nama Fruits vendor switch; 12-week inventory deck built.</td></tr>
+        <tr><td class="p">Listings &amp; admin</td><td><span class="tag t-drag">Stuck</span></td><td>Google listings un-editable; trade license blocked on zoning.</td></tr>
+        <tr><td class="p">Tenzi cafe / new sites</td><td><span class="tag t-live">New</span></td><td>Rev-share kiosk being modelled (Jun 11+); VC-office bulk-order lead in Whitefield.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 05 PEOPLE -->
+  <section>
+    <div class="sec-no">05 / THE PEOPLE</div>
+    <h2>Commentary, per person</h2>
+    <p class="lead">What the six weeks reveal about each operator — load, pattern, and the risk they carry.</p>
+    <div class="people">
+      <div class="person">
+        <h3>Rushil <span class="load">165 tasks · 56%</span></h3>
+        <div class="role">Marketing lead</div>
+        <p>Carries more than the other three combined. Genuinely high output — content, ads, events, design briefs, partnerships. But his list is where tasks go to multiply: deliverables mutate ("pitch → sticker → co-brand") rather than close.</p>
+        <p class="risk"><b>Risk —</b> single point of overload. If he's the bottleneck on his own 56%, throughput is capped no matter what.</p>
+      </div>
+      <div class="person">
+        <h3>Ankita <span class="load">39 tasks · chairs</span></h3>
+        <div class="role">Finance / corporate</div>
+        <p>The de-facto accountability function — runs the call, owns invoicing, payroll, insurance, listings. Repeatedly pushes for timelines, comms discipline and "put it on Plane." She <em>is</em> the closing loop, done manually, and can't scale to 297 items.</p>
+        <p class="risk"><b>Risk —</b> the only person enforcing follow-up, on top of a full finance role.</p>
+      </div>
+      <div class="person">
+        <h3>Manjunath <span class="load">45 tasks</span></h3>
+        <div class="role">Kitchens &amp; ops</div>
+        <p>Steady, reliable executor — staffing, inventory, audits, payroll runs, store visits. His drags are structural blockers (trade license, listings) wrongly carried as daily tasks rather than escalated and parked.</p>
+        <p class="risk"><b>Risk —</b> structural blockers disguised as to-dos burn his call-time weekly.</p>
+      </div>
+      <div class="person">
+        <h3>Abhi <span class="load">33 tasks</span></h3>
+        <div class="role">Category / aggregators / data</div>
+        <p>Owns menu, COGS, vendors, Swiggy/Zomato. Largely absent from early-May calls, more present in June. Sharp on numbers (caught the COGS spike), but the discount/free-click strategy he owns keeps reopening without a decision.</p>
+        <p class="risk"><b>Risk —</b> the highest-leverage lever (unit economics) has no owner-of-record decision.</p>
+      </div>
+      <div class="person">
+        <h3>Disha <span class="load">21 mentions</span></h3>
+        <div class="role">Marketing intern</div>
+        <p>The most-managed entity in the dataset — onboarded, taught, reviewed, scheduled across 21 touches. Object of management more than autonomous contributor. Conversion decision was set for <b>Jun 15</b> — today.</p>
+        <p class="risk"><b>Risk —</b> a month of management overhead on one intern; decision deadline is now.</p>
+      </div>
+      <div class="person">
+        <h3>Ravi <span class="load">the bottleneck</span></h3>
+        <div class="role">Designer (shared)</div>
+        <p>Named in delay after delay — animated video, inserts, stickers, brand assets. Rarely on the call, no clear deadlines set with him. Every marketing thread eventually waits on Ravi.</p>
+        <p class="risk"><b>Risk —</b> an off-call dependency silently gating most of Rushil's 56%.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 SIGNAL -->
+  <section>
+    <div class="sec-no">06 / SIGNAL vs NOISE</div>
+    <h2>What the structure exposes</h2>
+    <ul class="find">
+      <li><b>The call has no memory.</b> Each standup re-derives the world from scratch. Yesterday's 11 commitments are never checked — so "open," "done," and "abandoned" are indistinguishable.</li>
+      <li><b>Restatement masquerades as progress.</b> Saying "I'll follow up with the Run Club" for the 9th time feels like work. Tracked over time, it's a six-week stall.</li>
+      <li><b>Blockers and tasks are the same bucket.</b> A zoning wall and "design an insert" both live as daily to-dos. Real blockers never get escalated, parked, or killed.</li>
+      <li><b>Ownership is dangerously concentrated.</b> 56% on one person isn't delegation — it's a queue. The bus factor is one.</li>
+      <li><b>Decisions don't stick.</b> Sunday menu and meal combos were decided, built, then quietly cancelled weeks later — with no log of why.</li>
+    </ul>
+  </section>
+
+  <!-- 07 FIX -->
+  <div class="fix">
+    <div class="lbl">The product aspiration</div>
+    <h2>What a system would enforce</h2>
+    <p style="color:#cfcfcf;margin-bottom:22px;max-width:640px;">The data says the team doesn't have a productivity problem — it has a <b style="color:#fff">closure</b> problem. A daily ops layer wouldn't add work; it would make the existing work <em>finishable</em>.</p>
+    <ol>
+      <li><b>Carry-forward ledger.</b> Every commitment becomes a tracked item with an owner and a date. The next call <b>opens with yesterday's list</b> — done / open / slipped — not a blank page.</li>
+      <li><b>Aging &amp; nagging.</b> Anything open 3+ days gets flagged red and surfaced by name. The Run Club thread would have screamed at week two.</li>
+      <li><b>Blocker lane.</b> Structural blocks (zoning, claimed listings) get separated, escalated to the right person, and stop eating standup time.</li>
+      <li><b>Load balancing in view.</b> "Rushil: 14 open, 9 overdue" visible to everyone — so concentration is obvious and re-routable.</li>
+      <li><b>One source of truth.</b> Notes + Slack updates + warehouse numbers land in one daily brief, against the same task ledger — replacing memory with a record.</li>
+    </ol>
+  </div>
+
+  <footer>
+    PROTOTYPE OUTPUT · Ministry of Oats daily check-in teardown · May 1 – Jun 15, 2026<br>
+    Built from Gemini call notes (lossy transcription — names &amp; figures approximate). Counts derived from 297 logged "next steps" across 27 calls.<br>
+    Purpose: validate whether structuring the daily call yields a real accountability signal before building the automated pipeline.
+  </footer>
+
+</div>
+</body>
+</html>
