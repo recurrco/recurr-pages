@@ -4,102 +4,101 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow" />
-<title>Quad — Brand System v0.3</title>
-<meta name="description" content="The Quad brand system — a timeless legacy for the AI age. Primary palette, four-motif pattern toolkit, typography, colour spectrum, the three schools, and imagery." />
+<title>Quad — Brand System</title>
+<meta name="description" content="The Quad brand system — primary palette, four-motif pattern toolkit, typography, colour spectrum, and the three schools." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
   :root {
-    /* Primary / anchor */
-    --brown:#4E3629; --brown-d:#3A271D; --brown-dd:#2A1B12;
+    --brown:#3D2817; --brown-d:#2A1A0E; --brown-dd:#1C1109;
     --gold:#FFB500; --gold-d:#D99400; --gold-l:#FFD473;
-    --cream:#F7F2E9; --paper:#FBF8F2; --white:#FFFFFF;
-    --ink:#261D15; --g1:#7A6F64; --g2:#A99E92; --line:#E8E1D5;
-    /* Schools */
+    --cream:#F6EFE1; --paper:#FBF7EF; --white:#FFFFFF;
+    --ink:#2A1F16; --g1:#7A6F64; --g2:#A99E92; --line:#E8E0D2;
     --tech:#136F77; --tech-d:#0B4A50; --tech-l:#AFD0D4;
     --mgmt:#9E1B32; --mgmt-d:#6B1020; --mgmt-l:#EBCBD0;
     --dsgn:#6E2D8C; --dsgn-d:#4A1C5E; --dsgn-l:#D8BEE4;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior:smooth; }
-  body { font-family:'Hanken Grotesk', system-ui, sans-serif; color:var(--ink); background:var(--white); -webkit-font-smoothing:antialiased; line-height:1.55; font-size:16px; }
-  .wrap { max-width:1140px; margin:0 auto; padding:0 32px; }
+  body { font-family:'Hanken Grotesk', system-ui, sans-serif; color:var(--ink); background:var(--cream); -webkit-font-smoothing:antialiased; line-height:1.55; font-size:16px; }
+  .wrap { max-width:1180px; margin:0 auto; padding:0 32px; position:relative; }
   h1,h2,h3,h4 { font-weight:700; letter-spacing:-0.02em; line-height:1.08; }
-
   .eyebrow { font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; }
   .eyebrow.rule { padding-bottom:8px; border-bottom:1.5px solid currentColor; display:inline-block; }
-
-  section { padding:96px 0; border-bottom:1px solid var(--line); }
-  .sechead { font-size:clamp(28px,4vw,46px); margin:18px 0 0; }
-  .secsub { color:#5A5045; font-size:18px; max-width:760px; margin-top:18px; line-height:1.6; }
+  section { padding:104px 0; }
+  .sechead { font-size:clamp(28px,4vw,48px); margin:18px 0 0; }
+  .secsub { font-size:18px; max-width:760px; margin-top:18px; line-height:1.6; color:#5A4E40; }
   .note { font-size:13px; color:var(--g1); margin-top:16px; }
 
-  /* ===== FOLD 1 — PRIMARY + LOGO ONLY ===== */
-  header.hero { background:var(--brown); color:var(--cream); padding:0; border:0; }
-  .hero-inner { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:80px 32px; }
-  .hero-mark { width:148px; height:148px; margin-bottom:48px; }
-  .hero-mark img { width:100%; }
-  .hero h1 { font-size:clamp(34px,5.4vw,68px); color:var(--white); max-width:14ch; }
-  .hero h1 em { font-style:normal; color:var(--gold); }
-  .hero .sub { margin-top:24px; font-size:clamp(16px,2vw,20px); color:rgba(247,242,233,.66); max-width:50ch; }
-  .primaries { display:flex; gap:18px; margin-top:64px; flex-wrap:wrap; justify-content:center; }
-  .pchip { width:200px; border-radius:14px; overflow:hidden; text-align:left; box-shadow:0 10px 30px rgba(0,0,0,.18); }
-  .pchip .fill { height:120px; }
-  .pchip .cap { background:rgba(255,255,255,.06); padding:14px 16px; border:1px solid rgba(255,255,255,.1); border-top:0; }
-  .pchip .cap .n { font-weight:700; font-size:15px; color:#fff; }
-  .pchip .cap .h { font-size:13px; color:rgba(247,242,233,.55); margin-top:3px; letter-spacing:.02em; }
+  /* ===== PATTERN UTILITIES (to spec) ===== */
+  .pat { position:absolute; inset:0; pointer-events:none; }
+  .p-dots  { background-image:radial-gradient(var(--pc) 3px, transparent 3.6px); background-size:var(--ps,28px) var(--ps,28px); background-position:center; }
+  .p-rails { background-image:repeating-linear-gradient(90deg, var(--pc) 0 3px, transparent 3px var(--ps,24px)); }
+  .p-grid  { background-image:repeating-linear-gradient(0deg, var(--pc) 0 2px, transparent 2px var(--ps,32px)), repeating-linear-gradient(90deg, var(--pc) 0 2px, transparent 2px var(--ps,32px)); }
+  .p-rings { background-image:repeating-radial-gradient(circle at center, var(--pc) 0 2.5px, transparent 2.5px var(--ps,22px)); }
+
+  /* ===== FOLD 1 — HERO ===== */
+  header.hero { background:var(--brown); color:var(--cream); }
+  .hero-top { min-height:74vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:96px 32px 64px; position:relative; overflow:hidden; }
+  .hero-top .pat { --pc:rgba(255,181,0,.06); --ps:46px; }
+  .hero-logo { width:230px; position:relative; z-index:2; }
+  .hero-top h1 { font-size:clamp(34px,5vw,64px); color:var(--white); max-width:15ch; margin-top:44px; position:relative; z-index:2; }
+  .hero-top h1 em { font-style:normal; color:var(--gold); }
+  .hero-top .sub { margin-top:22px; font-size:clamp(16px,1.9vw,20px); color:rgba(246,239,225,.66); max-width:52ch; position:relative; z-index:2; }
+  /* tile band */
+  .tileband { display:grid; grid-template-columns:repeat(6,1fr); }
+  .tile { aspect-ratio:1; position:relative; overflow:hidden; }
+  .tile .pat { }
+  .tile.label { display:flex; align-items:center; justify-content:center; text-align:center; }
+  .tile .hx { position:absolute; left:14px; bottom:12px; font-size:11px; font-weight:700; letter-spacing:.04em; }
+  /* primaries */
+  .primaries { display:grid; grid-template-columns:repeat(3,1fr); gap:0; }
+  .pchip { padding:30px 28px; display:flex; flex-direction:column; gap:6px; }
+  .pchip .n { font-weight:800; font-size:18px; } .pchip .h { font-size:13px; opacity:.7; letter-spacing:.03em; }
 
   /* ===== THE IDEA ===== */
-  .idea { background:var(--paper); }
   .twocol { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:44px; }
-  .scard { border:1px solid var(--line); border-radius:16px; padding:32px; background:#fff; }
+  .scard { border:1px solid var(--line); border-radius:16px; padding:32px; background:#fff; position:relative; overflow:hidden; }
   .scard .tagline { font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-d); margin-bottom:14px; }
   .scard h3 { font-size:21px; } .scard p { margin-top:12px; color:#4a4038; font-size:15px; }
 
-  /* ===== PATTERN FOLDS ===== */
-  .pat-fold .grid { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
-  .pat-fold.rev .grid { direction:rtl; } .pat-fold.rev .grid > * { direction:ltr; }
-  .pat-stage { background:var(--brown); border-radius:20px; aspect-ratio:4/3; position:relative; overflow:hidden; display:grid; place-items:center; }
-  .pat-fold .num { font-size:13px; font-weight:800; letter-spacing:.18em; color:var(--gold-d); }
-  .pat-fold h2 { font-size:clamp(28px,3.8vw,42px); margin-top:14px; }
-  .pat-fold .body { font-size:17px; color:#4a4038; margin-top:18px; line-height:1.62; }
-  .pat-fold .body strong { color:var(--ink); }
-  .motif-chip { display:inline-flex; align-items:center; gap:10px; margin-top:24px; font-size:13px; font-weight:700; color:var(--brown); background:var(--cream); border:1px solid var(--line); padding:8px 14px; border-radius:999px; }
+  /* ===== MOTIF FOLDS (full-bleed) ===== */
+  .motif { position:relative; overflow:hidden; color:#fff; padding:0; }
+  .motif .inner { min-height:80vh; display:flex; align-items:center; padding:96px 0; position:relative; z-index:2; }
+  .motif .card { max-width:520px; background:var(--cream); color:var(--ink); border-radius:20px; padding:44px; box-shadow:0 24px 60px rgba(0,0,0,.22); }
+  .motif .num { font-size:13px; font-weight:800; letter-spacing:.2em; color:var(--gold-d); }
+  .motif .card h2 { font-size:clamp(28px,3.6vw,40px); margin-top:12px; }
+  .motif .card .body { font-size:16px; color:#4a4038; margin-top:16px; line-height:1.62; }
+  .motif .card .body strong { color:var(--ink); }
+  .spec { display:grid; grid-template-columns:repeat(2,1fr); gap:0; margin-top:26px; border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  .spec div { padding:14px 16px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .spec div:nth-child(2n){border-right:0}
+  .spec div:nth-child(n+3){} .spec span { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--g2); display:block; }
+  .spec b { font-size:16px; font-weight:700; color:var(--ink); }
+  .motif.right .inner { justify-content:flex-end; }
 
-  /* Pattern 1 — coordinate graph */
-  .coord { width:88%; height:88%; }
-  /* Pattern 2 — rails */
-  .rails { position:absolute; inset:0; }
-  .rail { position:absolute; left:8%; right:8%; height:3px; background:var(--gold); opacity:.32; }
-  .rail-pulse { position:absolute; left:8%; right:8%; height:3px; background:var(--gold-l); box-shadow:0 0 18px 3px rgba(255,212,115,.8); animation:railSweep 3.6s cubic-bezier(.6,0,.4,1) infinite; }
-  .rail-runner { position:absolute; width:12px; height:12px; border-radius:50%; background:var(--gold-l); box-shadow:0 0 16px 4px rgba(255,212,115,.9); top:50%; animation:railRun 4.2s linear infinite; }
-  @keyframes railSweep { 0%{top:18%;opacity:0} 12%{opacity:1} 88%{opacity:1} 100%{top:82%;opacity:0} }
-  @keyframes railRun { 0%{left:8%} 100%{left:88%} }
-  /* Pattern 3 — concentric ripples */
-  .ripple-stage { position:absolute; inset:0; display:grid; place-items:center; }
-  .ring { position:absolute; border:2px solid var(--gold); border-radius:50%; width:60px; height:60px; opacity:0; animation:ripple 3.2s ease-out infinite; }
-  .ring:nth-child(2){animation-delay:.8s} .ring:nth-child(3){animation-delay:1.6s} .ring:nth-child(4){animation-delay:2.4s}
-  .ring-core { width:18px; height:18px; border-radius:50%; background:var(--gold); box-shadow:0 0 24px 6px rgba(255,181,0,.55); }
-  @keyframes ripple { 0%{transform:scale(.2);opacity:.9} 80%{opacity:.12} 100%{transform:scale(6.4);opacity:0} }
-  /* Pattern 4 — dot grid */
-  .dotfield { position:absolute; inset:0; background-image:radial-gradient(var(--gold) 2.4px, transparent 2.8px); background-size:30px 30px; opacity:.45; }
-  .dotnet { position:absolute; inset:0; }
-  .node { fill:var(--gold-l); }
-  .node.pulse { animation:nodePulse 2.6s ease-in-out infinite; transform-origin:center; transform-box:fill-box; }
-  .node.pulse.b{animation-delay:.9s}.node.pulse.c{animation-delay:1.7s}
-  @keyframes nodePulse { 0%,100%{opacity:.4;r:4} 50%{opacity:1;r:7} }
+  /* ===== PATTERN CONSTRUCTION ===== */
+  .density { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:34px; }
+  .dcard { border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff; }
+  .dcard .demo { height:150px; position:relative; background:var(--brown); }
+  .dcard .cap { padding:16px 18px 20px; }
+  .dcard .cap .n { font-weight:700; font-size:15px; } .dcard .cap .h { font-size:13px; color:var(--g1); margin-top:4px; }
+  .rules { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:24px; }
+  .rule { border:1px solid var(--line); border-radius:12px; padding:20px; background:#fff; }
+  .rule .k { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--g2); }
+  .rule .v { font-size:17px; font-weight:700; margin-top:6px; }
+  .rule .d { font-size:12.5px; color:var(--g1); margin-top:6px; }
 
   /* ===== TYPOGRAPHY ===== */
-  .type-block { margin-top:40px; border:1px solid var(--line); border-radius:16px; overflow:hidden; }
+  .type-block { margin-top:40px; border:1px solid var(--line); border-radius:16px; overflow:hidden; background:#fff; }
   .type-row { padding:28px 32px; border-bottom:1px solid var(--line); display:grid; grid-template-columns:160px 1fr; gap:24px; align-items:baseline; }
   .type-row:last-child { border-bottom:0; }
   .type-row .role { font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--g2); }
-  .type-row .spec { color:var(--g1); font-size:13px; margin-top:6px; }
+  .type-row .spec2 { color:var(--g1); font-size:13px; margin-top:6px; }
   .ty-eyebrow { font-size:13px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; padding-bottom:7px; border-bottom:1.5px solid var(--brown); display:inline-block; color:var(--brown); }
   .ty-head { font-size:38px; font-weight:700; letter-spacing:-0.025em; line-height:1.05; }
-  .ty-sub { font-size:22px; font-weight:600; }
-  .ty-body { font-size:16px; color:#4a4038; max-width:560px; }
+  .ty-sub { font-size:22px; font-weight:600; } .ty-body { font-size:16px; color:#4a4038; max-width:560px; }
 
   /* ===== SPECTRUM ===== */
   .spectrum { display:grid; grid-template-columns:repeat(8,1fr); margin-top:36px; border-radius:12px; overflow:hidden; border:1px solid var(--line); }
@@ -107,44 +106,41 @@
   .spectrum .col .step { height:48px; }
   .spectrum .col .lbl { font-size:11px; font-weight:700; padding:10px 6px; text-align:center; background:#fff; }
 
-  /* ===== SCHOOL FOLDS ===== */
-  .school-fold .grid { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
-  .school-fold.rev .grid { direction:rtl; } .school-fold.rev .grid > * { direction:ltr; }
-  .school-fold h2 { font-size:clamp(34px,4.6vw,58px); margin-top:14px; }
-  .school-fold .courses { font-size:15px; font-weight:600; color:var(--g1); margin-top:10px; }
-  .school-fold .body { font-size:17px; color:#4a4038; margin-top:20px; line-height:1.62; }
-  .school-stage { border-radius:20px; aspect-ratio:4/3; position:relative; overflow:hidden; display:grid; place-items:center; }
-  .school-stage .big { font-size:clamp(80px,12vw,150px); font-weight:800; color:#fff; letter-spacing:-0.04em; position:relative; z-index:2; }
-  .school-stage .stamp { position:relative; z-index:2; color:rgba(255,255,255,.85); font-weight:700; letter-spacing:.16em; text-transform:uppercase; font-size:12px; margin-top:8px; }
-  .palette { display:flex; gap:0; margin-top:34px; border-radius:14px; overflow:hidden; border:1px solid var(--line); }
-  .palette .sw { flex:1; }
-  .palette .sw .fill { height:84px; }
-  .palette .sw .cap { padding:12px 12px 16px; background:#fff; }
-  .palette .sw .cap .n { font-size:12.5px; font-weight:700; }
-  .palette .sw .cap .h { font-size:11.5px; color:var(--g1); margin-top:3px; }
-  .role-tag { display:inline-block; font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; margin-bottom:8px; letter-spacing:.04em; }
+  /* ===== SCHOOL FOLDS (full colour bg) ===== */
+  .school { position:relative; overflow:hidden; color:#fff; }
+  .school .inner { display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center; position:relative; z-index:2; padding:104px 0; }
+  .school h2 { font-size:clamp(38px,5vw,64px); margin-top:14px; color:#fff; }
+  .school .courses { font-size:15px; font-weight:600; color:rgba(255,255,255,.78); margin-top:10px; }
+  .school .body { font-size:17px; color:rgba(255,255,255,.9); margin-top:20px; line-height:1.62; max-width:46ch; }
+  .palette-card { background:var(--cream); border-radius:18px; padding:26px; box-shadow:0 24px 60px rgba(0,0,0,.25); }
+  .palette-card .h { font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--g2); margin-bottom:16px; }
+  .palette { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; }
+  .palette .sw .fill { height:72px; border-radius:10px; }
+  .palette .sw .n { font-size:12px; font-weight:700; margin-top:8px; color:var(--ink); }
+  .palette .sw .x { font-size:11px; color:var(--g1); margin-top:2px; }
+  .school .eyebrow.rule { color:#fff; }
 
   /* ===== PHOTOGRAPHY & SOCIAL ===== */
   .photo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:36px; }
   .photo-grid img { width:100%; height:210px; object-fit:cover; border-radius:10px; display:block; }
   .treat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:32px; }
   .social { border-radius:14px; overflow:hidden; position:relative; aspect-ratio:4/5; display:flex; flex-direction:column; justify-content:flex-end; }
-  .social img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:grayscale(.45) contrast(1.06); }
-  .social .wash { position:absolute; inset:0; mix-blend-mode:multiply; opacity:.74; }
-  .social .patov { position:absolute; inset:0; mix-blend-mode:screen; opacity:.30; }
-  .social .scrim { position:absolute; inset:0; background:linear-gradient(180deg, rgba(20,12,8,0) 38%, rgba(20,12,8,.86) 100%); }
+  .social img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:grayscale(.18) contrast(1.03); }
+  .social .wash { position:absolute; inset:0; mix-blend-mode:multiply; opacity:.42; transition:opacity .6s ease; }
+  .social .patov { position:absolute; inset:0; mix-blend-mode:screen; opacity:.16; transition:background-position 8s linear; background-position:0 0; }
+  .social .scrim { position:absolute; inset:0; background:linear-gradient(180deg, rgba(20,12,8,0) 42%, rgba(20,12,8,.8) 100%); }
   .social .cap { position:relative; padding:18px; }
   .social .pe { color:#fff; font-size:10px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
-  .social .pe .bar { width:24px; height:2px; }
-  .social h4 { color:#fff; font-size:22px; margin-top:8px; line-height:1.08; }
-  /* washes + pattern overlays */
+  .social .pe .bar { width:24px; height:2px; background:var(--gold); }
+  .social h4 { color:#fff; font-size:22px; margin-top:8px; line-height:1.08; text-shadow:0 1px 12px rgba(0,0,0,.5); }
+  .social:hover .wash { opacity:.30; }
+  .social:hover .patov { background-position:140px 90px; }
   .social.tech .wash{background:var(--tech)} .social.mgmt .wash{background:var(--mgmt)} .social.dsgn .wash{background:var(--dsgn)}
-  .social.tech .patov{ background-image:repeating-linear-gradient(90deg, var(--gold) 0 3px, transparent 3px 22px); }
-  .social.mgmt .patov{ background-image:repeating-radial-gradient(circle at 72% 78%, var(--gold) 0 2.4px, transparent 2.4px 20px); }
-  .social.dsgn .patov{ background-image:radial-gradient(var(--gold) 2.4px, transparent 2.8px); background-size:20px 20px; }
-
+  .social.tech .patov{ background-image:repeating-linear-gradient(90deg, var(--gold) 0 3px, transparent 3px 24px); }
+  .social.mgmt .patov{ background-image:repeating-radial-gradient(circle at 60% 70%, var(--gold) 0 2.4px, transparent 2.4px 22px); }
+  .social.dsgn .patov{ background-image:radial-gradient(var(--gold) 2.6px, transparent 3px); background-size:24px 24px; }
   .dodont { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:36px; }
-  .dd { border:1px solid var(--line); border-radius:14px; padding:28px; }
+  .dd { border:1px solid var(--line); border-radius:14px; padding:28px; background:#fff; }
   .dd h4 { font-size:15px; letter-spacing:.04em; text-transform:uppercase; }
   .dd.do h4 { color:var(--tech); } .dd.dont h4 { color:var(--mgmt); }
   .dd ul { margin-top:14px; list-style:none; }
@@ -152,197 +148,185 @@
   .dd li:first-child{border-top:0} .dd li::before{ position:absolute; left:0; top:8px; font-weight:700; }
   .dd.do li::before{content:"✓";color:var(--tech)} .dd.dont li::before{content:"✕";color:var(--mgmt)}
 
-  /* ===== QUESTIONS / FOOTER ===== */
-  .qlist { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-top:36px; }
-  .qcard { border:1px solid var(--line); border-radius:14px; padding:28px; }
-  .qcard .num { font-weight:800; font-size:30px; color:var(--line); }
-  .qcard h4 { font-size:18px; margin-top:4px; } .qcard p { font-size:14.5px; color:#5a5045; margin-top:10px; }
-  footer { background:var(--brown); color:rgba(247,242,233,.6); padding:52px 0; font-size:13px; border:0; }
-  footer b { color:var(--gold-l); }
+  /* ===== CLOSING — ABSTRACT TILED LOGO ===== */
+  .closing { background:var(--brown); position:relative; overflow:hidden; min-height:88vh; display:grid; place-items:center; padding:0; }
+  .logo-tiles { position:absolute; inset:0; display:grid; grid-template-columns:repeat(6, 1fr); grid-auto-rows:1fr; }
+  .lt { display:flex; align-items:center; justify-content:center; }
+  .lt img { width:62%; opacity:.9; }
+  .lt.brown { background:var(--brown); } .lt.gold { background:var(--gold); }
+  .closing .medallion { position:relative; z-index:3; width:200px; height:200px; border-radius:50%; background:var(--cream); display:grid; place-items:center; box-shadow:0 30px 80px rgba(0,0,0,.4); }
+  .closing .medallion img { width:64%; }
 
-  @media (prefers-reduced-motion: reduce){ .rail-pulse,.rail-runner,.ring,.node.pulse{animation:none} }
+  @media (prefers-reduced-motion: reduce){ .social .patov{transition:none} }
   @media (max-width:920px){
-    .twocol,.pat-fold .grid,.school-fold .grid,.dodont,.qlist { grid-template-columns:1fr; gap:32px; }
-    .pat-fold.rev .grid,.school-fold.rev .grid { direction:ltr; }
+    .twocol,.school .inner,.dodont { grid-template-columns:1fr; gap:32px; }
+    .tileband { grid-template-columns:repeat(3,1fr); }
+    .primaries { grid-template-columns:1fr; }
     .spectrum { grid-template-columns:repeat(4,1fr); }
+    .density,.rules { grid-template-columns:repeat(2,1fr); }
     .photo-grid,.treat-grid { grid-template-columns:1fr; }
-    .palette { flex-wrap:wrap; } .palette .sw { flex:1 1 33%; }
-    section { padding:64px 0; }
+    .palette { grid-template-columns:repeat(3,1fr); }
+    .motif .card{padding:32px} .logo-tiles{grid-template-columns:repeat(4,1fr)}
+    section,.motif .inner,.school .inner{ padding-top:64px; padding-bottom:64px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ============ FOLD 1 — PRIMARY + LOGO ONLY ============ -->
+<!-- ============ FOLD 1 — HERO ============ -->
 <header class="hero">
-  <div class="hero-inner">
-    <div class="hero-mark"><img src="img/quad-mark.png" alt="Quad" /></div>
+  <div class="hero-top">
+    <div class="pat p-dots"></div>
+    <img class="hero-logo" src="img/quad-logo-gold.svg" alt="Quad" />
     <h1>A timeless legacy, built for the <em>AI age</em>.</h1>
     <p class="sub">Prestige a parent can trust. A foundation for the rest of a student's life. Solid, reliable, and made to last.</p>
-    <div class="primaries">
-      <div class="pchip"><div class="fill" style="background:var(--brown)"></div><div class="cap"><div class="n">Quad Brown</div><div class="h">#4E3629 · primary</div></div></div>
-      <div class="pchip"><div class="fill" style="background:var(--gold)"></div><div class="cap"><div class="n">Quad Gold</div><div class="h">#FFB500 · signature</div></div></div>
-      <div class="pchip"><div class="fill" style="background:var(--cream)"></div><div class="cap"><div class="n">Cream</div><div class="h">#F7F2E9 · canvas</div></div></div>
-    </div>
+  </div>
+  <div class="tileband">
+    <div class="tile" style="background:var(--brown)"><div class="pat p-grid" style="--pc:rgba(255,181,0,.5);--ps:34px"></div></div>
+    <div class="tile" style="background:var(--gold)"></div>
+    <div class="tile" style="background:var(--brown)"><div class="pat p-dots" style="--pc:var(--gold);--ps:30px"></div></div>
+    <div class="tile" style="background:var(--gold)"><div class="pat p-rails" style="--pc:var(--brown);--ps:26px"></div></div>
+    <div class="tile" style="background:var(--brown)"><div class="pat p-rings" style="--pc:rgba(255,181,0,.55);--ps:26px"></div></div>
+    <div class="tile" style="background:var(--cream)"><div class="pat p-grid" style="--pc:rgba(61,40,23,.18);--ps:34px"></div></div>
+  </div>
+  <div class="primaries" style="background:var(--brown-d);color:var(--cream)">
+    <div class="pchip"><span class="n">Quad Brown</span><span class="h">#3D2817 · primary</span></div>
+    <div class="pchip" style="background:var(--gold);color:var(--brown-dd)"><span class="n">Quad Gold</span><span class="h">#FFB500 · signature</span></div>
+    <div class="pchip" style="background:var(--cream);color:var(--brown)"><span class="n">Cream</span><span class="h">#F6EFE1 · canvas</span></div>
   </div>
 </header>
 
 <!-- ============ THE IDEA ============ -->
-<section class="idea">
+<section class="idea" style="background:var(--paper)">
   <div class="wrap">
     <span class="eyebrow rule" style="color:var(--gold-d)">The idea</span>
     <h2 class="sechead">Two layers. One identity.</h2>
-    <p class="secsub">Brown and gold are the enduring face of Quad — warm, grounded, and serious. On top sits a contemporary layer of colour and pattern that keeps the brand ambitious and alive. The first reassures the parent; the second inspires the student. Together they read as an institution with a legacy, not a startup with a logo.</p>
+    <p class="secsub">Brown and gold are the enduring face of Quad — warm, grounded, serious. On top sits a contemporary layer of colour and pattern that keeps the brand ambitious and alive. The first reassures the parent; the second inspires the student. Together they read as an institution with a legacy, not a startup with a logo.</p>
     <div class="twocol">
       <div class="scard">
         <div class="tagline">The enduring layer</div>
         <h3>Solid &amp; prestigious</h3>
-        <p>Brown on cream, one disciplined typeface, all-caps eyebrows under a thin rule, gold used sparingly for emphasis. Generous white space and honest, documentary photography of real students. This never changes — it is what makes Quad feel permanent.</p>
+        <p>Brown on cream, one disciplined typeface, all-caps eyebrows under a thin rule, gold used for emphasis. Generous space and honest, documentary photography. This never changes — it is what makes Quad feel permanent.</p>
       </div>
       <div class="scard">
         <div class="tagline">The contemporary layer</div>
         <h3>Spectrum &amp; pattern</h3>
-        <p>A refined colour spectrum — one hue per school — and four geometric patterns drawn directly from the Quad mark. Used as accents, dividers, and on social, never as noise. This is what makes Quad feel built for what's next.</p>
+        <p>A refined colour spectrum — one hue per school — and four geometric patterns drawn directly from the Quad mark. Bold, full, and used with intent. This is what makes Quad feel built for what's next.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ PATTERN 1 — COORDINATE GRAPH ============ -->
-<section class="pat-fold">
-  <div class="wrap">
-    <div class="grid">
-      <div class="pat-stage">
-        <svg class="coord" viewBox="0 0 640 480" fill="none">
-          <!-- grid -->
-          <g stroke="rgba(255,255,255,.10)" stroke-width="1">
-            <line x1="120" y1="60" x2="120" y2="420"/><line x1="200" y1="60" x2="200" y2="420"/>
-            <line x1="280" y1="60" x2="280" y2="420"/><line x1="360" y1="60" x2="360" y2="420"/>
-            <line x1="440" y1="60" x2="440" y2="420"/><line x1="520" y1="60" x2="520" y2="420"/>
-            <line x1="120" y1="100" x2="560" y2="100"/><line x1="120" y1="180" x2="560" y2="180"/>
-            <line x1="120" y1="260" x2="560" y2="260"/><line x1="120" y1="340" x2="560" y2="340"/>
-          </g>
-          <!-- axes with arrowheads at both ends -->
-          <g stroke="var(--gold)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="60" y1="380" x2="600" y2="380"/>
-            <polyline points="588,370 600,380 588,390"/><polyline points="72,370 60,380 72,390"/>
-            <line x1="120" y1="440" x2="120" y2="50"/>
-            <polyline points="110,62 120,50 130,62"/><polyline points="110,430 120,440 130,430"/>
-            <!-- ticks -->
-            <line x1="200" y1="375" x2="200" y2="385"/><line x1="280" y1="375" x2="280" y2="385"/>
-            <line x1="360" y1="375" x2="360" y2="385"/><line x1="440" y1="375" x2="440" y2="385"/>
-            <line x1="520" y1="375" x2="520" y2="385"/>
-            <line x1="115" y1="300" x2="125" y2="300"/><line x1="115" y1="220" x2="125" y2="220"/>
-            <line x1="115" y1="140" x2="125" y2="140"/>
-          </g>
-          <!-- plotted trajectory -->
-          <polyline points="120,360 200,330 280,290 360,230 440,160 520,90" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          <g fill="var(--gold)" stroke="var(--brown)" stroke-width="2.5">
-            <circle cx="120" cy="360" r="6"/><circle cx="200" cy="330" r="6"/><circle cx="280" cy="290" r="6"/>
-            <circle cx="360" cy="230" r="6"/><circle cx="440" cy="160" r="6"/><circle cx="520" cy="90" r="7"/>
-          </g>
-        </svg>
-      </div>
-      <div>
-        <span class="num">PATTERN 01</span>
-        <h2>The coordinate plane</h2>
-        <p class="body">Quad begins where you are and plots where you're going. The X-Y axis — arrows reaching outward in every direction — is a system of <strong>measurement and direction</strong>. Every student's journey is a line on this plane: a clear starting point, a destination, and the deliberate slope between them. Not vague ambition — a plotted trajectory, with proof at every step.</p>
-        <span class="motif-chip">◹ Direction · Measurement · Trajectory</span>
+<!-- ============ PATTERN 1 — COORDINATE ============ -->
+<section class="motif" style="background:var(--brown)">
+  <div class="pat p-grid" style="--pc:rgba(255,181,0,.4);--ps:48px"></div>
+  <div class="wrap"><div class="inner">
+    <div class="card">
+      <span class="num">PATTERN 01</span>
+      <h2>The coordinate plane</h2>
+      <p class="body">Quad begins where you are and plots where you're going. The X-Y axis — arrows reaching outward — is a system of <strong>measurement and direction</strong>. Every student's journey is a line on this plane: a clear start, a destination, and the deliberate slope between. Not vague ambition — a plotted trajectory, with proof at every step.</p>
+      <div class="spec">
+        <div><span>Line weight</span><b>2px</b></div>
+        <div><span>Cell size</span><b>32px</b></div>
+        <div><span>Repeat</span><b>32 × 32px tile</b></div>
+        <div><span>Density</span><b>Default · 24 / 48</b></div>
       </div>
     </div>
-  </div>
+  </div></div>
 </section>
 
 <!-- ============ PATTERN 2 — RAILS ============ -->
-<section class="pat-fold rev">
-  <div class="wrap">
-    <div class="grid">
-      <div class="pat-stage">
-        <div class="rails">
-          <div class="rail" style="top:24%"></div><div class="rail" style="top:36%"></div>
-          <div class="rail" style="top:48%"></div><div class="rail" style="top:60%"></div>
-          <div class="rail" style="top:72%"></div>
-          <div class="rail-pulse"></div>
-          <div class="rail-runner"></div>
-        </div>
-      </div>
-      <div>
-        <span class="num">PATTERN 02</span>
-        <h2>The rails for growth</h2>
-        <p class="body">Parallel lines, running on without end — the <strong>infrastructure a student needs to grow</strong>. These are the rails: the structure of the programme, the shape of the curriculum, the arc of a career laid out ahead. They don't stop at graduation. They run infinitely forward, carrying momentum from the first day to a lifetime of compounding progress.</p>
-        <span class="motif-chip">▤ Structure · Infrastructure · Infinite growth</span>
+<section class="motif right" style="background:var(--gold)">
+  <div class="pat p-rails" style="--pc:rgba(61,40,23,.55);--ps:30px"></div>
+  <div class="wrap"><div class="inner">
+    <div class="card">
+      <span class="num">PATTERN 02</span>
+      <h2>The rails for growth</h2>
+      <p class="body">Parallel lines running on without end — the <strong>infrastructure a student needs to grow</strong>. These are the rails: the structure of the programme, the shape of the curriculum, the arc of a career laid ahead. They don't stop at graduation. They run infinitely forward, carrying momentum from day one to a lifetime of compounding progress.</p>
+      <div class="spec">
+        <div><span>Line weight</span><b>3px</b></div>
+        <div><span>Gap</span><b>21px</b></div>
+        <div><span>Repeat</span><b>24px pitch</b></div>
+        <div><span>Density</span><b>Default · 16 / 36</b></div>
       </div>
     </div>
-  </div>
+  </div></div>
 </section>
 
 <!-- ============ PATTERN 3 — CONCENTRIC ============ -->
-<section class="pat-fold">
-  <div class="wrap">
-    <div class="grid">
-      <div class="pat-stage">
-        <div class="ripple-stage">
-          <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
-          <div class="ring-core"></div>
-        </div>
-      </div>
-      <div>
-        <span class="num">PATTERN 03</span>
-        <h2>Concentric reach</h2>
-        <p class="body">Circles radiating outward from a single centre — the signature of <strong>growth and reach</strong>. What begins as one student, one idea, one campus ripples outward: into community, into industry, into the world. Each ring is wider than the last. Quad is built to expand — and to keep expanding, long after the first ripple.</p>
-        <span class="motif-chip">◎ Growth · Reach · Momentum outward</span>
+<section class="motif" style="background:var(--brown)">
+  <div class="pat p-rings" style="--pc:rgba(255,181,0,.42);--ps:30px"></div>
+  <div class="wrap"><div class="inner">
+    <div class="card">
+      <span class="num">PATTERN 03</span>
+      <h2>Concentric reach</h2>
+      <p class="body">Circles radiating outward from a single centre — the signature of <strong>growth and reach</strong>. What begins as one student, one idea, one campus ripples outward: into community, into industry, into the world. Each ring is wider than the last. Quad is built to expand — and to keep expanding.</p>
+      <div class="spec">
+        <div><span>Ring weight</span><b>2.5px</b></div>
+        <div><span>Spacing</span><b>22px</b></div>
+        <div><span>Repeat</span><b>22px radial</b></div>
+        <div><span>Density</span><b>Default · 16 / 32</b></div>
       </div>
     </div>
-  </div>
+  </div></div>
 </section>
 
-<!-- ============ PATTERN 4 — DOT GRID ============ -->
-<section class="pat-fold rev">
-  <div class="wrap">
-    <div class="grid">
-      <div class="pat-stage">
-        <div class="dotfield"></div>
-        <svg class="dotnet" viewBox="0 0 480 360">
-          <g stroke="var(--gold)" stroke-width="1.4" opacity=".5">
-            <line x1="120" y1="110" x2="240" y2="90"/><line x1="240" y1="90" x2="330" y2="170"/>
-            <line x1="120" y1="110" x2="170" y2="220"/><line x1="170" y1="220" x2="330" y2="170"/>
-            <line x1="330" y1="170" x2="380" y2="260"/><line x1="170" y1="220" x2="240" y2="290"/>
-          </g>
-          <g class="node"><circle cx="120" cy="110" r="5"/></g>
-          <circle class="node pulse" cx="240" cy="90" r="5"/>
-          <circle class="node" cx="330" cy="170" r="5"/>
-          <circle class="node pulse b" cx="170" cy="220" r="5"/>
-          <circle class="node" cx="380" cy="260" r="5"/>
-          <circle class="node pulse c" cx="240" cy="290" r="5"/>
-        </svg>
-      </div>
-      <div>
-        <span class="num">PATTERN 04</span>
-        <h2>The network of dots</h2>
-        <p class="body">A field of points, connected — <strong>community, cohorts, data, and network</strong>. Every dot is a student, a mentor, a recruiter, a data point in a living system. Alone, a point. Together, a network with real gravity. This is the social fabric of Quad, and the raw material of a school designed for an AI-native world.</p>
-        <span class="motif-chip">⠿ Community · Cohorts · Network · Data</span>
+<!-- ============ PATTERN 4 — DOTS ============ -->
+<section class="motif right" style="background:var(--gold)">
+  <div class="pat p-dots" style="--pc:rgba(61,40,23,.55);--ps:30px"></div>
+  <div class="wrap"><div class="inner">
+    <div class="card">
+      <span class="num">PATTERN 04</span>
+      <h2>The network of dots</h2>
+      <p class="body">A field of points, connected — <strong>community, cohorts, data, and network</strong>. Every dot is a student, a mentor, a recruiter, a data point in a living system. Alone, a point. Together, a network with real gravity. This is the social fabric of Quad, and the raw material of a school built for an AI-native world.</p>
+      <div class="spec">
+        <div><span>Dot diameter</span><b>6px</b></div>
+        <div><span>Spacing</span><b>22px</b></div>
+        <div><span>Repeat</span><b>28px grid</b></div>
+        <div><span>Density</span><b>Default · 20 / 40</b></div>
       </div>
     </div>
+  </div></div>
+</section>
+
+<!-- ============ PATTERN CONSTRUCTION ============ -->
+<section style="background:var(--cream)">
+  <div class="wrap">
+    <span class="eyebrow rule" style="color:var(--gold-d)">Pattern construction</span>
+    <h2 class="sechead">One grid. Three densities. No guesswork.</h2>
+    <p class="secsub">Every pattern is built on an 8px grid so it tiles cleanly at any scale. Pick a density by surface size — and the stroke scales with it so the optical weight stays constant. When in doubt, use Default.</p>
+    <div class="rules">
+      <div class="rule"><div class="k">Base grid</div><div class="v">8px</div><div class="d">Everything snaps to multiples of 8.</div></div>
+      <div class="rule"><div class="k">Stroke / element</div><div class="v">≈ 10% of pitch</div><div class="d">2px fine · 3px standard · 5px bold.</div></div>
+      <div class="rule"><div class="k">Colour rule</div><div class="v">Two-tone only</div><div class="d">Gold on brown, or brown on gold. Never both.</div></div>
+      <div class="rule"><div class="k">When to use</div><div class="v">Surface-led</div><div class="d">Tight = small · Default = most · Loose = hero.</div></div>
+    </div>
+    <div class="density">
+      <div class="dcard"><div class="demo"><div class="pat p-dots" style="--pc:var(--gold);--ps:20px"></div></div><div class="cap"><div class="n">Tight — 20px</div><div class="h">Small surfaces, cards, badges, tight crops.</div></div></div>
+      <div class="dcard"><div class="demo"><div class="pat p-dots" style="--pc:var(--gold);--ps:28px"></div></div><div class="cap"><div class="n">Default — 28px</div><div class="h">The everyday setting. Web sections, social, print.</div></div></div>
+      <div class="dcard"><div class="demo"><div class="pat p-dots" style="--pc:var(--gold);--ps:44px"></div></div><div class="cap"><div class="n">Loose — 44px</div><div class="h">Large hero fills, banners, environmental graphics.</div></div></div>
+    </div>
+    <p class="note">Shown with the dot motif; the same three-tier logic applies to rails, grid and rings (each with its own pitch values, listed on the motif folds above).</p>
   </div>
 </section>
 
 <!-- ============ TYPOGRAPHY ============ -->
-<section>
+<section style="background:var(--paper)">
   <div class="wrap">
     <span class="eyebrow rule" style="color:var(--gold-d)">Typography</span>
     <h2 class="sechead">One voice, set with discipline</h2>
-    <p class="secsub">Quad runs on a single, flexible grotesque across every weight — clean, neutral, and confident. Shown here in <strong>Hanken Grotesk</strong> as a free stand-in; a premium grotesque (Graphik or Söhne) is the licensed target. The signature move stays constant: an all-caps eyebrow over a thin rule.</p>
+    <p class="secsub">Quad runs on a single flexible grotesque across every weight — clean, neutral, confident. Shown here in <strong>Hanken Grotesk</strong> as a free stand-in; a premium grotesque (Graphik or Söhne) is the licensed target. The signature move stays constant: an all-caps eyebrow over a thin rule.</p>
     <div class="type-block">
-      <div class="type-row"><div><div class="role">Eyebrow</div><div class="spec">700 · caps · +0.18em · rule under</div></div><div><span class="ty-eyebrow">School of Technology</span></div></div>
-      <div class="type-row"><div><div class="role">Headline</div><div class="spec">700 · initial caps · −0.025em</div></div><div><div class="ty-head">Become the engineer the AI age actually needs.</div></div></div>
-      <div class="type-row"><div><div class="role">Subhead</div><div class="spec">600 · sentence case</div></div><div><div class="ty-sub">Curriculum co-curated by IIT &amp; IIM alumni.</div></div></div>
-      <div class="type-row"><div><div class="role">Body</div><div class="spec">400 · 16px · 1.6 leading</div></div><div><div class="ty-body">A four-year programme where you write real code, ship a real startup, and graduate ready — across Patna, Mangalore and Bangalore. Built for builders, not exam-passers.</div></div></div>
+      <div class="type-row"><div><div class="role">Eyebrow</div><div class="spec2">700 · caps · +0.18em · rule under</div></div><div><span class="ty-eyebrow">School of Technology</span></div></div>
+      <div class="type-row"><div><div class="role">Headline</div><div class="spec2">700 · initial caps · −0.025em</div></div><div><div class="ty-head">Become the engineer the AI age actually needs.</div></div></div>
+      <div class="type-row"><div><div class="role">Subhead</div><div class="spec2">600 · sentence case</div></div><div><div class="ty-sub">Curriculum co-curated by IIT &amp; IIM alumni.</div></div></div>
+      <div class="type-row"><div><div class="role">Body</div><div class="spec2">400 · 16px · 1.6 leading</div></div><div><div class="ty-body">A four-year programme where you write real code, ship a real startup, and graduate ready — across Patna, Mangalore and Bangalore. Built for builders, not exam-passers.</div></div></div>
     </div>
   </div>
 </section>
 
 <!-- ============ SPECTRUM ============ -->
-<section style="background:var(--paper)">
+<section style="background:var(--cream)">
   <div class="wrap">
     <span class="eyebrow rule" style="color:var(--gold-d)">The Quad spectrum</span>
     <h2 class="sechead">A warm, refined range — never neon</h2>
@@ -362,87 +346,80 @@
 </section>
 
 <!-- ============ SCHOOL — TECHNOLOGY ============ -->
-<section class="school-fold">
-  <div class="wrap">
-    <div class="grid">
-      <div>
-        <span class="eyebrow rule" style="color:var(--tech)">School of Technology</span>
-        <h2>Technology</h2>
-        <div class="courses">B.Tech CS (AI/ML) · BCA</div>
-        <p class="body">The flagship. Curriculum co-curated by IIT &amp; IIM alumni, taught by people who build at the frontier. Students write 100,000+ lines of production code, complete a six-month internship, and graduate into a network of 75+ recruiters. Intelligence, systems, and rigour — the authoritative core of Quad.</p>
-        <div class="palette">
-          <div class="sw"><div class="fill" style="background:var(--tech)"></div><div class="cap"><div class="n">Teal</div><div class="h">#136F77 · primary</div></div></div>
-          <div class="sw"><div class="fill" style="background:var(--tech-d)"></div><div class="cap"><div class="n">Deep Petrol</div><div class="h">#0B4A50</div></div></div>
-          <div class="sw"><div class="fill" style="background:var(--tech-l)"></div><div class="cap"><div class="n">Mist</div><div class="h">#AFD0D4</div></div></div>
-          <div class="sw"><div class="fill" style="background:var(--gold)"></div><div class="cap"><div class="n">Gold spark</div><div class="h">#FFB500</div></div></div>
-          <div class="sw"><div class="fill" style="background:#27302E"></div><div class="cap"><div class="n">Graphite</div><div class="h">#27302E</div></div></div>
-        </div>
-      </div>
-      <div class="school-stage" style="background:var(--tech)">
-        <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(90deg, rgba(255,181,0,.30) 0 3px, transparent 3px 26px)"></div>
-        <div style="text-align:center"><div class="big">T</div><div class="stamp">Build the systems</div></div>
+<section class="school" style="background:var(--tech)">
+  <div class="pat p-rails" style="--pc:rgba(255,181,0,.16);--ps:40px"></div>
+  <div class="wrap"><div class="inner">
+    <div>
+      <span class="eyebrow rule">School of Technology</span>
+      <h2>Technology</h2>
+      <div class="courses">B.Tech CS (AI/ML) · BCA</div>
+      <p class="body">The flagship. Curriculum co-curated by IIT &amp; IIM alumni, taught by people who build at the frontier. Students write 100,000+ lines of production code, complete a six-month internship, and graduate into a network of 75+ recruiters. Intelligence, systems, and rigour.</p>
+    </div>
+    <div class="palette-card">
+      <div class="h">School palette · Teal + companions</div>
+      <div class="palette">
+        <div class="sw"><div class="fill" style="background:var(--tech)"></div><div class="n">Teal</div><div class="x">#136F77</div></div>
+        <div class="sw"><div class="fill" style="background:var(--tech-d)"></div><div class="n">Deep Petrol</div><div class="x">#0B4A50</div></div>
+        <div class="sw"><div class="fill" style="background:var(--tech-l)"></div><div class="n">Mist</div><div class="x">#AFD0D4</div></div>
+        <div class="sw"><div class="fill" style="background:var(--gold)"></div><div class="n">Gold spark</div><div class="x">#FFB500</div></div>
+        <div class="sw"><div class="fill" style="background:#27302E"></div><div class="n">Graphite</div><div class="x">#27302E</div></div>
       </div>
     </div>
-  </div>
+  </div></div>
 </section>
 
 <!-- ============ SCHOOL — MANAGEMENT ============ -->
-<section class="school-fold rev">
-  <div class="wrap">
-    <div class="grid">
-      <div>
-        <span class="eyebrow rule" style="color:var(--mgmt)">School of Management</span>
-        <h2>Management</h2>
-        <div class="courses">BBA · MBA (PGP)</div>
-        <p class="body">Where future founders and leaders are made. Every student builds and leads a real venture, backed by a ₹10L+ seed fund, mentored by operators from CRED, Salesforce, Google and beyond. Ambition, leadership, and gravitas — carried in a deep, confident crimson.</p>
-        <div class="palette">
-          <div class="sw"><div class="fill" style="background:var(--mgmt)"></div><div class="cap"><div class="n">Crimson</div><div class="h">#9E1B32 · primary</div></div></div>
-          <div class="sw"><div class="fill" style="background:var(--mgmt-d)"></div><div class="cap"><div class="n">Oxblood</div><div class="h">#6B1020</div></div></div>
-          <div class="sw"><div class="fill" style="background:var(--mgmt-l)"></div><div class="cap"><div class="n">Blush</div><div class="h">#EBCBD0</div></div></div>
-          <div class="sw"><div class="fill" style="background:#C8951C"></div><div class="cap"><div class="n">Antique Gold</div><div class="h">#C8951C</div></div></div>
-          <div class="sw"><div class="fill" style="background:#3A271D"></div><div class="cap"><div class="n">Espresso</div><div class="h">#3A271D</div></div></div>
-        </div>
-      </div>
-      <div class="school-stage" style="background:var(--mgmt)">
-        <div style="position:absolute;inset:0;background-image:repeating-radial-gradient(circle at 50% 60%, rgba(255,181,0,.28) 0 2.5px, transparent 2.5px 22px)"></div>
-        <div style="text-align:center"><div class="big">M</div><div class="stamp">Lead the venture</div></div>
+<section class="school" style="background:var(--mgmt)">
+  <div class="pat p-rings" style="--pc:rgba(255,181,0,.16);--ps:40px"></div>
+  <div class="wrap"><div class="inner">
+    <div>
+      <span class="eyebrow rule">School of Management</span>
+      <h2>Management</h2>
+      <div class="courses">BBA · MBA (PGP)</div>
+      <p class="body">Where future founders and leaders are made. Every student builds and leads a real venture, backed by a ₹10L+ seed fund, mentored by operators from CRED, Salesforce, Google and beyond. Ambition, leadership, and gravitas.</p>
+    </div>
+    <div class="palette-card">
+      <div class="h">School palette · Crimson + companions</div>
+      <div class="palette">
+        <div class="sw"><div class="fill" style="background:var(--mgmt)"></div><div class="n">Crimson</div><div class="x">#9E1B32</div></div>
+        <div class="sw"><div class="fill" style="background:var(--mgmt-d)"></div><div class="n">Oxblood</div><div class="x">#6B1020</div></div>
+        <div class="sw"><div class="fill" style="background:var(--mgmt-l)"></div><div class="n">Blush</div><div class="x">#EBCBD0</div></div>
+        <div class="sw"><div class="fill" style="background:#C8951C"></div><div class="n">Antique Gold</div><div class="x">#C8951C</div></div>
+        <div class="sw"><div class="fill" style="background:#3A271D"></div><div class="n">Espresso</div><div class="x">#3A271D</div></div>
       </div>
     </div>
-  </div>
+  </div></div>
 </section>
 
 <!-- ============ SCHOOL — DESIGN ============ -->
-<section class="school-fold">
-  <div class="wrap">
-    <div class="grid">
-      <div>
-        <span class="eyebrow rule" style="color:var(--dsgn)">School of Design</span>
-        <h2>Design</h2>
-        <div class="courses">B.Des — Integrated AI · <em style="font-style:normal;color:var(--g2)">listed</em></div>
-        <p class="body">Craft for an AI-native world — where design meets code, and imagination meets systems. Students learn to shape products, interfaces, and experiences that machines help build but humans must direct. Expressive and distinct, in a creative violet that sets the school apart.</p>
-        <div class="palette">
-          <div class="sw"><div class="fill" style="background:var(--dsgn)"></div><div class="cap"><div class="n">Violet</div><div class="h">#6E2D8C · primary</div></div></div>
-          <div class="sw"><div class="fill" style="background:var(--dsgn-d)"></div><div class="cap"><div class="n">Deep Plum</div><div class="h">#4A1C5E</div></div></div>
-          <div class="sw"><div class="fill" style="background:var(--dsgn-l)"></div><div class="cap"><div class="n">Lilac</div><div class="h">#D8BEE4</div></div></div>
-          <div class="sw"><div class="fill" style="background:#E8624D"></div><div class="cap"><div class="n">Coral</div><div class="h">#E8624D</div></div></div>
-          <div class="sw"><div class="fill" style="background:#211425"></div><div class="cap"><div class="n">Ink Plum</div><div class="h">#211425</div></div></div>
-        </div>
-      </div>
-      <div class="school-stage" style="background:var(--dsgn)">
-        <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,181,0,.32) 2.4px, transparent 2.8px);background-size:24px 24px"></div>
-        <div style="text-align:center"><div class="big">D</div><div class="stamp">Design what's next</div></div>
+<section class="school" style="background:var(--dsgn)">
+  <div class="pat p-dots" style="--pc:rgba(255,181,0,.16);--ps:34px"></div>
+  <div class="wrap"><div class="inner">
+    <div>
+      <span class="eyebrow rule">School of Design</span>
+      <h2>Design</h2>
+      <div class="courses">B.Des — Integrated AI · listed</div>
+      <p class="body">Craft for an AI-native world — where design meets code, and imagination meets systems. Students learn to shape products, interfaces, and experiences that machines help build but humans must direct. Expressive and distinct.</p>
+    </div>
+    <div class="palette-card">
+      <div class="h">School palette · Violet + companions</div>
+      <div class="palette">
+        <div class="sw"><div class="fill" style="background:var(--dsgn)"></div><div class="n">Violet</div><div class="x">#6E2D8C</div></div>
+        <div class="sw"><div class="fill" style="background:var(--dsgn-d)"></div><div class="n">Deep Plum</div><div class="x">#4A1C5E</div></div>
+        <div class="sw"><div class="fill" style="background:var(--dsgn-l)"></div><div class="n">Lilac</div><div class="x">#D8BEE4</div></div>
+        <div class="sw"><div class="fill" style="background:#E8624D"></div><div class="n">Coral</div><div class="x">#E8624D</div></div>
+        <div class="sw"><div class="fill" style="background:#211425"></div><div class="n">Ink Plum</div><div class="x">#211425</div></div>
       </div>
     </div>
-  </div>
+  </div></div>
 </section>
 
 <!-- ============ PHOTOGRAPHY & SOCIAL ============ -->
-<section style="background:var(--paper)">
+<section style="background:var(--cream)">
   <div class="wrap">
     <span class="eyebrow rule" style="color:var(--gold-d)">Photography &amp; social</span>
     <h2 class="sechead">Real students. Real campus. One treatment.</h2>
-    <p class="secsub">Quad's strength is honest, documentary photography — actual students mid-work, presenting, building. The raw shots are authentic but inconsistent. The system fixes that with one repeatable treatment: wash the image in the school accent, lay one pattern over it, and lock the same headline frame every time.</p>
-
+    <p class="secsub">Quad's strength is honest, documentary photography — actual students mid-work, presenting, building. The system gives every shot one repeatable treatment: a light wash in the school accent, a soft pattern layered over it, and the same headline frame. (Hover a tile to see the pattern drift.)</p>
     <div class="photo-grid">
       <img src="img/img_2907_1.jpg" alt="Students collaborating" />
       <img src="img/img_4867.jpg" alt="Student presenting" />
@@ -451,19 +428,19 @@
     <p class="note">Actual imagery from quadcse.com — candid, warm, real faces. This is the raw material; never replace it with stock.</p>
 
     <h3 style="font-size:22px;margin-top:52px">The social treatment</h3>
-    <p class="secsub" style="margin-top:10px">The accent colour does the heavy lifting — a strong wash that unifies any photo into the school's identity — with a pattern motif layered over it in gold and a consistent headline lockup.</p>
+    <p class="secsub" style="margin-top:10px">The accent tints the photo just enough to belong to the school — never enough to bury it — with a soft gold pattern on top and a consistent headline lockup.</p>
     <div class="treat-grid">
       <div class="social tech">
         <img src="img/img_2907_1.jpg" alt="" /><div class="wash"></div><div class="patov"></div><div class="scrim"></div>
-        <div class="cap"><span class="pe"><span class="bar" style="background:var(--gold)"></span>School of Technology</span><h4>Your cohort is your network.</h4></div>
+        <div class="cap"><span class="pe"><span class="bar"></span>School of Technology</span><h4>Your cohort is your network.</h4></div>
       </div>
       <div class="social mgmt">
         <img src="img/img_4867.jpg" alt="" /><div class="wash"></div><div class="patov"></div><div class="scrim"></div>
-        <div class="cap"><span class="pe"><span class="bar" style="background:var(--gold)"></span>School of Management</span><h4>Pitch day at Quad.</h4></div>
+        <div class="cap"><span class="pe"><span class="bar"></span>School of Management</span><h4>Pitch day at Quad.</h4></div>
       </div>
       <div class="social dsgn">
         <img src="img/img_4633.jpg" alt="" /><div class="wash"></div><div class="patov"></div><div class="scrim"></div>
-        <div class="cap"><span class="pe"><span class="bar" style="background:var(--gold)"></span>Life at Quad</span><h4>Made at Quad. Built for what's next.</h4></div>
+        <div class="cap"><span class="pe"><span class="bar"></span>Life at Quad</span><h4>Made at Quad. Built for what's next.</h4></div>
       </div>
     </div>
 
@@ -471,8 +448,8 @@
       <div class="dd do">
         <h4>Do</h4>
         <ul>
-          <li>Wash images heavily in the school accent — own the colour</li>
-          <li>Layer one pattern motif over the photo, in gold</li>
+          <li>Keep the wash light — the student stays the hero</li>
+          <li>Layer one soft pattern motif over the photo, in gold</li>
           <li>Shoot real students, real moments — candid over posed</li>
           <li>Crop tight on faces, hands, and the work itself</li>
           <li>Lock the same eyebrow-bar + headline frame every time</li>
@@ -481,8 +458,8 @@
       <div class="dd dont">
         <h4>Don't</h4>
         <ul>
+          <li>Crank the overlay so heavy the face disappears</li>
           <li>Use generic stock or AI-generated "students"</li>
-          <li>Leave the photo un-washed or use a weak, washed-out tint</li>
           <li>Stack two patterns or let the motif fight the face</li>
           <li>Crowd the frame — protect the scrim and breathing room</li>
           <li>Set headlines in a different font or all-caps blocks</li>
@@ -492,23 +469,30 @@
   </div>
 </section>
 
-<!-- ============ OPEN DECISIONS ============ -->
-<section>
-  <div class="wrap">
-    <span class="eyebrow rule" style="color:var(--gold-d)">Where I need your read</span>
-    <h2 class="sechead">Open decisions before v1.0</h2>
-    <div class="qlist">
-      <div class="qcard"><div class="num">01</div><h4>Brown + Gold balance</h4><p>Brown is primary, gold the signature. Comfortable with brown as the dominant face, or should gold carry more weight on hero surfaces?</p></div>
-      <div class="qcard"><div class="num">02</div><h4>School → hue mapping</h4><p>Technology = Teal, Management = Crimson, Design = Violet — all tuned to sit with brown/gold. Any swaps, or want a fourth reserved for a future school?</p></div>
-      <div class="qcard"><div class="num">03</div><h4>Motif → school pairing</h4><p>Right now all four patterns are shared. Worth assigning each school a signature motif (e.g. Technology = coordinate plane, Management = rails)?</p></div>
-      <div class="qcard"><div class="num">04</div><h4>Companion palettes</h4><p>Each school now has a 5-colour set. Are these the right companions, or do you want tighter / wider ranges per school?</p></div>
-    </div>
+<!-- ============ CLOSING — ABSTRACT TILED LOGO ============ -->
+<section class="closing">
+  <div class="logo-tiles">
+    <div class="lt brown"><img src="img/quad-logo-gold.svg" alt=""/></div>
+    <div class="lt gold"><img src="img/quad-logo.svg" alt=""/></div>
+    <div class="lt brown"><img src="img/quad-logo-gold.svg" alt=""/></div>
+    <div class="lt gold"><img src="img/quad-logo.svg" alt=""/></div>
+    <div class="lt brown"><img src="img/quad-logo-gold.svg" alt=""/></div>
+    <div class="lt gold"><img src="img/quad-logo.svg" alt=""/></div>
+    <div class="lt gold"><img src="img/quad-logo.svg" alt=""/></div>
+    <div class="lt brown"><img src="img/quad-logo-gold.svg" alt=""/></div>
+    <div class="lt gold"><img src="img/quad-logo.svg" alt=""/></div>
+    <div class="lt brown"><img src="img/quad-logo-gold.svg" alt=""/></div>
+    <div class="lt gold"><img src="img/quad-logo.svg" alt=""/></div>
+    <div class="lt brown"><img src="img/quad-logo-gold.svg" alt=""/></div>
+    <div class="lt brown"><img src="img/quad-logo-gold.svg" alt=""/></div>
+    <div class="lt gold"><img src="img/quad-logo.svg" alt=""/></div>
+    <div class="lt brown"><img src="img/quad-logo-gold.svg" alt=""/></div>
+    <div class="lt gold"><img src="img/quad-logo.svg" alt=""/></div>
+    <div class="lt brown"><img src="img/quad-logo-gold.svg" alt=""/></div>
+    <div class="lt gold"><img src="img/quad-logo.svg" alt=""/></div>
   </div>
+  <div class="medallion"><img src="img/quad-logo.svg" alt="Quad" /></div>
 </section>
-
-<footer>
-  <div class="wrap"><b>Quad brand system v0.3</b> — primary palette · four-motif pattern toolkit from the mark · typography · spectrum · three schools · imagery. A timeless legacy, built for the AI age. Comment back and we move to v1.0.</div>
-</footer>
 
 </body>
 </html>
