@@ -11,7 +11,7 @@
 <style>
   :root{
     --ink:#1A1A1A; --paper:#F5ECDF; --oat:#F0DFC8; --line:#E4D8C5;
-    --muted:#8A8275; --green:#1F7A4D; --amber:#B5852A;
+    --muted:#8A8275; --green:#1F7A4D; --amber:#B5852A; --red:#C8102E;
     --display:"Fraunces", Georgia, serif;
     --body:"Inter", system-ui, sans-serif;
   }
@@ -19,13 +19,11 @@
   html,body{height:100%;}
   body{font-family:var(--body);background:#111;color:var(--ink);overflow:hidden;-webkit-font-smoothing:antialiased;}
 
-  /* ---- Stage ---- */
   #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,#1c1c1c,#0c0c0c);}
   .frame{width:1280px;height:720px;position:relative;transform-origin:center center;box-shadow:0 30px 90px rgba(0,0,0,.5);border-radius:6px;overflow:hidden;background:#fff;flex:none;}
   .slide{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .25s ease;background:#fff;}
   .slide.active{opacity:1;pointer-events:auto;}
 
-  /* ---- Chrome ---- */
   #bar{position:fixed;left:0;right:0;bottom:0;height:42px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;color:#aaa;font-size:12px;letter-spacing:.04em;z-index:20;background:linear-gradient(transparent,rgba(0,0,0,.5));}
   #bar .sec{font-weight:600;color:#ccc;text-transform:uppercase;letter-spacing:.12em;}
   #bar .nav{display:flex;align-items:center;gap:14px;}
@@ -33,7 +31,6 @@
   #bar button:hover{border-color:#888;color:#fff;}
   #hint{position:fixed;top:14px;left:50%;transform:translateX(-50%);color:#666;font-size:11px;letter-spacing:.08em;z-index:20;text-transform:uppercase;}
 
-  /* ---- Overview ---- */
   #ov{position:fixed;inset:0;background:#0d0d0d;z-index:40;overflow:auto;display:none;padding:40px 28px 80px;}
   #ov.show{display:block;}
   #ov h2{color:#fff;font-family:var(--display);font-weight:500;font-size:26px;text-align:center;margin-bottom:6px;}
@@ -48,10 +45,11 @@
   .ovsec{grid-column:1/-1;color:#777;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-top:18px;padding-bottom:6px;border-bottom:1px solid #2a2a2a;}
 
   /* ============ SLIDE STYLES ============ */
-  .pad{position:absolute;inset:0;padding:64px 72px;}
+  .pad{position:absolute;inset:0;padding:60px 72px;}
   .kick{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
-  .s-title{font-family:var(--display);font-weight:600;letter-spacing:-.015em;line-height:1.04;color:var(--ink);}
-  .sfoot{position:absolute;left:72px;right:72px;bottom:30px;font-size:12px;color:#b6ab97;display:flex;justify-content:space-between;}
+  .s-title{font-family:var(--display);font-weight:600;letter-spacing:-.015em;line-height:1.05;color:var(--ink);}
+  .sfoot{position:absolute;left:72px;right:72px;bottom:26px;font-size:11.5px;color:#b6ab97;}
+  .accent{color:var(--red);}
 
   /* Cover */
   .cover{background:#1A1A1A;color:#fff;}
@@ -64,16 +62,16 @@
   .tile{position:absolute;border-radius:14px;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 22px;box-shadow:0 10px 30px rgba(40,30,10,.13);}
   .tile .bn{font-weight:800;line-height:1;letter-spacing:-.01em;}
   .tile .rv{font-weight:600;opacity:.9;margin-top:9px;font-variant-numeric:tabular-nums;}
-  .m-head{position:absolute;left:72px;right:72px;bottom:96px;text-align:center;}
+  .m-head{position:absolute;left:72px;right:72px;bottom:92px;text-align:center;}
   .m-head .q{font-family:var(--display);font-weight:600;font-size:48px;color:var(--ink);letter-spacing:-.02em;}
-  .m-note{position:absolute;left:0;right:0;bottom:34px;text-align:center;font-size:12px;color:#a99e8a;}
+  .m-note{position:absolute;left:0;right:0;bottom:32px;text-align:center;font-size:12px;color:#a99e8a;}
 
   /* Slide 3 — grid */
   .grid3{background:#fff;}
   .g3-head{text-align:center;}
   .g3-title{font-family:var(--display);font-weight:600;font-size:44px;letter-spacing:-.02em;}
   .g3-sub{font-size:19px;color:#5d564b;margin-top:8px;font-weight:500;}
-  .matrix{position:absolute;left:150px;right:64px;top:206px;bottom:84px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:14px;}
+  .matrix{position:absolute;left:150px;right:64px;top:206px;bottom:78px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:14px;}
   .rowlab{position:absolute;left:64px;font-weight:800;font-size:22px;color:var(--ink);}
   .rowlab.cpg{top:250px;} .rowlab.qsr{top:470px;}
   .cell{background:#F3EFE7;border-radius:12px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
@@ -81,15 +79,82 @@
   .cell img.a{left:6%;transform:rotate(-4deg);} .cell img.b{right:6%;transform:rotate(4deg);width:55%;}
   .cell .ph{color:#b3a890;font-size:12px;font-weight:600;text-align:center;letter-spacing:.04em;padding:8px;}
   .collab{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-weight:800;font-size:15px;text-transform:uppercase;letter-spacing:.06em;text-align:center;background:rgba(255,255,255,.94);color:var(--ink);padding:5px 16px;border-radius:20px;box-shadow:0 2px 10px rgba(0,0,0,.12);white-space:nowrap;}
-  .g3-foot{position:absolute;left:150px;right:64px;bottom:30px;font-size:12px;color:#a99e8a;}
+  .g3-foot{position:absolute;left:150px;right:64px;bottom:26px;font-size:11.5px;color:#a99e8a;}
 
-  /* Generic placeholder slide */
+  /* Slide 4 — Oats 2020 -> 2026 */
+  .oats{background:#fff;}
+  .oats .lanes{position:absolute;left:72px;right:72px;top:184px;display:flex;flex-direction:column;gap:22px;}
+  .lane{display:grid;grid-template-columns:78px 232px 64px 1fr;align-items:center;gap:18px;}
+  .lane .ch{font-weight:800;font-size:24px;color:var(--ink);}
+  .y20{background:#F1ECE2;border:1px solid var(--line);border-radius:12px;padding:16px 18px;height:104px;display:flex;flex-direction:column;justify-content:center;}
+  .y20 .yr{font-size:11px;font-weight:700;letter-spacing:.12em;color:#a99e8a;}
+  .y20 .v{font-size:30px;font-weight:800;color:#7d7565;line-height:1;margin-top:4px;}
+  .y20 .d{font-size:12px;color:#9a917f;margin-top:6px;}
+  .arr{font-size:34px;color:#d8cdb8;text-align:center;}
+  .y26{color:#fff;border-radius:14px;padding:18px 24px;height:118px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 12px 34px rgba(40,30,10,.16);}
+  .y26.cpg{background:var(--red);} .y26.qsr{background:#1A1A1A;}
+  .y26 .yr{font-size:11px;font-weight:700;letter-spacing:.12em;opacity:.8;}
+  .y26 .v{font-size:42px;font-weight:900;line-height:1;margin-top:2px;letter-spacing:-.02em;}
+  .y26 .d{font-size:13.5px;opacity:.95;margin-top:7px;line-height:1.35;max-width:760px;}
+  .oats .band{position:absolute;left:72px;right:72px;bottom:64px;display:flex;gap:14px;}
+  .bcell{flex:1;background:#FBF6EC;border:1px solid var(--line);border-radius:12px;padding:14px 20px;}
+  .bcell b{font-size:20px;font-weight:800;} .bcell span{font-size:13px;color:#6b6457;display:block;margin-top:2px;}
+
+  /* Section opener (dark) */
+  .opener{background:#1A1A1A;color:#fff;}
+  .opener .lbl{font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#7d756a;}
+  .opener .big{font-family:var(--display);font-weight:600;font-size:74px;letter-spacing:-.02em;line-height:1.02;margin-top:14px;}
+  .opener .sl{font-size:21px;color:#cfc7b8;margin-top:18px;max-width:760px;line-height:1.4;}
+  .opener .strip{position:absolute;left:72px;right:72px;bottom:60px;display:flex;gap:40px;border-top:1px solid #333;padding-top:22px;}
+  .opener .strip div b{font-family:var(--display);font-size:30px;font-weight:600;display:block;}
+  .opener .strip div span{font-size:12px;color:#9a917f;letter-spacing:.04em;}
+
+  /* Big-number slide */
+  .nums{background:#FBF6EC;}
+  .bignums{position:absolute;left:72px;right:72px;top:230px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .bni b{font-family:var(--display);font-size:54px;font-weight:600;line-height:1;color:var(--ink);letter-spacing:-.02em;}
+  .bni span{display:block;font-size:13px;color:#6b6457;margin-top:8px;font-weight:500;}
+  .ratebar{position:absolute;left:72px;right:72px;bottom:80px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 24px;display:flex;align-items:center;gap:24px;}
+  .ratebar .r{font-family:var(--display);font-size:34px;font-weight:600;color:var(--red);} .ratebar .t{font-size:15px;color:#5d564b;}
+
+  /* chips slide */
+  .chips{display:flex;flex-wrap:wrap;gap:12px;max-width:980px;margin-top:8px;}
+  .chip{background:#FBF6EC;border:1.5px solid var(--line);border-radius:30px;padding:12px 22px;font-weight:700;font-size:19px;}
+  .chip.new{background:var(--red);color:#fff;border-color:var(--red);}
+
+  /* who/why split */
+  .split{position:absolute;left:72px;right:72px;top:210px;bottom:64px;display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+  .col h4{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+  .col li{list-style:none;font-size:16px;color:#3d382f;padding:11px 0;border-bottom:1px solid var(--line);line-height:1.4;}
+  .col li b{color:var(--ink);}
+  .bigstat{position:absolute;right:72px;top:60px;text-align:right;}
+  .bigstat b{font-family:var(--display);font-size:64px;font-weight:600;color:var(--red);line-height:1;}
+  .bigstat span{display:block;font-size:13px;color:#6b6457;}
+
+  /* 4-stat tiles */
+  .stat4{position:absolute;left:72px;right:72px;top:220px;display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:1fr 1fr;gap:18px;bottom:120px;}
+  .st{background:#FBF6EC;border:1px solid var(--line);border-radius:14px;padding:24px 28px;display:flex;flex-direction:column;justify-content:center;}
+  .st b{font-family:var(--display);font-size:46px;font-weight:600;color:var(--ink);line-height:1;letter-spacing:-.02em;}
+  .st span{font-size:15px;color:#5d564b;margin-top:8px;}
+  .qcomm{position:absolute;left:72px;right:72px;bottom:60px;background:var(--ink);color:#fff;border-radius:12px;padding:16px 24px;font-size:16px;font-weight:600;display:flex;align-items:center;gap:14px;}
+  .qcomm .pill{background:var(--red);padding:5px 12px;border-radius:20px;font-size:13px;}
+
+  /* econ bar */
+  .econ{background:#fff;}
+  .ebar{position:absolute;left:72px;right:72px;top:280px;height:96px;display:flex;border-radius:12px;overflow:hidden;font-weight:700;color:#fff;}
+  .eseg{display:flex;align-items:center;justify-content:center;font-size:14px;text-align:center;padding:4px;}
+  .ebar .lbls{}
+  .eaxis{position:absolute;left:72px;right:72px;top:250px;font-size:12px;color:#9a917f;display:flex;justify-content:space-between;}
+  .econ .claims{position:absolute;left:72px;right:72px;top:430px;display:flex;gap:16px;}
+  .claim{flex:1;background:#FBF6EC;border:1px solid var(--line);border-radius:12px;padding:18px 22px;}
+  .claim b{font-size:19px;font-weight:800;display:block;margin-bottom:4px;} .claim span{font-size:13.5px;color:#6b6457;}
+
+  /* Generic placeholder */
   .ph-slide{background:var(--paper);}
   .ph-slide .big{font-family:var(--display);font-weight:600;font-size:46px;letter-spacing:-.015em;line-height:1.08;max-width:900px;margin-top:14px;}
-  .ph-slide .note{font-size:16px;color:#6b6457;margin-top:20px;max-width:680px;line-height:1.5;}
+  .ph-slide .note{font-size:16px;color:#6b6457;margin-top:20px;max-width:700px;line-height:1.5;}
   .ph-tag{position:absolute;top:60px;right:72px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:#c3b69e;padding:6px 12px;border-radius:20px;}
-  .ph-tag.fresh{background:#b8ad98;} .ph-tag.build{background:var(--amber);} .ph-tag.relo{background:#7c8a99;}
-  .scaffold{background:#fff;}
+  .ph-tag.fresh{background:#b8ad98;} .ph-tag.build{background:var(--amber);}
 </style>
 </head>
 <body>
@@ -100,7 +165,7 @@
   <div class="frame" id="frame">
 
     <!-- 1 COVER -->
-    <section class="slide cover" data-sec="Cover">
+    <section class="slide cover" data-sec="Cover" data-status="done">
       <div class="pad" style="display:flex;flex-direction:column;justify-content:center;">
         <div class="wm">MOO</div>
         <div class="pos">Cereals for grown-ups. The omnichannel oat brand.</div>
@@ -109,36 +174,20 @@
     </section>
 
     <!-- 2 REVENUE MOSAIC -->
-    <section class="slide mosaic" data-sec="The Thesis">
-      <!-- tiles: size ≈ India revenue tier -->
-      <div class="tile" style="left:60px;top:70px;width:312px;height:158px;background:#C8102E;transform:rotate(-3deg);">
-        <div class="bn" style="font-size:40px;">Haldiram's</div><div class="rv" style="font-size:17px;">₹12,800 Cr</div>
-      </div>
-      <div class="tile" style="left:792px;top:56px;width:236px;height:128px;background:#00704A;transform:rotate(2.5deg);">
-        <div class="bn" style="font-size:30px;">Starbucks</div><div class="rv" style="font-size:15px;">₹1,277 Cr</div>
-      </div>
-      <div class="tile" style="left:440px;top:96px;width:236px;height:128px;background:#E4002B;transform:rotate(-2deg);">
-        <div class="bn" style="font-size:27px;">Bikanervala</div><div class="rv" style="font-size:15px;">₹1,430 Cr</div>
-      </div>
-      <div class="tile" style="left:1040px;top:120px;width:184px;height:112px;background:#1A1A1A;transform:rotate(3deg);">
-        <div class="bn" style="font-size:22px;">Wow! Momo</div><div class="rv" style="font-size:13px;">₹470 Cr</div>
-      </div>
-      <div class="tile" style="left:150px;top:286px;width:184px;height:112px;background:#0E2A47;transform:rotate(2deg);">
-        <div class="bn" style="font-size:24px;">Blue Tokai</div><div class="rv" style="font-size:13px;">₹325 Cr</div>
-      </div>
-      <div class="tile" style="left:516px;top:288px;width:152px;height:96px;background:#5B8C3E;transform:rotate(-3.5deg);">
-        <div class="bn" style="font-size:21px;">Chaayos</div><div class="rv" style="font-size:12px;">₹249 Cr</div>
-      </div>
-      <div class="tile" style="left:816px;top:300px;width:152px;height:96px;background:#00529B;transform:rotate(3deg);">
-        <div class="bn" style="font-size:19px;">Chai Point</div><div class="rv" style="font-size:12px;">₹206 Cr</div>
-      </div>
-
+    <section class="slide mosaic" data-sec="The Thesis" data-status="done">
+      <div class="tile" style="left:60px;top:70px;width:312px;height:158px;background:#C8102E;transform:rotate(-3deg);"><div class="bn" style="font-size:40px;">Haldiram's</div><div class="rv" style="font-size:17px;">₹12,800 Cr</div></div>
+      <div class="tile" style="left:792px;top:56px;width:236px;height:128px;background:#00704A;transform:rotate(2.5deg);"><div class="bn" style="font-size:30px;">Starbucks</div><div class="rv" style="font-size:15px;">₹1,277 Cr</div></div>
+      <div class="tile" style="left:440px;top:96px;width:236px;height:128px;background:#E4002B;transform:rotate(-2deg);"><div class="bn" style="font-size:27px;">Bikanervala</div><div class="rv" style="font-size:15px;">₹1,430 Cr</div></div>
+      <div class="tile" style="left:1040px;top:120px;width:184px;height:112px;background:#1A1A1A;transform:rotate(3deg);"><div class="bn" style="font-size:22px;">Wow! Momo</div><div class="rv" style="font-size:13px;">₹470 Cr</div></div>
+      <div class="tile" style="left:150px;top:286px;width:184px;height:112px;background:#0E2A47;transform:rotate(2deg);"><div class="bn" style="font-size:24px;">Blue Tokai</div><div class="rv" style="font-size:13px;">₹325 Cr</div></div>
+      <div class="tile" style="left:516px;top:288px;width:152px;height:96px;background:#5B8C3E;transform:rotate(-3.5deg);"><div class="bn" style="font-size:21px;">Chaayos</div><div class="rv" style="font-size:12px;">₹249 Cr</div></div>
+      <div class="tile" style="left:816px;top:300px;width:152px;height:96px;background:#00529B;transform:rotate(3deg);"><div class="bn" style="font-size:19px;">Chai Point</div><div class="rv" style="font-size:12px;">₹206 Cr</div></div>
       <div class="m-head"><div class="q">What do they all have in common?</div></div>
       <div class="m-note">Tile size ≈ India revenue (latest reported FY24–25). Haldiram's = combined group, estimated. Indicative, not to exact scale.</div>
     </section>
 
     <!-- 3 SINGLE COMMODITY, MULTIPLE CHANNELS -->
-    <section class="slide grid3" data-sec="The Thesis">
+    <section class="slide grid3" data-sec="The Thesis" data-status="done">
       <div class="pad" style="padding-bottom:0;">
         <div class="g3-head">
           <div class="g3-title">Single commodity. Multiple channels.</div>
@@ -148,89 +197,211 @@
       <div class="rowlab cpg">CPG</div>
       <div class="rowlab qsr">QSR</div>
       <div class="matrix">
-        <!-- Coffee -->
         <div class="cell"><img class="a" src="img/coffee-cpg-bluetokai.png"><img class="b" src="img/coffee-cpg-starbucks.png"></div>
         <div class="cell"><span class="ph">Haldiram's / Bikano<br>packaged namkeen</span></div>
         <div class="cell"><span class="ph">Chaayos chai box<br>· Chai Point RTD</span></div>
         <div class="cell"><span class="ph">Wow! Momo<br>frozen momos (FMCG)</span></div>
-        <!-- QSR row -->
         <div class="cell"><img class="a" src="img/coffee-qsr-starbucks.png"><img class="b" src="img/coffee-qsr-bluetokai.png"><span class="collab">Coffee</span></div>
         <div class="cell"><img class="a" src="img/namkeen-qsr-haldirams.png"><img class="b" src="img/namkeen-qsr-bikanervala.png"><span class="collab">Namkeen</span></div>
         <div class="cell"><img class="a" src="img/chai-qsr-chaayos.png" style="left:auto;transform:rotate(0);width:74%;"><span class="collab">Chai</span></div>
         <div class="cell"><span class="ph">Wow! Momo<br>outlets</span><span class="collab">Momos</span></div>
       </div>
-      <div class="g3-foot">Photos: Coffee column complete · others to be filled (CPG packs + Momos outlet/frozen)</div>
+      <div class="g3-foot">Logos &amp; remaining photos drop in at final-design stage. 4 commodities · 7 brands (Meat/Licious dropped — not a true QSR).</div>
     </section>
 
-    <!-- 4 OATS BREAKOUT (scaffold) -->
-    <section class="slide scaffold" data-sec="The Thesis">
-      <div class="pad">
-        <div class="kick">The Thesis · slide 4 — to lock</div>
-        <div class="s-title" style="font-size:46px;margin-top:14px;max-width:1000px;">The surprising next big commodity: <span style="color:#C8102E;">Oats</span></div>
-        <div style="display:flex;gap:48px;margin-top:42px;">
-          <div style="flex:1;">
-            <div style="font-weight:800;font-size:22px;margin-bottom:12px;">2020</div>
-            <div style="color:#6b6457;font-size:15px;line-height:1.7;">
-              · CPG: <b>Saffola</b>, basically alone<br>
-              · QSR: &lt;10 oat SKUs on Zomato<br>
-              · Oats = a niche "health" add-on
-            </div>
-          </div>
-          <div style="font-size:40px;color:#c3b69e;align-self:center;">→</div>
-          <div style="flex:1;">
-            <div style="font-weight:800;font-size:22px;margin-bottom:12px;">2026</div>
-            <div style="color:#6b6457;font-size:15px;line-height:1.7;">
-              · CPG: <b>14+ brands</b>; oats = fastest-growing grain in healthy food<br>
-              · QSR: <b>40+ oat-led kitchens</b> on Zomato/Swiggy; EatFit's #1 SKU = Fruit Pop Oatmeal<br>
-              · Imports up <b>5×</b> in a decade · 100% imported
-            </div>
-          </div>
+    <!-- 4 OATS 2020 -> 2026 -->
+    <section class="slide oats" data-sec="The Thesis" data-status="done">
+      <div class="pad" style="padding-bottom:0;">
+        <div class="kick">The Thesis</div>
+        <div class="s-title" style="font-size:46px;margin-top:12px;">The surprising next big commodity: <span class="accent">Oats</span></div>
+      </div>
+      <div class="lanes">
+        <div class="lane">
+          <div class="ch">CPG</div>
+          <div class="y20"><div class="yr">2020</div><div class="v">1 brand</div><div class="d">Saffola, basically alone</div></div>
+          <div class="arr">→</div>
+          <div class="y26 cpg"><div class="yr">2026</div><div class="v">14+ brands</div><div class="d">Oats is now the fastest-growing grain in healthy CPG — outpacing wheat and millet.</div></div>
         </div>
-        <div class="note" style="margin-top:36px;font-size:15px;color:#8a8275;max-width:860px;">
-          <b>Open question for this slide:</b> two competing framings exist — (A) this "2020→2026 commodity explosion" view, or (B) your Figma version <i>"The next big commodity is healthy → and it's Oats"</i> (market-gap / Sweetgreen angle). We pick one before building. Hard stats to verify before it's investor-ready.
+        <div class="lane">
+          <div class="ch">QSR</div>
+          <div class="y20"><div class="yr">2020</div><div class="v">&lt;10 SKUs</div><div class="d">a niche health add-on on Zomato</div></div>
+          <div class="arr">→</div>
+          <div class="y26 qsr"><div class="yr">2026</div><div class="v">40+ oat-led kitchens</div><div class="d">live on Zomato &amp; Swiggy. EatFit's single best-selling SKU is an oatmeal — Fruit Pop Oatmeal.</div></div>
         </div>
       </div>
-      <div class="ph-tag build">Discuss next</div>
-    </section>
-
-    <!-- 5 SIZING (relocated) -->
-    <section class="slide ph-slide" data-sec="The Thesis">
-      <div class="pad">
-        <div class="kick">Relocated</div>
-        <div class="big">A 1000 Cr recipe with Oats</div>
-        <div class="note">Market sizing — <b>moved out of this section</b> (decided). TAM lands better after traction. Re-enters later, in <b>The Machine</b>, just before the ask.</div>
+      <div class="band">
+        <div class="bcell"><b>↑ 5× imports</b><span>Oat imports into India, last decade · ~100% imported commodity</span></div>
+        <div class="bcell"><b>Small today — breaking out fast</b><span>Not yet coffee-sized. But every curve above bends the same way.</span></div>
       </div>
-      <div class="ph-tag relo">Moved → The Machine</div>
+      <div class="sfoot">Stats to confirm before external use: brand counts, import multiple, EatFit SKU rank.</div>
     </section>
 
-    <!-- 6-19 PLACEHOLDERS -->
-    <section class="slide ph-slide" data-sec="The Proof"><div class="pad"><div class="kick">The Proof</div><div class="big">Our journey so far</div><div class="note">Traction timeline — stores, ~77K orders, run-rate, frugality.</div></div><div class="ph-tag fresh">Fresh</div></section>
-    <section class="slide ph-slide" data-sec="The Proof"><div class="pad"><div class="kick">The Proof</div><div class="big">Adoption cycle for new F&amp;B commodities</div><div class="note">Commercial kitchens → household kitchens. Coffee ahead, Momos mid, Oats early → educate via QSR, then win the CPG shelf.</div></div><div class="ph-tag build">Build</div></section>
-    <section class="slide ph-slide" data-sec="The Proof"><div class="pad"><div class="kick">The Proof</div><div class="big">We are healthy BLR's favourite F&amp;B brand</div><div class="note">Positioning proof in Bangalore.</div></div><div class="ph-tag fresh">Fresh</div></section>
-    <section class="slide ph-slide" data-sec="The Proof"><div class="pad"><div class="kick">The Proof</div><div class="big">We are teaching Oats to India</div><div class="note">3 → 9 categories; recipe collabs with influencers &amp; clubs.</div></div><div class="ph-tag build">Build</div></section>
-    <section class="slide ph-slide" data-sec="The Proof"><div class="pad"><div class="kick">The Proof</div><div class="big">60% Repeat Rate — Who and How?</div><div class="note">Retention is the moat — who repeats and why.</div></div><div class="ph-tag fresh">Fresh</div></section>
-    <section class="slide ph-slide" data-sec="The Proof"><div class="pad"><div class="kick">The Proof</div><div class="big">Low operations — 0 chefs in the kitchen</div><div class="note">Assembly, not cooking. 80% items uncooked · 60% lower kitchen capex · 10-minute economy.</div></div><div class="ph-tag build">Build</div></section>
-    <section class="slide ph-slide" data-sec="The Machine"><div class="pad"><div class="kick">The Machine</div><div class="big">Taking off on a 100x journey</div><div class="note">The growth chart — compounding, not plateauing. 4-stream path to ₹20–25 Cr.</div></div><div class="ph-tag fresh">Fresh</div></section>
-    <section class="slide ph-slide" data-sec="The Machine"><div class="pad"><div class="kick">The Machine</div><div class="big">GTM novelty, powered by a supply-chain moat</div><div class="note">Backward integration — oat imports, COGS down, CM1 via imports.</div></div><div class="ph-tag fresh">Fresh</div></section>
-    <section class="slide ph-slide" data-sec="The Machine"><div class="pad"><div class="kick">The Machine</div><div class="big">Battle-hardened unit economics</div><div class="note">+ve on Swiggy/Zomato, better on other channels; scale brings CM1 to ~85%.</div></div><div class="ph-tag build">Build</div></section>
-    <section class="slide ph-slide" data-sec="The Machine"><div class="pad"><div class="kick">The Machine</div><div class="big">CPG in India needs to be done differently</div><div class="note">The contrarian CPG approach. (Sizing slide re-enters around here.)</div></div><div class="ph-tag fresh">Fresh</div></section>
-    <section class="slide ph-slide" data-sec="The Machine"><div class="pad"><div class="kick">The Machine</div><div class="big">The roadmap</div><div class="note">QSR + CPG across FY26-27 / FY27-28 / FY28-29.</div></div><div class="ph-tag build">Build</div></section>
-    <section class="slide ph-slide" data-sec="The Round"><div class="pad"><div class="kick">The Round</div><div class="big">We are raising ₹X</div><div class="note">The ask + use of funds — milestone / city-structured. Lock the exact number (₹3.3–4 Cr).</div></div><div class="ph-tag fresh">Fresh</div></section>
-    <section class="slide ph-slide" data-sec="The Round"><div class="pad"><div class="kick">The Round</div><div class="big">Who we are</div><div class="note">Team — headcount + depth (content engine, MCP-for-data). Address the solo-founder question.</div></div><div class="ph-tag fresh">Fresh</div></section>
-    <section class="slide ph-slide" data-sec="The Round"><div class="pad"><div class="kick">The Round</div><div class="big">Reach out for more</div><div class="note">Closing / contact.</div></div><div class="ph-tag fresh">Fresh</div></section>
+    <!-- 5 OUR JOURNEY SO FAR (Proof opener) -->
+    <section class="slide opener" data-sec="The Proof" data-status="build">
+      <div class="pad" style="display:flex;flex-direction:column;justify-content:center;">
+        <div class="lbl">The Proof</div>
+        <div class="big">Our journey<br>so far</div>
+        <div class="sl">We've cracked profitable F&amp;B — and built a brand people genuinely love. Two years, near break-even, self-funded.</div>
+      </div>
+      <div class="strip">
+        <div><b>3</b><span>cloud kitchens, Bengaluru</span></div>
+        <div><b>77K+</b><span>orders to date</span></div>
+        <div><b>~₹2.7 Cr</b><span>run-rate (ARR)</span></div>
+        <div><b>+50%</b><span>YoY growth</span></div>
+        <div><b>~break-even</b><span>on 2 yrs of discipline</span></div>
+      </div>
+    </section>
+
+    <!-- 6 ADOPTION CYCLE -->
+    <section class="slide" data-sec="The Proof" data-status="build">
+      <div class="pad">
+        <div class="kick">The Proof · sequencing</div>
+        <div class="s-title" style="font-size:42px;margin-top:12px;">Which comes first — QSR or CPG?</div>
+        <svg viewBox="0 0 1100 380" style="position:absolute;left:72px;right:72px;top:170px;width:1136px;">
+          <line x1="40" y1="330" x2="1080" y2="330" stroke="#E4D8C5" stroke-width="2"/>
+          <line x1="40" y1="40" x2="40" y2="330" stroke="#E4D8C5" stroke-width="2"/>
+          <path d="M40 320 C 360 300, 620 200, 1060 70" fill="none" stroke="#C8102E" stroke-width="4"/>
+          <circle cx="300" cy="270" r="9" fill="#1A1A1A"/><text x="300" y="250" text-anchor="middle" font-family="Inter" font-size="20" font-weight="700" fill="#1A1A1A">Oats</text>
+          <circle cx="640" cy="190" r="9" fill="#8A8275"/><text x="640" y="170" text-anchor="middle" font-family="Inter" font-size="20" font-weight="700" fill="#8A8275">Momos</text>
+          <circle cx="960" cy="95" r="9" fill="#8A8275"/><text x="960" y="76" text-anchor="middle" font-family="Inter" font-size="20" font-weight="700" fill="#8A8275">Coffee</text>
+          <text x="60" y="360" font-family="Inter" font-size="15" fill="#9a917f">Commercial kitchens (QSR)</text>
+          <text x="1075" y="360" text-anchor="end" font-family="Inter" font-size="15" fill="#9a917f">Household kitchens (CPG)</text>
+        </svg>
+        <div style="position:absolute;left:72px;bottom:74px;right:72px;display:flex;gap:16px;">
+          <div class="bcell" style="flex:1;"><b>1 · Educate through QSRs</b><span>Kitchens teach the palate. A new commodity becomes familiar one order at a time.</span></div>
+          <div class="bcell" style="flex:1;"><b>2 · Then win the CPG shelf</b><span>Once it's a habit, it moves into the home. MOO leads with QSR — by design.</span></div>
+        </div>
+      </div>
+      <div class="ph-tag build">Placement?</div>
+      <div class="sfoot">Open: this is a strategy/sequencing slide — may belong in The Machine (next to GTM), not Proof. Flagged.</div>
+    </section>
+
+    <!-- 7 BLR'S FAVOURITE — NUMBERS -->
+    <section class="slide nums" data-sec="The Proof" data-status="build">
+      <div class="pad" style="padding-bottom:0;">
+        <div class="kick">The Proof</div>
+        <div class="s-title" style="font-size:42px;margin-top:12px;">Bengaluru's favourite healthy F&amp;B brand</div>
+      </div>
+      <div class="bignums">
+        <div class="bni"><b>77K+</b><span>orders to date</span></div>
+        <div class="bni"><b>50K+</b><span>customers served</span></div>
+        <div class="bni"><b>₹304</b><span>average order value</span></div>
+        <div class="bni"><b>+50%</b><span>YoY growth</span></div>
+      </div>
+      <div class="ratebar">
+        <div class="r">4.6★</div>
+        <div class="t"><b>Top-rated</b> across Swiggy &amp; Zomato in our category — thousands of reviews, consistently 4.5★+. <i>(rating to confirm)</i></div>
+      </div>
+      <div class="sfoot">Reconcile order/customer counts: 1.2L orders / 50K customers (Figma) vs 77,018 (warehouse). Confirm platform ratings + review volume.</div>
+    </section>
+
+    <!-- 8 TEACHING OATS TO INDIA -->
+    <section class="slide" data-sec="The Proof" data-status="build">
+      <div class="pad">
+        <div class="kick">The Proof</div>
+        <div class="s-title" style="font-size:42px;margin-top:12px;">We are teaching Oats to India</div>
+        <div class="note" style="font-size:17px;color:#5d564b;margin-top:16px;max-width:820px;">Building categories India has never seen on a menu — innovating oats into formats people already love. <b>3 → 9 categories</b> and counting.</div>
+        <div class="chips" style="margin-top:28px;">
+          <span class="chip">Oats Idli</span>
+          <span class="chip">Oats Khichdi</span>
+          <span class="chip">Oats Pancakes</span>
+          <span class="chip">Oats Dosa</span>
+          <span class="chip">Overnight Oats</span>
+          <span class="chip new">+ more every cycle</span>
+        </div>
+        <div class="note" style="margin-top:28px;font-size:15px;color:#8a8275;max-width:820px;">Recipe collabs with influencers &amp; clubs co-build new oat formats. <i>(deciding if this belongs here or in a distribution/brand slide)</i></div>
+      </div>
+      <div class="ph-tag build">Categories to confirm</div>
+    </section>
+
+    <!-- 9 60% REPEAT — WHO & WHY -->
+    <section class="slide nums" data-sec="The Proof" data-status="build">
+      <div class="pad" style="padding-bottom:0;">
+        <div class="kick">The Proof</div>
+        <div class="s-title" style="font-size:40px;margin-top:12px;max-width:760px;">A 60% repeat rate. Who — and why?</div>
+      </div>
+      <div class="bigstat"><b>60%</b><span>repeat rate</span></div>
+      <div class="split">
+        <div class="col">
+          <h4>Who repeats</h4>
+          <ul style="padding:0;">
+            <li><b>Health-conscious urban Bengaluru</b>, 25–40, ordering breakfast &amp; everyday meals</li>
+            <li><b>Habit buyers</b>, not occasion buyers — breakfast is a daily ritual</li>
+            <li>Skews <b>repeat over reach</b>: a loyal base, not one-time trials</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Why they come back</h4>
+          <ul style="padding:0;">
+            <li><b>Genuinely healthy and genuinely tasty</b> — rare to get both</li>
+            <li><b>Daily-occasion product</b> — breakfast repeats by nature</li>
+            <li><b>Ever-changing menu</b> — new oat categories keep it fresh</li>
+            <li><b>Fast + reliable</b> — ~6-min kitchen, consistent quality</li>
+          </ul>
+        </div>
+      </div>
+      <div class="sfoot">Audience profile to sharpen with real cohort data; confirm the 60% definition (orders vs customers, window).</div>
+    </section>
+
+    <!-- 10 LOW OPS / 0 CHEFS -->
+    <section class="slide" data-sec="The Proof" data-status="build">
+      <div class="pad" style="padding-bottom:0;">
+        <div class="kick">The Proof</div>
+        <div class="s-title" style="font-size:42px;margin-top:12px;">Low operations. Zero chefs in the kitchen.</div>
+      </div>
+      <div class="stat4">
+        <div class="st"><b>0 chefs</b><span>Assembly, not cooking — 80% of items are uncooked</span></div>
+        <div class="st"><b>~6 min</b><span>Average time to get an order out the door</span></div>
+        <div class="st"><b>60% lower</b><span>Kitchen capex vs a conventional QSR build</span></div>
+        <div class="st"><b>Lean &amp; fast</b><span>Built for the 10-minute economy — repeatable, low-hassle, high-speed</span></div>
+      </div>
+      <div class="qcomm"><span class="pill">Quick-commerce ready</span> A ~6-minute kitchen means we can plug straight into 10-minute delivery as it reshapes food.</div>
+    </section>
+
+    <!-- 11 BATTLE-HARDENED UNIT ECONOMICS -->
+    <section class="slide econ" data-sec="The Proof" data-status="build">
+      <div class="pad" style="padding-bottom:0;">
+        <div class="kick">The Proof</div>
+        <div class="s-title" style="font-size:42px;margin-top:12px;">Battle-hardened unit economics</div>
+        <div class="note" style="font-size:16px;color:#5d564b;margin-top:14px;max-width:880px;">We ship a positive bottom line in the most punishing setup there is — aggregators, where ~45% of every rupee goes to the platform. Anywhere else only gets better.</div>
+      </div>
+      <div class="eaxis"><span>₹100 order on Swiggy / Zomato</span><span>still positive →</span></div>
+      <div class="ebar">
+        <div class="eseg" style="background:#C8102E;flex:45;">Aggregator take ~45%</div>
+        <div class="eseg" style="background:#7d7565;flex:30;">COGS + packaging</div>
+        <div class="eseg" style="background:#b8ad98;flex:13;">Kitchen + ops</div>
+        <div class="eseg" style="background:#1F7A4D;flex:12;">Contribution +</div>
+      </div>
+      <div class="claims">
+        <div class="claim"><b>Positive on S/Z today</b><span>Profitable on the toughest channel, not just blended.</span></div>
+        <div class="claim"><b>Better off-aggregator</b><span>Direct &amp; walk-in skip the ~45% take entirely.</span></div>
+        <div class="claim"><b>CM1 → ~85% at scale</b><span>Procurement + backward integration compound margin. <i>(confirm)</i></span></div>
+      </div>
+      <div class="sfoot">Bar is indicative — exact splits to lock from Financial Model v2 (CM1/CM2). The ~85% CM1 figure needs confirming before external use.</div>
+    </section>
+
+    <!-- 12-15 MACHINE (placeholders) -->
+    <section class="slide ph-slide" data-sec="The Machine" data-status="fresh"><div class="pad"><div class="kick">The Machine</div><div class="big">Taking off on a 100x journey</div><div class="note">The growth chart — compounding, not plateauing. 4-stream path to ₹20–25 Cr.</div></div><div class="ph-tag fresh">Fresh</div></section>
+    <section class="slide ph-slide" data-sec="The Machine" data-status="fresh"><div class="pad"><div class="kick">The Machine</div><div class="big">GTM novelty, powered by a supply-chain moat</div><div class="note">Backward integration — oat imports, COGS down, CM1 via imports.</div></div><div class="ph-tag fresh">Fresh</div></section>
+    <section class="slide ph-slide" data-sec="The Machine" data-status="fresh"><div class="pad"><div class="kick">The Machine</div><div class="big">CPG in India, done differently</div><div class="note">The contrarian CPG approach — and where the ₹1,000 Cr sizing slide re-enters.</div></div><div class="ph-tag fresh">Fresh</div></section>
+    <section class="slide ph-slide" data-sec="The Machine" data-status="fresh"><div class="pad"><div class="kick">The Machine</div><div class="big">The roadmap</div><div class="note">QSR + CPG across FY26-27 / FY27-28 / FY28-29.</div></div><div class="ph-tag fresh">Fresh</div></section>
+
+    <!-- 16-18 ROUND (placeholders) -->
+    <section class="slide ph-slide" data-sec="The Round" data-status="fresh"><div class="pad"><div class="kick">The Round</div><div class="big">We are raising ₹X</div><div class="note">The ask + use of funds — milestone / city-structured. Lock the exact number (₹3.3–4 Cr).</div></div><div class="ph-tag fresh">Fresh</div></section>
+    <section class="slide ph-slide" data-sec="The Round" data-status="fresh"><div class="pad"><div class="kick">The Round</div><div class="big">Who we are</div><div class="note">Team — headcount + depth (content engine, MCP-for-data). Address the solo-founder question.</div></div><div class="ph-tag fresh">Fresh</div></section>
+    <section class="slide ph-slide" data-sec="The Round" data-status="fresh"><div class="pad"><div class="kick">The Round</div><div class="big">Reach out for more</div><div class="note">Closing / contact.</div></div><div class="ph-tag fresh">Fresh</div></section>
 
   </div>
 </div>
 
 <div id="bar">
   <span class="sec" id="secLabel">Cover</span>
-  <span class="nav"><button id="prev">‹</button><span id="ctr">1 / 19</span><button id="next">›</button></span>
+  <span class="nav"><button id="prev">‹</button><span id="ctr">1 / 18</span><button id="next">›</button></span>
 </div>
 
-<!-- Overview -->
 <div id="ov">
   <h2>MOO — Seed Deck</h2>
-  <div class="ovsub">Working outline · click any slide to jump · 19 slides, 5 sections</div>
+  <div class="ovsub">Working deck · click any slide to jump</div>
   <div class="ovgrid" id="ovgrid"></div>
 </div>
 
@@ -249,25 +420,20 @@
     const s=Math.min(window.innerWidth/1280,(window.innerHeight-60)/720)*0.96;
     document.getElementById('frame').style.transform='scale('+s+')';
   }
-  document.getElementById('next').onclick=()=>show(i+1);
-  document.getElementById('prev').onclick=()=>show(i-1);
+  document.getElementById('next').onclick=(e)=>{e.stopPropagation();show(i+1);};
+  document.getElementById('prev').onclick=(e)=>{e.stopPropagation();show(i-1);};
   const ov=document.getElementById('ov');
-  // build overview
-  const meta=slides.map((s,k)=>{
-    const tag=s.querySelector('.ph-tag,.ph-slide');
-    const t=s.querySelector('.big,.s-title,.g3-title,.q,.wm');
-    let st='done'; const tg=s.querySelector('.ph-tag');
-    if(tg){ if(tg.classList.contains('fresh'))st='fresh'; else if(tg.classList.contains('build'))st='build'; else st='fresh'; }
-    if(k<=2) st='done'; if(k===3) st='build'; if(k===4) st='fresh';
-    return {n:k, sec:s.dataset.sec, title:(t?t.textContent.trim():'Slide'), st};
-  });
   const ovgrid=document.getElementById('ovgrid');
   let lastSec='';
-  meta.forEach(m=>{
-    if(m.sec!==lastSec){ const h=document.createElement('div'); h.className='ovsec'; h.textContent=m.sec; ovgrid.appendChild(h); lastSec=m.sec; }
+  slides.forEach((s,k)=>{
+    const st=s.dataset.status||'fresh';
+    const t=s.querySelector('.big,.s-title,.g3-title,.q,.opener .big,.wm');
+    const sec=s.dataset.sec;
+    if(sec!==lastSec){ const h=document.createElement('div'); h.className='ovsec'; h.textContent=sec; ovgrid.appendChild(h); lastSec=sec; }
     const c=document.createElement('div'); c.className='ovcard';
-    c.innerHTML='<div class="n">'+String(m.n+1).padStart(2,'0')+'</div><div class="t">'+m.title+'</div><div class="s s-'+m.st+'">'+(m.st==='done'?'Rendered':m.st==='build'?'In progress':'Placeholder')+'</div>';
-    c.onclick=()=>{show(m.n);ov.classList.remove('show');};
+    const label=st==='done'?'Rendered':st==='build'?'Drafted':'Placeholder';
+    c.innerHTML='<div class="n">'+String(k+1).padStart(2,'0')+'</div><div class="t">'+(t?t.textContent.trim():'Slide')+'</div><div class="s s-'+st+'">'+label+'</div>';
+    c.onclick=()=>{show(k);ov.classList.remove('show');};
     ovgrid.appendChild(c);
   });
   document.addEventListener('keydown',e=>{
@@ -276,7 +442,6 @@
     else if(e.key.toLowerCase()==='o')ov.classList.toggle('show');
     else if(e.key==='Escape')ov.classList.remove('show');
   });
-  // click halves to navigate
   document.getElementById('stage').addEventListener('click',e=>{
     if(e.target.closest('#bar'))return;
     (e.clientX>window.innerWidth/2)?show(i+1):show(i-1);
