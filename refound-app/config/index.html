@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>ReFound — Configuration</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+  :root{
+    --bg:#ffffff;--ink:#111111;--muted:#8a8a8a;--faint:#b8b8b8;
+    --line:#e7e7e7;--line-2:#f0f0f0;--chip:#f4f4f4;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+  /* header / nav (matches app shell) */
+  header{padding:40px 24px 0;text-align:center}
+  .brand{font-family:var(--serif);font-style:italic;font-size:26px;letter-spacing:.01em}
+  .topnav{display:inline-flex;gap:4px;margin-top:22px;background:var(--chip);padding:4px;border-radius:10px}
+  .pill{padding:8px 18px;border-radius:7px;font-size:14px;color:var(--muted);font-weight:500;transition:all .12s}
+  .pill:hover{color:var(--ink)}
+  .pill.active{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .pill.gear{padding:8px 12px;font-size:15px}
+  .workspace{margin-top:14px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+
+  main{max-width:1080px;margin:0 auto;padding:40px 24px 100px}
+  .intro{text-align:center;max-width:620px;margin:0 auto 40px;font-size:13px;color:var(--muted);line-height:1.6}
+
+  /* sub-tabs */
+  .subtabs{display:flex;gap:24px;border-bottom:1px solid var(--line);margin-bottom:40px;flex-wrap:wrap}
+  .subtab{padding:0 0 12px;font-size:14px;color:var(--muted);font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+  .subtab:hover{color:var(--ink)}
+  .subtab.active{color:var(--ink);border-color:var(--ink)}
+  .subtab .seq{font-family:var(--mono);font-size:11px;color:var(--faint);margin-right:7px}
+  .panel{display:none}
+  .panel.active{display:block}
+
+  /* section scaffold */
+  .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+  .ptitle{font-size:24px;font-weight:600;letter-spacing:-.01em;margin-bottom:14px}
+  .lede{font-size:13.5px;color:var(--muted);margin-bottom:30px;max-width:680px;line-height:1.65}
+  .section-h{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:38px 0 16px}
+  .note{font-size:12.5px;color:var(--muted);line-height:1.55}
+
+  /* tag */
+  .tag{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:3px 9px;border-radius:3px}
+  .tag.new{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  /* glance / kv grid */
+  .glance{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  .glance>div{background:#fff;padding:18px 20px}
+  .glance .k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+  .glance .v{font-size:15px;font-weight:600}
+  .glance .v.mono{font-family:var(--mono);font-weight:500}
+  .glance .v small{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:4px;letter-spacing:0;line-height:1.4}
+
+  /* governor dials */
+  .gov{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:8px}
+  .gov>div{background:#fff;padding:22px 24px}
+  .gov .dial-h{font-size:13px;font-weight:600;margin-bottom:6px}
+  .gov .dial-v{font-family:var(--mono);font-size:28px;letter-spacing:-.02em;margin:8px 0 6px}
+  .gov .dial-n{font-size:12px;color:var(--muted);line-height:1.5}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;margin-bottom:6px}
+  th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:500;padding:0 14px 12px 0}
+  td{padding:13px 14px 13px 0;border-top:1px solid var(--line-2);font-size:13px;vertical-align:top}
+  td.mono,th.mono{font-family:var(--mono)}
+  td.r,th.r{text-align:right;padding-right:0}
+
+  /* bars */
+  .barrow{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+  .barrow .bl{width:130px;font-size:13px;font-weight:600;flex:none}
+  .barrow .bt{flex:1;height:7px;background:var(--line-2);position:relative}
+  .barrow .bt>span{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+  .barrow .bv{width:130px;font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right;flex:none}
+
+  /* two col */
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+  .twocol>section{background:#fff;padding:22px 24px}
+  .mini-h{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+
+  /* funnel */
+  .funnel{border:1px solid var(--line);margin-top:8px}
+  .frow{display:grid;grid-template-columns:200px 1fr auto;align-items:center;gap:18px;padding:16px 22px;border-bottom:1px solid var(--line-2)}
+  .frow:last-child{border-bottom:none}
+  .frow .fl{font-size:13px;font-weight:600}
+  .frow .fl small{display:block;font-weight:400;color:var(--muted);font-size:11.5px;margin-top:2px}
+  .frow .fbar{height:18px;background:var(--ink)}
+  .frow .fbar.g2{background:#4d4d4d}
+  .frow .fbar.g3{background:#9a9a9a}
+  .frow .fn{font-family:var(--mono);font-size:14px;white-space:nowrap}
+
+  /* persona */
+  .persona{border:1px solid var(--line);padding:24px;margin-bottom:14px}
+  .persona .nm{font-weight:600;font-size:15px}
+  .persona .ro{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin:4px 0 14px}
+  .persona .st{font-size:13px;color:#444;line-height:1.55;margin-bottom:16px;max-width:680px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{font-size:11px;background:var(--chip);padding:4px 10px;border-radius:4px;color:#555}
+  .src{font-size:11px;color:var(--faint);margin-top:14px}
+
+  /* knowledge grid */
+  .grid2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+  .gcell{background:#fff;padding:22px 22px}
+  .gcell h4{font-size:14px;font-weight:600;margin-bottom:8px}
+  .gcell p{font-size:12.5px;color:var(--muted);line-height:1.5}
+  .gcell .open{font-size:12px;color:var(--muted);margin-top:14px;display:inline-block}
+  .gcell .open::after{content:" \2192"}
+
+  /* status pills */
+  .pillstat{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;border:1px solid var(--line)}
+  .pillstat.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .pillstat.warn{border-color:var(--ink);color:var(--ink)}
+  .pillstat.off{color:var(--muted)}
+
+  .callout{border-left:2px solid var(--ink);padding:6px 0 6px 18px;margin:26px 0;font-size:13px;color:#444;line-height:1.6;max-width:700px}
+  .callout b{font-weight:600}
+
+  .foot{max-width:1080px;margin:0 auto;padding:0 24px 60px;font-size:11px;color:var(--faint);letter-spacing:.04em}
+  .foot span{color:var(--muted)}
+
+  @media(max-width:760px){
+    .glance,.gov,.twocol,.grid2{grid-template-columns:1fr}
+    .frow{grid-template-columns:1fr;gap:8px}
+    .barrow .bl,.barrow .bv{width:90px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Refound</div>
+  <nav class="topnav">
+    <a class="pill" href="../">Inbox</a>
+    <a class="pill" href="../">Reports</a>
+    <a class="pill gear active" href="config/" aria-label="Settings">&#9881;</a>
+  </nav>
+  <div class="workspace">Workspace &middot; Clarisights</div>
+</header>
+
+<main>
+  <p class="intro">Configuration is the set of inputs that <b style="color:var(--ink);font-weight:600">define the graph</b>. Everything in Inbox and Reports is downstream of what's set here — the buyer, the universe they search, the engines we simulate, and the territory that results.</p>
+
+  <div class="subtabs">
+    <button class="subtab active" data-tab="engagement"><span class="seq">01</span>Engagement &amp; Budget</button>
+    <button class="subtab" data-tab="personas"><span class="seq">02</span>Personas</button>
+    <button class="subtab" data-tab="universe"><span class="seq">03</span>Universe &amp; Journey</button>
+    <button class="subtab" data-tab="origins"><span class="seq">04</span>Origins</button>
+    <button class="subtab" data-tab="properties"><span class="seq">05</span>Properties</button>
+    <button class="subtab" data-tab="knowledge"><span class="seq">06</span>Knowledge</button>
+    <button class="subtab" data-tab="integrations"><span class="seq">07</span>Integrations</button>
+  </div>
+
+  <!-- ===== 01 ENGAGEMENT & BUDGET ===== -->
+  <div class="panel active" id="tab-engagement">
+    <div class="eyebrow">01 &middot; the governor</div>
+    <h2 class="ptitle">Engagement &amp; Budget</h2>
+    <p class="lede">Who the client is, how we work with them, and — critically — the budget that <b>governs the whole engine</b>. Budget isn't just a discovery input; it sets how large a universe we bother enumerating and the effort ceiling on any single action.</p>
+
+    <div class="glance">
+      <div><div class="k">Client</div><div class="v">Clarisights<small>marketing analytics &middot; Series A</small></div></div>
+      <div><div class="k">Engagement tier</div><div class="v">Growth retainer<small>$6K/mo + 5% closed-won</small></div></div>
+      <div><div class="k">Cadence</div><div class="v">Weekly sprint<small>snapshot Fri &middot; plan Mon</small></div></div>
+      <div><div class="k">Buyer's budget</div><div class="v">$1M+/mo<small>ad spend their buyer controls</small></div></div>
+      <div><div class="k">Their deal size</div><div class="v">Enterprise ACV<small>high value per won position</small></div></div>
+      <div><div class="k">Sign-off</div><div class="v">Arun &middot; Sasha<small>per workstream</small></div></div>
+    </div>
+
+    <div class="section-h">What the budget governs <span class="tag new" style="margin-left:8px">new</span></div>
+    <div class="gov">
+      <div>
+        <div class="dial-h">Universe denominator</div>
+        <div class="dial-v">3,400 / 247</div>
+        <div class="dial-n">Enumerate up to ~3,400 buyer queries and track presence on the top 247 destinations. A larger engagement widens both caps; a smaller one tightens them.</div>
+      </div>
+      <div>
+        <div class="dial-h">Effort ceiling per node</div>
+        <div class="dial-v">8 pts</div>
+        <div class="dial-n">Skip or defer nodes whose effort-to-win exceeds the value the budget implies per position. Keeps the inbox on high-return work, not vanity nodes.</div>
+      </div>
+      <div>
+        <div class="dial-h">Sprint velocity</div>
+        <div class="dial-v">6 / wk</div>
+        <div class="dial-n">Work items the team can ship per week at this tier — the rate the engine is allowed to release nodes into the inbox.</div>
+      </div>
+      <div>
+        <div class="dial-h">Team allocation</div>
+        <div class="dial-v">3 lanes</div>
+        <div class="dial-n">On-site SEO &middot; Backlinks &middot; UGC. Budget tier decides how much of each lane is staffed against this client.</div>
+      </div>
+    </div>
+
+    <div class="callout"><b>Why this matters:</b> the same engine running a $2K/mo client and a $20K/mo client should behave differently — smaller universe, slower release, tighter effort ceiling. Budget is the one dial that scales all of it.</div>
+  </div>
+
+  <!-- ===== 02 PERSONAS ===== -->
+  <div class="panel" id="tab-personas">
+    <div class="eyebrow">02 &middot; the buyers</div>
+    <h2 class="ptitle">Personas</h2>
+    <p class="lede">Each persona is a buying role, grounded in real research and instantiated as a <b>research space</b> that issues queries and follows results the way that buyer actually would. Personas are what make the universe a buyer's internet, not a keyword list.</p>
+
+    <div class="persona">
+      <div class="nm">The Performance Lead</div>
+      <div class="ro">Economic-adjacent buyer</div>
+      <div class="st">Runs paid across 8+ channels and 4 geos. Drowning in manual reporting, stitching exports every Monday. Wants one trustworthy view and to stop babysitting spreadsheets.</div>
+      <div class="chips"><span class="chip">Head of Performance</span><span class="chip">$1M+/mo spend</span><span class="chip">marketplaces &middot; fintech</span><span class="chip">drives ~46% of universe</span></div>
+      <div class="src">grounded in: 6 real sources (3 customer calls &middot; 2 Reddit threads &middot; 1 G2 review set)</div>
+    </div>
+    <div class="persona">
+      <div class="nm">The Analyst</div>
+      <div class="ro">Technical evaluator</div>
+      <div class="st">Builds the dashboards everyone depends on. Cares about data freshness, lineage, and whether the numbers will hold up in a board meeting. Skeptical of black boxes.</div>
+      <div class="chips"><span class="chip">Marketing Analyst</span><span class="chip">SQL-fluent</span><span class="chip">data-trust first</span><span class="chip">drives ~31% of universe</span></div>
+      <div class="src">grounded in: 4 real sources (2 customer calls &middot; 2 community posts)</div>
+    </div>
+    <div class="persona">
+      <div class="nm">The CMO</div>
+      <div class="ro">Economic buyer</div>
+      <div class="st">Wants a single number and a clean story for the board. Doesn't open the tool — judges it by whether reporting stops being a fire drill and starts being an asset.</div>
+      <div class="chips"><span class="chip">CMO / VP Marketing</span><span class="chip">board-facing</span><span class="chip">outcome-led</span><span class="chip">drives ~23% of universe</span></div>
+      <div class="src">grounded in: 3 real sources (2 exec interviews &middot; 1 published essay)</div>
+    </div>
+  </div>
+
+  <!-- ===== 03 UNIVERSE & JOURNEY ===== -->
+  <div class="panel" id="tab-universe">
+    <div class="eyebrow">03 &middot; what they search</div>
+    <h2 class="ptitle">Universe &amp; Journey <span class="tag new" style="vertical-align:middle;margin-left:6px">new</span></h2>
+    <p class="lede">The buyer's whole professional internet — not just commercial-intent keywords. Every query and question the personas could plausibly engage, tagged by where it sits in the journey. Most of it carries low buying intent on purpose: it maps <b>presence</b>, not just conversion.</p>
+
+    <div class="section-h">Universe by journey stage</div>
+    <div class="barrow"><div class="bl">Core</div><div class="bt"><span style="width:18%"></span></div><div class="bv">612 &middot; 18%</div></div>
+    <div class="barrow"><div class="bl">Category</div><div class="bt"><span style="width:34%"></span></div><div class="bv">1,156 &middot; 34%</div></div>
+    <div class="barrow"><div class="bl">Beyond</div><div class="bt"><span style="width:48%"></span></div><div class="bv">1,632 &middot; 48%</div></div>
+
+    <div class="twocol" style="margin-top:24px">
+      <section>
+        <div class="mini-h">What each stage means</div>
+        <table>
+          <tr><td style="font-weight:600;width:90px">Core</td><td class="note">Direct product &amp; category — "marketing reporting tool", "marketing analytics platform". High intent, small volume, fiercely held.</td></tr>
+          <tr><td style="font-weight:600">Category</td><td class="note">Adjacent problems — attribution, data warehouse, MMM, connector costs. The buyer is framing the problem.</td></tr>
+          <tr><td style="font-weight:600">Beyond</td><td class="note">The buyer's professional life — PPC tactics, board reporting, ad fraud, team structure. Low buying intent, high presence value.</td></tr>
+        </table>
+      </section>
+      <section>
+        <div class="mini-h">Sample queries / questions</div>
+        <table>
+          <tr><td class="mono note">marketing reporting tools</td><td class="r"><span class="tag">core</span></td></tr>
+          <tr><td class="mono note">funnel.io alternative</td><td class="r"><span class="tag">category</span></td></tr>
+          <tr><td class="mono note">what is a marketing data warehouse</td><td class="r"><span class="tag">category</span></td></tr>
+          <tr><td class="mono note">how to report ROAS to the board</td><td class="r"><span class="tag">beyond</span></td></tr>
+          <tr><td class="mono note">is Supermetrics worth it 2026</td><td class="r"><span class="tag">beyond</span></td></tr>
+        </table>
+      </section>
+    </div>
+
+    <div class="section-h">From universe to rabbithole</div>
+    <p class="note" style="margin-bottom:14px;max-width:680px">The pipeline every cycle: enumerate the universe, simulate it across origins (next tab), harvest the nodes encountered, weight them, and surface the top set as the active rabbithole the team works.</p>
+    <div class="funnel">
+      <div class="frow"><div class="fl">Universe<small>queries &amp; questions</small></div><div class="fbar" style="width:100%"></div><div class="fn">3,400</div></div>
+      <div class="frow"><div class="fl">Nodes discovered<small>the rabbithole</small></div><div class="fbar g2" style="width:29%"></div><div class="fn">1,000</div></div>
+      <div class="frow"><div class="fl">Active destinations<small>tracked for coverage</small></div><div class="fbar g3" style="width:7%"></div><div class="fn">247</div></div>
+    </div>
+  </div>
+
+  <!-- ===== 04 ORIGINS ===== -->
+  <div class="panel" id="tab-origins">
+    <div class="eyebrow">04 &middot; where we simulate</div>
+    <h2 class="ptitle">Origins <span class="tag new" style="vertical-align:middle;margin-left:6px">new</span></h2>
+    <p class="lede">We run the universe <b>as the buyer</b> — issuing queries and following results the way each persona would — then harvest every node encountered. Each origin sees a different internet; the union is the rabbithole. This is the buyer-search simulation, not a SERP scrape.</p>
+
+    <table>
+      <tr><th>Origin</th><th>Type</th><th class="r">Status</th><th class="r">Last run</th><th class="r">Journeys</th><th class="r">Nodes</th></tr>
+      <tr><td>Google Search</td><td class="note">Search engine</td><td class="r"><span class="pillstat on">active</span></td><td class="r mono">Jun 18 04:00</td><td class="r mono">3,400</td><td class="r mono">612</td></tr>
+      <tr><td>Brave Search</td><td class="note">Search (independent index)</td><td class="r"><span class="pillstat on">active</span></td><td class="r mono">Jun 18 04:00</td><td class="r mono">3,400</td><td class="r mono">188</td></tr>
+      <tr><td>Google AI Overviews</td><td class="note">In-SERP answers</td><td class="r"><span class="pillstat on">active</span></td><td class="r mono">Jun 18 04:00</td><td class="r mono">tracked</td><td class="r mono">31</td></tr>
+      <tr><td>ChatGPT</td><td class="note">Answer engine</td><td class="r"><span class="pillstat on">active</span></td><td class="r mono">Jun 18</td><td class="r mono">420</td><td class="r mono">96</td></tr>
+      <tr><td>Claude</td><td class="note">Answer engine</td><td class="r"><span class="pillstat on">active</span></td><td class="r mono">Jun 18</td><td class="r mono">420</td><td class="r mono">88</td></tr>
+      <tr><td>Perplexity</td><td class="note">Answer engine</td><td class="r"><span class="pillstat off">queued</span></td><td class="r mono">&mdash;</td><td class="r mono">&mdash;</td><td class="r mono">&mdash;</td></tr>
+    </table>
+    <div class="callout"><b>Note:</b> answer engines (ChatGPT, Claude) are sampled on a curated prompt set, not the full 3,400 — the prompts that map to real buyer questions. Search engines run the full universe. The same node found across multiple origins gets weighted up.</div>
+  </div>
+
+  <!-- ===== 05 PROPERTIES ===== -->
+  <div class="panel" id="tab-properties">
+    <div class="eyebrow">05 &middot; the territory</div>
+    <h2 class="ptitle">Properties</h2>
+    <p class="lede">Every domain the engine watches, sorted into four buckets. <b>The bucket decides the kind of work a node generates — and which delivery team owns it.</b> First-party &rarr; On-site SEO &middot; Third-party &rarr; Backlinks &middot; UGC &rarr; UGC team &middot; Competitor &rarr; intelligence that feeds the other three.</p>
+    <table>
+      <tr><th>Domain</th><th>Bucket</th><th>Routes to</th><th class="r">Nodes</th><th class="r">Authority</th></tr>
+      <tr><td class="mono">clarisights.com</td><td>First-party</td><td class="note">On-site SEO</td><td class="r mono">52</td><td class="r mono">&#9650; high</td></tr>
+      <tr><td class="mono">funnel.io</td><td>Competitor</td><td class="note">Intelligence</td><td class="r mono">38</td><td class="r mono">high</td></tr>
+      <tr><td class="mono">supermetrics.com</td><td>Competitor</td><td class="note">Intelligence</td><td class="r mono">41</td><td class="r mono">high</td></tr>
+      <tr><td class="mono">improvado.io</td><td>Competitor</td><td class="note">Intelligence</td><td class="r mono">22</td><td class="r mono">mid</td></tr>
+      <tr><td class="mono">g2.com</td><td>Third-party</td><td class="note">Backlinks</td><td class="r mono">14</td><td class="r mono">&#9650; high</td></tr>
+      <tr><td class="mono">capterra.com</td><td>Third-party</td><td class="note">Backlinks</td><td class="r mono">9</td><td class="r mono">high</td></tr>
+      <tr><td class="mono">reddit.com/r/PPC</td><td>UGC</td><td class="note">UGC team</td><td class="r mono">17</td><td class="r mono">mid</td></tr>
+      <tr><td class="mono">reddit.com/r/marketing</td><td>UGC</td><td class="note">UGC team</td><td class="r mono">12</td><td class="r mono">mid</td></tr>
+      <tr><td class="mono">linkedin.com</td><td>UGC</td><td class="note">UGC team</td><td class="r mono">8</td><td class="r mono">mid</td></tr>
+    </table>
+  </div>
+
+  <!-- ===== 06 KNOWLEDGE ===== -->
+  <div class="panel" id="tab-knowledge">
+    <div class="eyebrow">06 &middot; standing truth</div>
+    <h2 class="ptitle">Knowledge</h2>
+    <p class="lede">The client wiki the engine reads from — the standing, versioned truth about the client. Edited by the team, lives in the client's wiki repo, and grounds every brief and recommendation. This is also the seed of the value-add wiki we can hand the client.</p>
+    <div class="grid2">
+      <div class="gcell"><h4>Engagement Details</h4><p>Scope, owners, cadence, commercial terms, sign-off rules.</p><span class="open">Open in wiki</span></div>
+      <div class="gcell"><h4>Current Workstreams</h4><p>What's committed, in flight, and queued across the three lanes.</p><span class="open">Open in wiki</span></div>
+      <div class="gcell"><h4>Product Knowledge</h4><p>What Clarisights does, positioning, proof, pricing, objections.</p><span class="open">Open in wiki</span></div>
+      <div class="gcell"><h4>Buyer &amp; Market</h4><p>Personas, ICP, competitors, the category and where it's moving.</p><span class="open">Open in wiki</span></div>
+      <div class="gcell"><h4>Website &amp; Stack</h4><p>Domains, CMS, what we can publish to and how it deploys.</p><span class="open">Open in wiki</span></div>
+      <div class="gcell"><h4>Brand &amp; Authors</h4><p>Voice, tone, do/don't, named authors and their bylines.</p><span class="open">Open in wiki</span></div>
+    </div>
+    <div class="callout">Repo: <span style="font-family:var(--mono)">recurrco/wiki-clarisights</span> &middot; 20 pages from 58 sources. The engine reads this as ground truth; the team edits it as the engagement evolves.</div>
+  </div>
+
+  <!-- ===== 07 INTEGRATIONS ===== -->
+  <div class="panel" id="tab-integrations">
+    <div class="eyebrow">07 &middot; data feeds</div>
+    <h2 class="ptitle">Integrations</h2>
+    <p class="lede">The sources the engine and reporting pull from. Connected once during onboarding. Outcome feeds (GA4, Search Console) are also what will close the learning loop — feeding measured results back into prioritisation.</p>
+    <table>
+      <tr><th>Source</th><th>Feeds</th><th class="r">Status</th></tr>
+      <tr><td>Google Analytics 4</td><td class="note">Traffic &middot; outcome loop</td><td class="r"><span class="pillstat on">connected</span></td></tr>
+      <tr><td>Google Search Console</td><td class="note">Traffic &middot; mentions &middot; outcome loop</td><td class="r"><span class="pillstat on">connected</span></td></tr>
+      <tr><td>DataForSEO — SERP &amp; keywords</td><td class="note">Universe &middot; mentions &middot; positions</td><td class="r"><span class="pillstat on">connected</span></td></tr>
+      <tr><td>DataForSEO — Backlinks</td><td class="note">Edges &middot; link discovery</td><td class="r"><span class="pillstat warn">action needed</span></td></tr>
+      <tr><td>AEO tracker — LLM citations</td><td class="note">Mentions in AI answers</td><td class="r"><span class="pillstat off">not connected</span></td></tr>
+      <tr><td>HubSpot</td><td class="note">Pipeline attribution</td><td class="r"><span class="pillstat off">not connected</span></td></tr>
+    </table>
+  </div>
+
+</main>
+
+<div class="foot">ReFound &middot; <span>internal prototype</span> &middot; configuration &middot; demo data (Clarisights) &middot; layout study, not final visual design</div>
+
+<script>
+  document.querySelectorAll('.subtab').forEach(function(tab){
+    tab.addEventListener('click',function(){
+      document.querySelectorAll('.subtab').forEach(function(t){t.classList.remove('active')});
+      tab.classList.add('active');
+      document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
+      document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+      window.scrollTo({top:0});
+    });
+  });
+</script>
+</body>
+</html>
