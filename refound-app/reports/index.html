@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>ReFound — Reports</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+  :root{
+    --bg:#ffffff;--ink:#111111;--muted:#8a8a8a;--faint:#b8b8b8;
+    --line:#e7e7e7;--line-2:#f0f0f0;--chip:#f4f4f4;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  header{padding:40px 24px 0;text-align:center}
+  .brand{font-family:var(--serif);font-style:italic;font-size:26px;letter-spacing:.01em}
+  .topnav{display:inline-flex;gap:4px;margin-top:22px;background:var(--chip);padding:4px;border-radius:10px}
+  .pill{padding:8px 18px;border-radius:7px;font-size:14px;color:var(--muted);font-weight:500}
+  .pill:hover{color:var(--ink)}
+  .pill.active{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .pill.gear{padding:8px 12px;font-size:15px}
+  .workspace{margin-top:14px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .workspace a:hover{color:var(--muted)}
+  main{max-width:1080px;margin:0 auto;padding:42px 24px 100px}
+  .subtabs{display:flex;gap:26px;border-bottom:1px solid var(--line);margin-bottom:34px;flex-wrap:wrap}
+  .subtab{padding:0 0 12px;font-size:14px;color:var(--muted);font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px}
+  .subtab:hover{color:var(--ink)}
+  .subtab.active{color:var(--ink);border-color:var(--ink)}
+  .panel{display:none}.panel.active{display:block}
+  .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
+  .lede{font-size:13px;color:var(--muted);margin-bottom:30px;max-width:660px;line-height:1.6}
+  .hero{padding:8px 0 30px;border-bottom:1px solid var(--line);margin-bottom:32px}
+  .bignum{font-family:var(--mono);font-size:72px;line-height:1;font-weight:500;letter-spacing:-.02em}
+  .hero-sub{margin-top:14px;font-size:15px;color:var(--muted)}.hero-sub b{color:var(--ink);font-weight:600}
+  .bar{height:6px;background:var(--line-2);margin-top:22px;max-width:560px;position:relative}.bar>span{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+  .arc{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:36px}
+  .arc div{background:#fff;padding:18px 20px}.arc .n{font-family:var(--mono);font-size:12px;color:var(--faint)}
+  .arc .t{font-weight:600;margin:6px 0 4px;font-size:14px}.arc .s{font-size:12px;color:var(--muted)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+  .two>section{background:#fff;padding:24px}
+  .blk-h{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+  .kv{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line-2)}
+  .kv:last-child{border-bottom:none}.kv .k{font-size:13px;color:var(--muted)}.kv .v{font-family:var(--mono);font-size:14px}
+  .up{color:var(--ink);font-weight:600}
+  .spark{display:flex;align-items:flex-end;gap:5px;height:54px;margin-top:8px}.spark span{width:14px;background:var(--ink)}
+  .ramp{display:flex;gap:30px;margin-bottom:34px;flex-wrap:wrap}.ramp .step{text-align:center}
+  .dot{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--ink);margin:0 auto 10px}
+  .dot.d0{background:#fff}.dot.d1{background:#d6d6d6;border-color:#bdbdbd}.dot.d2{background:#9a9a9a;border-color:#8a8a8a}.dot.d3{background:#4d4d4d;border-color:#3d3d3d}.dot.d4{background:#111}
+  .ramp .ct{font-family:var(--mono);font-size:20px}.ramp .lb{font-size:11px;color:var(--muted);margin-top:4px}
+  table{width:100%;border-collapse:collapse;margin-bottom:8px}
+  th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:500;padding:0 14px 12px 0}
+  td{padding:13px 14px 13px 0;border-top:1px solid var(--line-2);font-size:13px;vertical-align:top}
+  td.mono,th.mono{font-family:var(--mono)}td.r,th.r{text-align:right;padding-right:0}
+  .section-h{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:36px 0 14px}.section-h:first-child{margin-top:0}
+  .goal{border:1px solid var(--line);padding:22px 24px;margin-bottom:16px}
+  .goal .gh{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+  .goal .gnum{font-family:var(--mono);font-size:12px;color:var(--faint)}
+  .goal .gt{font-size:15px;font-weight:600}
+  .goal .gd{font-size:12.5px;color:var(--muted);margin-bottom:16px;max-width:620px;line-height:1.5}
+  .pillstat{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;border:1px solid var(--line)}
+  .pillstat.on{background:var(--ink);color:#fff;border-color:var(--ink)}.pillstat.warn{border-color:var(--ink);color:var(--ink)}.pillstat.off{color:var(--muted)}
+  .callout{border-left:2px solid var(--ink);padding:6px 0 6px 18px;margin:24px 0;font-size:13px;color:#444;line-height:1.6;max-width:700px}
+  .callout b{font-weight:600}
+  .sig{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:8px}
+  .sig>div{background:#fff;padding:20px 22px}
+  .sig .sh{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+  .sig .badge{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);padding:2px 8px;border-radius:3px;color:var(--muted)}
+  .sig .badge.lead{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .foot{max-width:1080px;margin:0 auto;padding:0 24px 60px;font-size:11px;color:var(--faint);letter-spacing:.04em}.foot span{color:var(--muted)}
+  @media(max-width:760px){.two,.arc,.sig{grid-template-columns:1fr}.bignum{font-size:54px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Refound</div>
+  <nav class="topnav">
+    <a class="pill" href="../">Inbox</a>
+    <a class="pill active" href="../reports/">Reports</a>
+    <a class="pill gear" href="../config/" aria-label="Settings">&#9881;</a>
+  </nav>
+  <div class="workspace"><a href="../portfolio/">Workspace</a> &middot; Clarisights</div>
+</header>
+<main>
+  <div class="subtabs">
+    <button class="subtab active" data-tab="summary">Summary</button>
+    <button class="subtab" data-tab="coverage">Buyer Search</button>
+    <button class="subtab" data-tab="mentions">Brand Mentions</button>
+    <button class="subtab" data-tab="traffic">Website Performance</button>
+    <button class="subtab" data-tab="loop">The Loop</button>
+    <button class="subtab" data-tab="logs">Logs</button>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="panel active" id="tab-summary">
+    <div class="hero">
+      <div class="eyebrow">Buyer Search Coverage &middot; week 6</div>
+      <div class="bignum">58%</div>
+      <div class="hero-sub">Present on <b>142 of 247</b> buyer destinations &nbsp;&middot;&nbsp; <b>&#9650; +23</b> this month</div>
+      <div class="bar"><span style="width:58%"></span></div>
+    </div>
+    <div class="arc">
+      <div><div class="n">01</div><div class="t">Mapped</div><div class="s">247 destinations &middot; done</div></div>
+      <div><div class="n">02</div><div class="t">Getting present</div><div class="s">coverage 35 &rarr; 58%</div></div>
+      <div><div class="n">03</div><div class="t">Mentions rising</div><div class="s">rank &#9650; on 28 queries</div></div>
+      <div><div class="n">04</div><div class="t">Traffic</div><div class="s">+14% &middot; lags (quarters)</div></div>
+    </div>
+    <div class="two">
+      <section>
+        <div class="blk-h">Leading &middot; mentions &amp; coverage (weeks)</div>
+        <div class="kv"><span class="k">Google avg position</span><span class="v">8.4 <span class="up">&#9650;2.1</span></span></div>
+        <div class="kv"><span class="k">AI-answer inclusion</span><span class="v">19% <span class="up">&#9650;11</span></span></div>
+        <div class="kv"><span class="k">Reddit live threads</span><span class="v">7</span></div>
+        <div class="kv"><span class="k">Listicle spots won</span><span class="v">4</span></div>
+      </section>
+      <section>
+        <div class="blk-h">Lagging &middot; traffic, the payoff (quarters)</div>
+        <div class="kv"><span class="k">Organic sessions</span><span class="v">+14% <span class="up">MoM</span></span></div>
+        <div class="spark"><span style="height:42%"></span><span style="height:50%"></span><span style="height:55%"></span><span style="height:62%"></span><span style="height:74%"></span><span style="height:88%"></span></div>
+        <div class="kv" style="margin-top:10px"><span class="k">Attributed pipeline</span><span class="v">building</span></div>
+      </section>
+    </div>
+    <div class="callout">Read top to bottom: <b>coverage leads</b>, <b>mentions corroborate</b>, <b>traffic is the lagging payoff</b>. Never the promise — it compounds over quarters as the first two move.</div>
+  </div>
+
+  <!-- BUYER SEARCH -->
+  <div class="panel" id="tab-coverage">
+    <div class="eyebrow">Buyer Search &middot; the headline metric</div>
+    <p class="lede">Coverage is a census of the destinations you enumerated — not an attribution claim. You define the denominator; the engine tracks presence across it.</p>
+    <div class="ramp">
+      <div class="step"><div class="dot d0"></div><div class="ct">70</div><div class="lb">Absent</div></div>
+      <div class="step"><div class="dot d1"></div><div class="ct">35</div><div class="lb">Competitor-owned</div></div>
+      <div class="step"><div class="dot d2"></div><div class="ct">96</div><div class="lb">Present</div></div>
+      <div class="step"><div class="dot d3"></div><div class="ct">34</div><div class="lb">Contested</div></div>
+      <div class="step"><div class="dot d4"></div><div class="ct">12</div><div class="lb">Dominant</div></div>
+    </div>
+    <div class="section-h">Coverage by bucket</div>
+    <table>
+      <tr><th>Bucket</th><th>Always-on engine</th><th class="r">Present</th><th class="r">Total</th></tr>
+      <tr><td>First-party</td><td style="color:var(--muted)">Webmaster</td><td class="r mono">38</td><td class="r mono">52</td></tr>
+      <tr><td>Competitor</td><td style="color:var(--muted)">Competitor Watch</td><td class="r mono">29</td><td class="r mono">61</td></tr>
+      <tr><td>Third-party</td><td style="color:var(--muted)">Industry Radar</td><td class="r mono">44</td><td class="r mono">78</td></tr>
+      <tr><td>UGC</td><td style="color:var(--muted)">Social Presence</td><td class="r mono">31</td><td class="r mono">56</td></tr>
+    </table>
+    <div class="section-h">Coverage trend</div>
+    <div class="spark" style="height:70px"><span style="height:35%"></span><span style="height:40%"></span><span style="height:46%"></span><span style="height:50%"></span><span style="height:54%"></span><span style="height:58%"></span></div>
+    <p class="lede" style="margin-top:10px">35% &rarr; 58% over six weeks.</p>
+  </div>
+
+  <!-- BRAND MENTIONS — 3 GOALS -->
+  <div class="panel" id="tab-mentions">
+    <div class="eyebrow">Brand Mentions &middot; the three goals</div>
+    <p class="lede">The engine works three goals, one per bucket you can act on. Each is measured separately — winning positions on your own turf, earning mentions on UGC, earning mentions on third-party.</p>
+
+    <div class="goal">
+      <div class="gh"><span class="gnum">Goal 1</span><span class="gt">First-party — win positions &amp; displace the leader</span></div>
+      <div class="gd">Not "more nodes" — <b>positions where we now out-rank or out-cite the competitor.</b> You can't delete their page; you take the slot.</div>
+      <table>
+        <tr><th>Query</th><th class="r">Pos</th><th class="r">&Delta;</th><th class="r">vs leader</th></tr>
+        <tr><td class="mono">marketing reporting tools</td><td class="r mono">6</td><td class="r mono up">&#9650;4</td><td class="r">won</td></tr>
+        <tr><td class="mono">Funnel.io alternative</td><td class="r mono">3</td><td class="r mono up">&#9650;1</td><td class="r">contested</td></tr>
+        <tr><td class="mono">marketing data warehouse</td><td class="r mono">14</td><td class="r mono">&mdash;</td><td class="r">targeting</td></tr>
+      </table>
+      <div class="kv" style="max-width:380px"><span class="k">Positions won from competitors</span><span class="v">9 <span class="up">&#9650;3</span></span></div>
+    </div>
+
+    <div class="goal">
+      <div class="gh"><span class="gnum">Goal 2</span><span class="gt">UGC — mention quality &amp; volume</span></div>
+      <div class="gd">Brand showing up where buyers ask each other — Reddit, LinkedIn, forums. Measured on quality of placement, not just count.</div>
+      <table>
+        <tr><th>Surface</th><th class="r">Live threads</th><th class="r">Top reply</th><th class="r">Quality</th></tr>
+        <tr><td>r/PPC</td><td class="r mono">4</td><td class="r mono">2</td><td class="r">high</td></tr>
+        <tr><td>r/marketing</td><td class="r mono">3</td><td class="r mono">1</td><td class="r">mid</td></tr>
+        <tr><td>LinkedIn</td><td class="r mono">2</td><td class="r mono">&mdash;</td><td class="r">building</td></tr>
+      </table>
+    </div>
+
+    <div class="goal">
+      <div class="gh"><span class="gnum">Goal 3</span><span class="gt">Third-party — mention quality &amp; volume</span></div>
+      <div class="gd">Brand earning text + links on sources buyers (and LLMs) trust — listicles, review sites, publishers.</div>
+      <div class="two" style="margin-top:6px">
+        <section>
+          <div class="blk-h">Listicles / publishers</div>
+          <div class="kv"><span class="k">G2 Marketing Analytics</span><span class="v" style="font-family:var(--sans)">climbing</span></div>
+          <div class="kv"><span class="k">Editorial spots won</span><span class="v">4</span></div>
+          <div class="kv"><span class="k">Outreach in flight</span><span class="v">3</span></div>
+        </section>
+        <section>
+          <div class="blk-h">AI answers (corroborating)</div>
+          <div class="kv"><span class="k">Claude inclusion</span><span class="v">cited &#10003;</span></div>
+          <div class="kv"><span class="k">ChatGPT inclusion</span><span class="v">partial</span></div>
+          <div class="kv"><span class="k">Across tracked prompts</span><span class="v">19% <span class="up">&#9650;11</span></span></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEBSITE PERFORMANCE -->
+  <div class="panel" id="tab-traffic">
+    <div class="eyebrow">Website Performance &middot; the lagging signal</div>
+    <p class="lede">Referred organic traffic and pipeline. Explicitly the slowest tier — it compounds over quarters as Coverage and Mentions lead. We report it; we don't promise it on a weekly clock.</p>
+    <div class="two">
+      <section>
+        <div class="blk-h">Organic sessions &middot; 6-week trend</div>
+        <div class="spark" style="height:80px"><span style="height:38%"></span><span style="height:46%"></span><span style="height:52%"></span><span style="height:60%"></span><span style="height:73%"></span><span style="height:90%"></span></div>
+        <div class="kv" style="margin-top:14px"><span class="k">This month</span><span class="v">+14% MoM</span></div>
+        <div class="kv"><span class="k">vs. baseline (wk 0)</span><span class="v">+31%</span></div>
+      </section>
+      <section>
+        <div class="blk-h">Source</div>
+        <div class="kv"><span class="k">Google Analytics 4</span><span class="v"><span class="pillstat on">connected</span></span></div>
+        <div class="kv"><span class="k">Search Console</span><span class="v"><span class="pillstat on">connected</span></span></div>
+        <div class="kv"><span class="k">Last sync</span><span class="v">Jun 18, 04:00</span></div>
+      </section>
+    </div>
+    <div class="section-h">Top organic landing pages</div>
+    <table>
+      <tr><th>Page</th><th class="r">Sessions / mo</th><th class="r">&Delta;</th></tr>
+      <tr><td class="mono">/reporting</td><td class="r mono">4,820</td><td class="r mono up">+9%</td></tr>
+      <tr><td class="mono">/compare/funnel-io</td><td class="r mono">1,140</td><td class="r mono up">new</td></tr>
+      <tr><td class="mono">/integrations</td><td class="r mono">2,310</td><td class="r mono up">+4%</td></tr>
+      <tr><td class="mono">/learn/marketing-data-warehouse</td><td class="r mono">absent</td><td class="r mono">&mdash;</td></tr>
+    </table>
+  </div>
+
+  <!-- THE LOOP -->
+  <div class="panel" id="tab-loop">
+    <div class="eyebrow">The Loop &middot; how the engine learns</div>
+    <p class="lede">Reporting feeds back into prioritisation. Each cycle the engine re-weights nodes from <b>measured outcomes</b> — but it learns from leading signals only. Traffic lags by quarters; learning from it would chase noise, so it only confirms, never steers.</p>
+
+    <div class="section-h">Signals fed this cycle</div>
+    <div class="sig">
+      <div>
+        <div class="sh">Steers prioritisation <span class="badge lead">leading</span></div>
+        <div class="kv"><span class="k">Coverage &Delta;</span><span class="v">+3 present</span></div>
+        <div class="kv"><span class="k">Rank &Delta; (Google)</span><span class="v">28 queries &#9650;</span></div>
+        <div class="kv"><span class="k">AI-citation &Delta;</span><span class="v">+11%</span></div>
+      </div>
+      <div>
+        <div class="sh">Confirms only <span class="badge">lagging &middot; low weight</span></div>
+        <div class="kv"><span class="k">Organic traffic &Delta;</span><span class="v">+14% MoM</span></div>
+        <div class="kv"><span class="k">Pipeline &Delta;</span><span class="v">building</span></div>
+        <div class="kv"><span class="k">Weight in loop</span><span class="v">0.1&times;</span></div>
+      </div>
+    </div>
+
+    <div class="section-h">What re-prioritised this cycle</div>
+    <table>
+      <tr><th>Node</th><th class="r">Was</th><th class="r">Now</th><th>Why</th></tr>
+      <tr><td class="mono">/compare/funnel-io</td><td class="r mono">7</td><td class="r mono up">3</td><td style="color:var(--muted)">gap widened — funnel.io held pos 3, citation lift confirms intent</td></tr>
+      <tr><td class="mono">g2.com — analytics grid</td><td class="r mono">12</td><td class="r mono up">8</td><td style="color:var(--muted)">third-party citation rising; close to a win</td></tr>
+      <tr><td class="mono">/learn/attribution-101</td><td class="r mono">9</td><td class="r mono">19</td><td style="color:var(--muted)">competitor abandoned the position — lower urgency</td></tr>
+      <tr><td class="mono">r/PPC — Supermetrics thread</td><td class="r mono">&mdash;</td><td class="r mono up">5</td><td style="color:var(--muted)">thread heating, buyer intent — perishable, surfaced now</td></tr>
+    </table>
+    <div class="callout"><b>Guardrail:</b> the loop respects the same hierarchy the reports do — coverage and mentions teach it, traffic only checks it. This is what keeps it learning, not drifting.</div>
+  </div>
+
+  <!-- LOGS -->
+  <div class="panel" id="tab-logs">
+    <div class="eyebrow">Logs &middot; engine + work activity</div>
+    <p class="lede">Every engine run, snapshot, and shipped work item — each with its provenance ("why"). The trail behind every recommendation.</p>
+    <table>
+      <tr><th>When</th><th>Event</th><th>By</th><th>Why</th></tr>
+      <tr><td class="mono">Jun 18 &middot; 04:00</td><td>Snapshot <b>v6</b> frozen</td><td style="color:var(--muted)">engine</td><td style="color:var(--muted)">247 nodes &middot; +23 present</td></tr>
+      <tr><td class="mono">Jun 18 &middot; 04:02</td><td>Coverage recomputed 55% &rarr; 58%</td><td style="color:var(--muted)">engine</td><td style="color:var(--muted)">2 nodes moved to Present</td></tr>
+      <tr><td class="mono">Jun 18 &middot; 04:05</td><td>Re-prioritised 4 nodes</td><td style="color:var(--muted)">engine</td><td style="color:var(--muted)">the Loop &middot; leading-signal deltas</td></tr>
+      <tr><td class="mono">Jun 17 &middot; 18:30</td><td>Shipped: /marketing-data-mcp</td><td style="color:var(--muted)">sujith@</td><td style="color:var(--muted)">work item complete</td></tr>
+      <tr><td class="mono">Jun 16 &middot; 09:15</td><td>New competitor node: adverity.com</td><td style="color:var(--muted)">engine</td><td style="color:var(--muted)">discover &middot; confidence 0.91</td></tr>
+      <tr><td class="mono">Jun 15 &middot; 11:00</td><td>Verify: 4 low-confidence deltas accepted</td><td style="color:var(--muted)">sujith@</td><td style="color:var(--muted)">human review gate</td></tr>
+    </table>
+  </div>
+</main>
+<div class="foot">ReFound &middot; <span>internal prototype</span> &middot; reports &middot; demo data (Clarisights) &middot; layout study, not final visual design</div>
+<script>
+  document.querySelectorAll('.subtab').forEach(function(tab){
+    tab.addEventListener('click',function(){
+      document.querySelectorAll('.subtab').forEach(function(t){t.classList.remove('active')});
+      tab.classList.add('active');
+      document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
+      document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
