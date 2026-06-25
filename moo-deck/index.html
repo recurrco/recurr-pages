@@ -47,8 +47,10 @@
   /* ============ SLIDE STYLES ============ */
   .pad{position:absolute;inset:0;padding:60px 72px;}
   .kick{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+  .eyebrow{position:absolute;top:46px;left:0;right:0;text-align:center;font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);}
   .s-title{font-family:var(--display);font-weight:600;letter-spacing:-.015em;line-height:1.05;color:var(--ink);}
-  .sfoot{position:absolute;left:72px;right:72px;bottom:26px;font-size:11.5px;color:#b6ab97;}
+  .stitle-c{position:absolute;top:78px;left:72px;right:72px;text-align:center;font-family:var(--display);font-weight:600;font-size:42px;letter-spacing:-.02em;color:var(--ink);}
+  .sfoot{position:absolute;left:72px;right:72px;bottom:24px;font-size:11px;color:#b6ab97;}
   .accent{color:var(--red);}
 
   /* Cover */
@@ -100,52 +102,86 @@
   .bcell{flex:1;background:#FBF6EC;border:1px solid var(--line);border-radius:12px;padding:14px 20px;}
   .bcell b{font-size:20px;font-weight:800;} .bcell span{font-size:13px;color:#6b6457;display:block;margin-top:2px;}
 
-  /* Section opener (dark) */
+  /* Section opener (dark) + timeline */
   .opener{background:#1A1A1A;color:#fff;}
   .opener .lbl{font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#7d756a;}
-  .opener .big{font-family:var(--display);font-weight:600;font-size:74px;letter-spacing:-.02em;line-height:1.02;margin-top:14px;}
-  .opener .sl{font-size:21px;color:#cfc7b8;margin-top:18px;max-width:760px;line-height:1.4;}
-  .opener .strip{position:absolute;left:72px;right:72px;bottom:60px;display:flex;gap:40px;border-top:1px solid #333;padding-top:22px;}
-  .opener .strip div b{font-family:var(--display);font-size:30px;font-weight:600;display:block;}
+  .opener .big{font-family:var(--display);font-weight:600;font-size:60px;letter-spacing:-.02em;line-height:1.02;margin-top:10px;}
+  .tline{position:absolute;left:72px;right:72px;top:300px;}
+  .tline .track{position:relative;height:2px;background:#3a352e;margin:0 60px;}
+  .tnode{position:absolute;top:-9px;width:20px;height:20px;border-radius:50%;background:#3a352e;transform:translateX(-50%);}
+  .tnode.now{background:var(--red);box-shadow:0 0 0 6px rgba(200,16,46,.25);}
+  .tlabel{position:absolute;top:-58px;transform:translateX(-50%);text-align:center;}
+  .tlabel .yr{font-family:var(--display);font-size:34px;font-weight:600;}
+  .tlabel .tag{font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-top:2px;}
+  .tlabel.muted .yr{color:#6b6458;} .tlabel.muted .tag{color:#5a554d;}
+  .tlabel.now .yr{color:#fff;} .tlabel.now .tag{color:var(--red);font-weight:700;}
+  .tlabel.future .yr{color:#cfc7b8;} .tlabel.future .tag{color:#8a8275;}
+  .opener .strip{position:absolute;left:72px;right:72px;bottom:54px;display:flex;gap:36px;border-top:1px solid #333;padding-top:22px;}
+  .opener .strip div b{font-family:var(--display);font-size:32px;font-weight:600;display:block;}
   .opener .strip div span{font-size:12px;color:#9a917f;letter-spacing:.04em;}
 
-  /* Big-number slide */
-  .nums{background:#FBF6EC;}
-  .bignums{position:absolute;left:72px;right:72px;top:230px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
-  .bni b{font-family:var(--display);font-size:54px;font-weight:600;line-height:1;color:var(--ink);letter-spacing:-.02em;}
-  .bni span{display:block;font-size:13px;color:#6b6457;margin-top:8px;font-weight:500;}
-  .ratebar{position:absolute;left:72px;right:72px;bottom:80px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 24px;display:flex;align-items:center;gap:24px;}
-  .ratebar .r{font-family:var(--display);font-size:34px;font-weight:600;color:var(--red);} .ratebar .t{font-size:15px;color:#5d564b;}
+  /* Collage */
+  .collage{background:#fff;}
+  .col-stats{position:absolute;top:84px;left:72px;display:flex;gap:12px;}
+  .cstat{border-radius:12px;padding:12px 18px;color:#fff;}
+  .cstat b{font-family:var(--display);font-size:30px;font-weight:600;line-height:1;display:block;}
+  .cstat span{font-size:12px;opacity:.9;}
+  .wall{position:absolute;left:72px;right:72px;top:170px;bottom:34px;column-count:5;column-gap:10px;}
+  .wcard{break-inside:avoid;margin-bottom:10px;border:1px solid #ececec;border-radius:10px;overflow:hidden;position:relative;background:#f6f3ee;}
+  .wcard img{width:100%;display:block;object-fit:cover;}
+  .wcard .cap{position:absolute;top:6px;left:6px;font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:rgba(0,0,0,.62);color:#fff;padding:3px 7px;border-radius:5px;}
 
-  /* chips slide */
-  .chips{display:flex;flex-wrap:wrap;gap:12px;max-width:980px;margin-top:8px;}
-  .chip{background:#FBF6EC;border:1.5px solid var(--line);border-radius:30px;padding:12px 22px;font-weight:700;font-size:19px;}
-  .chip.new{background:var(--red);color:#fff;border-color:var(--red);}
+  /* Menu / categories */
+  .menu{background:#FBF6EC;}
+  .mgrid{position:absolute;left:72px;right:72px;top:170px;bottom:96px;display:grid;grid-template-columns:repeat(5,1fr);grid-auto-rows:1fr;gap:12px;}
+  .mc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;}
+  .mc .nm{font-weight:800;font-size:18px;line-height:1.1;}
+  .mc .ct{font-size:12px;color:#8a8275;margin-top:6px;}
+  .mc.hl{background:var(--red);color:#fff;border-color:var(--red);}
+  .mc.hl .ct{color:rgba(255,255,255,.85);}
+  .mc.img{padding:0;overflow:hidden;}.mc.img img{width:100%;height:100%;object-fit:cover;}
+  .mfoot{position:absolute;left:72px;right:72px;bottom:54px;display:flex;align-items:center;gap:16px;}
+  .mfoot .pin{font-family:var(--display);font-size:30px;font-weight:600;color:var(--ink);}
+  .mfoot .pt{font-size:15px;color:#5d564b;}
 
-  /* who/why split */
-  .split{position:absolute;left:72px;right:72px;top:210px;bottom:64px;display:grid;grid-template-columns:1fr 1fr;gap:32px;}
-  .col h4{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
-  .col li{list-style:none;font-size:16px;color:#3d382f;padding:11px 0;border-bottom:1px solid var(--line);line-height:1.4;}
-  .col li b{color:var(--ink);}
-  .bigstat{position:absolute;right:72px;top:60px;text-align:right;}
-  .bigstat b{font-family:var(--display);font-size:64px;font-weight:600;color:var(--red);line-height:1;}
-  .bigstat span{display:block;font-size:13px;color:#6b6457;}
+  /* Funnel */
+  .funnelwrap{position:absolute;left:72px;top:180px;bottom:48px;width:560px;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;}
+  .fband{border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:14px;}
+  .fband .ft{font-weight:800;font-size:21px;line-height:1.1;}
+  .fband .fs{font-size:12.5px;opacity:.92;margin-top:4px;max-width:380px;}
+  .f1{width:100%;height:130px;background:#E7C9A0;color:#5d4a2e;}
+  .f2{width:74%;height:130px;background:#D98A4E;}
+  .f3{width:50%;height:150px;background:#C8102E;position:relative;}
+  .fcall{position:absolute;right:-220px;bottom:24px;width:200px;}
+  .fcall b{font-family:var(--display);font-size:50px;font-weight:600;color:var(--red);line-height:1;}
+  .fcall span{font-size:13px;color:#5d564b;display:block;}
+  .fside{position:absolute;right:72px;top:200px;width:480px;}
+  .fside h4{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+  .fside .occ{display:flex;gap:10px;margin-bottom:22px;}
+  .fside .occ div{flex:1;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center;font-weight:700;font-size:14px;}
+  .fside .occ div span{display:block;font-size:11px;color:#8a8275;font-weight:500;margin-top:3px;}
+  .fside .maprow{font-size:15px;color:#3d382f;padding:10px 0;border-bottom:1px solid var(--line);line-height:1.4;}
+  .fside .maprow b{color:var(--ink);}
 
-  /* 4-stat tiles */
-  .stat4{position:absolute;left:72px;right:72px;top:220px;display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:1fr 1fr;gap:18px;bottom:120px;}
-  .st{background:#FBF6EC;border:1px solid var(--line);border-radius:14px;padding:24px 28px;display:flex;flex-direction:column;justify-content:center;}
-  .st b{font-family:var(--display);font-size:46px;font-weight:600;color:var(--ink);line-height:1;letter-spacing:-.02em;}
-  .st span{font-size:15px;color:#5d564b;margin-top:8px;}
-  .qcomm{position:absolute;left:72px;right:72px;bottom:60px;background:var(--ink);color:#fff;border-radius:12px;padding:16px 24px;font-size:16px;font-weight:600;display:flex;align-items:center;gap:14px;}
-  .qcomm .pill{background:var(--red);padding:5px 12px;border-radius:20px;font-size:13px;}
+  /* Lean kitchen: cards + masonry */
+  .lean{background:#fff;}
+  .ops{position:absolute;left:72px;top:180px;bottom:48px;width:660px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:14px;}
+  .opcard{background:#FAF7F1;border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:center;}
+  .opcard b{font-family:var(--display);font-weight:600;font-size:30px;color:var(--ink);line-height:1;letter-spacing:-.01em;}
+  .opcard .big{font-size:46px;}
+  .opcard span{font-size:13px;color:#6b6457;margin-top:10px;line-height:1.4;}
+  .mason{position:absolute;right:72px;top:180px;bottom:48px;width:430px;column-count:2;column-gap:12px;}
+  .mtile{break-inside:avoid;margin-bottom:12px;border-radius:12px;overflow:hidden;position:relative;border:1px solid #ececec;}
+  .mtile img{width:100%;display:block;}
+  .mtile.chip{background:var(--ink);color:#fff;padding:18px;font-family:"Fraunces",serif;font-weight:600;font-size:24px;line-height:1.1;}
+  .mtile.chip.red{background:var(--red);}
 
   /* econ bar */
   .econ{background:#fff;}
-  .ebar{position:absolute;left:72px;right:72px;top:280px;height:96px;display:flex;border-radius:12px;overflow:hidden;font-weight:700;color:#fff;}
+  .ebar{position:absolute;left:72px;right:72px;top:300px;height:96px;display:flex;border-radius:12px;overflow:hidden;font-weight:700;color:#fff;}
   .eseg{display:flex;align-items:center;justify-content:center;font-size:14px;text-align:center;padding:4px;}
-  .ebar .lbls{}
-  .eaxis{position:absolute;left:72px;right:72px;top:250px;font-size:12px;color:#9a917f;display:flex;justify-content:space-between;}
-  .econ .claims{position:absolute;left:72px;right:72px;top:430px;display:flex;gap:16px;}
+  .eaxis{position:absolute;left:72px;right:72px;top:270px;font-size:12px;color:#9a917f;display:flex;justify-content:space-between;}
+  .econ .claims{position:absolute;left:72px;right:72px;top:450px;display:flex;gap:16px;}
   .claim{flex:1;background:#FBF6EC;border:1px solid var(--line);border-radius:12px;padding:18px 22px;}
   .claim b{font-size:19px;font-weight:800;display:block;margin-bottom:4px;} .claim span{font-size:13.5px;color:#6b6457;}
 
@@ -236,26 +272,146 @@
       <div class="sfoot">Stats to confirm before external use: brand counts, import multiple, EatFit SKU rank.</div>
     </section>
 
-    <!-- 5 OUR JOURNEY SO FAR (Proof opener) -->
-    <section class="slide opener" data-sec="The Proof" data-status="build">
-      <div class="pad" style="display:flex;flex-direction:column;justify-content:center;">
+    <!-- 5 OUR JOURNEY SO FAR (timeline opener) -->
+    <section class="slide opener" data-sec="The Proof" data-status="done">
+      <div class="pad" style="padding-top:64px;">
         <div class="lbl">The Proof</div>
-        <div class="big">Our journey<br>so far</div>
-        <div class="sl">We've cracked profitable F&amp;B — and built a brand people genuinely love. Two years, near break-even, self-funded.</div>
+        <div class="big">Our journey so far</div>
+      </div>
+      <div class="tline">
+        <div class="track">
+          <div class="tnode" style="left:0%;"></div>
+          <div class="tnode now" style="left:50%;"></div>
+          <div class="tnode" style="left:100%;"></div>
+          <div class="tlabel muted" style="left:0%;"><div class="yr">2024</div><div class="tag">First kitchen</div></div>
+          <div class="tlabel now" style="left:50%;"><div class="yr">2026</div><div class="tag">We are here</div></div>
+          <div class="tlabel future" style="left:100%;"><div class="yr">2028</div><div class="tag">Where we're headed</div></div>
+        </div>
       </div>
       <div class="strip">
+        <div><b>₹2.7 Cr</b><span>run-rate (ARR)</span></div>
+        <div><b>1.5K+</b><span>orders per week</span></div>
         <div><b>3</b><span>cloud kitchens, Bengaluru</span></div>
-        <div><b>77K+</b><span>orders to date</span></div>
-        <div><b>~₹2.7 Cr</b><span>run-rate (ARR)</span></div>
-        <div><b>+50%</b><span>YoY growth</span></div>
-        <div><b>~break-even</b><span>on 2 yrs of discipline</span></div>
+        <div><b>₹308</b><span>average order value</span></div>
       </div>
     </section>
 
-    <!-- 6 ADOPTION CYCLE -->
-    <section class="slide" data-sec="The Proof" data-status="build">
+    <!-- 6 COLLAGE -->
+    <section class="slide collage" data-sec="The Proof" data-status="done">
+      <div class="eyebrow">What's working for us</div>
+      <div class="col-stats">
+        <div class="cstat" style="background:var(--red);"><b>60%</b><span>repeat rate</span></div>
+        <div class="cstat" style="background:var(--ink);"><b>&lt;10 min</b><span>delivery menu</span></div>
+      </div>
+      <div class="wall">
+        <div class="wcard"><span class="cap">Swiggy</span><img src="img/swiggy-card.png" style="height:120px;object-position:top;"></div>
+        <div class="wcard"><span class="cap">Power user</span><img src="img/power-user.png" style="height:130px;object-position:top;"></div>
+        <div class="wcard"><span class="cap">Customer love</span><img src="img/love-chat.png" style="height:300px;object-position:top;"></div>
+        <div class="wcard"><span class="cap">Zomato</span><img src="img/zomato-card.png" style="height:120px;object-position:top;"></div>
+        <div class="wcard"><span class="cap">On the menu</span><img src="img/menu-screenshot.png" style="height:260px;object-position:top;"></div>
+        <div class="wcard"><span class="cap">Content</span><img src="img/breakfast-club.png" style="height:150px;"></div>
+        <div class="wcard"><span class="cap">Customer love</span><img src="img/love-receipt.png" style="height:200px;object-position:top;"></div>
+        <div class="wcard"><span class="cap">Review</span><img src="img/review-perfectionist.png" style="height:230px;object-position:top;"></div>
+        <div class="wcard"><span class="cap">Partnership</span><img src="img/partner-razorrun.png" style="height:150px;"></div>
+        <div class="wcard"><span class="cap">Partnership</span><img src="img/partner-event1.png" style="height:120px;"></div>
+        <div class="wcard"><span class="cap">Partnership</span><img src="img/partner-event2.png" style="height:120px;"></div>
+      </div>
+    </section>
+
+    <!-- 7 CREATING NEW CATEGORIES -->
+    <section class="slide menu" data-sec="The Proof" data-status="done">
+      <div class="eyebrow">What's working for us</div>
+      <div class="stitle-c">Creating new categories, scaling checkouts</div>
+      <div class="mgrid">
+        <div class="mc"><div class="nm">Overnight Oats</div><div class="ct">Banana Nut · Berry Blast · Mango</div></div>
+        <div class="mc"><div class="nm">Oat Smoothie Bowls</div><div class="ct">Very Berry · Pink Dragon</div></div>
+        <div class="mc img"><img src="img/food-bowl1.png"></div>
+        <div class="mc"><div class="nm">Yogurt Granola Bowls</div><div class="ct">PB Apple · Tropical Mango</div></div>
+        <div class="mc hl"><div class="nm">Protein Idlis</div><div class="ct">India-first — oats, not rice</div></div>
+        <div class="mc"><div class="nm">Super Shakes</div><div class="ct">Protein smoothies (Supply6 · Cosmix)</div></div>
+        <div class="mc"><div class="nm">Chia Puddings</div><div class="ct">Coffee Caramel · Spiced Apple</div></div>
+        <div class="mc img"><img src="img/food-bowl2.png"></div>
+        <div class="mc"><div class="nm">Oat Cookies</div><div class="ct">Choc-chip · Cinnamon Raisin</div></div>
+        <div class="mc"><div class="nm">Cold-Pressed Juices</div><div class="ct">Beet-Carrot · Watermelon Chia</div></div>
+        <div class="mc"><div class="nm">Barista</div><div class="ct">Cold brew · Oat-milk lattes</div></div>
+        <div class="mc"><div class="nm">Breakfast Boxes</div><div class="ct">Energy · Immunity · Probiotic</div></div>
+        <div class="mc"><div class="nm">Khichdi &amp; Poha</div><div class="ct">Masala oats · Rajma oats</div></div>
+        <div class="mc hl"><div class="nm">Post-Workout</div><div class="ct">Whey · Plant · Oatmeal shakes</div></div>
+      </div>
+      <div class="mfoot"><span class="pin">1 oat → 12+ categories</span><span class="pt">— spanning the whole day. Every new category lifts basket size and repeat. <i>(influencer recipe-collabs unverified — left out)</i></span></div>
+    </section>
+
+    <!-- 8 60% REPEAT — FUNNEL -->
+    <section class="slide menu" data-sec="The Proof" data-status="done">
+      <div class="eyebrow">What's working for us</div>
+      <div class="stitle-c">60% repeat orders — who, and how?</div>
+      <div class="funnelwrap">
+        <div class="fband f1"><div class="ft">Eating more consciously</div><div class="fs">The broad, fast-growing audience that wants to eat cleaner</div></div>
+        <div class="fband f2"><div class="ft">Everyday healthy eaters</div><div class="fs">Breakfast &amp; desk-friendly — ordering as a habit</div></div>
+        <div class="fband f3"><div class="ft">Gym-goers &amp; athletes</div><div class="fs">Chasing protein + fibre, post-workout</div>
+          <div class="fcall"><b>60%</b><span>of our repeat orders come from the bottom of the funnel</span></div>
+        </div>
+      </div>
+      <div class="fside">
+        <h4>How they order us</h4>
+        <div class="occ">
+          <div>Post-workout<span>recovery fuel</span></div>
+          <div>Breakfast<span>daily ritual</span></div>
+          <div>Desk-friendly<span>healthy lunch</span></div>
+        </div>
+        <h4>How we widen the funnel</h4>
+        <div class="maprow"><b>Win the hardest eaters first</b> — protein idlis &amp; post-workout shakes for the bottom.</div>
+        <div class="maprow"><b>Then widen up</b> — overnight oats, smoothie bowls &amp; juices pull in the conscious-eating mainstream.</div>
+        <div class="maprow"><b>New categories = new audience</b> — each launch unlocks a wider slice of the funnel.</div>
+      </div>
+      <div class="sfoot">Confirm the 60% definition (orders vs customers, window) + the funnel split with real cohort data.</div>
+    </section>
+
+    <!-- 9 LEAN & FAST KITCHEN -->
+    <section class="slide lean" data-sec="The Proof" data-status="done">
+      <div class="eyebrow">What's working for us</div>
+      <div class="stitle-c">Lean &amp; fast kitchen operations</div>
+      <div class="ops">
+        <div class="opcard"><b>₹7L</b><span><b style="font-size:15px;">Low-cost expansion.</b> A new kitchen costs under 50% of a traditional build.</span></div>
+        <div class="opcard"><b class="big">&lt;10m</b><span><b style="font-size:15px;">Orders dispatch fast.</b> Recipes are quick-commerce-ready — mostly picking &amp; packing.</span></div>
+        <div class="opcard"><b class="big">&lt;1%</b><span><b style="font-size:15px;">Wastage.</b> Low-perishability intermediates (like soaked oats) by design.</span></div>
+        <div class="opcard"><b style="font-size:26px;">No cooking.<br>No chef.</b><span>Solves staffing — easy sourcing, low training, lower churn.</span></div>
+      </div>
+      <div class="mason">
+        <div class="mtile chip red">#1 in the BLR breakfast slot</div>
+        <div class="mtile"><img src="img/review-perfectionist.png"></div>
+        <div class="mtile chip">Top checkout rates in India</div>
+        <div class="mtile"><img src="img/kitchen.png"></div>
+      </div>
+    </section>
+
+    <!-- 10 BATTLE-HARDENED UNIT ECONOMICS -->
+    <section class="slide econ" data-sec="The Proof" data-status="done">
+      <div class="eyebrow">What's working for us</div>
+      <div class="pad" style="padding-top:74px;padding-bottom:0;">
+        <div class="s-title" style="font-size:42px;text-align:center;">Battle-hardened unit economics</div>
+        <div style="font-size:16px;color:#5d564b;margin-top:14px;max-width:880px;text-align:center;margin-left:auto;margin-right:auto;">We ship a positive bottom line in the most punishing setup there is — aggregators, where ~45% of every rupee goes to the platform. Anywhere else only gets better.</div>
+      </div>
+      <div class="eaxis"><span>₹100 order on Swiggy / Zomato</span><span>still positive →</span></div>
+      <div class="ebar">
+        <div class="eseg" style="background:#C8102E;flex:45;">Aggregator take ~45%</div>
+        <div class="eseg" style="background:#7d7565;flex:30;">COGS + packaging</div>
+        <div class="eseg" style="background:#b8ad98;flex:13;">Kitchen + ops</div>
+        <div class="eseg" style="background:#1F7A4D;flex:12;">Contribution +</div>
+      </div>
+      <div class="claims">
+        <div class="claim"><b>Positive on S/Z today</b><span>Profitable on the toughest channel, not just blended.</span></div>
+        <div class="claim"><b>Better off-aggregator</b><span>Direct &amp; walk-in skip the ~45% take entirely.</span></div>
+        <div class="claim"><b>CM1 → ~85% at scale</b><span>Procurement + backward integration compound margin. <i>(confirm)</i></span></div>
+      </div>
+      <div class="sfoot">Bar is indicative — exact splits to lock from Financial Model v2 (CM1/CM2). The ~85% CM1 figure needs confirming.</div>
+    </section>
+
+    <!-- 11-15 MACHINE -->
+    <section class="slide ph-slide" data-sec="The Machine" data-status="fresh"><div class="pad"><div class="kick">The Machine</div><div class="big">Taking off on a 100x journey</div><div class="note">The growth chart — compounding, not plateauing. 4-stream path to ₹20–25 Cr.</div></div><div class="ph-tag fresh">Fresh</div></section>
+    <section class="slide" data-sec="The Machine" data-status="build">
       <div class="pad">
-        <div class="kick">The Proof · sequencing</div>
+        <div class="kick">The Machine · sequencing</div>
         <div class="s-title" style="font-size:42px;margin-top:12px;">Which comes first — QSR or CPG?</div>
         <svg viewBox="0 0 1100 380" style="position:absolute;left:72px;right:72px;top:170px;width:1136px;">
           <line x1="40" y1="330" x2="1080" y2="330" stroke="#E4D8C5" stroke-width="2"/>
@@ -272,121 +428,13 @@
           <div class="bcell" style="flex:1;"><b>2 · Then win the CPG shelf</b><span>Once it's a habit, it moves into the home. MOO leads with QSR — by design.</span></div>
         </div>
       </div>
-      <div class="ph-tag build">Placement?</div>
-      <div class="sfoot">Open: this is a strategy/sequencing slide — may belong in The Machine (next to GTM), not Proof. Flagged.</div>
+      <div class="ph-tag build">Moved from Proof</div>
     </section>
-
-    <!-- 7 BLR'S FAVOURITE — NUMBERS -->
-    <section class="slide nums" data-sec="The Proof" data-status="build">
-      <div class="pad" style="padding-bottom:0;">
-        <div class="kick">The Proof</div>
-        <div class="s-title" style="font-size:42px;margin-top:12px;">Bengaluru's favourite healthy F&amp;B brand</div>
-      </div>
-      <div class="bignums">
-        <div class="bni"><b>77K+</b><span>orders to date</span></div>
-        <div class="bni"><b>50K+</b><span>customers served</span></div>
-        <div class="bni"><b>₹304</b><span>average order value</span></div>
-        <div class="bni"><b>+50%</b><span>YoY growth</span></div>
-      </div>
-      <div class="ratebar">
-        <div class="r">4.6★</div>
-        <div class="t"><b>Top-rated</b> across Swiggy &amp; Zomato in our category — thousands of reviews, consistently 4.5★+. <i>(rating to confirm)</i></div>
-      </div>
-      <div class="sfoot">Reconcile order/customer counts: 1.2L orders / 50K customers (Figma) vs 77,018 (warehouse). Confirm platform ratings + review volume.</div>
-    </section>
-
-    <!-- 8 TEACHING OATS TO INDIA -->
-    <section class="slide" data-sec="The Proof" data-status="build">
-      <div class="pad">
-        <div class="kick">The Proof</div>
-        <div class="s-title" style="font-size:42px;margin-top:12px;">We are teaching Oats to India</div>
-        <div class="note" style="font-size:17px;color:#5d564b;margin-top:16px;max-width:820px;">Building categories India has never seen on a menu — innovating oats into formats people already love. <b>3 → 9 categories</b> and counting.</div>
-        <div class="chips" style="margin-top:28px;">
-          <span class="chip">Oats Idli</span>
-          <span class="chip">Oats Khichdi</span>
-          <span class="chip">Oats Pancakes</span>
-          <span class="chip">Oats Dosa</span>
-          <span class="chip">Overnight Oats</span>
-          <span class="chip new">+ more every cycle</span>
-        </div>
-        <div class="note" style="margin-top:28px;font-size:15px;color:#8a8275;max-width:820px;">Recipe collabs with influencers &amp; clubs co-build new oat formats. <i>(deciding if this belongs here or in a distribution/brand slide)</i></div>
-      </div>
-      <div class="ph-tag build">Categories to confirm</div>
-    </section>
-
-    <!-- 9 60% REPEAT — WHO & WHY -->
-    <section class="slide nums" data-sec="The Proof" data-status="build">
-      <div class="pad" style="padding-bottom:0;">
-        <div class="kick">The Proof</div>
-        <div class="s-title" style="font-size:40px;margin-top:12px;max-width:760px;">A 60% repeat rate. Who — and why?</div>
-      </div>
-      <div class="bigstat"><b>60%</b><span>repeat rate</span></div>
-      <div class="split">
-        <div class="col">
-          <h4>Who repeats</h4>
-          <ul style="padding:0;">
-            <li><b>Health-conscious urban Bengaluru</b>, 25–40, ordering breakfast &amp; everyday meals</li>
-            <li><b>Habit buyers</b>, not occasion buyers — breakfast is a daily ritual</li>
-            <li>Skews <b>repeat over reach</b>: a loyal base, not one-time trials</li>
-          </ul>
-        </div>
-        <div class="col">
-          <h4>Why they come back</h4>
-          <ul style="padding:0;">
-            <li><b>Genuinely healthy and genuinely tasty</b> — rare to get both</li>
-            <li><b>Daily-occasion product</b> — breakfast repeats by nature</li>
-            <li><b>Ever-changing menu</b> — new oat categories keep it fresh</li>
-            <li><b>Fast + reliable</b> — ~6-min kitchen, consistent quality</li>
-          </ul>
-        </div>
-      </div>
-      <div class="sfoot">Audience profile to sharpen with real cohort data; confirm the 60% definition (orders vs customers, window).</div>
-    </section>
-
-    <!-- 10 LOW OPS / 0 CHEFS -->
-    <section class="slide" data-sec="The Proof" data-status="build">
-      <div class="pad" style="padding-bottom:0;">
-        <div class="kick">The Proof</div>
-        <div class="s-title" style="font-size:42px;margin-top:12px;">Low operations. Zero chefs in the kitchen.</div>
-      </div>
-      <div class="stat4">
-        <div class="st"><b>0 chefs</b><span>Assembly, not cooking — 80% of items are uncooked</span></div>
-        <div class="st"><b>~6 min</b><span>Average time to get an order out the door</span></div>
-        <div class="st"><b>60% lower</b><span>Kitchen capex vs a conventional QSR build</span></div>
-        <div class="st"><b>Lean &amp; fast</b><span>Built for the 10-minute economy — repeatable, low-hassle, high-speed</span></div>
-      </div>
-      <div class="qcomm"><span class="pill">Quick-commerce ready</span> A ~6-minute kitchen means we can plug straight into 10-minute delivery as it reshapes food.</div>
-    </section>
-
-    <!-- 11 BATTLE-HARDENED UNIT ECONOMICS -->
-    <section class="slide econ" data-sec="The Proof" data-status="build">
-      <div class="pad" style="padding-bottom:0;">
-        <div class="kick">The Proof</div>
-        <div class="s-title" style="font-size:42px;margin-top:12px;">Battle-hardened unit economics</div>
-        <div class="note" style="font-size:16px;color:#5d564b;margin-top:14px;max-width:880px;">We ship a positive bottom line in the most punishing setup there is — aggregators, where ~45% of every rupee goes to the platform. Anywhere else only gets better.</div>
-      </div>
-      <div class="eaxis"><span>₹100 order on Swiggy / Zomato</span><span>still positive →</span></div>
-      <div class="ebar">
-        <div class="eseg" style="background:#C8102E;flex:45;">Aggregator take ~45%</div>
-        <div class="eseg" style="background:#7d7565;flex:30;">COGS + packaging</div>
-        <div class="eseg" style="background:#b8ad98;flex:13;">Kitchen + ops</div>
-        <div class="eseg" style="background:#1F7A4D;flex:12;">Contribution +</div>
-      </div>
-      <div class="claims">
-        <div class="claim"><b>Positive on S/Z today</b><span>Profitable on the toughest channel, not just blended.</span></div>
-        <div class="claim"><b>Better off-aggregator</b><span>Direct &amp; walk-in skip the ~45% take entirely.</span></div>
-        <div class="claim"><b>CM1 → ~85% at scale</b><span>Procurement + backward integration compound margin. <i>(confirm)</i></span></div>
-      </div>
-      <div class="sfoot">Bar is indicative — exact splits to lock from Financial Model v2 (CM1/CM2). The ~85% CM1 figure needs confirming before external use.</div>
-    </section>
-
-    <!-- 12-15 MACHINE (placeholders) -->
-    <section class="slide ph-slide" data-sec="The Machine" data-status="fresh"><div class="pad"><div class="kick">The Machine</div><div class="big">Taking off on a 100x journey</div><div class="note">The growth chart — compounding, not plateauing. 4-stream path to ₹20–25 Cr.</div></div><div class="ph-tag fresh">Fresh</div></section>
     <section class="slide ph-slide" data-sec="The Machine" data-status="fresh"><div class="pad"><div class="kick">The Machine</div><div class="big">GTM novelty, powered by a supply-chain moat</div><div class="note">Backward integration — oat imports, COGS down, CM1 via imports.</div></div><div class="ph-tag fresh">Fresh</div></section>
     <section class="slide ph-slide" data-sec="The Machine" data-status="fresh"><div class="pad"><div class="kick">The Machine</div><div class="big">CPG in India, done differently</div><div class="note">The contrarian CPG approach — and where the ₹1,000 Cr sizing slide re-enters.</div></div><div class="ph-tag fresh">Fresh</div></section>
     <section class="slide ph-slide" data-sec="The Machine" data-status="fresh"><div class="pad"><div class="kick">The Machine</div><div class="big">The roadmap</div><div class="note">QSR + CPG across FY26-27 / FY27-28 / FY28-29.</div></div><div class="ph-tag fresh">Fresh</div></section>
 
-    <!-- 16-18 ROUND (placeholders) -->
+    <!-- 16-18 ROUND -->
     <section class="slide ph-slide" data-sec="The Round" data-status="fresh"><div class="pad"><div class="kick">The Round</div><div class="big">We are raising ₹X</div><div class="note">The ask + use of funds — milestone / city-structured. Lock the exact number (₹3.3–4 Cr).</div></div><div class="ph-tag fresh">Fresh</div></section>
     <section class="slide ph-slide" data-sec="The Round" data-status="fresh"><div class="pad"><div class="kick">The Round</div><div class="big">Who we are</div><div class="note">Team — headcount + depth (content engine, MCP-for-data). Address the solo-founder question.</div></div><div class="ph-tag fresh">Fresh</div></section>
     <section class="slide ph-slide" data-sec="The Round" data-status="fresh"><div class="pad"><div class="kick">The Round</div><div class="big">Reach out for more</div><div class="note">Closing / contact.</div></div><div class="ph-tag fresh">Fresh</div></section>
@@ -427,7 +475,7 @@
   let lastSec='';
   slides.forEach((s,k)=>{
     const st=s.dataset.status||'fresh';
-    const t=s.querySelector('.big,.s-title,.g3-title,.q,.opener .big,.wm');
+    const t=s.querySelector('.big,.s-title,.g3-title,.q,.stitle-c,.opener .big,.wm');
     const sec=s.dataset.sec;
     if(sec!==lastSec){ const h=document.createElement('div'); h.className='ovsec'; h.textContent=sec; ovgrid.appendChild(h); lastSec=sec; }
     const c=document.createElement('div'); c.className='ovcard';
