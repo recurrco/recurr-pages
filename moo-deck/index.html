@@ -7,12 +7,15 @@
 <title>MOO — Seed Deck (Working)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#1A1A1A; --paper:#F5ECDF; --oat:#F0DFC8; --line:#E4D8C5;
-    --muted:#8A8275; --green:#1F7A4D; --amber:#B5852A; --red:#C8102E;
-    --display:"Fraunces", Georgia, serif;
+    /* MOO Design System V1 — five colors, no negotiation */
+    --ink:#1A1A1A; --black:#1A1A1A;
+    --yellow:#FFD500; --red:#FF3D47; --blue:#4361EE; --oat:#F0DFC8;
+    --paper:#F0DFC8; --cream:#FAF4E9; --line:#E2D3B8; --muted:#8C7E66;
+    --green:#22C55E;
+    --display:"Bebas Neue", Impact, sans-serif;
     --body:"Inter", system-ui, sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -25,7 +28,7 @@
   .slide.active{opacity:1;pointer-events:auto;}
 
   #bar{position:fixed;left:0;right:0;bottom:0;height:42px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;color:#aaa;font-size:12px;letter-spacing:.04em;z-index:20;background:linear-gradient(transparent,rgba(0,0,0,.5));}
-  #bar .sec{font-weight:600;color:#ccc;text-transform:uppercase;letter-spacing:.12em;}
+  #bar .sec{font-weight:700;color:#ccc;text-transform:uppercase;letter-spacing:.14em;}
   #bar .nav{display:flex;align-items:center;gap:14px;}
   #bar button{background:none;border:1px solid #444;color:#bbb;border-radius:6px;width:30px;height:26px;cursor:pointer;font-size:14px;}
   #bar button:hover{border-color:#888;color:#fff;}
@@ -33,210 +36,178 @@
 
   #ov{position:fixed;inset:0;background:#0d0d0d;z-index:40;overflow:auto;display:none;padding:40px 28px 80px;}
   #ov.show{display:block;}
-  #ov h2{color:#fff;font-family:var(--display);font-weight:500;font-size:26px;text-align:center;margin-bottom:6px;}
+  #ov h2{color:#fff;font-family:var(--display);font-weight:400;font-size:34px;letter-spacing:.02em;text-align:center;margin-bottom:6px;}
   #ov .ovsub{color:#888;text-align:center;font-size:12.5px;margin-bottom:30px;}
   .ovgrid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
   .ovcard{background:#191919;border:1px solid #2a2a2a;border-radius:10px;padding:14px 16px;cursor:pointer;transition:.15s;}
   .ovcard:hover{border-color:#555;background:#202020;}
-  .ovcard .n{font-family:var(--display);font-size:15px;color:#666;}
+  .ovcard .n{font-family:var(--display);font-size:18px;color:#666;letter-spacing:.04em;}
   .ovcard .t{color:#eee;font-size:13.5px;font-weight:600;margin-top:3px;line-height:1.25;}
   .ovcard .s{font-size:10px;letter-spacing:.06em;text-transform:uppercase;margin-top:8px;display:inline-block;padding:3px 7px;border-radius:20px;}
   .s-done{background:#13351f;color:#5fd391;} .s-build{background:#3a3216;color:#e0b85a;} .s-fresh{background:#262626;color:#999;}
   .ovsec{grid-column:1/-1;color:#777;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-top:18px;padding-bottom:6px;border-bottom:1px solid #2a2a2a;}
 
-  /* ============ SLIDE STYLES ============ */
+  /* ============ SHARED ============ */
   .pad{position:absolute;inset:0;padding:60px 72px;}
-  .kick{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
-  .eyebrow{position:absolute;top:46px;left:0;right:0;text-align:center;font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);}
-  .s-title{font-family:var(--display);font-weight:600;letter-spacing:-.015em;line-height:1.05;color:var(--ink);}
-  .stitle-c{position:absolute;top:78px;left:72px;right:72px;text-align:center;font-family:var(--display);font-weight:600;font-size:42px;letter-spacing:-.02em;color:var(--ink);}
-  .sfoot{position:absolute;left:72px;right:72px;bottom:24px;font-size:11px;color:#b6ab97;}
+  .kick{font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);}
+  .eyebrow{position:absolute;top:46px;left:0;right:0;text-align:center;font-size:13px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--red);}
+  .s-title{font-family:var(--display);font-weight:400;letter-spacing:.005em;line-height:.94;color:var(--ink);}
+  .stitle-c{position:absolute;top:74px;left:72px;right:72px;text-align:center;font-family:var(--display);font-weight:400;font-size:60px;letter-spacing:.01em;line-height:.95;color:var(--ink);}
+  .sfoot{position:absolute;left:72px;right:72px;bottom:24px;font-size:11px;color:var(--muted);}
   .accent{color:var(--red);}
 
-  /* Cover */
-  .cover{background:#1A1A1A;color:#fff;}
-  .cover .wm{font-family:var(--display);font-weight:600;font-size:128px;letter-spacing:-.02em;}
-  .cover .pos{font-size:20px;color:#cfc7b8;margin-top:6px;font-weight:500;}
-  .cover .rd{position:absolute;bottom:48px;left:72px;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#7d756a;}
+  /* ===== Cover ===== */
+  .cover{background:var(--blue);}
+  .cv-logo{position:absolute;top:46px;left:50%;transform:translateX(-50%);height:84px;}
+  .cv-stage{position:absolute;left:40px;right:40px;bottom:96px;top:170px;display:flex;align-items:flex-end;justify-content:center;}
+  .cv-stage img{display:block;filter:drop-shadow(0 6px 10px rgba(0,0,0,.18));}
+  .cv-stage img:nth-child(odd){margin:0 -6px;}
+  .cv-stage img:nth-child(even){margin:0 -6px;}
+  .cv-strip{position:absolute;left:0;right:0;bottom:0;height:104px;background:var(--oat);display:flex;align-items:center;justify-content:center;gap:72px;z-index:2;}
+  .cv-strip .stat{display:flex;align-items:baseline;gap:11px;color:var(--red);}
+  .cv-strip .stat b{font-family:var(--display);font-weight:400;font-size:48px;line-height:1;letter-spacing:.02em;}
+  .cv-strip .stat span{font-family:var(--body);font-weight:700;font-size:15px;letter-spacing:.05em;text-transform:uppercase;}
 
   /* Slide 2 — revenue mosaic */
-  .mosaic{background:#FBF6EC;}
-  .tile{position:absolute;border-radius:14px;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 22px;box-shadow:0 10px 30px rgba(40,30,10,.13);}
-  .tile .bn{font-weight:800;line-height:1;letter-spacing:-.01em;}
-  .tile .rv{font-weight:600;opacity:.9;margin-top:9px;font-variant-numeric:tabular-nums;}
+  .mosaic{background:var(--paper);}
+  .tile{position:absolute;border-radius:14px;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 22px;box-shadow:0 10px 30px rgba(40,30,10,.16);}
+  .tile .bn{font-family:var(--display);font-weight:400;line-height:.96;letter-spacing:.02em;}
+  .tile .rv{font-weight:700;opacity:.92;margin-top:7px;font-variant-numeric:tabular-nums;}
   .m-head{position:absolute;left:72px;right:72px;bottom:92px;text-align:center;}
-  .m-head .q{font-family:var(--display);font-weight:600;font-size:48px;color:var(--ink);letter-spacing:-.02em;}
-  .m-note{position:absolute;left:0;right:0;bottom:32px;text-align:center;font-size:12px;color:#a99e8a;}
+  .m-head .q{font-family:var(--display);font-weight:400;font-size:64px;color:var(--ink);letter-spacing:.01em;line-height:.95;}
+  .m-note{position:absolute;left:0;right:0;bottom:32px;text-align:center;font-size:12px;color:var(--muted);}
 
   /* Slide 3 — grid */
   .grid3{background:#fff;}
   .g3-head{text-align:center;}
-  .g3-title{font-family:var(--display);font-weight:600;font-size:44px;letter-spacing:-.02em;}
-  .g3-sub{font-size:19px;color:#5d564b;margin-top:8px;font-weight:500;}
-  .matrix{position:absolute;left:150px;right:64px;top:206px;bottom:78px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:14px;}
-  .rowlab{position:absolute;left:64px;font-weight:800;font-size:22px;color:var(--ink);}
-  .rowlab.cpg{top:250px;} .rowlab.qsr{top:470px;}
-  .cell{background:#F3EFE7;border-radius:12px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+  .g3-title{font-family:var(--display);font-weight:400;font-size:62px;letter-spacing:.01em;line-height:.95;}
+  .g3-sub{font-size:19px;color:#5d564b;margin-top:10px;font-weight:500;}
+  .matrix{position:absolute;left:150px;right:64px;top:212px;bottom:78px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:14px;}
+  .rowlab{position:absolute;left:64px;font-family:var(--display);font-weight:400;font-size:30px;letter-spacing:.02em;color:var(--ink);}
+  .rowlab.cpg{top:256px;} .rowlab.qsr{top:476px;}
+  .cell{background:var(--oat);border-radius:12px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
   .cell img{position:absolute;width:60%;height:78%;object-fit:contain;}
   .cell img.a{left:6%;transform:rotate(-4deg);} .cell img.b{right:6%;transform:rotate(4deg);width:55%;}
-  .cell .ph{color:#b3a890;font-size:12px;font-weight:600;text-align:center;letter-spacing:.04em;padding:8px;}
-  .collab{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-weight:800;font-size:15px;text-transform:uppercase;letter-spacing:.06em;text-align:center;background:rgba(255,255,255,.94);color:var(--ink);padding:5px 16px;border-radius:20px;box-shadow:0 2px 10px rgba(0,0,0,.12);white-space:nowrap;}
-  .g3-foot{position:absolute;left:150px;right:64px;bottom:26px;font-size:11.5px;color:#a99e8a;}
+  .cell .ph{color:#9a8e74;font-size:12px;font-weight:600;text-align:center;letter-spacing:.04em;padding:8px;}
+  .collab{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:.08em;text-align:center;background:#fff;color:var(--ink);padding:5px 16px;border-radius:20px;box-shadow:0 2px 10px rgba(0,0,0,.12);white-space:nowrap;}
+  .g3-foot{position:absolute;left:150px;right:64px;bottom:26px;font-size:11.5px;color:var(--muted);}
 
   /* Slide 4 — Oats 2020 -> 2026 */
   .oats{background:#fff;}
-  .oats .lanes{position:absolute;left:72px;right:72px;top:184px;display:flex;flex-direction:column;gap:22px;}
-  .lane{display:grid;grid-template-columns:78px 232px 64px 1fr;align-items:center;gap:18px;}
-  .lane .ch{font-weight:800;font-size:24px;color:var(--ink);}
-  .y20{background:#F1ECE2;border:1px solid var(--line);border-radius:12px;padding:16px 18px;height:104px;display:flex;flex-direction:column;justify-content:center;}
-  .y20 .yr{font-size:11px;font-weight:700;letter-spacing:.12em;color:#a99e8a;}
-  .y20 .v{font-size:30px;font-weight:800;color:#7d7565;line-height:1;margin-top:4px;}
+  .oats .lanes{position:absolute;left:72px;right:72px;top:188px;display:flex;flex-direction:column;gap:22px;}
+  .lane{display:grid;grid-template-columns:96px 232px 64px 1fr;align-items:center;gap:18px;}
+  .lane .ch{font-family:var(--display);font-weight:400;font-size:38px;letter-spacing:.02em;color:var(--ink);}
+  .y20{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:16px 18px;height:104px;display:flex;flex-direction:column;justify-content:center;}
+  .y20 .yr{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--muted);}
+  .y20 .v{font-family:var(--display);font-weight:400;font-size:38px;color:#9a8e74;line-height:.9;margin-top:6px;letter-spacing:.02em;}
   .y20 .d{font-size:12px;color:#9a917f;margin-top:6px;}
   .arr{font-size:34px;color:#d8cdb8;text-align:center;}
-  .y26{color:#fff;border-radius:14px;padding:18px 24px;height:118px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 12px 34px rgba(40,30,10,.16);}
-  .y26.cpg{background:var(--red);} .y26.qsr{background:#1A1A1A;}
-  .y26 .yr{font-size:11px;font-weight:700;letter-spacing:.12em;opacity:.8;}
-  .y26 .v{font-size:42px;font-weight:900;line-height:1;margin-top:2px;letter-spacing:-.02em;}
-  .y26 .d{font-size:13.5px;opacity:.95;margin-top:7px;line-height:1.35;max-width:760px;}
-  .oats .band{position:absolute;left:72px;right:72px;bottom:64px;display:flex;gap:14px;}
-  .bcell{flex:1;background:#FBF6EC;border:1px solid var(--line);border-radius:12px;padding:14px 20px;}
-  .bcell b{font-size:20px;font-weight:800;} .bcell span{font-size:13px;color:#6b6457;display:block;margin-top:2px;}
+  .y26{color:#fff;border-radius:14px;padding:16px 24px;height:118px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 12px 34px rgba(40,30,10,.16);}
+  .y26.cpg{background:var(--red);} .y26.qsr{background:var(--black);}
+  .y26 .yr{font-size:11px;font-weight:800;letter-spacing:.14em;opacity:.82;}
+  .y26 .v{font-family:var(--display);font-weight:400;font-size:52px;line-height:.9;margin-top:4px;letter-spacing:.02em;}
+  .y26 .d{font-size:13px;opacity:.95;margin-top:7px;line-height:1.35;max-width:760px;font-weight:500;}
+  .oats .band{position:absolute;left:72px;right:72px;bottom:60px;display:flex;gap:14px;}
+  .bcell{flex:1;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:14px 20px;}
+  .bcell b{font-family:var(--display);font-weight:400;font-size:28px;letter-spacing:.02em;} .bcell span{font-size:13px;color:#6b6457;display:block;margin-top:2px;}
 
   /* Section opener (dark) + timeline */
-  .opener{background:#1A1A1A;color:#fff;}
-  .opener .lbl{font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#7d756a;}
-  .opener .big{font-family:var(--display);font-weight:600;font-size:60px;letter-spacing:-.02em;line-height:1.02;margin-top:10px;}
+  .opener{background:var(--black);color:#fff;}
+  .opener .lbl{font-size:13px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#8aa0ff;}
+  .opener .big{font-family:var(--display);font-weight:400;font-size:88px;letter-spacing:.01em;line-height:.92;margin-top:12px;}
   .tline{position:absolute;left:72px;right:72px;top:300px;}
   .tline .track{position:relative;height:2px;background:#3a352e;margin:0 60px;}
   .tnode{position:absolute;top:-9px;width:20px;height:20px;border-radius:50%;background:#3a352e;transform:translateX(-50%);}
-  .tnode.now{background:var(--red);box-shadow:0 0 0 6px rgba(200,16,46,.25);}
-  .tlabel{position:absolute;top:-58px;transform:translateX(-50%);text-align:center;}
-  .tlabel .yr{font-family:var(--display);font-size:34px;font-weight:600;}
-  .tlabel .tag{font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-top:2px;}
+  .tnode.now{background:var(--red);box-shadow:0 0 0 6px rgba(255,61,71,.28);}
+  .tlabel{position:absolute;top:-60px;transform:translateX(-50%);text-align:center;}
+  .tlabel .yr{font-family:var(--display);font-size:42px;font-weight:400;letter-spacing:.02em;}
+  .tlabel .tag{font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-top:2px;font-weight:600;}
   .tlabel.muted .yr{color:#6b6458;} .tlabel.muted .tag{color:#5a554d;}
-  .tlabel.now .yr{color:#fff;} .tlabel.now .tag{color:var(--red);font-weight:700;}
+  .tlabel.now{top:-86px;} .tlabel.now .yr{color:#fff;} .tlabel.now .tag{color:var(--red);font-weight:800;margin-top:4px;}
   .tlabel.future .yr{color:#cfc7b8;} .tlabel.future .tag{color:#8a8275;}
   .opener .strip{position:absolute;left:72px;right:72px;bottom:54px;display:flex;gap:36px;border-top:1px solid #333;padding-top:22px;}
-  .opener .strip div b{font-family:var(--display);font-size:32px;font-weight:600;display:block;}
+  .opener .strip div b{font-family:var(--display);font-size:46px;font-weight:400;display:block;letter-spacing:.02em;line-height:.9;}
   .opener .strip div span{font-size:12px;color:#9a917f;letter-spacing:.04em;}
 
   /* Collage */
   .collage{background:#fff;}
   .col-stats{position:absolute;top:84px;left:72px;display:flex;gap:12px;}
   .cstat{border-radius:12px;padding:12px 18px;color:#fff;}
-  .cstat b{font-family:var(--display);font-size:30px;font-weight:600;line-height:1;display:block;}
-  .cstat span{font-size:12px;opacity:.9;}
-  .wall{position:absolute;left:72px;right:72px;top:170px;bottom:34px;column-count:5;column-gap:10px;}
+  .cstat b{font-family:var(--display);font-size:42px;font-weight:400;line-height:.85;display:block;letter-spacing:.02em;}
+  .cstat span{font-size:12px;opacity:.92;font-weight:600;}
+  .wall{position:absolute;left:72px;right:72px;top:174px;bottom:34px;column-count:5;column-gap:10px;}
   .wcard{break-inside:avoid;margin-bottom:10px;border:1px solid #ececec;border-radius:10px;overflow:hidden;position:relative;background:#f6f3ee;}
   .wcard img{width:100%;display:block;object-fit:cover;}
   .wcard .cap{position:absolute;top:6px;left:6px;font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:rgba(0,0,0,.62);color:#fff;padding:3px 7px;border-radius:5px;}
 
   /* Menu / categories */
-  .menu{background:#FBF6EC;}
-  .mgrid{position:absolute;left:72px;right:72px;top:166px;bottom:124px;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:1fr;gap:12px;}
+  .menu{background:var(--paper);}
+  .mgrid{position:absolute;left:72px;right:72px;top:172px;bottom:124px;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:1fr;gap:12px;}
   .mc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;}
   .mc .nm{font-weight:800;font-size:18px;line-height:1.1;}
-  .mc .ct{font-size:12px;color:#8a8275;margin-top:6px;}
+  .mc .ct{font-size:12px;color:var(--muted);margin-top:6px;}
   .mc.hl{background:var(--red);color:#fff;border-color:var(--red);}
-  .mc.hl .ct{color:rgba(255,255,255,.85);}
+  .mc.hl .ct{color:rgba(255,255,255,.88);}
   .mc.img{padding:0;overflow:hidden;}.mc.img img{width:100%;height:100%;object-fit:cover;}
   .mfoot{position:absolute;left:72px;right:72px;bottom:54px;display:flex;align-items:center;gap:16px;}
-  .mfoot .pin{font-family:var(--display);font-size:30px;font-weight:600;color:var(--ink);}
+  .mfoot .pin{font-family:var(--display);font-size:42px;font-weight:400;color:var(--ink);letter-spacing:.02em;line-height:.9;}
   .mfoot .pt{font-size:15px;color:#5d564b;}
 
   /* Funnel */
-  .funnelwrap{position:absolute;left:72px;top:180px;bottom:48px;width:560px;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;}
+  .funnelwrap{position:absolute;left:72px;top:184px;bottom:48px;width:560px;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;}
   .fband{border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:14px;}
   .fband .ft{font-weight:800;font-size:21px;line-height:1.1;}
-  .fband .fs{font-size:12.5px;opacity:.92;margin-top:4px;max-width:380px;}
-  .f1{width:100%;height:130px;background:#E7C9A0;color:#5d4a2e;}
-  .f2{width:74%;height:130px;background:#D98A4E;}
-  .f3{width:50%;height:150px;background:#C8102E;position:relative;}
+  .fband .fs{font-size:12.5px;opacity:.92;margin-top:4px;max-width:380px;font-weight:500;}
+  .f1{width:100%;height:130px;background:#E3CB94;color:#6b5836;}
+  .f2{width:74%;height:130px;background:var(--yellow);color:#5a4a14;}
+  .f3{width:50%;height:150px;background:var(--red);position:relative;}
   .fcall{position:absolute;right:-220px;bottom:24px;width:200px;}
-  .fcall b{font-family:var(--display);font-size:50px;font-weight:600;color:var(--red);line-height:1;}
-  .fcall span{font-size:13px;color:#5d564b;display:block;}
+  .fcall b{font-family:var(--display);font-size:68px;font-weight:400;color:var(--red);line-height:.85;letter-spacing:.02em;}
+  .fcall span{font-size:13px;color:#5d564b;display:block;font-weight:500;}
   .fside{position:absolute;right:72px;top:200px;width:480px;}
-  .fside h4{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+  .fside h4{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:14px;}
   .fside .occ{display:flex;gap:10px;margin-bottom:22px;}
-  .fside .occ div{flex:1;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center;font-weight:700;font-size:14px;}
-  .fside .occ div span{display:block;font-size:11px;color:#8a8275;font-weight:500;margin-top:3px;}
+  .fside .occ div{flex:1;background:var(--cream);border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center;font-weight:700;font-size:14px;}
+  .fside .occ div span{display:block;font-size:11px;color:var(--muted);font-weight:500;margin-top:3px;}
   .fside .maprow{font-size:15px;color:#3d382f;padding:10px 0;border-bottom:1px solid var(--line);line-height:1.4;}
   .fside .maprow b{color:var(--ink);}
 
   /* Lean kitchen: cards + masonry */
   .lean{background:#fff;}
-  .ops{position:absolute;left:72px;top:180px;bottom:48px;width:660px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:14px;}
-  .opcard{background:#FAF7F1;border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:center;}
-  .opcard b{font-family:var(--display);font-weight:600;font-size:30px;color:var(--ink);line-height:1;letter-spacing:-.01em;}
-  .opcard .big{font-size:46px;}
-  .opcard span{font-size:13px;color:#6b6457;margin-top:10px;line-height:1.4;}
-  .mason{position:absolute;right:72px;top:180px;bottom:48px;width:430px;column-count:2;column-gap:12px;}
+  .ops{position:absolute;left:72px;top:184px;bottom:48px;width:660px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:14px;}
+  .opcard{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:center;}
+  .opcard b{font-family:var(--display);font-weight:400;font-size:48px;color:var(--ink);line-height:.85;letter-spacing:.02em;}
+  .opcard .big{font-size:62px;}
+  .opcard span{font-size:13px;color:#6b6457;margin-top:12px;line-height:1.4;font-weight:500;}
+  .opcard span b{font-family:var(--body);font-size:15px;color:var(--ink);}
+  .mason{position:absolute;right:72px;top:184px;bottom:48px;width:430px;column-count:2;column-gap:12px;}
   .mtile{break-inside:avoid;margin-bottom:12px;border-radius:12px;overflow:hidden;position:relative;border:1px solid #ececec;}
   .mtile img{width:100%;display:block;object-fit:cover;}
-  .mtile.chip{background:var(--ink);color:#fff;padding:18px;font-family:"Fraunces",serif;font-weight:600;font-size:24px;line-height:1.1;}
+  .mtile.chip{background:var(--black);color:#fff;padding:18px;font-family:var(--display);font-weight:400;font-size:34px;line-height:.95;letter-spacing:.02em;}
   .mtile.chip.red{background:var(--red);}
-
-  /* econ bar */
-  .econ{background:#fff;}
-  .ebar{position:absolute;left:72px;right:72px;top:300px;height:96px;display:flex;border-radius:12px;overflow:hidden;font-weight:700;color:#fff;}
-  .eseg{display:flex;align-items:center;justify-content:center;font-size:14px;text-align:center;padding:4px;}
-  .eaxis{position:absolute;left:72px;right:72px;top:270px;font-size:12px;color:#9a917f;display:flex;justify-content:space-between;}
-  .econ .claims{position:absolute;left:72px;right:72px;top:450px;display:flex;gap:16px;}
-  .claim{flex:1;background:#FBF6EC;border:1px solid var(--line);border-radius:12px;padding:18px 22px;}
-  .claim b{font-size:19px;font-weight:800;display:block;margin-bottom:4px;} .claim span{font-size:13.5px;color:#6b6457;}
-
-  /* Section 3 — The Machine */
-  .m3-open{background:#1A1A1A;color:#fff;}
-  .m3-open .lbl{font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#7d756a;}
-  .m3-open .big{font-family:var(--display);font-weight:600;font-size:56px;letter-spacing:-.02em;line-height:1.04;margin-top:10px;}
-  .m3-open .sl{font-size:20px;color:#cfc7b8;margin-top:14px;font-weight:500;}
-  .engines{position:absolute;left:72px;right:72px;bottom:60px;display:flex;gap:16px;}
-  .engine{flex:1;border:1px solid #333;border-radius:14px;padding:22px;background:#212121;}
-  .engine .en{font-family:var(--display);font-size:15px;color:var(--red);font-weight:600;letter-spacing:.02em;}
-  .engine .et{font-size:23px;font-weight:800;margin-top:6px;}
-  .engine .ed{font-size:13px;color:#9a917f;margin-top:8px;line-height:1.4;}
-  .engine .stt{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;margin-top:14px;color:#5fd391;font-weight:700;}
-  .engine.next .stt{color:#e0b85a;} .engine.soon .stt{color:#8a8275;}
-  .m3lab{position:absolute;top:60px;left:72px;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);}
-  .kpis{position:absolute;left:72px;right:72px;top:170px;bottom:60px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-  .kpi{background:#FAF7F1;border:1px solid var(--line);border-radius:14px;padding:24px 28px;display:flex;flex-direction:column;justify-content:center;}
-  .kpi b{font-family:var(--display);font-size:32px;font-weight:600;color:var(--ink);line-height:1;}
-  .kpi .t{font-size:14.5px;color:#5d564b;margin-top:10px;line-height:1.45;}
-  .moatflow{position:absolute;left:72px;right:72px;top:210px;display:flex;align-items:center;gap:12px;}
-  .mstep{flex:1;background:#1A1A1A;color:#fff;border-radius:12px;padding:20px;text-align:center;font-weight:800;font-size:19px;}
-  .mstep span{display:block;font-size:12px;color:#b8b2a6;font-weight:500;margin-top:5px;}
-  .marrow{font-size:28px;color:#d8cdb8;}
-  .moatwhy{position:absolute;left:72px;right:72px;top:380px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
-  .mw{background:#FBF6EC;border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
-  .mw b{font-size:15px;font-weight:800;display:block;margin-bottom:6px;} .mw span{font-size:13px;color:#6b6457;line-height:1.4;}
-  .m3pat{position:absolute;left:72px;right:72px;bottom:56px;background:var(--red);color:#fff;border-radius:12px;padding:16px 24px;font-weight:600;font-size:17px;text-align:center;}
-  .aggstats{position:absolute;left:72px;right:72px;top:450px;display:flex;gap:14px;}
-  .aggstats .claim{flex:1;}
 
   /* Section 3 — the 100x journey (faithful) */
   .s3{background:#fff;}
-  .s3lab{position:absolute;top:50px;left:72px;font-size:14px;font-weight:700;color:var(--ink);}
-  .s3h{position:absolute;left:72px;font-family:var(--display);font-weight:600;letter-spacing:-.02em;color:var(--ink);line-height:1.05;}
+  .s3lab{position:absolute;top:50px;left:72px;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);}
+  .s3h{position:absolute;left:72px;font-family:var(--display);font-weight:400;letter-spacing:.01em;color:var(--ink);line-height:.95;}
   .s3p{font-weight:600;color:#2a2620;line-height:1.34;}
   .nb{position:absolute;border-radius:12px;padding:20px 24px;font-weight:700;line-height:1.22;font-size:19px;}
-  .nb.blue{background:#324CF2;color:#fff;} .nb.yellow{background:#FFD300;color:#2a2620;}
+  .nb.blue{background:var(--blue);color:#fff;} .nb.yellow{background:var(--yellow);color:#2a2620;}
   .tnode5{position:absolute;top:-7px;width:16px;height:16px;border-radius:50%;background:#cdc4b4;transform:translateX(-50%);}
-  .tnode5.now{background:var(--red);box-shadow:0 0 0 6px rgba(200,16,46,.25);}
+  .tnode5.now{background:var(--red);box-shadow:0 0 0 6px rgba(255,61,71,.28);}
   .pill2{display:flex;align-items:center;gap:16px;}
-  .pill2 .num{font-family:var(--display);font-weight:700;font-size:60px;line-height:1;}
+  .pill2 .num{font-family:var(--display);font-weight:400;font-size:72px;line-height:.85;letter-spacing:.02em;}
   .pill2 .lab{font-weight:800;font-size:21px;border-radius:40px;padding:13px 26px;color:#fff;}
   .frow{display:grid;grid-template-columns:260px 70px;align-items:baseline;column-gap:18px;padding:6px 0;}
-  .frow .fn{font-weight:800;font-size:27px;color:var(--ink);}
-  .frow .fn em{font-style:normal;font-size:13px;color:#8a8275;font-weight:700;letter-spacing:.04em;text-transform:uppercase;display:block;}
+  .frow .fn{font-family:var(--display);font-weight:400;font-size:36px;color:var(--ink);letter-spacing:.02em;line-height:1;}
+  .frow .fn em{font-style:normal;font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:block;font-family:var(--body);}
   .frow .fr{font-weight:800;font-size:26px;color:var(--green);letter-spacing:.04em;}
-  .chb{position:absolute;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-weight:800;}
+  .chb{position:absolute;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:var(--display);font-weight:400;letter-spacing:.02em;}
 
   /* Generic placeholder */
   .ph-slide{background:var(--paper);}
-  .ph-slide .big{font-family:var(--display);font-weight:600;font-size:46px;letter-spacing:-.015em;line-height:1.08;max-width:900px;margin-top:14px;}
+  .ph-slide .big{font-family:var(--display);font-weight:400;font-size:62px;letter-spacing:.01em;line-height:.95;max-width:900px;margin-top:14px;}
   .ph-slide .note{font-size:16px;color:#6b6457;margin-top:20px;max-width:700px;line-height:1.5;}
-  .ph-tag{position:absolute;top:60px;right:72px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:#c3b69e;padding:6px 12px;border-radius:20px;}
-  .ph-tag.fresh{background:#b8ad98;} .ph-tag.build{background:var(--amber);}
 </style>
 </head>
 <body>
@@ -247,23 +218,32 @@
   <div class="frame" id="frame">
 
     <!-- 1 COVER -->
-    <section class="slide cover" data-sec="Cover" data-status="done">
-      <div class="pad" style="display:flex;flex-direction:column;justify-content:center;">
-        <div class="wm">MOO</div>
-        <div class="pos">Cereals for grown-ups. The omnichannel oat brand.</div>
+    <section class="slide cover" data-sec="Cover" data-status="done" data-title="Ministry of Oats — Cover">
+      <img class="cv-logo" src="img/logo-moo.png" alt="Ministry of Oats">
+      <div class="cv-stage">
+        <img src="img/bunny-1.png" style="height:300px;">
+        <img src="img/bunny-2.png" style="height:338px;">
+        <img src="img/bunny-3.png" style="height:312px;">
+        <img src="img/bunny-4.png" style="height:330px;">
+        <img src="img/bunny-5.png" style="height:316px;">
+        <img src="img/bunny-6.png" style="height:326px;">
       </div>
-      <div class="rd">Ministry of Oats · Seed Round 2026</div>
+      <div class="cv-strip">
+        <div class="stat"><b>2.7Cr</b><span>ARR</span></div>
+        <div class="stat"><b>1.5K+</b><span>orders / week</span></div>
+        <div class="stat"><b>3</b><span>stores</span></div>
+      </div>
     </section>
 
     <!-- 2 REVENUE MOSAIC -->
     <section class="slide mosaic" data-sec="The Thesis" data-status="done">
-      <div class="tile" style="left:60px;top:70px;width:312px;height:158px;background:#C8102E;transform:rotate(-3deg);"><div class="bn" style="font-size:40px;">Haldiram's</div><div class="rv" style="font-size:17px;">₹12,800 Cr</div></div>
-      <div class="tile" style="left:792px;top:56px;width:236px;height:128px;background:#00704A;transform:rotate(2.5deg);"><div class="bn" style="font-size:30px;">Starbucks</div><div class="rv" style="font-size:15px;">₹1,277 Cr</div></div>
-      <div class="tile" style="left:440px;top:96px;width:236px;height:128px;background:#E4002B;transform:rotate(-2deg);"><div class="bn" style="font-size:27px;">Bikanervala</div><div class="rv" style="font-size:15px;">₹1,430 Cr</div></div>
-      <div class="tile" style="left:1040px;top:120px;width:184px;height:112px;background:#1A1A1A;transform:rotate(3deg);"><div class="bn" style="font-size:22px;">Wow! Momo</div><div class="rv" style="font-size:13px;">₹470 Cr</div></div>
-      <div class="tile" style="left:150px;top:286px;width:184px;height:112px;background:#0E2A47;transform:rotate(2deg);"><div class="bn" style="font-size:24px;">Blue Tokai</div><div class="rv" style="font-size:13px;">₹325 Cr</div></div>
-      <div class="tile" style="left:516px;top:288px;width:152px;height:96px;background:#5B8C3E;transform:rotate(-3.5deg);"><div class="bn" style="font-size:21px;">Chaayos</div><div class="rv" style="font-size:12px;">₹249 Cr</div></div>
-      <div class="tile" style="left:816px;top:300px;width:152px;height:96px;background:#00529B;transform:rotate(3deg);"><div class="bn" style="font-size:19px;">Chai Point</div><div class="rv" style="font-size:12px;">₹206 Cr</div></div>
+      <div class="tile" style="left:60px;top:70px;width:312px;height:158px;background:#C8102E;transform:rotate(-3deg);"><div class="bn" style="font-size:50px;">Haldiram's</div><div class="rv" style="font-size:17px;">₹12,800 Cr</div></div>
+      <div class="tile" style="left:792px;top:56px;width:236px;height:128px;background:#00704A;transform:rotate(2.5deg);"><div class="bn" style="font-size:38px;">Starbucks</div><div class="rv" style="font-size:15px;">₹1,277 Cr</div></div>
+      <div class="tile" style="left:440px;top:96px;width:236px;height:128px;background:#E4002B;transform:rotate(-2deg);"><div class="bn" style="font-size:34px;">Bikanervala</div><div class="rv" style="font-size:15px;">₹1,430 Cr</div></div>
+      <div class="tile" style="left:1040px;top:120px;width:184px;height:112px;background:#1A1A1A;transform:rotate(3deg);"><div class="bn" style="font-size:28px;">Wow! Momo</div><div class="rv" style="font-size:13px;">₹470 Cr</div></div>
+      <div class="tile" style="left:150px;top:286px;width:184px;height:112px;background:#0E2A47;transform:rotate(2deg);"><div class="bn" style="font-size:30px;">Blue Tokai</div><div class="rv" style="font-size:13px;">₹325 Cr</div></div>
+      <div class="tile" style="left:516px;top:288px;width:152px;height:96px;background:#5B8C3E;transform:rotate(-3.5deg);"><div class="bn" style="font-size:27px;">Chaayos</div><div class="rv" style="font-size:12px;">₹249 Cr</div></div>
+      <div class="tile" style="left:816px;top:300px;width:152px;height:96px;background:#00529B;transform:rotate(3deg);"><div class="bn" style="font-size:24px;">Chai Point</div><div class="rv" style="font-size:12px;">₹206 Cr</div></div>
       <div class="m-head"><div class="q">What do they all have in common?</div></div>
       <div class="m-note">Tile size ≈ India revenue (latest reported FY24–25). Haldiram's = combined group, estimated. Indicative, not to exact scale.</div>
     </section>
@@ -295,7 +275,7 @@
     <section class="slide oats" data-sec="The Thesis" data-status="done">
       <div class="pad" style="padding-bottom:0;">
         <div class="kick">The Thesis</div>
-        <div class="s-title" style="font-size:46px;margin-top:12px;">The surprising next big commodity: <span class="accent">Oats</span></div>
+        <div class="s-title" style="font-size:60px;margin-top:12px;">The surprising next big commodity: <span class="accent">Oats</span></div>
       </div>
       <div class="lanes">
         <div class="lane">
@@ -308,7 +288,7 @@
           <div class="ch">QSR</div>
           <div class="y20"><div class="yr">2020</div><div class="v">&lt;10 SKUs</div><div class="d">a niche health add-on on Zomato</div></div>
           <div class="arr">→</div>
-          <div class="y26 qsr"><div class="yr">2026</div><div class="v">40+ oat-led kitchens</div><div class="d">live on Zomato &amp; Swiggy. EatFit's single best-selling SKU is an oatmeal — Fruit Pop Oatmeal.</div></div>
+          <div class="y26 qsr"><div class="yr">2026</div><div class="v">40+ kitchens</div><div class="d">live on Zomato &amp; Swiggy. EatFit's single best-selling SKU is an oatmeal — Fruit Pop Oatmeal.</div></div>
         </div>
       </div>
       <div class="band">
@@ -416,10 +396,10 @@
       <div class="eyebrow">What's working for us</div>
       <div class="stitle-c">Lean &amp; fast kitchen operations</div>
       <div class="ops">
-        <div class="opcard"><b>₹7L</b><span><b style="font-size:15px;">Low-cost expansion.</b> A new kitchen costs under 50% of a traditional build.</span></div>
-        <div class="opcard"><b class="big">&lt;10m</b><span><b style="font-size:15px;">Orders dispatch fast.</b> Recipes are quick-commerce-ready — mostly picking &amp; packing.</span></div>
-        <div class="opcard"><b class="big">&lt;1%</b><span><b style="font-size:15px;">Wastage.</b> Low-perishability intermediates (like soaked oats) by design.</span></div>
-        <div class="opcard"><b style="font-size:26px;">No cooking.<br>No chef.</b><span>Solves staffing — easy sourcing, low training, lower churn.</span></div>
+        <div class="opcard"><b>₹7L</b><span><b>Low-cost expansion.</b> A new kitchen costs under 50% of a traditional build.</span></div>
+        <div class="opcard"><b class="big">&lt;10m</b><span><b>Orders dispatch fast.</b> Recipes are quick-commerce-ready — mostly picking &amp; packing.</span></div>
+        <div class="opcard"><b class="big">&lt;1%</b><span><b>Wastage.</b> Low-perishability intermediates (like soaked oats) by design.</span></div>
+        <div class="opcard"><b style="font-size:40px;">No cooking.<br>No chef.</b><span>Solves staffing — easy sourcing, low training, lower churn.</span></div>
       </div>
       <div class="mason">
         <div class="mtile chip red">#1 in the BLR breakfast slot</div>
@@ -433,7 +413,7 @@
     <section class="slide opener" data-sec="The 100x Journey" data-status="done">
       <div class="pad" style="display:flex;flex-direction:column;justify-content:center;">
         <div class="lbl">Section 3</div>
-        <div class="big" style="font-size:66px;">Taking off on<br>a 100x journey</div>
+        <div class="big" style="font-size:96px;">Taking off on<br>a 100x journey</div>
       </div>
       <div class="tline" style="top:auto;bottom:118px;">
         <div class="track">
@@ -454,63 +434,63 @@
     <!-- 11 — INDIA READY FOR OMNI-CHANNEL OATS -->
     <section class="slide s3" data-sec="The 100x Journey" data-status="done">
       <div class="s3lab">Taking off on a 100x journey</div>
-      <div class="s3h" style="top:84px;right:72px;font-size:44px;">India is ready for an omni-channel Oats brand</div>
-      <div style="position:absolute;top:152px;left:72px;font-size:20px;font-weight:600;color:#5d564b;">No brand meets the customer across <b style="color:var(--ink);">both</b> — the CPG shelf and the QSR counter.</div>
-      <svg viewBox="0 0 720 330" style="position:absolute;left:72px;top:238px;width:720px;">
+      <div class="s3h" style="top:80px;right:72px;font-size:60px;">India is ready for an omni-channel Oats brand</div>
+      <div style="position:absolute;top:166px;left:72px;font-size:20px;font-weight:600;color:#5d564b;">No brand meets the customer across <b style="color:var(--ink);">both</b> — the CPG shelf and the QSR counter.</div>
+      <svg viewBox="0 0 720 330" style="position:absolute;left:72px;top:244px;width:720px;">
         <line x1="24" y1="14" x2="24" y2="296" stroke="#cdc4b4" stroke-width="2"/>
         <line x1="24" y1="296" x2="700" y2="296" stroke="#cdc4b4" stroke-width="2"/>
-        <path d="M24 296 C 280 268, 470 175, 690 58 L690 296 Z" fill="#6B4EFF"/>
-        <path d="M24 296 C 320 290, 520 245, 690 158 L690 296 Z" fill="#FF5A5F"/>
-        <text x="330" y="205" font-family="Inter" font-size="22" font-weight="800" fill="#fff">Oats</text>
+        <path d="M24 296 C 280 268, 470 175, 690 58 L690 296 Z" fill="#4361EE"/>
+        <path d="M24 296 C 320 290, 520 245, 690 158 L690 296 Z" fill="#FF3D47"/>
+        <text x="300" y="278" font-family="Inter" font-size="26" font-weight="800" fill="#fff">Oats</text>
         <circle cx="612" cy="78" r="22" fill="#1A1A1A"/>
         <text x="612" y="44" text-anchor="middle" font-family="Inter" font-size="18" font-weight="800" fill="#1A1A1A">Coffee</text>
       </svg>
-      <div style="position:absolute;left:150px;bottom:42px;font-size:15px;font-weight:700;color:#9a917f;">From commercial kitchens → household kitchens</div>
+      <div style="position:absolute;left:150px;bottom:42px;font-size:15px;font-weight:700;color:var(--muted);">From commercial kitchens → household kitchens</div>
       <div style="position:absolute;right:96px;top:300px;display:flex;flex-direction:column;gap:30px;">
-        <div class="pill2"><span class="num" style="color:#6B4EFF;">1</span><span class="lab" style="background:#6B4EFF;">Educate through QSRs</span></div>
-        <div class="pill2"><span class="num" style="color:#FF5A5F;">2</span><span class="lab" style="background:#FF5A5F;">Show up on CPG shelf</span></div>
+        <div class="pill2"><span class="num" style="color:var(--blue);">1</span><span class="lab" style="background:var(--blue);">Educate through QSRs</span></div>
+        <div class="pill2"><span class="num" style="color:var(--red);">2</span><span class="lab" style="background:var(--red);">Show up on CPG shelf</span></div>
       </div>
     </section>
 
     <!-- 12 — NEW CHANNELS UNLOCK MARKETS -->
     <section class="slide s3" data-sec="The 100x Journey" data-status="done">
       <div class="s3lab">Taking off on a 100x journey</div>
-      <div class="s3h" style="top:84px;font-size:44px;">New channels unlock markets and revenue</div>
+      <div class="s3h" style="top:80px;font-size:60px;">New channels unlock markets and revenue</div>
       <svg viewBox="0 0 1280 720" style="position:absolute;inset:0;width:1280px;height:720px;pointer-events:none;">
         <path d="M402 435 H446 V325 H490 M446 435 V535 H490" fill="none" stroke="#cdc4b4" stroke-width="2"/>
-        <path d="M600 460 V404" fill="none" stroke="#FF5A5F" stroke-width="3"/><path d="M600 400 l-6 10 h12 z" fill="#FF5A5F"/>
+        <path d="M600 460 V404" fill="none" stroke="#FF3D47" stroke-width="3"/><path d="M600 400 l-6 10 h12 z" fill="#FF3D47"/>
         <line x1="710" y1="300" x2="756" y2="300" stroke="#cdc4b4" stroke-width="2"/>
         <line x1="710" y1="365" x2="756" y2="365" stroke="#cdc4b4" stroke-width="2"/>
         <line x1="710" y1="430" x2="756" y2="430" stroke="#cdc4b4" stroke-width="2"/>
       </svg>
-      <div class="chb" style="left:72px;top:340px;width:330px;height:190px;background:#E7E3DB;"><div style="font-size:30px;color:#324CF2;">Inventory</div><div style="font-size:13px;color:#3d382f;font-weight:700;max-width:240px;margin-top:8px;">&gt;50% of current inventory is Oats &amp; derivatives</div></div>
-      <div class="chb" style="left:490px;top:250px;width:220px;height:150px;background:#E7E3DB;font-size:30px;color:#324CF2;">QSR</div>
-      <div class="chb" style="left:490px;top:460px;width:220px;height:150px;border:2.5px solid #FF5A5F;font-size:30px;color:#FF5A5F;">CPG</div>
-      <div style="position:absolute;left:765px;top:282px;font-size:30px;font-weight:800;color:#324CF2;">Aggregators</div>
-      <div style="position:absolute;left:765px;top:347px;font-size:30px;font-weight:800;color:#FF5A5F;">Retail Outlets</div>
-      <div style="position:absolute;left:765px;top:412px;font-size:30px;font-weight:800;color:#FF5A5F;">Fridge Partnerships</div>
+      <div class="chb" style="left:72px;top:340px;width:330px;height:190px;background:var(--oat);"><div style="font-size:40px;color:var(--blue);">Inventory</div><div style="font-family:var(--body);font-size:13px;color:#3d382f;font-weight:700;max-width:240px;margin-top:8px;letter-spacing:0;">&gt;50% of current inventory is Oats &amp; derivatives</div></div>
+      <div class="chb" style="left:490px;top:250px;width:220px;height:150px;background:var(--oat);font-size:40px;color:var(--blue);">QSR</div>
+      <div class="chb" style="left:490px;top:460px;width:220px;height:150px;border:2.5px solid var(--red);font-size:40px;color:var(--red);">CPG</div>
+      <div style="position:absolute;left:765px;top:280px;font-family:var(--display);font-size:40px;color:var(--blue);letter-spacing:.02em;">Aggregators</div>
+      <div style="position:absolute;left:765px;top:344px;font-family:var(--display);font-size:40px;color:var(--red);letter-spacing:.02em;">Retail Outlets</div>
+      <div style="position:absolute;left:765px;top:408px;font-family:var(--display);font-size:40px;color:var(--red);letter-spacing:.02em;">Fridge Partnerships</div>
       <div style="position:absolute;left:765px;top:500px;font-size:15px;font-weight:600;color:#3d382f;line-height:1.5;max-width:430px;">
         <div style="margin-bottom:12px;">In-house consumption writes off inventory risks</div>
         <div style="margin-bottom:12px;">Builds on existing brand trust</div>
         <div>Massive pricing leverage for CPG if we can import Oats</div>
       </div>
       <div style="position:absolute;left:490px;bottom:46px;display:flex;gap:36px;font-size:14px;font-weight:700;">
-        <span style="color:#324CF2;">● Scaling</span><span style="color:#FF5A5F;">● Launching</span>
+        <span style="color:var(--blue);">● Scaling</span><span style="color:var(--red);">● Launching</span>
       </div>
     </section>
 
     <!-- 13 — AGGREGATORS -->
     <section class="slide s3" data-sec="The 100x Journey" data-status="done">
       <div class="s3lab">Taking off on a 100x journey</div>
-      <div class="s3h" style="top:84px;font-size:50px;">Aggregators</div>
-      <div class="s3p" style="position:absolute;top:236px;left:72px;right:520px;font-size:38px;">Positive unit economics. Battle-hardened thanks to Zomato / Swiggy.</div>
-      <div class="s3p" style="position:absolute;top:470px;left:72px;right:640px;font-size:28px;color:#5d564b;">Unit-store profitability needs just <b style="color:var(--ink);">~60 aggregator orders a day</b> — and all 3 stores are profitable.</div>
+      <div class="s3h" style="top:80px;font-size:68px;">Aggregators</div>
+      <div class="s3p" style="position:absolute;top:240px;left:72px;right:520px;font-size:42px;">Positive unit economics. Battle-hardened thanks to Zomato / Swiggy.</div>
+      <div class="s3p" style="position:absolute;top:480px;left:72px;right:640px;font-size:28px;color:#5d564b;">Unit-store profitability needs just <b style="color:var(--ink);">~60 aggregator orders a day</b> — and all 3 stores are profitable.</div>
     </section>
 
     <!-- 14 — FRIDGE PARTNERSHIP -->
     <section class="slide s3" data-sec="The 100x Journey" data-status="done">
       <div class="s3lab">Taking off on a 100x journey</div>
-      <div class="s3h" style="top:80px;font-size:46px;">Fridge Partnership</div>
+      <div class="s3h" style="top:76px;font-size:62px;">Fridge Partnership</div>
       <div style="position:absolute;top:150px;left:72px;right:560px;font-size:20px;font-weight:700;color:#3d382f;line-height:1.3;">Cold-shelves that multiply revenue per kitchen. Multiple pilots in motion.</div>
       <div style="position:absolute;left:72px;top:262px;">
         <div class="frow"><div class="fn">Zomato</div><div class="fr">₹₹₹</div></div>
@@ -530,8 +510,8 @@
     <!-- 15 — RETAIL OUTLETS -->
     <section class="slide s3" data-sec="The 100x Journey" data-status="done">
       <div class="s3lab">Taking off on a 100x journey</div>
-      <div class="s3h" style="top:84px;font-size:50px;">Retail Outlets</div>
-      <div class="s3p" style="position:absolute;top:170px;left:72px;right:620px;font-size:24px;color:#3d382f;">Building on our fit for <b>post-workout</b> and <b>desk-friendly</b> menus, we want our brand available in the right contexts.</div>
+      <div class="s3h" style="top:80px;font-size:68px;">Retail Outlets</div>
+      <div class="s3p" style="position:absolute;top:180px;left:72px;right:620px;font-size:24px;color:#3d382f;">Building on our fit for <b>post-workout</b> and <b>desk-friendly</b> menus, we want our brand available in the right contexts.</div>
       <div class="nb blue" style="top:110px;right:72px;max-width:300px;">A flagship store that multiplexes as central kitchen</div>
       <div class="nb yellow" style="bottom:120px;right:120px;max-width:300px;">Wishlist: a kiosk at the BLR airport</div>
     </section>
@@ -539,17 +519,17 @@
     <!-- 16 — CPG -->
     <section class="slide s3" data-sec="The 100x Journey" data-status="done">
       <div class="s3lab">Taking off on a 100x journey</div>
-      <div class="s3h" style="top:84px;font-size:50px;">CPG</div>
-      <div class="s3p" style="position:absolute;top:230px;left:200px;right:200px;text-align:center;font-size:28px;">The supply-chain insight that shapes our view: oats is a <b>100% imported</b> product in India — and the price drops <b>~50%</b> if we import a container.</div>
-      <div class="s3p" style="position:absolute;top:470px;left:72px;width:560px;font-size:21px;color:#5d564b;">QSR consumption gives us a pricing edge on the entire market — second only to Marico, Quaker, Kellogg's and the larger incumbents.</div>
-      <div class="s3p" style="position:absolute;top:470px;right:72px;width:560px;font-size:21px;color:#5d564b;">Given our recipe design, that brings overall QSR food cost to a mere <b style="color:var(--red);">15%</b> — turning our contribution margins into a massive advantage.</div>
+      <div class="s3h" style="top:80px;font-size:68px;">CPG</div>
+      <div class="s3p" style="position:absolute;top:236px;left:200px;right:200px;text-align:center;font-size:28px;">The supply-chain insight that shapes our view: oats is a <b>100% imported</b> product in India — and the price drops <b>~50%</b> if we import a container.</div>
+      <div class="s3p" style="position:absolute;top:480px;left:72px;width:560px;font-size:21px;color:#5d564b;">QSR consumption gives us a pricing edge on the entire market — second only to Marico, Quaker, Kellogg's and the larger incumbents.</div>
+      <div class="s3p" style="position:absolute;top:480px;right:72px;width:560px;font-size:21px;color:#5d564b;">Given our recipe design, that brings overall QSR food cost to a mere <b style="color:var(--red);">15%</b> — turning our contribution margins into a massive advantage.</div>
     </section>
 
     <!-- 17 — AN API FOR OATS (vision) -->
     <section class="slide s3" data-sec="The 100x Journey" data-status="done">
-      <div style="position:absolute;top:300px;left:72px;font-size:14px;font-weight:700;letter-spacing:.04em;color:var(--muted);text-transform:uppercase;">Our vision</div>
-      <div class="s3h" style="top:330px;font-size:58px;">An API for Oats.</div>
-      <div class="s3p" style="position:absolute;top:412px;left:72px;width:520px;font-size:22px;color:#3d382f;">We want to be the largest importer of oats into Asia — and the first name that comes to mind when you think about oats.</div>
+      <div style="position:absolute;top:300px;left:72px;font-size:13px;font-weight:800;letter-spacing:.14em;color:var(--blue);text-transform:uppercase;">Our vision</div>
+      <div class="s3h" style="top:326px;font-size:84px;">An API for Oats.</div>
+      <div class="s3p" style="position:absolute;top:452px;left:72px;width:520px;font-size:22px;color:#3d382f;">We want to be the largest importer of oats into Asia — and the first name that comes to mind when you think about oats.</div>
       <div class="nb blue" style="top:96px;left:560px;max-width:300px;">A flagship store that multiplexes as central kitchen</div>
       <div class="nb yellow" style="top:330px;left:620px;max-width:300px;">Wishlist: a kiosk at the BLR airport</div>
     </section>
@@ -557,8 +537,8 @@
     <!-- 18 — WHY US? -->
     <section class="slide s3" data-sec="The 100x Journey" data-status="done">
       <div class="s3lab">Taking off on a 100x journey</div>
-      <div class="s3h" style="top:84px;font-size:50px;">Why us?</div>
-      <div style="position:absolute;top:150px;right:72px;width:560px;text-align:right;">
+      <div class="s3h" style="top:80px;font-size:68px;">Why us?</div>
+      <div style="position:absolute;top:160px;right:72px;width:560px;text-align:right;">
         <div style="font-size:26px;font-weight:800;color:var(--ink);">Software mindset is an edge.</div>
         <div style="font-size:26px;font-weight:800;color:var(--ink);margin-top:14px;">Hi! I am Pratik. 👋</div>
       </div>
@@ -602,12 +582,13 @@
   let lastSec='';
   slides.forEach((s,k)=>{
     const st=s.dataset.status||'fresh';
-    const t=s.querySelector('.big,.s-title,.g3-title,.q,.stitle-c,.opener .big,.wm');
+    const tEl=s.querySelector('.big,.s-title,.g3-title,.q,.stitle-c,.opener .big');
+    const t=s.dataset.title||(tEl?tEl.textContent.trim():'Slide');
     const sec=s.dataset.sec;
     if(sec!==lastSec){ const h=document.createElement('div'); h.className='ovsec'; h.textContent=sec; ovgrid.appendChild(h); lastSec=sec; }
     const c=document.createElement('div'); c.className='ovcard';
     const label=st==='done'?'Rendered':st==='build'?'Drafted':'Placeholder';
-    c.innerHTML='<div class="n">'+String(k+1).padStart(2,'0')+'</div><div class="t">'+(t?t.textContent.trim():'Slide')+'</div><div class="s s-'+st+'">'+label+'</div>';
+    c.innerHTML='<div class="n">'+String(k+1).padStart(2,'0')+'</div><div class="t">'+t+'</div><div class="s s-'+st+'">'+label+'</div>';
     c.onclick=()=>{show(k);ov.classList.remove('show');};
     ovgrid.appendChild(c);
   });
