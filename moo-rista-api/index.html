@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Ministry of Oats × Rista — Direct Orders API Integration</title>
+<style>
+  :root{
+    --ink:#1a1714; --muted:#6b6258; --line:#e7e2da; --bg:#fbfaf7; --card:#ffffff;
+    --accent:#2f7d5b; --accent-soft:#eaf3ee; --code-bg:#f4f1ec; --warn:#b4541f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px 80px}
+  header{padding:48px 0 24px;border-bottom:1px solid var(--line);margin-bottom:0}
+  .kicker{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-size:30px;line-height:1.2;letter-spacing:-.01em;font-weight:700;margin-bottom:10px}
+  .sub{color:var(--muted);font-size:15px}
+  .meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-size:12px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:99px;padding:4px 11px}
+  /* tabs */
+  .tabs{position:sticky;top:0;z-index:10;background:var(--bg);display:flex;gap:6px;padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:34px}
+  .tab{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--muted);font:inherit;font-size:14px;font-weight:600;padding:9px 16px;border-radius:9px;cursor:pointer;transition:.15s}
+  .tab:hover{border-color:#cfc8bd}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .panel{display:none;animation:fade .2s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  h2{font-size:21px;font-weight:700;letter-spacing:-.01em;margin:34px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  h2:first-child{margin-top:0}
+  h3{font-size:15px;font-weight:700;margin:24px 0 8px;color:var(--ink)}
+  p{margin:0 0 14px}
+  .lead{font-size:17px;color:var(--ink)}
+  ul,ol{margin:0 0 16px 22px}
+  li{margin-bottom:8px}
+  strong{font-weight:650}
+  code{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.9em;background:var(--code-bg);padding:2px 6px;border-radius:5px;color:#5a3a1a}
+  .callout{background:var(--accent-soft);border:1px solid #cfe3d7;border-left:3px solid var(--accent);border-radius:8px;padding:16px 18px;margin:18px 0}
+  .callout .lbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .flow{background:var(--code-bg);border:1px solid var(--line);border-radius:10px;padding:18px;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:13px;line-height:1.7;white-space:pre-wrap;overflow-x:auto;margin:18px 0;color:#3a342c}
+  .qlist{counter-reset:q;list-style:none;margin-left:0}
+  .qlist li{counter-increment:q;position:relative;padding-left:38px;margin-bottom:14px}
+  .qlist li::before{content:counter(q);position:absolute;left:0;top:1px;width:26px;height:26px;background:var(--ink);color:#fff;border-radius:7px;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .do{background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px 20px 6px;margin:16px 0}
+  .footer-note{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+  .keyq{color:var(--warn);font-weight:650}
+  @media (max-width:560px){h1{font-size:24px}.wrap{padding:0 16px 60px}}
+  @media print{.tabs{display:none}.panel{display:block!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">Outpost Kitchen Pvt Ltd · Ministry of Oats</div>
+    <h1>Recording our direct-channel orders in Rista</h1>
+    <p class="sub">A short brief for the Rista engineering team — what we're building, how we intend to use <code>POST /sale</code>, and what we need from you.</p>
+    <div class="meta">
+      <span class="chip">Brands: Ministry of Oats · The Whole Fruit · Protein Police</span>
+      <span class="chip">Branches: HSR · Indiranagar · Whitefield (BNG) · CEN</span>
+      <span class="chip">API key id: 8cfe42cc…</span>
+    </div>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-panel="why">1 · Why &amp; How</button>
+    <button class="tab" role="tab" aria-selected="false" data-panel="arch">2 · Architecture &amp; What We Need</button>
+  </div>
+
+  <!-- ============ PANEL 1 ============ -->
+  <section class="panel active" id="why" role="tabpanel">
+    <h2>Posting MOO Direct Orders into Rista — Why &amp; How</h2>
+    <p class="lead">We are launching our own ordering channel (our app, <strong>moo.kitchen</strong>) and we want each order to land in Rista <strong>exactly the way a Swiggy, Zomato, or walk-in order does today</strong> — same invoice, same reports, same settlement view — just tagged as our own channel. Rista stays the single system of record for all sales; we simply add one more channel into it via the API.</p>
+
+    <h3>How the order reaches us <span style="font-weight:400;color:var(--muted)">(“how are you getting this order?”)</span></h3>
+    <ol>
+      <li>Customer places and <strong>pre-pays</strong> the order on moo.kitchen (online payment via Razorpay).</li>
+      <li>Our backend re-derives and validates the price server-side, then saves the order in our own database as the source record, with a <strong>stable order id</strong>.</li>
+    </ol>
+
+    <h3>How we post it into Rista <span style="font-weight:400;color:var(--muted)">(“how does it get onto Rista?”)</span></h3>
+    <p>On payment success, our service calls <strong><code>POST /sale</code></strong> with:</p>
+    <ul>
+      <li><code>branchCode</code> — the fulfilling outlet (HSR / IND / BNG / CEN)</li>
+      <li><code>channel</code> — a dedicated price channel for us (e.g. <em>“MOO Direct”</em>), so the order is priced and reported as a distinct channel, like Swiggy / Zomato / Walk-in</li>
+      <li><code>items[]</code> — each line carries <code>skuCode</code>, <code>quantity</code>, <code>unitPrice</code>, <code>itemAmount</code>, tax, <code>itemNature</code>, and any add-on <code>options[]</code></li>
+      <li><code>payments[]</code> — the Razorpay collection recorded against the sale (<code>mode</code>, <code>amount</code>, <code>reference</code>)</li>
+      <li><code>sourceInfo</code> — the block built for external orders:
+        <ul>
+          <li><code>invoiceNumber</code> = our order id → drives <strong>idempotency</strong> (a retry returns <code>409 “already processed”</code>, never a duplicate sale)</li>
+          <li><code>source</code> = "moo.kitchen", <code>isEcomOrder: true</code>, <code>isEditable: false</code> (lock the order once created)</li>
+          <li><code>callbackURL</code> = our endpoint, so Rista can push status (Accepted / Rejected / Prepared / Dispatched / Delivered) back to us</li>
+        </ul>
+      </li>
+    </ul>
+
+    <div class="callout">
+      <div class="lbl">The gate — we never post a bad order</div>
+      <p style="margin-bottom:0">This is the important part for data integrity. <strong>Before an order JSON is ever built, every SKU in it is already proven to exist and be active in Rista.</strong> Our catalog system continuously reconciles our menu against the live Rista catalog and assigns each SKU an <em>orderability status</em> with a 1:1 link to the Rista item code. The app only ever shows — and only lets a customer buy — SKUs that are currently mapped and live in Rista. So a <code>POST /sale</code> from us will only ever contain SKU codes Rista recognises. No phantom items, no unmapped codes.</p>
+    </div>
+
+    <h3>Why this is low-risk for you</h3>
+    <ul>
+      <li><strong>Idempotent</strong> — the same <code>invoiceNumber</code> can never create two sales.</li>
+      <li><strong>Locked</strong> — <code>isEditable: false</code>, so the record can't be silently mutated.</li>
+      <li><strong>Reversible</strong> — if we ever post in error, we void via <code>POST /sale/status</code> (Voided).</li>
+      <li><strong>Non-aggregator only</strong> — this is our own direct channel; it does not touch the Swiggy / Zomato sync at all.</li>
+    </ul>
+
+    <h3>The outcome we're after</h3>
+    <p>A MOO Direct order shows up in your invoice list / reports / settlement next to Swiggy, Zomato, and Walk-in — and our warehouse, which already syncs Rista sales every 15 minutes, picks it up the same way it picks up everything else. <strong>One system of record, one more channel.</strong></p>
+  </section>
+
+  <!-- ============ PANEL 2 ============ -->
+  <section class="panel" id="arch" role="tabpanel">
+    <h2>MOO × Rista — Architecture &amp; What We Need</h2>
+
+    <h3>Who we are</h3>
+    <p>We run Ministry of Oats (and The Whole Fruit / Protein Police) on Rista across HSR, Indiranagar, Whitefield (<code>BNG</code>) and our central kitchen (<code>CEN</code>). We've built a data warehouse on top of the Rista API and already pull <strong>sales, inventory, transfers, purchases, soldout, etc. every 15 minutes</strong> — read-only, working well. API key id <code>8cfe42cc-b669-4d3d-bf7d-3554209b2bac</code>.</p>
+
+    <h3>Our system in four lines</h3>
+    <ul>
+      <li><strong>Ordering app (moo.kitchen):</strong> our own direct-to-consumer channel; prepaid via Razorpay.</li>
+      <li><strong>Catalog system:</strong> continuously reconciles our menu against the live Rista catalog; guarantees every orderable SKU is mapped 1:1 to a Rista item (this is our pre-post validation gate).</li>
+      <li><strong>Warehouse:</strong> syncs Rista sales into our analytics — so anything in Rista flows to us automatically.</li>
+      <li><strong>Rista = single system of record</strong> for all sales. We are not building a competing OMS.</li>
+    </ul>
+
+    <h3>The integration point (one new flow)</h3>
+    <div class="flow">Customer pays on moo.kitchen
+      │
+      ▼  POST /sale   channel = "MOO Direct"
+      │               sourceInfo.invoiceNumber = our order id
+      │               items[] = pre-validated Rista SKUs
+      │               payments[] = Razorpay collection
+      │               callbackURL = our status endpoint
+ ┌─────────┐
+ │  RISTA  │ ── appears like Swiggy / Zomato / Walk-in ──▶  invoices · reports · settlement
+ └─────────┘
+      │  callback (Accepted / Prepared / Dispatched / Delivered)
+      ▼
+ moo.kitchen shows live status</div>
+
+    <h3>What we need you to <span style="color:var(--accent)">DO</span></h3>
+    <div class="do">
+      <ol>
+        <li><strong>Enable the Sale-write endpoints</strong> on our API key — <code>POST /sale</code> plus the lifecycle calls we'll use: <code>POST /sale/status</code> (void / close) and <code>POST /sale/payments</code>. Today this family appears access-gated (we see <code>403 — Licence expired or not allowed to access the resource</code>). <strong>Please confirm whether our plan / licence includes it and what's needed to switch it on.</strong></li>
+        <li><strong>Set up a price channel for our direct orders</strong> (e.g. <em>“MOO Direct”</em>) at our branches, so our orders are priced and reported as a distinct channel — the way Swiggy / Zomato / Walk-in are.</li>
+      </ol>
+    </div>
+
+    <h3>What we need to <span style="color:var(--accent)">KNOW</span></h3>
+    <ol class="qlist">
+      <li><span class="keyq">Access tier:</span> is <code>POST /sale</code> (+ <code>/sale/status</code>, <code>/sale/payments</code>) available on our licence? If not, what's the path to enable it? <em>(This is the one answer that unblocks everything else.)</em></li>
+      <li><strong>Channel value:</strong> what exact <code>channel</code> string do we send, and do you need to configure a price channel for us first so it shows distinctly in invoices / reports?</li>
+      <li><strong>isEditable:</strong> the spec says <code>isEditable:true</code> needs “catalog sourced from Rista.” We intend to send <code>false</code> (locked). Confirm that's correct for an ecom order, and that our Rista-synced catalog qualifies.</li>
+      <li><strong>Tax:</strong> for our channel, do we send <code>unitPrice</code> tax-<strong>inclusive</strong> or <strong>exclusive</strong>, and do we provide <code>taxAmountIncluded/Excluded</code> or will Rista compute tax from the item's <code>taxCode</code> / HSN?</li>
+      <li><strong>Idempotency:</strong> is dedup keyed on <code>sourceInfo.invoiceNumber</code>? Is there a time window? Is it safe to retry the same payload after a network failure (always 409, never a duplicate)?</li>
+      <li><strong>Callbacks:</strong> which status events fire, what's the payload shape, how is the callback authenticated (<code>callbackHeaders</code> only?), and what are the retry semantics if our <code>callbackURL</code> returns a 5xx?</li>
+      <li><strong>Payments:</strong> for a prepaid online order, do we record the collection inside the <code>payments[]</code> block of <code>POST /sale</code>, or via <code>POST /sale/payments</code> afterwards? What <code>mode</code> value should a Razorpay / online payment use, and does this feed settlement / books correctly?</li>
+      <li><strong>Codes &amp; limits:</strong> <code>POST /sale</code> takes the 3-letter <code>branchCode</code> (HSR / IDR / BNG / CEN) — confirm. Any <strong>rate limits</strong> on <code>POST /sale</code>?</li>
+      <li><span class="keyq">The key outcome:</span> does a sale created via <code>POST /sale</code> flow into the <strong>same reports, exports, and settlement</strong> as Swiggy / Zomato / store sales — so it appears identically to any other channel, both to us and in your reporting?</li>
+    </ol>
+
+    <p style="font-size:14px;color:var(--muted);margin-top:22px"><em>Separate, lower priority — not for this call unless time allows: enabling <code>GET /inventory/items</code> on our key for BOM / average-cost sync, which currently also returns 403.</em></p>
+  </section>
+
+  <div class="footer-note">Outpost Kitchen Pvt Ltd · prepared for the Rista engineering call · contact: pratik@recurr.co</div>
+</div>
+
+<script>
+  const tabs=[...document.querySelectorAll('.tab')];
+  const panels=[...document.querySelectorAll('.panel')];
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===t));
+    panels.forEach(p=>p.classList.toggle('active', p.id===t.dataset.panel));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+</script>
+</body>
+</html>
