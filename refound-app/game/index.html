@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>ReFound — Game lifecycle</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+  :root{
+    --bg:#ffffff;--ink:#111111;--muted:#8a8a8a;--faint:#b8b8b8;
+    --line:#e7e7e7;--line-2:#f0f0f0;--chip:#f4f4f4;--wash:#fafafa;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --serif:Georgia,"Times New Roman",serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+  header{padding:28px 24px 0;max-width:1080px;margin:0 auto}
+  .topbar{display:flex;align-items:center;justify-content:space-between}
+  .brand{font-family:var(--serif);font-style:italic;font-size:22px}
+  .workspace{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .crumb{margin-top:22px;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px}
+  .crumb a:hover{color:var(--ink)}.crumb .sep{color:var(--faint)}.crumb .here{color:var(--ink);font-weight:600}
+
+  main{max-width:1080px;margin:0 auto;padding:26px 24px 100px}
+  .demo-hint{font-size:12px;color:var(--muted);background:var(--wash);border:1px solid var(--line);border-radius:8px;padding:11px 16px;margin-bottom:26px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+  .demo-hint b{color:var(--ink);font-weight:600}
+  .demo-hint button{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:5px 11px}
+  .demo-hint button:hover{color:var(--ink);border-color:var(--ink)}
+
+  /* hero */
+  .nhero{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:28px}
+  .tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;align-items:center}
+  .tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:3px 9px;border-radius:3px}
+  .statepill{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:3px 10px;border-radius:3px;border:1px solid var(--ink)}
+  .statepill.live{background:#fff;color:var(--ink)}
+  .statepill.review{background:var(--ink);color:#fff}
+  .statepill.won{background:var(--ink);color:#fff}
+  .statepill.rework{background:#fff;color:var(--ink)}
+  .ntitle{font-size:26px;line-height:1.2;font-weight:600;letter-spacing:-.01em;max-width:780px}
+  .nurl{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:12px}
+  .nsub{font-size:13.5px;color:var(--muted);margin-top:14px;max-width:720px;line-height:1.55}
+  .levelchip{font-family:var(--mono);font-size:11px;color:var(--ink);border:1px solid var(--ink);border-radius:3px;padding:3px 9px}
+
+  /* stepper */
+  .stepper{display:flex;align-items:center;gap:0;margin-bottom:36px;flex-wrap:wrap}
+  .step{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--faint)}
+  .step .dot{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--faint);background:#fff;flex:none}
+  .step.done{color:var(--muted)}.step.done .dot{background:var(--muted);border-color:var(--muted)}
+  .step.active{color:var(--ink);font-weight:600}.step.active .dot{background:var(--ink);border-color:var(--ink);box-shadow:0 0 0 3px rgba(17,17,17,.12)}
+  .step .bar{width:30px;height:1px;background:var(--line);margin:0 10px}
+  @media(max-width:720px){.step .label{display:none}.step .bar{width:16px}}
+
+  .grid{display:grid;grid-template-columns:1fr 320px;gap:34px;align-items:start}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+
+  .block{margin-bottom:34px}
+  .block-h{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;justify-content:space-between;align-items:baseline}
+  .block-h .aux{font-size:11px;text-transform:none;letter-spacing:.02em;color:var(--faint)}
+
+  /* objective + feedback */
+  .obj{border:1px solid var(--line);border-radius:10px;padding:18px 22px}
+  .obj .ol{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:9px}
+  .obj .ot{font-size:15.5px;font-weight:600;line-height:1.4}
+  .fb{margin-top:14px;border-left:2px solid var(--ink);background:var(--wash);padding:11px 16px;font-size:13px;color:#333;line-height:1.5;border-radius:0 8px 8px 0}
+  .fb b{font-weight:600}
+  .fb .who{font-family:var(--mono);font-size:11px;color:var(--muted);display:block;margin-top:6px}
+
+  /* brief */
+  .brief{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:16px}
+  .brief .bh{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:13px 22px;border-bottom:1px solid var(--line);background:var(--wash)}
+  .brief .bl{font-size:13px;color:#333;padding:10px 22px;border-bottom:1px solid var(--line-2);display:flex;gap:11px;line-height:1.45}
+  .brief .bl:last-child{border-bottom:none}
+  .brief .bl::before{content:"–";color:var(--faint);flex:none}
+
+  /* submitted artifact */
+  .artifact{border:1px solid var(--line);border-radius:10px;padding:16px 22px;margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .artifact .am{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:5px}
+  .artifact .at{font-size:14px;font-weight:600}
+  .artifact .open{font-size:12px;color:var(--ink);font-weight:600;border:1px solid var(--ink);padding:7px 13px;border-radius:6px;white-space:nowrap}
+
+  /* action zone */
+  .actbox{border:1px solid var(--ink);border-radius:10px;padding:22px;background:#fff}
+  .actbox .ah{font-size:14px;font-weight:600;margin-bottom:4px}
+  .actbox .ad{font-size:12.5px;color:var(--muted);line-height:1.5;margin-bottom:18px}
+  .verdicts{display:flex;flex-direction:column;gap:10px}
+  .vbtn{display:flex;align-items:flex-start;gap:12px;text-align:left;border:1px solid var(--line);border-radius:8px;padding:13px 15px;transition:border-color .12s,background .12s}
+  .vbtn:hover{border-color:var(--ink)}
+  .vbtn .vi{font-family:var(--mono);font-size:14px;color:var(--ink);flex:none;width:16px;line-height:1.3}
+  .vbtn .vt{font-size:13.5px;font-weight:600;margin-bottom:2px}
+  .vbtn .vd{font-size:12px;color:var(--muted);line-height:1.4}
+  .vbtn.primary{background:var(--ink);border-color:var(--ink)}
+  .vbtn.primary .vt,.vbtn.primary .vi{color:#fff}.vbtn.primary .vd{color:#cfcfcf}
+
+  .sub{margin-top:14px;border-top:1px solid var(--line-2);padding-top:14px;display:none}
+  .sub.show{display:block}
+  .sub .sl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+  .radio{display:flex;align-items:center;gap:9px;font-size:13px;padding:7px 0;cursor:pointer}
+  .radio input{accent-color:#111}
+  textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:10px 12px;font-family:inherit;font-size:13px;margin-top:10px;resize:vertical;min-height:62px;color:var(--ink)}
+  textarea:focus{outline:none;border-color:var(--ink)}
+  .confirm{margin-top:12px;background:var(--ink);color:#fff;font-size:13px;font-weight:600;padding:10px 18px;border-radius:7px}
+  .confirm:hover{opacity:.85}
+  .cancel{margin-left:10px;font-size:12.5px;color:var(--muted)}.cancel:hover{color:var(--ink)}
+
+  /* player action */
+  .playact{border:1px dashed var(--line);border-radius:10px;padding:20px 22px;background:var(--wash)}
+  .playact .pl{font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.5}
+  .playact .pl b{color:var(--ink);font-weight:600}
+  .markdone{background:var(--ink);color:#fff;font-size:13px;font-weight:600;padding:10px 18px;border-radius:7px}
+  .markdone:hover{opacity:.85}
+
+  /* won */
+  .wonbox{border:1px solid var(--ink);border-radius:10px;padding:24px;background:var(--ink);color:#fff}
+  .wonbox .wh{font-size:16px;font-weight:600;margin-bottom:6px}
+  .wonbox .wd{font-size:13px;color:#cfcfcf;line-height:1.55;max-width:60ch}
+  .wonbox .reopen{margin-top:18px;font-size:12px;color:#fff;border:1px solid #555;border-radius:6px;padding:8px 14px}
+  .wonbox .reopen:hover{border-color:#fff}
+
+  /* sidebar */
+  .side{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .side-h{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:13px 18px;border-bottom:1px solid var(--line);background:var(--wash)}
+  .srow{display:flex;justify-content:space-between;gap:12px;padding:11px 18px;border-bottom:1px solid var(--line-2);font-size:13px}
+  .srow:last-child{border-bottom:none}.srow .k{color:var(--muted)}.srow .v{font-weight:600;text-align:right}.srow .v.mono{font-family:var(--mono);font-weight:500}
+
+  /* history */
+  .hist{margin-top:24px}
+  .timeline{border-left:1.5px solid var(--line);margin-left:6px;padding-left:22px}
+  .tl{position:relative;padding:0 0 18px}
+  .tl:last-child{padding-bottom:0}
+  .tl::before{content:"";position:absolute;left:-29px;top:3px;width:9px;height:9px;border-radius:50%;background:#fff;border:1.6px solid var(--ink)}
+  .tl.engine::before{background:var(--faint);border-color:var(--faint)}
+  .tl.lvl::before{background:var(--ink)}
+  .tl .when{font-family:var(--mono);font-size:11px;color:var(--faint);margin-bottom:2px}
+  .tl .what{font-size:13px;font-weight:600;line-height:1.35}
+  .tl .who{font-size:12px;color:var(--muted);margin-top:1px}
+
+  .foot{max-width:1080px;margin:0 auto;padding:0 24px 60px;font-size:11px;color:var(--faint);letter-spacing:.04em}
+  .foot span{color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="brand">Refound</div>
+    <div class="workspace">Operator · Clarisights</div>
+  </div>
+  <div class="crumb"><a href="../">Inbox</a><span class="sep">/</span><span class="here">Game · the lifecycle</span></div>
+</header>
+
+<main>
+  <div class="demo-hint">
+    <span>Clickable prototype of the <b>game loop</b> — play the verdicts to feel verify → rework / level-up / won, and the re-open on regression.</span>
+    <button onclick="reset()">↺ Reset demo</button>
+  </div>
+
+  <!-- HERO -->
+  <section class="nhero">
+    <div class="tags">
+      <span class="statepill" id="statepill">In review</span>
+      <span class="tag">UGC · Reddit</span>
+      <span class="tag">Perishable</span>
+      <span class="levelchip" id="levelchip">Level 1</span>
+    </div>
+    <h1 class="ntitle">r/PPC — “what's everyone using instead of Supermetrics in 2026?”</h1>
+    <div class="nurl">reddit.com/r/PPC · 47 upvotes · live thread</div>
+    <p class="nsub">A high-intent thread with buyers asking right now. Surfaced by the engine as perishable — worth winning this week, before it cools.</p>
+  </section>
+
+  <!-- STEPPER -->
+  <div class="stepper" id="stepper"></div>
+
+  <div class="grid">
+    <!-- MAIN COLUMN -->
+    <div>
+      <div class="block">
+        <div class="block-h">This round <span class="aux" id="roundaux">level 1</span></div>
+        <div class="obj">
+          <div class="ol">Objective</div>
+          <div class="ot" id="objective"></div>
+          <div class="fb" id="feedback" style="display:none"></div>
+        </div>
+        <div class="brief">
+          <div class="bh">The brief</div>
+          <div id="brieflist"></div>
+        </div>
+        <div class="artifact" id="artifact" style="display:none">
+          <div><div class="am" id="artmeta"></div><div class="at" id="arttitle"></div></div>
+          <a class="open" href="#">Open ↗</a>
+        </div>
+      </div>
+
+      <!-- DYNAMIC ACTION ZONE -->
+      <div class="block">
+        <div class="block-h" id="actionhead">Verify</div>
+        <div id="actionzone"></div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div>
+      <div class="side">
+        <div class="side-h">Game</div>
+        <div class="srow"><span class="k">Bucket</span><span class="v">UGC</span></div>
+        <div class="srow"><span class="k">Owner</span><span class="v mono">sujith@</span></div>
+        <div class="srow"><span class="k">Player</span><span class="v">varsha@ (team)</span></div>
+        <div class="srow"><span class="k">In play since</span><span class="v mono">Jun 24</span></div>
+        <div class="srow"><span class="k">Current level</span><span class="v mono" id="sidelevel">1</span></div>
+      </div>
+
+      <div class="hist">
+        <div class="block-h">History <span class="aux">every round, kept</span></div>
+        <div class="timeline" id="timeline"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="foot">ReFound · <span>internal prototype</span> · game lifecycle · demo data · layout study, not final visual design</div>
+
+<script>
+// ---------- level content ----------
+const LEVELS = {
+  1: {
+    aux: "level 1 · win a presence in the thread",
+    objective: "Post one genuinely helpful, non-salesy comment that surfaces Clarisights as one option.",
+    brief: [
+      "Read the thread; match the tone — peers, not vendors.",
+      "Lead with the real answer to their question.",
+      "Mention Clarisights once, as one option, with the honest trade-off.",
+      "Link the comparison page, not the homepage."
+    ],
+    artifact: { meta: "comment · posted Jun 24 · 18h old", title: "“We moved off Supermetrics last year — here's the honest trade-off…”" }
+  },
+  2: {
+    aux: "level 2 · the thread is engaging back",
+    objective: "Reply to the 3 follow-up questions before the thread cools — it's now a live evaluation.",
+    brief: [
+      "3 replies: pricing, data freshness, and migration effort.",
+      "Answer each directly; pull the facts from the wiki.",
+      "Keep it a conversation, not a pitch.",
+      "Flag if any reply exposes a gap in the comparison page."
+    ],
+    artifact: null
+  },
+  3: {
+    aux: "re-defend · the win regressed",
+    objective: "Your top comment was buried by a competitor's reply — re-engage to recover the position.",
+    brief: [
+      "A competitor posted a strong counter; you dropped below the fold.",
+      "Add a substantive follow-up that re-earns the top slot.",
+      "Cite a fresh proof point the competitor can't match."
+    ],
+    artifact: null
+  }
+};
+
+// ---------- state ----------
+let S;
+function init(){
+  S = { level:1, status:'in_review', history:[
+    { type:'engine', when:'Jun 24 · 06:40', what:'Surfaced — thread rising', who:'engine · 47 upvotes · buyer intent' },
+    { type:'lvl',    when:'Jun 24 · 11:15', what:'L1 played — comment posted', who:'varsha@' },
+    { type:'',       when:'Jun 24 · 11:16', what:'L1 marked done — in review', who:'varsha@' },
+  ]};
+}
+init();
+
+const STEPS = [['backlog','Backlog'],['inplay','In play'],['assigned','Assigned'],['playing','Playing'],['in_review','In review'],['won','Won']];
+function stepIndex(){
+  if(S.status==='won') return 5;
+  if(S.status==='in_review') return 4;
+  if(S.status==='playing') return 3;
+  return 4;
+}
+
+function render(){
+  // level + state pill
+  document.getElementById('levelchip').textContent = 'Level '+S.level;
+  document.getElementById('sidelevel').textContent = S.level;
+  document.getElementById('roundaux').textContent = LEVELS[S.level].aux;
+  const pill = document.getElementById('statepill');
+  const map = {in_review:['review','In review'], playing:['rework','Playing'], won:['won','Won']};
+  pill.className = 'statepill '+map[S.status][0];
+  pill.textContent = map[S.status][1];
+
+  // stepper
+  const si = stepIndex();
+  document.getElementById('stepper').innerHTML = STEPS.map((s,i)=>{
+    const cls = i<si?'done':(i===si?'active':'');
+    const bar = i<STEPS.length-1?'<span class="bar"></span>':'';
+    return `<span class="step ${cls}"><span class="dot"></span><span class="label">${s[1]}</span></span>${bar}`;
+  }).join('');
+
+  // objective + feedback
+  document.getElementById('objective').textContent = LEVELS[S.level].objective;
+  const fb = document.getElementById('feedback');
+  if(S.feedback){ fb.style.display='block'; fb.innerHTML = `<b>Rework — ${S.feedback.reason}.</b> ${S.feedback.note} <span class="who">${S.feedback.who}</span>`; }
+  else fb.style.display='none';
+
+  // brief
+  document.getElementById('brieflist').innerHTML = LEVELS[S.level].brief.map(b=>`<div class="bl">${b}</div>`).join('');
+
+  // artifact (shown only in review, if present)
+  const art = document.getElementById('artifact');
+  const ad = LEVELS[S.level].artifact;
+  if(S.status==='in_review' && ad){ art.style.display='flex'; document.getElementById('artmeta').textContent=ad.meta; document.getElementById('arttitle').textContent=ad.title; }
+  else art.style.display='none';
+
+  renderAction();
+  renderHistory();
+}
+
+function renderAction(){
+  const head = document.getElementById('actionhead');
+  const zone = document.getElementById('actionzone');
+
+  if(S.status==='playing'){
+    head.textContent = 'Play';
+    zone.innerHTML = `<div class="playact">
+      <div class="pl">The player works this round, then marks it done. <b>${S.feedback?'Rework requested — address the feedback above.':'New objective — pick it up.'}</b></div>
+      <button class="markdone" onclick="markDone()">▶ Mark done (player)</button>
+    </div>`;
+    return;
+  }
+  if(S.status==='won'){
+    head.textContent = 'Outcome';
+    zone.innerHTML = `<div class="wonbox">
+      <div class="wh">Won · Level ${S.level} verified</div>
+      <div class="wd">The comment is live and top-of-thread. The game closes — but the engine keeps watching it. If the position later slips, the game re-opens automatically.</div>
+      <button class="reopen" onclick="regress()">↻ Simulate: position slipped on re-index</button>
+    </div>`;
+    return;
+  }
+  // in_review → verification panel
+  head.textContent = 'Verify';
+  zone.innerHTML = `<div class="actbox">
+    <div class="ah">Verify this round</div>
+    <div class="ad">Check the work against the brief's objective. Record a verdict — it routes the game.</div>
+    <div class="verdicts">
+      <button class="vbtn primary" onclick="verify('won')"><span class="vi">✓</span><span><span class="vt">Verified — won</span><span class="vd">It's live, on-objective, and winning. Close the game.</span></span></button>
+      <button class="vbtn" onclick="toggle('reworksub')"><span class="vi">↻</span><span><span class="vt">Needs rework</span><span class="vd">Can't verify · not as expected · missing something critical → back to the player, same level.</span></span></button>
+      <button class="vbtn" onclick="toggle('lvlupsub')"><span class="vi">▲</span><span><span class="vt">Level up</span><span class="vd">This round won — but there's more to win here. Re-open at the next level.</span></span></button>
+    </div>
+    <div class="sub" id="reworksub">
+      <div class="sl">Why is it going back?</div>
+      <label class="radio"><input type="radio" name="rw" value="can't be verified"> Can't verify it — we can't confirm the move landed</label>
+      <label class="radio"><input type="radio" name="rw" value="not as expected" checked> Present, but not the way we expected</label>
+      <label class="radio"><input type="radio" name="rw" value="missing something critical"> Missing something critical</label>
+      <textarea id="rwnote" placeholder="Feedback for the player…">Too salesy — leads with the product, not the answer. Re-do leading with the honest trade-off, mention Clarisights once.</textarea>
+      <button class="confirm" onclick="rework()">Send back to player</button><button class="cancel" onclick="toggle('reworksub')">cancel</button>
+    </div>
+    <div class="sub" id="lvlupsub">
+      <div class="sl">Level ${S.level} won → open level ${S.level+1}</div>
+      <div class="ad" style="margin:0 0 4px">${LEVELS[S.level+1]?('Next: '+LEVELS[S.level+1].objective):'No further level defined.'}</div>
+      ${LEVELS[S.level+1]?'<button class="confirm" onclick="levelUp()">Open level '+(S.level+1)+'</button><button class="cancel" onclick="toggle(\'lvlupsub\')">cancel</button>':''}
+    </div>
+  </div>`;
+}
+
+function renderHistory(){
+  document.getElementById('timeline').innerHTML = S.history.map(h=>
+    `<div class="tl ${h.type}"><div class="when">${h.when}</div><div class="what">${h.what}</div><div class="who">${h.who}</div></div>`
+  ).join('');
+}
+
+// ---------- transitions ----------
+function toggle(id){
+  ['reworksub','lvlupsub'].forEach(s=>{ const el=document.getElementById(s); if(el) el.classList.toggle('show', s===id ? !el.classList.contains('show') : false); });
+}
+function push(type,what,who){ S.history.push({type,when:'Jun 25 · '+nextTime(),what,who}); }
+let _t=8; function nextTime(){ _t+=Math.floor(Math.random()*3)+1; return ('0'+(9+Math.floor(_t/60))).slice(-2)+':'+('0'+(_t%60)).slice(-2)+' AM'; }
+
+function verify(kind){
+  if(kind==='won'){
+    push('lvl', `L${S.level} verified ✓ — won`, 'sujith@ · matched the objective');
+    S.status='won'; S.feedback=null; render();
+  }
+}
+function rework(){
+  const reason=document.querySelector('input[name=rw]:checked').value;
+  const note=document.getElementById('rwnote').value || 'See brief.';
+  push('', `L${S.level} rework — ${reason}`, 'sujith@');
+  S.status='playing'; S.feedback={reason,note,who:'sujith@ · '+nowish()}; render();
+}
+function levelUp(){
+  push('lvl', `L${S.level} won ✓`, 'sujith@');
+  S.level+=1;
+  push('lvl', `Level ${S.level} opened — re-surfaced, history kept`, 'engine · new objective');
+  S.status='playing'; S.feedback=null; render();
+}
+function markDone(){
+  push('lvl', `L${S.level} played + marked done`, 'varsha@');
+  S.status='in_review'; render();
+}
+function regress(){
+  push('engine', 'Re-index — position slipped, game re-opened', 'engine · competitor reply buried you');
+  S.level=3; S.status='playing'; S.feedback=null; render();
+}
+function nowish(){ return 'just now'; }
+function reset(){ _t=8; init(); render(); }
+
+render();
+</script>
+</body>
+</html>
