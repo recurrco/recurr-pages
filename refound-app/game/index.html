@@ -337,28 +337,23 @@ function renderAction(){
     </div>`;
     return;
   }
-  // in_review → verification panel
-  head.textContent = 'Verify';
+  // in_review → verification panel (the mandatory gate: pass = advance/win, fail = stay)
+  head.textContent = 'Verify level '+S.level;
+  const hasNext = !!LEVELS[S.level+1];
   zone.innerHTML = `<div class="actbox">
-    <div class="ah">Verify this round</div>
-    <div class="ad">Check the work against the brief's objective. Record a verdict — it routes the game.</div>
+    <div class="ah">Verify level ${S.level}</div>
+    <div class="ad">Check the work against the objective. <b>Verification is the only gate</b> — a game can't reach the next level without a pass.</div>
     <div class="verdicts">
-      <button class="vbtn primary" onclick="verify('won')"><span class="vi">✓</span><span><span class="vt">Verified — won</span><span class="vd">It's live, on-objective, and winning. Close the game.</span></span></button>
-      <button class="vbtn" onclick="toggle('reworksub')"><span class="vi">↻</span><span><span class="vt">Needs rework</span><span class="vd">Can't verify · not as expected · missing something critical → back to the player, same level.</span></span></button>
-      <button class="vbtn" onclick="toggle('lvlupsub')"><span class="vi">▲</span><span><span class="vt">Level up</span><span class="vd">This round won — but there's more to win here. Re-open at the next level.</span></span></button>
+      <button class="vbtn primary" onclick="verify()"><span class="vi">✓</span><span><span class="vt">Verified ${hasNext?'— go to level '+(S.level+1):'— won'}</span><span class="vd">${hasNext?'It meets the objective. Advance straight to level '+(S.level+1)+' — nothing else needed.':'It meets the objective and there\'s no further level. Close the game as won.'}</span></span></button>
+      <button class="vbtn" onclick="toggle('reworksub')"><span class="vi">✗</span><span><span class="vt">Something's off</span><span class="vd">Can't verify · not as expected · missing something critical → stays on level ${S.level}, keep playing. Level ${S.level+1} stays closed.</span></span></button>
     </div>
     <div class="sub" id="reworksub">
-      <div class="sl">Why is it going back?</div>
+      <div class="sl">What's off? (it stays on level ${S.level})</div>
       <label class="radio"><input type="radio" name="rw" value="can't be verified"> Can't verify it — we can't confirm the move landed</label>
       <label class="radio"><input type="radio" name="rw" value="not as expected" checked> Present, but not the way we expected</label>
       <label class="radio"><input type="radio" name="rw" value="missing something critical"> Missing something critical</label>
       <textarea id="rwnote" placeholder="Feedback for the player…">Too salesy — leads with the product, not the answer. Re-do leading with the honest trade-off, mention Clarisights once.</textarea>
-      <button class="confirm" onclick="rework()">Send back to player</button><button class="cancel" onclick="toggle('reworksub')">cancel</button>
-    </div>
-    <div class="sub" id="lvlupsub">
-      <div class="sl">Level ${S.level} won → open level ${S.level+1}</div>
-      <div class="ad" style="margin:0 0 4px">${LEVELS[S.level+1]?('Next: '+LEVELS[S.level+1].objective):'No further level defined.'}</div>
-      ${LEVELS[S.level+1]?'<button class="confirm" onclick="levelUp()">Open level '+(S.level+1)+'</button><button class="cancel" onclick="toggle(\'lvlupsub\')">cancel</button>':''}
+      <button class="confirm" onclick="rework()">Keep playing level ${S.level}</button><button class="cancel" onclick="toggle('reworksub')">cancel</button>
     </div>
   </div>`;
 }
@@ -376,9 +371,15 @@ function toggle(id){
 function push(type,what,who){ S.history.push({type,when:'Jun 25 · '+nextTime(),what,who}); }
 let _t=8; function nextTime(){ _t+=Math.floor(Math.random()*3)+1; return ('0'+(9+Math.floor(_t/60))).slice(-2)+':'+('0'+(_t%60)).slice(-2)+' AM'; }
 
-function verify(kind){
-  if(kind==='won'){
-    push('lvl', `L${S.level} verified ✓ — won`, 'sujith@ · matched the objective');
+function verify(){
+  // the gate: a pass either advances to the next level or wins — never the operator's choice
+  if(LEVELS[S.level+1]){
+    push('lvl', `L${S.level} verified ✓`, 'sujith@ · meets the objective');
+    S.level+=1;
+    push('lvl', `Level ${S.level} opened — verification passed`, 'engine · same game, history kept');
+    S.status='playing'; S.feedback=null; render();
+  } else {
+    push('lvl', `L${S.level} verified ✓ — won`, 'sujith@ · meets the objective, no further level');
     S.status='won'; S.feedback=null; render();
   }
 }
