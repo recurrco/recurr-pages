@@ -1,0 +1,723 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Ministry of Oats — Direction 1: The Circular</title>
+<meta name="description" content="A rebrand direction for Ministry of Oats. The world's most charming bureaucracy, rendered as official paperwork.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --cream:#FFE8CA;        /* primary base paper */
+    --paper:#FFF6E8;        /* lighter card paper */
+    --sky:#6AC4FF;          /* primary accent / stamp blue */
+    --ink:#22323B;          /* calm desaturated slate */
+    --ink-soft:rgba(34,50,59,.62);
+    --ink-faint:rgba(34,50,59,.34);
+    --ink-hair:rgba(34,50,59,.20);
+    --stamp:#B23A48;        /* restrained ink-red, tertiary */
+    --rule:rgba(34,50,59,.85);
+    --serif:"Spectral",Georgia,"Times New Roman",serif;
+    --mono:"Space Mono",ui-monospace,"SFMono-Regular",monospace;
+    --margin:clamp(20px,6vw,120px);
+    --maxdoc:1060px;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:
+      radial-gradient(120% 80% at 50% -10%, #FFF1DC 0%, var(--cream) 55%, #FBDFBE 100%) fixed;
+    color:var(--ink);
+    font-family:var(--serif);
+    font-size:18px;
+    line-height:1.62;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  /* faint paper grain + baseline dotted texture */
+  body::before{
+    content:"";
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      radial-gradient(rgba(34,50,59,.045) 1px, transparent 1px);
+    background-size:22px 22px;
+    background-position:0 2px;
+    opacity:.55;
+    mix-blend-mode:multiply;
+  }
+  body::after{
+    content:"";
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.5'/></svg>");
+    opacity:.04;
+    mix-blend-mode:multiply;
+  }
+
+  .doc{
+    position:relative;z-index:1;
+    max-width:var(--maxdoc);
+    margin:0 auto;
+    padding:clamp(28px,5vw,64px) var(--margin) clamp(60px,9vw,120px);
+  }
+
+  /* ---- generic rules ---- */
+  .rule{border:0;border-top:1px solid var(--rule);margin:0}
+  .rule.thin{border-top:1px solid var(--ink-hair)}
+  .rule.double{border:0;height:4px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+
+  .mono{font-family:var(--mono)}
+  .label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .kicker{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.26em;
+    text-transform:uppercase;
+    color:var(--sky);
+    filter:saturate(.75) brightness(.74);
+  }
+
+  /* ============ LETTERHEAD MASTHEAD ============ */
+  header.masthead{position:relative;z-index:1}
+  .topstrip{
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--ink-faint);
+    padding-bottom:14px;
+  }
+  .topstrip span{white-space:nowrap}
+  .topstrip .mid{flex:1;text-align:center;color:var(--ink-soft)}
+
+  .head-grid{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    gap:clamp(18px,4vw,48px);
+    padding:34px 0 30px;
+  }
+  .crest{flex:0 0 auto;width:clamp(78px,11vw,108px);height:auto;display:block}
+  .crest svg{display:block;width:100%;height:auto}
+
+  .wordmark-wrap{text-align:center;min-width:0}
+  .wordmark-wrap img{
+    width:100%;max-width:380px;height:auto;display:block;margin:0 auto;
+  }
+  .wordmark-sub{
+    margin-top:10px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--ink-soft);
+  }
+
+  .refblock{
+    text-align:right;font-family:var(--mono);font-size:10.5px;
+    line-height:1.9;letter-spacing:.04em;color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .refblock b{color:var(--ink);font-weight:700}
+
+  .motto{
+    text-align:center;
+    font-family:var(--mono);font-size:11px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-soft);
+    padding:14px 0;
+  }
+
+  /* ============ HERO ============ */
+  .hero{padding:clamp(54px,9vw,104px) 0 clamp(40px,7vw,72px)}
+  .hero .kicker{display:block;margin-bottom:26px}
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:clamp(38px,8.2vw,86px);
+    line-height:1.02;
+    letter-spacing:-.015em;
+    margin:0;
+    max-width:14ch;
+  }
+  .hero h1 em{font-style:italic;color:var(--ink-soft)}
+  .hero .lede{
+    margin-top:34px;
+    font-size:clamp(18px,2.4vw,23px);
+    color:var(--ink-soft);
+    max-width:46ch;
+    line-height:1.55;
+  }
+  .hero .lede b{color:var(--ink);font-weight:600;font-style:italic}
+
+  /* section scaffolding */
+  section{padding:clamp(46px,7vw,84px) 0}
+  .sec-head{
+    display:flex;align-items:baseline;gap:18px;
+    margin-bottom:34px;
+  }
+  .sec-no{
+    font-family:var(--mono);font-size:13px;font-weight:700;
+    color:var(--sky);filter:saturate(.7) brightness(.7);
+    letter-spacing:.04em;flex:0 0 auto;
+  }
+  .sec-title{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(24px,3.6vw,38px);
+    letter-spacing:-.01em;line-height:1.05;margin:0;
+  }
+  .sec-head .label{margin-left:auto;align-self:center}
+
+  /* ---- The Idea : document body + marginalia ---- */
+  .idea-grid{
+    display:grid;
+    grid-template-columns:1fr minmax(150px,210px);
+    gap:clamp(26px,5vw,64px);
+    align-items:start;
+  }
+  .idea-body p{
+    font-size:clamp(19px,2.5vw,25px);
+    line-height:1.5;margin:0 0 1.1em;
+    text-align:justify;text-justify:inter-word;hyphens:auto;
+  }
+  .idea-body p:first-of-type{font-size:clamp(21px,3vw,30px)}
+  .idea-body .dropcap::first-letter{
+    font-family:var(--serif);font-weight:700;font-style:normal;
+    float:left;font-size:3.4em;line-height:.72;
+    padding:.06em .12em 0 0;color:var(--ink);
+  }
+  .marginalia{
+    border-left:1px solid var(--ink-hair);
+    padding-left:18px;
+    font-family:var(--mono);font-size:11px;line-height:1.85;
+    color:var(--ink-soft);letter-spacing:.02em;
+  }
+  .marginalia .m{margin-bottom:18px}
+  .marginalia .m b{color:var(--ink);display:block;letter-spacing:.14em;text-transform:uppercase;font-size:10px;margin-bottom:3px}
+
+  /* ---- The Voice ---- */
+  .voice-grid{display:grid;grid-template-columns:1fr;gap:clamp(28px,5vw,52px)}
+  @media(min-width:880px){.voice-grid{grid-template-columns:0.92fr 1.08fr}}
+
+  .principles{list-style:none;margin:0;padding:0}
+  .principles li{
+    display:flex;gap:14px;align-items:baseline;
+    padding:15px 0;border-top:1px solid var(--ink-hair);
+    font-size:17px;line-height:1.4;
+  }
+  .principles li:last-child{border-bottom:1px solid var(--ink-hair)}
+  .principles .pn{font-family:var(--mono);font-size:11px;color:var(--sky);
+    filter:saturate(.7) brightness(.7);flex:0 0 auto;letter-spacing:.05em;padding-top:3px}
+  .principles b{font-weight:600}
+
+  /* the rendered circular */
+  .circular{
+    position:relative;
+    background:var(--paper);
+    border:1px solid var(--ink-hair);
+    box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 18px 40px -28px rgba(34,50,59,.5);
+    padding:clamp(26px,4vw,44px) clamp(24px,4vw,46px) clamp(30px,4vw,48px);
+    overflow:hidden;
+  }
+  .circular .c-top{
+    display:flex;justify-content:space-between;align-items:flex-start;
+    gap:16px;flex-wrap:wrap;
+  }
+  .circular .c-id{font-family:var(--serif);font-weight:700;font-size:clamp(22px,3.4vw,30px);letter-spacing:-.01em}
+  .circular .c-date{font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);text-align:right;line-height:1.8;letter-spacing:.04em}
+  .circular .c-meta{
+    margin-top:18px;border-top:1px solid var(--ink-hair);border-bottom:1px solid var(--ink-hair);
+    padding:14px 0;font-family:var(--mono);font-size:12px;line-height:2;letter-spacing:.02em;
+  }
+  .circular .c-meta .k{color:var(--ink-soft);display:inline-block;width:72px}
+  .circular .c-body{
+    margin-top:22px;font-size:17.5px;line-height:1.62;
+    text-align:justify;text-justify:inter-word;hyphens:auto;
+  }
+  .circular .c-sign{
+    margin-top:30px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;
+  }
+  .c-sign .sig{font-family:var(--serif);font-style:italic;font-size:23px;line-height:1;
+    border-top:1px solid var(--rule);padding-top:8px;min-width:200px}
+  .c-sign .sig small{display:block;font-family:var(--mono);font-style:normal;
+    font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin-top:6px}
+
+  /* rubber stamp overlay */
+  .stamp{
+    font-family:var(--mono);font-weight:700;text-transform:uppercase;
+    letter-spacing:.12em;color:var(--stamp);
+    border:2.5px solid var(--stamp);border-radius:6px;
+    padding:10px 16px;font-size:clamp(13px,2vw,17px);
+    display:inline-block;line-height:1.05;text-align:center;
+    box-shadow:0 0 0 1px var(--stamp) inset;
+    opacity:.78;mix-blend-mode:multiply;
+  }
+  .stamp.blue{color:var(--sky);border-color:var(--sky);box-shadow:0 0 0 1px var(--sky) inset;filter:saturate(.85) brightness(.95)}
+  .stamp small{display:block;font-weight:400;font-size:.6em;letter-spacing:.22em;opacity:.85;margin-top:4px}
+  .circular .stamp-overlay{
+    position:absolute;right:clamp(14px,3vw,40px);bottom:clamp(60px,9vw,96px);
+    transform:rotate(-11deg);pointer-events:none;
+  }
+
+  .notice{
+    margin-top:30px;border:1px dashed var(--ink-hair);background:rgba(106,196,255,.07);
+    padding:20px 22px;font-size:16px;line-height:1.55;
+  }
+  .notice .label{display:block;margin-bottom:8px}
+  .notice b{font-weight:600;font-style:italic}
+
+  /* ---- Lexicon table ---- */
+  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--ink-hair);background:var(--paper)}
+  table.lex{width:100%;border-collapse:collapse;min-width:560px}
+  table.lex caption{
+    text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--ink-soft);padding:16px 18px;border-bottom:1px solid var(--ink-hair);
+  }
+  table.lex th{
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-soft);text-align:left;font-weight:400;padding:13px 18px;border-bottom:1px solid var(--ink-hair);
+  }
+  table.lex td{padding:14px 18px;border-bottom:1px solid var(--ink-hair);vertical-align:top;font-size:16.5px}
+  table.lex tr:last-child td{border-bottom:0}
+  table.lex td.term{font-family:var(--serif);font-weight:600;font-style:italic;color:var(--ink)}
+  table.lex td.arrow{font-family:var(--mono);color:var(--sky);filter:saturate(.7) brightness(.7);text-align:center;width:40px}
+  table.lex td.plain{color:var(--ink-soft)}
+  table.lex tbody tr{transition:background .25s ease}
+  table.lex tbody tr:hover{background:rgba(106,196,255,.08)}
+
+  /* ---- Palette ---- */
+  .swatches{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  @media(min-width:680px){.swatches{grid-template-columns:repeat(5,1fr)}}
+  .sw{border:1px solid var(--ink-hair);background:var(--paper);overflow:hidden;display:flex;flex-direction:column}
+  .sw .chip{height:120px;border-bottom:1px solid var(--ink-hair)}
+  .sw .meta{padding:13px 14px}
+  .sw .meta .nm{font-family:var(--serif);font-weight:600;font-size:15px;line-height:1.2}
+  .sw .meta .hex{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--ink-soft);margin-top:4px}
+  .sw .meta .role{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-top:7px}
+
+  /* ---- Typography specimen ---- */
+  .type-grid{display:grid;grid-template-columns:1fr;gap:22px}
+  .spec{border:1px solid var(--ink-hair);background:var(--paper);padding:clamp(22px,4vw,38px)}
+  .spec .stag{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+  .spec .stag .nm{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+  .spec .stag .role{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink-faint)}
+  .spec .big{font-family:var(--serif);font-weight:500;font-size:clamp(40px,8vw,76px);line-height:.96;letter-spacing:-.02em;margin:0}
+  .spec .big.italic{font-style:italic;font-weight:400}
+  .spec .glyphs{font-family:var(--serif);font-size:clamp(18px,2.4vw,24px);color:var(--ink-soft);margin-top:14px;line-height:1.5}
+  .spec.mono .big{font-family:var(--mono);font-weight:700;font-size:clamp(24px,5vw,46px);letter-spacing:-.01em}
+  .spec.mono .glyphs{font-family:var(--mono);font-size:13px;letter-spacing:.04em}
+
+  /* ---- In the Wild ---- */
+  .wild-grid{display:grid;grid-template-columns:1fr;gap:24px}
+  @media(min-width:780px){.wild-grid{grid-template-columns:1fr 1fr}}
+  .mock{border:1px solid var(--ink-hair);background:var(--paper);overflow:hidden;position:relative}
+  .mock .mock-cap{
+    font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink-soft);padding:13px 18px;border-bottom:1px solid var(--ink-hair);
+    display:flex;justify-content:space-between;gap:10px;
+  }
+  .mock .mock-cap .n{color:var(--ink)}
+  .mock .mock-body{padding:clamp(20px,3.5vw,34px)}
+
+  /* poster mock */
+  .poster{background:var(--ink);color:var(--cream);min-height:340px;display:flex;flex-direction:column;justify-content:space-between}
+  .poster .p-pad{padding:clamp(22px,4vw,38px)}
+  .poster img.wm{width:160px;max-width:60%;height:auto;filter:brightness(0) invert(1);opacity:.95}
+  .poster .p-no{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--sky)}
+  .poster h3{font-family:var(--serif);font-weight:500;font-size:clamp(26px,4.4vw,40px);line-height:1.02;margin:18px 0 0;letter-spacing:-.01em;max-width:16ch}
+  .poster .p-foot{border-top:1px solid rgba(255,232,202,.22);padding:14px clamp(22px,4vw,38px);
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,232,202,.7);
+    display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+  /* citizen ID card */
+  .idcard{background:linear-gradient(135deg,#FFF6E8,#FFEFD6);border:1px solid var(--ink-hair);padding:0;border-radius:10px;overflow:hidden}
+  .idcard .id-top{background:var(--sky);filter:saturate(.78) brightness(1.02);color:var(--ink);
+    padding:12px 18px;display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+  .idcard .id-grid{display:grid;grid-template-columns:64px 1fr;gap:16px;padding:18px;align-items:center}
+  .idcard .id-photo{width:64px;height:78px;border:1px solid var(--ink-hair);background:
+     repeating-linear-gradient(45deg,rgba(34,50,59,.07) 0 6px,transparent 6px 12px);
+     display:flex;align-items:center;justify-content:center;border-radius:4px}
+  .idcard .id-photo svg{width:42px;height:42px;opacity:.5}
+  .idcard .id-fields .nm{font-family:var(--serif);font-weight:700;font-size:20px;line-height:1}
+  .idcard .id-fields .row{font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-top:7px;letter-spacing:.02em}
+  .idcard .id-fields .row b{color:var(--ink)}
+  .idcard .id-foot{border-top:1px dashed var(--ink-hair);padding:11px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .idcard .id-foot .oath{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-soft)}
+
+  /* senoate menu */
+  .menu .m-item{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px dotted var(--ink-hair)}
+  .menu .m-item:last-child{border-bottom:0}
+  .menu .m-item .nm{font-family:var(--serif);font-weight:600;font-size:17px}
+  .menu .m-item .nm small{display:block;font-family:var(--mono);font-weight:400;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-top:2px}
+  .menu .m-item .pr{font-family:var(--mono);font-size:14px;color:var(--ink)}
+  .menu .m-head{font-family:var(--serif);font-style:italic;font-weight:500;font-size:22px;margin:0 0 14px}
+
+  /* stamp set */
+  .stampset{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+  .stampset .stamp{transform:rotate(-3deg)}
+  .stampset .stamp:nth-child(2){transform:rotate(2.5deg)}
+  .stampset .stamp:nth-child(3){transform:rotate(-1.5deg)}
+
+  /* ---- footer ---- */
+  footer{position:relative;z-index:1;border-top:1px solid var(--rule);margin-top:clamp(40px,7vw,80px);
+    padding:clamp(40px,7vw,70px) 0 clamp(30px,5vw,46px)}
+  footer .f-crest{width:64px;height:auto;margin:0 auto 22px;display:block}
+  footer .f-sign{text-align:center;font-family:var(--serif);font-style:italic;font-size:clamp(22px,3.4vw,30px);margin:0}
+  footer .f-meta{text-align:center;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--ink-soft);margin-top:18px;line-height:2}
+  footer .f-dir{display:inline-block;margin-top:8px;color:var(--ink);border:1px solid var(--ink-hair);
+    padding:6px 14px;border-radius:30px;letter-spacing:.18em}
+
+  /* micro-motion: calm reveal */
+  @media (prefers-reduced-motion:no-preference){
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .8s cubic-bezier(.2,.6,.2,1),transform .8s cubic-bezier(.2,.6,.2,1)}
+    .reveal.in{opacity:1;transform:none}
+    .crest svg .ring-rot{transform-origin:50% 50%;animation:spin 90s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+  }
+
+  @media(max-width:680px){
+    .head-grid{grid-template-columns:1fr;justify-items:center;text-align:center;gap:20px;padding:24px 0}
+    .refblock{text-align:center;white-space:normal}
+    .topstrip{flex-direction:column;gap:4px;text-align:center}
+    .topstrip .mid{order:3}
+    .idea-grid{grid-template-columns:1fr}
+    .marginalia{border-left:0;border-top:1px solid var(--ink-hair);padding-left:0;padding-top:18px}
+    .idea-body p{text-align:left;hyphens:none}
+    .circular .c-body{text-align:left;hyphens:none}
+  }
+</style>
+
+<!-- reusable crest SVG defined once, referenced via <use> -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="crest" viewBox="0 0 200 200">
+    <g fill="none" stroke="currentColor" stroke-width="2">
+      <circle class="ring-rot" cx="100" cy="100" r="95"/>
+      <circle cx="100" cy="100" r="78"/>
+    </g>
+    <!-- ring text -->
+    <defs>
+      <path id="ringpath" d="M100,100 m-65,0 a65,65 0 1,1 130,0 a65,65 0 1,1 -130,0"/>
+    </defs>
+    <text font-family="Space Mono, monospace" font-size="11.5" letter-spacing="2.2" fill="currentColor">
+      <textPath href="#ringpath" startOffset="0%">· MINISTRY OF OATS · EST. ALLEGEDLY </textPath>
+    </text>
+    <!-- central motif: rising sun over bowl + crossed spoons -->
+    <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <!-- sun -->
+      <circle cx="100" cy="92" r="13"/>
+      <line x1="100" y1="64" x2="100" y2="74"/>
+      <line x1="78" y1="73" x2="84" y2="80"/>
+      <line x1="122" y1="73" x2="116" y2="80"/>
+      <line x1="70" y1="92" x2="79" y2="92"/>
+      <line x1="121" y1="92" x2="130" y2="92"/>
+      <!-- bowl -->
+      <path d="M64,108 a36,30 0 0 0 72,0 Z"/>
+      <line x1="58" y1="108" x2="142" y2="108"/>
+      <!-- crossed spoons -->
+      <g stroke-width="1.8">
+        <line x1="84" y1="128" x2="116" y2="150"/>
+        <ellipse cx="82" cy="126" rx="5" ry="7" transform="rotate(-34 82 126)"/>
+        <line x1="116" y1="128" x2="84" y2="150"/>
+        <ellipse cx="118" cy="126" rx="5" ry="7" transform="rotate(34 118 126)"/>
+      </g>
+    </g>
+  </symbol>
+</svg>
+
+<div class="doc">
+
+  <!-- ============ HEADER / LETTERHEAD ============ -->
+  <header class="masthead">
+    <div class="topstrip">
+      <span>Government of Breakfast</span>
+      <span class="mid">— Office of the Ministry of Oats —</span>
+      <span>Bengaluru · India</span>
+    </div>
+    <hr class="rule double">
+    <div class="head-grid">
+      <div class="crest" style="color:var(--ink)"><svg><use href="#crest"/></svg></div>
+      <div class="wordmark-wrap">
+        <img src="./moo-logo.png" alt="Ministry of Oats">
+        <div class="wordmark-sub">Department of Mornings &nbsp;·&nbsp; Bureau of Better Breakfast</div>
+      </div>
+      <div class="refblock">
+        <div>Ref. &nbsp;<b>OAT/2026/MORN</b></div>
+        <div>File &nbsp;<b>MOO·D1</b></div>
+        <div>Dated &nbsp;<b>27 · 06 · 2026</b></div>
+        <div>Folio &nbsp;<b>01 of 01</b></div>
+      </div>
+    </div>
+    <hr class="rule">
+    <p class="motto">Issued in public interest.</p>
+    <hr class="rule thin">
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero reveal">
+    <span class="kicker">Brand Direction No. 01 — The Circular</span>
+    <h1>A government department<br>for <em>breakfast.</em></h1>
+    <p class="lede">We regulate mornings. <b>Ministry of Oats — Est. allegedly.</b> Everything that follows is, as a matter of record, entirely official.</p>
+  </section>
+
+  <hr class="rule thin">
+
+  <!-- ============ THE IDEA ============ -->
+  <section class="reveal">
+    <div class="sec-head">
+      <span class="sec-no">§1</span>
+      <h2 class="sec-title">The Idea</h2>
+      <span class="label">On the record</span>
+    </div>
+    <div class="idea-grid">
+      <div class="idea-body">
+        <p class="dropcap">The world's most charming bureaucracy. We write and look like a real government ministry — Cabinet, circulars, policy, citizens, decrees — applied to oats and mornings, with a completely straight face.</p>
+        <p>The most nonchalant, unserious ministry that ever existed: heavy dry sarcasm, but the design stays calm, cool, and toned down. The humour comes from gravity and deadpan — never from being loud. We do not announce that we are fun. The straight face does that for us.</p>
+      </div>
+      <aside class="marginalia">
+        <div class="m"><b>Posture</b>Maximum gravity, minimum stakes.</div>
+        <div class="m"><b>Tone</b>Real officialese over jokey filler.</div>
+        <div class="m"><b>Restraint</b>The wordplay is the wink, never the whole joke.</div>
+        <div class="m"><b>Note</b>Filed under: oats, mornings, and the public good.</div>
+      </aside>
+    </div>
+  </section>
+
+  <hr class="rule thin">
+
+  <!-- ============ THE VOICE ============ -->
+  <section class="reveal">
+    <div class="sec-head">
+      <span class="sec-no">§2</span>
+      <h2 class="sec-title">The Voice</h2>
+      <span class="label">Two engines</span>
+    </div>
+    <div class="voice-grid">
+      <div>
+        <p class="label" style="margin-bottom:16px">Article 1 — Principles of address</p>
+        <ol class="principles">
+          <li><span class="pn">i</span><span><b>Straight face, always.</b> No exclamation marks were harmed.</span></li>
+          <li><span class="pn">ii</span><span><b>We never say we're fun</b> — the deadpan does it.</span></li>
+          <li><span class="pn">iii</span><span><b>Maximum gravity, minimum stakes.</b></span></li>
+          <li><span class="pn">iv</span><span><b>The wordplay is the wink,</b> never the whole joke.</span></li>
+          <li><span class="pn">v</span><span><b>Real officialese</b> over jokey filler.</span></li>
+        </ol>
+        <p class="label" style="margin:26px 0 12px">Two engines of language</p>
+        <p style="font-size:16px;color:var(--ink-soft);line-height:1.55;margin:0">
+          <b style="color:var(--ink);font-weight:600">Officialese</b> builds the world — citizens, registrations, constituencies, circulars headed <span class="mono" style="font-size:13px">Subject:</span> / <span class="mono" style="font-size:13px">Ref:</span>, all closing <em>“By order of the Cabinet.”</em>
+          <br><br>
+          <b style="color:var(--ink);font-weight:600">The oat wordplay</b> supplies the wit, deadpan and sparing: <em>It's oat-ficial</em>, the <em>Oath of Oats</em>, <em>oat-ority</em>, <em>devoated citizens</em>, the <em>Senoate</em>.
+        </p>
+      </div>
+
+      <div>
+        <!-- the rendered circular -->
+        <article class="circular">
+          <div class="c-top">
+            <div class="c-id">Circular No.&nbsp;014</div>
+            <div class="c-date">Issued · Public Interest<br>OAT / 2026 / MORN<br>Effective immediately</div>
+          </div>
+          <div class="c-meta">
+            <div><span class="k">Subject:</span> The reintroduction of joy at breakfast</div>
+            <div><span class="k">Ref:</span> OAT/2026/MORN</div>
+            <div><span class="k">From:</span> The Cabinet, Ministry of Oats</div>
+          </div>
+          <p class="c-body">Effective immediately, all citizens are entitled to a breakfast that is genuinely good for them and genuinely good. The Ministry regrets the decades of delay, and assures the public that the matter has now been resolved with appropriate seriousness.</p>
+          <div class="c-sign">
+            <div class="sig">The Cabinet<small>By order of the Cabinet.</small></div>
+          </div>
+          <div class="stamp-overlay">
+            <span class="stamp">It's Oat-ficial<small>Ministry of Oats</small></span>
+          </div>
+        </article>
+
+        <div class="notice">
+          <span class="label">Registration Notice</span>
+          To become a citizen, take the <b>Oath of Oats</b>. Benefits are non-negotiable and mildly delicious.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule thin">
+
+  <!-- ============ THE LEXICON ============ -->
+  <section class="reveal">
+    <div class="sec-head">
+      <span class="sec-no">§3</span>
+      <h2 class="sec-title">The Lexicon</h2>
+      <span class="label">Official translations</span>
+    </div>
+    <div class="table-scroll">
+      <table class="lex">
+        <caption>Schedule A — terms, as the Ministry prefers them</caption>
+        <thead>
+          <tr><th>Ministry term</th><th></th><th>In plain administration</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="term">Citizen</td><td class="arrow">→</td><td class="plain">Customer</td></tr>
+          <tr><td class="term">Registration</td><td class="arrow">→</td><td class="plain">Sign-up</td></tr>
+          <tr><td class="term">Constituency</td><td class="arrow">→</td><td class="plain">Loyalty base</td></tr>
+          <tr><td class="term">The Oath of Oats</td><td class="arrow">→</td><td class="plain">Loyalty signup</td></tr>
+          <tr><td class="term">Devoated citizen</td><td class="arrow">→</td><td class="plain">Loyal regular</td></tr>
+          <tr><td class="term">Promoated</td><td class="arrow">→</td><td class="plain">Tier upgrade</td></tr>
+          <tr><td class="term">The Senoate</td><td class="arrow">→</td><td class="plain">The menu</td></tr>
+          <tr><td class="term">Diplomoat</td><td class="arrow">→</td><td class="plain">A Cabinet character</td></tr>
+          <tr><td class="term">Circular No. 0XX</td><td class="arrow">→</td><td class="plain">A campaign</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="rule thin">
+
+  <!-- ============ PALETTE ============ -->
+  <section class="reveal">
+    <div class="sec-head">
+      <span class="sec-no">§4</span>
+      <h2 class="sec-title">Palette</h2>
+      <span class="label">Toned down, by order</span>
+    </div>
+    <div class="swatches">
+      <div class="sw"><div class="chip" style="background:#FFE8CA"></div><div class="meta"><div class="nm">Warm Cream</div><div class="hex">#FFE8CA</div><div class="role">Primary base</div></div></div>
+      <div class="sw"><div class="chip" style="background:#FFF6E8"></div><div class="meta"><div class="nm">Paper Cream</div><div class="hex">#FFF6E8</div><div class="role">Cards</div></div></div>
+      <div class="sw"><div class="chip" style="background:#6AC4FF"></div><div class="meta"><div class="nm">Sky Blue</div><div class="hex">#6AC4FF</div><div class="role">Primary accent</div></div></div>
+      <div class="sw"><div class="chip" style="background:#22323B"></div><div class="meta"><div class="nm">Ministry Ink</div><div class="hex">#22323B</div><div class="role">Type · rules</div></div></div>
+      <div class="sw"><div class="chip" style="background:#B23A48"></div><div class="meta"><div class="nm">Stamp Red</div><div class="hex">#B23A48</div><div class="role">Tertiary · seal</div></div></div>
+    </div>
+  </section>
+
+  <hr class="rule thin">
+
+  <!-- ============ TYPOGRAPHY ============ -->
+  <section class="reveal">
+    <div class="sec-head">
+      <span class="sec-no">§5</span>
+      <h2 class="sec-title">Typography</h2>
+      <span class="label">For the record</span>
+    </div>
+    <div class="type-grid">
+      <div class="spec">
+        <div class="stag"><span class="nm">Spectral</span><span class="role">Display &amp; body — transitional serif, document-like</span></div>
+        <p class="big">It's oat-ficial.</p>
+        <p class="big italic">By order of the Cabinet.</p>
+        <p class="glyphs">ABCDEFGHIJKLM abcdefghijklm 0123456789 — the Ministry regrets the decades of delay.</p>
+      </div>
+      <div class="spec mono">
+        <div class="stag"><span class="nm">Space Mono</span><span class="role">Labels · refs · captions · stamps</span></div>
+        <p class="big">REF: OAT/2026/MORN</p>
+        <p class="glyphs">SUBJECT: · CIRCULAR No. 014 · ISSUED IN PUBLIC INTEREST · §1 §2 §3 · 0123456789</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule thin">
+
+  <!-- ============ IN THE WILD ============ -->
+  <section class="reveal">
+    <div class="sec-head">
+      <span class="sec-no">§6</span>
+      <h2 class="sec-title">In the Wild</h2>
+      <span class="label">Specimen applications</span>
+    </div>
+    <div class="wild-grid">
+
+      <!-- campaign poster -->
+      <div class="mock">
+        <div class="mock-cap"><span class="n">Campaign poster</span><span>Circular No. 014</span></div>
+        <div class="poster">
+          <div class="p-pad">
+            <div class="p-no">Circular No. 014</div>
+            <h3>The reintroduction of joy at breakfast.</h3>
+          </div>
+          <div class="p-pad" style="padding-top:0">
+            <img class="wm" src="./moo-logo.png" alt="Ministry of Oats">
+          </div>
+          <div class="p-foot"><span>Issued in public interest.</span><span>By order of the Cabinet.</span></div>
+        </div>
+      </div>
+
+      <!-- citizen ID card -->
+      <div class="mock">
+        <div class="mock-cap"><span class="n">Citizen ID card</span><span>Registration</span></div>
+        <div class="mock-body">
+          <div class="idcard">
+            <div class="id-top"><span>Ministry of Oats</span><span>Citizen · No. 00482</span></div>
+            <div class="id-grid">
+              <div class="id-photo">
+                <svg viewBox="0 0 48 48" fill="none" stroke="#22323B" stroke-width="2"><circle cx="24" cy="18" r="9"/><path d="M8 42c0-9 7-14 16-14s16 5 16 14"/></svg>
+              </div>
+              <div class="id-fields">
+                <div class="nm">A Devoated Citizen</div>
+                <div class="row"><b>Status</b> · Registered &amp; sworn</div>
+                <div class="row"><b>Constituency</b> · Bengaluru, IN</div>
+                <div class="row"><b>Tier</b> · Promoated, Grade II</div>
+              </div>
+            </div>
+            <div class="id-foot">
+              <span class="oath">“I do solemnly oat.”</span>
+              <span class="stamp blue" style="font-size:10px;padding:5px 9px">Oath of Oats</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- the senoate menu -->
+      <div class="mock">
+        <div class="mock-cap"><span class="n">The Senoate</span><span>Order of business</span></div>
+        <div class="mock-body menu">
+          <p class="m-head">The Senoate — today's order of business</p>
+          <div class="m-item"><div class="nm">Overnight Oats, Standard Issue<small>Tabled daily · motion carried</small></div><div class="pr">₹220</div></div>
+          <div class="m-item"><div class="nm">Smoothie, Cabinet Approved<small>Ratified · seasonal</small></div><div class="pr">₹260</div></div>
+          <div class="m-item"><div class="nm">Chia Pudding, Sub-Clause 3<small>Under review · delicious</small></div><div class="pr">₹240</div></div>
+          <div class="m-item"><div class="nm">Granola, By Statute<small>Crunch ratified in full</small></div><div class="pr">₹200</div></div>
+        </div>
+      </div>
+
+      <!-- stamp set -->
+      <div class="mock">
+        <div class="mock-cap"><span class="n">Stamp set</span><span>Office seals</span></div>
+        <div class="mock-body">
+          <div class="stampset">
+            <span class="stamp">It's Oat-ficial</span>
+            <span class="stamp blue">By Order of<br>the Cabinet</span>
+            <span class="stamp">Issued in<br>Public Interest</span>
+          </div>
+          <p style="font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin:22px 0 0;letter-spacing:.04em;line-height:1.7">
+            Applied to packaging, receipts, and any matter requiring the weight of the State. Use sparingly; the stamp does not negotiate.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="f-crest" style="color:var(--ink)"><svg><use href="#crest"/></svg></div>
+    <p class="f-sign">By order of the Cabinet.</p>
+    <div class="f-meta">
+      <div>Ministry of Oats &nbsp;·&nbsp; Est. allegedly &nbsp;·&nbsp; Issued in public interest.</div>
+      <span class="f-dir">Brand Direction No. 01 — The Circular</span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  (function(){
+    var els=document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+    var io=new IntersectionObserver(function(en){
+      en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});
+    },{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){io.observe(e);});
+  })();
+</script>
