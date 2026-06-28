@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ministry of Oats — Direction 04: The Cabinet (hand-drawn)</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Rebrand direction for Ministry of Oats — the world's most charming bureaucracy, hand-drawn. A governing Cabinet of little oat-monsters, in a soft pale-blue world.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --field:#DEF0FF;        /* pale airy blue — primary world / dominant background */
+  --sky:#6AC4FF;          /* deeper sky blue — structure / accents, sparingly */
+  --pink:#FEC6CD;         /* soft pink — warm accent */
+  --cream:#FFE8CA;        /* warm cream — everyday warm tone */
+  --paper:#FFF6E8;        /* near-white warm paper — cards */
+  --ink:#22323B;          /* soft near-black — linework + text */
+  --line:rgba(34,50,59,.16);
+  --line-strong:rgba(34,50,59,.30);
+  --max:1180px;
+  --r:16px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:"Inter",system-ui,sans-serif;
+  color:var(--ink);
+  background:var(--field);
+  overflow-x:hidden;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+svg{display:block}
+/* CRISP type layer — deliberately clean against the loose art */
+h1,h2,h3{font-family:"Hanken Grotesk",system-ui,sans-serif;font-weight:800;line-height:1.02;letter-spacing:-.02em;margin:0;color:var(--ink)}
+.mono{font-family:"JetBrains Mono",monospace}
+a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.eyebrow{font-family:"Hanken Grotesk",sans-serif;font-weight:800;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);opacity:.62}
+
+/* ============ HAND-DRAWN FILTER ============ */
+/* feTurbulence + feDisplacementMap gives strokes an organic waver. */
+.sketch svg [data-wobble],
+.wobble{filter:url(#handdrawn)}
+
+/* ============ MASTHEAD ============ */
+.masthead{
+  position:sticky;top:0;z-index:60;
+  background:rgba(222,240,255,.86);
+  backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.masthead .row{display:flex;align-items:center;gap:14px;padding:11px 24px;max-width:var(--max);margin:0 auto}
+.seal{flex:none;width:46px;height:46px}
+.mast-id{display:flex;flex-direction:column;gap:3px;min-width:0}
+.mast-logo{height:24px;width:auto}
+.mast-motto{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);opacity:.6}
+.mast-spacer{flex:1}
+.mast-tag{font-family:"Hanken Grotesk",sans-serif;font-weight:800;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--field);background:var(--ink);padding:7px 13px;border-radius:999px;white-space:nowrap}
+@media(max-width:560px){.mast-tag{display:none}}
+
+/* ============ HERO LANDSCAPE ============ */
+.hero{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(180deg,#EAF6FF 0%,var(--field) 50%,#E7F2FF 100%)}
+.hero .stage{position:relative;min-height:min(88vh,780px);display:flex;flex-direction:column;justify-content:flex-start}
+.hero-copy{position:relative;z-index:6;text-align:center;padding:56px 24px 8px}
+.hero-wordmark{width:min(540px,80vw);margin:0 auto}
+.hero-motto{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink);opacity:.66;margin-top:16px}
+.hero-line{font-family:"Hanken Grotesk",sans-serif;font-weight:800;font-size:clamp(26px,5vw,46px);color:var(--ink);max-width:16ch;margin:18px auto 0;line-height:1.04;letter-spacing:-.025em}
+.hero-sub{font-size:14.5px;color:var(--ink);opacity:.74;max-width:44ch;margin:14px auto 0}
+/* full-width landscape scene at the base of the hero */
+.heroscene{position:relative;z-index:4;margin-top:auto;width:100%;height:clamp(300px,44vh,440px);pointer-events:none}
+.heroscene svg{position:absolute;inset:0;width:100%;height:100%}
+.hero-credit{position:absolute;bottom:12px;left:0;right:0;text-align:center;z-index:7;font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);opacity:.42}
+
+/* float anim for hero cabinet group */
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes sunbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.f-bob{animation:floaty var(--d,6s) ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+
+/* ============ SECTIONS ============ */
+section{position:relative}
+.band{padding:82px 0}
+.band--field{background:var(--field)}
+.band--cream{background:var(--cream)}
+.band--pink{background:var(--pink)}
+.band--ink{background:var(--ink);color:#E7F1F7}
+.band--ink h2,.band--ink h3{color:#fff}
+.sec-head{max-width:660px;margin:0 0 42px}
+.sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.sec-head h2{font-size:clamp(30px,5vw,52px);margin-top:10px;letter-spacing:-.03em}
+.sec-head p{font-size:16px;margin:16px 0 0;color:var(--ink);opacity:.78}
+.band--ink .sec-head p{color:#C7DCEA;opacity:1}
+
+/* THE IDEA */
+.idea-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:42px;align-items:center}
+.idea-lead{font-family:"Hanken Grotesk",sans-serif;font-weight:700;font-size:clamp(21px,2.8vw,29px);line-height:1.24;color:var(--ink);letter-spacing:-.02em}
+.idea-lead em{font-style:normal;background:linear-gradient(transparent 62%,var(--sky) 0);padding:0 3px}
+.idea-body{font-size:15.5px;margin-top:18px;opacity:.82}
+.idea-card{background:var(--ink);color:#E7F1F7;border-radius:var(--r);padding:30px;position:relative;overflow:hidden}
+.idea-card .stamp{margin:0 0 18px}
+.idea-card h3{color:#fff;font-size:21px;font-weight:800}
+.idea-card ul{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:13px}
+.idea-card li{display:flex;gap:11px;font-size:14px;color:#CFE0EC;align-items:baseline}
+.idea-card li::before{content:"§";font-family:"Hanken Grotesk",sans-serif;color:var(--sky);font-weight:800;flex:none}
+@media(max-width:760px){.idea-grid{grid-template-columns:1fr;gap:28px}}
+
+/* hand-drawn stamp (loose rubber stamp look) */
+.stamp{display:inline-flex;align-items:center;gap:8px;font-family:"Hanken Grotesk",sans-serif;font-weight:800;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#fff;padding:8px 14px;position:relative}
+.stamp svg.stampbox{position:absolute;inset:0;width:100%;height:100%}
+.stamp .stamptxt{position:relative;z-index:2}
+.stamp.ink{color:var(--ink)}
+
+/* THE CABINET */
+.cab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.minister{background:var(--paper);border:1.5px solid var(--line-strong);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.minister:hover{transform:translateY(-6px)}
+.minister .portrait{position:relative;aspect-ratio:4/3.3;overflow:hidden}
+.minister .portrait svg{position:absolute;inset:0;width:100%;height:100%}
+.minister .body{padding:18px 18px 22px;border-top:1.5px solid var(--line)}
+.minister .dept{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;opacity:.55;margin-bottom:7px;color:var(--ink)}
+.minister h3{font-size:18px;line-height:1.1;font-weight:800;letter-spacing:-.01em}
+.minister .role{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);opacity:.7;font-weight:500;margin:8px 0 10px}
+.minister p{font-size:13.5px;opacity:.78;margin:0}
+@media(max-width:860px){.cab-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.cab-grid{grid-template-columns:1fr}}
+
+/* THE VOICE */
+.voice-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:36px;align-items:start}
+.principles{display:grid;gap:14px}
+.principle{display:flex;gap:14px;align-items:baseline}
+.principle .n{font-family:"Hanken Grotesk",sans-serif;font-size:14px;font-weight:800;color:var(--ink);background:var(--sky);width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.principle span:last-child{font-size:15px;color:#D6E5F0}
+/* circular doc */
+.circular{background:var(--paper);color:var(--ink);border-radius:14px;overflow:hidden;border:1.5px solid var(--line-strong)}
+.circular .top{background:var(--cream);padding:18px 22px;border-bottom:2px solid var(--line-strong);display:flex;align-items:center;gap:14px}
+.circular .top .seal{width:42px;height:42px}
+.circular .top .meta{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);line-height:1.7;opacity:.85}
+.circular .top .meta b{font-weight:700;opacity:1}
+.circular .doc{padding:24px 26px 8px}
+.circular .docnum{font-family:"JetBrains Mono",monospace;font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.circular .subj{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.02em;color:var(--ink);margin:12px 0;line-height:1.9;opacity:.85}
+.circular .subj b{color:var(--ink);opacity:1}
+.circular .docbody{font-size:15px;line-height:1.62;border-top:1.5px dashed var(--line-strong);padding-top:16px;margin-top:6px}
+.circular .docbody em{font-style:normal;background:linear-gradient(transparent 60%,var(--pink) 0);padding:0 2px}
+.circular .sign{font-family:"Hanken Grotesk",sans-serif;font-weight:800;font-size:16px;color:var(--ink);margin-top:18px;letter-spacing:-.01em}
+.circular .foot{display:flex;gap:10px;flex-wrap:wrap;padding:14px 26px 24px}
+.reg-notice{margin-top:24px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-left:4px solid var(--sky);border-radius:10px;padding:18px 20px}
+.reg-notice .tag{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--sky);margin-bottom:8px}
+.reg-notice p{margin:0;font-size:14.5px;color:#E0EDF6}
+.reg-notice em{font-style:normal;color:#fff;font-weight:600}
+@media(max-width:820px){.voice-grid{grid-template-columns:1fr;gap:28px}}
+
+/* LEXICON */
+.lex-wrap{overflow-x:auto;border-radius:var(--r);border:1.5px solid var(--line-strong)}
+table.lex{width:100%;border-collapse:collapse;min-width:520px;background:var(--paper)}
+table.lex th{background:var(--ink);color:#fff;font-family:"Hanken Grotesk",sans-serif;font-weight:800;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;text-align:left;padding:14px 20px}
+table.lex td{padding:14px 20px;border-top:1px solid var(--line);font-size:15px;vertical-align:top}
+table.lex tr:nth-child(even) td{background:rgba(106,196,255,.09)}
+table.lex td.term{font-family:"Hanken Grotesk",sans-serif;font-weight:800;color:var(--ink);font-size:15.5px;letter-spacing:-.01em}
+table.lex td.arrow{color:var(--sky);font-weight:700;text-align:center;width:40px}
+
+/* PALETTE */
+.swatches{display:grid;grid-template-columns:repeat(7,1fr);gap:0;border-radius:var(--r);overflow:hidden;border:1.5px solid var(--line-strong)}
+.sw{padding:26px 14px 16px;min-height:166px;display:flex;flex-direction:column;justify-content:flex-end}
+.sw .nm{font-family:"Hanken Grotesk",sans-serif;font-weight:800;font-size:15px;line-height:1.1;letter-spacing:-.01em}
+.sw .hx{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.04em;margin-top:6px;opacity:.85}
+.sw .role{font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:auto;opacity:.65}
+@media(max-width:760px){.swatches{grid-template-columns:repeat(2,1fr)}}
+
+/* TYPOGRAPHY */
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.type-card{background:var(--paper);border:1.5px solid var(--line-strong);border-radius:var(--r);padding:28px}
+.type-card .label{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);opacity:.65;margin-bottom:14px}
+.type-card .big{font-family:"Hanken Grotesk",sans-serif;font-weight:800;font-size:clamp(34px,5vw,52px);line-height:1;color:var(--ink);letter-spacing:-.03em}
+.type-card .big.body{font-family:"Inter";font-weight:600;letter-spacing:-.01em}
+.type-card .big.code{font-family:"JetBrains Mono";font-weight:500;font-size:clamp(22px,3.2vw,34px);letter-spacing:-.02em}
+.type-card .alpha{margin-top:14px;font-size:14.5px;opacity:.68}
+.type-card .spec{margin-top:18px;font-size:13.5px;opacity:.82;line-height:1.55}
+.type-card.full{grid-column:1/-1}
+@media(max-width:680px){.type-grid{grid-template-columns:1fr}}
+
+/* IN THE WILD */
+.wild-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:24px}
+.wild-row2{display:grid;grid-template-columns:.85fr 1.15fr;gap:24px;margin-top:24px}
+.mock{border-radius:var(--r);overflow:hidden;position:relative;min-height:290px;border:1.5px solid var(--line-strong)}
+/* poster */
+.poster{background:linear-gradient(180deg,#EAF6FF,var(--field) 55%,#E2F0FF);position:relative;overflow:hidden;display:flex;flex-direction:column;padding:26px 28px 0}
+.poster .p-tag{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);opacity:.7}
+.poster h3{font-size:clamp(24px,3.4vw,34px);color:var(--ink);margin:10px 0 6px;max-width:13ch;font-weight:800;letter-spacing:-.025em}
+.poster .p-sub{font-size:13px;color:var(--ink);opacity:.78;max-width:30ch}
+.poster .p-scene{position:relative;margin-top:auto;height:170px}
+.poster .p-scene svg{position:absolute;inset:0;width:100%;height:100%}
+.poster .p-stamp{position:absolute;left:24px;bottom:18px;z-index:4}
+/* ID card */
+.idcard{background:var(--paper);padding:22px;display:flex;flex-direction:column}
+.idcard .id-top{display:flex;align-items:center;gap:10px;border-bottom:2px solid var(--line-strong);padding-bottom:12px}
+.idcard .id-top .seal{width:34px;height:34px}
+.idcard .id-top .t{font-family:"Hanken Grotesk",sans-serif;font-weight:800;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);line-height:1.5}
+.idcard .id-main{display:flex;gap:16px;margin-top:16px;align-items:center}
+.idcard .id-photo{flex:none;width:104px;height:120px;border-radius:10px;background:var(--field);position:relative;overflow:hidden;border:1.5px solid var(--line-strong)}
+.idcard .id-photo svg{position:absolute;inset:0;width:100%;height:100%}
+.idcard .id-fields{font-size:12.5px;line-height:1.5}
+.idcard .id-fields .k{font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;opacity:.55}
+.idcard .id-fields .v{font-family:"Hanken Grotesk",sans-serif;font-weight:800;color:var(--ink);font-size:14.5px;margin-bottom:9px;letter-spacing:-.01em}
+.idcard .id-bar{margin-top:auto;padding-top:14px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.idcard .barcode{height:30px;flex:1;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 5px);opacity:.6;border-radius:2px}
+/* label / packaging */
+.label{background:var(--pink);padding:26px 28px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.label .l-ring{position:absolute;top:18px;right:22px;width:60px;height:60px;opacity:.9}
+.label .l-kicker{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);opacity:.72}
+.label h3{font-size:clamp(26px,3.6vw,38px);color:var(--ink);margin:6px 0;max-width:10ch;font-weight:800;letter-spacing:-.03em}
+.label .l-strap{font-family:"Hanken Grotesk",sans-serif;font-weight:600;font-size:16px;color:var(--ink);opacity:.85;margin-bottom:14px}
+.label .l-net{display:flex;gap:20px;border-top:1.5px solid var(--line-strong);padding-top:14px;margin-top:6px;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);position:relative;z-index:3}
+.label .l-net b{display:block;font-size:14px;font-family:"Hanken Grotesk",sans-serif;font-weight:800;text-transform:none;letter-spacing:-.01em;margin-top:2px}
+.label .l-monster{position:absolute;right:-4px;bottom:-8px;width:130px;height:auto;z-index:1}
+/* menu (Senoate) */
+.menu{background:var(--ink);color:#E7F1F7;padding:26px 28px;position:relative;overflow:hidden}
+.menu .m-head{display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:14px}
+.menu .m-head .seal{width:36px;height:36px}
+.menu .m-head .t{font-family:"Hanken Grotesk",sans-serif;font-weight:800;font-size:22px;color:#fff;letter-spacing:-.02em}
+.menu .m-head .t small{display:block;font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--sky);margin-top:3px;font-weight:400}
+.menu ul{list-style:none;margin:16px 0 0;padding:0}
+.menu li{display:flex;align-items:baseline;gap:8px;padding:9px 0;border-bottom:1px dotted rgba(255,255,255,.18);font-size:14px;flex-wrap:wrap}
+.menu li .dish{font-family:"Hanken Grotesk",sans-serif;font-weight:700;color:#fff;font-size:15px;letter-spacing:-.01em}
+.menu li .dots{flex:1;border-bottom:1px dotted rgba(255,255,255,.3);transform:translateY(-3px)}
+.menu li .pr{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--sky)}
+.menu li .note{flex-basis:100%;font-size:11px;color:#9FC0D8;font-style:italic}
+@media(max-width:820px){.wild-grid,.wild-row2{grid-template-columns:1fr}}
+
+/* FOOTER */
+.foot-scene{position:relative;height:230px;overflow:hidden;background:linear-gradient(180deg,#EAF6FF,var(--field))}
+.foot-scene svg{position:absolute;inset:0;width:100%;height:100%}
+.footer{background:var(--ink);color:#C7DCEA;padding:48px 0 40px;text-align:center}
+.footer .seal{width:54px;height:54px;margin:0 auto 18px}
+.footer .sign{font-family:"Hanken Grotesk",sans-serif;font-weight:800;font-size:clamp(24px,4vw,34px);color:#fff;letter-spacing:-.02em}
+.footer .motto{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--sky);margin-top:14px}
+.footer .dir{margin-top:26px;font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#8FB0C8;border-top:1px solid rgba(255,255,255,.12);padding-top:22px;display:inline-block}
+.footer .disclaimer{font-size:11px;color:#6F92AC;margin-top:18px}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important}
+}
+</style>
+</head>
+<body class="sketch">
+
+<!-- ============ GLOBAL SVG DEFS: hand-drawn filter + seal + monster symbols ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- the hand-drawn waver: small turbulence displacing the strokes -->
+    <filter id="handdrawn" x="-12%" y="-12%" width="124%" height="124%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.024" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.1" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="handdrawn2" x="-12%" y="-12%" width="124%" height="124%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="19" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+
+    <!-- circular ring text path for the seal -->
+    <path id="ringTop" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/>
+
+    <!-- =========== SEAL (loose line-art ministry seal) =========== -->
+    <g id="ms-seal">
+      <g filter="url(#handdrawn)">
+        <circle cx="50" cy="50" r="45.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="37.5" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <!-- little oat bowl + rising sun motif -->
+        <g stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M33 57 q17 15 34 0"/>
+          <path d="M30.5 57 q19.5 1 39 0"/>
+          <circle cx="50" cy="44.5" r="6.6"/>
+          <line x1="50" y1="32" x2="50" y2="37"/>
+          <line x1="40" y1="36" x2="43" y2="40"/>
+          <line x1="60" y1="36" x2="57" y2="40"/>
+          <line x1="33.5" y1="44.5" x2="38.5" y2="44.5"/>
+          <line x1="61.5" y1="44.5" x2="66.5" y2="44.5"/>
+        </g>
+      </g>
+      <text font-family="JetBrains Mono, monospace" font-size="6" letter-spacing="1.2" fill="currentColor">
+        <textPath href="#ringTop" startOffset="2%">· MINISTRY OF OATS · EST. ALLEGEDLY ·</textPath>
+      </text>
+    </g>
+
+    <!-- =========== SIX ORIGINAL OAT-MONSTER DOODLES ===========
+         Each viewBox 0 0 120 130. Simple round soft creature, dot eyes,
+         tiny grin, stub limbs, an oat sprig on the head. Flat pastel fill.
+         The body group is wobbled by the handdrawn filter. -->
+
+    <!-- M1 · cream, round, calm — Minister of Overnight Affairs -->
+    <g id="mon-overnight">
+      <g filter="url(#handdrawn)">
+        <!-- oat sprig -->
+        <g stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round">
+          <path d="M60 30 C60 18 60 13 60 9"/>
+          <ellipse cx="55" cy="16" rx="3.4" ry="5" fill="#FFE8CA" transform="rotate(-26 55 16)"/>
+          <ellipse cx="65" cy="13" rx="3.4" ry="5" fill="#FFE8CA" transform="rotate(24 65 13)"/>
+          <ellipse cx="60" cy="9" rx="3.2" ry="4.6" fill="#FFE8CA"/>
+        </g>
+        <!-- body -->
+        <path d="M60 30 C90 30 100 54 100 78 C100 106 82 120 60 120 C38 120 20 106 20 78 C20 54 30 30 60 30 Z"
+              fill="#FFE8CA" stroke="#22323B" stroke-width="2.4" stroke-linejoin="round"/>
+        <!-- eyes -->
+        <circle cx="48" cy="72" r="3.4" fill="#22323B"/>
+        <circle cx="72" cy="72" r="3.4" fill="#22323B"/>
+        <!-- closed-ish drowsy brows (deadpan) -->
+        <path d="M43 64 q5 -3 10 0" stroke="#22323B" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+        <path d="M67 64 q5 -3 10 0" stroke="#22323B" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+        <!-- tiny grin -->
+        <path d="M52 86 q8 7 16 0" stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- cheeks -->
+        <circle cx="40" cy="82" r="4.5" fill="#FEC6CD" opacity=".8"/>
+        <circle cx="80" cy="82" r="4.5" fill="#FEC6CD" opacity=".8"/>
+        <!-- stub arms -->
+        <path d="M22 92 q-9 4 -10 12" stroke="#22323B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M98 92 q9 4 10 12" stroke="#22323B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <!-- hatch shading -->
+        <g stroke="#22323B" stroke-width="0.9" opacity=".28" stroke-linecap="round">
+          <line x1="84" y1="98" x2="90" y2="104"/><line x1="80" y1="103" x2="86" y2="109"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- M2 · pink, taller — Secretary of Smoothies -->
+    <g id="mon-smoothie">
+      <g filter="url(#handdrawn2)">
+        <g stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round">
+          <path d="M60 26 C62 16 64 12 66 8"/>
+          <ellipse cx="61" cy="14" rx="3.2" ry="5" fill="#FFE8CA" transform="rotate(-30 61 14)"/>
+          <ellipse cx="70" cy="11" rx="3.2" ry="5" fill="#FFE8CA" transform="rotate(20 70 11)"/>
+          <ellipse cx="66" cy="8" rx="3" ry="4.4" fill="#FFE8CA"/>
+        </g>
+        <path d="M60 26 C84 26 96 44 96 72 C96 104 80 122 60 122 C40 122 24 104 24 72 C24 44 36 26 60 26 Z"
+              fill="#FEC6CD" stroke="#22323B" stroke-width="2.4" stroke-linejoin="round"/>
+        <!-- wide awake eyes -->
+        <circle cx="49" cy="66" r="6.4" fill="#fff" stroke="#22323B" stroke-width="2"/>
+        <circle cx="71" cy="66" r="6.4" fill="#fff" stroke="#22323B" stroke-width="2"/>
+        <circle cx="50" cy="67" r="2.6" fill="#22323B"/>
+        <circle cx="72" cy="67" r="2.6" fill="#22323B"/>
+        <!-- small flat mouth (busy, deadpan) -->
+        <path d="M53 84 q7 4 14 0" stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <circle cx="40" cy="78" r="4" fill="#fff" opacity=".5"/>
+        <circle cx="80" cy="78" r="4" fill="#fff" opacity=".5"/>
+        <path d="M26 88 q-9 6 -9 14" stroke="#22323B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M94 88 q9 6 9 14" stroke="#22323B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <g stroke="#22323B" stroke-width="0.9" opacity=".26" stroke-linecap="round">
+          <line x1="80" y1="100" x2="86" y2="106"/><line x1="76" y1="105" x2="82" y2="111"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- M3 · sky-tinted, small + suave — The Diplomoat -->
+    <g id="mon-diplomoat">
+      <g filter="url(#handdrawn)">
+        <g stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round">
+          <path d="M58 30 C56 20 54 15 52 11"/>
+          <ellipse cx="49" cy="17" rx="3.2" ry="4.8" fill="#FFE8CA" transform="rotate(-24 49 17)"/>
+          <ellipse cx="57" cy="14" rx="3.2" ry="4.8" fill="#FFE8CA" transform="rotate(26 57 14)"/>
+          <ellipse cx="52" cy="11" rx="3" ry="4.4" fill="#FFE8CA"/>
+        </g>
+        <path d="M60 30 C86 30 98 52 98 78 C98 106 80 120 60 120 C40 120 22 106 22 78 C22 52 34 30 60 30 Z"
+              fill="#DEF0FF" stroke="#22323B" stroke-width="2.4" stroke-linejoin="round"/>
+        <!-- one raised brow (suave) -->
+        <path d="M42 64 q5 -4 10 -1" stroke="#22323B" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+        <path d="M68 60 q5 1 10 2" stroke="#22323B" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+        <circle cx="47" cy="72" r="3.4" fill="#22323B"/>
+        <circle cx="73" cy="72" r="3.4" fill="#22323B"/>
+        <!-- slight smirk -->
+        <path d="M52 87 q9 5 16 -2" stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- bow tie -->
+        <path d="M54 100 l8 5 l-8 5 z M66 100 l-8 5 l8 5 z" fill="#FEC6CD" stroke="#22323B" stroke-width="1.6" stroke-linejoin="round"/>
+        <circle cx="60" cy="105" r="2.1" fill="#22323B"/>
+        <path d="M24 92 q-9 4 -10 12" stroke="#22323B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M96 92 q9 4 10 12" stroke="#22323B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <g stroke="#22323B" stroke-width="0.9" opacity=".26" stroke-linecap="round">
+          <line x1="82" y1="96" x2="88" y2="102"/><line x1="78" y1="101" x2="84" y2="107"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- M4 · cream, sleepy/patient blob — Minister of Chia & Long-Term Planning -->
+    <g id="mon-chia">
+      <g filter="url(#handdrawn2)">
+        <g stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round">
+          <path d="M60 36 C60 24 60 18 60 13"/>
+          <ellipse cx="55" cy="20" rx="3.2" ry="4.8" fill="#FFE8CA" transform="rotate(-26 55 20)"/>
+          <ellipse cx="65" cy="17" rx="3.2" ry="4.8" fill="#FFE8CA" transform="rotate(24 65 17)"/>
+          <ellipse cx="60" cy="13" rx="3" ry="4.4" fill="#FFE8CA"/>
+        </g>
+        <!-- wide low patient body -->
+        <path d="M60 36 C94 36 106 58 106 82 C106 106 86 121 60 121 C34 121 14 106 14 82 C14 58 26 36 60 36 Z"
+              fill="#FFE8CA" stroke="#22323B" stroke-width="2.4" stroke-linejoin="round"/>
+        <!-- half-closed sleepy eyes -->
+        <path d="M42 76 q6 4 12 0" stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M66 76 q6 4 12 0" stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- chia dots speckle -->
+        <g fill="#22323B" opacity=".5"><circle cx="36" cy="92" r="1.4"/><circle cx="45" cy="98" r="1.4"/><circle cx="74" cy="95" r="1.4"/><circle cx="84" cy="90" r="1.4"/><circle cx="60" cy="100" r="1.4"/></g>
+        <!-- tiny content grin -->
+        <path d="M52 90 q8 5 16 0" stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <circle cx="38" cy="86" r="4.5" fill="#FEC6CD" opacity=".8"/>
+        <circle cx="82" cy="86" r="4.5" fill="#FEC6CD" opacity=".8"/>
+        <path d="M16 96 q-8 5 -8 13" stroke="#22323B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M104 96 q8 5 8 13" stroke="#22323B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      </g>
+    </g>
+
+    <!-- M5 · sky, tidy & precise — Under-Secretary of Bowls -->
+    <g id="mon-bowls">
+      <g filter="url(#handdrawn)">
+        <g stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round">
+          <path d="M60 32 C60 20 60 15 60 10"/>
+          <ellipse cx="55" cy="17" rx="3.2" ry="4.8" fill="#FFE8CA" transform="rotate(-26 55 17)"/>
+          <ellipse cx="65" cy="14" rx="3.2" ry="4.8" fill="#FFE8CA" transform="rotate(24 65 14)"/>
+          <ellipse cx="60" cy="10" rx="3" ry="4.4" fill="#FFE8CA"/>
+        </g>
+        <path d="M60 32 C84 32 96 52 96 76 C96 104 80 120 60 120 C40 120 24 104 24 76 C24 52 36 32 60 32 Z"
+              fill="#DEF0FF" stroke="#22323B" stroke-width="2.4" stroke-linejoin="round"/>
+        <!-- attentive round eyes -->
+        <circle cx="49" cy="70" r="3.7" fill="#22323B"/>
+        <circle cx="71" cy="70" r="3.7" fill="#22323B"/>
+        <circle cx="50.2" cy="68.8" r="1.1" fill="#fff"/>
+        <circle cx="72.2" cy="68.8" r="1.1" fill="#fff"/>
+        <!-- neat tiny mouth -->
+        <path d="M55 85 q5 4 10 0" stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- holds a little bowl -->
+        <g stroke="#22323B" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M46 100 q14 10 28 0" fill="#FEC6CD"/>
+          <path d="M44 100 q16 1 32 0"/>
+        </g>
+        <path d="M26 90 q-8 4 -9 11" stroke="#22323B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M94 90 q8 4 9 11" stroke="#22323B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <g stroke="#22323B" stroke-width="0.9" opacity=".24" stroke-linecap="round">
+          <line x1="80" y1="94" x2="86" y2="100"/><line x1="76" y1="99" x2="82" y2="105"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- M6 · pink, sweet — Minister of Just Desserts -->
+    <g id="mon-desserts">
+      <g filter="url(#handdrawn2)">
+        <g stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round">
+          <path d="M60 30 C58 20 56 15 54 11"/>
+          <ellipse cx="51" cy="17" rx="3.2" ry="4.8" fill="#FFE8CA" transform="rotate(-24 51 17)"/>
+          <ellipse cx="59" cy="14" rx="3.2" ry="4.8" fill="#FFE8CA" transform="rotate(26 59 14)"/>
+          <ellipse cx="54" cy="11" rx="3" ry="4.4" fill="#FFE8CA"/>
+        </g>
+        <path d="M60 30 C86 30 98 52 98 78 C98 106 80 120 60 120 C40 120 22 106 22 78 C22 52 34 30 60 30 Z"
+              fill="#FEC6CD" stroke="#22323B" stroke-width="2.4" stroke-linejoin="round"/>
+        <!-- happy arc eyes -->
+        <path d="M43 72 q5 -5 10 0" stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M67 72 q5 -5 10 0" stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- open little smile -->
+        <path d="M51 84 q9 8 18 0 q-9 3 -18 0 Z" fill="#22323B"/>
+        <circle cx="39" cy="82" r="4.6" fill="#fff" opacity=".45"/>
+        <circle cx="81" cy="82" r="4.6" fill="#fff" opacity=".45"/>
+        <!-- cherry on top dot -->
+        <circle cx="60" cy="44" r="2.4" fill="#22323B"/>
+        <path d="M24 92 q-9 4 -10 12" stroke="#22323B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M96 92 q9 4 10 12" stroke="#22323B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <g stroke="#22323B" stroke-width="0.9" opacity=".26" stroke-linecap="round">
+          <line x1="82" y1="98" x2="88" y2="104"/><line x1="78" y1="103" x2="84" y2="109"/>
+        </g>
+      </g>
+    </g>
+  </defs>
+</svg>
+
+<!-- ============ MASTHEAD ============ -->
+<header class="masthead">
+  <div class="row">
+    <svg class="seal" viewBox="0 0 100 100" style="color:var(--ink)" aria-label="Ministry of Oats seal" role="img"><use href="#ms-seal"/></svg>
+    <div class="mast-id">
+      <img class="mast-logo" src="./moo-logo.png" alt="Ministry of Oats">
+      <span class="mast-motto">Issued in public interest.</span>
+    </div>
+    <div class="mast-spacer"></div>
+    <span class="mast-tag">Direction 04 · The Cabinet</span>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="stage">
+    <div class="hero-copy">
+      <img class="hero-wordmark" src="./moo-logo.png" alt="Ministry of Oats">
+      <div class="hero-motto">Issued in public interest.</div>
+      <h1 class="hero-line">A government department for breakfast.</h1>
+      <p class="hero-sub">We regulate mornings. The Cabinet has assembled in the field for the official portrait — straight faces, as required by protocol.</p>
+    </div>
+
+    <!-- full landscape: hills, sun, oat stalks, cabinet on the horizon -->
+    <div class="heroscene">
+      <svg viewBox="0 0 1200 440" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <!-- sun -->
+        <g class="f-bob" style="--d:8s">
+          <g filter="url(#handdrawn)" stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round">
+            <circle cx="600" cy="120" r="34" fill="#FFE8CA"/>
+            <line x1="600" y1="68" x2="600" y2="80"/><line x1="600" y1="160" x2="600" y2="172"/>
+            <line x1="548" y1="120" x2="560" y2="120"/><line x1="640" y1="120" x2="652" y2="120"/>
+            <line x1="563" y1="83" x2="571" y2="91"/><line x1="629" y1="149" x2="637" y2="157"/>
+            <line x1="637" y1="83" x2="629" y2="91"/><line x1="571" y1="149" x2="563" y2="157"/>
+          </g>
+        </g>
+        <!-- loose clouds -->
+        <g filter="url(#handdrawn)" stroke="#22323B" stroke-width="1.8" fill="#fff" stroke-linecap="round" opacity=".9">
+          <path d="M180 110 q-22 0 -22 14 q0 14 22 14 h70 q22 0 22 -14 q0 -16 -24 -14 q-4 -16 -24 -12 q-10 -2 -20 4 Z"/>
+          <path d="M930 80 q-18 0 -18 11 q0 11 18 11 h54 q18 0 18 -11 q0 -13 -20 -11 q-4 -12 -20 -9 Z"/>
+        </g>
+        <!-- rolling hills (wobbly) -->
+        <g filter="url(#handdrawn)" stroke="#22323B" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M-20 360 q200 -70 420 -40 q220 30 420 -20 q220 -56 420 8 V460 H-20 Z" fill="#FFE8CA" stroke-width="2.2"/>
+          <path d="M-20 392 q160 -44 360 -24 q220 22 410 -10 q170 -28 470 12 V460 H-20 Z" fill="#FEC6CD" stroke-width="2.2"/>
+          <path d="M-20 420 q260 -30 560 -8 q280 22 680 -6 V460 H-20 Z" fill="#FFF6E8" stroke-width="2.2"/>
+        </g>
+        <!-- oat stalks scattered along the front hill -->
+        <g id="hero-stalks" stroke="#22323B" stroke-linecap="round" fill="#22323B" opacity=".5"></g>
+
+        <!-- CABINET on the horizon (the 6 monsters, scaled small, in a row) -->
+        <g class="f-bob" style="--d:6.4s"><g transform="translate(300,250) scale(0.62)"><use href="#mon-overnight"/></g></g>
+        <g class="f-bob" style="--d:5.2s"><g transform="translate(400,268) scale(0.50)"><use href="#mon-bowls"/></g></g>
+        <g class="f-bob" style="--d:7s"><g transform="translate(520,232) scale(0.74)"><use href="#mon-smoothie"/></g></g>
+        <g class="f-bob" style="--d:6s"><g transform="translate(660,250) scale(0.60)"><use href="#mon-chia"/></g></g>
+        <g class="f-bob" style="--d:5.6s"><g transform="translate(760,256) scale(0.56)"><use href="#mon-diplomoat"/></g></g>
+        <g class="f-bob" style="--d:6.8s"><g transform="translate(852,262) scale(0.52)"><use href="#mon-desserts"/></g></g>
+      </svg>
+    </div>
+
+    <div class="hero-credit">Official Cabinet Portrait · Ref OAT/2026/CAB · taken in a field, as is tradition</div>
+  </div>
+</section>
+
+<!-- ============ THE IDEA ============ -->
+<section class="band band--field">
+  <div class="wrap">
+    <div class="idea-grid">
+      <div>
+        <div class="eyebrow">The big idea</div>
+        <p class="idea-lead">Ministry of Oats is <em>the world's most charming bureaucracy</em> — a real government department, run entirely for the benefit of your mornings.</p>
+        <p class="idea-body">We look and write like an actual ministry: circulars, decrees, registrations, constituencies, the lot. The wordplay is the wink, never the whole joke. And now the ministry has a face — a governing Cabinet of characters who hold the portfolios, stand for the portrait, and keep a completely straight face while doing it.</p>
+        <p class="idea-body">Maximum gravity. Minimum stakes. We never tell you it's fun. The deadpan does that.</p>
+      </div>
+      <div class="idea-card">
+        <span class="stamp" style="color:#fff">
+          <svg class="stampbox" viewBox="0 0 200 44" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#handdrawn)"><rect x="3" y="3" width="194" height="38" rx="7" fill="none" stroke="#fff" stroke-width="2" transform="rotate(-1.6 100 22)"/></g></svg>
+          <span class="stamptxt">★ By order of the Cabinet</span>
+        </span>
+        <h3>Statement of Purpose</h3>
+        <ul>
+          <li>Straight face, always.</li>
+          <li>We never say we're fun — the deadpan does it.</li>
+          <li>Maximum gravity, minimum stakes.</li>
+          <li>The wordplay is the wink, never the whole joke.</li>
+          <li>Real officialese over jokey filler.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE CABINET ============ -->
+<section class="band band--cream">
+  <div class="wrap">
+    <div class="sec-head center">
+      <div class="eyebrow">Section IV — Composition of Government</div>
+      <h2>The Cabinet</h2>
+      <p>Six ministers. Six portfolios. One unified position on the importance of a good breakfast. Portfolios are non-negotiable and mildly delicious.</p>
+    </div>
+    <div class="cab-grid">
+
+      <article class="minister">
+        <div class="portrait" style="background:#EAF6FF">
+          <svg viewBox="0 0 120 130" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+            <path d="M-10 116 q70 -22 140 0 V140 H-10 Z" fill="#FFE8CA" opacity=".55"/>
+            <g class="f-bob" style="--d:6s"><use href="#mon-overnight"/></g>
+          </svg>
+        </div>
+        <div class="body">
+          <div class="dept">Department of Overnight Affairs</div>
+          <h3>Minister of Overnight Affairs</h3>
+          <div class="role">Portfolio: Overnight Oats</div>
+          <p>Oversees all matters that resolve themselves while citizens sleep. Files no reports before noon, on principle.</p>
+        </div>
+      </article>
+
+      <article class="minister">
+        <div class="portrait" style="background:#EAF6FF">
+          <svg viewBox="0 0 120 130" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+            <path d="M-10 116 q70 -22 140 0 V140 H-10 Z" fill="#FEC6CD" opacity=".5"/>
+            <g class="f-bob" style="--d:5.4s"><use href="#mon-smoothie"/></g>
+          </svg>
+        </div>
+        <div class="body">
+          <div class="dept">Department of Liquid Affairs</div>
+          <h3>Secretary of Smoothies</h3>
+          <div class="role">Portfolio: Smoothies</div>
+          <p>Holds emergency powers over blending, texture and pace. Believes most problems can be solved at high speed.</p>
+        </div>
+      </article>
+
+      <article class="minister">
+        <div class="portrait" style="background:#EAF6FF">
+          <svg viewBox="0 0 120 130" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+            <path d="M-10 116 q70 -22 140 0 V140 H-10 Z" fill="#FFE8CA" opacity=".55"/>
+            <g class="f-bob" style="--d:6.6s"><use href="#mon-diplomoat"/></g>
+          </svg>
+        </div>
+        <div class="body">
+          <div class="dept">Office of External Relations</div>
+          <h3>The Diplomoat</h3>
+          <div class="role">Portfolio: Coffee &amp; Diplomacy</div>
+          <p>Represents the Ministry abroad and at the counter. Has never lost a negotiation conducted before the first cup.</p>
+        </div>
+      </article>
+
+      <article class="minister">
+        <div class="portrait" style="background:#EAF6FF">
+          <svg viewBox="0 0 120 130" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+            <path d="M-10 116 q70 -22 140 0 V140 H-10 Z" fill="#FEC6CD" opacity=".5"/>
+            <g class="f-bob" style="--d:7.2s"><use href="#mon-chia"/></g>
+          </svg>
+        </div>
+        <div class="body">
+          <div class="dept">Department of Patience</div>
+          <h3>Minister of Chia &amp; Long-Term Planning</h3>
+          <div class="role">Portfolio: Chia Puddings</div>
+          <p>Responsible for outcomes that require soaking overnight and good things that take their time. Rarely rushed.</p>
+        </div>
+      </article>
+
+      <article class="minister">
+        <div class="portrait" style="background:#EAF6FF">
+          <svg viewBox="0 0 120 130" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+            <path d="M-10 116 q70 -22 140 0 V140 H-10 Z" fill="#6AC4FF" opacity=".4"/>
+            <g class="f-bob" style="--d:5.8s"><use href="#mon-bowls"/></g>
+          </svg>
+        </div>
+        <div class="body">
+          <div class="dept">Bureau of Bowls</div>
+          <h3>Under-Secretary of Bowls</h3>
+          <div class="role">Portfolio: Smoothie Bowls</div>
+          <p>Maintains standards of arrangement, topping and depth. Considers a poorly assembled bowl a matter of public record.</p>
+        </div>
+      </article>
+
+      <article class="minister">
+        <div class="portrait" style="background:#EAF6FF">
+          <svg viewBox="0 0 120 130" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+            <path d="M-10 116 q70 -22 140 0 V140 H-10 Z" fill="#FEC6CD" opacity=".5"/>
+            <g class="f-bob" style="--d:6.2s"><use href="#mon-desserts"/></g>
+          </svg>
+        </div>
+        <div class="body">
+          <div class="dept">Department of Just Desserts</div>
+          <h3>Minister of Just Desserts</h3>
+          <div class="role">Portfolio: Desserts</div>
+          <p>Ensures every citizen receives what they are due — sweetly, and within the bounds of clean eating. Holds no grudges.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE VOICE ============ -->
+<section class="band band--ink">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow" style="color:var(--sky);opacity:1">Section V — Communications Protocol</div>
+      <h2>The Voice</h2>
+      <p>Two engines: bureaucratic officialese, and the occasional deadpan oat. Every campaign is a Circular. Every sign-off, an order of the Cabinet.</p>
+    </div>
+
+    <div class="voice-grid">
+      <div class="principles">
+        <div class="principle"><span class="n">1</span><span>Straight face, always.</span></div>
+        <div class="principle"><span class="n">2</span><span>We never say we're fun — the deadpan does it.</span></div>
+        <div class="principle"><span class="n">3</span><span>Maximum gravity, minimum stakes.</span></div>
+        <div class="principle"><span class="n">4</span><span>The wordplay is the wink, never the whole joke.</span></div>
+        <div class="principle"><span class="n">5</span><span>Real officialese over jokey filler.</span></div>
+
+        <div class="reg-notice">
+          <div class="tag">Registration Notice</div>
+          <p>To become a citizen, take <em>the Oath of Oats</em>. Benefits are non-negotiable and mildly delicious.</p>
+        </div>
+      </div>
+
+      <!-- Rendered sample Circular -->
+      <div class="circular">
+        <div class="top">
+          <svg class="seal" viewBox="0 0 100 100" style="color:var(--ink)" aria-hidden="true"><use href="#ms-seal"/></svg>
+          <div class="meta">
+            <b>Government of Ministry of Oats</b><br>
+            Office of the Cabinet · Mornings Division
+          </div>
+        </div>
+        <div class="doc">
+          <div class="docnum">CIRCULAR No. 014</div>
+          <div class="subj">
+            <span><b>Subject:</b> The reintroduction of joy at breakfast</span><br>
+            <span><b>Ref:</b> OAT/2026/MORN</span>
+          </div>
+          <div class="docbody">
+            <em>Effective immediately, all citizens are entitled to a breakfast that is genuinely good for them and genuinely good.</em> The Ministry regrets the decades of delay.
+            <div class="sign">By order of the Cabinet.</div>
+          </div>
+        </div>
+        <div class="foot">
+          <span class="stamp ink">
+            <svg class="stampbox" viewBox="0 0 150 40" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#handdrawn)"><rect x="3" y="3" width="144" height="34" rx="6" fill="none" stroke="#22323B" stroke-width="1.8" transform="rotate(-2 75 20)"/></g></svg>
+            <span class="stamptxt">★ It's oat-ficial</span>
+          </span>
+          <span class="stamp ink">
+            <svg class="stampbox" viewBox="0 0 190 40" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#handdrawn)"><rect x="3" y="3" width="184" height="34" rx="6" fill="none" stroke="#22323B" stroke-width="1.8" transform="rotate(1.4 95 20)"/></g></svg>
+            <span class="stamptxt">★ Issued in public interest</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE LEXICON ============ -->
+<section class="band band--field">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Section VI — Schedule of Terms</div>
+      <h2>The Lexicon</h2>
+      <p>How the Ministry refers to ordinary things. To be used consistently across all official communication.</p>
+    </div>
+    <div class="lex-wrap">
+      <table class="lex">
+        <thead><tr><th>Ministry term</th><th></th><th>Means</th></tr></thead>
+        <tbody>
+          <tr><td class="term">Citizen</td><td class="arrow">→</td><td>Customer</td></tr>
+          <tr><td class="term">Registration</td><td class="arrow">→</td><td>Sign-up</td></tr>
+          <tr><td class="term">Constituency</td><td class="arrow">→</td><td>Loyalty base</td></tr>
+          <tr><td class="term">The Oath of Oats</td><td class="arrow">→</td><td>Loyalty signup</td></tr>
+          <tr><td class="term">Devoated citizen</td><td class="arrow">→</td><td>Loyal regular</td></tr>
+          <tr><td class="term">Promoated</td><td class="arrow">→</td><td>Tier upgrade</td></tr>
+          <tr><td class="term">The Senoate</td><td class="arrow">→</td><td>The menu</td></tr>
+          <tr><td class="term">Diplomoat</td><td class="arrow">→</td><td>A Cabinet character</td></tr>
+          <tr><td class="term">Circular No. 0XX</td><td class="arrow">→</td><td>A campaign</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PALETTE ============ -->
+<section class="band band--pink">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Section VII — Official Colours</div>
+      <h2>The Palette</h2>
+      <p>A quiet pale-blue world, warmed by pink and cream. Soft and airy, never neon — the colours of a government that is, against all odds, in a good mood.</p>
+    </div>
+    <div class="swatches">
+      <div class="sw" style="background:var(--field);color:#22323B"><span class="role">Primary world</span><span class="nm">Airy Blue</span><span class="hx">#DEF0FF</span></div>
+      <div class="sw" style="background:var(--sky);color:#0C3A5E"><span class="role">Structure · accent</span><span class="nm">Sky Blue</span><span class="hx">#6AC4FF</span></div>
+      <div class="sw" style="background:var(--pink);color:#7A3A42"><span class="role">Warm accent</span><span class="nm">Soft Pink</span><span class="hx">#FEC6CD</span></div>
+      <div class="sw" style="background:var(--cream);color:#7A5A2E"><span class="role">Everyday warm</span><span class="nm">Warm Cream</span><span class="hx">#FFE8CA</span></div>
+      <div class="sw" style="background:var(--paper);color:#8A6A3A"><span class="role">Cards</span><span class="nm">Paper</span><span class="hx">#FFF6E8</span></div>
+      <div class="sw" style="background:var(--ink);color:#CDD9DF"><span class="role">Linework · text</span><span class="nm">Ink</span><span class="hx">#22323B</span></div>
+      <div class="sw" style="background:#fff;color:#22323B"><span class="role">Highlights</span><span class="nm">White</span><span class="hx">#FFFFFF</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TYPOGRAPHY ============ -->
+<section class="band band--field">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Section VIII — Approved Typefaces</div>
+      <h2>Typography</h2>
+      <p>Crisp, clean type — deliberately at odds with the loose hand-drawn world. A confident grotesque for headings and officialese, a monospace for the codes no ministry can live without.</p>
+    </div>
+    <div class="type-grid">
+      <div class="type-card">
+        <div class="label">Display — Hanken Grotesk (extrabold)</div>
+        <div class="big">It's oat-ficial.</div>
+        <div class="alpha">AaBbCc · The Oath of Oats · 0123456789</div>
+        <div class="spec">Headlines, ministerial titles, official labels. Clean and confident against the sketch.</div>
+      </div>
+      <div class="type-card">
+        <div class="label">Body / UI — Inter</div>
+        <div class="big body">We regulate mornings.</div>
+        <div class="alpha">AaBbCc · Citizens are entitled to a good breakfast · 0123456789</div>
+        <div class="spec">Running copy, navigation, captions. Plain language, said clearly.</div>
+      </div>
+      <div class="type-card full">
+        <div class="label">Officialese codes — JetBrains Mono</div>
+        <div class="big code">CIRCULAR No. 014 · Ref OAT/2026/MORN</div>
+        <div class="spec">Reference numbers, stamps, mottos, registration notices. The bureaucratic texture.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IN THE WILD ============ -->
+<section class="band band--cream">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Section IX — The Ministry in the World</div>
+      <h2>In the Wild</h2>
+      <p>The system, applied with a straight face. Campaign posters, citizen identity, packaging, and the official menu of the realm.</p>
+    </div>
+
+    <div class="wild-grid">
+      <!-- Campaign poster -->
+      <div class="mock poster">
+        <span class="p-tag">Circular No. 014 · Public Campaign</span>
+        <h3>The reintroduction of joy at breakfast.</h3>
+        <p class="p-sub">Effective immediately. The Ministry regrets the decades of delay.</p>
+        <div class="p-scene">
+          <svg viewBox="0 0 460 180" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+            <g filter="url(#handdrawn)" stroke="#22323B" stroke-linejoin="round" stroke-linecap="round">
+              <path d="M-10 130 q120 -38 240 -16 q140 26 240 -6 V190 H-10 Z" fill="#FFE8CA" stroke-width="2.2"/>
+              <path d="M-10 154 q140 -26 320 -8 q120 12 160 4 V190 H-10 Z" fill="#FEC6CD" stroke-width="2.2"/>
+            </g>
+            <g class="f-bob" style="--d:5.4s"><g transform="translate(300,30) scale(1.0)"><use href="#mon-overnight"/></g></g>
+          </svg>
+          <span class="stamp ink p-stamp">
+            <svg class="stampbox" viewBox="0 0 150 40" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#handdrawn)"><rect x="3" y="3" width="144" height="34" rx="6" fill="none" stroke="#22323B" stroke-width="1.8" transform="rotate(-3 75 20)"/></g></svg>
+            <span class="stamptxt">★ It's oat-ficial</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Citizen ID card -->
+      <div class="mock idcard">
+        <div class="id-top">
+          <svg class="seal" viewBox="0 0 100 100" style="color:var(--ink)" aria-hidden="true"><use href="#ms-seal"/></svg>
+          <div class="t">Citizen Identity Card<br>Government of Ministry of Oats</div>
+        </div>
+        <div class="id-main">
+          <div class="id-photo">
+            <svg viewBox="0 0 120 130" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+              <path d="M-10 116 q70 -20 140 0 V140 H-10 Z" fill="#6AC4FF" opacity=".35"/>
+              <g transform="translate(8,4) scale(0.92)"><use href="#mon-bowls"/></g>
+            </svg>
+          </div>
+          <div class="id-fields">
+            <div class="k">Citizen</div><div class="v">A. Devoated</div>
+            <div class="k">Status</div><div class="v">Devoated · Promoated</div>
+            <div class="k">Constituency</div><div class="v">Bengaluru — South</div>
+          </div>
+        </div>
+        <div class="id-bar">
+          <div class="barcode"></div>
+          <span class="stamp ink" style="transform:rotate(-3deg)">
+            <svg class="stampbox" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#handdrawn)"><rect x="3" y="3" width="114" height="34" rx="6" fill="none" stroke="#22323B" stroke-width="1.8"/></g></svg>
+            <span class="stamptxt">★ Oath taken</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wild-row2">
+      <!-- Packaging label -->
+      <div class="mock label">
+        <svg class="l-ring" viewBox="0 0 100 100" style="color:var(--ink)" aria-hidden="true"><use href="#ms-seal"/></svg>
+        <span class="l-kicker">Approved by the Department of Patience</span>
+        <h3>Overnight Oats</h3>
+        <div class="l-strap">Resolved while you slept.</div>
+        <div class="l-net">
+          <div>Net wt<b>320 g</b></div>
+          <div>Citizens<b>Serves 2</b></div>
+          <div>Ref<b>OAT/CHIA/07</b></div>
+        </div>
+        <svg class="l-monster" viewBox="0 0 120 130" aria-hidden="true"><g transform="translate(0,8)"><use href="#mon-chia"/></g></svg>
+      </div>
+
+      <!-- The Senoate (menu) -->
+      <div class="mock menu">
+        <div class="m-head">
+          <svg class="seal" viewBox="0 0 100 100" style="color:var(--sky)" aria-hidden="true"><use href="#ms-seal"/></svg>
+          <div class="t">The Senoate<small>Official menu of the realm</small></div>
+        </div>
+        <ul>
+          <li><span class="dish">Overnight Affairs</span><span class="dots"></span><span class="pr">₹220</span><span class="note">Tabled by the Minister of Overnight Affairs.</span></li>
+          <li><span class="dish">High-Speed Smoothie</span><span class="dots"></span><span class="pr">₹240</span></li>
+          <li><span class="dish">Long-Term Chia Pudding</span><span class="dots"></span><span class="pr">₹210</span><span class="note">Requires soaking. Worth the wait.</span></li>
+          <li><span class="dish">Bowl of Public Record</span><span class="dots"></span><span class="pr">₹280</span></li>
+          <li><span class="dish">Just Desserts</span><span class="dots"></span><span class="pr">₹190</span><span class="note">Sweetly, and within reason.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="foot-scene">
+    <svg viewBox="0 0 1200 230" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <g class="f-bob" style="--d:8s"><g filter="url(#handdrawn)" stroke="#22323B" stroke-width="2" fill="none" stroke-linecap="round">
+        <circle cx="600" cy="92" r="28" fill="#FFE8CA"/>
+        <line x1="600" y1="50" x2="600" y2="60"/><line x1="558" y1="92" x2="568" y2="92"/><line x1="632" y1="92" x2="642" y2="92"/>
+        <line x1="570" y1="62" x2="577" y2="69"/><line x1="630" y1="62" x2="623" y2="69"/>
+      </g></g>
+      <g filter="url(#handdrawn)" stroke="#22323B" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M-20 168 q200 -44 440 -22 q220 22 420 -10 q160 -24 380 6 V240 H-20 Z" fill="#FFE8CA" stroke-width="2.2"/>
+        <path d="M-20 196 q260 -26 560 -8 q300 18 680 -4 V240 H-20 Z" fill="#FEC6CD" stroke-width="2.2"/>
+      </g>
+      <g class="f-bob" style="--d:6s"><g transform="translate(220,84) scale(0.56)"><use href="#mon-diplomoat"/></g></g>
+      <g class="f-bob" style="--d:5.2s"><g transform="translate(880,80) scale(0.62)"><use href="#mon-smoothie"/></g></g>
+    </svg>
+  </div>
+  <div class="footer">
+    <svg class="seal" viewBox="0 0 100 100" style="color:var(--sky)" aria-hidden="true"><use href="#ms-seal"/></svg>
+    <div class="sign">By order of the Cabinet.</div>
+    <div class="motto">Issued in public interest.</div>
+    <div class="dir">Ministry of Oats · Direction 04 — The Cabinet (hand-drawn)</div>
+    <div class="disclaimer">A rebrand direction study. Ministry of Oats — Est. allegedly.</div>
+  </div>
+</footer>
+
+<script>
+// Scatter loose oat-stalk silhouettes along the hero front hill (decorative, calm).
+(function(){
+  var host=document.getElementById('hero-stalks');
+  if(!host) return;
+  var svgns="http://www.w3.org/2000/svg";
+  var n=window.innerWidth<560?12:22;
+  for(var i=0;i<n;i++){
+    var x=30+i*(1140/n)+(Math.random()*16-8);
+    var h=24+Math.random()*30;
+    var baseY=418+(Math.random()*8-4);
+    var lean=(Math.random()*8-4);
+    // stem
+    var stem=document.createElementNS(svgns,'path');
+    stem.setAttribute('d','M'+x+' '+baseY+' q'+lean+' '+(-h/2)+' '+(lean*0.6)+' '+(-h));
+    stem.setAttribute('stroke','#22323B');
+    stem.setAttribute('stroke-width','1.4');
+    stem.setAttribute('fill','none');
+    stem.setAttribute('stroke-linecap','round');
+    host.appendChild(stem);
+    // a few seed dots
+    var tx=x+lean*0.6, ty=baseY-h;
+    for(var k=0;k<3;k++){
+      var seed=document.createElementNS(svgns,'circle');
+      seed.setAttribute('cx',tx+(Math.random()*6-3));
+      seed.setAttribute('cy',ty+k*4-2);
+      seed.setAttribute('r','1.5');
+      seed.setAttribute('fill','#22323B');
+      host.appendChild(seed);
+    }
+  }
+})();
+</script>
+</body>
+</html>
