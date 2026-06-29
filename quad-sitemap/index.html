@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Quad — Information Architecture v1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --crimson:#A41034; --crimson-d:#7C0C27; --crimson-dd:#560819;
+    --black:#000; --ink:#111; --mute:#6b6660; --white:#fff;
+    --paper:#F6F4F1; --offwhite:#FBFAF8; --line:#DCD7D0; --line-soft:#ECE8E2;
+    --tech:#6578B4; --tech-d:#3B2883; --tech-l:#eef1f8;
+    --mgmt:#52A52E; --mgmt-d:#026833; --mgmt-l:#eef6e9;
+    --trust:#A41034; --trust-l:#fbeef0;
+    --content:#9A6A1E; --content-l:#f8f1e4;
+    --brand:#444; --brand-l:#f1efec;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Hanken Grotesk',system-ui,sans-serif;
+    background:var(--offwhite); color:var(--ink);
+    -webkit-font-smoothing:antialiased; line-height:1.5;
+  }
+  .mono{font-family:'JetBrains Mono',monospace}
+
+  /* ---- header ---- */
+  header{
+    background:var(--ink); color:var(--white);
+    padding:34px 32px 30px; border-bottom:3px solid var(--crimson);
+  }
+  .wrap{max-width:1180px;margin:0 auto}
+  .brandrow{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+  .logo{
+    width:38px;height:38px;border:2px solid var(--white);border-radius:9px;
+    display:grid;place-items:center;font-weight:900;font-size:19px;letter-spacing:-1px;
+  }
+  .brandrow .nm{font-weight:800;font-size:15px;letter-spacing:.02em}
+  .brandrow .ver{
+    margin-left:auto;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:#bcb7b0;border:1px solid #3a3a3a;border-radius:100px;padding:5px 13px;
+  }
+  h1{font-size:clamp(28px,4vw,46px);font-weight:900;letter-spacing:-.022em;line-height:1.04}
+  h1 .red{color:#ff5773}
+  .sub{margin-top:14px;max-width:680px;color:#cfcac3;font-size:15.5px;line-height:1.55}
+  .meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+  .chip{
+    font-size:11.5px;letter-spacing:.05em;background:#222;border:1px solid #333;
+    color:#d8d3cc;padding:5px 11px;border-radius:6px;
+  }
+  .chip b{color:#ff5773;font-weight:700}
+
+  /* ---- tension strip ---- */
+  .tension{background:var(--paper);border-bottom:1px solid var(--line);padding:26px 32px}
+  .tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .tcard{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:18px 18px 16px}
+  .tcard .k{font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;color:var(--crimson);margin-bottom:7px}
+  .tcard p{font-size:13.5px;color:#4a443e;line-height:1.5}
+  .tcard b{color:var(--ink)}
+
+  /* ---- section ---- */
+  section{padding:30px 32px}
+  .sectlabel{
+    display:flex;align-items:baseline;gap:12px;margin-bottom:18px;
+    border-bottom:1px solid var(--line);padding-bottom:11px;
+  }
+  .sectlabel h2{font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--ink)}
+  .sectlabel .hint{font-size:13px;color:var(--mute)}
+
+  /* legend */
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:4px}
+  .lg{display:flex;align-items:center;gap:8px;font-size:12.5px;color:#4a443e;font-weight:500}
+  .dot{width:13px;height:13px;border-radius:4px;flex:none}
+
+  /* ---- zone ---- */
+  .zone{
+    border:1px solid var(--line);border-radius:16px;background:var(--white);
+    padding:18px 18px 20px;margin-bottom:18px;position:relative;overflow:hidden;
+  }
+  .zone::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--zc,var(--crimson))}
+  .zhead{display:flex;align-items:center;gap:10px;margin:2px 0 14px 6px;flex-wrap:wrap}
+  .zhead .zt{font-weight:800;font-size:15px;letter-spacing:-.01em}
+  .zhead .zd{font-size:12.5px;color:var(--mute)}
+  .zhead .ztag{
+    margin-left:auto;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+    color:var(--zc,var(--crimson));background:var(--zcl,#fbeef0);padding:4px 10px;border-radius:100px;
+  }
+
+  /* node grid */
+  .nodes{display:flex;flex-wrap:wrap;gap:10px;margin-left:6px}
+  .node{
+    border:1px solid var(--line);border-radius:10px;background:var(--offwhite);
+    padding:11px 13px;min-width:178px;flex:1 1 178px;max-width:260px;
+    border-left:3px solid var(--nc,var(--line));
+  }
+  .node .u{font-size:12px;font-weight:600;color:var(--nc,var(--crimson))}
+  .node .l{font-size:12px;color:#56504a;margin-top:3px;line-height:1.35}
+
+  /* hub + leaves */
+  .progrow{display:flex;flex-wrap:wrap;gap:14px;margin-left:6px}
+  .prog{border:1px solid var(--line);border-radius:12px;background:var(--offwhite);padding:13px;flex:1 1 250px;min-width:240px}
+  .prog.tech{border-top:3px solid var(--tech)}
+  .prog.mgmt{border-top:3px solid var(--mgmt)}
+  .prog .hub{font-weight:700;font-size:13.5px;color:var(--ink)}
+  .prog .hub .uu{display:block;font-size:11.5px;font-weight:600;margin-top:2px}
+  .prog.tech .hub .uu{color:var(--tech-d)}
+  .prog.mgmt .hub .uu{color:var(--mgmt-d)}
+  .prog .deg{font-size:11.5px;color:var(--mute);margin-top:2px}
+  .leaves{margin-top:11px;padding-top:10px;border-top:1px dashed var(--line);display:flex;flex-direction:column;gap:5px}
+  .leaf{display:flex;align-items:center;gap:7px;font-size:11.5px}
+  .leaf::before{content:"└";color:var(--line);font-family:'JetBrains Mono',monospace}
+  .leaf .lu{font-weight:600}
+  .prog.tech .leaf .lu{color:var(--tech)}
+  .prog.mgmt .leaf .lu{color:var(--mgmt)}
+  .leaf .lk{color:var(--mute);font-size:10.5px;margin-left:auto;text-align:right}
+
+  .flow{
+    margin:4px 6px 16px;font-size:12.5px;color:#4a443e;background:var(--paper);
+    border:1px dashed var(--line);border-radius:10px;padding:11px 14px;line-height:1.55;
+  }
+  .flow b{color:var(--crimson)}
+  .flow .ar{color:var(--mute);margin:0 4px}
+
+  /* decisions */
+  table.dec{width:100%;border-collapse:collapse;font-size:13px;background:var(--white);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  table.dec th{background:var(--paper);text-align:left;padding:11px 14px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700;border-bottom:1px solid var(--line)}
+  table.dec td{padding:11px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+  table.dec tr:last-child td{border-bottom:none}
+  table.dec td:first-child{font-weight:700;color:var(--crimson);white-space:nowrap}
+  table.dec b{color:var(--ink)}
+
+  footer{background:var(--ink);color:#9a948c;padding:26px 32px;font-size:12.5px;text-align:center}
+  footer b{color:#fff}
+
+  @media(max-width:720px){
+    .tgrid{grid-template-columns:1fr}
+    header,section,.tension,footer{padding-left:18px;padding-right:18px}
+    .node{max-width:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brandrow">
+      <div class="logo">Q</div>
+      <div class="nm">QUAD</div>
+      <div class="ver">Information Architecture · v1</div>
+    </div>
+    <h1>The site, organised around <span class="red">what a buyer actually decides</span>.</h1>
+    <p class="sub">Program-first architecture. The conversion spine (what Quad sells), the SEO capture lane (what buyers search), and the trust surfaces (what de-risks the decision) are kept as separate jobs — so nothing competes with itself.</p>
+    <div class="meta">
+      <span class="chip">2 schools</span>
+      <span class="chip">4 programs</span>
+      <span class="chip">3 campuses</span>
+      <span class="chip">7 program×campus leaves</span>
+      <span class="chip">Open content · one <b>/apply</b> path</span>
+      <span class="chip">Live entities only — <b>nothing "coming soon"</b></span>
+    </div>
+  </div>
+</header>
+
+<!-- TENSION -->
+<div class="tension">
+  <div class="wrap">
+    <div class="tgrid">
+      <div class="tcard">
+        <div class="k">Discovery</div>
+        <p>Search is <b>geo-skewed</b> — "btech colleges in patna", "engineering colleges in mangalore for cs" ($2.80 CPC), "best private university in bangalore". Served by campus leaves + guides.</p>
+      </div>
+      <div class="tcard">
+        <div class="k">Conversion</div>
+        <p><b>98.6% top-of-funnel leak.</b> 51,519 leads → 706 started → 0 enrolled. Real apps come from Ads/Vedantu/Direct (79% of apps, 1.8% of leads). Open content, one apply path.</p>
+      </div>
+      <div class="tcard">
+        <div class="k">Credibility</div>
+        <p>Two-person buyer: student desire + parent veto (70% kill rate). Parent's question — <b>"is this a real college?"</b> Answered by /degree + a CMS-driven FAQ.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LEGEND -->
+<section style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="legend">
+      <div class="lg"><span class="dot" style="background:#A41034"></span>Conversion spine + trust</div>
+      <div class="lg"><span class="dot" style="background:#6578B4"></span>School of AI/ML</div>
+      <div class="lg"><span class="dot" style="background:#52A52E"></span>Business School</div>
+      <div class="lg"><span class="dot" style="background:#9A6A1E"></span>SEO content lane</div>
+      <div class="lg"><span class="dot" style="background:#444"></span>Brand</div>
+    </div>
+  </div>
+</section>
+
+<!-- THE MAP -->
+<section style="padding-top:14px">
+  <div class="wrap">
+    <div class="sectlabel"><h2>The Sitemap</h2><span class="hint">grouped by job, not by menu order</span></div>
+
+    <!-- ENTRY -->
+    <div class="zone" style="--zc:#A41034;--zcl:#fbeef0">
+      <div class="zhead"><span class="zt">Entry</span><span class="zd">positioning + dual router</span><span class="ztag">Home</span></div>
+      <div class="nodes">
+        <div class="node" style="--nc:#A41034"><div class="u mono">/</div><div class="l">Home — positioning line, then "Explore programs" / "Find your campus". Serves student & parent without forcing a choice.</div></div>
+      </div>
+    </div>
+
+    <!-- CONVERSION SPINE -->
+    <div class="zone" style="--zc:#A41034;--zcl:#fbeef0">
+      <div class="zhead"><span class="zt">Conversion spine</span><span class="zd">Schools group the nav · Programs are canonical · Campus leaves capture geo+degree intent</span><span class="ztag">Programs</span></div>
+
+      <div class="nodes" style="margin-bottom:14px">
+        <div class="node tech-n" style="--nc:#6578B4"><div class="u mono">/schools/ai-ml</div><div class="l">School of AI/ML — nav hub. Groups B.Tech AI/ML + BCA.</div></div>
+        <div class="node" style="--nc:#52A52E"><div class="u mono">/schools/business</div><div class="l">Business School — nav hub. Groups BBA + MBA.</div></div>
+      </div>
+
+      <div class="progrow">
+        <div class="prog tech">
+          <div class="hub">B.Tech CS (AI/ML)<span class="uu mono">/programs/btech-ai-ml</span><span class="deg">4 yr · flagship</span></div>
+          <div class="leaves">
+            <div class="leaf"><span class="lu mono">/patna</span><span class="lk">btech AI patna · ₹8L</span></div>
+            <div class="leaf"><span class="lu mono">/mangalore</span><span class="lk">$2.80 CPC term · ₹9.5L</span></div>
+            <div class="leaf"><span class="lu mono">/bangalore</span><span class="lk">long-tail + brand · ₹14L</span></div>
+          </div>
+        </div>
+        <div class="prog tech">
+          <div class="hub">BCA<span class="uu mono">/programs/bca</span><span class="deg">3 yr · Mangalore University</span></div>
+          <div class="leaves">
+            <div class="leaf"><span class="lu mono">/mangalore</span><span class="lk">"MU BCA fees" · ₹3.6L</span></div>
+          </div>
+        </div>
+        <div class="prog mgmt">
+          <div class="hub">BBA<span class="uu mono">/programs/bba</span><span class="deg">3 yr</span></div>
+          <div class="leaves">
+            <div class="leaf"><span class="lu mono">/patna</span><span class="lk">"bba colleges patna" · ₹4L</span></div>
+            <div class="leaf"><span class="lu mono">/bangalore</span><span class="lk">"bba admission blr" · ₹6.5L</span></div>
+          </div>
+        </div>
+        <div class="prog mgmt">
+          <div class="hub">MBA (PGP)<span class="uu mono">/programs/mba</span><span class="deg">2 yr</span></div>
+          <div class="leaves">
+            <div class="leaf"><span class="lu mono">/mangalore</span><span class="lk">"mba colleges mangalore" · ₹5.5L</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="flow">Every leaf is <b>differentiated</b>, not a clone — local fees, photos, placement, dates, conferring university, scoped FAQ. Primary CTA <b>Apply</b> <span class="ar">·</span> softer secondary <b>Register for QAT</b>.</div>
+    </div>
+
+    <!-- LOCAL -->
+    <div class="zone" style="--zc:#A41034;--zcl:#fbeef0">
+      <div class="zhead"><span class="zt">Campus hubs</span><span class="zd">local trust + magnet terms</span><span class="ztag">Campuses</span></div>
+      <div class="nodes">
+        <div class="node" style="--nc:#A41034"><div class="u mono">/campus/patna</div><div class="l">Programs here, infra, hostel, local admissions CTA.</div></div>
+        <div class="node" style="--nc:#A41034"><div class="u mono">/campus/mangalore</div><div class="l">Engineering anchor + local trust.</div></div>
+        <div class="node" style="--nc:#A41034"><div class="u mono">/campus/bangalore</div><div class="l">Carries "best private university in bangalore".</div></div>
+      </div>
+    </div>
+
+    <!-- TRUST + ACTION -->
+    <div class="zone" style="--zc:#A41034;--zcl:#fbeef0">
+      <div class="zhead"><span class="zt">Trust &amp; action surfaces</span><span class="zd">de-risk the parent, then convert</span><span class="ztag">Top-level</span></div>
+      <div class="nodes">
+        <div class="node" style="--nc:#A41034"><div class="u mono">/qat</div><div class="l"><b>The exam as a funnel.</b> What/why/sample/prep/register the Quad Aptitude Test — a low-commitment entry that feeds /apply.</div></div>
+        <div class="node" style="--nc:#A41034"><div class="u mono">/apply</div><div class="l">Eligibility → QAT info → form. The one conversion path.</div></div>
+        <div class="node" style="--nc:#A41034"><div class="u mono">/fees</div><div class="l">Fees + scholarships + loans/EMI. High-intent, linkable hub.</div></div>
+        <div class="node" style="--nc:#A41034"><div class="u mono">/degree</div><div class="l">Degree recognition &amp; accreditation — the partner-university model, honestly. The trust closer.</div></div>
+        <div class="node" style="--nc:#A41034"><div class="u mono">/faq</div><div class="l"><b>Searchable CMS, not a static page.</b> 13 buckets · JSON-LD answer surface for LLM/Google citation · blocks plug contextually into every page.</div></div>
+        <div class="node" style="--nc:#A41034"><div class="u mono">/contact</div><div class="l">Talk to an advisor · book a campus visit.</div></div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="zone" style="--zc:#9A6A1E;--zcl:#f8f1e4">
+      <div class="zhead"><span class="zt">SEO content lane</span><span class="zd">attract — separate namespace, no cannibalization with /programs</span><span class="ztag">Guides + Journal</span></div>
+      <div class="nodes">
+        <div class="node" style="--nc:#9A6A1E"><div class="u mono">/guides/*</div><div class="l">Mid-funnel, <b>winnable</b>: bca-vs-btech · scope-of-bba/bca · best-course-after-12th · best-engineering-branch-for-future (AI-first) · how-to-choose-a-new-age-tech-school (houses comparison intent, neutrally — no "vs competitor" pages).</div></div>
+        <div class="node" style="--nc:#9A6A1E"><div class="u mono">/journal/*</div><div class="l">Founder essays, opinionated POV, batch storytelling. Brand credibility, not search.</div></div>
+      </div>
+    </div>
+
+    <!-- BRAND -->
+    <div class="zone" style="--zc:#444;--zcl:#f1efec">
+      <div class="zhead"><span class="zt">Brand</span><span class="zd">story &amp; life</span><span class="ztag">Brand</span></div>
+      <div class="nodes">
+        <div class="node" style="--nc:#444"><div class="u mono">/about</div><div class="l">Story, founders, vision, "75% CXO" faculty.</div></div>
+        <div class="node" style="--nc:#444"><div class="u mono">/life</div><div class="l">Clubs, batch stories, student life.</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- NAV -->
+<section style="padding-top:8px">
+  <div class="wrap">
+    <div class="sectlabel"><h2>Primary Navigation</h2><span class="hint">what's actually in the menu</span></div>
+    <div class="flow" style="font-size:13.5px">
+      <b class="mono">Schools ▾</b> <span class="ar">·</span> <b class="mono">Campuses ▾</b> <span class="ar">·</span> <b class="mono">Fees &amp; Scholarships</b> <span class="ar">·</span> <b class="mono">Guides</b> <span class="ar">·</span> <b class="mono">About</b> <span class="ar">·</span> <b class="mono" style="color:#A41034">Apply →</b><br/>
+      <span style="color:#6b6660;font-size:12.5px">Footer / utility: Degree &amp; Accreditation · FAQ · QAT · Journal · Life at Quad · Contact · compliance (refund, anti-ragging).</span>
+    </div>
+  </div>
+</section>
+
+<!-- DECISIONS -->
+<section style="padding-top:8px;padding-bottom:40px">
+  <div class="wrap">
+    <div class="sectlabel"><h2>Locked Decisions</h2><span class="hint">the reasoning behind the shape</span></div>
+    <table class="dec">
+      <tr><th style="width:165px">Decision</th><th>Choice &amp; why</th></tr>
+      <tr><td>Primary axis</td><td><b>Program-first.</b> The program is what a buyer decides on — cleanest page to rank + convert. School = nav grouping, Campus = facet.</td></tr>
+      <tr><td>Campus pages</td><td><b>Hub + indexable campus leaves.</b> Captures high-CPC geo+degree terms a dropdown can't, without fragmenting the flagship.</td></tr>
+      <tr><td>No /compare</td><td>Competitor comparison dropped — too aggressive for the brand now. Comparison <b>intent</b> served quietly inside /guides.</td></tr>
+      <tr><td>Nothing "coming soon"</td><td>Design school, B.Des, Mumbai <b>removed</b>. Push them when they're real.</td></tr>
+      <tr><td>QAT</td><td>Dedicated <b>/qat</b> top-level surface — the exam itself as a soft-entry funnel into /apply.</td></tr>
+      <tr><td>FAQ</td><td><b>CMS play.</b> Searchable hub + JSON-LD AEO surface + contextual blocks on every page. The answer surface competitors all neglect.</td></tr>
+      <tr><td>Conversion</td><td><b>Open content, zero gating, one /apply.</b> Attacks the 98.6% leak + the over-gating the current site is blamed for.</td></tr>
+      <tr><td>Homepage</td><td><b>Positioning + dual router.</b> Routes student (program) and parent (campus) fast, without forcing one.</td></tr>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <b>Quad — Information Architecture v1</b> · locked 2026-06-29 · source of truth for the Sanity build<br/>
+    Build order: Patna → Mangalore → Bangalore → national guides → trust surfaces (follow the keyword map).
+  </div>
+</footer>
+
+</body>
+</html>
