@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Quad Offering Wiki — coverage map</title>
+<meta name="description" content="A reviewable coverage map of the Quad offering knowledge base — every taxonomy item tagged Have, Recurr-enriching, or Awaiting Quad against the ideal-scope benchmark." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --crimson:#A41034; --crimson-d:#7C0C27; --crimson-dd:#560819;
+    --black:#000000; --ink:#141414; --white:#FFFFFF; --paper:#F6F4F1; --offwhite:#FBFAF8;
+    --g1:#68666F; --g2:#9A969C; --line:#E2DDD6;
+    --red:#E80538; --orange:#E87D1E; --yellow:#EBCD00; --green:#52A52E;
+    --teal:#00979D; --blue:#6578B4; --purple:#80408D; --magenta:#C9006B;
+    /* status */
+    --have:#52A52E; --have-bg:#EAF6E4;
+    --enrich:#E87D1E; --enrich-bg:#FCF0E4;
+    --await:#A41034; --await-bg:#FBF1F3;
+    --sidebar-w:312px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Hanken Grotesk',system-ui,sans-serif;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;line-height:1.55;font-size:16px}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,h4{font-weight:800;letter-spacing:-0.02em;line-height:1.1}
+  .eyebrow{font-size:11.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+
+  /* pattern motifs */
+  .pat{position:absolute;inset:0;pointer-events:none}
+  .p-dots{background-image:radial-gradient(var(--pc) 3px,transparent 3.6px);background-size:var(--ps,28px) var(--ps,28px)}
+  .p-grid{background-image:repeating-linear-gradient(0deg,var(--pc) 0 2px,transparent 2px var(--ps,34px)),repeating-linear-gradient(90deg,var(--pc) 0 2px,transparent 2px var(--ps,34px))}
+
+  /* ===== LAYOUT ===== */
+  .shell{display:flex;min-height:100vh}
+
+  /* ===== SIDEBAR ===== */
+  aside.sb{width:var(--sidebar-w);flex:none;background:var(--ink);color:rgba(255,255,255,.72);position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid #2C2A2E;transition:margin-left .25s ease}
+  aside.sb::-webkit-scrollbar{width:8px} aside.sb::-webkit-scrollbar-thumb{background:#3a383d;border-radius:8px}
+  .sb-top{padding:22px 22px 16px;border-bottom:1px solid #2C2A2E;position:sticky;top:0;background:var(--ink);z-index:3}
+  .sb-brand{display:flex;align-items:center;gap:10px}
+  .sb-brand .mark{width:30px;height:30px;border-radius:8px;background:var(--crimson);display:grid;place-items:center;font-weight:900;color:#fff;font-size:15px;flex:none}
+  .sb-brand .nm{font-size:14.5px;font-weight:800;color:#fff;letter-spacing:-.01em}
+  .sb-brand .nm small{display:block;font-size:10.5px;font-weight:600;color:var(--g2);letter-spacing:.04em;margin-top:1px}
+  .sb-search{margin-top:14px;position:relative}
+  .sb-search input{width:100%;background:#211F23;border:1px solid #34323a;border-radius:9px;color:#fff;font-family:inherit;font-size:13px;padding:9px 12px 9px 30px}
+  .sb-search input::placeholder{color:#6f6c75}
+  .sb-search input:focus{outline:1px solid var(--crimson);border-color:var(--crimson)}
+  .sb-search .ic{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#6f6c75;font-size:13px}
+
+  .sb-group{padding:14px 12px 4px}
+  .sb-gh{display:flex;align-items:center;gap:8px;font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--g2);padding:6px 10px}
+  .sb-gh .cnt{margin-left:auto;font-size:10px;background:#211F23;border:1px solid #34323a;border-radius:6px;padding:2px 7px;color:#8a868f;letter-spacing:0}
+  .sb-link{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;padding:7px 10px;border-radius:8px;color:rgba(255,255,255,.72);cursor:pointer;line-height:1.3}
+  .sb-link:hover{background:#211F23;color:#fff}
+  .sb-link.active{background:var(--crimson);color:#fff}
+  .sb-link .dot{width:9px;height:9px;border-radius:50%;flex:none}
+  .sb-link .txt{flex:1;min-width:0}
+  .sb-sub{padding-left:8px}
+  .sb-sub .sb-link{font-size:12.5px;font-weight:500;color:rgba(255,255,255,.6)}
+  .sb-sub .sb-link .dot{width:7px;height:7px}
+
+  .dot-have{background:var(--have)} .dot-enrich{background:var(--enrich)} .dot-await{background:var(--await)} .dot-mixed{background:linear-gradient(135deg,var(--have) 0 33%,var(--enrich) 33% 66%,var(--await) 66%)}
+
+  /* ===== MAIN ===== */
+  main{flex:1;min-width:0}
+  .topbar{position:sticky;top:0;z-index:40;background:rgba(246,244,241,.92);backdrop-filter:saturate(1.3) blur(8px);border-bottom:1px solid var(--line);height:58px;display:flex;align-items:center;gap:14px;padding:0 26px}
+  .hamb{display:none;width:38px;height:38px;border:1px solid var(--line);border-radius:9px;background:#fff;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:4px}
+  .hamb span{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px}
+  .topbar .bc{font-size:13px;font-weight:600;color:var(--g1)}
+  .topbar .bc b{color:var(--ink)}
+  .topbar .right{margin-left:auto;display:flex;gap:8px;align-items:center}
+  .legpill{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--ink)}
+  .legpill .dot{width:9px;height:9px;border-radius:50%}
+
+  .content{max-width:1000px;margin:0 auto;padding:0 32px 120px}
+
+  /* ===== HERO ===== */
+  .phero{background:var(--crimson);color:#fff;position:relative;overflow:hidden;border-radius:0}
+  .phero .pat{--pc:rgba(255,255,255,.07);--ps:44px}
+  .phero .inner{position:relative;z-index:2;max-width:1000px;margin:0 auto;padding:54px 32px 48px}
+  .phero .tag{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:800;letter-spacing:.04em;background:rgba(0,0,0,.22);padding:7px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.18)}
+  .phero h1{font-size:clamp(28px,4vw,44px);margin-top:18px;max-width:20ch}
+  .phero p.sub{font-size:clamp(15px,1.6vw,18px);color:rgba(255,255,255,.88);margin-top:16px;max-width:64ch;line-height:1.55}
+  .phero .basis{margin-top:18px;font-size:13px;color:rgba(255,255,255,.74);max-width:64ch;line-height:1.55}
+  .phero .basis b{color:#fff}
+
+  /* ===== SUMMARY BAR ===== */
+  .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:-30px;position:relative;z-index:5}
+  .scard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 22px 20px;position:relative;overflow:hidden}
+  .scard .topbar2{display:flex;align-items:center;gap:9px}
+  .scard .dot{width:13px;height:13px;border-radius:50%}
+  .scard .lab{font-size:12.5px;font-weight:800;letter-spacing:.02em}
+  .scard .n{font-size:42px;font-weight:900;letter-spacing:-.03em;line-height:1;margin-top:12px}
+  .scard .desc{font-size:12.5px;color:var(--g1);margin-top:8px;line-height:1.5}
+  .scard.have .n{color:var(--have)} .scard.enrich .n{color:var(--enrich)} .scard.await .n{color:var(--await)}
+  .meterrow{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+  .meter{height:12px;border-radius:999px;overflow:hidden;display:flex;background:var(--paper)}
+  .meter i{display:block;height:100%}
+  .meter .mh{background:var(--have)} .meter .me{background:var(--enrich)} .meter .ma{background:var(--await)}
+  .meterlab{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:var(--g1);font-weight:600}
+  .meterlab b{color:var(--ink)}
+
+  /* ===== SECTION HEADERS ===== */
+  .parthead{margin-top:64px;padding-bottom:14px;border-bottom:2px solid var(--ink);display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;scroll-margin-top:74px}
+  .parthead .eyebrow{color:var(--crimson)}
+  .parthead h2{font-size:clamp(24px,3vw,34px);margin-top:6px}
+  .parthead .meta{margin-left:auto;font-size:12.5px;color:var(--g1);font-weight:600}
+  .partlede{font-size:15px;color:#4a464c;margin-top:16px;max-width:74ch;line-height:1.62}
+
+  /* ===== ITEM CARD ===== */
+  .item{background:#fff;border:1px solid var(--line);border-radius:14px;margin-top:16px;overflow:hidden;scroll-margin-top:74px;position:relative}
+  .item .il{position:absolute;left:0;top:0;bottom:0;width:4px}
+  .item.have .il{background:var(--have)} .item.enrich .il{background:var(--enrich)} .item.await .il{background:var(--await)}
+  .item .ihd{padding:18px 22px 18px 26px;display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap}
+  .item .ihd .titles{flex:1;min-width:240px}
+  .item .ihd h3{font-size:17.5px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .item .ihd h3 .tier{font-size:10px;font-weight:800;letter-spacing:.06em;color:var(--g1);background:var(--paper);border:1px solid var(--line);border-radius:5px;padding:2px 7px;text-transform:uppercase}
+  .item .ihd .cat{font-size:12.5px;color:var(--g1);margin-top:5px;line-height:1.45}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;border-radius:999px;padding:6px 12px;white-space:nowrap;flex:none}
+  .badge .dot{width:8px;height:8px;border-radius:50%}
+  .badge.have{background:var(--have-bg);color:#2f6b18} .badge.have .dot{background:var(--have)}
+  .badge.enrich{background:var(--enrich-bg);color:#a35610} .badge.enrich .dot{background:var(--enrich)}
+  .badge.await{background:var(--await-bg);color:var(--crimson)} .badge.await .dot{background:var(--await)}
+  .item .ibody{padding:0 22px 20px 26px}
+  .item .ibody .inner{border-top:1px dashed var(--line);padding-top:16px}
+  .item .ibody p{font-size:14.5px;color:#3f3b41;line-height:1.62}
+  .item .ibody p + p{margin-top:10px}
+  .item .ibody h4{font-size:13px;font-weight:800;margin-top:16px;margin-bottom:8px;letter-spacing:.02em}
+  .item .ibody ul{list-style:none;margin-top:6px}
+  .item .ibody li{font-size:14px;padding:5px 0 5px 22px;position:relative;color:#3f3b41;line-height:1.55}
+  .item .ibody li::before{content:"→";position:absolute;left:0;font-weight:800;color:var(--crimson)}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+  .chips span{font-size:12px;font-weight:600;background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:5px 10px}
+
+  /* stub box for awaiting-quad */
+  .stub{background:var(--await-bg);border:1px dashed #E3B9C3;border-radius:11px;padding:16px 18px;margin-top:14px}
+  .stub .sl{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--crimson)}
+  .stub p{font-size:13.5px;color:#6a3845!important;margin-top:8px;line-height:1.55}
+  .stub .formtag{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font-size:12px;font-weight:700;background:#fff;border:1px solid #E3B9C3;color:var(--crimson);border-radius:8px;padding:8px 13px}
+
+  /* enrich firstcut box */
+  .firstcut{background:var(--enrich-bg);border:1px solid #F0D2B0;border-radius:11px;padding:16px 18px;margin-top:14px}
+  .firstcut .sl{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#a35610}
+  .firstcut p{font-size:13.5px;color:#5e4221!important;margin-top:8px;line-height:1.58}
+
+  /* fee table */
+  .feetable{width:100%;border-collapse:collapse;margin-top:14px;border:1px solid var(--line);border-radius:11px;overflow:hidden}
+  .feetable th,.feetable td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);font-size:13.5px}
+  .feetable thead th{background:var(--paper);font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--g1);font-weight:800}
+  .feetable td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .feetable tr:last-child td{border-bottom:0;font-weight:800;background:var(--await-bg)}
+
+  /* matrix */
+  .mtxwrap{overflow-x:auto;margin-top:16px;border:1px solid var(--line);border-radius:13px;background:#fff}
+  table.mtx{width:100%;border-collapse:collapse;min-width:600px}
+  table.mtx th,table.mtx td{padding:13px 15px;text-align:center;border-bottom:1px solid var(--line);border-right:1px solid var(--line);font-size:13.5px}
+  table.mtx th:last-child,table.mtx td:last-child{border-right:0}
+  table.mtx tr:last-child td{border-bottom:0}
+  table.mtx thead th{background:var(--ink);color:#fff;font-size:12px;font-weight:800;letter-spacing:.02em}
+  table.mtx tbody th{text-align:left;background:var(--paper);font-weight:800;font-size:13px}
+  table.mtx .yes{font-weight:800;color:var(--have)}
+  table.mtx .soon{font-weight:700;color:var(--enrich);font-size:12px}
+  table.mtx .no{color:var(--g2)}
+  table.mtx .schooltag{display:inline-block;font-size:10px;font-weight:800;color:#fff;border-radius:5px;padding:2px 6px;margin-left:6px}
+
+  /* legend block */
+  .legendcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:24px}
+  .legendcard h3{font-size:15px;margin-bottom:14px}
+  .legrow{display:flex;gap:13px;padding:11px 0;border-top:1px solid var(--line)}
+  .legrow:first-of-type{border-top:0;padding-top:0}
+  .legrow .dot{width:14px;height:14px;border-radius:50%;flex:none;margin-top:3px}
+  .legrow .lt{font-size:14px;font-weight:800} .legrow .ld{font-size:13px;color:var(--g1);margin-top:3px;line-height:1.5}
+
+  .hidden{display:none!important}
+  .nores{padding:40px;text-align:center;color:var(--g1);font-size:14px}
+  .ovl{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:35}
+
+  @media (max-width:1080px){ :root{--sidebar-w:280px} }
+  @media (max-width:860px){
+    aside.sb{position:fixed;top:0;left:0;z-index:60;margin-left:calc(-1 * var(--sidebar-w));box-shadow:0 0 40px rgba(0,0,0,.3)}
+    body.navopen aside.sb{margin-left:0}
+    body.navopen .ovl{display:block}
+    .hamb{display:flex}
+    .summary{grid-template-columns:1fr}
+    .content{padding:0 18px 100px}
+    .phero .inner{padding:40px 18px 44px}
+    :root{--sidebar-w:280px}
+  }
+</style>
+</head>
+<body>
+
+<div class="ovl" id="ovl" onclick="closeNav()"></div>
+
+<div class="shell">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sb" id="sb">
+    <div class="sb-top">
+      <div class="sb-brand">
+        <span class="mark">Q</span>
+        <span class="nm">Offering Wiki<small>Coverage map · QUAD-60</small></span>
+      </div>
+      <div class="sb-search">
+        <span class="ic">⌕</span>
+        <input id="navsearch" type="text" placeholder="Filter taxonomy…" oninput="filterNav(this.value)" />
+      </div>
+    </div>
+
+    <!-- INSTITUTION -->
+    <div class="sb-group" data-group>
+      <div class="sb-gh"><span>A · Institution</span><span class="cnt">21</span></div>
+      <a class="sb-link" data-nav data-text="legend overview" onclick="go('overview',this)"><span class="dot dot-mixed"></span><span class="txt">Overview &amp; legend</span></a>
+      <a class="sb-link" data-nav data-text="identity founding vision" onclick="go('inst-identity',this)"><span class="dot dot-enrich"></span><span class="txt">Identity / founding / vision</span></a>
+      <a class="sb-link" data-nav data-text="legal entity ugc status" onclick="go('inst-legal',this)"><span class="dot dot-have"></span><span class="txt">Legal entity + UGC status</span></a>
+      <a class="sb-link" data-nav data-text="degree granting partner per program" onclick="go('inst-grantor',this)"><span class="dot dot-await"></span><span class="txt">Degree-granting partner</span></a>
+      <a class="sb-link" data-nav data-text="founders leadership" onclick="go('inst-founders',this)"><span class="dot dot-have"></span><span class="txt">Founders / leadership</span></a>
+      <a class="sb-link" data-nav data-text="governance advisory board" onclick="go('inst-governance',this)"><span class="dot dot-await"></span><span class="txt">Governance / advisory board</span></a>
+      <a class="sb-link" data-nav data-text="accreditation conferring university" onclick="go('inst-accred',this)"><span class="dot dot-await"></span><span class="txt">Accreditation of conferring univ</span></a>
+      <a class="sb-link" data-nav data-text="faculty named profiles" onclick="go('inst-faculty',this)"><span class="dot dot-await"></span><span class="txt">Faculty — named profiles</span></a>
+      <a class="sb-link" data-nav data-text="mentors industry network" onclick="go('inst-mentors',this)"><span class="dot dot-have"></span><span class="txt">Mentors / industry network</span></a>
+      <a class="sb-link" data-nav data-text="academic structure schools" onclick="go('inst-structure',this)"><span class="dot dot-have"></span><span class="txt">Academic structure (3 schools)</span></a>
+      <a class="sb-link" data-nav data-text="campus infrastructure labs" onclick="go('inst-campus',this)"><span class="dot dot-enrich"></span><span class="txt">Campus &amp; infrastructure</span></a>
+      <a class="sb-link" data-nav data-text="hostels residential accommodation" onclick="go('inst-hostel',this)"><span class="dot dot-await"></span><span class="txt">Hostels / residential model</span></a>
+      <a class="sb-link" data-nav data-text="partnerships mous" onclick="go('inst-partners',this)"><span class="dot dot-await"></span><span class="txt">Partnerships / MOUs</span></a>
+      <a class="sb-link" data-nav data-text="placement statistics" onclick="go('inst-placement',this)"><span class="dot dot-await"></span><span class="txt">Placement statistics</span></a>
+      <a class="sb-link" data-nav data-text="recruiters named list" onclick="go('inst-recruiters',this)"><span class="dot dot-await"></span><span class="txt">Recruiters — named list</span></a>
+      <a class="sb-link" data-nav data-text="alumni outcomes" onclick="go('inst-alumni',this)"><span class="dot dot-await"></span><span class="txt">Alumni outcomes (N/A)</span></a>
+      <a class="sb-link" data-nav data-text="student life clubs events" onclick="go('inst-life',this)"><span class="dot dot-enrich"></span><span class="txt">Student life / clubs</span></a>
+      <a class="sb-link" data-nav data-text="entrepreneurship incubator seed fund" onclick="go('inst-entre',this)"><span class="dot dot-have"></span><span class="txt">Entrepreneurship / seed fund</span></a>
+      <a class="sb-link" data-nav data-text="news press media" onclick="go('inst-news',this)"><span class="dot dot-enrich"></span><span class="txt">News / press</span></a>
+      <a class="sb-link" data-nav data-text="compliance disclosures refund anti ragging" onclick="go('inst-compliance',this)"><span class="dot dot-await"></span><span class="txt">Compliance disclosures</span></a>
+      <a class="sb-link" data-nav data-text="rankings awards" onclick="go('inst-rankings',this)"><span class="dot dot-await"></span><span class="txt">Rankings (N/A)</span></a>
+      <a class="sb-link" data-nav data-text="contact visit how to reach" onclick="go('inst-contact',this)"><span class="dot dot-have"></span><span class="txt">Contact</span></a>
+    </div>
+
+    <!-- PROGRAM -->
+    <div class="sb-group" data-group>
+      <div class="sb-gh"><span>B · Program / course</span><span class="cnt">24</span></div>
+      <a class="sb-link" data-nav data-text="matrix campus course offering" onclick="go('matrix',this)"><span class="dot dot-have"></span><span class="txt">Campus × course matrix</span></a>
+      <a class="sb-link" data-nav data-text="degree conferring authority" onclick="go('prog-degree',this)"><span class="dot dot-await"></span><span class="txt">Degree + conferring authority</span></a>
+      <a class="sb-link" data-nav data-text="duration format credits" onclick="go('prog-duration',this)"><span class="dot dot-have"></span><span class="txt">Duration / format</span></a>
+      <a class="sb-link" data-nav data-text="eligibility" onclick="go('prog-elig',this)"><span class="dot dot-have"></span><span class="txt">Eligibility</span></a>
+      <a class="sb-link" data-nav data-text="selection qat mechanics entrance test" onclick="go('prog-qat',this)"><span class="dot dot-await"></span><span class="txt">Selection + QAT mechanics</span></a>
+      <a class="sb-link" data-nav data-text="fees breakup" onclick="go('prog-fees',this)"><span class="dot dot-have"></span><span class="txt">Fees + breakup</span></a>
+      <a class="sb-link" data-nav data-text="scholarships" onclick="go('prog-schol',this)"><span class="dot dot-have"></span><span class="txt">Scholarships</span></a>
+      <a class="sb-link" data-nav data-text="loans emi financing lenders" onclick="go('prog-loans',this)"><span class="dot dot-have"></span><span class="txt">Loans / EMI</span></a>
+      <a class="sb-link" data-nav data-text="curriculum semester wise syllabus" onclick="go('prog-curric',this)"><span class="dot dot-mixed"></span><span class="txt">Curriculum — semester-wise</span></a>
+      <a class="sb-link" data-nav data-text="specializations electives" onclick="go('prog-spec',this)"><span class="dot dot-await"></span><span class="txt">Specializations / electives</span></a>
+      <a class="sb-link" data-nav data-text="tools tech taught" onclick="go('prog-tools',this)"><span class="dot dot-have"></span><span class="txt">Tools &amp; tech</span></a>
+      <a class="sb-link" data-nav data-text="projects capstones" onclick="go('prog-projects',this)"><span class="dot dot-have"></span><span class="txt">Projects / capstones</span></a>
+      <a class="sb-link" data-nav data-text="internships" onclick="go('prog-intern',this)"><span class="dot dot-have"></span><span class="txt">Internships</span></a>
+      <a class="sb-link" data-nav data-text="program faculty named" onclick="go('prog-faculty',this)"><span class="dot dot-await"></span><span class="txt">Program faculty — named</span></a>
+      <a class="sb-link" data-nav data-text="learning outcomes" onclick="go('prog-learn',this)"><span class="dot dot-enrich"></span><span class="txt">Learning outcomes</span></a>
+      <a class="sb-link" data-nav data-text="career outcomes job roles" onclick="go('prog-career',this)"><span class="dot dot-enrich"></span><span class="txt">Career outcomes / roles</span></a>
+      <a class="sb-link" data-nav data-text="placement stats salary program" onclick="go('prog-placement',this)"><span class="dot dot-await"></span><span class="txt">Placement stats + salary</span></a>
+      <a class="sb-link" data-nav data-text="degree recognition validity program level" onclick="go('prog-recog',this)"><span class="dot dot-await"></span><span class="txt">Degree recognition / validity</span></a>
+      <a class="sb-link" data-nav data-text="intake seats" onclick="go('prog-seats',this)"><span class="dot dot-enrich"></span><span class="txt">Intake / seats</span></a>
+      <a class="sb-link" data-nav data-text="campus availability" onclick="go('prog-avail',this)"><span class="dot dot-have"></span><span class="txt">Campus availability</span></a>
+      <a class="sb-link" data-nav data-text="important dates deadlines calendar" onclick="go('prog-dates',this)"><span class="dot dot-await"></span><span class="txt">Important dates / deadlines</span></a>
+      <a class="sb-link" data-nav data-text="refund withdrawal policy" onclick="go('prog-refund',this)"><span class="dot dot-await"></span><span class="txt">Refund / withdrawal policy</span></a>
+      <a class="sb-link" data-nav data-text="comparison vs traditional college" onclick="go('prog-compare',this)"><span class="dot dot-enrich"></span><span class="txt">Comparison vs traditional</span></a>
+      <a class="sb-link" data-nav data-text="brochure prospectus download" onclick="go('prog-brochure',this)"><span class="dot dot-await"></span><span class="txt">Brochure / prospectus</span></a>
+      <a class="sb-link" data-nav data-text="program specific faqs" onclick="go('prog-faqs',this)"><span class="dot dot-await"></span><span class="txt">Program-specific FAQs</span></a>
+    </div>
+
+    <!-- FAQ -->
+    <div class="sb-group" data-group>
+      <div class="sb-gh"><span>C · FAQ (13 buckets)</span><span class="cnt">13</span></div>
+      <a class="sb-link" data-nav data-text="faq answers state" onclick="go('faq-state',this)"><span class="dot dot-mixed"></span><span class="txt">FAQ current state &amp; scaffold</span></a>
+      <a class="sb-link" data-nav data-text="faq degree recognition validity bucket" onclick="go('faq-recog',this)"><span class="dot dot-await"></span><span class="txt">★ Degree Recognition &amp; Validity</span></a>
+      <a class="sb-link" data-nav data-text="faq buckets list admissions eligibility" onclick="go('faq-buckets',this)"><span class="dot dot-mixed"></span><span class="txt">All 13 FAQ buckets</span></a>
+    </div>
+
+    <div class="sb-group" data-group style="padding-bottom:32px">
+      <div class="sb-gh"><span>D · How to read this</span></div>
+      <a class="sb-link" data-nav data-text="delta what it tells us synthesis" onclick="go('delta',this)"><span class="dot dot-mixed"></span><span class="txt">What the delta tells us</span></a>
+    </div>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+    <div class="topbar">
+      <button class="hamb" onclick="toggleNav()" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+      <div class="bc">Quad &nbsp;›&nbsp; <b>Offering Wiki</b> &nbsp;›&nbsp; Coverage map</div>
+      <div class="right">
+        <span class="legpill"><span class="dot" style="background:var(--have)"></span>Have</span>
+        <span class="legpill"><span class="dot" style="background:var(--enrich)"></span>Enriching</span>
+        <span class="legpill"><span class="dot" style="background:var(--await)"></span>Awaiting</span>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="phero">
+      <div class="pat p-dots"></div>
+      <div class="inner">
+        <span class="tag">★ Offering knowledge base · coverage benchmark</span>
+        <h1>How complete is the Quad offering wiki?</h1>
+        <p class="sub">A visual render of the ideal-scope taxonomy — reverse-engineered from 8 institutions (Newton, Scaler, Masai, Sitare, Plaksha, Rishihood, Amity, Manipal). Every category is tagged against what the wiki actually holds today.</p>
+        <p class="basis"><b>Coverage is strong where data is public</b> (fees, curriculum, admissions, scholarships, loans) and <b>weak where it needs Quad-team facts</b> (placement data, named faculty, degree-grantor per program, seats, FAQ answers). The offering is <b>input-bound, not research-bound.</b></p>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- SUMMARY -->
+      <div id="overview" style="scroll-margin-top:74px"></div>
+      <div class="summary">
+        <div class="scard have">
+          <div class="topbar2"><span class="dot" style="background:var(--have)"></span><span class="lab">Have — rendered in full</span></div>
+          <div class="n">21</div>
+          <div class="desc">Content is present in the wiki and rendered here as real facts.</div>
+        </div>
+        <div class="scard enrich">
+          <div class="topbar2"><span class="dot" style="background:var(--enrich)"></span><span class="lab">Recurr-enriching</span></div>
+          <div class="n">9</div>
+          <div class="desc">We can research / scaffold without the client — first cut written, marked amber.</div>
+        </div>
+        <div class="scard await">
+          <div class="topbar2"><span class="dot" style="background:var(--await)"></span><span class="lab">Awaiting Quad team</span></div>
+          <div class="n">23</div>
+          <div class="desc">Needs Quad-team facts — stubbed with a placeholder and a fact-form tag.</div>
+        </div>
+      </div>
+
+      <div class="meterrow" style="margin-top:18px">
+        <div class="meter">
+          <i class="mh" style="width:39.6%"></i><i class="me" style="width:17%"></i><i class="ma" style="width:43.4%"></i>
+        </div>
+        <div class="meterlab">
+          <span><b>53</b> taxonomy items total</span>
+          <span><b>40%</b> Have · <b>17%</b> Enriching · <b>43%</b> Awaiting</span>
+        </div>
+      </div>
+
+      <div class="legendcard">
+        <h3>Legend — what the status colours mean</h3>
+        <div class="legrow"><span class="dot" style="background:var(--have)"></span><div><div class="lt">🟢 Have</div><div class="ld">Content already exists in the offering KB (<code>sources/offering/</code>). Rendered in full below with the real fact.</div></div></div>
+        <div class="legrow"><span class="dot" style="background:var(--enrich)"></span><div><div class="lt">🟡 Recurr-enriching</div><div class="ld">We can research or scaffold this without the client — FAQ bucket structure, student life, learning/career framing, comparison-vs-traditional, founding/vision. A first cut is written and marked amber for review.</div></div></div>
+        <div class="legrow"><span class="dot" style="background:var(--await)"></span><div><div class="lt">🔴 Awaiting Quad team</div><div class="ld">Requires Quad-team facts (degree-grantor per program, placement data, FAQ answers, QAT mechanics, faculty, hostel, refund, seats). Stubbed only — <b>we never invent Quad facts.</b></div></div></div>
+      </div>
+
+      <!-- ====================================================== -->
+      <!-- PART A — INSTITUTION -->
+      <!-- ====================================================== -->
+      <div class="parthead" id="part-inst">
+        <div><span class="eyebrow">Part A</span><h2>Institution</h2></div>
+        <div class="meta">21 categories · 7 Have · 4 Enriching · 10 Awaiting</div>
+      </div>
+      <p class="partlede">What the brand presents about itself. Tier 1 = table stakes, Tier 2 = expected, Tier 3 = optional / often N/A for a young institution.</p>
+
+      <!-- identity -->
+      <article class="item enrich" id="inst-identity" data-text="identity founding story year vision mission values">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Identity, founding story / year, vision<span class="tier">Tier 1</span></h3><div class="cat">Institution · who Quad is, when it started, what it stands for</div></div><span class="badge enrich"><span class="dot"></span>Recurr-enriching</span></div>
+        <div class="ibody"><div class="inner">
+          <p><b>Quad AI</b> — a new-age, AI-native tech-education brand positioning itself as an industry-ready alternative to traditional colleges. Builds curriculum, runs operations and examinations; degrees are awarded by partner universities.</p>
+          <p><b>Founded 2024</b> (first batch ~60 students; 500+ reached by 2025). Origin tagline: "Patna's First Tech-Empowered Campus" — Bihar / Tier-2/3 roots, now expanding to Bangalore. <b>Vision:</b> "Transform tech education" — build builders, leaders and decision-makers, not exam-passers.</p>
+          <div class="firstcut"><div class="sl">⌁ Recurr first cut</div><p>Founders + 2024 + the loose "transform tech education" vision are captured, but a locked, defensible vision/mission/values statement is open (tied to QUAD-7 positioning — candidate paths A/B/C in <code>brand.md</code>). Recurr can draft the founding-story narrative; the values lock needs a Pratik/Quad sign-off.</p></div>
+        </div></div>
+      </article>
+
+      <!-- legal -->
+      <article class="item have" id="inst-legal" data-text="legal entity degree granting basis ugc status operating company">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Legal entity + UGC status<span class="tier">Tier 1</span></h3><div class="cat">Institution · operating co vs university; UGC status</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <p><b>Legal entity:</b> Onenorth Learning Pvt. Ltd. (handle "Quad CSE"). <b>Not</b> a UGC-regulated Higher Education Institution.</p>
+          <p>The honest regulatory line (currently buried in the footer): <em>"Quad AI is a private limited company and not a Higher Education Institution regulated by the UGC. All admissions, academic operations, examinations and degree awards are managed solely by the respective partner university."</em> This is the <b>#1 buyer-trust gap</b> — content must answer it head-on, never hide it.</p>
+        </div></div>
+      </article>
+
+      <!-- grantor -->
+      <article class="item await" id="inst-grantor" data-text="degree granting partner per program conferring authority">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Degree-granting partner, per program<span class="tier">Tier 1</span></h3><div class="cat">Institution · who actually confers each degree</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Only <b>one</b> grantor is named today: <b>BCA → Mangalore University</b> (delivered via Trisha College) — Quad's most legitimately accredited course. For B.Tech, BBA and MBA the site says only "respective partner university" without naming it.</p>
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>Who grants the <b>B.Tech</b>, <b>BBA</b> and <b>MBA</b> degrees? This is the highest-value Tier-1 trust gap. We will not guess a university name for a compliance-heavy education brand.</p><span class="formtag">📋 Fact-collection form → "Degree-granting partner per program"</span></div>
+        </div></div>
+      </article>
+
+      <!-- founders -->
+      <article class="item have" id="inst-founders" data-text="founders leadership sourav payal mohit">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Founders / leadership<span class="tier">Tier 1</span></h3><div class="cat">Institution · who runs Quad</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <ul>
+            <li><b>Sourav</b> — Co-founder. MBA, FMS Delhi. ~12 yrs industry. Drives industry partnerships + placement connections.</li>
+            <li><b>Payal</b> — Co-founder. MBA, IIM Indore. ~10 yrs consulting + investment banking. Leads education vision + innovation.</li>
+            <li><b>Mohit</b> — handles commercials.</li>
+          </ul>
+        </div></div>
+      </article>
+
+      <!-- governance -->
+      <article class="item await" id="inst-governance" data-text="governance advisory governing board">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Governance / advisory board<span class="tier">Tier 2</span></h3><div class="cat">Institution · governing or advisory body</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>No governance, advisory or governing-board information captured. If an advisory board exists (academic council, industry advisors), names + affiliations would strengthen the legitimacy surface.</p><span class="formtag">📋 Fact-collection form → "Governance / advisory board"</span></div>
+        </div></div>
+      </article>
+
+      <!-- accreditation -->
+      <article class="item await" id="inst-accred" data-text="accreditation recognition stack ugc naac nba aicte conferring university">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Accreditation of the conferring univ<span class="tier">Tier 1</span></h3><div class="cat">Institution · UGC / NAAC / NBA / AICTE of the partner that confers</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>Since Quad itself isn't a UGC HEI, accreditation lives with the <b>partner university</b> per program. We have Mangalore University for BCA but no accreditation stack (NAAC grade, NBA, etc.) for any partner. Pairs directly with the degree-grantor gap above.</p><span class="formtag">📋 Fact-collection form → "Partner-university accreditation stack"</span></div>
+        </div></div>
+      </article>
+
+      <!-- faculty -->
+      <article class="item await" id="inst-faculty" data-text="faculty named profiles credentials">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Faculty — named profiles<span class="tier">Tier 2</span></h3><div class="cat">Institution · named full-time faculty + credentials</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Today only the claim exists: <em>"75% of faculty are outstation CXOs / founders flying in weekly."</em> No named, credentialed faculty profiles.</p>
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>Need the actual core / full-time faculty roster with names, qualifications and roles (distinct from the visiting-mentor network below).</p><span class="formtag">📋 Fact-collection form → "Named faculty roster"</span></div>
+        </div></div>
+      </article>
+
+      <!-- mentors -->
+      <article class="item have" id="inst-mentors" data-text="mentors industry network cred google salesforce">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Mentors / industry network<span class="tier">Tier 2</span></h3><div class="cat">Institution · the visiting-mentor pool</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <p><b>100+ mentors</b> from frontier companies deliver masterclasses, expert sessions and 1:1 resume prep. Sample affiliations:</p>
+          <div class="chips"><span>CRED</span><span>Google</span><span>Salesforce</span><span>Samsung</span><span>Microsoft</span><span>Amazon</span><span>Cisco</span><span>Apple</span><span>Oxyzo</span><span>OfBusiness</span><span>YouTube</span></div>
+          <p style="margin-top:12px">Curriculum is co-curated by IIT &amp; IIM alumni. (Note: mentors ≠ named recruiters — see the recruiters item.)</p>
+        </div></div>
+      </article>
+
+      <!-- structure -->
+      <article class="item have" id="inst-structure" data-text="academic structure three schools ai ml business design">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Academic structure (3 schools)<span class="tier">Tier 1</span></h3><div class="cat">Institution · schools / departments</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Each school is treated almost as a different college because each competes with a different competitor set.</p>
+          <ul>
+            <li><b>School of AI/ML</b> <span style="color:var(--blue);font-weight:700">(active)</span> — B.Tech CS (AI/ML) + BCA. Competes with engineering colleges + Scaler SST, Newton SoT, NxtWave NIAT, PW IoI.</li>
+            <li><b>School of Business</b> <span style="color:var(--green);font-weight:700">(active)</span> — BBA + MBA, "AI embedded in every subject." Competes with BBA/MBA colleges, Masters Union, Mesa.</li>
+            <li><b>School of Design</b> <span style="color:var(--magenta);font-weight:700">(listed_only)</span> — B.Des appears in the homepage selector but not on <code>/programmes</code>. No curriculum / campus / fee. Treat as placeholder.</li>
+          </ul>
+        </div></div>
+      </article>
+
+      <!-- campus infra -->
+      <article class="item enrich" id="inst-campus" data-text="campus infrastructure labs library facilities address">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Campus &amp; infrastructure<span class="tier">Tier 2</span></h3><div class="cat">Institution · labs, library, facilities per campus</div></div><span class="badge enrich"><span class="dot"></span>Recurr-enriching</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Addresses are captured for all three campuses:</p>
+          <ul>
+            <li><b>Patna</b> (origin) — Gigaspace Tower, Road No 19, Rajiv Nagar, Patna · Bihar. The affordability anchor.</li>
+            <li><b>Mangalore</b> (coastal) — Trisha Campus, Bangera, Ganesh Bagh Layout, Kuloor · Karnataka. The accredited-degree hub.</li>
+            <li><b>Bangalore</b> (tech capital) — 27th Main Rd, 1st Sector, near RBIH, HSR Layout, Bengaluru. The premium tier.</li>
+          </ul>
+          <div class="firstcut"><div class="sl">⌁ Recurr first cut</div><p>We have addresses + positioning roles only. Recurr can build campus pages from the public <code>/gallery</code> and <code>/life-at-quad</code> assets (photos, the boardroom-not-classroom framing). Specific facility detail — lab specs, library, seat counts per facility — would need the Quad team.</p></div>
+        </div></div>
+      </article>
+
+      <!-- hostel -->
+      <article class="item await" id="inst-hostel" data-text="hostels accommodation residential model">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Hostels / residential model<span class="tier">Tier 2</span></h3><div class="cat">Institution · accommodation</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>No hostel / accommodation information. For an in-person, multi-campus, Tier-2/3-rooted brand this is a real parent question. Need: is it residential, hostel cost, partner accommodation, per campus.</p><span class="formtag">📋 Fact-collection form → "Hostel / residential model"</span></div>
+        </div></div>
+      </article>
+
+      <!-- partnerships -->
+      <article class="item await" id="inst-partners" data-text="partnerships mous formal">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Partnerships / MOUs<span class="tier">Tier 2</span></h3><div class="cat">Institution · formal institutional partnerships</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <p>We have mentor companies, but those aren't formal MOUs. The only confirmed institutional partnership is <b>Trisha College / Mangalore University</b> (for BCA).</p>
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>Are there formal academic / corporate MOUs (degree partners for B.Tech/BBA/MBA, hiring partners, exchange programs)? Names + nature of each.</p><span class="formtag">📋 Fact-collection form → "Formal partnerships / MOUs"</span></div>
+        </div></div>
+      </article>
+
+      <!-- placement stats -->
+      <article class="item await" id="inst-placement" data-text="placement statistics rates internship conversion">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Placement statistics<span class="tier">Tier 1</span></h3><div class="cat">Institution · placement rates, internship conversion</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Today it's claims only: "100% placement assistance," "75+ marquee recruiters." No actual placement-rate or salary data.</p>
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>Need real numbers: placement %, median / highest package, internship-to-PPO conversion, by cohort/campus. One of the four highest-value Tier-1 gaps.</p><span class="formtag">📋 Fact-collection form → "Placement statistics"</span></div>
+        </div></div>
+      </article>
+
+      <!-- recruiters -->
+      <article class="item await" id="inst-recruiters" data-text="recruiters named list hiring">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Recruiters — named list<span class="tier">Tier 1</span></h3><div class="cat">Institution · companies that actually hire from Quad</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <p>"75+ marquee recruiters" is claimed, and logos appear on marketing pages — but mentor companies are being used as a proxy. We can't confirm which of these have <b>actually hired</b> a Quad student.</p>
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>Need the verified list of companies that have hired Quad graduates/interns (distinct from mentor or aspirational logos).</p><span class="formtag">📋 Fact-collection form → "Verified recruiters list"</span></div>
+        </div></div>
+      </article>
+
+      <!-- alumni -->
+      <article class="item await" id="inst-alumni" data-text="alumni graduate outcomes na pre first batch">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Alumni / graduate outcomes<span class="tier">Tier 3</span></h3><div class="cat">Institution · graduate destinations</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <p><b>Largely N/A today</b> — Quad's first batch (2024 entry) has not graduated, so there is no full alumni cohort yet.</p>
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team (or N/A)</div><p>If any early-exit / transfer / internship-conversion stories exist they'd help, but a full alumni-outcomes surface is genuinely premature. Confirm with Quad whether any graduate data exists at all.</p><span class="formtag">📋 Fact-collection form → "Alumni outcomes (if any)"</span></div>
+        </div></div>
+      </article>
+
+      <!-- student life -->
+      <article class="item enrich" id="inst-life" data-text="student life clubs events coding ai sports">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Student life / clubs / events<span class="tier">Tier 2</span></h3><div class="cat">Institution · clubs, sports, culture</div></div><span class="badge enrich"><span class="dot"></span>Recurr-enriching</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Quad's <code>/life-at-quad</code> page exists and isn't yet captured in the KB — Recurr can research and render it without the client:</p>
+          <h4>6 clubs</h4>
+          <div class="chips"><span>Coding</span><span>AI</span><span>Communication</span><span>Media</span><span>Career</span><span>Cultural</span></div>
+          <h4>Sports / recreation</h4>
+          <div class="chips"><span>Foosball</span><span>Cricket</span><span>Badminton</span><span>E-sports</span><span>Table tennis</span><span>Football</span><span>Indoor games</span></div>
+          <h4>Industry exposure &amp; events</h4>
+          <ul>
+            <li>Field Immersion Programs · Corporate &amp; Startup Tours · "Quad Connect"</li>
+            <li>"Day at QUAD" immersion · excursions · intercity events · campus tours</li>
+          </ul>
+          <div class="firstcut"><div class="sl">⌁ Recurr first cut</div><p>This is fully Recurr-researchable from the live site + gallery. First cut above; we can build the full student-life proof surface. Culture line: builds "builders, leaders, future decision-makers."</p></div>
+        </div></div>
+      </article>
+
+      <!-- entrepreneurship -->
+      <article class="item have" id="inst-entre" data-text="entrepreneurship incubator startup seed fund">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Entrepreneurship / incubator / seed fund<span class="tier">Tier 2</span></h3><div class="cat">Institution · startup support</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <p><b>₹10L+ startup seed fund</b>; a <b>mandatory startup build per student</b>. MBA/PGP ventures are incubated and funded by the incubation cell. One of the three career pathways (Job · Entrepreneurship · Higher studies).</p>
+        </div></div>
+      </article>
+
+      <!-- news -->
+      <article class="item enrich" id="inst-news" data-text="news press media coverage">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>News / press / media<span class="tier">Tier 3</span></h3><div class="cat">Institution · press coverage</div></div><span class="badge enrich"><span class="dot"></span>Recurr-enriching</span></div>
+        <div class="ibody"><div class="inner">
+          <div class="firstcut"><div class="sl">⌁ Recurr first cut</div><p>No press surface captured today. Recurr can compile any existing media mentions, workshop write-ups and the blog inventory (<code>/blog</code>, not yet deep-crawled) into a press/news surface — this is research, not Quad-fact-dependent. Tier 3, so lower priority.</p></div>
+        </div></div>
+      </article>
+
+      <!-- compliance -->
+      <article class="item await" id="inst-compliance" data-text="governance compliance disclosures mandatory anti ragging refund">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Compliance disclosures<span class="tier">Tier 2</span></h3><div class="cat">Institution · mandatory disclosure, anti-ragging, refund</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>No anti-ragging, mandatory-disclosure or refund-policy documents captured. These are standard parent-trust artifacts and often legally expected. Need the actual policy text / links.</p><span class="formtag">📋 Fact-collection form → "Compliance disclosures (anti-ragging, refund, mandatory)"</span></div>
+        </div></div>
+      </article>
+
+      <!-- rankings -->
+      <article class="item await" id="inst-rankings" data-text="rankings awards nirf qs the">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Rankings &amp; awards<span class="tier">Tier 3</span></h3><div class="cat">Institution · NIRF / QS / THE</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Genuinely <b>N/A</b> — new-age players deliberately omit rankings, and a 2024-founded non-HEI wouldn't be ranked. Listed for completeness.</p>
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team (likely N/A)</div><p>Confirm there are no awards / recognitions worth surfacing (industry awards, ed-tech listicles). Otherwise leave deliberately empty.</p><span class="formtag">📋 Fact-collection form → "Awards / recognitions (if any)"</span></div>
+        </div></div>
+      </article>
+
+      <!-- contact -->
+      <article class="item have" id="inst-contact" data-text="contact visit how to reach phone email">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Contact / how to reach<span class="tier">Tier 1</span></h3><div class="cat">Institution · phone, email, portal</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <ul>
+            <li><b>Phone:</b> +91 7368050555</li>
+            <li><b>Email:</b> hello@quadcse.com</li>
+            <li><b>Site:</b> quadcse.com · <b>Admissions portal:</b> admissions.quadcse.com</li>
+          </ul>
+        </div></div>
+      </article>
+
+      <!-- ====================================================== -->
+      <!-- PART B — PROGRAM / COURSE -->
+      <!-- ====================================================== -->
+      <div class="parthead" id="part-prog">
+        <div><span class="eyebrow">Part B</span><h2>Program / course</h2></div>
+        <div class="meta">24 categories · 11 Have · 4 Enriching · 9 Awaiting</div>
+      </div>
+      <p class="partlede">What's published per course. The wiki holds 4 active courses (B.Tech, BBA, MBA, BCA) + 1 listed_only (B.Des), across 7 live campus × course permutations.</p>
+
+      <!-- matrix -->
+      <article class="item have" id="matrix" data-text="campus course matrix offering live permutations">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Campus × course matrix — the live offering<span class="tier">Anchor</span></h3><div class="cat">Program · the 7 live permutations a student can actually buy</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <p>~7 live permutations across 4 active courses × 3 campuses. <span class="yes" style="color:var(--have);font-weight:800">✓</span> = active (total fee) · <span class="soon" style="color:var(--enrich)">soon</span> = announced · <span class="no" style="color:var(--g2)">—</span> = not offered.</p>
+          <div class="mtxwrap">
+            <table class="mtx">
+              <thead><tr><th style="text-align:left">Course ↓ / Campus →</th><th>Patna</th><th>Mangalore</th><th>Bangalore</th></tr></thead>
+              <tbody>
+                <tr><th>B.Tech CS (AI/ML) <span class="schooltag" style="background:var(--blue)">AI/ML</span></th><td class="yes">✓ ₹8.0L</td><td class="yes">✓ ₹9.5L</td><td class="yes">✓ ₹14.0L</td></tr>
+                <tr><th>BBA (UG Mgmt) <span class="schooltag" style="background:var(--green)">Business</span></th><td class="yes">✓ ₹4.0L</td><td class="soon">soon</td><td class="yes">✓ ₹6.5L</td></tr>
+                <tr><th>MBA (PGP Mgmt) <span class="schooltag" style="background:var(--green)">Business</span></th><td class="soon">soon</td><td class="yes">✓ ₹5.5L</td><td class="soon">soon</td></tr>
+                <tr><th>BCA (Trisha / Mangalore Univ) <span class="schooltag" style="background:var(--blue)">AI/ML</span></th><td class="no">—</td><td class="yes">✓ ₹3.6L</td><td class="no">—</td></tr>
+                <tr><th>B.Des (Design) <span class="schooltag" style="background:var(--magenta)">Design</span></th><td class="no">—</td><td class="no">—</td><td class="no">— listed_only</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h4>Fee ladder (cheapest → priciest, total + ₹2k reg)</h4>
+          <ul>
+            <li>BCA — Mangalore · ₹3.6L · 3 yr</li>
+            <li>BBA — Patna · ₹4.0L · 3 yr</li>
+            <li>MBA — Mangalore · ₹5.5L · 2 yr</li>
+            <li>BBA — Bangalore · ₹6.5L · 3 yr</li>
+            <li>B.Tech — Patna · ₹8.0L · 4 yr</li>
+            <li>B.Tech — Mangalore · ₹9.5L · 4 yr</li>
+            <li>B.Tech — Bangalore · ₹14.0L · 4 yr</li>
+          </ul>
+        </div></div>
+      </article>
+
+      <!-- degree -->
+      <article class="item await" id="prog-degree" data-text="degree awarded conferring authority partner university per program">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Degree awarded + conferring authority<span class="tier">Tier 1</span></h3><div class="cat">Program · named partner university per program</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Confirmed only for <b>BCA → Mangalore University</b> (via Trisha College). B.Tech / BBA / MBA all show <em>degree_grantor: partner university (not Quad/UGC)</em> without a name.</p>
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>Same root gap as the institution-level item. Name the conferring university for each non-BCA program.</p><span class="formtag">📋 Fact-collection form → "Conferring authority per program"</span></div>
+        </div></div>
+      </article>
+
+      <!-- duration -->
+      <article class="item have" id="prog-duration" data-text="duration format credits years semesters">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Duration / format<span class="tier">Tier 1</span></h3><div class="cat">Program · length + mode</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <ul>
+            <li><b>B.Tech CS (AI/ML)</b> — 4 yrs / 8 sem · full-time, in-campus</li>
+            <li><b>BBA (UG Mgmt)</b> — 3 yrs / 6 sem · full-time</li>
+            <li><b>MBA (PGP Mgmt)</b> — 2 yrs (1+1) / 4 sem · full-time</li>
+            <li><b>BCA (Trisha)</b> — 3 yrs / 6 sem · full-time</li>
+          </ul>
+        </div></div>
+      </article>
+
+      <!-- eligibility -->
+      <article class="item have" id="prog-elig" data-text="eligibility class x xii marks">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Eligibility<span class="tier">Tier 1</span></h3><div class="cat">Program · who can apply</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Class X &amp; XII completion (expected or final) from any recognised board (CBSE / ISC / equivalent) → QAT → online interview. No application fee. Same across all active courses.</p>
+        </div></div>
+      </article>
+
+      <!-- qat -->
+      <article class="item await" id="prog-qat" data-text="selection process entrance test qat mechanics format syllabus dates cutoffs">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Selection + QAT mechanics<span class="tier">Tier 1</span></h3><div class="cat">Program · entrance-test format, syllabus, dates, cutoffs</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <p>We know the shape: a <b>60-minute online aptitude test</b> (logical reasoning, data interpretation, verbal/written, quantitative) → online interview (problem-solving + creativity).</p>
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>Missing the mechanics buyers actually ask for: detailed syllabus, test dates / windows, sample papers, scoring, cutoffs, how interview is weighted. One of the four highest-value Tier-1 gaps.</p><span class="formtag">📋 Fact-collection form → "QAT mechanics (syllabus / dates / cutoffs)"</span></div>
+        </div></div>
+      </article>
+
+      <!-- fees -->
+      <article class="item have" id="prog-fees" data-text="fees breakup semester per campus">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Fees + full breakup<span class="tier">Tier 1</span></h3><div class="cat">Program · per-semester fee tables (the strongest surface)</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Canonical from the website, per semester. Includes tuition, exams, software-development, experiential-learning + ₹2,000 one-time registration.</p>
+          <h4>B.Tech CS (AI/ML) — total over 4 years</h4>
+          <table class="feetable">
+            <thead><tr><th>Campus</th><th class="num">Sem 1–2 ea</th><th class="num">Sem 3–4 ea</th><th class="num">Sem 5–8 ea</th><th class="num">Total</th></tr></thead>
+            <tbody>
+              <tr><td>Bangalore</td><td class="num">₹2,00,000</td><td class="num">₹2,00,000</td><td class="num">₹1,50,000</td><td class="num">₹14,00,000</td></tr>
+              <tr><td>Mangalore</td><td class="num">₹1,50,000</td><td class="num">₹1,25,000</td><td class="num">₹1,00,000</td><td class="num">₹9,50,000</td></tr>
+              <tr><td>Patna</td><td class="num">₹1,00,000</td><td class="num">₹1,00,000</td><td class="num">₹1,00,000</td><td class="num">₹8,00,000</td></tr>
+            </tbody>
+          </table>
+          <h4>Other courses — total program fee</h4>
+          <ul>
+            <li><b>BBA</b> — Bangalore ₹6.5L · Patna ₹4.0L</li>
+            <li><b>MBA (PGP)</b> — Mangalore ₹5.5L (₹1.5L ×2 + ₹1.25L ×2)</li>
+            <li><b>BCA (Trisha)</b> — Mangalore ₹3.6L (₹70k / ₹60k / ₹50k per sem pair) — lowest-priced Quad course</li>
+          </ul>
+          <p style="margin-top:10px;font-size:13px;color:var(--g1)">⚠ The Recurr calculator models Patna B.Tech at ₹9.52L and Patna BBA at ₹6.52L (BLR placeholders for the commercial model). <b>Website wins</b>: Patna B.Tech = ₹8.0L, Patna BBA = ₹4.0L.</p>
+        </div></div>
+      </article>
+
+      <!-- scholarships -->
+      <article class="item have" id="prog-schol" data-text="scholarships named criteria amounts women in tech udaan">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Scholarships<span class="tier">Tier 1</span></h3><div class="cat">Program · named scholarships (amounts/criteria thin)</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Four named scholarships, shared across courses:</p>
+          <ul>
+            <li><b>Women in Tech</b> — up to 50%</li>
+            <li><b>First Mover's</b> — up to 50% (early-bird)</li>
+            <li><b>Udaan</b> — top-10-percentile QAT scorers</li>
+            <li><b>JP Narayan</b> — changemakers, interview-based</li>
+          </ul>
+          <p style="margin-top:10px;font-size:13px;color:var(--g1)">Note: exact amounts / renewal criteria for Udaan &amp; JP Narayan are thin — a minor Quad-side confirmation, but the names + ranges are present, so this stays 🟢.</p>
+        </div></div>
+      </article>
+
+      <!-- loans -->
+      <article class="item have" id="prog-loans" data-text="loans emi financing named lenders hdfc credila axis">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Loans / EMI / financing<span class="tier">Tier 1</span></h3><div class="cat">Program · named lenders</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Six named education-loan partners:</p>
+          <div class="chips"><span>HDFC Credila</span><span>Axis Bank</span><span>ICICI Bank</span><span>State Bank of India</span><span>Kuhoo</span><span>Propelld</span></div>
+        </div></div>
+      </article>
+
+      <!-- curriculum -->
+      <article class="item enrich" id="prog-curric" data-text="curriculum semester year wise syllabus btech bba mba bca">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Curriculum — semester / year-wise<span class="tier">Tier 1</span></h3><div class="cat">Program · 🟢 B.Tech full · 🟡 other courses thinner</div></div><span class="badge enrich"><span class="dot"></span>Mixed (Have + enrich)</span></div>
+        <div class="ibody"><div class="inner">
+          <p><b>B.Tech CS (AI/ML)</b> is fully captured (🟢) — year arc <b>Build → Achieve → Innovate → Master</b>:</p>
+          <ul>
+            <li><b>Y1 Build</b> — Python, ReactJS, DSA, web, JS, Maths for CS. Projects: GenAI CRM, social-media analyzer, open source.</li>
+            <li><b>Y2 Achieve</b> — Node.js, databases (PostgreSQL/MongoDB), ML, Spark/Hadoop. Projects: route optimiser, InShorts clone, real-time bidding.</li>
+            <li><b>Y3 Innovate</b> — mandatory 6-month paid internship, deep learning, GPT models, networks. Project: "Build your own ChatGPT."</li>
+            <li><b>Y4 Master</b> — OS, compiler design, system design, cybersecurity, capstone + 8th-sem industry internship.</li>
+          </ul>
+          <p style="margin-top:10px">BBA, MBA and BCA also have year/semester arcs captured (Business Foundations → Specialization; Foundations → Backend/Applied AI → Specialization). But these are thinner than the B.Tech's per-project detail.</p>
+          <div class="firstcut"><div class="sl">⌁ Recurr first cut</div><p>Recurr can deepen the BBA/MBA/BCA curriculum surfaces to B.Tech parity from the public course pages. Where the site itself is thin (exact electives, credit counts), that tips into the Quad-fact column — see Specializations.</p></div>
+        </div></div>
+      </article>
+
+      <!-- specializations -->
+      <article class="item await" id="prog-spec" data-text="specializations electives tracks">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Specializations / electives<span class="tier">Tier 2</span></h3><div class="cat">Program · specialization tracks + electives</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Track names are captured (Business: Marketing &amp; Growth · Finance &amp; Consulting · Business Analytics &amp; AI Strategy · Entrepreneurship; BCA: AI/ML · Data Science · Cloud · Cybersecurity · Full-Stack · BI). But the actual elective menus and how/when a student chooses are not.</p>
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>Need the elective catalogue + selection rules per program (which electives, when chosen, prerequisites, B.Tech specialization options).</p><span class="formtag">📋 Fact-collection form → "Specializations / electives detail"</span></div>
+        </div></div>
+      </article>
+
+      <!-- tools -->
+      <article class="item have" id="prog-tools" data-text="tools tech taught ai chatgpt claude figma">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Tools &amp; tech taught<span class="tier">Tier 2</span></h3><div class="cat">Program · named tools / stack</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <p><b>AI/ML</b> stack: Python, React, Node.js, PostgreSQL, MongoDB, Spark, Hadoop, deep-learning + GPT tooling.</p>
+          <p><b>Business (30+ AI tools)</b>: ChatGPT, Claude, Canva, Gamma, NotebookLM → Meta Ads, Figma, Lovable, Perplexity → Excel, Notion, Make.com, Gemini → CRM / analytics / Zapier automation.</p>
+        </div></div>
+      </article>
+
+      <!-- projects -->
+      <article class="item have" id="prog-projects" data-text="projects capstones build your own chatgpt">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Projects / capstones<span class="tier">Tier 2</span></h3><div class="cat">Program · build assignments</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <p>"100,000+ lines of production code before graduation." B.Tech projects: GenAI CRM, real-time bidding platform, "Build your own ChatGPT," deep-tech capstone. MBA project ladder: AI business-case → process optimization → AI-powered CRM/funnel → AI-led business transformation. BCA: 3–4 month capstone + portfolio.</p>
+        </div></div>
+      </article>
+
+      <!-- internships -->
+      <article class="item have" id="prog-intern" data-text="internships mandatory paid six month">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Internships<span class="tier">Tier 1</span></h3><div class="cat">Program · internship model</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <p><b>Mandatory 6-month paid internship</b> across active courses (Year 3 for B.Tech, Sem 5 for BBA). B.Tech also has an 8th-semester industry internship.</p>
+        </div></div>
+      </article>
+
+      <!-- prog faculty -->
+      <article class="item await" id="prog-faculty" data-text="program faculty named per course">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Program faculty — named<span class="tier">Tier 2</span></h3><div class="cat">Program · who teaches this specific program</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>Same root as institution-level faculty — no program-specific named teaching faculty. Need the per-program teaching roster.</p><span class="formtag">📋 Fact-collection form → "Program faculty roster"</span></div>
+        </div></div>
+      </article>
+
+      <!-- learning outcomes -->
+      <article class="item enrich" id="prog-learn" data-text="learning outcomes skills graduate">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Learning outcomes<span class="tier">Tier 2</span></h3><div class="cat">Program · what a student can do at the end</div></div><span class="badge enrich"><span class="dot"></span>Recurr-enriching</span></div>
+        <div class="ibody"><div class="inner">
+          <div class="firstcut"><div class="sl">⌁ Recurr first cut</div><p>Implicit in the curriculum but never stated as outcomes. Recurr can frame explicit learning outcomes per program from the published syllabus (e.g. B.Tech: "ship a full-stack AI product end-to-end; train + deploy ML on real data; clear a top-tech technical interview"). This is framing work, not new Quad facts — drafts on us, validation light.</p></div>
+        </div></div>
+      </article>
+
+      <!-- career outcomes -->
+      <article class="item enrich" id="prog-career" data-text="career outcomes job roles pathways">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Career outcomes / job roles<span class="tier">Tier 2</span></h3><div class="cat">Program · roles a graduate targets</div></div><span class="badge enrich"><span class="dot"></span>Recurr-enriching</span></div>
+        <div class="ibody"><div class="inner">
+          <p>The three pathways are captured: <b>Job · Entrepreneurship · Higher studies</b>.</p>
+          <div class="firstcut"><div class="sl">⌁ Recurr first cut</div><p>Recurr can map concrete target roles per program from the curriculum + tools (e.g. B.Tech → SWE, ML engineer, full-stack; BBA → growth, product, founder's-office; MBA → product manager, consultant, founder). Framing/research, not Quad-dependent.</p></div>
+        </div></div>
+      </article>
+
+      <!-- placement program -->
+      <article class="item await" id="prog-placement" data-text="placement stats salary data program level">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Placement stats + salary (program-level)<span class="tier">Tier 1</span></h3><div class="cat">Program · per-program placement + package data</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>No program-level placement % or salary data. Same family as the institution-level placement gap — but buyers want it broken down per program/campus.</p><span class="formtag">📋 Fact-collection form → "Placement stats + salary (per program)"</span></div>
+        </div></div>
+      </article>
+
+      <!-- recognition -->
+      <article class="item await" id="prog-recog" data-text="degree recognition validity stated program level">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Degree recognition / validity (program level)<span class="tier">Tier 1</span></h3><div class="cat">Program · is this degree valid for jobs / higher studies</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>The single most important trust statement, missing at program level: is the degree UGC-recognised (via the partner), valid for govt jobs / PG / abroad? Needs the partner-university recognition facts per program. Pairs with the FAQ "Degree Recognition &amp; Validity" bucket below.</p><span class="formtag">📋 Fact-collection form → "Degree recognition / validity per program"</span></div>
+        </div></div>
+      </article>
+
+      <!-- seats -->
+      <article class="item enrich" id="prog-seats" data-text="intake seats per campus or total">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Intake / seats<span class="tier">Tier 2</span></h3><div class="cat">Program · seat counts</div></div><span class="badge enrich"><span class="dot"></span>Confirm with Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Seat numbers are published per course: <b>B.Tech 120 · BBA 120 · MBA 60 · BCA 120</b>.</p>
+          <div class="firstcut" style="background:var(--enrich-bg);border-color:#F0D2B0"><div class="sl">⌁ Open question — quick confirm</div><p>Unknown whether 120 is <b>per campus or total across campuses</b>. We have the number; we just need one clarification. Logged as an open question in <code>_sources.md</code> — a single yes/no to the Quad team rather than a full fact request.</p></div>
+        </div></div>
+      </article>
+
+      <!-- campus availability -->
+      <article class="item have" id="prog-avail" data-text="campus availability matrix where offered">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Campus availability<span class="tier">Tier 1</span></h3><div class="cat">Program · which campuses each course runs at</div></div><span class="badge have"><span class="dot"></span>Have</span></div>
+        <div class="ibody"><div class="inner">
+          <ul>
+            <li><b>B.Tech</b> — Patna · Mangalore · Bangalore (all three)</li>
+            <li><b>BBA</b> — Patna · Bangalore (Mangalore soon)</li>
+            <li><b>MBA</b> — Mangalore (Bangalore, Patna soon)</li>
+            <li><b>BCA</b> — Mangalore only</li>
+          </ul>
+          <p style="margin-top:8px;font-size:13px;color:var(--g1)">Fully captured in the matrix above. (Mumbai shows on the site as "upcoming" but Pratik confirmed no Bombay campus exists — treated as 3 campuses only.)</p>
+        </div></div>
+      </article>
+
+      <!-- dates -->
+      <article class="item await" id="prog-dates" data-text="important dates academic calendar deadlines">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Important dates / deadlines<span class="tier">Tier 2</span></h3><div class="cat">Program · application deadlines, academic calendar</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>No application deadlines, QAT windows, term-start dates or academic calendar. These change every cycle and only Quad has them.</p><span class="formtag">📋 Fact-collection form → "Important dates / deadlines"</span></div>
+        </div></div>
+      </article>
+
+      <!-- refund -->
+      <article class="item await" id="prog-refund" data-text="refund withdrawal policy">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Refund / withdrawal policy<span class="tier">Tier 2</span></h3><div class="cat">Program · what happens if a student leaves</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>No refund / withdrawal policy. A genuine parent concern given the fee size. Need the actual policy text.</p><span class="formtag">📋 Fact-collection form → "Refund / withdrawal policy"</span></div>
+        </div></div>
+      </article>
+
+      <!-- comparison -->
+      <article class="item enrich" id="prog-compare" data-text="comparison vs traditional college positioning">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Comparison vs traditional college<span class="tier">Tier 2</span></h3><div class="cat">Program · structured Quad-vs-traditional frame</div></div><span class="badge enrich"><span class="dot"></span>Recurr-enriching</span></div>
+        <div class="ibody"><div class="inner">
+          <p>The positioning exists ("industry-ready alternative to traditional colleges," "built like a boardroom not a classroom") but not as a structured comparison.</p>
+          <div class="firstcut"><div class="sl">⌁ Recurr first cut</div><p>Recurr can build a structured Quad-vs-traditional comparison (pedagogy, internship, AI-native tooling, career support, cohort) — pure positioning/research work. Feeds the planned 30-page "Quad vs X" cluster in the content strategy.</p></div>
+        </div></div>
+      </article>
+
+      <!-- brochure -->
+      <article class="item await" id="prog-brochure" data-text="brochure prospectus download">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Brochure / prospectus<span class="tier">Tier 2</span></h3><div class="cat">Program · downloadable prospectus</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>No downloadable brochure / prospectus per program. Need the asset (or sign-off for Recurr to design one from approved facts).</p><span class="formtag">📋 Fact-collection form → "Brochure / prospectus"</span></div>
+        </div></div>
+      </article>
+
+      <!-- prog faqs -->
+      <article class="item await" id="prog-faqs" data-text="program specific faqs">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>Program-specific FAQs<span class="tier">Tier 1</span></h3><div class="cat">Program · per-course objection handling</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>No per-program FAQ answers (site FAQs are JS-rendered and generic). Recurr can scaffold the question set per program; the <b>answers</b> need Quad. See FAQ section below.</p><span class="formtag">📋 Fact-collection form → "Program-specific FAQ answers"</span></div>
+        </div></div>
+      </article>
+
+      <!-- ====================================================== -->
+      <!-- PART C — FAQ -->
+      <!-- ====================================================== -->
+      <div class="parthead" id="part-faq">
+        <div><span class="eyebrow">Part C</span><h2>FAQ — the universally weak surface</h2></div>
+        <div class="meta">Quad's biggest opportunity</div>
+      </div>
+      <p class="partlede">The ideal is a faceted help-center bucketed by applicant journey (13 buckets, from Scaler ×10 + Amity's funnel split). Today Quad has FAQ <b>questions only</b> (JS-rendered, un-scrapeable) and no answers. Recurr can build the bucket structure; Quad must supply the answers.</p>
+
+      <!-- faq state -->
+      <article class="item enrich" id="faq-state" data-text="faq current state answers questions scaffold">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>FAQ current state &amp; scaffold<span class="tier">Tier 1</span></h3><div class="cat">FAQ · what exists vs what's needed</div></div><span class="badge enrich"><span class="dot"></span>Mixed (scaffold + answers)</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Questions captured from the live site (objection-handling gold for the trust surface + AEO):</p>
+          <ul>
+            <li>What is Quad AI · Which degree is offered · How is Quad different from a traditional college</li>
+            <li>Career support &amp; placement · Types of programs · Who should choose Quad</li>
+            <li>Why choose Quad for professional education · Where located · What makes Quad different</li>
+          </ul>
+          <div class="firstcut"><div class="sl">⌁ Recurr can build the structure</div><p>Recurr scaffolds the 13-bucket faceted help-center (below). 🟡</p></div>
+          <div class="stub"><div class="sl">⚠ But the answers await Quad</div><p>Answers are JS-rendered and could not be scraped — especially accreditation, refund, placement-guarantee wording. 🔴</p><span class="formtag">📋 Fact-collection form → "Clean FAQ answers"</span></div>
+        </div></div>
+      </article>
+
+      <!-- faq recognition bucket -->
+      <article class="item await" id="faq-recog" data-text="faq degree recognition validity bucket must have">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>★ Degree Recognition &amp; Validity bucket<span class="tier">Must-have</span></h3><div class="cat">FAQ · the #1 buyer-trust bucket</div></div><span class="badge await"><span class="dot"></span>Awaiting Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <p>The single most important FAQ bucket for Quad — it answers the non-UGC trust gap head-on instead of burying it in the footer. Recurr can build the bucket shell, but every answer here is a Quad fact.</p>
+          <div class="stub"><div class="sl">⚠ Stub — awaiting Quad team</div><p>Need authoritative answers: who confers the degree, is it UGC-recognised via the partner, valid for govt jobs / PG / abroad, per program. <b>This is the highest-leverage single fact request in the whole offering.</b></p><span class="formtag">📋 Fact-collection form → "Degree Recognition &amp; Validity answers"</span></div>
+        </div></div>
+      </article>
+
+      <!-- faq buckets -->
+      <article class="item enrich" id="faq-buckets" data-text="all 13 faq buckets list admissions eligibility entrance test interview fees">
+        <div class="il"></div>
+        <div class="ihd"><div class="titles"><h3>All 13 FAQ buckets<span class="tier">Tier 1</span></h3><div class="cat">FAQ · the canonical faceted structure</div></div><span class="badge enrich"><span class="dot"></span>Structure: Recurr · Answers: Quad</span></div>
+        <div class="ibody"><div class="inner">
+          <p>Canonical buckets (Scaler ×10 + Amity funnel split). 🟡 = Recurr can scaffold the bucket · 🔴 = answers need Quad.</p>
+          <ul>
+            <li>Admissions &amp; Selection 🟡🔴</li>
+            <li>Eligibility 🟡 (we have the facts) </li>
+            <li>Entrance Test (QAT) 🔴 (mechanics gap)</li>
+            <li>Interview 🔴</li>
+            <li>Fees &amp; Payment 🟡 (strong)</li>
+            <li>Scholarships &amp; Financial Aid 🟡</li>
+            <li>Loans / EMI 🟡 (6 lenders)</li>
+            <li>Curriculum &amp; Academics 🟡</li>
+            <li>Placements &amp; Outcomes 🔴 (data gap)</li>
+            <li><b>Degree Recognition &amp; Validity 🔴 (must-have)</b></li>
+            <li>Campus &amp; Hostel / Facilities 🔴 (hostel gap)</li>
+            <li>Refund &amp; Withdrawal 🔴</li>
+            <li>International / Transfer 🔴 (optional)</li>
+          </ul>
+          <div class="firstcut"><div class="sl">⌁ Recurr first cut</div><p>The 13-bucket scaffold is built above. Buckets backed by 🟢 facts (Eligibility, Fees, Scholarships, Loans, Curriculum) can be answered now; the rest are answer-stubs awaiting Quad.</p></div>
+        </div></div>
+      </article>
+
+      <!-- ====================================================== -->
+      <!-- PART D — DELTA -->
+      <!-- ====================================================== -->
+      <div class="parthead" id="part-delta">
+        <div><span class="eyebrow">Part D</span><h2>What the delta tells us</h2></div>
+      </div>
+
+      <article class="item" id="delta" data-text="delta synthesis input bound highest value gaps fill task" style="border-left:4px solid var(--ink)">
+        <div class="ihd"><div class="titles"><h3>Synthesis</h3><div class="cat">The strategic read on the coverage map</div></div></div>
+        <div class="ibody"><div class="inner">
+          <p><b>Coverage is strong where data is public</b> (fees, curriculum, admission process, scholarships, loans) and <b>weak where it needs Quad-team facts</b> (placement data, named faculty, degree-grantor per program, seats, FAQ answers, hostel, refund, dates). The offering is <b>input-bound, not research-bound.</b></p>
+          <h4>Highest-value Tier-1 gaps — all Quad-owned</h4>
+          <ul>
+            <li>Degree-granting partner + its accreditation, <b>per program</b></li>
+            <li>Real <b>placement statistics</b> (institution + program level)</li>
+            <li><b>FAQ answers</b> — especially the Degree-Recognition-&amp;-Validity bucket</li>
+            <li><b>Selection / QAT mechanics</b> (syllabus, dates, cutoffs)</li>
+          </ul>
+          <h4>What Recurr can close without the client (🟡)</h4>
+          <ul>
+            <li>FAQ bucket scaffolding (the 13-bucket structure)</li>
+            <li>Student life (from <code>/life-at-quad</code>) · campus pages (from <code>/gallery</code>)</li>
+            <li>Learning + career-outcome framing · comparison-vs-traditional</li>
+            <li>Founding/vision narrative · news/press compilation · deeper non-B.Tech curriculum</li>
+          </ul>
+          <p style="margin-top:14px"><b>Bottom line:</b> the fill task is mostly a <b>structured fact-request to the Quad team</b> (the 🔴 items → a single fact-collection form), plus a handful Recurr researches (🟡). The 🟢 surface is already solid and renders cleanly above.</p>
+        </div></div>
+      </article>
+
+      <p class="nores hidden" id="nores">No taxonomy items match your filter.</p>
+
+      <div style="margin-top:54px;text-align:center;font-size:12.5px;color:var(--g1);border-top:1px solid var(--line);padding-top:24px">
+        Source: <code>wiki-quad/sources/offering/_scope-and-gaps.md</code> + the offering KB. Benchmark set: Newton · Scaler · Masai · Sitare · Plaksha · Rishihood · Amity · Manipal.
+        <br/>Quad facts are never invented — 🔴 items are honest stubs awaiting the Quad fact-collection form. · Plane: QUAD-60
+      </div>
+
+    </div><!-- /content -->
+  </main>
+</div><!-- /shell -->
+
+<script>
+  // ----- nav: smooth scroll + active state -----
+  function go(id, el){
+    var target = document.getElementById(id);
+    if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); }
+    document.querySelectorAll('.sb-link').forEach(function(l){ l.classList.remove('active'); });
+    if(el) el.classList.add('active');
+    if(window.innerWidth <= 860) closeNav();
+  }
+
+  // ----- mobile nav -----
+  function toggleNav(){ document.body.classList.toggle('navopen'); }
+  function closeNav(){ document.body.classList.remove('navopen'); }
+
+  // ----- sidebar filter -----
+  function filterNav(q){
+    q = (q||'').trim().toLowerCase();
+    var links = document.querySelectorAll('.sb-link[data-nav]');
+    links.forEach(function(l){
+      var t = (l.getAttribute('data-text')||'') + ' ' + l.textContent.toLowerCase();
+      l.style.display = (!q || t.indexOf(q) > -1) ? '' : 'none';
+    });
+    // hide empty groups
+    document.querySelectorAll('[data-group]').forEach(function(g){
+      var any = Array.prototype.some.call(g.querySelectorAll('.sb-link[data-nav]'), function(l){ return l.style.display !== 'none'; });
+      g.style.display = any ? '' : 'none';
+    });
+  }
+
+  // ----- scrollspy: highlight the section in view -----
+  var items = Array.prototype.slice.call(document.querySelectorAll('article.item[id], div[id="overview"]'));
+  var spyMap = {};
+  document.querySelectorAll('.sb-link[data-nav]').forEach(function(l){
+    var m = (l.getAttribute('onclick')||'').match(/go\('([^']+)'/);
+    if(m) spyMap[m[1]] = l;
+  });
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var link = spyMap[e.target.id];
+        if(link){
+          document.querySelectorAll('.sb-link').forEach(function(l){ l.classList.remove('active'); });
+          link.classList.add('active');
+          // keep active link visible in sidebar
+          var sb = document.getElementById('sb');
+          var lr = link.getBoundingClientRect();
+          if(lr.top < 120 || lr.bottom > window.innerHeight - 40){ link.scrollIntoView({block:'nearest'}); }
+        }
+      }
+    });
+  }, {rootMargin: '-72px 0px -68% 0px', threshold:0});
+  items.forEach(function(i){ obs.observe(i); });
+</script>
+</body>
+</html>
