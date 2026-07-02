@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Clarisights — Data Literacy · Layer 2 (Industry Playbooks)</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0d0d0f;--paper:#fff;--rule:#0d0d0f;--soft:#f4f4f1;--muted:#6b6b70;--line:#e4e4de;--hi:#fef6e0;--accent:#1f5cff;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{background:var(--soft);color:var(--ink);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased;font-feature-settings:'ss01','cv11';}
+  body{font-size:16px;line-height:1.55;}
+  .app{display:grid;grid-template-columns:288px 1fr;min-height:100vh;}
+
+  /* NAV */
+  .nav{position:sticky;top:0;height:100vh;overflow-y:auto;padding:38px 28px;border-right:1px solid var(--rule);background:var(--paper);}
+  .brand{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-bottom:5px;font-family:'JetBrains Mono',monospace;}
+  .doc-title{font-size:13px;line-height:1.35;color:var(--muted);margin-bottom:30px;}
+  .kpi{display:flex;gap:8px;margin-bottom:26px;}
+  .kpi .k{flex:1;border:1px solid var(--rule);border-radius:5px;padding:9px 10px;}
+  .kpi .kv{font-size:22px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+  .kpi .kl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;font-family:'JetBrains Mono',monospace;margin-top:2px;}
+  .nav-section{margin-bottom:20px;}
+  .nav-section-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:9px;}
+  .nav-list{list-style:none;}
+  .nav-list li{margin-bottom:3px;}
+  .nav-list a{display:flex;gap:10px;padding:5px 8px 5px 10px;font-size:12.5px;color:var(--ink);text-decoration:none;line-height:1.35;border-left:2px solid transparent;transition:border-color .15s;}
+  .nav-list a:hover{border-left-color:var(--muted);}
+  .nav-list a.active{border-left-color:var(--ink);font-weight:600;}
+  .nav-list .num{color:var(--muted);font-variant-numeric:tabular-nums;min-width:22px;font-family:'JetBrains Mono',monospace;font-size:11px;}
+  .nav-foot{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);line-height:1.55;}
+
+  /* STAGE */
+  .stage{padding:32px 26px;}
+  .doc{max-width:1080px;margin:0 auto;}
+  .block{background:var(--paper);border:1px solid var(--rule);border-radius:5px;padding:44px 52px 46px;margin-bottom:24px;scroll-margin-top:22px;}
+  .block-meta{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:22px;font-family:'JetBrains Mono',monospace;}
+  h1{font-size:44px;line-height:1.06;letter-spacing:-.03em;font-weight:700;margin-bottom:14px;}
+  h2{font-size:30px;line-height:1.12;letter-spacing:-.02em;font-weight:600;margin-bottom:14px;}
+  h3{font-size:20px;font-weight:600;letter-spacing:-.01em;margin-bottom:8px;}
+  .lede{font-size:17px;color:var(--muted);line-height:1.55;max-width:820px;margin-bottom:6px;}
+  p{font-size:15px;line-height:1.6;margin-bottom:12px;max-width:820px;}
+  .pull{font-size:20px;line-height:1.42;font-weight:500;padding:18px 22px;background:var(--hi);border:1px solid var(--ink);border-radius:5px;margin:20px 0 6px;}
+  .pull b{font-weight:700;}
+
+  /* HEADER cover */
+  .cover{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .cover .block-meta{color:rgba(255,255,255,.55);}
+  .cover .lede{color:rgba(255,255,255,.75);max-width:760px;}
+  .cover .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px;}
+  .cover .tag{font-size:11px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:5px 12px;color:rgba(255,255,255,.85);}
+
+  /* FIVE sections */
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:8px;}
+  .step{border:1px solid var(--rule);border-radius:5px;padding:16px 15px;}
+  .step .sn{width:26px;height:26px;border:1.5px solid var(--ink);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-bottom:11px;}
+  .step .st{font-size:15px;font-weight:600;line-height:1.25;margin-bottom:6px;}
+  .step .sd{font-size:12.5px;line-height:1.45;color:var(--muted);}
+
+  /* VERTICAL table */
+  table.v{width:100%;border-collapse:collapse;margin-top:6px;font-size:14px;}
+  table.v th,table.v td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.v th{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;font-family:'JetBrains Mono',monospace;border-bottom:2px solid var(--ink);}
+  table.v td b{font-weight:600;}
+  .pill{display:inline-block;font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;padding:2px 8px;border-radius:20px;border:1px solid var(--ink);}
+  .pill.p0{background:var(--ink);color:#fff;}
+
+  /* VERTICAL blocks + article cards */
+  .vhead{border-top:3px solid var(--ink);padding-top:16px;margin-bottom:16px;}
+  .vhead .vpr{font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+  .vhead h3{font-size:26px;letter-spacing:-.02em;margin:4px 0 4px;}
+  .vhead .vanchor{font-size:12.5px;color:var(--muted);}
+  .art{border:1px solid var(--line);border-radius:5px;padding:15px 17px;margin-bottom:10px;}
+  .art-h{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:6px;flex-wrap:wrap;}
+  .art-t{font-size:16px;font-weight:600;letter-spacing:-.01em;}
+  .kw{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:var(--soft);border:1px solid var(--line);border-radius:4px;padding:3px 8px;color:var(--muted);white-space:nowrap;}
+  .art-n{font-size:13.5px;line-height:1.5;color:#333;margin-bottom:8px;}
+  .art-m{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:.02em;}
+
+  /* SPRINTS */
+  .sprint{display:grid;grid-template-columns:150px 1fr;gap:22px;padding:16px 0;border-top:1px solid var(--line);}
+  .sprint:first-of-type{border-top:2px solid var(--ink);}
+  .sprint .sp-w{font-size:13px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+  .sprint .sp-w span{display:block;font-size:10.5px;color:var(--muted);font-weight:500;margin-top:3px;letter-spacing:.04em;}
+  .sprint .sp-b{font-size:14.5px;line-height:1.55;}
+  .sprint .sp-b b{font-weight:600;}
+  .sprint.now .sp-w{color:var(--accent);}
+
+  ul.ticks{list-style:none;margin-top:6px;}
+  ul.ticks li{position:relative;padding-left:24px;margin-bottom:11px;font-size:14.5px;line-height:1.5;max-width:840px;}
+  ul.ticks li::before{content:"→";position:absolute;left:0;color:var(--accent);font-weight:700;}
+  ul.ticks li b{font-weight:600;}
+
+  @media(max-width:900px){
+    .app{grid-template-columns:1fr;}
+    .nav{position:relative;height:auto;border-right:none;border-bottom:1px solid var(--rule);}
+    .stage{padding:14px 10px;}
+    .block{padding:28px 22px;}
+    h1{font-size:32px;} h2{font-size:24px;}
+    .steps{grid-template-columns:1fr 1fr;}
+    .sprint{grid-template-columns:1fr;gap:6px;}
+    .art-h{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="nav">
+    <div class="brand">Data Literacy · Layer 2</div>
+    <div class="doc-title">Industry Playbooks — content plan<br><span style="color:#aaa">The "utility" layer · a.k.a. Data Standards</span></div>
+    <div class="kpi">
+      <div class="k"><div class="kv">30</div><div class="kl">Articles</div></div>
+      <div class="k"><div class="kv">6</div><div class="kl">Verticals</div></div>
+      <div class="k"><div class="kv">5</div><div class="kl">Sections</div></div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Overview</div>
+      <ul class="nav-list">
+        <li><a href="#s00"><span class="num">00</span><span>What L2 is</span></a></li>
+        <li><a href="#s10"><span class="num">01</span><span>The 5-section model</span></a></li>
+        <li><a href="#s20"><span class="num">02</span><span>The 6 verticals</span></a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">The 30 articles</div>
+      <ul class="nav-list">
+        <li><a href="#s21"><span class="num">2.1</span><span>eCommerce · P0</span></a></li>
+        <li><a href="#s22"><span class="num">2.2</span><span>Gaming &amp; Apps · P1</span></a></li>
+        <li><a href="#s23"><span class="num">2.3</span><span>Fintech · P1</span></a></li>
+        <li><a href="#s24"><span class="num">2.4</span><span>Travel &amp; Mobility · P2</span></a></li>
+        <li><a href="#s25"><span class="num">2.5</span><span>Retail · P2</span></a></li>
+        <li><a href="#s26"><span class="num">2.6</span><span>Energy &amp; Subscription · P2</span></a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Execution</div>
+      <ul class="nav-list">
+        <li><a href="#s30"><span class="num">03</span><span>Build sequence</span></a></li>
+        <li><a href="#s40"><span class="num">04</span><span>Principles &amp; the moat</span></a></li>
+        <li><a href="#s50"><span class="num">05</span><span>Dependencies &amp; status</span></a></li>
+      </ul>
+    </div>
+    <div class="nav-foot">Working plan · source: Data Literacy content CSV (30 L2 rows). All rows currently <b>planned</b>.</div>
+  </aside>
+
+  <main class="stage">
+    <div class="doc">
+
+    <!-- COVER -->
+    <section class="block cover" id="s00">
+      <div class="block-meta"><span>Content Plan · Layer 2</span><span>Industry Playbooks</span></div>
+      <h1>Data Literacy — Layer 2: Industry Playbooks</h1>
+      <div class="lede">The "utility" layer of the Data Literacy program. Where L1 defines the language (glossary, metric &amp; platform pages), L2 turns it into <b>industry-specific playbooks a marketing team can actually run on</b> — the layer that converts a reader into a believer. <b>30 articles = 6 verticals × 5 sections.</b></div>
+      <div class="tags"><span class="tag">Format: Playbook</span><span class="tag">Utility content</span><span class="tag">Industry-led, not platform-led</span><span class="tag">SME-grounded</span></div>
+    </section>
+
+    <!-- 00 WHAT -->
+    <section class="block" id="s10-intro">
+      <div class="block-meta"><span>00 · What it is</span><span>The premise</span></div>
+      <h2>Buyers self-identify by industry — not by platform.</h2>
+      <p>A performance marketer at a fintech doesn't search "how to use Meta Ads reporting." They search "fintech marketing KPIs" and "how do other fintechs structure their reporting." L2 meets them there: <b>practical, vertical-specific playbooks that teach the craft of marketing data</b> — useful even if the reader never touches Clarisights.</p>
+      <p>Each playbook is grounded in real customer operations (CS conversations + Zulip threads), not marketing brainstorms. The product sells itself when the reader realises the standard they just learned is already built into the platform.</p>
+      <div class="pull">L2 is the proof-of-competence layer. L1 shows we know the words; L2 shows we know how the best teams in your industry actually <b>run</b> the data.</div>
+    </section>
+
+    <!-- 01 MODEL -->
+    <section class="block" id="s10">
+      <div class="block-meta"><span>01 · The Model</span><span>5 sections per vertical</span></div>
+      <h2>Every vertical gets the same five sections.</h2>
+      <div class="lede" style="margin-bottom:20px">One repeatable template, filled with industry-specific substance. Ship it once (eCommerce), then replicate the pattern five times.</div>
+      <div class="steps">
+        <div class="step"><div class="sn">1</div><div class="st">KPI Framework</div><div class="sd">What to measure &amp; why. Hierarchy from board → CMO → channel manager. Benchmarks + what "good" looks like at scale.</div></div>
+        <div class="step"><div class="sn">2</div><div class="st">Campaign Naming Standard</div><div class="sd">Naming syntax with real industry examples. UTM taxonomy that scales multi-market. The Data Standards reference.</div></div>
+        <div class="step"><div class="sn">3</div><div class="st">Reporting Templates</div><div class="sd">Three real downloads: weekly (channel-manager) · monthly (CMO) · quarterly (board). Grounded in real customer reports.</div></div>
+        <div class="step"><div class="sn">4</div><div class="st">Data Setup Guide</div><div class="sd">What to connect first, which dimensions from day zero, which transformations — the 3 setup decisions that shape everything downstream.</div></div>
+        <div class="step"><div class="sn">5</div><div class="st">Common Data Mistakes</div><div class="sd">The 5–7 failure modes specific to the industry, pulled from Zulip + CS threads. Each mistake gets a fix.</div></div>
+      </div>
+    </section>
+
+    <!-- 02 VERTICALS -->
+    <section class="block" id="s20">
+      <div class="block-meta"><span>02 · The Verticals</span><span>6 × priority order</span></div>
+      <h2>Six verticals, sequenced by ICP weight.</h2>
+      <table class="v">
+        <tr><th>Vertical</th><th>Priority</th><th>Why this vertical / character</th><th>SME anchors</th></tr>
+        <tr><td><b>eCommerce</b></td><td><span class="pill p0">P0</span></td><td>The launch vertical — <b>~67% of the Clarisights ICP.</b> The proof point for the whole L2 model.</td><td>Delivery Hero, AboutYou, Deichmann, Westwing, Fressnapf, On Running</td></tr>
+        <tr><td><b>Gaming &amp; Mobile Apps</b></td><td><span class="pill">P1</span></td><td>Mobile-first, SKAN-attribution-heavy, fast creative-testing cadence.</td><td>Lion Studios, Product Madness, Lovoo</td></tr>
+        <tr><td><b>Fintech</b></td><td><span class="pill">P1</span></td><td>Compliance constraints, multi-product reporting, high ACV, LTV-led.</td><td>Trade Republic, Mastercard</td></tr>
+        <tr><td><b>Travel &amp; Mobility</b></td><td><span class="pill">P2</span></td><td>Seasonal, dynamic pricing, geo-heavy reporting.</td><td>Blacklane, Careem</td></tr>
+        <tr><td><b>Retail</b></td><td><span class="pill">P2</span></td><td>Omnichannel attribution, physical + digital overlap, store-level reporting.</td><td>Deichmann, Fressnapf</td></tr>
+        <tr><td><b>Energy &amp; Subscription</b></td><td><span class="pill">P2</span></td><td>Emerging vertical. LTV-focused, long sales cycle.</td><td>Enpal</td></tr>
+      </table>
+      <p style="margin-top:16px;color:var(--muted);font-size:13.5px">Each vertical below lists its five articles with the target keyword, the writer/SME model, and what the piece covers.</p>
+    </section>
+
+    <!-- ecom -->
+    <section class="block" id="s21">
+      <div class="vhead"><span class="vpr">P0 · launch vertical</span><h3>eCommerce</h3><div class="vanchor">SME anchors — Delivery Hero · AboutYou · Deichmann · Westwing · Fressnapf · On Running</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">KPI Framework</span><code class="kw">ecom marketing kpis</code></div><div class="art-n">Which metrics matter for eCommerce and why. KPI hierarchy: board → CMO → channel manager. Benchmarks and what &#x27;good&#x27; looks like at scale. 67% of Clarisights ICP. The launch vertical.</div><div class="art-m">Content Team + SME-led &nbsp;·&nbsp; source: CS team + Delivery Hero, AboutYou, Deichmann, Westwing, Fressnapf, On Running</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Campaign Naming Standard</span><code class="kw">ecom campaign naming convention</code></div><div class="art-n">Campaign naming syntax with real eCommerce examples. UTM taxonomy that scales to multi-market. How to enforce naming across teams and agencies. Reference for the Data Standards Project.</div><div class="art-m">Content Team + Philip &nbsp;·&nbsp; source: Philip (data standards) + Delivery Hero, AboutYou, Deichmann, Westwing, Fressnapf, On Running</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Reporting Templates (Weekly / Monthly / Quarterly)</span><code class="kw">ecom marketing reporting templates</code></div><div class="art-n">Three actual templates as downloads: weekly performance report (channel manager view), monthly CMO dashboard (executive view), quarterly board report (investor view). Grounded in real eCommerce customer reports.</div><div class="art-m">Content Team + SME-led &nbsp;·&nbsp; source: CS team + Delivery Hero, AboutYou, Deichmann, Westwing, Fressnapf, On Running</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Data Setup Guide</span><code class="kw">ecom marketing data setup</code></div><div class="art-n">For eCommerce: which platforms to connect first, what dimensions to track from day zero, what transformations to apply before reporting, and the three setup decisions that determine everything downstream.</div><div class="art-m">Content Team + Avi/Sufyaan &nbsp;·&nbsp; source: Avi/Sufyaan (CS leads) + Delivery Hero, AboutYou, Deichmann, Westwing, Fressnapf, On Running</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Common Data Mistakes</span><code class="kw">ecom marketing data mistakes</code></div><div class="art-n">The 5-7 mistakes specific to eCommerce: real failure modes pulled from Zulip + CS conversations. Each mistake gets a fix.</div><div class="art-m">Content Team &nbsp;·&nbsp; source: Zulip — eCommerce customer threads</div></div>
+    </section>
+    <!-- gaming -->
+    <section class="block" id="s22">
+      <div class="vhead"><span class="vpr">P1</span><h3>Gaming &amp; Mobile Apps</h3><div class="vanchor">SME anchors — Lion Studios · Product Madness · Lovoo</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">KPI Framework</span><code class="kw">gaming marketing kpis</code></div><div class="art-n">Which metrics matter for Gaming &amp; Mobile Apps and why. KPI hierarchy: board → CMO → channel manager. Benchmarks and what &#x27;good&#x27; looks like at scale. Mobile-first, SKAN-attribution-heavy, complex creative testing cadence.</div><div class="art-m">Content Team + SME-led &nbsp;·&nbsp; source: CS team + Lion Studios, Product Madness, Lovoo</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Campaign Naming Standard</span><code class="kw">gaming campaign naming convention</code></div><div class="art-n">Campaign naming syntax with real Gaming &amp; Mobile Apps examples. UTM taxonomy that scales to multi-market. How to enforce naming across teams and agencies. Reference for the Data Standards Project.</div><div class="art-m">Content Team + Philip &nbsp;·&nbsp; source: Philip (data standards) + Lion Studios, Product Madness, Lovoo</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Reporting Templates (Weekly / Monthly / Quarterly)</span><code class="kw">gaming marketing reporting templates</code></div><div class="art-n">Three actual templates as downloads: weekly performance report (channel manager view), monthly CMO dashboard (executive view), quarterly board report (investor view). Grounded in real Gaming &amp; Mobile Apps customer reports.</div><div class="art-m">Content Team + SME-led &nbsp;·&nbsp; source: CS team + Lion Studios, Product Madness, Lovoo</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Data Setup Guide</span><code class="kw">gaming marketing data setup</code></div><div class="art-n">For Gaming &amp; Mobile Apps: which platforms to connect first, what dimensions to track from day zero, what transformations to apply before reporting, and the three setup decisions that determine everything downstream.</div><div class="art-m">Content Team + Avi/Sufyaan &nbsp;·&nbsp; source: Avi/Sufyaan (CS leads) + Lion Studios, Product Madness, Lovoo</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Common Data Mistakes</span><code class="kw">gaming marketing data mistakes</code></div><div class="art-n">The 5-7 mistakes specific to Gaming &amp; Mobile Apps: real failure modes pulled from Zulip + CS conversations. Each mistake gets a fix.</div><div class="art-m">Content Team &nbsp;·&nbsp; source: Zulip — Gaming &amp; Mobile Apps customer threads</div></div>
+    </section>
+    <!-- fintech -->
+    <section class="block" id="s23">
+      <div class="vhead"><span class="vpr">P1</span><h3>Fintech</h3><div class="vanchor">SME anchors — Trade Republic · Mastercard</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">KPI Framework</span><code class="kw">fintech marketing kpis</code></div><div class="art-n">Which metrics matter for Fintech and why. KPI hierarchy: board → CMO → channel manager. Benchmarks and what &#x27;good&#x27; looks like at scale. Compliance constraints, multi-product reporting, high ACV, LTV-led.</div><div class="art-m">Content Team + SME-led &nbsp;·&nbsp; source: CS team + Trade Republic, Mastercard</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Campaign Naming Standard</span><code class="kw">fintech campaign naming convention</code></div><div class="art-n">Campaign naming syntax with real Fintech examples. UTM taxonomy that scales to multi-market. How to enforce naming across teams and agencies. Reference for the Data Standards Project.</div><div class="art-m">Content Team + Philip &nbsp;·&nbsp; source: Philip (data standards) + Trade Republic, Mastercard</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Reporting Templates (Weekly / Monthly / Quarterly)</span><code class="kw">fintech marketing reporting templates</code></div><div class="art-n">Three actual templates as downloads: weekly performance report (channel manager view), monthly CMO dashboard (executive view), quarterly board report (investor view). Grounded in real Fintech customer reports.</div><div class="art-m">Content Team + SME-led &nbsp;·&nbsp; source: CS team + Trade Republic, Mastercard</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Data Setup Guide</span><code class="kw">fintech marketing data setup</code></div><div class="art-n">For Fintech: which platforms to connect first, what dimensions to track from day zero, what transformations to apply before reporting, and the three setup decisions that determine everything downstream.</div><div class="art-m">Content Team + Avi/Sufyaan &nbsp;·&nbsp; source: Avi/Sufyaan (CS leads) + Trade Republic, Mastercard</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Common Data Mistakes</span><code class="kw">fintech marketing data mistakes</code></div><div class="art-n">The 5-7 mistakes specific to Fintech: real failure modes pulled from Zulip + CS conversations. Each mistake gets a fix.</div><div class="art-m">Content Team &nbsp;·&nbsp; source: Zulip — Fintech customer threads</div></div>
+    </section>
+    <!-- travel -->
+    <section class="block" id="s24">
+      <div class="vhead"><span class="vpr">P2</span><h3>Travel &amp; Mobility</h3><div class="vanchor">SME anchors — Blacklane · Careem</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">KPI Framework</span><code class="kw">travel marketing kpis</code></div><div class="art-n">Which metrics matter for Travel &amp; Mobility and why. KPI hierarchy: board → CMO → channel manager. Benchmarks and what &#x27;good&#x27; looks like at scale. Seasonal, dynamic pricing, geo-heavy reporting.</div><div class="art-m">Content Team + SME-led &nbsp;·&nbsp; source: CS team + Blacklane, Careem</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Campaign Naming Standard</span><code class="kw">travel campaign naming convention</code></div><div class="art-n">Campaign naming syntax with real Travel &amp; Mobility examples. UTM taxonomy that scales to multi-market. How to enforce naming across teams and agencies. Reference for the Data Standards Project.</div><div class="art-m">Content Team + Philip &nbsp;·&nbsp; source: Philip (data standards) + Blacklane, Careem</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Reporting Templates (Weekly / Monthly / Quarterly)</span><code class="kw">travel marketing reporting templates</code></div><div class="art-n">Three actual templates as downloads: weekly performance report (channel manager view), monthly CMO dashboard (executive view), quarterly board report (investor view). Grounded in real Travel &amp; Mobility customer reports.</div><div class="art-m">Content Team + SME-led &nbsp;·&nbsp; source: CS team + Blacklane, Careem</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Data Setup Guide</span><code class="kw">travel marketing data setup</code></div><div class="art-n">For Travel &amp; Mobility: which platforms to connect first, what dimensions to track from day zero, what transformations to apply before reporting, and the three setup decisions that determine everything downstream.</div><div class="art-m">Content Team + Avi/Sufyaan &nbsp;·&nbsp; source: Avi/Sufyaan (CS leads) + Blacklane, Careem</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Common Data Mistakes</span><code class="kw">travel marketing data mistakes</code></div><div class="art-n">The 5-7 mistakes specific to Travel &amp; Mobility: real failure modes pulled from Zulip + CS conversations. Each mistake gets a fix.</div><div class="art-m">Content Team &nbsp;·&nbsp; source: Zulip — Travel &amp; Mobility customer threads</div></div>
+    </section>
+    <!-- retail -->
+    <section class="block" id="s25">
+      <div class="vhead"><span class="vpr">P2</span><h3>Retail</h3><div class="vanchor">SME anchors — Deichmann · Fressnapf</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">KPI Framework</span><code class="kw">retail marketing kpis</code></div><div class="art-n">Which metrics matter for Retail and why. KPI hierarchy: board → CMO → channel manager. Benchmarks and what &#x27;good&#x27; looks like at scale. Omnichannel attribution, physical + digital overlap, store-level reporting.</div><div class="art-m">Content Team + SME-led &nbsp;·&nbsp; source: CS team + Deichmann, Fressnapf</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Campaign Naming Standard</span><code class="kw">retail campaign naming convention</code></div><div class="art-n">Campaign naming syntax with real Retail examples. UTM taxonomy that scales to multi-market. How to enforce naming across teams and agencies. Reference for the Data Standards Project.</div><div class="art-m">Content Team + Philip &nbsp;·&nbsp; source: Philip (data standards) + Deichmann, Fressnapf</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Reporting Templates (Weekly / Monthly / Quarterly)</span><code class="kw">retail marketing reporting templates</code></div><div class="art-n">Three actual templates as downloads: weekly performance report (channel manager view), monthly CMO dashboard (executive view), quarterly board report (investor view). Grounded in real Retail customer reports.</div><div class="art-m">Content Team + SME-led &nbsp;·&nbsp; source: CS team + Deichmann, Fressnapf</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Data Setup Guide</span><code class="kw">retail marketing data setup</code></div><div class="art-n">For Retail: which platforms to connect first, what dimensions to track from day zero, what transformations to apply before reporting, and the three setup decisions that determine everything downstream.</div><div class="art-m">Content Team + Avi/Sufyaan &nbsp;·&nbsp; source: Avi/Sufyaan (CS leads) + Deichmann, Fressnapf</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Common Data Mistakes</span><code class="kw">retail marketing data mistakes</code></div><div class="art-n">The 5-7 mistakes specific to Retail: real failure modes pulled from Zulip + CS conversations. Each mistake gets a fix.</div><div class="art-m">Content Team &nbsp;·&nbsp; source: Zulip — Retail customer threads</div></div>
+    </section>
+    <!-- energy -->
+    <section class="block" id="s26">
+      <div class="vhead"><span class="vpr">P2</span><h3>Energy &amp; Subscription</h3><div class="vanchor">SME anchors — Enpal</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">KPI Framework</span><code class="kw">energy marketing kpis</code></div><div class="art-n">Which metrics matter for Energy &amp; Subscription and why. KPI hierarchy: board → CMO → channel manager. Benchmarks and what &#x27;good&#x27; looks like at scale. Emerging vertical. LTV-focused, long sales cycle.</div><div class="art-m">Content Team + SME-led &nbsp;·&nbsp; source: CS team + Enpal</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Campaign Naming Standard</span><code class="kw">energy campaign naming convention</code></div><div class="art-n">Campaign naming syntax with real Energy &amp; Subscription examples. UTM taxonomy that scales to multi-market. How to enforce naming across teams and agencies. Reference for the Data Standards Project.</div><div class="art-m">Content Team + Philip &nbsp;·&nbsp; source: Philip (data standards) + Enpal</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Reporting Templates (Weekly / Monthly / Quarterly)</span><code class="kw">energy marketing reporting templates</code></div><div class="art-n">Three actual templates as downloads: weekly performance report (channel manager view), monthly CMO dashboard (executive view), quarterly board report (investor view). Grounded in real Energy &amp; Subscription customer reports.</div><div class="art-m">Content Team + SME-led &nbsp;·&nbsp; source: CS team + Enpal</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Data Setup Guide</span><code class="kw">energy marketing data setup</code></div><div class="art-n">For Energy &amp; Subscription: which platforms to connect first, what dimensions to track from day zero, what transformations to apply before reporting, and the three setup decisions that determine everything downstream.</div><div class="art-m">Content Team + Avi/Sufyaan &nbsp;·&nbsp; source: Avi/Sufyaan (CS leads) + Enpal</div></div>
+      <div class="art"><div class="art-h"><span class="art-t">Common Data Mistakes</span><code class="kw">energy marketing data mistakes</code></div><div class="art-n">The 5-7 mistakes specific to Energy &amp; Subscription: real failure modes pulled from Zulip + CS conversations. Each mistake gets a fix.</div><div class="art-m">Content Team &nbsp;·&nbsp; source: Zulip — Energy &amp; Subscription customer threads</div></div>
+    </section>
+
+
+    <!-- 03 SEQUENCE -->
+    <section class="block" id="s30">
+      <div class="block-meta"><span>03 · Execution</span><span>Build sequence</span></div>
+      <h2>Ship one vertical in full, then replicate.</h2>
+      <div class="lede" style="margin-bottom:18px">The original program cadence. eCommerce ships complete first as the proof of the L2 model; the rest follow the same 5-section template.</div>
+      <div class="sprint now"><div class="sp-w">Sprint 3<span>Weeks 1–2 · May</span></div><div class="sp-b"><b>eCommerce playbook ships in full.</b> All 5 sections — KPI Framework, Naming Standard, Reporting Templates (3 downloads), Data Setup Guide, Common Mistakes. <b>This is the proof point for the L2 model.</b></div></div>
+      <div class="sprint"><div class="sp-w">Sprint 4<span>Weeks 3–4 · May</span></div><div class="sp-b"><b>Gaming + Fintech playbooks.</b> Same structure, different content. By end of May, three industries live.</div></div>
+      <div class="sprint"><div class="sp-w">Sprint 5<span>Weeks 1–2 · June</span></div><div class="sp-b"><b>Data Standards Project v1</b> (the naming-standard spine) + first webinar (Philip's Data Naming Masterclass) + first "Inside the Data Team" profile.</div></div>
+      <div class="sprint"><div class="sp-w">Sprint 6<span>Weeks 3–4 · June</span></div><div class="sp-b"><b>Compound.</b> Cross-link L1 ↔ L2 ↔ L3, complete the remaining verticals (Travel, Retail, Energy), measure baseline traffic, start the Q3 calendar.</div></div>
+      <div class="pull" style="margin-top:20px">Sequencing note: the plan was drafted May. It now inherits the H2 reset — L2 can only <b>publish</b> once <code>press.clarisights.com</code> is live (the July item). Until then, drafting proceeds; publishing is queued.</div>
+    </section>
+
+    <!-- 04 PRINCIPLES -->
+    <section class="block" id="s40">
+      <div class="block-meta"><span>04 · Principles</span><span>The moat</span></div>
+      <h2>Why this compounds — the graph, not the page.</h2>
+      <ul class="ticks">
+        <li><b>Specificity over scale.</b> No "Top 10 KPIs" listicles. Every page answers a specific question a specific marketer has at a specific moment.</li>
+        <li><b>Nomenclature is the thesis, not a footnote.</b> Naming, field taxonomy and API conventions are the central argument — that's what makes it defensible.</li>
+        <li><b>Teach the craft, not the tool.</b> Every piece is useful even if the reader never uses Clarisights. The product sells itself once they see the standard is built in.</li>
+        <li><b>Grounded in real operations.</b> CS conversations and Zulip threads are the source material — the SME column on every row is the authority.</li>
+        <li><b>The moat is the interconnected graph.</b> Every L2 playbook references the L1 definitions; every L3 authority piece drives back to both. Individual pages capture traffic; the graph builds authority nobody can shortcut.</li>
+      </ul>
+    </section>
+
+    <!-- 05 DEPENDENCIES -->
+    <section class="block" id="s50">
+      <div class="block-meta"><span>05 · Reality check</span><span>Dependencies &amp; status</span></div>
+      <h2>What has to be true for L2 to ship.</h2>
+      <ul class="ticks">
+        <li><b>Status: all 30 planned, none drafted.</b> The proof-point (eCommerce, 5 sections incl. 3 template downloads) is the first thing to write.</li>
+        <li><b>Publishing home.</b> L2 cannot go live until <code>press.clarisights.com</code> exists (July). Drafting is not blocked; publishing is.</li>
+        <li><b>L1 first.</b> The graph logic assumes the L1 glossary/metric pages exist to link into. L1 leads, L2 references it.</li>
+        <li><b>SME time.</b> Each playbook needs its CS anchor (Avi/Sufyaan) and Philip for the naming standard. SME availability is the real production constraint, not writing capacity.</li>
+        <li><b>A named DRI.</b> The content engine still runs on an unnamed <code>[account lead]</code> — assign an owner before scaling past the eCommerce proof point.</li>
+      </ul>
+      <div class="pull">Fastest path to value: <b>draft the eCommerce 5 now</b> so they're ready the day the publishing home is live — and use that vertical as the template every other vertical clones.</div>
+    </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  const blocks=document.querySelectorAll('.block[id]');
+  const navLinks=document.querySelectorAll('.nav-list a');
+  const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+id));}});},{rootMargin:'-25% 0px -65% 0px'});
+  blocks.forEach(b=>obs.observe(b));
+</script>
+
+</body>
+</html>
