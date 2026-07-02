@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Clarisights — Positioning · Working Session</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0f;
+    --paper: #ffffff;
+    --rule: #0d0d0f;
+    --soft: #f4f4f1;
+    --muted: #6b6b70;
+    --line: #e4e4de;
+    --hi: #fef6e0;
+    --accent: #1f5cff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { background: var(--soft); color: var(--ink); font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; font-feature-settings: 'ss01','cv11'; }
+  body { font-size: 16px; line-height: 1.55; }
+
+  .app { display: grid; grid-template-columns: 288px 1fr; min-height: 100vh; }
+
+  /* NAV */
+  .nav { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 38px 28px; border-right: 1px solid var(--rule); background: var(--paper); }
+  .brand { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; margin-bottom: 5px; font-family: 'JetBrains Mono', monospace; }
+  .doc-title { font-size: 13px; line-height: 1.35; color: var(--muted); margin-bottom: 34px; }
+  .nav-section { margin-bottom: 22px; }
+  .nav-section-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 9px; }
+  .nav-list { list-style: none; }
+  .nav-list li { margin-bottom: 3px; }
+  .nav-list a { display: flex; gap: 10px; padding: 5px 8px 5px 10px; font-size: 12.5px; color: var(--ink); text-decoration: none; line-height: 1.35; border-left: 2px solid transparent; transition: border-color .15s, color .15s; }
+  .nav-list a:hover { border-left-color: var(--muted); }
+  .nav-list a.active { border-left-color: var(--ink); font-weight: 600; }
+  .nav-list .num { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 24px; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .nav-list a.active .num { color: var(--ink); }
+  .nav-foot { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 11px; color: var(--muted); line-height: 1.55; }
+
+  /* STAGE + SLIDES */
+  .stage { padding: 28px 24px; }
+  .deck { max-width: 1120px; margin: 0 auto; }
+  .slide { background: var(--paper); border: 1px solid var(--rule); border-radius: 5px; min-height: 620px; padding: 54px 62px 60px; margin-bottom: 26px; scroll-margin-top: 26px; position: relative; display: flex; flex-direction: column; }
+  .slide-meta { display: flex; justify-content: space-between; align-items: baseline; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 30px; font-family: 'JetBrains Mono', monospace; }
+  .slide h2 { font-size: 38px; line-height: 1.08; font-weight: 600; letter-spacing: -0.018em; margin-bottom: 16px; }
+  .slide h2.large { font-size: 54px; line-height: 1.04; letter-spacing: -0.025em; }
+  .slide h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.005em; margin-bottom: 8px; }
+  .slide .lede { font-size: 16.5px; color: var(--muted); margin-bottom: 26px; max-width: 780px; line-height: 1.55; }
+  .slide .pull { font-size: 21px; line-height: 1.42; font-weight: 500; padding: 18px 22px; background: var(--hi); border: 1px solid var(--ink); border-radius: 5px; margin: 20px 0 6px; max-width: 940px; }
+  .slide .pull b { font-weight: 700; }
+  .slide .footnote { margin-top: auto; padding-top: 22px; font-size: 12.5px; color: var(--muted); line-height: 1.5; border-top: 1px solid var(--line); }
+  .spacer { flex: 1; }
+
+  /* COVER */
+  .slide.title { justify-content: space-between; background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .slide.title .slide-meta { color: rgba(255,255,255,.55); }
+  .title-top { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,.6); font-family: 'JetBrains Mono', monospace; }
+  .title-mid h1 { font-size: 60px; line-height: 1.03; letter-spacing: -0.03em; font-weight: 600; margin-bottom: 22px; }
+  .title-mid .sub { font-size: 18px; line-height: 1.5; color: rgba(255,255,255,.75); max-width: 720px; }
+  .title-bot { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; padding-top: 26px; border-top: 1px solid rgba(255,255,255,.18); }
+  .b-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,.5); font-weight: 700; margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
+  .b-val { font-size: 14px; font-weight: 500; }
+
+  /* DIVIDER */
+  .slide.divider { justify-content: center; }
+  .num-big { font-size: 128px; line-height: 0.9; font-weight: 700; letter-spacing: -0.04em; color: var(--line); margin-bottom: 18px; font-variant-numeric: tabular-nums; }
+  .slide.divider h2 { font-size: 44px; }
+
+  /* LAYOUT HELPERS */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .three-col { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+  .col { border-top: 2px solid var(--ink); padding-top: 14px; }
+  .col-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 9px; font-family: 'JetBrains Mono', monospace; }
+  .col h4 { font-size: 21px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 12px; }
+  .col p { font-size: 14.5px; line-height: 1.55; margin-bottom: 8px; }
+
+  /* CARDS */
+  .card-grid { display: grid; gap: 14px; margin-top: 6px; }
+  .card-grid.g2 { grid-template-columns: 1fr 1fr; }
+  .card-grid.g3 { grid-template-columns: repeat(3,1fr); }
+  .card-grid.g4 { grid-template-columns: repeat(4,1fr); }
+  .card { border: 1px solid var(--rule); border-radius: 5px; padding: 18px 18px 16px; background: var(--paper); }
+  .card .ci { width: 30px; height: 30px; border: 1.5px solid var(--ink); border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; margin-bottom: 12px; font-variant-numeric: tabular-nums; font-family: 'JetBrains Mono', monospace; }
+  .card .ct { font-size: 16px; font-weight: 600; line-height: 1.3; margin-bottom: 6px; }
+  .card .cd { font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+  .card .cd b { color: var(--ink); font-weight: 600; }
+  .card.dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .card.dark .ci { border-color: var(--paper); }
+  .card.dark .cd { color: rgba(255,255,255,.78); }
+  .card.dark .cd b { color: #fff; }
+  .card.warn { background: var(--hi); }
+
+  /* SOURCE ROWS */
+  .src { display: grid; grid-template-columns: 210px 1fr; gap: 24px; padding: 18px 0; border-top: 1px solid var(--line); }
+  .src:first-of-type { border-top: 2px solid var(--ink); }
+  .src .sh { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+  .src .sh .tag { display: block; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
+  .src .sf { font-size: 14.5px; line-height: 1.55; color: var(--muted); }
+  .src .sf b { color: var(--ink); font-weight: 600; }
+
+  /* VS */
+  .vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+  .vs-tile { border: 2px solid var(--ink); border-radius: 5px; padding: 22px 22px 20px; background: var(--paper); }
+  .vs-tile.no { background: var(--ink); color: var(--paper); }
+  .vs-tile .vs-l { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; opacity: .65; font-weight: 700; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+  .vs-tile h4 { font-size: 22px; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 12px; }
+  .vs-tile p { font-size: 14px; line-height: 1.55; }
+  .vs-tile.no p { color: rgba(255,255,255,.85); }
+
+  /* THE LINE */
+  .the-line { border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 30px 0; margin: 8px 0 26px; }
+  .the-line .hook { font-size: 20px; color: var(--muted); font-weight: 500; margin-bottom: 14px; }
+  .the-line .lead { font-size: 50px; line-height: 1.06; font-weight: 700; letter-spacing: -0.028em; }
+  .the-line .lead .em { color: var(--accent); }
+
+  /* LISTS */
+  ul.ticks { list-style: none; margin-top: 6px; }
+  ul.ticks li { position: relative; padding-left: 26px; margin-bottom: 12px; font-size: 15.5px; line-height: 1.5; max-width: 900px; }
+  ul.ticks li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  ul.ticks li b { font-weight: 600; }
+
+  /* ASK */
+  .ask { display: grid; grid-template-columns: 34px 1fr; gap: 18px; padding: 20px 0; border-top: 1px solid var(--line); }
+  .ask:first-of-type { border-top: 2px solid var(--ink); }
+  .ask .an { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; font-family: 'JetBrains Mono', monospace; }
+  .ask .ad h4 { font-size: 17px; font-weight: 600; margin-bottom: 5px; letter-spacing: -0.01em; }
+  .ask .ad p { font-size: 14.5px; color: var(--muted); line-height: 1.5; }
+  .ask .ad .q { display: inline-block; margin-top: 7px; font-size: 13.5px; color: var(--accent); font-weight: 500; }
+
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+    .nav { position: relative; height: auto; border-right: none; border-bottom: 1px solid var(--rule); }
+    .stage { padding: 14px 10px; }
+    .slide { padding: 30px 24px; min-height: 0; }
+    .slide h2 { font-size: 27px; }
+    .slide h2.large { font-size: 32px; }
+    .title-mid h1 { font-size: 36px; }
+    .title-bot { grid-template-columns: 1fr 1fr; }
+    .two-col, .three-col, .card-grid.g2, .card-grid.g3, .card-grid.g4, .vs-grid, .src { grid-template-columns: 1fr; }
+    .the-line .lead { font-size: 30px; }
+    .num-big { font-size: 90px; }
+    .slide.divider h2 { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ═════════ NAV ═════════ -->
+  <aside class="nav">
+    <div class="brand">Positioning · Working Session</div>
+    <div class="doc-title">Clarisights × Arun — 1:1<br><span style="color:#aaa">Compressed thinking to date · for alignment</span></div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Cover</div>
+      <ul class="nav-list">
+        <li><a href="#s00"><span class="num">00</span><span>Cover</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">01 · Why Now</div>
+      <ul class="nav-list">
+        <li><a href="#s10"><span class="num">1.0</span><span>Section opener</span></a></li>
+        <li><a href="#s11"><span class="num">1.1</span><span>The moment</span></a></li>
+        <li><a href="#s12"><span class="num">1.2</span><span>The category won't wait</span></a></li>
+        <li><a href="#s13"><span class="num">1.3</span><span>What it changes for us</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">02 · How We Research It</div>
+      <ul class="nav-list">
+        <li><a href="#s20"><span class="num">2.0</span><span>Section opener</span></a></li>
+        <li><a href="#s21"><span class="num">2.1</span><span>Four evidence sources</span></a></li>
+        <li><a href="#s22"><span class="num">2.2</span><span>The discipline</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">03 · The Working Position</div>
+      <ul class="nav-list">
+        <li><a href="#s30"><span class="num">3.0</span><span>Section opener</span></a></li>
+        <li><a href="#s31"><span class="num">3.1</span><span>The line</span></a></li>
+        <li><a href="#s32"><span class="num">3.2</span><span>The messaging house</span></a></li>
+        <li><a href="#s33"><span class="num">3.3</span><span>Three decisions to ratify</span></a></li>
+      </ul>
+    </div>
+
+    <div class="nav-foot">
+      Scroll to advance, or click any title.<br>Working draft — built to be pressure-tested.
+    </div>
+  </aside>
+
+  <!-- ═════════ DECK ═════════ -->
+  <main class="stage">
+    <div class="deck">
+
+    <!-- 0.0 COVER -->
+    <section class="slide title" id="s00">
+      <div class="slide-meta"><span>Positioning · Working Session</span><span>00 / 12</span></div>
+      <div class="title-top">Clarisights × Arun — 1:1</div>
+      <div class="title-mid">
+        <h1>Before we spend the quarter on the message, let's lock the message.</h1>
+        <div class="sub">Where our positioning thinking stands today — why it's the highest-leverage decision on the table right now, how we're researching it, and the working position we're most confident in. Built for alignment, not a verdict.</div>
+      </div>
+      <div class="title-bot">
+        <div><div class="b-label">Purpose</div><div class="b-val">Lock the through-line</div></div>
+        <div><div class="b-label">Sections</div><div class="b-val">Why now · Research · The position</div></div>
+        <div><div class="b-label">Outcome</div><div class="b-val">Three decisions</div></div>
+        <div><div class="b-label">Status</div><div class="b-val">Working draft</div></div>
+      </div>
+    </section>
+
+    <!-- 1.0 OPENER -->
+    <section class="slide divider" id="s10">
+      <div class="slide-meta"><span>Section 01 · Why Now</span><span>01 / 12</span></div>
+      <div class="num-big">01</div>
+      <h2>Why we're opening up positioning — now.</h2>
+      <div class="lede">Everything we ship this quarter is downstream of one decision we haven't made yet. This section makes the case for why that decision can't wait.</div>
+    </section>
+
+    <!-- 1.1 THE MOMENT -->
+    <section class="slide" id="s11">
+      <div class="slide-meta"><span>1.1 · The Moment</span><span>02 / 12</span></div>
+      <h2>In the next 90 days, we commit real budget to the message.</h2>
+      <div class="lede">Between now and September, four things ship — and every one of them is built <i>on top of</i> the positioning.</div>
+      <div class="card-grid g4">
+        <div class="card"><div class="ci">Jul</div><div class="ct">Content site</div><div class="cd">A live publishing home — content that proves the position.</div></div>
+        <div class="card"><div class="ci">Aug</div><div class="ct">Product website</div><div class="cd">The site that <b>sells</b> the position. Build starts Aug 1.</div></div>
+        <div class="card"><div class="ci">Aug</div><div class="ct">Google + ChatGPT ads</div><div class="cd">Paid attention <b>bought</b> for the position.</div></div>
+        <div class="card"><div class="ci">Sep</div><div class="ct">LinkedIn ads</div><div class="cd">Scaled paid demand against the same message.</div></div>
+      </div>
+      <div class="pull">Positioning is the one shared input. Lock it and the spend compounds. Leave it fuzzy and we pay — in budget <b>and</b> in a whole new website — to broadcast a blurry message.</div>
+      <div class="footnote">This is the most expensive moment to <i>not</i> have a locked message. The cost of deciding is one call; the cost of not deciding is a quarter of spend pointed at a moving target.</div>
+    </section>
+
+    <!-- 1.2 CATEGORY WON'T WAIT -->
+    <section class="slide" id="s12">
+      <div class="slide-meta"><span>1.2 · The Stakes</span><span>03 / 12</span></div>
+      <h2>We either define a category, or compete inside a shrinking one.</h2>
+      <div class="lede">Three forces make the choice urgent — and they all point the same way.</div>
+      <div class="three-col" style="margin-bottom:22px">
+        <div class="col"><div class="col-label">The category</div><h4>Reporting is commoditizing</h4><p>Supermetrics, Funnel, Adverity + internal BI all race on connectors and price. Positioned as <b>better reporting</b>, we compete on features in a frame that's getting cheaper.</p></div>
+        <div class="col"><div class="col-label">The buyer</div><h4>Split down the middle</h4><p>Marketing buys; the data team deploys and gates. Generic positioning talks to everyone and lands with no one — and deals stall at the committee.</p></div>
+        <div class="col"><div class="col-label">The moment</div><h4>AI is redrawing "analytics"</h4><p>LLMs are actively re-defining what analytics means. There's a narrow window to <b>claim a frame</b> before the category resettles around someone else's.</p></div>
+      </div>
+      <div class="vs-grid">
+        <div class="vs-tile"><div class="vs-l">If we act</div><h4>We position</h4><p>We name the frame, own a category over time, and everything downstream inherits a clear story.</p></div>
+        <div class="vs-tile no"><div class="vs-l">If we wait</div><h4>We get positioned</h4><p>The market — and competitors — define us as "another reporting tool," and we spend the quarter fighting on price and feature parity.</p></div>
+      </div>
+    </section>
+
+    <!-- 1.3 WHAT IT CHANGES -->
+    <section class="slide" id="s13">
+      <div class="slide-meta"><span>1.3 · The Payoff</span><span>04 / 12</span></div>
+      <h2>What a locked position actually buys.</h2>
+      <div class="lede">Not a branding nicety — a set of concrete, measurable outcomes.</div>
+      <div class="card-grid g3">
+        <div class="card"><div class="ct">Coherence → lower CAC</div><div class="cd">One message across site, content, ads and sales — instead of five teams saying five things.</div></div>
+        <div class="card"><div class="ct">A category we own</div><div class="cd">We stop competing on feature-parity against commodity tools and set our own frame.</div></div>
+        <div class="card"><div class="ct">Qualification</div><div class="cd">The right message attracts complex, high-velocity accounts (our ICP) and repels cheap-tool shoppers — close-rate and CAC, not just brand.</div></div>
+        <div class="card"><div class="ct">Pricing power</div><div class="cd">Escape the "reporting tool" price anchor and price to the value we deliver.</div></div>
+        <div class="card"><div class="ct">A spine for the pipeline goal</div><div class="cd">Paid + inbound only convert if the message qualifies the right buyer. Positioning is that filter.</div></div>
+        <div class="card dark"><div class="ct">The one-liner</div><div class="cd">The message is the multiplier on everything else we're about to spend behind. Lock it first.</div></div>
+      </div>
+    </section>
+
+    <!-- 2.0 OPENER -->
+    <section class="slide divider" id="s20">
+      <div class="slide-meta"><span>Section 02 · How We Research It</span><span>05 / 12</span></div>
+      <div class="num-big">02</div>
+      <h2>We're not guessing our way to a position.</h2>
+      <div class="lede">Positioning is a decision we make against evidence, then pressure-test on real buyers before we spend a rupee behind it.</div>
+    </section>
+
+    <!-- 2.1 FOUR SOURCES -->
+    <section class="slide" id="s21">
+      <div class="slide-meta"><span>2.1 · The Evidence</span><span>06 / 12</span></div>
+      <h2>Four sources, one triangulation.</h2>
+      <div class="lede">Each source answers a different question about who we are to the buyer. Together they converge.</div>
+      <div class="src"><div class="sh"><span class="tag">Source 01</span>Data-leader discovery calls</div><div class="sf">We run demos <b>as research</b> and watch the language sharp buyers reach for unprompted. Piyush (Twilio) said <b>"is this Amplitude for marketing?"</b> on his own — validating the category instinct — then surfaced <b>change-velocity</b> as the real ICP filter. 2–3 more scheduled.</div></div>
+      <div class="src"><div class="sh"><span class="tag">Source 02</span>Support-ticket mining</div><div class="sf">~4,900 tickets analysed. What customers <b>actually</b> hire us for: <b>"the one number I can trust across every channel."</b> Freshness and reconciliation drive the load — that's the job.</div></div>
+      <div class="src"><div class="sh"><span class="tag">Source 03</span>Competitive + search intelligence</div><div class="sf">What category language has oxygen vs. dead air. Finding: <b>coined category terms — nobody searches them.</b> The buyer's own words beat our invented ones.</div></div>
+      <div class="src"><div class="sh"><span class="tag">Source 04</span>Win / loss signal</div><div class="sf">Where deals die: the buying committee. <b>Marketing buys, the data team deploys and gates</b> — the message has to clear both, or it stalls at VP/CFO.</div></div>
+    </section>
+
+    <!-- 2.2 DISCIPLINE -->
+    <section class="slide" id="s22">
+      <div class="slide-meta"><span>2.2 · The Method</span><span>07 / 12</span></div>
+      <h2>The discipline.</h2>
+      <div class="lede">Three rules keep this rigorous rather than a creative whim.</div>
+      <div class="card-grid g3">
+        <div class="card"><div class="ci">01</div><div class="ct">Buyer's words &gt; our words</div><div class="cd">We anchor on validated language from real buyers — not internal jargon or a coined label.</div></div>
+        <div class="card"><div class="ci">02</div><div class="ct">Test before we spend</div><div class="cd">The working position gets pressure-tested on the next discovery calls <b>before</b> it hits the homepage or paid.</div></div>
+        <div class="card"><div class="ci">03</div><div class="ct">Lock once, inherit everywhere</div><div class="cd">One decision → site, content, ads and sales all ladder to it. No re-litigating downstream.</div></div>
+      </div>
+      <div class="pull">Framed correctly, locking positioning isn't a delay — it's the move that <b>de-risks</b> the entire H2 spend.</div>
+    </section>
+
+    <!-- 3.0 OPENER -->
+    <section class="slide divider" id="s30">
+      <div class="slide-meta"><span>Section 03 · The Working Position</span><span>08 / 12</span></div>
+      <div class="num-big">03</div>
+      <h2>Where we've landed — the position we're most confident in right now.</h2>
+      <div class="lede">Working, not final. Built to be pressure-tested with you on this call.</div>
+    </section>
+
+    <!-- 3.1 THE LINE -->
+    <section class="slide" id="s31">
+      <div class="slide-meta"><span>3.1 · The Line</span><span>09 / 12</span></div>
+      <div class="the-line">
+        <div class="hook">Marketing changed. Your reporting didn't.</div>
+        <div class="lead">We power <span class="em">data engineering</span> for the world's fastest marketing teams.</div>
+      </div>
+      <h3 style="margin-bottom:14px">Why this line wins</h3>
+      <ul class="ticks">
+        <li><b>Resolves the split buyer.</b> "Data engineering" earns credibility with the data team that deploys; "for marketing teams" keeps the marketer the hero and beneficiary.</li>
+        <li><b>Escapes the commodity frame.</b> We stop competing as "better reporting" — a shrinking, price-driven category — and reframe as infrastructure.</li>
+        <li><b>Category-defining, not category-claiming.</b> It's a POV we can own over time, not a coined label nobody searches.</li>
+      </ul>
+    </section>
+
+    <!-- 3.2 MESSAGING HOUSE -->
+    <section class="slide" id="s32">
+      <div class="slide-meta"><span>3.2 · The Messaging House</span><span>10 / 12</span></div>
+      <h2>One message, built for the whole committee.</h2>
+      <div class="lede">The position isn't just a tagline — it's a coherent house that solves the committee problem deals keep dying on.</div>
+      <div class="two-col" style="margin-bottom:18px">
+        <div class="col"><div class="col-label">Hero · the marketer</div><h4>"Reporting that steers marketing spend at speed and scale."</h4><p>The one number you can trust — always fresh, always reconciled, across every channel.</p></div>
+        <div class="col"><div class="col-label">Bridge · the data team</div><h4>"We land governed marketing data in your warehouse."</h4><p>We're not another silo you babysit. This is the line that gets marketers past VP/CFO.</p></div>
+      </div>
+      <div class="card-grid g2">
+        <div class="card warn"><div class="ct">The job — from 4,900 tickets</div><div class="cd">One trustworthy number across every channel. Freshness + reconciliation is what they actually hire us for.</div></div>
+        <div class="card"><div class="ct">Two products, staged</div><div class="cd">Attribution today (the big door) → MM / incrementality as a <b>consumption-priced data product = Phase 2</b>, the new TAM. Teed up, not forced open now.</div></div>
+      </div>
+    </section>
+
+    <!-- 3.3 THE ASK -->
+    <section class="slide" id="s33">
+      <div class="slide-meta"><span>3.3 · The Ask</span><span>11 / 12</span></div>
+      <h2>Three decisions to ratify.</h2>
+      <div class="lede">Ratify these and the messaging house gets written this week — the homepage and content engine stop guessing.</div>
+      <div class="ask"><div class="an">1</div><div class="ad"><h4>Category name</h4><p>Keep "Marketing Data Plane" as a thought-leadership POV — not the product label. The product speaks the buyer's language; the category emerges from the POV.</p><span class="q">Comfortable letting the category emerge, vs. claiming it cold?</span></div></div>
+      <div class="ask"><div class="an">2</div><div class="ad"><h4>The line</h4><p>"We power data engineering for the world's fastest marketing teams," with "marketing changed, your reporting didn't" as the problem hook.</p><span class="q">Any hard objection to this as the through-line for site + content + outbound?</span></div></div>
+      <div class="ask"><div class="an">3</div><div class="ad"><h4>Staging</h4><p>Marketer story locked first; the data-product / incrementality motion opened deliberately as Phase 2.</p><span class="q">Agreed to keep it staged — and does it go to customers now, or stay internal until the marketer story is locked?</span></div></div>
+    </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const navLinks = document.querySelectorAll('.nav-list a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  slides.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
