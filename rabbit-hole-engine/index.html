@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rabbit Hole — the engine inside ReFound</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbfaf7;
+    --panel:#ffffff;
+    --ink:#171615;
+    --ink2:#403c37;
+    --muted:#8a847b;
+    --line:#e7e3db;
+    --line2:#d9d4ca;
+    --accent:#b8531d;
+    --accent-soft:#f3e2d4;
+    /* activation palette */
+    --absent:#c5c1b8;
+    --compete:#b3402f;
+    --present:#d99a2b;
+    --contested:#5f79a8;
+    --dominant:#3f7d5e;
+    --radius:14px;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased;
+    font-size:16px;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+  /* ---------- top nav ---------- */
+  header.top{
+    position:sticky;top:0;z-index:50;
+    background:rgba(251,250,247,.82);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar{display:flex;align-items:center;justify-content:space-between;height:60px;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em}
+  .brand .dot{width:22px;height:22px;border-radius:50%;background:var(--accent);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:13px}
+  .topnav{display:flex;gap:22px;font-size:13px}
+  .topnav a{color:var(--ink2);text-decoration:none;font-weight:500}
+  .topnav a:hover{color:var(--accent)}
+  @media(max-width:820px){.topnav{display:none}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:84px 0 56px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(38px,6vw,68px);line-height:1.02;letter-spacing:-.02em;margin:18px 0 0}
+  h1 em{font-style:italic;color:var(--accent)}
+  .lede{font-size:clamp(18px,2.4vw,22px);color:var(--ink2);max-width:680px;margin-top:22px}
+  .stacknote{margin-top:30px;display:flex;flex-wrap:wrap;gap:10px}
+  .pill{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:7px 13px;border:1px solid var(--line2);border-radius:999px;background:var(--panel);color:var(--ink2)}
+  .pill b{color:var(--ink)}
+
+  /* ---------- section scaffolding ---------- */
+  section{padding:72px 0;border-bottom:1px solid var(--line)}
+  .sec-num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:.16em;font-weight:600}
+  h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(28px,4vw,40px);line-height:1.08;letter-spacing:-.015em;margin:10px 0 0}
+  .sub{color:var(--ink2);max-width:640px;margin-top:16px;font-size:17px}
+  h3{font-size:19px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+  .grid{display:grid;gap:18px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g2{grid-template-columns:1fr}}
+
+  .label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .big{font-family:'Fraunces',serif;font-size:46px;font-weight:600;line-height:1}
+  ul.clean{list-style:none;margin-top:14px}
+  ul.clean li{padding-left:20px;position:relative;margin-bottom:9px;color:var(--ink2);font-size:15px}
+  ul.clean li:before{content:"→";position:absolute;left:0;color:var(--accent);font-weight:700}
+
+  .callout{background:var(--accent-soft);border:1px solid #e7cdb6;border-radius:var(--radius);padding:22px 24px;margin-top:26px}
+  .callout .label{color:var(--accent)}
+  .quote{font-family:'Fraunces',serif;font-size:clamp(22px,3vw,30px);line-height:1.3;font-weight:500;letter-spacing:-.01em}
+
+  figcaption{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-align:center;margin-top:12px;letter-spacing:.04em}
+
+  /* legend */
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:18px;font-size:13px;color:var(--ink2)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .swatch{width:13px;height:13px;border-radius:4px;display:inline-block}
+
+  /* activation ladder */
+  .ladder{display:flex;align-items:center;gap:0;flex-wrap:wrap;margin-top:8px}
+  .step{flex:1;min-width:120px;text-align:center;padding:16px 10px;border-radius:10px;color:#fff;font-weight:600;font-size:14px;position:relative}
+  .arrow{color:var(--muted);font-size:22px;padding:0 6px}
+
+  /* node card mockup */
+  .ui{border:1px solid var(--line2);border-radius:12px;background:var(--panel);overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.02),0 14px 34px -22px rgba(23,22,21,.28)}
+  .ui-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line);background:#fcfbf9}
+  .ui-dots{display:flex;gap:6px}
+  .ui-dots i{width:10px;height:10px;border-radius:50%;background:var(--line2);display:inline-block}
+  .ui-title{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted)}
+  .ui-body{padding:20px}
+  .tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 9px;border-radius:6px;font-weight:600}
+
+  table.spec{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:4px}
+  table.spec td{padding:9px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.spec td:first-child{color:var(--muted);width:38%;font-family:'IBM Plex Mono',monospace;font-size:12px}
+  table.spec td:last-child{color:var(--ink)}
+
+  .stars{color:var(--accent);letter-spacing:2px}
+
+  /* scoring bars */
+  .score-row{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  .score-name{width:150px;font-size:14px;font-weight:600}
+  .bar{flex:1;height:14px;background:var(--line);border-radius:999px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#d98a3f,var(--accent))}
+  .score-val{width:42px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink2)}
+
+  /* loop steps */
+  .loop{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:8px}
+  @media(max-width:820px){.loop{grid-template-columns:1fr 1fr}}
+  .loopstep{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;position:relative}
+  .loopstep .n{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);font-weight:600}
+  .loopstep h4{font-size:16px;margin:6px 0 6px}
+  .loopstep p{font-size:13.5px;color:var(--ink2)}
+
+  /* task types */
+  .tasks{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:8px}
+  @media(max-width:820px){.tasks{grid-template-columns:1fr 1fr}}
+  .task{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+  .task .ico{font-size:22px}
+  .task h4{font-size:14px;margin-top:8px}
+  .task p{font-size:12px;color:var(--muted);margin-top:4px}
+
+  /* diff */
+  .diff{font-family:'IBM Plex Mono',monospace;font-size:13px;background:#1d1c1a;color:#e9e5dd;border-radius:12px;padding:18px 20px;overflow:auto}
+  .diff .add{color:#7fc99a}
+  .diff .chg{color:#e3b572}
+  .diff .new{color:#7fa6d6}
+  .diff .mut{color:#857f74}
+
+  /* reporting */
+  .metric{display:flex;gap:26px;flex-wrap:wrap}
+  .metric .m{flex:1;min-width:180px}
+  .metric .m .big{color:var(--ink)}
+  .delta-up{color:var(--dominant);font-size:14px;font-weight:600;font-family:'IBM Plex Mono',monospace}
+
+  footer{padding:56px 0 80px}
+  .foot{font-size:13px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+
+  .note{font-size:13px;color:var(--muted);margin-top:10px;font-style:italic}
+
+  /* graph svg labels */
+  .nlabel{font-family:'IBM Plex Mono',monospace;font-size:10px;fill:var(--ink2)}
+  .glass{fill:var(--panel);stroke:var(--line2)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="topbar">
+    <div class="brand"><span class="dot">R</span> Rabbit&nbsp;Hole</div>
+    <nav class="topnav">
+      <a href="#idea">The idea</a>
+      <a href="#map">The map</a>
+      <a href="#entities">Entities</a>
+      <a href="#ladder">Activation</a>
+      <a href="#rings">Rings</a>
+      <a href="#edges">Edges</a>
+      <a href="#score">Scoring</a>
+      <a href="#loop">The loop</a>
+      <a href="#platform">The platform</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">The engine inside ReFound</div>
+    <h1>The internet your buyers travel, turned into a <em>map you can win.</em></h1>
+    <p class="lede">Rabbit Hole is the proprietary graph engine behind ReFound. It collapses the infinite internet into the finite slice that actually influences your buyer — then tells you exactly where to show up next.</p>
+    <div class="stacknote">
+      <span class="pill">Category&nbsp;·&nbsp;<b>Buyer Search</b></span>
+      <span class="pill">Product&nbsp;·&nbsp;<b>ReFound</b>&nbsp;(what the client logs into)</span>
+      <span class="pill">Engine&nbsp;·&nbsp;<b>Rabbit Hole</b>&nbsp;(the IP inside)</span>
+    </div>
+    <p class="note">A walkthrough page — read it, sit with it, then mark up what should change.</p>
+  </div>
+</div>
+
+<!-- 1. THE IDEA -->
+<section id="idea">
+  <div class="wrap">
+    <div class="sec-num">01 — THE THESIS</div>
+    <h2>Your buyers travel a finite slice of the internet. Map it, win it, and traffic follows.</h2>
+    <p class="sub">The internet is effectively infinite. The part that influences <em>your</em> buyer is not — it's a few hundred URLs. Rabbit Hole's first move is to throw away everything else.</p>
+
+    <figure style="margin-top:34px">
+      <svg viewBox="0 0 980 300" width="100%" role="img" aria-label="Infinite internet collapses into a finite map">
+        <!-- infinite cloud -->
+        <g>
+          <text x="120" y="34" class="nlabel" style="font-size:12px" text-anchor="middle">THE INFINITE INTERNET</text>
+          <g fill="#dcd8cf">
+            <!-- scatter of dots -->
+            <!-- generated grid of faint dots -->
+          </g>
+        </g>
+        <!-- scatter -->
+        <g fill="#d9d4ca">
+          <!-- many faint nodes -->
+          <circle cx="40" cy="80" r="3"/><circle cx="78" cy="120" r="3"/><circle cx="60" cy="180" r="3"/><circle cx="110" cy="70" r="3"/><circle cx="150" cy="110" r="3"/><circle cx="95" cy="220" r="3"/><circle cx="40" cy="150" r="3"/><circle cx="170" cy="170" r="3"/><circle cx="130" cy="200" r="3"/><circle cx="200" cy="90" r="3"/><circle cx="210" cy="150" r="3"/><circle cx="175" cy="230" r="3"/><circle cx="55" cy="240" r="3"/><circle cx="225" cy="200" r="3"/><circle cx="30" cy="110" r="3"/><circle cx="145" cy="250" r="3"/><circle cx="100" cy="150" r="3"/><circle cx="190" cy="250" r="3"/><circle cx="70" cy="55" r="3"/><circle cx="230" cy="120" r="3"/>
+        </g>
+        <!-- funnel arrow -->
+        <g>
+          <path d="M270 150 L430 150" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#arr)"/>
+          <text x="350" y="138" class="nlabel" text-anchor="middle" style="fill:var(--accent);font-weight:600">SCOPE DOWN</text>
+        </g>
+        <defs>
+          <marker id="arr" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--accent)"/></marker>
+        </defs>
+        <!-- finite map -->
+        <g>
+          <text x="720" y="34" class="nlabel" style="font-size:12px" text-anchor="middle">YOUR FINITE MAP · ~300 NODES</text>
+          <rect x="470" y="56" width="500" height="220" rx="14" fill="#fff" stroke="var(--line2)"/>
+          <!-- edges -->
+          <g stroke="#d9d4ca" stroke-width="1.4">
+            <line x1="560" y1="110" x2="660" y2="150"/><line x1="660" y1="150" x2="760" y2="110"/>
+            <line x1="660" y1="150" x2="640" y2="230"/><line x1="760" y1="110" x2="860" y2="160"/>
+            <line x1="640" y1="230" x2="760" y2="220"/><line x1="760" y1="220" x2="860" y2="160"/>
+            <line x1="560" y1="110" x2="560" y2="200"/><line x1="560" y1="200" x2="640" y2="230"/>
+            <line x1="760" y1="110" x2="760" y2="220"/>
+          </g>
+          <!-- nodes colored by status -->
+          <g>
+            <circle cx="560" cy="110" r="11" fill="var(--dominant)"/>
+            <circle cx="660" cy="150" r="14" fill="var(--contested)"/>
+            <circle cx="760" cy="110" r="10" fill="var(--present)"/>
+            <circle cx="860" cy="160" r="12" fill="var(--compete)"/>
+            <circle cx="640" cy="230" r="9" fill="var(--absent)"/>
+            <circle cx="760" cy="220" r="11" fill="var(--compete)"/>
+            <circle cx="560" cy="200" r="9" fill="var(--present)"/>
+          </g>
+        </g>
+      </svg>
+      <figcaption>Hundreds of nodes, not millions of pages. Everything outside the map is noise.</figcaption>
+    </figure>
+
+    <div class="grid g3" style="margin-top:36px">
+      <div class="card"><div class="label">Rule 01</div><h3>Finite</h3><p style="color:var(--ink2);font-size:15px">Hundreds of nodes that matter — not the whole web. The map is small enough to reason about.</p></div>
+      <div class="card"><div class="label">Rule 02</div><h3>Living</h3><p style="color:var(--ink2);font-size:15px">Refreshed weekly. New nodes appear as the internet moves. Nodes are never deleted — URLs are permanent.</p></div>
+      <div class="card"><div class="label">Rule 03</div><h3>Win rate is the score</h3><p style="color:var(--ink2);font-size:15px">The metric: how many nodes moved from <em>absent</em> → <em>present</em> → <em>dominant</em>.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. THE MAP -->
+<section id="map">
+  <div class="wrap">
+    <div class="sec-num">02 — THE MAP</div>
+    <h2>What the map actually looks like</h2>
+    <p class="sub">Every dot is a URL your buyer might touch — a Reddit thread, a Google result, a G2 listing, a ChatGPT answer, a comparison page. Colour = your standing on it. This is the showpiece of the platform.</p>
+
+    <figure style="margin-top:30px" class="card">
+      <svg viewBox="0 0 980 480" width="100%" role="img" aria-label="The internet graph for one client">
+        <defs>
+          <marker id="a2" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#c9c4ba"/></marker>
+        </defs>
+        <!-- edges -->
+        <g stroke="#cfcabf" stroke-width="1.6" opacity=".9">
+          <line x1="180" y1="120" x2="360" y2="90"/>
+          <line x1="360" y1="90" x2="520" y2="140"/>
+          <line x1="520" y1="140" x2="700" y2="100"/>
+          <line x1="520" y1="140" x2="640" y2="250"/>
+          <line x1="360" y1="90" x2="300" y2="240"/>
+          <line x1="300" y1="240" x2="520" y2="140"/>
+          <line x1="700" y1="100" x2="820" y2="190"/>
+          <line x1="640" y1="250" x2="820" y2="190"/>
+          <line x1="640" y1="250" x2="540" y2="360"/>
+          <line x1="300" y1="240" x2="430" y2="360"/>
+          <line x1="430" y1="360" x2="540" y2="360"/>
+          <line x1="540" y1="360" x2="720" y2="350"/>
+          <line x1="820" y1="190" x2="720" y2="350"/>
+          <line x1="180" y1="120" x2="300" y2="240"/>
+          <line x1="430" y1="360" x2="180" y2="300"/>
+          <line x1="180" y1="300" x2="300" y2="240"/>
+        </g>
+        <!-- nodes -->
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#403c37">
+          <!-- dominant -->
+          <circle cx="180" cy="120" r="15" fill="var(--dominant)"/><text x="180" y="92" text-anchor="middle">your blog · "X vs Y"</text>
+          <!-- contested big hub -->
+          <circle cx="520" cy="140" r="22" fill="var(--contested)"/><text x="520" y="105" text-anchor="middle">Reddit · best tools thread</text>
+          <!-- present -->
+          <circle cx="360" cy="90" r="13" fill="var(--present)"/><text x="360" y="64" text-anchor="middle">ChatGPT answer</text>
+          <circle cx="300" cy="240" r="12" fill="var(--present)"/><text x="300" y="270" text-anchor="middle">your landing page</text>
+          <!-- competitor owned -->
+          <circle cx="700" cy="100" r="16" fill="var(--compete)"/><text x="700" y="72" text-anchor="middle">G2 · category grid</text>
+          <circle cx="820" cy="190" r="14" fill="var(--compete)"/><text x="838" y="193" >competitor "alt" page</text>
+          <circle cx="720" cy="350" r="13" fill="var(--compete)"/><text x="720" y="380" text-anchor="middle">listicle · top 10</text>
+          <!-- absent -->
+          <circle cx="640" cy="250" r="13" fill="var(--absent)"/><text x="640" y="282" text-anchor="middle">"alternatives" SERP</text>
+          <circle cx="540" cy="360" r="11" fill="var(--absent)"/><text x="540" y="390" text-anchor="middle">Quora thread</text>
+          <circle cx="430" cy="360" r="11" fill="var(--absent)"/><text x="430" y="390" text-anchor="middle">YouTube review</text>
+          <circle cx="180" cy="300" r="10" fill="var(--present)"/><text x="180" y="330" text-anchor="middle">LinkedIn post</text>
+        </g>
+      </svg>
+      <div class="legend">
+        <span><i class="swatch" style="background:var(--absent)"></i> Absent — nobody owns it yet</span>
+        <span><i class="swatch" style="background:var(--compete)"></i> Competitor-owned</span>
+        <span><i class="swatch" style="background:var(--present)"></i> Present — you're there</span>
+        <span><i class="swatch" style="background:var(--contested)"></i> Contested — you + rivals</span>
+        <span><i class="swatch" style="background:var(--dominant)"></i> Dominant — you win it</span>
+      </div>
+      <figcaption>Node size ≈ strategic importance · edges = how buyers travel between them</figcaption>
+    </figure>
+    <div class="callout">
+      <div class="label">Read the map in one glance</div>
+      <p class="quote" style="font-size:22px;margin-top:8px">Lots of red around high-traffic hubs = competitors own your buyers' research. Turning red&nbsp;→&nbsp;green is the entire job.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. ENTITIES -->
+<section id="entities">
+  <div class="wrap">
+    <div class="sec-num">03 — THE THREE THINGS IT OPERATES ON</div>
+    <h2>Everything is a Property, a Node, or a Topic</h2>
+    <p class="sub">Three object types make the whole internet computable. Learn these three and you understand the data model.</p>
+
+    <div class="grid g3" style="margin-top:30px">
+      <div class="card">
+        <div class="label">Entity 01</div><h3>Property</h3>
+        <p style="color:var(--ink2);font-size:14.5px">A <b>domain</b>. reddit.com, g2.com, a competitor's site, your own site. Many nodes live on one property.</p>
+        <ul class="clean">
+          <li><b>Type:</b> 1st party (you) / 2nd party (G2, Capterra) / 3rd party (Reddit, blogs, rivals)</li>
+          <li><b>Domain Authority</b> — how strong the domain is</li>
+          <li><b>GEO weight</b> — how often LLMs cite it as a source</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="label">Entity 02</div><h3>Node — the atomic unit</h3>
+        <p style="color:var(--ink2);font-size:14.5px">A <b>single URL</b> on a property. One Reddit thread, one blog post, one comparison page (real <em>or</em> planned). This is the thing you win or lose.</p>
+        <ul class="clean">
+          <li>Carries an <b>activation status</b> (see next)</li>
+          <li>Knows its topic, competitors, content depth, SEO rank, GEO-citability</li>
+          <li>Stores a 1–5 <b>value score</b>, effort, dependencies & the next <b>action</b></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="label">Entity 03</div><h3>Topic</h3>
+        <p style="color:var(--ink2);font-size:14.5px">A <b>buyer conversation</b>. "Funnel.io alternatives", "marketing reporting tools". Topics cluster nodes.</p>
+        <ul class="clean">
+          <li>Search volume, CPC (commercial intent), intent type</li>
+          <li>A <b>ring</b> (Core / Category / Universe)</li>
+          <li>A <b>win rate</b> — % of its nodes you're Present or Dominant on</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin-top:46px;font-size:16px;color:var(--muted)" class="label">What a single Node looks like inside the product</h3>
+    <div class="ui" style="margin-top:14px;max-width:640px">
+      <div class="ui-head">
+        <div class="ui-dots"><i></i><i></i><i></i></div>
+        <div class="ui-title">node · reddit.com/r/marketing/best-reporting-tools</div>
+      </div>
+      <div class="ui-body">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+          <span class="tag" style="background:#e6edf6;color:var(--contested)">● Contested</span>
+          <span class="tag" style="background:#f1efe9;color:var(--ink2)">Core ring</span>
+          <span class="tag" style="background:#f1efe9;color:var(--ink2)">3rd party · Community</span>
+          <span class="stars">★★★★☆</span>
+        </div>
+        <table class="spec">
+          <tr><td>topic</td><td>marketing reporting tools</td></tr>
+          <tr><td>competitors here</td><td>Funnel.io, Whatagraph</td></tr>
+          <tr><td>content depth</td><td>Deep</td></tr>
+          <tr><td>geo citability</td><td>High — ChatGPT quotes this thread</td></tr>
+          <tr><td>action</td><td style="color:var(--accent);font-weight:600">→ Post a genuine answer comparing the 3 tools</td></tr>
+          <tr><td>unlocks</td><td>2 downstream nodes</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. ACTIVATION LADDER -->
+<section id="ladder">
+  <div class="wrap">
+    <div class="sec-num">04 — THE LADDER</div>
+    <h2>Every node climbs the same ladder</h2>
+    <p class="sub">The whole engine exists to push nodes rightward — from <em>you're absent</em> to <em>you dominate.</em> Win rate is just how far up the ladder your nodes have climbed.</p>
+
+    <div class="ladder" style="margin-top:30px">
+      <div class="step" style="background:var(--absent);color:#4a4640">Absent</div>
+      <span class="arrow">→</span>
+      <div class="step" style="background:var(--present)">Present</div>
+      <span class="arrow">→</span>
+      <div class="step" style="background:var(--contested)">Contested</div>
+      <span class="arrow">→</span>
+      <div class="step" style="background:var(--dominant)">Dominant</div>
+    </div>
+    <div style="margin-top:18px;display:flex;align-items:center;gap:12px;color:var(--ink2);font-size:14px">
+      <div class="step" style="background:var(--compete);flex:0 0 auto;min-width:150px">Competitor-owned</div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted)">→ create competing content / comment → drops into <b>Contested</b>, then climb</span>
+    </div>
+
+    <div class="grid g2" style="margin-top:34px">
+      <div class="card"><h3>The moves that climb the ladder</h3>
+        <ul class="clean">
+          <li><b>Absent → Present:</b> publish content, comment, submit a listing</li>
+          <li><b>Present → Dominant:</b> optimise, earn reviews, build links</li>
+          <li><b>Competitor-owned → Contested:</b> show up where only they are</li>
+        </ul>
+      </div>
+      <div class="card"><h3>Why this matters commercially</h3>
+        <p style="color:var(--ink2);font-size:15px">Win rate is a number you can put in front of a client and watch go up every week. "On the 38 nodes that decide this category, you went from 12% present to 41% in 60 days." That's the proof Buyer Search is working.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. RINGS -->
+<section id="rings">
+  <div class="wrap">
+    <div class="sec-num">05 — THE RINGS</div>
+    <h2>Not all conversations are equal — they sit in rings</h2>
+    <p class="sub">Topics are organised by how close they are to the buying decision. This is how the engine knows a "vs" page matters more than a thought-leadership essay.</p>
+
+    <div class="grid g2" style="margin-top:30px;align-items:center">
+      <figure>
+        <svg viewBox="0 0 360 360" width="100%" style="max-width:360px;display:block;margin:0 auto">
+          <circle cx="180" cy="180" r="170" fill="#f3efe8" stroke="var(--line2)"/>
+          <circle cx="180" cy="180" r="115" fill="#efe7da" stroke="var(--line2)"/>
+          <circle cx="180" cy="180" r="58" fill="var(--accent-soft)" stroke="#e7cdb6"/>
+          <text x="180" y="36" text-anchor="middle" class="nlabel" style="font-weight:600">UNIVERSE</text>
+          <text x="180" y="92" text-anchor="middle" class="nlabel" style="font-weight:600">CATEGORY</text>
+          <text x="180" y="176" text-anchor="middle" class="nlabel" style="font-weight:600;fill:var(--accent)">CORE</text>
+          <text x="180" y="192" text-anchor="middle" class="nlabel" style="fill:var(--accent)">buy intent</text>
+          <circle cx="180" cy="180" r="5" fill="var(--accent)"/>
+        </svg>
+      </figure>
+      <div>
+        <div class="card" style="margin-bottom:14px;border-left:3px solid var(--accent)"><h3>Core — ready to buy</h3><p style="color:var(--ink2);font-size:14.5px">"Clarisights vs Datorama", "Funnel.io alternatives". Highest value — the buyer has their wallet out.</p></div>
+        <div class="card" style="margin-bottom:14px"><h3>Category — exploring</h3><p style="color:var(--ink2);font-size:14.5px">"cross-channel marketing analytics", "marketing reporting tools". They know the problem, not the vendor.</p></div>
+        <div class="card"><h3>Universe — thought leadership</h3><p style="color:var(--ink2);font-size:14.5px">"the future of marketing analytics". Awareness & authority, far from the decision.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. EDGES -->
+<section id="edges">
+  <div class="wrap">
+    <div class="sec-num">06 — THE EDGES</div>
+    <h2>The nodes aren't a list — they're connected. That's the IP.</h2>
+    <p class="sub">Five kinds of relationship turn a spreadsheet of URLs into a map of buyer journeys. Anyone can list URLs; the edges are what only Rabbit Hole has.</p>
+
+    <div class="grid g3" style="margin-top:30px">
+      <div class="card"><div class="label">Edge 01</div><h3>Hyperlink</h3><p style="color:var(--ink2);font-size:14px">A links to B — weighted by quality (an editorial backlink ≫ a sidebar link).</p></div>
+      <div class="card"><div class="label">Edge 02</div><h3>SERP co-occurrence</h3><p style="color:var(--ink2);font-size:14px">Two URLs that keep ranking together for the same searches.</p></div>
+      <div class="card"><div class="label">Edge 03</div><h3>Co-citation</h3><p style="color:var(--ink2);font-size:14px">Two URLs cited together by a third source.</p></div>
+      <div class="card"><div class="label">Edge 04</div><h3>LLM citation</h3><p style="color:var(--ink2);font-size:14px">ChatGPT / Claude cite this URL when answering a buyer's question.</p></div>
+      <div class="card"><div class="label">Edge 05</div><h3>Entity co-occurrence</h3><p style="color:var(--ink2);font-size:14px">The same brands / products mentioned together across the web.</p></div>
+      <div class="card" style="background:var(--accent-soft);border-color:#e7cdb6"><div class="label" style="color:var(--accent)">So what</div><p style="color:var(--ink2);font-size:14px;margin-top:6px">Edges let you <b>trace a buyer journey</b>: Google → Reddit → comparison page → you. You see the bottlenecks and dead ends.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. SCORING -->
+<section id="score">
+  <div class="wrap">
+    <div class="sec-num">07 — SCORING</div>
+    <h2>How it ranks what to do next</h2>
+    <p class="sub">Every node gets a composite importance score from three stacked signals. That score, weighted by how far you are from winning and which ring it's in, becomes priority.</p>
+
+    <div class="card" style="margin-top:30px;max-width:680px">
+      <div class="label" style="margin-bottom:18px">Node score — three layers</div>
+      <div class="score-row"><div class="score-name">Graph authority</div><div class="bar"><i style="width:86%"></i></div><div class="score-val">8.6</div></div>
+      <div class="score-row"><div class="score-name">Engagement</div><div class="bar"><i style="width:72%"></i></div><div class="score-val">7.2</div></div>
+      <div class="score-row"><div class="score-name">Content quality</div><div class="bar"><i style="width:64%"></i></div><div class="score-val">6.4</div></div>
+      <hr style="border:none;border-top:1px solid var(--line);margin:18px 0">
+      <div class="mono" style="font-size:13px;color:var(--ink2);line-height:2">
+        priority = <b style="color:var(--accent)">score</b> × <b style="color:var(--accent)">activation&nbsp;gap</b> × <b style="color:var(--accent)">ring&nbsp;weight</b>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-top:22px">
+      <div class="card"><h3 style="font-size:16px">Graph authority</h3><p style="color:var(--ink2);font-size:14px">How central this node is in the map — PageRank-style + betweenness. Is it a bridge buyers must cross?</p></div>
+      <div class="card"><h3 style="font-size:16px">Engagement</h3><p style="color:var(--ink2);font-size:14px">Search volume, traffic, and commercial intent on the topic it serves.</p></div>
+      <div class="card"><h3 style="font-size:16px">Content quality</h3><p style="color:var(--ink2);font-size:14px">Depth, GEO-citability, link strength of what's there now.</p></div>
+    </div>
+
+    <h3 style="margin-top:40px;font-size:16px;color:var(--muted)" class="label">The output: a ranked hit list</h3>
+    <div class="ui" style="margin-top:14px">
+      <div class="ui-head"><div class="ui-dots"><i></i><i></i><i></i></div><div class="ui-title">workstream · this week's priorities</div></div>
+      <div class="ui-body" style="padding:0">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center">
+          <div><span class="tag" style="background:#fbe7e2;color:var(--compete)">competitor-owned</span> <b style="font-size:14px">G2 · category grid</b><div class="mono" style="font-size:11px;color:var(--muted);margin-top:3px">Core · ★★★★★ · unlocks 4</div></div>
+          <div class="mono" style="font-size:13px;color:var(--accent);font-weight:600">98</div>
+        </div>
+        <div style="padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center">
+          <div><span class="tag" style="background:#f1efe9;color:var(--absent)">absent</span> <b style="font-size:14px">"alternatives" SERP — build comparison page</b><div class="mono" style="font-size:11px;color:var(--muted);margin-top:3px">Core · ★★★★☆ · no blockers</div></div>
+          <div class="mono" style="font-size:13px;color:var(--accent);font-weight:600">91</div>
+        </div>
+        <div style="padding:14px 18px;display:flex;justify-content:space-between;align-items:center">
+          <div><span class="tag" style="background:#e6edf6;color:var(--contested)">contested</span> <b style="font-size:14px">Reddit · best-tools thread</b><div class="mono" style="font-size:11px;color:var(--muted);margin-top:3px">Core · ★★★★☆ · high GEO</div></div>
+          <div class="mono" style="font-size:13px;color:var(--accent);font-weight:600">88</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. THE LOOP -->
+<section id="loop">
+  <div class="wrap">
+    <div class="sec-num">08 — THE WEEKLY LOOP</div>
+    <h2>The whole machine, run every week</h2>
+    <p class="sub">This is the engine in motion. The map ships like software — a new version every Friday.</p>
+
+    <div class="loop" style="margin-top:30px">
+      <div class="loopstep"><div class="n">01</div><h4>Snapshot</h4><p>Freeze the whole map — every node, score, status. Like a git commit. v1 = day one (mostly red & grey).</p></div>
+      <div class="loopstep"><div class="n">02</div><h4>Delta</h4><p>The git-diff of the internet. Splits change into: what <em>we</em> did, what <em>competitors</em> did, what the <em>internet</em> did on its own.</p></div>
+      <div class="loopstep"><div class="n">03</div><h4>Prioritise</h4><p>Re-rank every gap into a hit list. "Core ring, competitor-owned, 5-star, no blockers" floats to the top.</p></div>
+      <div class="loopstep"><div class="n">04</div><h4>Work</h4><p>Each node carries an action. Actions collapse into exactly 5 task types (below). Team executes → re-snapshot.</p></div>
+    </div>
+    <p class="mono" style="text-align:center;color:var(--muted);font-size:12px;margin-top:18px">↻ &nbsp;snapshot → delta → prioritise → work → <b style="color:var(--accent)">one week later</b> → snapshot …</p>
+
+    <h3 style="margin-top:44px;font-size:16px;color:var(--muted)" class="label">The delta — a git-diff for your internet</h3>
+    <div class="diff" style="margin-top:14px">
+      <div><span class="add">▲ WON</span>   <span class="mut">your blog "X vs Y"</span>        contested → <span class="add">dominant</span></div>
+      <div><span class="add">▲ WON</span>   <span class="mut">ChatGPT answer</span>           absent &nbsp;&nbsp; → <span class="add">present</span></div>
+      <div><span class="chg">~ MOVED</span> <span class="mut">G2 category grid</span>         competitor added a new tile</div>
+      <div><span class="new">+ NEW</span>   <span class="mut">reddit.com/.../q2-tools-2026</span>  fresh thread, 240 upvotes</div>
+      <div><span class="mut">─────────────────────────────────────────────</span></div>
+      <div><span class="mut">win rate · Core ring</span>     31% → <span class="add">44%</span>  (+13)</div>
+    </div>
+
+    <h3 style="margin-top:44px;font-size:16px;color:var(--muted)" class="label">Every action is one of exactly 5 task types</h3>
+    <div class="tasks" style="margin-top:14px">
+      <div class="task"><div class="ico">✍️</div><h4>Publish a blog</h4><p>on your site</p></div>
+      <div class="task"><div class="ico">🛬</div><h4>Build a landing page</h4><p>on your site</p></div>
+      <div class="task"><div class="ico">⚙️</div><h4>Programmatic project</h4><p>pages at scale</p></div>
+      <div class="task"><div class="ico">💬</div><h4>Engage a forum</h4><p>Reddit, Quora</p></div>
+      <div class="task"><div class="ico">🏆</div><h4>Win a listicle</h4><p>3rd-party spot</p></div>
+    </div>
+    <p class="note">Each task carries a <b>target</b>, a <b>destination URL</b> (new on your site, or existing on the web), and the <b>knowledge</b> of what to say + where it's sourced.</p>
+  </div>
+</section>
+
+<!-- 9. THE PLATFORM -->
+<section id="platform">
+  <div class="wrap">
+    <div class="sec-num">09 — WHAT THE CLIENT SEES</div>
+    <h2>The outcome, every time they log in</h2>
+    <p class="sub">Behind the curtain it's a graph engine. To the client, ReFound opens on two numbers going up — and the proof of what's driving them.</p>
+
+    <div class="ui" style="margin-top:30px">
+      <div class="ui-head"><div class="ui-dots"><i></i><i></i><i></i></div><div class="ui-title">refound · results · clarisights</div></div>
+      <div class="ui-body">
+        <div class="metric">
+          <div class="m"><div class="label">Mentions earned</div><div class="big">1,284</div><div class="delta-up">▲ +37% · 30d</div></div>
+          <div class="m"><div class="label">Buyer traffic</div><div class="big">9,410</div><div class="delta-up">▲ +52% · 30d</div></div>
+          <div class="m" style="flex:1.4;min-width:240px">
+            <div class="label" style="margin-bottom:8px">Where you're getting found</div>
+            <svg viewBox="0 0 320 90" width="100%">
+              <polyline fill="none" stroke="var(--accent)" stroke-width="2.5" points="0,80 40,72 80,74 120,60 160,52 200,40 240,30 280,22 320,12"/>
+              <polyline fill="var(--accent-soft)" stroke="none" opacity=".6" points="0,80 40,72 80,74 120,60 160,52 200,40 240,30 280,22 320,12 320,90 0,90"/>
+            </svg>
+            <div class="mono" style="font-size:11px;color:var(--muted)">Google · ChatGPT · Reddit · listicles</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:34px">
+      <div class="label">How the layers stack for the client</div>
+      <div class="quote" style="font-size:21px;margin-top:8px">They buy <b>Buyer Search</b>. They log into <b>ReFound</b>. They never operate <b>Rabbit Hole</b> — but they feel it in the two numbers, and they see it in the map.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      Rabbit Hole engine walkthrough · v1 · built for review<br>
+      pages.recurr.co/rabbit-hole-engine · internal — Recurr / ReFound
+    </div>
+  </div>
+</footer>
+
+<script>
+  // active nav highlight
+  const links=[...document.querySelectorAll('.topnav a')];
+  const secs=links.map(l=>document.querySelector(l.getAttribute('href')));
+  const obs=new IntersectionObserver((es)=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        const id='#'+e.target.id;
+        links.forEach(l=>l.style.color = l.getAttribute('href')===id ? 'var(--accent)' : 'var(--ink2)');
+      }
+    });
+  },{rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(s=>s&&obs.observe(s));
+</script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recurrops Agent — Job Description & Lifecycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A0A0A; --paper:#FFFFFF; --soft:#F5F5F4; --line:#E4E4E1;
+    --mute:#6B6B6B; --mid:#1A1A1A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    color:var(--ink); background:var(--paper);
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 28px}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+  section{padding:64px 0;border-top:1px solid var(--line)}
+  h2{font-size:30px;font-weight:700;letter-spacing:-.02em;margin:14px 0 28px}
+  p.lead{font-size:18px;color:var(--mid);max-width:64ch}
+
+  /* MASTHEAD */
+  .mast{padding:78px 0 64px}
+  .badge{display:inline-block;border:1px solid var(--ink);border-radius:999px;padding:5px 13px;font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+  .mast h1{font-size:62px;line-height:1.02;font-weight:700;letter-spacing:-.035em;margin:22px 0 14px}
+  .mast .tag{font-size:21px;color:var(--mid);max-width:60ch}
+  .metarow{display:flex;flex-wrap:wrap;gap:26px;margin-top:34px;font-size:13px;color:var(--mute)}
+  .metarow b{color:var(--ink);font-weight:600}
+
+  /* WORK PLANE */
+  .plane{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--ink)}
+  .plane .col{padding:26px 24px;border-right:1px solid var(--line)}
+  .plane .col:last-child{border-right:none}
+  .plane .n{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mute)}
+  .plane h3{font-size:22px;font-weight:700;margin:6px 0 10px}
+  .plane .role{font-size:14.5px;color:var(--mid);margin-bottom:16px}
+  .plane .duty{font-size:13px;color:var(--ink);border-top:1px dashed var(--line);padding-top:12px}
+  .plane .duty span{display:block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:5px}
+
+  /* CENTER DIAGRAM */
+  .diagram{background:var(--soft);border:1px solid var(--line);padding:34px 24px;text-align:center}
+  .dnode{display:inline-block;border:1px solid var(--ink);background:var(--paper);padding:10px 18px;font-weight:600;font-size:14px;border-radius:6px}
+  .dagent{display:inline-block;background:var(--ink);color:var(--paper);padding:14px 26px;font-weight:700;border-radius:8px;font-size:16px;margin:0 6px}
+  .darrow{font-family:'IBM Plex Mono',monospace;color:var(--mute);font-size:13px;margin:14px 0}
+  .drow{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;align-items:center}
+  .dcaption{font-size:12.5px;color:var(--mute);margin-top:18px;max-width:70ch;margin-left:auto;margin-right:auto}
+
+  /* JD CARDS */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+  .card{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:24px 22px}
+  .card .num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mute)}
+  .card h4{font-size:18px;font-weight:600;margin:8px 0 8px}
+  .card p{font-size:14px;color:var(--mid)}
+
+  /* LIFECYCLE */
+  .loop{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border:1px solid var(--ink)}
+  .step{padding:20px 16px;border-right:1px solid var(--line);position:relative}
+  .step:last-child{border-right:none}
+  .step .s{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mute)}
+  .step h5{font-size:15px;font-weight:700;margin:7px 0 7px}
+  .step p{font-size:12.5px;color:var(--mid)}
+  .loopnote{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mute);text-align:center;margin-top:14px}
+
+  /* KPI */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .kpi{border-top:2px solid var(--ink);padding-top:14px}
+  .kpi .v{font-size:15px;font-weight:700}
+  .kpi .d{font-size:12.5px;color:var(--mute);margin-top:5px}
+
+  /* SECONDARY TOOLS */
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .chip{border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13px;font-family:'IBM Plex Mono',monospace}
+
+  /* PHASES */
+  .phase{display:grid;grid-template-columns:120px 1fr;gap:0;border-bottom:1px solid var(--line)}
+  .phase:first-of-type{border-top:1px solid var(--line)}
+  .phase .ph{padding:18px 0;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500}
+  .phase .pb{padding:18px 0 18px 22px;border-left:1px solid var(--line)}
+  .phase .pb b{font-size:15px}
+  .phase .pb p{font-size:13.5px;color:var(--mid);margin-top:4px}
+  .tagsm{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);border-radius:4px;padding:2px 7px;color:var(--mute);margin-left:8px}
+
+  /* GUARDRAILS */
+  .rails{list-style:none}
+  .rails li{padding:13px 0;border-bottom:1px solid var(--line);font-size:14.5px;display:flex;gap:12px}
+  .rails li::before{content:"—";color:var(--mute);font-family:'IBM Plex Mono',monospace}
+
+  footer{padding:46px 0 70px;border-top:1px solid var(--ink);color:var(--mute);font-size:13px}
+  footer b{color:var(--ink)}
+
+  @media(max-width:860px){
+    .plane,.grid,.loop,.kpis{grid-template-columns:1fr}
+    .loop .step{border-right:none;border-bottom:1px solid var(--line)}
+    .mast h1{font-size:42px}
+    .phase{grid-template-columns:1fr}
+    .phase .pb{border-left:none;padding-left:0}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="badge">Recurrops · Internal Agent Spec</span>
+    <h1>The Recurrops Agent</h1>
+    <p class="tag">The agent that keeps three tools — Plane, Slack, and Claude — working as one always-true work plane, across every Recurr project.</p>
+    <div class="metarow">
+      <div><b>Runs on</b> · Claude Managed Agents (cloud)</div>
+      <div><b>Brain</b> · Claude (auto-upgrading)</div>
+      <div><b>Status</b> · Spec v0.1 — report-only pilot</div>
+      <div><b>First target</b> · Clarisights</div>
+    </div>
+  </header>
+
+  <!-- MISSION -->
+  <section>
+    <span class="eyebrow">Mission</span>
+    <h2>One coherent work plane the team can trust</h2>
+    <p class="lead">Recurr runs on three surfaces. Plane is the truthful, client-facing view of work. Slack is where everyone talks. Claude is the always-fresh, intelligent workspace where the team actually does the thinking — connected to every secondary tool and every scrap of project context. The Recurrops Agent's whole job is to keep these three in sync and in shape so the team — and eventually a hands-off founder — can rely on them without manual upkeep.</p>
+  </section>
+
+  <!-- THE WORK PLANE -->
+  <section>
+    <span class="eyebrow">The Three-Tool Work Plane</span>
+    <h2>Each tool has one clear job</h2>
+    <div class="plane">
+      <div class="col">
+        <div class="n">01</div>
+        <h3>Plane</h3>
+        <div class="role">The client-facing view on the reality of work — what's planned and what's progressed on a specific project.</div>
+        <div class="duty"><span>Agent's duty</span>Keep it honest: no stale tasks, cycles running, planning compliance enforced.</div>
+      </div>
+      <div class="col">
+        <div class="n">02</div>
+        <h3>Slack</h3>
+        <div class="role">The single interface where all communication happens, across team and projects.</div>
+        <div class="duty"><span>Agent's duty</span>Listen for decisions &amp; updates, broadcast across projects, chase what's missing.</div>
+      </div>
+      <div class="col">
+        <div class="n">03</div>
+        <h3>Claude</h3>
+        <div class="role">An always-updated intelligent workspace, wired to secondary tools &amp; project context, where the team works actively.</div>
+        <div class="duty"><span>Agent's duty</span>Keep it fresh &amp; fully wired so the team can use Claude to the maximum. <b>This is the headline KPI.</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGRAM -->
+  <section>
+    <span class="eyebrow">How it sits</span>
+    <h2>The agent in the middle</h2>
+    <div class="diagram">
+      <div class="drow">
+        <span class="dnode">Plane</span>
+        <span class="dnode">Slack</span>
+      </div>
+      <div class="darrow">│ reads reality + comms ▼ &nbsp;&nbsp; ▲ enforces hygiene + broadcasts │</div>
+      <div class="drow"><span class="dagent">OUTWORK AGENT</span></div>
+      <div class="darrow">│ keeps fresh + fully wired ▼ │</div>
+      <div class="drow">
+        <span class="dnode">Claude workspace</span>
+        <span class="dnode mono">project repo</span>
+      </div>
+      <div class="dcaption">The agent reads Plane &amp; Slack, reconciles them into each project's Claude-accessible knowledge (a GitHub repo), keeps every secondary tool wired into Claude, and pushes updates back out to the team. The team works in Claude; the agent makes sure Claude is always right.</div>
+    </div>
+  </section>
+
+  <!-- JOB DESCRIPTION -->
+  <section>
+    <span class="eyebrow">Job Description</span>
+    <h2>Six standing responsibilities</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="num">JD-01</div>
+        <h4>Keep Claude fresh</h4>
+        <p>Continuously sync each project's real state (from Plane + Slack) into the Claude-accessible knowledge so the team always opens an up-to-date workspace. Freshness is the core metric.</p>
+      </div>
+      <div class="card">
+        <div class="num">JD-02</div>
+        <h4>Guard the three-tool plane</h4>
+        <p>Make sure work lives where it should — reality in Plane, talk in Slack, active work in Claude — and that the three never drift apart.</p>
+      </div>
+      <div class="card">
+        <div class="num">JD-03</div>
+        <h4>Wire secondary tools into Claude</h4>
+        <p>Ensure Sanity, Figma, Google Workspace, GitHub, Metabase and the rest are connected to Claude brilliantly via MCPs / APIs / connectors — so any member can reach any tool from the workspace.</p>
+      </div>
+      <div class="card">
+        <div class="num">JD-04</div>
+        <h4>Broadcast updates globally</h4>
+        <p>Roll up progress across all projects and broadcast a clean, regular update so nothing happens in a silo.</p>
+      </div>
+      <div class="card">
+        <div class="num">JD-05</div>
+        <h4>Chase missing updates</h4>
+        <p>When an owner hasn't logged progress or a decision never made it to the board, follow up until it's captured.</p>
+      </div>
+      <div class="card">
+        <div class="num">JD-06</div>
+        <h4>Enforce planning &amp; cycle compliance</h4>
+        <p>Make sure work is planned properly and cycles/sprints are actually run — flag projects that fall out of rhythm.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIFECYCLE -->
+  <section>
+    <span class="eyebrow">Lifecycle</span>
+    <h2>The loop it runs, per project</h2>
+    <div class="loop">
+      <div class="step"><div class="s">STEP 1</div><h5>Observe</h5><p>Read the Plane board + recent Slack for the project.</p></div>
+      <div class="step"><div class="s">STEP 2</div><h5>Reconcile</h5><p>Compare reality against what the workspace currently says.</p></div>
+      <div class="step"><div class="s">STEP 3</div><h5>Refresh Claude</h5><p>Update the project repo so the workspace is current.</p></div>
+      <div class="step"><div class="s">STEP 4</div><h5>Flag hygiene</h5><p>Surface stale tasks, undefined work, broken cycles.</p></div>
+      <div class="step"><div class="s">STEP 5</div><h5>Chase</h5><p>Nudge owners for missing updates &amp; decisions.</p></div>
+      <div class="step"><div class="s">STEP 6</div><h5>Broadcast</h5><p>Post the rolled-up update to the team.</p></div>
+    </div>
+    <div class="loopnote">↻ runs on a schedule (daily per project) · global broadcast on its own cadence · state persists between runs</div>
+  </section>
+
+  <!-- KPIs -->
+  <section>
+    <span class="eyebrow">KPIs</span>
+    <h2>How we know it's working</h2>
+    <div class="kpis">
+      <div class="kpi"><div class="v">Claude freshness</div><div class="d">How current the workspace is vs Plane + Slack reality. The headline metric.</div></div>
+      <div class="kpi"><div class="v">Team Claude usage</div><div class="d">Are people actually working in the workspace to its maximum extent.</div></div>
+      <div class="kpi"><div class="v">Plane hygiene</div><div class="d">No stale tasks, cycles running, planning compliance held.</div></div>
+      <div class="kpi"><div class="v">Integration coverage</div><div class="d">Share of secondary tools cleanly wired into Claude.</div></div>
+    </div>
+  </section>
+
+  <!-- SECONDARY TOOLS -->
+  <section>
+    <span class="eyebrow">Secondary tools it keeps wired to Claude</span>
+    <h2>Connected on demand, kept brilliant</h2>
+    <p class="lead">Members reach for these now and then. The agent owns their integrations and their connection to Claude — so they're always one step away inside the workspace.</p>
+    <div class="chips">
+      <span class="chip">Sanity</span>
+      <span class="chip">Figma</span>
+      <span class="chip">Google Workspace</span>
+      <span class="chip">GitHub</span>
+      <span class="chip">Metabase</span>
+      <span class="chip">+ more as needed</span>
+    </div>
+  </section>
+
+  <!-- ROLLOUT -->
+  <section>
+    <span class="eyebrow">Rollout</span>
+    <h2>Earns trust before it acts</h2>
+    <div class="phase">
+      <div class="ph">Phase 0</div>
+      <div class="pb"><b>Report-only pilot <span class="tagsm">Clarisights</span></b><p>One project. Reads Plane + Slack, writes only to the repo, posts a summary. Changes nothing in Plane or Slack. We watch it.</p></div>
+    </div>
+    <div class="phase">
+      <div class="ph">Phase 1</div>
+      <div class="pb"><b>Freshness + hygiene, all projects</b><p>Daily loop across every project. Keeps Claude fresh and flags hygiene problems. Still read-only on Plane &amp; Slack.</p></div>
+    </div>
+    <div class="phase">
+      <div class="ph">Phase 2</div>
+      <div class="pb"><b>Active broadcast + follow-ups</b><p>Now allowed to post the global broadcast and nudge owners in Slack for missing updates.</p></div>
+    </div>
+    <div class="phase">
+      <div class="ph">Phase 3</div>
+      <div class="pb"><b>Compliance + integration automation</b><p>Enforces planning &amp; cycle compliance, and automatically wires/repairs secondary-tool connections to Claude.</p></div>
+    </div>
+  </section>
+
+  <!-- GUARDRAILS -->
+  <section>
+    <span class="eyebrow">Guardrails</span>
+    <h2>What it will not do (yet)</h2>
+    <ul class="rails">
+      <li>Never messages clients — internal team only.</li>
+      <li>Plane stays the single source of truth for priorities; the agent reflects it, never overrides it.</li>
+      <li>Starts report-only — no writes to Plane or Slack until each phase is trusted.</li>
+      <li>Destructive or outward actions require a human approval step until proven.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p><b>Recurrops Agent</b> — internal spec v0.1 · Part of Recurrops, Recurr's unified work plane.</p>
+    <p style="margin-top:8px">Stack: <b>Claude Managed Agents</b> (cloud sandbox) · MCP connectors to Plane, Slack, GitHub + secondary tools · one GitHub repo per project as the store · scheduled sessions.</p>
+  </footer>
+
+</div>
+</body>
+</html>
