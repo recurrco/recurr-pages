@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quad B.Tech CS — Ads Landing Page Wireframe (mobile-first, lead-capture)</title>
+<style>
+  :root{
+    --ink:#1c1c22; --ink2:#3a3a44; --mut:#71717a; --mut2:#a1a1aa;
+    --line:#d4d4d8; --line2:#e4e4e7; --bg:#f4f4f5; --card:#ffffff;
+    --wire:#e9e9ec; --wireln:#c8c8ce; --accent:#e11d3a; --note:#fff7d6; --noteln:#e9c94a;
+    --ok:#0f7a4d; --okbg:#e7f5ee;
+    --max:440px;
+    --mono:"SF Mono",ui-monospace,"Menlo",monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent)}
+
+  /* ---------- page chrome ---------- */
+  .top{max-width:900px;margin:0 auto;padding:40px 22px 10px}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+  h1.title{font-size:30px;line-height:1.15;margin:10px 0 6px;letter-spacing:-.02em}
+  .sub{color:var(--ink2);font-size:15.5px;max-width:680px}
+  .meta{margin-top:14px;font-size:13px;color:var(--mut);font-family:var(--mono)}
+  .meta b{color:var(--ink2);font-weight:600}
+
+  .decisions{max-width:900px;margin:22px auto 0;padding:0 22px}
+  .decgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .dec{background:var(--card);border:1px solid var(--line2);border-radius:12px;padding:12px 13px}
+  .dec .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut2)}
+  .dec .v{font-size:13.5px;font-weight:600;margin-top:3px;color:var(--ink)}
+  .dec .v small{display:block;font-weight:400;color:var(--mut);font-size:11.5px;margin-top:2px}
+
+  .legend{max-width:900px;margin:16px auto 0;padding:0 22px;display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--mut);font-family:var(--mono)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .sw{width:26px;height:14px;border-radius:3px;display:inline-block}
+  .sw.img{background:var(--wire);border:1px dashed var(--wireln)}
+  .sw.btn{background:var(--ink)}
+  .sw.field{background:#fff;border:1px solid var(--line)}
+  .sw.note{background:var(--note);border:1px solid var(--noteln)}
+
+  /* ---------- stage ---------- */
+  .stage{max-width:calc(var(--max) + 40px);margin:30px auto 80px;padding:0 20px}
+
+  .phone{background:#000;border-radius:44px;padding:10px;box-shadow:0 30px 60px -20px rgba(0,0,0,.35)}
+  .screen{background:var(--card);border-radius:36px;overflow:hidden}
+
+  /* faux browser bar / no-nav marker */
+  .fauxbar{background:#fafafa;border-bottom:1px solid var(--line2);padding:9px 14px;display:flex;align-items:center;justify-content:space-between}
+  .logo{font-weight:800;letter-spacing:-.02em;font-size:15px}
+  .logo .q{color:var(--accent)}
+  .nonav{font-family:var(--mono);font-size:9.5px;color:var(--mut2);border:1px dashed var(--wireln);border-radius:20px;padding:3px 8px}
+
+  /* fold shell */
+  .fold{position:relative;border-bottom:1px solid var(--line2);padding:22px 18px 20px}
+  .fold:last-of-type{border-bottom:0}
+  .fnum{position:absolute;top:-1px;left:-1px;background:var(--ink);color:#fff;font-family:var(--mono);font-size:11px;font-weight:600;padding:3px 9px;border-radius:0 0 10px 0;z-index:2}
+  .ftag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut2);margin:2px 0 12px 30px}
+
+  /* wire primitives */
+  .eyebrow{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border:1px solid #f3c6cd;background:#fdeef0;border-radius:20px;padding:5px 11px}
+  h2.wh{font-size:23px;line-height:1.18;letter-spacing:-.02em;margin:12px 0 8px}
+  h3.wh{font-size:17px;line-height:1.25;margin:0 0 5px;letter-spacing:-.01em}
+  .lead{color:var(--ink2);font-size:14.5px;margin:0 0 4px}
+  .small{font-size:13px;color:var(--mut)}
+  .center{text-align:center}
+
+  .imgbox{background:var(--wire);border:1px dashed var(--wireln);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--mut2);font-family:var(--mono);font-size:11px;letter-spacing:.05em;min-height:120px;text-align:center;padding:10px}
+  .imgbox.tall{min-height:190px}
+  .imgbox.hero{min-height:150px}
+
+  .field{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 13px;color:var(--mut2);font-size:14px;margin-top:9px;display:flex;align-items:center;gap:8px}
+  .field .ph{color:var(--mut2)}
+  .field .lbl{font-family:var(--mono);font-size:9.5px;color:var(--mut2);margin-left:auto;letter-spacing:.05em}
+
+  .btn{background:var(--ink);color:#fff;border-radius:11px;padding:14px;text-align:center;font-weight:700;font-size:15px;margin-top:10px}
+  .btn.arrow::after{content:" →"}
+  .btn2{background:#fff;color:var(--ink);border:1.5px solid var(--ink);border-radius:11px;padding:12px;text-align:center;font-weight:600;font-size:14px;margin-top:8px}
+  .micro{font-size:11.5px;color:var(--mut2);text-align:center;margin-top:7px}
+
+  .trust{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;justify-content:center}
+  .chip{font-size:11.5px;color:var(--ink2);background:#f1f1f3;border:1px solid var(--line2);border-radius:20px;padding:5px 10px;font-weight:500}
+
+  /* proof bar */
+  .proof{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .stat{background:#fafafa;border:1px solid var(--line2);border-radius:12px;padding:14px 12px;text-align:center}
+  .stat b{display:block;font-size:22px;letter-spacing:-.02em}
+  .stat span{font-size:11.5px;color:var(--mut)}
+
+  /* logo wall */
+  .logowall{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+  .logocell{background:var(--wire);border:1px dashed var(--wireln);border-radius:8px;height:42px;display:flex;align-items:center;justify-content:center;color:var(--mut2);font-size:10.5px;font-family:var(--mono)}
+
+  /* differentiators */
+  .diff{border:1px solid var(--line2);border-radius:13px;padding:14px;margin-top:10px;display:flex;gap:12px}
+  .diff .ic{width:38px;height:38px;flex:none;border-radius:9px;background:var(--wire);border:1px dashed var(--wireln);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--mut2)}
+
+  /* mentor grid */
+  .mentors{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:6px}
+  .mcard{border:1px solid var(--line2);border-radius:11px;padding:11px;text-align:center}
+  .mcard .av{width:46px;height:46px;border-radius:50%;background:var(--wire);border:1px dashed var(--wireln);margin:0 auto 8px}
+  .mcard .nm{font-weight:700;font-size:13px}
+  .mcard .ed{font-size:10.5px;color:var(--mut)}
+  .mcard .co{font-size:11px;color:var(--accent);font-weight:600;margin-top:3px}
+
+  /* curriculum tabs */
+  .tabs{display:flex;gap:6px;margin:6px 0 12px;overflow:auto;-webkit-overflow-scrolling:touch}
+  .tab{flex:none;font-size:12px;font-weight:600;padding:8px 12px;border-radius:20px;border:1px solid var(--line);color:var(--mut)}
+  .tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .yr{border:1px solid var(--line2);border-radius:12px;padding:14px}
+  .yr .k{font-family:var(--mono);font-size:10.5px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+  .expand{font-size:12.5px;color:var(--accent);font-weight:600;margin-top:10px;text-align:center}
+
+  /* steps */
+  .step{display:flex;gap:12px;margin-top:12px}
+  .step .n{width:30px;height:30px;flex:none;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+
+  /* investment */
+  .fee{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:6px}
+  .fee .fc{background:#fafafa;border:1px solid var(--line2);border-radius:10px;padding:11px 8px;text-align:center}
+  .fee .fc b{display:block;font-size:16px;letter-spacing:-.01em}
+  .fee .fc span{font-size:11px;color:var(--mut)}
+  .band{border:1px solid var(--line2);border-radius:11px;padding:12px;margin-top:9px}
+  .band .h{font-weight:700;font-size:13.5px;margin-bottom:3px}
+  .band .b{font-size:12.5px;color:var(--ink2)}
+  .schol-note{background:var(--okbg);border:1px solid #bfe6d1;color:var(--ok)}
+
+  /* faq */
+  .faq{border:1px solid var(--line2);border-radius:10px;padding:12px 13px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .faq .qq{font-weight:600;font-size:13.5px}
+  .faq .pm{color:var(--mut2);font-family:var(--mono)}
+
+  /* sticky bar */
+  .stickybar{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line2);padding:10px 14px;display:flex;gap:9px;align-items:center;box-shadow:0 -8px 20px -12px rgba(0,0,0,.15)}
+  .stickybar .lab{font-family:var(--mono);font-size:8.5px;color:var(--mut2);position:absolute;top:-8px;left:12px;background:#fff;padding:0 5px}
+  .stickybar .sb-call{flex:none;border:1.5px solid var(--ink);border-radius:9px;padding:11px 14px;font-weight:600;font-size:13px}
+  .stickybar .sb-cta{flex:1;background:var(--ink);color:#fff;border-radius:9px;padding:12px;text-align:center;font-weight:700;font-size:14px}
+
+  /* annotation note */
+  .note{background:var(--note);border:1px solid var(--noteln);border-left:4px solid var(--noteln);border-radius:10px;padding:12px 13px;margin:14px 20px 0;max-width:calc(var(--max) + 0px)}
+  .note .nh{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8a6d00;margin-bottom:5px}
+  .note p{margin:0;font-size:12.7px;color:#5c4a00;line-height:1.5}
+  .note p + p{margin-top:6px}
+  .note .kill{color:#9a2033;font-weight:600}
+  .note b{color:#4a3c00}
+  .notewrap{max-width:calc(var(--max) + 40px);margin:0 auto;padding:0 20px}
+
+  .foldwrap{max-width:calc(var(--max) + 40px);margin:0 auto}
+
+  .footnote{max-width:900px;margin:10px auto 70px;padding:0 22px;color:var(--mut);font-size:13px}
+  .footnote code{font-family:var(--mono);font-size:12px;background:#ececee;padding:1px 5px;border-radius:4px}
+
+  @media (max-width:520px){
+    .decgrid{grid-template-columns:1fr 1fr}
+    h1.title{font-size:24px}
+    .stage{padding:0 12px}
+    .note{margin-left:12px;margin-right:12px}
+    .notewrap{padding:0 12px}
+  }
+</style>
+</head>
+<body>
+
+  <header class="top">
+    <div class="kicker">Quad · Advisory · Milestone 1 wireframe</div>
+    <h1 class="title">B.Tech CS (AI&nbsp;&amp;&nbsp;ML) — Paid-Ads Landing Page</h1>
+    <p class="sub">A mobile-first, lead-capture rebuild of <a href="https://www.quadcse.com/ug-program-in-computer-science">quadcse.com/ug-program-in-computer-science</a>. This is a <b>structural wireframe</b> — the focus is information architecture and copy. Brand, colour, imagery and motion come in Milestone&nbsp;2. Every fold carries a note explaining the CRO decision behind it.</p>
+    <div class="meta">Diagnosis of live page: <b>~17,155px / ~20 mobile screens</b> · <b>8 overlapping “why us” sections</b> · best proof buried ~70% down · new plan collapses this to <b>10 focused folds</b>.</div>
+  </header>
+
+  <section class="decisions">
+    <div class="decgrid">
+      <div class="dec"><div class="l">Goal</div><div class="v">Lead capture<small>Phone + City → counsellor callback</small></div></div>
+      <div class="dec"><div class="l">Page type</div><div class="v">Standalone ad LP<small>No nav · single CTA · message-matched</small></div></div>
+      <div class="dec"><div class="l">Primary CTA</div><div class="v">“Talk to a counsellor”<small>Repeated at every decision point</small></div></div>
+      <div class="dec"><div class="l">Proof we may claim</div><div class="v">Mentors · Recruiters<small>6-mo paid internship · up to 50% scholarship. No placement %/salary.</small></div></div>
+    </div>
+  </section>
+
+  <div class="legend">
+    <span><i class="sw img"></i> image / media placeholder</span>
+    <span><i class="sw field"></i> form field</span>
+    <span><i class="sw btn"></i> primary CTA</span>
+    <span><i class="sw note"></i> IA / CRO rationale</span>
+  </div>
+
+  <main class="stage">
+    <div class="phone">
+      <div class="screen">
+
+        <!-- faux bar -->
+        <div class="fauxbar">
+          <div class="logo">Quad<span class="q">.</span></div>
+          <div class="nonav">NO NAV — logo only</div>
+        </div>
+
+        <!-- FOLD 1 -->
+        <section class="fold">
+          <div class="fnum">01</div>
+          <div class="ftag">Hero + inline capture</div>
+          <span class="eyebrow">2026 batch · 120 seats · applications open</span>
+          <h2 class="wh">Learn to build AI products — mentored by engineers from Google, Microsoft&nbsp;&amp; Amazon.</h2>
+          <p class="lead">A 4-year UG in Computer Science (AI&nbsp;&amp;&nbsp;ML). 100+ mentors from MAANG, IIT&nbsp;&amp;&nbsp;IIM, a 6-month <b>paid</b> internship, and scholarships up to 50%.</p>
+
+          <div class="field"><span class="ph">+91  ·  Phone number</span><span class="lbl">TEL</span></div>
+          <div class="field"><span class="ph">Choose campus — Bengaluru / Mangalore / Patna</span><span class="lbl">SELECT</span></div>
+          <div class="btn arrow">Talk to a counsellor</div>
+          <div class="micro">Free counselling call · we’ll call you back · no spam</div>
+
+          <div class="trust">
+            <span class="chip">100+ MAANG/IIT/IIM mentors</span>
+            <span class="chip">75+ hiring partners</span>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="notewrap"><div class="note" style="margin-left:0;margin-right:0">
+      <div class="nh">Fold 01 · why</div>
+      <p><b>Headline sells an outcome, not a catalog title.</b> Live page led with “UG programme in Computer Science (AI & ML)” — a name, not a reason. We lead with the single most credible differentiator (real MAANG mentors) + concrete proof in the subhead.</p>
+      <p><b>Form is inline and above the fold</b> — phone + city only. The decision moment and the ask are on the same screen; no “tap Apply → modal” friction.</p>
+      <p class="kill">Killed: full nav hamburger, the “Brochure” escape-hatch button, the 4 logistics cards (4 Years / 120 Seats / Full-time / In-Campus), and the floating WhatsApp button that overlapped the CTA. Logistics move to Fold 02 as <i>proof</i>.</p>
+    </div></div>
+
+    <!-- FOLD 2 -->
+    <div class="foldwrap"><div class="phone" style="margin-top:22px"><div class="screen"><section class="fold" style="border-bottom:0">
+      <div class="fnum">02</div>
+      <div class="ftag">Proof bar</div>
+      <div class="proof">
+        <div class="stat"><b>100+</b><span>mentors from MAANG, IIT &amp; IIM</span></div>
+        <div class="stat"><b>75+</b><span>hiring partners</span></div>
+        <div class="stat"><b>6&nbsp;months</b><span>mandatory <b>paid</b> internship</span></div>
+        <div class="stat"><b>up to 50%</b><span>scholarships available</span></div>
+      </div>
+    </section></div></div></div>
+
+    <div class="notewrap"><div class="note">
+      <div class="nh">Fold 02 · why</div>
+      <p>Replaces the hero’s vanity stats with <b>persuasion stats</b>. Every number here is real and answers “why should I trust this?” — not “what are the logistics?”. Placed immediately after the hook so a skimmer gets proof in the first two screens.</p>
+    </div></div>
+
+    <!-- FOLD 3 -->
+    <div class="foldwrap"><div class="phone" style="margin-top:22px"><div class="screen"><section class="fold" style="border-bottom:0">
+      <div class="fnum">03</div>
+      <div class="ftag">Recruiter / hiring network</div>
+      <h2 class="wh center">The companies our hiring network opens up</h2>
+      <p class="lead center small">75+ hiring partners — from MAANG to India’s fastest-growing startups.</p>
+      <div class="logowall">
+        <div class="logocell">Google</div><div class="logocell">Microsoft</div><div class="logocell">Amazon</div>
+        <div class="logocell">Adobe</div><div class="logocell">Goldman&nbsp;S.</div><div class="logocell">Uber</div>
+        <div class="logocell">Swiggy</div><div class="logocell">Zomato</div><div class="logocell">Paytm</div>
+        <div class="logocell">Deloitte</div><div class="logocell">Accenture</div><div class="logocell">+65 more</div>
+      </div>
+    </section></div></div></div>
+
+    <div class="notewrap"><div class="note">
+      <div class="nh">Fold 03 · why</div>
+      <p>Pulled up from ~75% down the live page. Logo walls are the fastest-scanning trust unit that exists. <b>Wording is honest</b>: “hiring network / partners,” not “our students got placed at” — Quad is pre-first-graduation, so we imply access, not a placement record.</p>
+    </div></div>
+
+    <!-- FOLD 4 -->
+    <div class="foldwrap"><div class="phone" style="margin-top:22px"><div class="screen"><section class="fold" style="border-bottom:0">
+      <div class="fnum">04</div>
+      <div class="ftag">Why Quad — 3 differentiators</div>
+      <h2 class="wh">Three reasons this isn’t a normal CS degree</h2>
+      <div class="diff"><div class="ic">01</div><div><h3 class="wh">Mentored by people who build at the frontier</h3><p class="small">Classes run by working engineers, founders &amp; CxOs from Google, Microsoft, Amazon &amp; CRED — not career academics. 1-on-1 mentorship, resume reviews, mock interviews with MAANG engineers.</p></div></div>
+      <div class="diff"><div class="ic">02</div><div><h3 class="wh">You learn by shipping, not memorising</h3><p class="small">Write 1,00,000+ lines of production code before you graduate. Live projects from semester one — a GenAI CRM, an InShorts-style app, even your own ChatGPT. Students win at IIT-B Techfest &amp; Smart India Hackathon.</p></div></div>
+      <div class="diff"><div class="ic">03</div><div><h3 class="wh">A guaranteed on-ramp into industry</h3><p class="small">A mandatory 6-month <b>paid</b> internship, dedicated 1:1 career coaching, and a 75+ company hiring network — so you graduate industry-ready, not just certified.</p></div></div>
+    </section></div></div></div>
+
+    <div class="notewrap"><div class="note">
+      <div class="nh">Fold 04 · why</div>
+      <p class="kill">Merges FOUR live sections into three — “More than academics,” “Real-World Application” (6 sub-blocks), “Unfair Advantage,” and “Career Pathways” all said the same thing. Redundancy was the #1 length problem.</p>
+      <p>Each differentiator is <b>claim + proof in one breath</b>. The strong, specific facts that were buried (1,00,000+ LOC, IIT-B wins, “build your own ChatGPT”) are promoted here; the hyperbole (“1% club,” “boardroom not classroom”) is dropped.</p>
+    </div></div>
+
+    <!-- FOLD 5 -->
+    <div class="foldwrap"><div class="phone" style="margin-top:22px"><div class="screen"><section class="fold" style="border-bottom:0">
+      <div class="fnum">05</div>
+      <div class="ftag">Mentors — named</div>
+      <h2 class="wh center">Meet a few of your mentors</h2>
+      <p class="lead center small">100+ mentors from top corporates — masterclasses, expert sessions &amp; 1-on-1 guidance.</p>
+      <div class="mentors">
+        <div class="mcard"><div class="av"></div><div class="nm">Prashant Verma</div><div class="ed">IIT Roorkee</div><div class="co">CRED</div></div>
+        <div class="mcard"><div class="av"></div><div class="nm">Neenu</div><div class="ed">IIM Mumbai</div><div class="co">Google</div></div>
+        <div class="mcard"><div class="av"></div><div class="nm">Priyanka Sadana</div><div class="ed">XLRI</div><div class="co">Microsoft</div></div>
+        <div class="mcard"><div class="av"></div><div class="nm">Mohit Banka</div><div class="ed">IIM Calcutta</div><div class="co">Amazon</div></div>
+        <div class="mcard"><div class="av"></div><div class="nm">Syed Mujtaba</div><div class="ed">ISB Hyderabad</div><div class="co">Apple</div></div>
+        <div class="mcard"><div class="av"></div><div class="nm">Shiladitya Saha</div><div class="ed">IIT Kharagpur</div><div class="co">Microsoft</div></div>
+      </div>
+      <div class="expand">See all 100+ mentors ↓</div>
+    </section></div></div></div>
+
+    <div class="notewrap"><div class="note">
+      <div class="nh">Fold 05 · why</div>
+      <p><b>This is the single strongest asset on the whole site — moved from ~70% down to the upper-middle.</b> Real named people, from real institutions, at real MAANG companies. Faces + names + logos = the most concrete proof Quad has. It backs the Fold-01 promise before we ask for the fee.</p>
+    </div></div>
+
+    <!-- FOLD 6 -->
+    <div class="foldwrap"><div class="phone" style="margin-top:22px"><div class="screen"><section class="fold" style="border-bottom:0">
+      <div class="fnum">06</div>
+      <div class="ftag">Curriculum snapshot — tabbed</div>
+      <h2 class="wh">Four years, engineered as a launchpad</h2>
+      <div class="tabs">
+        <div class="tab on">Yr 1 · Build</div><div class="tab">Yr 2 · Achieve</div><div class="tab">Yr 3 · Innovate</div><div class="tab">Yr 4 · Master</div>
+      </div>
+      <div class="yr">
+        <div class="k">Year 1 — Build</div>
+        <h3 class="wh" style="margin-top:6px">Foundations you can ship</h3>
+        <p class="small">DSA, web dev &amp; Python from day one. Ship a portfolio site and a GenAI-powered CRM by year end.</p>
+      </div>
+      <div class="expand">See the full 4-year curriculum ↓</div>
+    </section></div></div></div>
+
+    <div class="notewrap"><div class="note">
+      <div class="nh">Fold 06 · why</div>
+      <p>The live curriculum was a valuable but enormous keyword dump. Here it’s <b>collapsed to a tabbed snapshot led by outcomes</b> (“build your own ChatGPT,” “real-time bidding platform”), with a single expand for high-intent researchers. Depth stays available; it just doesn’t cost 4 screens of scroll.</p>
+    </div></div>
+
+    <!-- FOLD 7 -->
+    <div class="foldwrap"><div class="phone" style="margin-top:22px"><div class="screen"><section class="fold" style="border-bottom:0">
+      <div class="fnum">07</div>
+      <div class="ftag">How you get in</div>
+      <h2 class="wh">Getting in is 3 steps</h2>
+      <div class="step"><div class="n">1</div><div><h3 class="wh">Apply</h3><p class="small">Share your Class X &amp; XII marks (expected or final) — any board.</p></div></div>
+      <div class="step"><div class="n">2</div><div><h3 class="wh">Take the QAT</h3><p class="small">A 60-min online aptitude test — logic, data, quant &amp; communication. Not just scores; fit.</p></div></div>
+      <div class="step"><div class="n">3</div><div><h3 class="wh">1:1 interview</h3><p class="small">A short conversation to see how you think, solve and create.</p></div></div>
+      <div class="btn arrow" style="margin-top:16px">Talk to a counsellor</div>
+    </section></div></div></div>
+
+    <div class="notewrap"><div class="note">
+      <div class="nh">Fold 07 · why</div>
+      <p>Removes “how do I even get in?” anxiety right before the money conversation. A clear, low-bar 3-step process makes applying feel achievable — and the repeated CTA converts the reassurance immediately.</p>
+    </div></div>
+
+    <!-- FOLD 8 -->
+    <div class="foldwrap"><div class="phone" style="margin-top:22px"><div class="screen"><section class="fold" style="border-bottom:0">
+      <div class="fnum">08</div>
+      <div class="ftag">Investment — fee + scholarship + loans, fused</div>
+      <h2 class="wh">Transparent fees. Real help paying for them.</h2>
+      <p class="lead small">4-year, all-in tuition (software + experiential learning included):</p>
+      <div class="fee">
+        <div class="fc"><b>₹8L</b><span>Patna</span></div>
+        <div class="fc"><b>₹9.5L</b><span>Mangalore</span></div>
+        <div class="fc"><b>₹14L</b><span>Bengaluru</span></div>
+      </div>
+      <div class="band schol-note"><div class="h">Scholarships up to 50%</div><div class="b">Women in Tech · Early-Mover · Udaan (merit) · JP Narayan (changemakers).</div></div>
+      <div class="band"><div class="h">Low-stress financing</div><div class="b">EMI &amp; education loans with HDFC Credila, Axis, ICICI, SBI, Kuhoo &amp; Propelld.</div></div>
+      <div class="btn arrow">Check your scholarship eligibility</div>
+    </section></div></div></div>
+
+    <div class="notewrap"><div class="note">
+      <div class="nh">Fold 08 · why</div>
+      <p><b>Fee, scholarship and loans are fused into one “Investment” block.</b> On the live page the fee table sat alone (sticker shock), with scholarships and loan partners as separate sections further down. Here the objection and its three answers live on one screen.</p>
+      <p>Transparent per-city pricing is a genuine differentiator in Indian edu — we keep it, but pair it instantly with “here’s how you afford it,” and turn the CTA into a value-add (“check eligibility”) rather than a raw ask.</p>
+    </div></div>
+
+    <!-- FOLD 9 -->
+    <div class="foldwrap"><div class="phone" style="margin-top:22px"><div class="screen"><section class="fold" style="border-bottom:0">
+      <div class="fnum">09</div>
+      <div class="ftag">FAQ — expanded</div>
+      <h2 class="wh">Questions students &amp; parents ask</h2>
+      <div class="faq"><span class="qq">Who awards the degree? Is it recognised?</span><span class="pm">+</span></div>
+      <div class="faq"><span class="qq">What placement support do I actually get?</span><span class="pm">+</span></div>
+      <div class="faq"><span class="qq">How do scholarships work?</span><span class="pm">+</span></div>
+      <div class="faq"><span class="qq">What does the fee cover? Is EMI available?</span><span class="pm">+</span></div>
+      <div class="faq"><span class="qq">What is the QAT, and how hard is it?</span><span class="pm">+</span></div>
+      <div class="faq"><span class="qq">Which campuses, and can I switch?</span><span class="pm">+</span></div>
+    </section></div></div></div>
+
+    <div class="notewrap"><div class="note">
+      <div class="nh">Fold 09 · why</div>
+      <p>Live page had only 4 FAQs. The most important one — <b>“who awards the degree?”</b> — was hidden in a footer regulatory disclaimer (Quad is a training institute, degrees come from a partner university, not a UGC HEI). Answering that <b>openly</b> defuses the biggest trust objection instead of letting a prospect find it in the fine print.</p>
+      <p>Placement FAQ stays honest: support + paid internship + hiring network. No invented %.</p>
+    </div></div>
+
+    <!-- FOLD 10 -->
+    <div class="foldwrap"><div class="phone" style="margin-top:22px"><div class="screen"><section class="fold" style="border-bottom:0">
+      <div class="fnum">10</div>
+      <div class="ftag">Final CTA band</div>
+      <h2 class="wh center">120 seats. 2026 batch. Let’s talk.</h2>
+      <p class="lead center small">Book a free counselling call — we’ll help you pick a campus, check scholarship eligibility, and walk you through admission.</p>
+      <div class="field"><span class="ph">+91  ·  Phone number</span><span class="lbl">TEL</span></div>
+      <div class="field"><span class="ph">Choose campus — Bengaluru / Mangalore / Patna</span><span class="lbl">SELECT</span></div>
+      <div class="btn arrow">Talk to a counsellor</div>
+      <div class="micro">Free · we’ll call you back · no spam</div>
+    </section>
+
+      <!-- sticky bar lives inside the screen -->
+      <div class="stickybar">
+        <span class="lab">STICKY — persists on every fold</span>
+        <div class="sb-call">Call</div>
+        <div class="sb-cta">Talk to a counsellor</div>
+      </div>
+    </div></div></div>
+
+    <div class="notewrap"><div class="note">
+      <div class="nh">Fold 10 + sticky · why</div>
+      <p>Closes with the same low-friction ask, restating scarcity (120 seats). The <b>sticky bottom bar</b> keeps the primary CTA one thumb-tap away through the entire scroll — so intent captured anywhere converts without hunting.</p>
+    </div></div>
+
+  </main>
+
+  <div class="footnote">
+    <p><b>What changed, in one line:</b> ~20 screens → 10 · one goal (phone lead) · nav / brochure / read-more leaks removed · proof (mentors, recruiters) promoted above the fee · price objection answered in-place · no fabricated placement or salary claims.</p>
+    <p><b>Next — Milestone 2:</b> map assets from <code>~/recurrco/storage/Quad Images</code> + the live site into these folds, source motion/animation components from <a href="https://21st.dev">21st.dev</a> that fit this IA, apply the Quad V3 (crimson) brand, and ship the designed v1.</p>
+  </div>
+
+</body>
+</html>
