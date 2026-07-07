@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>B.Tech Computer Science (AI &amp; ML) — Quad</title>
+<meta name="description" content="A 4-year UG in Computer Science (AI & ML), mentored by engineers from Google, Microsoft & Amazon. 100+ MAANG/IIT/IIM mentors, a 6-month paid internship, scholarships up to 50%.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crimson:#A41034; --crimson-d:#7C0C27; --crimson-dd:#560819; --bright:#E80538;
+  --ink:#141018; --ink2:#3a343f; --paper:#F6F4F1; --off:#FBFAF8; --white:#fff;
+  --tech:#3B2883; --tech-l:#6578B4;
+  --g1:#6b6770; --g2:#9a959e; --line:#e2ddd6; --line-d:#d3cdc4;
+  --ok:#026833; --ok-l:#eaf3ea;
+  --sans:'Hanken Grotesk',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --max:1120px; --r:16px; --r-s:11px;
+  --sh:0 1px 2px rgba(20,16,24,.04),0 12px 34px -18px rgba(20,16,24,.22);
+  --sh-h:0 2px 4px rgba(20,16,24,.06),0 26px 50px -20px rgba(164,16,52,.30);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{margin:0;letter-spacing:-.025em;line-height:1.08;font-weight:800}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.crimson{color:var(--crimson)}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--sans);font-weight:700;font-size:16px;border-radius:12px;padding:15px 22px;cursor:pointer;border:1.5px solid transparent;transition:transform .18s ease,box-shadow .18s ease,background .18s ease,color .18s ease;width:100%}
+.btn-primary{background:var(--crimson);color:#fff;box-shadow:0 10px 26px -10px rgba(164,16,52,.6)}
+.btn-primary:hover{background:var(--crimson-d);transform:translateY(-2px);box-shadow:0 16px 34px -12px rgba(164,16,52,.7)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-d)}
+.btn-ghost:hover{border-color:var(--ink);transform:translateY(-1px)}
+.btn-lightline{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+.btn-lightline:hover{background:rgba(255,255,255,.12);border-color:#fff}
+.btn-sm{width:auto;font-size:14px;padding:10px 16px;border-radius:10px}
+.arrow svg{width:18px;height:18px;transition:transform .2s ease}
+.btn:hover .arrow svg{transform:translateX(3px)}
+
+/* ---------- top bar ---------- */
+header.bar{position:absolute;top:0;left:0;right:0;z-index:40}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:18px;padding-bottom:18px}
+.bar .logo{height:30px;width:auto}
+.bar .actions{display:flex;gap:10px;align-items:center}
+.bar .brochure{color:#fff;font-weight:600;font-size:14px;padding:9px 12px;opacity:.92;display:inline-flex;gap:7px;align-items:center}
+.bar .brochure:hover{opacity:1}
+@media(max-width:600px){ .bar .brochure span{display:none} .bar .logo{height:26px} }
+
+/* ---------- hero ---------- */
+.hero{position:relative;background:var(--crimson-dd);color:#fff;overflow:hidden;padding:112px 0 64px}
+.hero-bg{position:absolute;inset:0;z-index:0;
+  background:
+   radial-gradient(120% 90% at 82% 8%, rgba(232,5,56,.55), transparent 55%),
+   radial-gradient(90% 80% at 10% 100%, rgba(60,40,120,.45), transparent 60%),
+   linear-gradient(160deg, var(--crimson) 0%, var(--crimson-dd) 90%);}
+.hero-dots{position:absolute;inset:0;z-index:1;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.16) 1.2px, transparent 1.3px);
+  background-size:26px 26px;
+  -webkit-mask-image:linear-gradient(180deg,#000,transparent 78%);mask-image:linear-gradient(180deg,#000,transparent 78%)}
+.hero-spot{position:absolute;z-index:1;width:620px;height:620px;left:var(--mx,70%);top:var(--my,18%);transform:translate(-50%,-50%);
+  background:radial-gradient(circle, rgba(255,220,225,.22), transparent 62%);pointer-events:none;transition:left .3s ease,top .3s ease;filter:blur(6px)}
+.hero .wrap{position:relative;z-index:2}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:34px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:40px;padding:7px 14px;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:#ffd0d8;box-shadow:0 0 0 0 rgba(255,208,216,.7);animation:pulse 2.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,208,216,.6)}70%{box-shadow:0 0 0 8px rgba(255,208,216,0)}100%{box-shadow:0 0 0 0 rgba(255,208,216,0)}}
+.hero h1{font-size:clamp(33px,7.4vw,58px);font-weight:900;margin:20px 0 0;letter-spacing:-.03em}
+.hero h1 .hl{color:#ffd7dd}
+.hero .lede{margin-top:18px;font-size:clamp(16px,2.4vw,19px);color:rgba(255,255,255,.9);max-width:560px;font-weight:400}
+.hero .lede b{color:#fff;font-weight:700}
+.trustrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.tchip{font-size:12.5px;font-weight:600;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:30px;padding:6px 12px}
+
+/* form card */
+.formcard{background:var(--off);color:var(--ink);border-radius:20px;padding:22px;box-shadow:0 30px 60px -22px rgba(0,0,0,.5)}
+.formcard .fh{font-size:19px;font-weight:800;letter-spacing:-.02em}
+.formcard .fsub{font-size:13.5px;color:var(--g1);margin-top:3px}
+.field{position:relative;margin-top:12px}
+.field label{position:absolute;top:8px;left:14px;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g2)}
+.field input,.field select{width:100%;border:1.5px solid var(--line-d);background:#fff;border-radius:11px;padding:24px 14px 9px;font-family:var(--sans);font-size:15.5px;color:var(--ink);appearance:none;transition:border-color .15s ease,box-shadow .15s ease}
+.field input:focus,.field select:focus{outline:none;border-color:var(--crimson);box-shadow:0 0 0 3px rgba(164,16,52,.12)}
+.field.sel::after{content:"";position:absolute;right:16px;top:26px;width:8px;height:8px;border-right:2px solid var(--g1);border-bottom:2px solid var(--g1);transform:rotate(45deg);pointer-events:none}
+.formcard .btn{margin-top:14px}
+.micro{font-size:12px;color:var(--g2);text-align:center;margin-top:10px}
+.altcta{display:flex;gap:16px;justify-content:center;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.altcta a{font-size:13.5px;font-weight:700;color:var(--crimson);display:inline-flex;align-items:center;gap:5px}
+.altcta a:hover{text-decoration:underline}
+.formcard.done .fbody{display:none}
+.done-msg{display:none;text-align:center;padding:26px 6px}
+.formcard.done .done-msg{display:block}
+.done-msg .ok{width:52px;height:52px;border-radius:50%;background:var(--ok-l);color:var(--ok);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:26px}
+
+/* ---------- sections ---------- */
+section{position:relative}
+.sec{padding:66px 0}
+.sec-head{max-width:640px;margin-bottom:34px}
+.sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.sec-head .eyebrow{color:var(--crimson)}
+.sec-head h2{font-size:clamp(26px,4.4vw,40px);margin-top:12px;font-weight:800}
+.sec-head p{margin-top:12px;color:var(--g1);font-size:16.5px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.06s}.rv.d2{transition-delay:.12s}.rv.d3{transition-delay:.18s}.rv.d4{transition-delay:.24s}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.hero-spot,.pill .dot{animation:none}.marquee-track{animation:none!important}}
+
+/* ---------- proof bar ---------- */
+.proof{background:var(--ink);color:#fff}
+.proof .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.1);border-radius:16px;overflow:hidden}
+.proof .cell{background:var(--ink);padding:26px 16px;text-align:center}
+.proof .num{font-size:clamp(30px,6vw,46px);font-weight:900;letter-spacing:-.03em;color:#fff;line-height:1}
+.proof .num .u{color:#ff9fb0}
+.proof .lab{font-size:13px;color:rgba(255,255,255,.7);margin-top:8px;font-weight:500}
+@media(min-width:760px){.proof .grid{grid-template-columns:repeat(4,1fr)}}
+
+/* ---------- marquee ---------- */
+.marquee{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee-track{display:flex;gap:18px;width:max-content;animation:scrollx 34s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+@keyframes scrollx{to{transform:translateX(-50%)}}
+.lchip{flex:none;height:78px;width:158px;background:#fff;border:1px solid var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center;padding:18px}
+.lchip img{max-height:34px;max-width:112px;object-fit:contain;filter:grayscale(1);opacity:.62;transition:filter .25s ease,opacity .25s ease}
+.lchip:hover img{filter:none;opacity:1}
+
+/* ---------- differentiators ---------- */
+.diffs{display:grid;grid-template-columns:1fr;gap:18px}
+@media(min-width:820px){.diffs{grid-template-columns:repeat(3,1fr)}}
+.diff{background:var(--off);border:1px solid var(--line);border-radius:var(--r);padding:26px;position:relative;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.diff::before{content:"";position:absolute;left:0;top:0;height:4px;width:100%;background:linear-gradient(90deg,var(--crimson),var(--bright));transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.diff:hover{transform:translateY(-4px);box-shadow:var(--sh-h);border-color:transparent}
+.diff:hover::before{transform:scaleX(1)}
+.diff .n{font-size:13px;font-weight:800;color:var(--crimson);letter-spacing:.1em}
+.diff h3{font-size:21px;margin:12px 0 9px;font-weight:800}
+.diff p{color:var(--g1);font-size:15px}
+.diff p b{color:var(--ink2)}
+
+/* ---------- mentors ---------- */
+.mentors{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(min-width:640px){.mentors{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.mentors{grid-template-columns:repeat(4,1fr)}}
+.mentor{background:var(--white);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;text-align:center;transition:transform .2s ease,box-shadow .2s ease}
+.mentor:hover{transform:translateY(-4px);box-shadow:var(--sh-h)}
+.mentor .ph{aspect-ratio:1;background:var(--paper);overflow:hidden}
+.mentor .ph img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.mentor:hover .ph img{transform:scale(1.05)}
+.mentor .info{padding:12px 10px 14px}
+.mentor .nm{font-weight:800;font-size:15px}
+.mentor .ed{font-size:12px;color:var(--g1);margin-top:1px}
+.mentor .co{display:inline-block;margin-top:8px;font-size:11.5px;font-weight:800;color:var(--crimson);background:#fbeef1;border-radius:20px;padding:3px 10px;letter-spacing:.02em}
+
+/* ---------- curriculum ---------- */
+.curr{background:var(--ink);color:#fff;border-radius:22px;padding:28px 22px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;font-family:var(--sans);font-weight:700;font-size:14px;color:rgba(255,255,255,.62);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:30px;padding:10px 16px;cursor:pointer;transition:all .2s ease}
+.tab.on{background:#fff;color:var(--ink);border-color:#fff}
+.panel{display:none;margin-top:22px;animation:fade .4s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.panel .yr{font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#ff9fb0}
+.panel h3{font-size:23px;margin:8px 0 10px}
+.panel p{color:rgba(255,255,255,.8);font-size:15.5px;max-width:640px}
+.panel .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.panel .tags span{font-size:12.5px;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:6px 11px}
+.curr .foot{margin-top:20px;font-size:13.5px;color:rgba(255,255,255,.6)}
+
+/* ---------- steps ---------- */
+.steps{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:760px){.steps{grid-template-columns:repeat(3,1fr)}}
+.step{background:var(--off);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.step .n{width:40px;height:40px;border-radius:11px;background:var(--crimson);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:19px}
+.step h3{font-size:18px;margin:14px 0 7px}
+.step p{color:var(--g1);font-size:14.5px}
+
+/* ---------- investment ---------- */
+.invest{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:900px){.invest{grid-template-columns:1.2fr 1fr}}
+.fees{background:var(--off);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.fees .row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.fc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 12px;text-align:center}
+.fc.feat{border-color:var(--crimson);box-shadow:0 0 0 1px var(--crimson) inset}
+.fc .city{font-size:12.5px;color:var(--g1);font-weight:600}
+.fc .amt{font-size:clamp(20px,4vw,27px);font-weight:900;letter-spacing:-.02em;margin-top:3px}
+.fc .per{font-size:11px;color:var(--g2)}
+.fees .note{font-size:12.5px;color:var(--g1);margin-top:14px}
+.help{display:flex;flex-direction:column;gap:12px}
+.hband{border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.hband.schol{background:var(--ok-l);border-color:#bfe0c9}
+.hband .ht{font-weight:800;font-size:16px;display:flex;align-items:center;gap:8px}
+.hband.schol .ht{color:var(--ok)}
+.hband .hb{font-size:14px;color:var(--ink2);margin-top:5px}
+.hband .btn{margin-top:14px}
+
+/* ---------- faq ---------- */
+.faqwrap{max-width:780px;margin:0 auto}
+.faq{border:1px solid var(--line);border-radius:12px;background:var(--off);margin-bottom:10px;overflow:hidden}
+.faq summary{list-style:none;cursor:pointer;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px;font-weight:700;font-size:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq .ico{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line-d);position:relative;transition:.2s}
+.faq .ico::before,.faq .ico::after{content:"";position:absolute;background:var(--crimson);border-radius:2px;transition:.25s}
+.faq .ico::before{width:12px;height:2px;top:11px;left:6px}
+.faq .ico::after{width:2px;height:12px;top:6px;left:11px}
+.faq[open] .ico{border-color:var(--crimson);background:#fbeef1}
+.faq[open] .ico::after{transform:rotate(90deg);opacity:0}
+.faq .body{padding:0 20px 18px;color:var(--g1);font-size:15px}
+
+/* ---------- final cta ---------- */
+.final{background:var(--crimson-dd);color:#fff;position:relative;overflow:hidden}
+.final .hero-dots{opacity:.4}
+.final .inner{position:relative;z-index:2;display:grid;grid-template-columns:1fr;gap:28px;align-items:center;padding:66px 0}
+.final h2{font-size:clamp(28px,5vw,44px);font-weight:900}
+.final p{color:rgba(255,255,255,.88);margin-top:14px;font-size:17px;max-width:520px}
+@media(min-width:900px){.final .inner{grid-template-columns:1.1fr .9fr}.hero-grid{grid-template-columns:1.05fr .95fr}}
+
+/* ---------- footer ---------- */
+footer{background:var(--ink);color:rgba(255,255,255,.72);padding:40px 0 120px;font-size:13.5px}
+footer .top{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:22px}
+footer .logo{height:26px}
+footer .contact a{color:#fff;font-weight:600}
+footer .disc{margin-top:18px;font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;max-width:820px}
+footer .legal{margin-top:14px;display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px}
+
+/* ---------- sticky bar ---------- */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fff;border-top:1px solid var(--line);box-shadow:0 -10px 30px -14px rgba(0,0,0,.2);padding:11px 16px;display:flex;gap:10px;align-items:center;transform:translateY(120%);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.sticky.show{transform:none}
+.sticky .lbl{display:none}
+.sticky .btn{width:auto}
+.sticky .apply{flex:none}
+.sticky .call{flex:1}
+@media(min-width:760px){.sticky{justify-content:center}.sticky .call{flex:none;min-width:260px}}
+</style>
+</head>
+<body>
+
+<!-- ===== TOP BAR (logo + secondary CTAs visible) ===== -->
+<header class="bar">
+  <div class="wrap">
+    <img class="logo" src="assets/quad-logo-white.png" alt="Quad AI">
+    <div class="actions">
+      <a class="brochure" href="#lead" data-brochure>⬇ <span>Download Brochure</span></a>
+      <a class="btn btn-lightline btn-sm" href="#lead" data-apply>Apply&nbsp;Now</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== FOLD 1 · HERO ===== -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-spot" id="spot"></div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="herocopy">
+        <span class="pill rv"><span class="dot"></span> 2026 Batch · 120 seats · Applications open</span>
+        <h1 class="rv d1">Learn to build AI products — mentored by engineers from <span class="hl">Google, Microsoft &amp; Amazon.</span></h1>
+        <p class="lede rv d2">A 4-year UG in Computer Science (AI&nbsp;&amp;&nbsp;ML). <b>100+ mentors</b> from MAANG, IIT&nbsp;&amp;&nbsp;IIM, a <b>6-month paid internship</b>, and <b>scholarships up to 50%</b>.</p>
+        <div class="trustrow rv d3">
+          <span class="tchip">100+ MAANG / IIT / IIM mentors</span>
+          <span class="tchip">75+ hiring partners</span>
+          <span class="tchip">3 campuses</span>
+        </div>
+      </div>
+
+      <!-- Lead form -->
+      <div class="rv d2" id="lead">
+        <form class="formcard" id="leadform" novalidate>
+          <div class="fbody">
+            <div class="fh">Get a call back</div>
+            <div class="fsub">Free counselling call — pick a campus, check scholarships, understand admission.</div>
+            <div class="field">
+              <label for="phone">Phone number</label>
+              <input id="phone" name="phone" type="tel" inputmode="numeric" placeholder="+91  98765 43210" required>
+            </div>
+            <div class="field sel">
+              <label for="campus">Preferred campus</label>
+              <select id="campus" name="campus" required>
+                <option value="" selected disabled>Choose a campus</option>
+                <option>Bengaluru</option><option>Mangalore</option><option>Patna</option>
+              </select>
+            </div>
+            <button class="btn btn-primary arrow" type="submit">Get a call back
+              <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </button>
+            <div class="micro">We’ll call you back within 24 hours · no spam</div>
+            <div class="altcta">
+              <a href="#lead" data-apply>Apply directly →</a>
+              <a href="#lead" data-brochure>Download brochure ⬇</a>
+            </div>
+          </div>
+          <div class="done-msg">
+            <div class="ok">✓</div>
+            <div class="fh">Thanks — you’re on the list.</div>
+            <div class="fsub" style="margin-top:6px">A Quad counsellor will call you back within 24 hours.</div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOLD 2 · PROOF BAR (count-up) ===== -->
+<section class="proof">
+  <div class="wrap sec" style="padding:44px 20px">
+    <div class="grid">
+      <div class="cell rv"><div class="num" data-count="100" data-suffix="+">0</div><div class="lab">mentors from MAANG, IIT &amp; IIM</div></div>
+      <div class="cell rv d1"><div class="num" data-count="75" data-suffix="+">0</div><div class="lab">hiring partners</div></div>
+      <div class="cell rv d2"><div class="num" data-count="6" data-suffix=" mo">0</div><div class="lab">mandatory <b style="color:#fff">paid</b> internship</div></div>
+      <div class="cell rv d3"><div class="num" data-prefix="" data-count="50" data-suffix="%">0</div><div class="lab">scholarships up to 50%</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOLD 3 · RECRUITER MARQUEE ===== -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head center rv">
+      <span class="eyebrow">The hiring network</span>
+      <h2>The companies our network opens up</h2>
+      <p>75+ hiring partners — from MAANG to India’s fastest-growing startups.</p>
+    </div>
+  </div>
+  <div class="marquee rv d1">
+    <div class="marquee-track" id="mtrack"></div>
+  </div>
+</section>
+
+<!-- ===== FOLD 4 · WHY QUAD (3 differentiators) ===== -->
+<section class="sec" style="background:var(--off);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Why Quad</span>
+      <h2>Three reasons this isn’t a normal CS degree</h2>
+    </div>
+    <div class="diffs">
+      <div class="diff rv"><div class="n">01</div><h3>Mentored by people who build at the frontier</h3><p>Your classes are run by working engineers, founders &amp; CxOs from <b>Google, Microsoft, Amazon &amp; CRED</b> — not career academics. 1-on-1 mentorship, resume reviews, and mock interviews with MAANG engineers.</p></div>
+      <div class="diff rv d1"><div class="n">02</div><h3>You learn by shipping, not memorising</h3><p>Write <b>1,00,000+ lines of production code</b> before you graduate. Live projects from semester one — a GenAI CRM, an InShorts-style app, even <b>your own ChatGPT</b>. Students win at IIT-B Techfest &amp; Smart India Hackathon.</p></div>
+      <div class="diff rv d2"><div class="n">03</div><h3>A guaranteed on-ramp into industry</h3><p>A mandatory <b>6-month paid internship</b>, dedicated 1:1 career coaching, and a <b>75+ company hiring network</b> — so you graduate industry-ready, not just certified.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOLD 5 · MENTORS ===== -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head center rv">
+      <span class="eyebrow">Your mentors</span>
+      <h2>Meet a few of your mentors</h2>
+      <p>100+ mentors from top corporates — masterclasses, expert sessions &amp; 1-on-1 guidance.</p>
+    </div>
+    <div class="mentors" id="mentorgrid"></div>
+  </div>
+</section>
+
+<!-- ===== FOLD 6 · CURRICULUM ===== -->
+<section class="sec" style="background:var(--off);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">The 4-year path</span>
+      <h2>Engineered as a launchpad</h2>
+    </div>
+    <div class="curr rv d1">
+      <div class="tabs" id="tabs">
+        <button class="tab on" data-p="y1">Year 1 · Build</button>
+        <button class="tab" data-p="y2">Year 2 · Achieve</button>
+        <button class="tab" data-p="y3">Year 3 · Innovate</button>
+        <button class="tab" data-p="y4">Year 4 · Master</button>
+      </div>
+      <div class="panel on" id="y1">
+        <div class="yr">Year 1 — Build</div>
+        <h3>Foundations you can ship</h3>
+        <p>Learn by building from day one — data structures, web development and Python. Finish the year with a live portfolio and a GenAI-powered CRM.</p>
+        <div class="tags"><span>DSA</span><span>Python</span><span>ReactJS</span><span>Web Dev</span><span>Maths for CS</span><span>APIs</span></div>
+      </div>
+      <div class="panel" id="y2">
+        <div class="yr">Year 2 — Achieve</div>
+        <h3>Data-driven systems that scale</h3>
+        <p>Build complex, scalable systems — backend engineering, databases and your first machine learning. Ship an InShorts-style news app and a real-time bidding platform.</p>
+        <div class="tags"><span>Node.js</span><span>Databases</span><span>Machine Learning</span><span>PostgreSQL</span><span>Data Viz</span><span>Spark</span></div>
+      </div>
+      <div class="panel" id="y3">
+        <div class="yr">Year 3 — Innovate</div>
+        <h3>Specialise + a 6-month paid internship</h3>
+        <p>Go deep into deep learning, networks and architecture — then spend six months inside a real company. Build your own ChatGPT and a mini mobile OS.</p>
+        <div class="tags"><span>Deep Learning</span><span>GPT models</span><span>Computer Networks</span><span>Architecture</span><span>6-mo paid internship</span></div>
+      </div>
+      <div class="panel" id="y4">
+        <div class="yr">Year 4 — Master &amp; Excel</div>
+        <h3>Industry immersion + capstone</h3>
+        <p>A full industry internship and a deep-tech capstone. Graduate with MAANG-ready system design and an entrepreneur’s toolkit.</p>
+        <div class="tags"><span>System Design</span><span>Operating Systems</span><span>Compiler Design</span><span>Cyber Security</span><span>Capstone</span></div>
+      </div>
+      <div class="foot">Curriculum co-curated with IIT &amp; IIM alumni · full syllabus shared on your counselling call.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOLD 7 · HOW YOU GET IN ===== -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Admission</span>
+      <h2>Getting in is 3 steps</h2>
+    </div>
+    <div class="steps">
+      <div class="step rv"><div class="n">1</div><h3>Apply</h3><p>Share your Class X &amp; XII marks (expected or final) — from any recognised board.</p></div>
+      <div class="step rv d1"><div class="n">2</div><h3>Take the QAT</h3><p>A 60-minute online aptitude test — logic, data interpretation, quant &amp; communication. Not just scores; fit.</p></div>
+      <div class="step rv d2"><div class="n">3</div><h3>1:1 interview</h3><p>A short conversation to see how you think, solve and create.</p></div>
+    </div>
+    <div class="rv d2" style="max-width:340px;margin-top:24px">
+      <a class="btn btn-primary arrow" href="#lead" data-scroll>Get a call back
+        <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOLD 8 · INVESTMENT ===== -->
+<section class="sec" style="background:var(--off);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Investment</span>
+      <h2>Transparent fees. Real help paying for them.</h2>
+    </div>
+    <div class="invest">
+      <div class="fees rv">
+        <div class="row">
+          <div class="fc"><div class="city">Patna</div><div class="amt">₹8L</div><div class="per">4-year total</div></div>
+          <div class="fc"><div class="city">Mangalore</div><div class="amt">₹9.5L</div><div class="per">4-year total</div></div>
+          <div class="fc feat"><div class="city">Bengaluru</div><div class="amt">₹14L</div><div class="per">4-year total</div></div>
+        </div>
+        <p class="note">All-in tuition — includes software, development &amp; experiential-learning charges. No hidden costs.</p>
+      </div>
+      <div class="help">
+        <div class="hband schol rv d1">
+          <div class="ht">🎓 Scholarships up to 50%</div>
+          <div class="hb">Women in Tech · Early-Mover · Udaan (merit) · JP Narayan (changemakers).</div>
+        </div>
+        <div class="hband rv d2">
+          <div class="ht">Low-stress financing</div>
+          <div class="hb">EMI &amp; education loans with HDFC Credila, Axis, ICICI, SBI, Kuhoo &amp; Propelld.</div>
+          <a class="btn btn-primary arrow" href="#lead" data-scroll>Check your scholarship eligibility
+            <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOLD 9 · FAQ ===== -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head center rv">
+      <span class="eyebrow">FAQ</span>
+      <h2>Questions students &amp; parents ask</h2>
+    </div>
+    <div class="faqwrap">
+      <details class="faq rv" open><summary>Who awards the degree? Is it recognised?<span class="ico"></span></summary><div class="body">Quad delivers the industry-led program and skilling; your <b>degree is awarded by our partner university</b>. Quad AI (Onenorth Learning Pvt. Ltd.) is a training institute, not a UGC-regulated Higher Education Institution — so you get an industry-ready skillset <i>and</i> a recognised degree from the partnering university.</div></details>
+      <details class="faq rv"><summary>What placement support do I actually get?<span class="ico"></span></summary><div class="body">Dedicated 1:1 career coaching, resume reviews and mock interviews with MAANG engineers, a mandatory <b>6-month paid internship</b>, and access to a 75+ company hiring network. (We’re early — so we’re transparent: we sell support and access, not a placement statistic.)</div></details>
+      <details class="faq rv"><summary>How do the scholarships work?<span class="ico"></span></summary><div class="body">Scholarships range from 10%–50% of tuition across four programs — Women in Tech, Early-Mover, Udaan (top-percentile QAT scorers) and JP Narayan (changemakers, via interview). Your counsellor helps you find the one you qualify for.</div></details>
+      <details class="faq rv"><summary>What does the fee cover, and is EMI available?<span class="ico"></span></summary><div class="body">Fees are all-in — tuition, software, development and experiential learning. 4-year totals are ₹8L (Patna), ₹9.5L (Mangalore) and ₹14L (Bengaluru). EMI and education loans are available through our finance partners.</div></details>
+      <details class="faq rv"><summary>What is the QAT, and how hard is it?<span class="ico"></span></summary><div class="body">The QAT is a 60-minute online aptitude test covering logical reasoning, data interpretation, quantitative ability and communication. It’s designed to find fit and potential — not to trip you up.</div></details>
+      <details class="faq rv"><summary>Which campuses can I join?<span class="ico"></span></summary><div class="body">Bengaluru, Mangalore and Patna are live for the 2026 batch. Mumbai is coming soon.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOLD 10 · FINAL CTA ===== -->
+<section class="final">
+  <div class="hero-dots"></div>
+  <div class="wrap">
+    <div class="inner">
+      <div class="rv">
+        <span class="eyebrow" style="color:#ffd7dd">2026 batch · 120 seats</span>
+        <h2>120 seats. One conversation away.</h2>
+        <p>Book a free counselling call — we’ll help you pick a campus, check your scholarship eligibility, and walk you through admission.</p>
+      </div>
+      <div class="rv d1">
+        <form class="formcard" id="leadform2" novalidate>
+          <div class="fbody">
+            <div class="fh">Get a call back</div>
+            <div class="fsub">Takes 20 seconds.</div>
+            <div class="field"><label for="phone2">Phone number</label><input id="phone2" type="tel" inputmode="numeric" placeholder="+91  98765 43210" required></div>
+            <div class="field sel"><label for="campus2">Preferred campus</label>
+              <select id="campus2" required><option value="" selected disabled>Choose a campus</option><option>Bengaluru</option><option>Mangalore</option><option>Patna</option></select></div>
+            <button class="btn btn-primary arrow" type="submit">Get a call back
+              <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+            <div class="altcta">
+              <a href="#lead" data-apply>Apply directly →</a>
+              <a href="#lead" data-brochure>Download brochure ⬇</a>
+            </div>
+          </div>
+          <div class="done-msg"><div class="ok">✓</div><div class="fh">Thanks — you’re on the list.</div><div class="fsub" style="margin-top:6px">A counsellor will call you back within 24 hours.</div></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="top">
+      <img class="logo" src="assets/quad-logo-white.png" alt="Quad AI">
+      <div class="contact">📞 <a href="tel:+917368050555">+91 73680 50555</a> &nbsp;·&nbsp; ✉ <a href="mailto:hello@quadcse.com">hello@quadcse.com</a></div>
+    </div>
+    <p class="disc">Quad AI (Onenorth Learning Pvt. Ltd.) is a private limited company and not a Higher Education Institution (HEI) regulated by the University Grants Commission (UGC). Quad provides market-led, industry skilling and training. All admissions, academic operations, examinations, and degree awards are managed solely by the respective partner university.</p>
+    <div class="legal"><span>© 2026 Quad AI</span><a href="#">Privacy Policy</a><a href="#">Terms</a><a href="#">Refund Policy</a></div>
+  </div>
+</footer>
+
+<!-- ===== STICKY BAR (secondary Apply + primary Get a call back) ===== -->
+<div class="sticky" id="sticky">
+  <a class="btn btn-ghost apply" href="#lead" data-scroll>Apply Now</a>
+  <a class="btn btn-primary call arrow" href="#lead" data-scroll>Get a call back
+    <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+</div>
+
+<script>
+(function(){
+  var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- reveal on scroll ---- */
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.14, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+
+  /* ---- count-up ---- */
+  function countUp(el){
+    var target=+el.dataset.count, pre=el.dataset.prefix||'', suf=el.dataset.suffix||'';
+    if(RM){ el.textContent=pre+target+suf; return; }
+    var t0=null, dur=1300;
+    function step(ts){ if(!t0)t0=ts; var p=Math.min((ts-t0)/dur,1); var e=1-Math.pow(1-p,3);
+      el.innerHTML=pre+Math.round(e*target)+'<span class="u">'+suf+'</span>'; if(p<1)requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  }
+  var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){countUp(e.target);cio.unobserve(e.target);}});},{threshold:.6});
+  document.querySelectorAll('.num[data-count]').forEach(function(el){cio.observe(el);});
+
+  /* ---- recruiter marquee (duplicate for seamless loop) ---- */
+  var logos=['google','microsoft','amazon','adobe','goldman_sachs','uber','swiggy','zomato','paytm','deloitte','accenture','wipro','cognizant','capgemini','mahindra','hdfc','icici','bajaj'];
+  var track=document.getElementById('mtrack');
+  if(track){ var html=logos.map(function(l){return '<div class="lchip"><img src="assets/logos/'+l+'.png" alt="'+l+'" loading="lazy"></div>';}).join('');
+    track.innerHTML=html+html; }
+
+  /* ---- mentors ---- */
+  var mentors=[
+    ['prashant_verma','Prashant Verma','IIT Roorkee','CRED'],
+    ['neenu','Neenu','IIM Mumbai','Google'],
+    ['priyanka_sadana','Priyanka Sadana','XLRI','Microsoft'],
+    ['mohit_banka','Mohit Banka','IIM Calcutta','Amazon'],
+    ['syed','Syed Mujtaba','ISB Hyderabad','Apple'],
+    ['shiladitya_saha','Shiladitya Saha','IIT Kharagpur','Microsoft'],
+    ['ritika','Ritika','IIM Mumbai','Oxyzo'],
+    ['nimit_agarwal','Nimit Agarwal','DA-IICT','Google']
+  ];
+  var mg=document.getElementById('mentorgrid');
+  if(mg){ mg.innerHTML=mentors.map(function(m,i){
+    return '<div class="mentor rv '+(i%4===1?'d1':i%4===2?'d2':i%4===3?'d3':'')+'">'+
+      '<div class="ph"><img src="assets/mentors/'+m[0]+'.jpg" alt="'+m[1]+'" loading="lazy"></div>'+
+      '<div class="info"><div class="nm">'+m[1]+'</div><div class="ed">'+m[2]+'</div><div class="co">'+m[3]+'</div></div></div>';
+  }).join('');
+    mg.querySelectorAll('.rv').forEach(function(el){io.observe(el);}); }
+
+  /* ---- curriculum tabs ---- */
+  document.getElementById('tabs').addEventListener('click',function(e){
+    var b=e.target.closest('.tab'); if(!b)return;
+    this.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');}); b.classList.add('on');
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+    document.getElementById(b.dataset.p).classList.add('on');
+  });
+
+  /* ---- hero spotlight follow ---- */
+  var spot=document.getElementById('spot'), hero=document.querySelector('.hero');
+  if(spot&&hero&&!RM){ hero.addEventListener('pointermove',function(ev){
+    var r=hero.getBoundingClientRect();
+    spot.style.setProperty('--mx',((ev.clientX-r.left)/r.width*100)+'%');
+    spot.style.setProperty('--my',((ev.clientY-r.top)/r.height*100)+'%');
+  }); }
+
+  /* ---- sticky bar after hero ---- */
+  var sticky=document.getElementById('sticky');
+  var sio=new IntersectionObserver(function(es){ es.forEach(function(e){ sticky.classList.toggle('show', !e.isIntersecting); }); },{threshold:0});
+  sio.observe(document.getElementById('top'));
+
+  /* ---- smooth scroll to form for secondary CTAs + focus ---- */
+  function toForm(){ var f=document.getElementById('lead'); f.scrollIntoView({behavior:RM?'auto':'smooth',block:'center'});
+    setTimeout(function(){ var p=document.getElementById('phone'); if(p)p.focus({preventScroll:true}); }, RM?0:500); }
+  document.querySelectorAll('[data-scroll],[data-apply],[data-brochure]').forEach(function(a){
+    a.addEventListener('click',function(e){ e.preventDefault(); toForm(); });
+  });
+
+  /* ---- form submit (prototype: inline success) ---- */
+  function wire(id){ var f=document.getElementById(id); if(!f)return;
+    f.addEventListener('submit',function(e){ e.preventDefault();
+      var phone=f.querySelector('input[type=tel]').value.trim();
+      if(phone.replace(/\D/g,'').length<10){ f.querySelector('input[type=tel]').focus(); return; }
+      f.classList.add('done');
+    });
+  }
+  wire('leadform'); wire('leadform2');
+})();
+</script>
+</body>
+</html>
