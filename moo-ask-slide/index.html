@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>MOO — The Ask (final slide)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* MOO Design System V1 */
+    --ink:#1A1A1A; --black:#1A1A1A;
+    --yellow:#FFD500; --red:#FF3D47; --blue:#4361EE; --oat:#F0DFC8;
+    --cream:#FAF4E9; --muted:#8C7E66; --green:#22C55E;
+    --display:"Bebas Neue", Impact, sans-serif;
+    --body:"Inter", system-ui, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;}
+  body{font-family:var(--body);background:radial-gradient(circle at 50% 40%,#1c1c1c,#0c0c0c);color:#fff;overflow:hidden;-webkit-font-smoothing:antialiased;}
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;}
+  .frame{width:1280px;height:720px;position:relative;transform-origin:center center;box-shadow:0 30px 90px rgba(0,0,0,.5);border-radius:6px;overflow:hidden;flex:none;}
+
+  /* Blue field + subtle grid, matches deck cover / current ask slide */
+  .slide{position:absolute;inset:0;background:var(--blue);
+    background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+    background-size:96px 96px;}
+  .pad{position:absolute;inset:0;padding:52px 60px;}
+
+  /* Header */
+  .head{display:flex;align-items:flex-start;justify-content:space-between;}
+  .h-title{font-family:var(--display);font-weight:400;font-size:74px;line-height:.9;letter-spacing:.01em;color:#fff;}
+  .h-sub{font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#dfe4ff;margin-top:10px;}
+  .h-logo{height:44px;flex:none;margin-top:6px;}
+
+  /* Two-column mid section */
+  .mid{position:absolute;left:60px;right:60px;top:188px;display:flex;gap:34px;}
+  .col-l{flex:1.15;}
+  .col-r{flex:1;display:flex;flex-direction:column;align-items:center;}
+
+  .block-lbl{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--yellow);margin-bottom:14px;}
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;max-width:520px;}
+  .chip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:30px;
+    padding:9px 16px;font-size:14.5px;font-weight:600;color:#fff;display:flex;align-items:center;gap:8px;}
+  .chip b{font-family:var(--display);font-weight:400;font-size:20px;letter-spacing:.02em;color:var(--yellow);line-height:1;}
+
+  .outcome{margin-top:22px;background:var(--yellow);color:var(--ink);border-radius:14px;padding:16px 22px;display:inline-flex;align-items:baseline;gap:14px;box-shadow:0 12px 30px rgba(0,0,0,.22);}
+  .outcome .arw{font-family:var(--display);font-size:30px;line-height:1;}
+  .outcome b{font-family:var(--display);font-weight:400;font-size:46px;line-height:.85;letter-spacing:.02em;}
+  .outcome span{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+
+  /* Donut */
+  .donut-wrap{display:flex;flex-direction:column;align-items:center;}
+  .donut{width:178px;height:178px;border-radius:50%;position:relative;
+    background:conic-gradient(
+      var(--red) 0 33%,
+      var(--yellow) 33% 63%,
+      var(--oat) 63% 80%,
+      var(--green) 80% 92%,
+      var(--black) 92% 100%);
+    box-shadow:0 14px 34px rgba(0,0,0,.28);}
+  .donut::after{content:"";position:absolute;inset:46px;border-radius:50%;background:var(--blue);}
+  .donut .hole{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;}
+  .donut .hole b{font-family:var(--display);font-weight:400;font-size:36px;line-height:.8;letter-spacing:.02em;color:#fff;}
+  .donut .hole span{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#dfe4ff;margin-top:3px;}
+  .legend{margin-top:14px;display:grid;grid-template-columns:1fr;gap:5px;width:100%;max-width:300px;}
+  .lg{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:500;color:#eef1ff;}
+  .lg i{width:11px;height:11px;border-radius:3px;flex:none;}
+  .lg .amt{margin-left:auto;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;}
+
+  /* Exit band */
+  .exit{position:absolute;left:60px;right:60px;bottom:70px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:13px 20px;}
+  .exit .el{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);}
+  .exit .es{font-size:12.5px;color:#eef1ff;font-weight:500;margin-top:3px;max-width:820px;}
+  .exit .row{display:flex;gap:10px;margin-top:11px;}
+  .ex{flex:1;background:rgba(255,255,255,.1);border-radius:10px;padding:10px 13px;}
+  .ex .b{font-family:var(--display);font-weight:400;font-size:26px;line-height:.85;letter-spacing:.02em;color:#fff;}
+  .ex .n{font-size:12px;color:#dfe4ff;font-weight:600;margin-top:5px;}
+  .ex .n em{font-style:normal;color:#fff;font-weight:800;}
+
+  /* Footer contact */
+  .foot{position:absolute;left:60px;right:60px;bottom:26px;display:flex;align-items:center;justify-content:space-between;}
+  .foot .who{font-size:13px;font-weight:700;color:#fff;letter-spacing:.02em;}
+  .foot .who span{color:#c8d0ff;font-weight:500;}
+  .foot .cta{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#dfe4ff;}
+
+  #cap{position:fixed;top:12px;left:50%;transform:translateX(-50%);color:#666;font-size:11px;letter-spacing:.08em;text-transform:uppercase;z-index:20;}
+</style>
+</head>
+<body>
+<div id="cap">MOO — The Ask · draft slide for review</div>
+<div id="stage">
+  <div class="frame" id="frame">
+    <div class="slide">
+      <div class="pad">
+
+        <!-- Header -->
+        <div class="head">
+          <div>
+            <div class="h-title">WE ARE RAISING ₹6 CR</div>
+            <div class="h-sub">Seed round · Compulsorily Convertible Debentures</div>
+          </div>
+          <img class="h-logo" src="../moo-deck/img/logo-moo.png" alt="Ministry of Oats"
+               onerror="this.style.display='none'">
+        </div>
+
+        <!-- Mid: unlocks (left) + use of funds (right) -->
+        <div class="mid">
+          <div class="col-l">
+            <div class="block-lbl">What ₹6 Cr unlocks in 18 months</div>
+            <div class="chips">
+              <div class="chip"><b>3&rarr;15</b> Stores in Bengaluru</div>
+              <div class="chip"><b>Delhi</b> NCR beachhead</div>
+              <div class="chip"><b>50</b> Cold-shelf fridges</div>
+              <div class="chip"><b>85%</b> Contribution margin</div>
+              <div class="chip"><b>CPG</b> Shelf launch</div>
+            </div>
+            <div class="outcome">
+              <span class="arw">&rarr;</span>
+              <b>₹20 CR</b>
+              <span>Revenue<br>run-rate</span>
+            </div>
+          </div>
+
+          <div class="col-r">
+            <div class="donut-wrap">
+              <div class="block-lbl" style="text-align:center;width:100%;">Use of funds</div>
+              <div class="donut">
+                <div class="hole"><b>₹6 CR</b><span>Seed</span></div>
+              </div>
+              <div class="legend">
+                <div class="lg"><i style="background:var(--red)"></i>Delhi NCR beachhead<span class="amt">₹2.0 Cr</span></div>
+                <div class="lg"><i style="background:var(--yellow)"></i>Bengaluru expansion<span class="amt">₹1.8 Cr</span></div>
+                <div class="lg"><i style="background:var(--oat)"></i>Central kitchen &amp; supply<span class="amt">₹1.0 Cr</span></div>
+                <div class="lg"><i style="background:var(--green)"></i>Fridges + brand / GTM<span class="amt">₹0.7 Cr</span></div>
+                <div class="lg"><i style="background:var(--black)"></i>CPG pilot<span class="amt">₹0.5 Cr</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Exit / return story -->
+        <div class="exit">
+          <div class="el">The exit is proven — strategics buy this category</div>
+          <div class="es">QSR chains and healthy-food brands are being acquired by Marico, ITC, Tata &amp; PE right now. The oats leader is the natural next buy.</div>
+          <div class="row">
+            <div class="ex"><div class="b">~₹1,400 CR</div><div class="n">Theobroma <em>&rarr; ChrysCapital</em> · QSR chain</div></div>
+            <div class="ex"><div class="b">₹370 CR</div><div class="n">Plix <em>&rarr; Marico</em></div></div>
+            <div class="ex"><div class="b">₹350 CR</div><div class="n">True Elements <em>&rarr; Marico</em></div></div>
+            <div class="ex"><div class="b">₹180 CR+</div><div class="n">Yogabars <em>&rarr; ITC</em></div></div>
+            <div class="ex"><div class="b">₹156 CR</div><div class="n">Soulfull <em>&rarr; Tata</em></div></div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="foot">
+          <div class="who">Pratik Mishra · Founder <span>&nbsp;|&nbsp; pratik@ministryofoats.com &nbsp;·&nbsp; +91 &mdash;&mdash;&mdash;&mdash;&mdash;</span></div>
+          <div class="cta">Let's put fuel on the fire.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function fit(){
+    var f=document.getElementById('frame');
+    var s=Math.min(window.innerWidth/1280,window.innerHeight/720)*0.94;
+    f.style.transform='scale('+s+')';
+  }
+  window.addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>
