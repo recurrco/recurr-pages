@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Goodera — Catalog Data Foundations</title>
+<style>
+  :root{
+    --ink:#141414; --muted:#5c5c5c; --faint:#8a8a8a;
+    --line:#e7e7e7; --bg:#ffffff; --panel:#fafafa;
+    --orange:#F04E23; --orange-soft:#FEF0EB;
+    --green:#16A46A; --green-soft:#ECF8F2;
+    --red:#E23D2E; --red-soft:#FDEEEC;
+    --maxw:820px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;
+    color:var(--ink); background:var(--bg); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  /* header */
+  header{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+  .kicker{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
+  h1{font-size:40px;line-height:1.1;font-weight:800;letter-spacing:-0.02em;margin-bottom:14px}
+  .sub{font-size:18px;color:var(--muted);max-width:640px}
+  .meta{margin-top:24px;font-size:13px;color:var(--faint)}
+  .meta b{color:var(--muted);font-weight:600}
+  /* sections */
+  section{padding:44px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+  h3{font-size:26px;font-weight:800;letter-spacing:-0.01em;margin-bottom:16px;line-height:1.2}
+  p{margin-bottom:16px;font-size:16.5px}
+  p:last-child{margin-bottom:0}
+  strong{font-weight:700}
+  .lead{font-size:20px;line-height:1.5;color:var(--ink)}
+  .lead b{color:var(--orange)}
+  /* health check grid */
+  .health{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  .col{border-radius:14px;padding:22px 22px 18px}
+  .col.good{background:var(--green-soft)}
+  .col.bad{background:var(--red-soft)}
+  .col .h{font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .col.good .h{color:var(--green)}
+  .col.bad .h{color:var(--red)}
+  .col ul{list-style:none}
+  .col li{font-size:15px;padding:7px 0;border-top:1px solid rgba(0,0,0,.06);font-weight:500}
+  .col li:first-child{border-top:none}
+  .col li span{display:block;font-size:13px;color:var(--muted);font-weight:400;margin-top:2px}
+  /* kit bars */
+  .bars{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 24px;margin-top:8px}
+  .bars .cap{font-size:14px;color:var(--muted);margin-bottom:20px}
+  .bar-row{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  .bar-lbl{width:70px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;font-weight:600;text-align:right;flex:none}
+  .bar-track{flex:1;background:#eee;border-radius:6px;height:26px;overflow:hidden}
+  .bar-fill{height:100%;background:var(--orange);border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:9px;color:#fff;font-size:13px;font-weight:700}
+  .bars .punch{margin-top:18px;font-size:15px;font-weight:600;color:var(--ink);border-top:1px solid var(--line);padding-top:16px}
+  .bars .punch b{color:var(--orange)}
+  /* shelf */
+  .shelf{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center;margin-top:8px}
+  .shelf-box{border-radius:14px;padding:22px;min-height:210px}
+  .shelf-box.now{background:var(--red-soft)}
+  .shelf-box.next{background:var(--green-soft)}
+  .shelf-box .t{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+  .shelf-box.now .t{color:var(--red)}
+  .shelf-box.next .t{color:var(--green)}
+  .tag{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:6px;padding:3px 8px;margin:3px 3px 3px 0}
+  .tag.dup{color:var(--red);text-decoration:line-through;text-decoration-color:rgba(226,61,46,.5)}
+  .shelf-box.now .cap,.shelf-box.next .cap{font-size:13px;color:var(--muted);margin-top:12px;line-height:1.5}
+  .arrow{font-size:28px;color:var(--faint);text-align:center}
+  .clean-line{font-size:14px;padding:6px 0;border-bottom:1px dashed rgba(22,164,106,.3);color:var(--ink);font-weight:600}
+  .clean-line:last-of-type{border-bottom:none}
+  /* staircase */
+  .stairs{margin-top:8px}
+  .step{display:flex;gap:0;margin-bottom:0}
+  .step-num{flex:none;width:52px;height:52px;border-radius:12px;background:var(--ink);color:#fff;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;z-index:2}
+  .step.s1 .step-num{background:var(--orange)}
+  .step-body{flex:1;padding:2px 0 26px 20px;position:relative;margin-left:-26px;padding-left:46px}
+  .step:not(:last-child) .step-body::before{content:"";position:absolute;left:25px;top:52px;bottom:-2px;width:2px;background:var(--line)}
+  .step-name{font-weight:800;font-size:18px;margin-bottom:3px}
+  .step-name em{font-style:normal;color:var(--orange)}
+  .step-desc{font-size:15px;color:var(--muted)}
+  .step-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--orange);background:var(--orange-soft);padding:2px 8px;border-radius:20px;margin-left:8px;vertical-align:middle}
+  .foundation{margin-top:6px;text-align:center;font-size:13px;color:var(--faint);font-weight:600;letter-spacing:.03em}
+  /* others callout */
+  .callout{background:var(--ink);color:#fff;border-radius:16px;padding:32px 30px;margin-top:8px}
+  .callout .big{font-size:44px;font-weight:800;color:var(--orange);line-height:1;margin-bottom:8px}
+  .callout h4{font-size:20px;font-weight:700;margin-bottom:12px}
+  .callout p{color:#c9c9c9;font-size:16px}
+  .callout p:last-child{margin-bottom:0}
+  .callout b{color:#fff}
+  /* order reasons */
+  .reason{font-size:15.5px;padding:10px 0;border-top:1px solid var(--line);color:var(--muted)}
+  .reason:first-child{border-top:none}
+  .reason b{color:var(--ink)}
+  /* golden rule */
+  .golden{background:var(--orange);color:#fff;border-radius:16px;padding:34px 30px;text-align:center;margin-top:8px}
+  .golden .flow{font-size:20px;font-weight:800;letter-spacing:-0.01em;margin-bottom:12px}
+  .golden .flow span{opacity:.6;margin:0 6px;font-weight:400}
+  .golden p{color:rgba(255,255,255,.9);font-size:16px;max-width:560px;margin:0 auto}
+  footer{padding:40px 0 60px;color:var(--faint);font-size:13px}
+  footer b{color:var(--muted)}
+  .stat-inline{color:var(--orange);font-weight:700}
+  @media(max-width:680px){
+    h1{font-size:31px}
+    .health{grid-template-columns:1fr}
+    .shelf{grid-template-columns:1fr}
+    .arrow{transform:rotate(90deg)}
+    h3{font-size:22px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="kicker">Goodera · Data Foundations</div>
+    <h1>Cleaning the catalog before we build the smart layer</h1>
+    <p class="sub">A plain-English walkthrough of the data cleanup we need to do first — so that filters, search, recommendations, and the Catalog Room actually work.</p>
+    <div class="meta"><b>Scope:</b> Activity catalog (1,094 activities · 2,296 variants) &nbsp;·&nbsp; <b>Based on:</b> the VV domain schema + the June activity export &nbsp;·&nbsp; <b>For:</b> Vishesh, Shubham, Karan</div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <p class="lead">The catalog isn't <em>broken</em> — it's <b>inconsistent</b>. The same fact gets written several different ways, real categories hide behind the word "others," and some fields are half-empty. None of this stops the catalog working today — but <b>all of it blocks the smart features</b> (recommendations, personalization, the Catalog Room). You can't build intelligence on messy inputs.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>The health check</h2>
+    <h3>Half of it is already clean. The mess is concentrated.</h3>
+    <div class="health">
+      <div class="col good">
+        <div class="h">✓ Already solid</div>
+        <ul>
+          <li>Business Unit <span>only 2 clean values</span></li>
+          <li>Event Format <span>4 clean values</span></li>
+          <li>Duration <span>all numeric, sensible range</span></li>
+          <li>Min Participants <span>all numeric</span></li>
+          <li>Turnaround (TAT) <span>all numeric</span></li>
+        </ul>
+      </div>
+      <div class="col bad">
+        <div class="h">✗ Needs work</div>
+        <ul>
+          <li>Volunteer Output <span>48% blank + free text ("Best", "2–3 cards")</span></li>
+          <li>Focus Areas <span>real categories hidden as "others" (8% of rows)</span></li>
+          <li>Material Cost <span>35% blank + a few $100,000 typos</span></li>
+          <li>Activity Names <span>46 duplicate pairs — same item, different spelling</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>The whole problem in one picture</h2>
+    <h3>One "kit," written four ways</h3>
+    <p>There's a field that was <em>built to be the clean, structured version</em> of volunteer output. Even inside that field, a single unit — a <strong>kit</strong> — is stored four different ways:</p>
+    <div class="bars">
+      <div class="cap">How the unit "kit" is actually stored today:</div>
+      <div class="bar-row"><div class="bar-lbl">"kit"</div><div class="bar-track"><div class="bar-fill" style="width:100%">534</div></div></div>
+      <div class="bar-row"><div class="bar-lbl">"Kit"</div><div class="bar-track"><div class="bar-fill" style="width:25%">133</div></div></div>
+      <div class="bar-row"><div class="bar-lbl">"kits"</div><div class="bar-track"><div class="bar-fill" style="width:5%">21</div></div></div>
+      <div class="bar-row"><div class="bar-lbl">"Kit&nbsp;"</div><div class="bar-track"><div class="bar-fill" style="width:3%;background:#f7a58c">+more</div></div></div>
+      <div class="punch">To a human these are one thing. <b>To a computer they're four different things.</b> A filter for "kit" silently misses 177+ activities. Multiply that across every field, and you see why filters feel flaky and why recommendations can't work yet.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>The mental model</h2>
+    <h3>A messy shelf vs. an organized store</h3>
+    <div class="shelf">
+      <div class="shelf-box now">
+        <div class="t">Today</div>
+        <span class="tag dup">EduCards</span><span class="tag dup">Educards</span>
+        <span class="tag dup">Wish Tree</span><span class="tag dup">Wish tree</span>
+        <span class="tag dup">kit</span><span class="tag dup">Kit</span>
+        <span class="tag">"others"</span><span class="tag">(blank)</span>
+        <span class="tag">$100000</span>
+        <div class="cap">Items dumped on a shelf. Labels handwritten. Some peeling off. It works if you already know what you're looking at.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="shelf-box next">
+        <div class="t">The foundation</div>
+        <div class="clean-line">Every item = one row, no duplicates</div>
+        <div class="clean-line">Every tag = a real, chosen category</div>
+        <div class="clean-line">No blanks in the fields that matter</div>
+        <div class="clean-line">One fact stored in exactly one place</div>
+        <div class="cap">Then filters, search, recommendations, and AI all sit <b>on top</b> — and just work.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>The path</h2>
+    <h3>Build the foundation, bottom-up</h3>
+    <p>These are done <strong>in order</strong>. Each step stands on the one below it — skipping ahead means rebuilding.</p>
+    <div class="foundation">↑ &nbsp; build upward &nbsp; ↑</div>
+    <div class="stairs" style="margin-top:20px">
+      <div class="step"><div class="step-num">6</div><div class="step-body"><div class="step-name">Lock it <span class="step-tag">can't rot again</span></div><div class="step-desc">Rules at data-entry: pick a category from a list, no free-typing. Enforced only once the data already obeys.</div></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-name">Merge duplicates of the same fact</div><div class="step-desc">One fact, one home. Retire the messy free-text "volunteer output" and keep only the structured version.</div></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-name">Fill the gaps that matter</div><div class="step-desc">The 35% missing material cost, the blank outputs — fill with values from the agreed clean set.</div></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-name">Normalize every value</div><div class="step-desc">Map each messy value to its one canonical form: kit / Kit / kits → "kit". Fix the $100k typos.</div></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-name">Dedupe the catalog</div><div class="step-desc">Merge the 46 duplicate activities (EduCards = Educards) into single items.</div></div></div>
+      <div class="step s1"><div class="step-num">1</div><div class="step-body"><div class="step-name"><em>Agree the official lists — FIRST</em> <span class="step-tag">the real decision</span></div><div class="step-desc">The canonical focus areas, output units, and tags — and break the "others" pile open into real categories. Everything above depends on this.</div></div></div>
+      <div class="step"><div class="step-num">0</div><div class="step-body" style="padding-bottom:6px"><div class="step-name">Snapshot &amp; agree "what good looks like"</div><div class="step-desc">Freeze a copy of today's data before touching anything.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Why this exact order</h2>
+    <h3>Each layer needs the one under it</h3>
+    <div class="reason"><b>Can't dedupe before the vocabulary</b> — deciding two items are "the same" needs agreed rules.</div>
+    <div class="reason"><b>Can't normalize before dedupe</b> — otherwise you clean the same duplicate twice.</div>
+    <div class="reason"><b>Can't fill gaps before normalizing</b> — you'd fill blanks with values that don't match the clean set.</div>
+    <div class="reason"><b>Can't merge double-storage before filling</b> — you might delete the only copy that held the data.</div>
+    <div class="reason"><b>Lock it last</b> — you only enforce rules once the data already passes them.</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Step 1 is a business decision, not a technical one</h2>
+    <h3>The "others" trap</h3>
+    <div class="callout">
+      <div class="big">111</div>
+      <h4>activities are tagged <em>only</em> "others"</h4>
+      <p>That's 111 items the catalog literally cannot categorize, filter, or recommend — invisible to any smart feature.</p>
+      <p><b>"Others" isn't a category — it's a pile of missing categories.</b> Cleaning it means opening the pile and naming what's really inside. That's a call the product team owns, and it's exactly the "rich tagging" the Catalog Room is built on.</p>
+    </div>
+    <p style="margin-top:24px">Decide the canonical focus areas, output units, and tag vocabulary <strong>once</strong> — and ~80% of the mess collapses on its own, because most of it is just the same handful of real values written carelessly.</p>
+  </div>
+</section>
+
+<section style="border-bottom:none">
+  <div class="wrap">
+    <div class="golden">
+      <div class="flow">Vocabulary <span>→</span> Dedupe <span>→</span> Normalize <span>→</span> Fill <span>→</span> Merge <span>→</span> Lock</div>
+      <p>Foundations first, features second. Everything smart — recommendations, personalization, the Catalog Room — is a feature that only works once this foundation is solid.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Prepared for the Goodera product team · <b>Vishesh · Shubham · Karan</b>. Working document — for discussion, not final scope. Figures from the June 2026 activity export (1,094 activities / 2,296 variants).
+  </div>
+</footer>
+
+</body>
+</html>
