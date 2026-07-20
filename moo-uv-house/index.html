@@ -4,16 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>MOO at UV House — Ordering Pilot (concept)</title>
+  <title>MOO at UV House — Ordering Pilot (prototype)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    /* ============================================================
+       MOO CONSUMER DESIGN SYSTEM V1 — "Magazine. Caricature. Calm."
+       Tokens pulled verbatim from Figma b7EFMLIJO7wAGhbocE359z · page 0:1
+       ============================================================ */
     :root{
-      --moo-yellow:#FFD500; --moo-red:#FF3D47; --moo-blue:#4361EE; --moo-oat:#F0DFC8;
-      --moo-black:#1A1A1A; --moo-charcoal:#2a2a2a; --moo-white:#fff;
-      --uv-navy:#0E1E3D; --uv-ink:#132a52;
-      --cat-overnight:#FFD500; --cat-chia:#F5A3D0; --cat-bowls:#00B8D4; --cat-smoothies:#FF3D47; --cat-barista:#FFAA8A;
+      --moo-black:#1A1A1A; --moo-yellow:#FFD500; --moo-red:#FF3D47; --moo-blue:#4361EE; --moo-oat:#F0DFC8; --moo-white:#fff;
+      /* category (bunny) palette */
+      --cat-overnight:#FFD500; --cat-chia:#F5A3D0; --cat-bowls:#00B8D4; --cat-smoothies:#FF3D47; --cat-desserts:#5AC8C4; --cat-barista:#FFAA8A;
+      /* kitchen state */
+      --st-open:#22C55E; --st-soon:#FFD500; --st-closed:#FF3D47;
+      /* co-brand */
+      --uv-navy:#0E1E3D;
       --green:#1E9E5A; --green-soft:#E4F5EC;
       --surface:#FAFAFA; --border:#ececec; --muted:#8a8a8a;
       --fh:'Bebas Neue','Impact',sans-serif; --fb:'Inter',-apple-system,sans-serif;
@@ -23,215 +30,238 @@
     body{font-family:var(--fb);color:var(--moo-black);background:#d8c8ad;
       background-image:linear-gradient(rgba(26,26,26,.05) 1.5px,transparent 1.5px),linear-gradient(90deg,rgba(26,26,26,.05) 1.5px,transparent 1.5px);
       background-size:48px 48px;-webkit-font-smoothing:antialiased;min-height:100vh;}
-
-    /* ===== layout: intro rail + phone ===== */
-    .wrap{display:flex;flex-direction:column;align-items:center;padding:28px 16px 120px;}
-    .kicker{max-width:480px;width:100%;margin-bottom:18px;}
-    .kicker .lock{display:flex;align-items:center;gap:10px;font-family:var(--fh);font-size:30px;letter-spacing:.02em;color:var(--moo-black);}
-    .kicker .lock .x{font-family:var(--fb);font-weight:700;font-size:15px;color:var(--muted);}
-    .kicker p{font-size:13px;color:#5a4d38;margin-top:4px;line-height:1.5;}
+    .wrap{display:flex;flex-direction:column;align-items:center;padding:26px 16px 130px;}
+    .kicker{max-width:390px;width:100%;margin-bottom:16px;}
+    .kicker .lock{display:flex;align-items:center;gap:9px;font-family:var(--fh);font-size:28px;letter-spacing:.02em;}
+    .kicker .lock .uvw{font-family:var(--fb);font-weight:800;font-size:16px;}
+    .kicker .lock .x{font-family:var(--fb);font-weight:600;font-size:13px;color:var(--muted);}
+    .kicker p{font-size:12.5px;color:#5a4d38;margin-top:5px;line-height:1.5;}
     .kicker .tag{display:inline-block;margin-top:8px;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:var(--moo-black);color:var(--moo-yellow);padding:4px 9px;border-radius:100px;}
 
-    /* ===== phone ===== */
-    .phone{width:390px;max-width:100%;height:800px;background:var(--moo-black);border-radius:44px;padding:11px;box-shadow:0 40px 80px -20px rgba(20,10,0,.55),0 0 0 2px rgba(0,0,0,.4);position:relative;}
+    /* phone */
+    .phone{width:390px;max-width:100%;height:820px;background:var(--moo-black);border-radius:44px;padding:11px;box-shadow:0 40px 80px -20px rgba(20,10,0,.55),0 0 0 2px rgba(0,0,0,.4);position:relative;}
     .screenwin{position:relative;width:100%;height:100%;background:var(--moo-white);border-radius:34px;overflow:hidden;}
     .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:130px;height:26px;background:var(--moo-black);border-radius:0 0 16px 16px;z-index:60;}
-
     .screen{position:absolute;inset:0;display:none;flex-direction:column;overflow-y:auto;overflow-x:hidden;}
     .screen.active{display:flex;animation:fade .3s var(--ease);}
     @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
     .screen::-webkit-scrollbar{display:none;}
-
-    /* status strip (fake ios) */
-    .ios{height:44px;flex:0 0 44px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 22px 6px;font-size:12px;font-weight:600;}
+    .ios{height:40px;flex:0 0 40px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 22px 4px;font-size:12px;font-weight:600;}
     .ios.light{color:#fff;} .ios.dark{color:var(--moo-black);}
-
     h1,h2,h3,.big{font-family:var(--fh);font-weight:400;letter-spacing:.01em;line-height:.95;text-transform:uppercase;}
 
-    /* ===== buttons ===== */
+    /* ===== AppShell top bar (design-system: LOGO / STEP / STEP-BACK) ===== */
+    .topbar{height:56px;flex:0 0 56px;display:flex;align-items:center;padding:0 20px;border-bottom:1px solid var(--border);background:#fff;position:sticky;top:0;z-index:25;}
+    .topbar .wm{font-family:var(--fh);font-size:26px;letter-spacing:.02em;}
+    .topbar .back{font-family:var(--fh);font-size:26px;margin-right:12px;cursor:pointer;}
+    .topbar .ttl{font-family:var(--fh);font-size:22px;}
+    .topbar .spacer{flex:1;}
+    .topbar .profile{width:32px;height:32px;border-radius:50%;background:var(--moo-yellow);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;}
+    .topbar .stepdot{display:flex;gap:5px;} .topbar .stepdot i{width:7px;height:7px;border-radius:50%;background:var(--border);} .topbar .stepdot i.on{background:var(--moo-black);}
+    /* deliver pill (STEP mode) */
+    .delpill{display:flex;align-items:center;gap:9px;border:1.5px solid var(--moo-black);border-radius:100px;padding:6px 12px;}
+    .delpill .l{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);line-height:1;}
+    .delpill .t{font-family:var(--fh);font-size:18px;line-height:1;}
+    /* live-order chip (design-system live component) */
+    .livechip{display:flex;align-items:center;gap:7px;background:var(--moo-yellow);border-radius:100px;padding:6px 12px 6px 10px;cursor:pointer;box-shadow:0 0 0 4px rgba(255,213,0,.25);}
+    .livechip .pdot{width:7px;height:7px;border-radius:50%;background:var(--moo-black);animation:pulse 1.5s infinite;}
+    .livechip .lt{font-family:var(--fh);font-size:20px;line-height:1;}
+    @keyframes pulse{0%{opacity:1}50%{opacity:.25}100%{opacity:1}}
+
+    /* ===== status strip (below top bar when kitchen state ≠ open) ===== */
+    .statusstrip{height:30px;flex:0 0 30px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+    .statusstrip.soon{background:var(--moo-yellow);color:var(--moo-black);}
+    .statusstrip.open{background:#eafaf0;color:var(--st-open);}
+    .statusstrip.closed{background:var(--moo-black);color:var(--moo-yellow);}
+
+    /* buttons */
     .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:none;cursor:pointer;font-family:var(--fb);font-weight:700;font-size:15px;padding:16px;border-radius:16px;transition:transform .12s var(--bounce);}
     .btn:active{transform:scale(.97);}
-    .btn-primary{background:var(--moo-black);color:#fff;}
-    .btn-yellow{background:var(--moo-yellow);color:var(--moo-black);}
+    .btn-primary{background:var(--moo-black);color:#fff;} .btn-yellow{background:var(--moo-yellow);color:var(--moo-black);}
     .btn-ghost{background:#fff;color:var(--moo-black);border:1.5px solid var(--border);}
-    .btn-blue{background:var(--uv-navy);color:#fff;}
+    .btn-bebas{font-family:var(--fh);font-size:20px;letter-spacing:.03em;font-weight:400;}
+    .pad{padding:0 22px;}
 
-    /* =========================================================
-       SCREEN 1 — SPLASH + EMAIL-DOMAIN GATE / SIGN-IN
-       ========================================================= */
-    #s-splash{background:var(--uv-navy);color:#fff;
-      background-image:linear-gradient(rgba(255,255,255,.05) 1.5px,transparent 1.5px),linear-gradient(90deg,rgba(255,255,255,.05) 1.5px,transparent 1.5px);
-      background-size:44px 44px;}
-    #s-splash .body{flex:1;display:flex;flex-direction:column;padding:8px 28px 30px;}
-    .cobrand{display:flex;align-items:center;gap:12px;margin-top:6px;}
-    .cobrand .moo{font-family:var(--fh);font-size:34px;color:var(--moo-yellow);display:flex;align-items:center;gap:7px;}
-    .cobrand .x{font-size:13px;font-weight:700;color:rgba(255,255,255,.5);}
-    .cobrand .uv{font-weight:800;font-size:15px;letter-spacing:.02em;border:1.5px solid rgba(255,255,255,.4);padding:5px 9px;border-radius:8px;}
+    /* ============ 1 · SPLASH + GATE ============ */
+    #s-splash{background:var(--uv-navy);color:#fff;background-image:linear-gradient(rgba(255,255,255,.05) 1.5px,transparent 1.5px),linear-gradient(90deg,rgba(255,255,255,.05) 1.5px,transparent 1.5px);background-size:44px 44px;}
+    #s-splash .tbar{height:56px;flex:0 0 56px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;}
+    #s-splash .tbar .wm{font-family:var(--fh);font-size:22px;letter-spacing:.02em;color:#fff;}
+    #s-splash .tbar .dot{width:8px;height:8px;border-radius:50%;background:var(--moo-yellow);}
+    #s-splash .body{flex:1;display:flex;flex-direction:column;padding:4px 28px 28px;}
+    .cobrand{display:flex;align-items:center;gap:11px;margin-top:2px;}
+    .cobrand .moo{font-family:var(--fh);font-size:30px;color:var(--moo-yellow);display:flex;align-items:center;gap:7px;}
+    .cobrand .x{font-size:12px;font-weight:700;color:rgba(255,255,255,.5);}
+    .cobrand .uv{font-weight:800;font-size:14px;border:1.5px solid rgba(255,255,255,.4);padding:5px 9px;border-radius:8px;}
     .splash-hero{flex:1;display:flex;flex-direction:column;justify-content:center;}
-    .splash-hero .eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--moo-yellow);margin-bottom:14px;}
-    .splash-hero h1{font-size:74px;color:#fff;}
-    .splash-hero h1 .pop{color:var(--moo-yellow);}
-    .splash-hero .sub{font-size:15px;line-height:1.55;color:rgba(255,255,255,.82);margin-top:16px;max-width:300px;}
-    .perkpill{display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:var(--moo-yellow);color:var(--moo-black);font-weight:800;font-size:14px;padding:9px 14px;border-radius:100px;width:max-content;}
-    .gatebox{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:16px;margin-top:8px;}
+    .splash-hero .eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--moo-yellow);margin-bottom:12px;}
+    .splash-hero h1{font-size:76px;color:#fff;} .splash-hero h1 .pop{color:var(--moo-yellow);}
+    .splash-hero .sub{font-size:15px;line-height:1.55;color:rgba(255,255,255,.82);margin-top:14px;max-width:300px;}
+    .perkpill{display:inline-flex;align-items:center;gap:8px;margin-top:18px;background:var(--moo-yellow);color:var(--moo-black);font-weight:800;font-size:14px;padding:9px 14px;border-radius:100px;width:max-content;}
+    .gatebox{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:16px;margin-top:6px;}
     .gatebox .glabel{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:7px;margin-bottom:12px;}
     .fauxinput{display:flex;align-items:center;background:#fff;border-radius:12px;padding:13px 14px;color:var(--muted);font-size:14px;font-weight:500;}
     .fauxinput .dom{margin-left:auto;color:var(--uv-navy);font-weight:700;}
     .signin-row{display:flex;flex-direction:column;gap:10px;margin-top:12px;}
-    .fineprint{font-size:11px;color:rgba(255,255,255,.55);text-align:center;margin-top:14px;line-height:1.5;}
+    .fineprint{font-size:11px;color:rgba(255,255,255,.55);text-align:center;margin-top:12px;line-height:1.5;}
 
-    /* =========================================================
-       SCREEN 2 — HOME
-       ========================================================= */
+    /* ============ 2 · PLAN SETUP (office-desk builder) ============ */
+    #s-setup{background:var(--surface);}
+    .setup-body{padding:18px 22px 40px;}
+    .kq{font-family:var(--fh);font-size:34px;line-height:1;margin:18px 0 4px;}
+    .ksub{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.4;}
+    .selcard{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;transition:.15s;}
+    .selcard.on{border-color:var(--moo-black);background:#fff;box-shadow:0 6px 16px -10px rgba(0,0,0,.25);}
+    .selcard .ic{width:36px;height:36px;border-radius:10px;background:var(--moo-oat);display:flex;align-items:center;justify-content:center;font-size:18px;}
+    .selcard .t{font-weight:700;font-size:14px;} .selcard .s{font-size:12px;color:var(--muted);}
+    .selcard .chk{margin-left:auto;width:22px;height:22px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;}
+    .selcard.on .chk{background:var(--moo-black);border-color:var(--moo-black);}
+    .weekrow{display:flex;gap:7px;margin-bottom:14px;}
+    .wd{flex:1;text-align:center;padding:11px 0;border-radius:12px;border:1.5px solid var(--border);font-weight:700;font-size:13px;cursor:pointer;}
+    .wd.on{background:var(--moo-black);color:#fff;border-color:var(--moo-black);}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+    .chip{padding:9px 14px;border-radius:100px;border:1.5px solid var(--border);font-weight:600;font-size:13px;cursor:pointer;background:#fff;}
+    .chip.on{background:var(--moo-yellow);border-color:var(--moo-yellow);}
+    .seclabel{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:20px 0 10px;}
+
+    /* ============ 3 · GENERATED PLAN ============ */
+    #s-plan{background:var(--surface);}
+    .planwrap{padding:16px 22px 120px;}
+    .planhero{background:var(--moo-black);color:#fff;border-radius:22px;padding:20px;margin-bottom:16px;}
+    .planhero .e{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--moo-yellow);}
+    .planhero h2{font-size:38px;margin-top:6px;}
+    .planhero .p{font-size:13px;color:rgba(255,255,255,.75);margin-top:8px;line-height:1.5;}
+    .daycard{background:#fff;border:1px solid var(--border);border-radius:18px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:13px;}
+    .daycard .day{font-family:var(--fh);font-size:16px;width:44px;color:var(--muted);}
+    .daycard .thumb{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;}
+    .daycard .nm{font-weight:700;font-size:14px;} .daycard .mt{font-size:12px;color:var(--muted);}
+    .daycard .pr{margin-left:auto;text-align:right;} .daycard .pr .n{font-weight:800;font-size:14px;} .daycard .pr .w{font-size:11px;color:#bbb;text-decoration:line-through;}
+    .swapnote{text-align:center;font-size:12px;color:var(--muted);margin:10px 0 4px;}
+
+    /* ============ 4 · HOME / CALENDAR ============ */
     #s-home{background:var(--surface);}
-    .home-head{padding:4px 22px 16px;}
-    .home-head .hi{font-size:13px;color:var(--muted);font-weight:600;}
-    .home-head h2{font-size:40px;margin-top:2px;}
-    .avatar{width:42px;height:42px;border-radius:50%;background:var(--moo-yellow);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--moo-black);font-size:15px;}
-    .row-between{display:flex;align-items:center;justify-content:space-between;}
-    .pad{padding:0 22px;}
-    .live-chip{margin:0 22px 16px;background:var(--moo-black);color:#fff;border-radius:18px;padding:14px 16px;display:flex;align-items:center;gap:13px;cursor:pointer;}
-    .pulse{width:10px;height:10px;border-radius:50%;background:var(--moo-yellow);box-shadow:0 0 0 0 rgba(255,213,0,.7);animation:pulse 1.6s infinite;}
-    @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,213,0,.6)}70%{box-shadow:0 0 0 9px rgba(255,213,0,0)}100%{box-shadow:0 0 0 0 rgba(255,213,0,0)}}
-    .live-chip .lc-t{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--moo-yellow);font-weight:700;}
-    .live-chip .lc-m{font-family:var(--fh);font-size:19px;margin-top:1px;}
-    .live-chip .arw{margin-left:auto;opacity:.6;}
-    .addrcard{margin:0 22px;background:#fff;border:1px solid var(--border);border-radius:22px;overflow:hidden;box-shadow:0 8px 24px -14px rgba(0,0,0,.15);}
-    .addrcard .top{background:var(--uv-navy);color:#fff;padding:16px 18px;display:flex;align-items:center;gap:12px;}
-    .addrcard .top .ic{width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,.13);display:flex;align-items:center;justify-content:center;font-size:19px;}
-    .addrcard .top .l{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:700;}
-    .addrcard .top .n{font-family:var(--fh);font-size:22px;margin-top:1px;}
-    .addrcard .body{padding:18px;}
-    .addrcard .perkline{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--green);font-weight:700;margin-bottom:14px;}
-    .qtiles{display:flex;gap:10px;margin:18px 22px 0;}
-    .qtile{flex:1;background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px;text-align:center;}
-    .qtile .em{font-size:22px;} .qtile .t{font-size:12px;font-weight:600;margin-top:6px;color:#555;}
+    .home-head{padding:14px 22px 10px;}
+    .home-head .hi{font-size:13px;color:var(--muted);font-weight:600;} .home-head h2{font-size:36px;margin-top:2px;}
+    .cal{padding:4px 22px 90px;}
+    .caldaylabel{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:16px 0 10px;}
+    .ordercard{background:#fff;border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:10px;}
+    .ordercard .oc-top{display:flex;align-items:center;gap:13px;padding:14px 16px;}
+    .ordercard .thumb{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;}
+    .ordercard .nm{font-weight:700;font-size:14px;} .ordercard .mt{font-size:12px;color:var(--muted);}
+    .ordercard .slot{margin-left:auto;text-align:right;font-size:11px;} .ordercard .slot .tt{font-family:var(--fh);font-size:18px;}
+    .ordercard .oc-live{background:var(--moo-black);color:#fff;padding:9px 16px;display:flex;align-items:center;gap:9px;font-size:12px;}
+    .ordercard .oc-live .lc-t{color:var(--moo-yellow);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:10px;}
+    .emptyslot{border:1.5px dashed var(--border);border-radius:18px;padding:16px;display:flex;align-items:center;gap:12px;color:var(--muted);cursor:pointer;margin-bottom:10px;}
+    .emptyslot .plus{width:34px;height:34px;border-radius:10px;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--moo-black);}
+    .planbadge{display:inline-flex;align-items:center;gap:6px;background:var(--green-soft);color:var(--green);font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:6px;margin-left:8px;}
 
-    /* =========================================================
-       SCREEN 3 — MENU
-       ========================================================= */
+    /* ============ 5 · MENU ============ */
     #s-menu{background:var(--surface);}
-    .menu-top{background:#fff;border-bottom:1px solid var(--border);padding:2px 0 0;position:sticky;top:0;z-index:20;}
-    .deliverbar{display:flex;align-items:center;gap:11px;padding:12px 20px;cursor:pointer;}
-    .deliverbar .ic{width:34px;height:34px;border-radius:10px;background:var(--moo-oat);display:flex;align-items:center;justify-content:center;font-size:16px;}
-    .deliverbar .l{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;}
-    .deliverbar .m{font-weight:700;font-size:14px;margin-top:1px;}
-    .deliverbar .chg{margin-left:auto;font-size:12px;font-weight:700;color:var(--moo-blue);}
-    .cats{display:flex;gap:8px;padding:4px 20px 12px;overflow-x:auto;}
-    .cats::-webkit-scrollbar{display:none;}
-    .cat{flex:0 0 auto;padding:7px 13px;border-radius:100px;font-size:12px;font-weight:700;background:var(--surface);border:1px solid var(--border);color:#555;cursor:pointer;}
+    .introbanner{margin:12px 20px;background:linear-gradient(100deg,#1A1A1A,#33270a);color:#fff;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;}
+    .introbanner .big9{font-family:var(--fh);font-size:40px;color:var(--moo-yellow);line-height:.8;}
+    .introbanner .t{font-weight:800;font-size:14px;} .introbanner .s{font-size:11.5px;color:rgba(255,255,255,.7);margin-top:2px;line-height:1.35;}
+    .cats{display:flex;gap:8px;padding:2px 20px 12px;overflow-x:auto;} .cats::-webkit-scrollbar{display:none;}
+    .cat{flex:0 0 auto;padding:7px 13px;border-radius:100px;font-size:12px;font-weight:700;background:#fff;border:1px solid var(--border);color:#555;cursor:pointer;}
     .cat.on{background:var(--moo-black);color:#fff;border-color:var(--moo-black);}
-    .menu-scroll{padding:16px 20px 120px;}
-    .sec-h{font-family:var(--fh);font-size:26px;margin:8px 0 12px;display:flex;align-items:center;gap:9px;}
+    .menu-scroll{padding:6px 20px 120px;}
+    .sec-h{font-family:var(--fh);font-size:26px;margin:12px 0 12px;display:flex;align-items:center;gap:9px;}
     .dot{width:11px;height:11px;border-radius:50%;}
     .item{display:flex;gap:14px;background:#fff;border:1px solid var(--border);border-radius:20px;padding:12px;margin-bottom:12px;}
-    .thumb{width:82px;height:82px;flex:0 0 82px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:34px;}
+    .thumb2{width:82px;height:82px;flex:0 0 82px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:34px;}
     .item .info{flex:1;min-width:0;display:flex;flex-direction:column;}
-    .item .nm{font-weight:700;font-size:15px;line-height:1.2;}
-    .item .ds{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.35;}
+    .item .nm{font-weight:700;font-size:15px;line-height:1.2;} .item .ds{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.35;}
     .priceline{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:8px;}
-    .price-now{font-weight:800;font-size:16px;}
-    .price-was{font-size:13px;color:#bbb;text-decoration:line-through;}
-    .perkchip{font-size:10px;font-weight:800;letter-spacing:.03em;background:var(--green-soft);color:var(--green);padding:3px 7px;border-radius:6px;}
+    .price-now{font-weight:800;font-size:16px;} .price-was{font-size:13px;color:#bbb;text-decoration:line-through;}
+    .perkchip{font-size:10px;font-weight:800;background:var(--green-soft);color:var(--green);padding:3px 7px;border-radius:6px;}
+    .ninechip{font-size:10px;font-weight:800;background:var(--moo-yellow);color:var(--moo-black);padding:3px 7px;border-radius:6px;}
     .add{margin-left:auto;background:var(--moo-yellow);color:var(--moo-black);border:none;font-weight:800;font-size:13px;padding:8px 16px;border-radius:11px;cursor:pointer;transition:transform .12s var(--bounce);}
     .add:active{transform:scale(.92);}
-
-    /* cart bar */
-    .cartbar{position:absolute;left:14px;right:14px;bottom:16px;background:var(--moo-black);color:#fff;border-radius:18px;padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;z-index:40;box-shadow:0 16px 30px -10px rgba(0,0,0,.5);transition:transform .12s var(--bounce);}
-    .cartbar:active{transform:scale(.98);}
+    .cartbar{position:absolute;left:14px;right:14px;bottom:16px;background:var(--moo-black);color:#fff;border-radius:18px;padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;z-index:40;box-shadow:0 16px 30px -10px rgba(0,0,0,.5);}
     .cartbar .ct{background:var(--moo-yellow);color:var(--moo-black);font-weight:800;font-size:13px;width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
     .cartbar .cm{font-weight:700;font-size:14px;} .cartbar .cta{margin-left:auto;font-family:var(--fh);font-size:19px;letter-spacing:.03em;}
 
-    /* =========================================================
-       SCREEN 4 — CHECKOUT
-       ========================================================= */
+    /* ============ 6 · CHECKOUT ============ */
     #s-checkout{background:var(--surface);}
-    .ck-head{padding:6px 20px 14px;display:flex;align-items:center;gap:12px;}
-    .back{width:38px;height:38px;border-radius:11px;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;}
-    .ck-head h2{font-size:32px;}
-    .card{background:#fff;border:1px solid var(--border);border-radius:20px;margin:0 20px 14px;overflow:hidden;}
-    .ln{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--surface);}
-    .ln:last-child{border-bottom:none;}
+    .card{background:#fff;border:1px solid var(--border);border-radius:20px;margin:14px 20px 14px;overflow:hidden;}
+    .card:first-of-type{margin-top:16px;}
+    .ln{display:flex;align-items:center;gap:12px;padding:14px 16px;}
     .ln .tb{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 44px;}
     .ln .nm{font-weight:600;font-size:14px;} .ln .qy{font-size:12px;color:var(--muted);}
-    .ln .pr{margin-left:auto;font-weight:700;font-size:14px;}
+    .ln .pr{margin-left:auto;font-weight:800;font-size:14px;}
+    .ln .pr small{display:block;font-weight:500;font-size:11px;color:#bbb;text-decoration:line-through;text-align:right;}
     .breakdown{padding:16px;}
     .br{display:flex;justify-content:space-between;font-size:14px;padding:6px 0;color:#444;}
     .br.g{color:var(--green);font-weight:700;}
-    .br.total{border-top:1.5px dashed var(--border);margin-top:8px;padding-top:12px;font-family:var(--fh);font-size:26px;color:var(--moo-black);}
-    .saved{margin:0 20px 14px;background:var(--green-soft);color:var(--green);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px;}
-    .splitnote{margin:0 20px 16px;font-size:11.5px;color:var(--muted);line-height:1.5;display:flex;gap:8px;align-items:flex-start;}
-    .phonein{margin:0 20px 14px;}
-    .phonein .glabel{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:7px;}
-    .phonein .fi{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:13px 14px;font-size:14px;color:#333;}
-    .footer-cta{position:absolute;left:14px;right:14px;bottom:16px;z-index:40;}
+    .br.total{border-top:1.5px dashed var(--border);margin-top:8px;padding-top:12px;font-family:var(--fh);font-size:28px;color:var(--moo-black);}
+    .saved{margin:0 20px 12px;background:var(--green-soft);color:var(--green);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px;}
+    .splitnote{margin:0 20px 14px;font-size:11.5px;color:var(--muted);line-height:1.5;display:flex;gap:8px;align-items:flex-start;}
+    /* clubbed phone + pay component (build note #3) */
+    .paybar{position:absolute;left:14px;right:14px;bottom:16px;z-index:40;background:#fff;border:1.5px solid var(--moo-black);border-radius:18px;padding:8px 8px 8px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 16px 30px -12px rgba(0,0,0,.4);}
+    .paybar .cc{font-weight:700;font-size:14px;color:var(--muted);}
+    .paybar input{flex:1;border:none;outline:none;font-family:var(--fb);font-size:15px;font-weight:600;letter-spacing:.02em;background:transparent;min-width:0;}
+    .paybar button{flex:0 0 auto;background:var(--border);color:#aaa;border:none;font-family:var(--fh);font-size:19px;letter-spacing:.03em;padding:12px 18px;border-radius:12px;cursor:not-allowed;transition:.15s;}
+    .paybar button.on{background:var(--moo-yellow);color:var(--moo-black);cursor:pointer;}
+    .payhint{position:absolute;left:20px;right:20px;bottom:84px;text-align:center;font-size:11px;color:var(--muted);z-index:40;}
 
-    /* =========================================================
-       SCREEN 5 — LIVE ORDER TRACKER
-       ========================================================= */
+    /* ============ 7 · LIVE TRACKER ============ */
     #s-track{background:var(--moo-black);color:#fff;}
     #s-track .tbody{flex:1;display:flex;flex-direction:column;padding:6px 24px 28px;}
-    .celebrate{text-align:center;margin:8px 0 22px;}
-    .celebrate .em{font-size:52px;}
-    .celebrate h1{font-size:60px;color:var(--moo-yellow);margin-top:6px;}
-    .track-chip{background:rgba(255,213,0,.12);border:1px solid rgba(255,213,0,.3);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:13px;margin-bottom:22px;}
+    .celebrate{text-align:center;margin:6px 0 18px;} .celebrate .em{font-size:48px;} .celebrate h1{font-size:58px;color:var(--moo-yellow);margin-top:6px;}
+    .track-chip{background:rgba(255,213,0,.12);border:1px solid rgba(255,213,0,.3);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:13px;margin-bottom:20px;}
+    .track-chip .pdot{width:9px;height:9px;border-radius:50%;background:var(--moo-yellow);animation:pulse 1.5s infinite;}
     .track-chip .lc-t{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--moo-yellow);font-weight:700;}
     .track-chip .lc-m{font-family:var(--fh);font-size:22px;margin-top:1px;color:#fff;}
-    .steps{display:flex;flex-direction:column;gap:0;margin-bottom:22px;}
+    .steps{display:flex;flex-direction:column;margin-bottom:20px;}
     .step{display:flex;gap:14px;align-items:flex-start;}
     .step .rail{display:flex;flex-direction:column;align-items:center;}
     .step .node{width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:13px;color:rgba(255,255,255,.4);flex:0 0 26px;}
-    .step .line{width:2px;flex:1;min-height:26px;background:rgba(255,255,255,.16);}
+    .step .line{width:2px;flex:1;min-height:24px;background:rgba(255,255,255,.16);}
     .step.done .node{background:var(--moo-yellow);border-color:var(--moo-yellow);color:var(--moo-black);}
     .step.done .line{background:var(--moo-yellow);}
-    .step.now .node{border-color:var(--moo-yellow);color:var(--moo-yellow);animation:pulse 1.6s infinite;}
-    .step .lab{padding-bottom:22px;} .step:last-child .lab{padding-bottom:0;}
+    .step.now .node{border-color:var(--moo-yellow);color:var(--moo-yellow);animation:pulse 1.5s infinite;}
+    .step .lab{padding-bottom:20px;} .step:last-child .lab{padding-bottom:0;}
     .step .lab .t{font-weight:700;font-size:15px;} .step.pending .lab .t{color:rgba(255,255,255,.4);}
     .step .lab .s{font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;}
-    .track-drop{background:rgba(255,255,255,.06);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:12px;margin-bottom:14px;}
-    .track-drop .l{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:700;}
-    .track-drop .m{font-family:var(--fh);font-size:19px;margin-top:1px;}
-    .track-saved{text-align:center;font-size:13px;color:var(--moo-yellow);font-weight:700;margin-bottom:16px;}
+    .track-drop{background:rgba(255,255,255,.06);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+    .track-drop .l{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:700;} .track-drop .m{font-family:var(--fh);font-size:19px;margin-top:1px;}
+    .track-saved{text-align:center;font-size:13px;color:var(--moo-yellow);font-weight:700;margin-bottom:14px;}
 
-    /* ===== slot picker sheet ===== */
+    /* slot picker sheet */
     .scrim{position:absolute;inset:0;background:rgba(10,6,0,.55);z-index:70;display:none;align-items:flex-end;}
     .scrim.open{display:flex;animation:fade .2s;}
     .sheet{background:#fff;width:100%;border-radius:26px 26px 0 0;padding:8px 20px 24px;max-height:86%;overflow-y:auto;animation:up .3s var(--bounce);}
     @keyframes up{from{transform:translateY(100%)}to{transform:none}}
     .grab{width:40px;height:5px;border-radius:100px;background:#e0e0e0;margin:8px auto 14px;}
-    .sheet h3{font-size:28px;margin-bottom:3px;}
-    .sheet .sh-sub{font-size:12px;color:var(--muted);margin-bottom:16px;}
-    .days{display:flex;gap:8px;overflow-x:auto;padding-bottom:14px;}
-    .days::-webkit-scrollbar{display:none;}
-    .day{flex:0 0 auto;text-align:center;padding:10px 14px;border-radius:14px;border:1px solid var(--border);cursor:pointer;}
-    .day.on{background:var(--moo-black);color:#fff;border-color:var(--moo-black);}
-    .day .dn{font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.7;} .day .dd{font-family:var(--fh);font-size:22px;}
+    .sheet h3{font-size:28px;margin-bottom:3px;} .sheet .sh-sub{font-size:12px;color:var(--muted);margin-bottom:16px;}
+    .days{display:flex;gap:8px;overflow-x:auto;padding-bottom:14px;} .days::-webkit-scrollbar{display:none;}
+    .day2{flex:0 0 auto;text-align:center;padding:10px 14px;border-radius:14px;border:1px solid var(--border);cursor:pointer;}
+    .day2.on{background:var(--moo-black);color:#fff;border-color:var(--moo-black);}
+    .day2 .dn{font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.7;} .day2 .dd{font-family:var(--fh);font-size:22px;}
     .slotgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:6px;}
     .slot{padding:12px 6px;border:1px solid var(--border);border-radius:13px;text-align:center;font-weight:700;font-size:13px;cursor:pointer;position:relative;}
     .slot.on{background:var(--moo-yellow);border-color:var(--moo-yellow);}
-    .slot .fast{position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:800;letter-spacing:.05em;background:var(--moo-black);color:var(--moo-yellow);padding:2px 6px;border-radius:100px;white-space:nowrap;}
+    .slot .fast{position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:800;background:var(--moo-black);color:var(--moo-yellow);padding:2px 6px;border-radius:100px;white-space:nowrap;}
     .slot.dis{color:#ccc;background:var(--surface);cursor:not-allowed;}
     .leadnote{font-size:11px;color:var(--muted);margin-top:14px;text-align:center;}
 
-    /* ===== bottom tab bar ===== */
-    .tabbar{position:absolute;bottom:0;left:0;right:0;height:62px;background:#fff;border-top:1px solid var(--border);display:flex;z-index:30;padding-bottom:6px;}
+    /* tab bar */
+    .tabbar{position:absolute;bottom:0;left:0;right:0;height:60px;background:#fff;border-top:1px solid var(--border);display:flex;z-index:30;padding-bottom:6px;}
     .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;font-weight:600;color:#bbb;cursor:pointer;}
-    .tab .ti{font-size:19px;} .tab.on{color:var(--moo-black);}
+    .tab .ti{font-size:18px;} .tab.on{color:var(--moo-black);}
 
-    /* ===== prototype flow nav (outside phone) ===== */
-    .flownav{position:fixed;bottom:0;left:0;right:0;background:rgba(20,12,4,.92);backdrop-filter:blur(8px);color:#fff;display:flex;justify-content:center;gap:6px;padding:10px;z-index:200;flex-wrap:wrap;}
-    .flownav b{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--moo-yellow);align-self:center;margin-right:6px;}
-    .fbtn{background:rgba(255,255,255,.1);color:#fff;border:none;font-family:var(--fb);font-weight:600;font-size:12px;padding:7px 12px;border-radius:9px;cursor:pointer;transition:.15s;}
+    /* flow nav */
+    .flownav{position:fixed;bottom:0;left:0;right:0;background:rgba(20,12,4,.93);backdrop-filter:blur(8px);color:#fff;display:flex;justify-content:center;gap:6px;padding:10px;z-index:200;flex-wrap:wrap;}
+    .flownav b{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--moo-yellow);align-self:center;margin-right:4px;}
+    .fbtn{background:rgba(255,255,255,.1);color:#fff;border:none;font-family:var(--fb);font-weight:600;font-size:12px;padding:7px 11px;border-radius:9px;cursor:pointer;transition:.15s;}
     .fbtn:hover{background:rgba(255,255,255,.2);} .fbtn.on{background:var(--moo-yellow);color:var(--moo-black);}
-    @media(max-width:440px){.phone{height:760px;} .flownav b{display:none;}}
+    @media(max-width:440px){.phone{height:780px;} .flownav b{display:none;}}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="kicker">
-      <div class="lock"><span>MOO</span><span class="x">×</span><span style="font-family:var(--fb);font-weight:800;font-size:19px;">URBAN VAULT</span></div>
-      <p>Ordering-pilot concept — a deeply-discounted MOO storefront for everyone at UV House. Same engine as the live app; reconfigured as an employee perk. <b>Tap through the flow below.</b></p>
-      <span class="tag">Concept · not live · for discussion</span>
+      <div class="lock"><span>MOO</span><span class="x">at</span><span class="uvw">URBAN VAULT</span></div>
+      <p>UV House ordering pilot — the employee experience, in the MOO design system. Not just a storefront: MOO sets up your desk-breakfast habit and plans your week. <b>Tap the flow below.</b></p>
+      <span class="tag">Prototype · concept · for the Amal call</span>
     </div>
 
     <div class="phone">
@@ -241,220 +271,216 @@
         <!-- ============ 1 · SPLASH + GATE ============ -->
         <section class="screen active" id="s-splash">
           <div class="ios light"><span>9:41</span><span>◵ ▮▮▮</span></div>
+          <div class="tbar"><span class="wm">MINISTRY OF OATS</span><span class="dot"></span></div>
           <div class="body">
-            <div class="cobrand">
-              <span class="moo">🐰 MOO</span><span class="x">at</span><span class="uv">UV HOUSE</span>
-            </div>
+            <div class="cobrand"><span class="moo">🐰 MOO</span><span class="x">at</span><span class="uv">UV HOUSE</span></div>
             <div class="splash-hero">
               <div class="eyebrow">Urban Vault employee perk</div>
               <h1>DESK<br>FUEL,<br><span class="pop">SORTED.</span></h1>
-              <div class="sub">Clean breakfast &amp; lunch from Ministry of Oats — delivered to UV House, at a price only UV folks get.</div>
-              <div class="perkpill">⚡ Up to 45% off, every order</div>
+              <div class="sub">Clean breakfast &amp; lunch from Ministry of Oats — planned around your week, delivered to UV House, at a price only UV folks get.</div>
+              <div class="perkpill">⚡ First bowl ₹9 · then up to 45% off</div>
             </div>
             <div class="gatebox">
               <div class="glabel">🔒 UV employees only</div>
               <div class="fauxinput"><span>you</span><span class="dom">@urbanvault.in</span></div>
               <div class="signin-row">
-                <button class="btn btn-yellow" onclick="go('s-home')">Continue with Google</button>
-                <button class="btn btn-ghost" onclick="go('s-home')" style="background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.25)">Email me a login code</button>
+                <button class="btn btn-yellow" onclick="go('s-setup')">Continue with Google</button>
+                <button class="btn" onclick="go('s-setup')" style="background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.25)">Email me a login code</button>
               </div>
             </div>
-            <div class="fineprint">We verify your Urban Vault email to unlock the perk.<br>Nothing to install — it's a link.</div>
+            <div class="fineprint">We verify your Urban Vault email to unlock the perk. Nothing to install — it's a link.</div>
           </div>
         </section>
 
-        <!-- ============ 2 · HOME ============ -->
+        <!-- ============ 2 · PLAN SETUP (office-desk builder) ============ -->
+        <section class="screen" id="s-setup">
+          <div class="ios dark"><span>9:41</span><span>◵ ▮▮▮</span></div>
+          <div class="topbar"><span class="wm">MOO</span><span class="spacer"></span><span class="stepdot"><i class="on"></i><i></i><i></i></span></div>
+          <div class="setup-body">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--moo-yellow);background:var(--moo-black);width:max-content;padding:4px 10px;border-radius:100px;">Set up your desk breakfast</div>
+            <div class="kq">At the Office Desk</div>
+            <div class="ksub">MOO will plan a breakfast habit for you at UV House and drop it at your desk. Two taps to set it up.</div>
+
+            <div class="seclabel">Where</div>
+            <div class="selcard on"><div class="ic">🏢</div><div><div class="t">UV House · Reception drop</div><div class="s">Scanned from the poster at your floor</div></div><div class="chk">✓</div></div>
+
+            <div class="seclabel">Which days</div>
+            <div class="weekrow">
+              <div class="wd on">M</div><div class="wd on">T</div><div class="wd on">W</div><div class="wd on">T</div><div class="wd on">F</div><div class="wd">S</div><div class="wd">S</div>
+            </div>
+
+            <div class="seclabel">What's important in your breakfast?</div>
+            <div class="chips">
+              <div class="chip on">High protein</div><div class="chip on">Under 400 cal</div><div class="chip">Vegan</div><div class="chip">Extra fibre</div><div class="chip">Low sugar</div><div class="chip">Caffeine</div>
+            </div>
+
+            <button class="btn btn-primary btn-bebas" onclick="go('s-plan')">Generate my week →</button>
+          </div>
+        </section>
+
+        <!-- ============ 3 · GENERATED PLAN ============ -->
+        <section class="screen" id="s-plan">
+          <div class="ios dark"><span>9:41</span><span>◵ ▮▮▮</span></div>
+          <div class="topbar"><span class="back" onclick="go('s-setup')">‹</span><span class="ttl">Your first week</span><span class="spacer"></span><span class="stepdot"><i class="on"></i><i class="on"></i><i></i></span></div>
+          <div class="planwrap">
+            <div class="planhero">
+              <div class="e">Planned for you · Mon–Fri</div>
+              <h2>Breakfast,<br>on autopilot</h2>
+              <div class="p">High-protein, under 400 cal, delivered to UV House at 9:30 AM. Skip or swap any day — you're never locked in.</div>
+            </div>
+            <div class="daycard"><div class="day">MON</div><div class="thumb" style="background:#FFF3B0">🥣</div><div><div class="nm">Choc Peanut Crunch Oats</div><div class="mt">32g protein · 380 cal</div></div><div class="pr"><div class="n" style="color:var(--green)">₹9</div><div class="w">₹320</div></div></div>
+            <div class="daycard"><div class="day">TUE</div><div class="thumb" style="background:#FFC9CD">🥤</div><div><div class="nm">PB Protein Smoothie</div><div class="mt">30g protein · 340 cal</div></div><div class="pr"><div class="n">₹198</div><div class="w">₹360</div></div></div>
+            <div class="daycard"><div class="day">WED</div><div class="thumb" style="background:#FFE0B0">🥣</div><div><div class="nm">Biscoff Banana Bowl</div><div class="mt">24g protein · 390 cal</div></div><div class="pr"><div class="n">₹165</div><div class="w">₹300</div></div></div>
+            <div class="daycard"><div class="day">THU</div><div class="thumb" style="background:#B0EEF5">🥣</div><div><div class="nm">Blueberry Almond Oats</div><div class="mt">22g protein · 360 cal</div></div><div class="pr"><div class="n">₹176</div><div class="w">₹320</div></div></div>
+            <div class="daycard"><div class="day">FRI</div><div class="thumb" style="background:#FFDFC9">☕</div><div><div class="nm">Cold Brew + Protein Bar</div><div class="mt">20g protein · 300 cal</div></div><div class="pr"><div class="n">₹154</div><div class="w">₹280</div></div></div>
+            <div class="swapnote">Tap any day to swap · your first order is on us for ₹9</div>
+            <button class="btn btn-yellow btn-bebas" onclick="go('s-home')">Lock in my week →</button>
+          </div>
+        </section>
+
+        <!-- ============ 4 · HOME / CALENDAR ============ -->
         <section class="screen" id="s-home">
           <div class="ios dark"><span>9:41</span><span>◵ ▮▮▮</span></div>
-          <div class="home-head">
-            <div class="row-between">
-              <div><div class="hi">Good morning,</div><h2>Arjun</h2></div>
-              <div class="avatar">AR</div>
+          <div class="topbar"><span class="wm">MOO</span><span class="spacer"></span><span class="profile">AR</span></div>
+          <div class="statusstrip open">🟢 Open · kitchen 9AM–5PM · delivering to UV House</div>
+          <div class="home-head"><div class="hi">Good morning,</div><h2>Arjun</h2></div>
+          <div class="cal">
+            <div class="caldaylabel">Today · Mon 20</div>
+            <div class="ordercard">
+              <div class="oc-top">
+                <div class="thumb" style="background:#FFF3B0">🥣</div>
+                <div><div class="nm">Choc Peanut Crunch Oats <span class="planbadge">₹9 first order</span></div><div class="mt">From your desk-breakfast plan</div></div>
+                <div class="slot"><div class="tt">9:30</div>AM</div>
+              </div>
+              <div class="oc-live" onclick="go('s-track')"><span style="width:8px;height:8px;border-radius:50%;background:var(--moo-yellow);display:inline-block"></span><span class="lc-t">Confirm by 8:30 →</span></div>
             </div>
-          </div>
-          <div class="live-chip" onclick="go('s-track')">
-            <span class="pulse"></span>
-            <div><div class="lc-t">Live order · preparing</div><div class="lc-m">Arrives at UV House · 12:30</div></div>
-            <span class="arw">›</span>
-          </div>
-          <div class="addrcard">
-            <div class="top">
-              <div class="ic">🏢</div>
-              <div><div class="l">Ordering for</div><div class="n">UV House · Reception</div></div>
+            <div class="caldaylabel">Tomorrow · Tue 21</div>
+            <div class="ordercard">
+              <div class="oc-top">
+                <div class="thumb" style="background:#FFC9CD">🥤</div>
+                <div><div class="nm">PB Protein Smoothie <span class="planbadge" style="background:#eef;color:var(--moo-blue)">planned</span></div><div class="mt">Delivered to UV House</div></div>
+                <div class="slot"><div class="tt">9:30</div>AM</div>
+              </div>
             </div>
-            <div class="body">
-              <div class="perkline">✓ Urban Vault perk active — up to 45% off</div>
-              <button class="btn btn-primary" onclick="openSlot('s-menu')">Place a new order →</button>
-            </div>
-          </div>
-          <div class="qtiles">
-            <div class="qtile" onclick="go('s-track')"><div class="em">📦</div><div class="t">My orders</div></div>
-            <div class="qtile"><div class="em">💬</div><div class="t">Support</div></div>
-            <div class="qtile"><div class="em">⚡</div><div class="t">Reorder</div></div>
+            <div class="emptyslot" onclick="openSlot('s-menu')"><div class="plus">+</div><div>Add a one-off order — lunch, coffee, or a treat</div></div>
           </div>
           <div style="flex:1"></div>
-          <div class="tabbar">
-            <div class="tab on"><span class="ti">🏠</span>Home</div>
+          <div class="tabbar" style="position:relative">
+            <div class="tab on"><span class="ti">📅</span>Plan</div>
             <div class="tab" onclick="openSlot('s-menu')"><span class="ti">🍽️</span>Menu</div>
             <div class="tab" onclick="go('s-track')"><span class="ti">📦</span>Orders</div>
             <div class="tab"><span class="ti">👤</span>Profile</div>
           </div>
         </section>
 
-        <!-- ============ 3 · MENU ============ -->
+        <!-- ============ 5 · MENU ============ -->
         <section class="screen" id="s-menu">
           <div class="ios dark"><span>9:41</span><span>◵ ▮▮▮</span></div>
-          <div class="menu-top">
-            <div class="deliverbar" onclick="openSlot(null)">
-              <div class="ic">🛵</div>
-              <div><div class="l">Delivering to UV House by</div><div class="m">Today · 12:30 PM</div></div>
-              <div class="chg">Change</div>
-            </div>
-            <div class="cats">
-              <div class="cat on">All</div><div class="cat">Overnight Oats</div><div class="cat">Bowls</div><div class="cat">Smoothies</div><div class="cat">Barista</div>
-            </div>
+          <div class="topbar">
+            <span class="back" onclick="go('s-home')">‹</span><span class="wm" style="font-size:22px">MOO</span><span class="spacer"></span>
+            <div class="delpill" onclick="openSlot(null)"><div><div class="l">Delivering to UV House</div></div><div class="t">12:00</div></div>
           </div>
+          <div class="statusstrip soon">Last orders for the 12:00 slot in 22 min</div>
+          <div class="introbanner">
+            <div class="big9">₹9</div>
+            <div><div class="t">Your first MOO is ₹9</div><div class="s">One item, this order only. Adds up to ₹9 + tax — delivery's on us.</div></div>
+          </div>
+          <div class="cats"><div class="cat on">All</div><div class="cat">Overnight Oats</div><div class="cat">Bowls</div><div class="cat">Smoothies</div><div class="cat">Barista</div></div>
           <div class="menu-scroll">
             <div class="sec-h"><span class="dot" style="background:var(--cat-overnight)"></span>Overnight Oats</div>
-
             <div class="item">
-              <div class="thumb" style="background:#FFF3B0">🥣</div>
-              <div class="info">
-                <div class="nm">Chocolate Peanut Crunch</div>
-                <div class="ds">Overnight oats, dark cocoa, roasted peanut, 22g protein</div>
-                <div class="priceline">
-                  <span class="price-now">₹176</span><span class="price-was">₹320</span><span class="perkchip">UV −45%</span>
-                  <button class="add" onclick="go('s-checkout')">ADD +</button>
-                </div>
-              </div>
+              <div class="thumb2" style="background:#FFF3B0">🥣</div>
+              <div class="info"><div class="nm">Chocolate Peanut Crunch</div><div class="ds">Overnight oats, dark cocoa, roasted peanut · 22g protein</div>
+                <div class="priceline"><span class="price-now" style="color:var(--green)">₹9</span><span class="price-was">₹320</span><span class="ninechip">FIRST ORDER</span><button class="add" onclick="go('s-checkout')">ADD +</button></div></div>
             </div>
-
             <div class="item">
-              <div class="thumb" style="background:#FFE0B0">🥣</div>
-              <div class="info">
-                <div class="nm">Biscoff Banana Yogurt Bowl</div>
-                <div class="ds">Greek yogurt, banana, biscoff crumble, granola</div>
-                <div class="priceline">
-                  <span class="price-now">₹165</span><span class="price-was">₹300</span><span class="perkchip">UV −45%</span>
-                  <button class="add" onclick="go('s-checkout')">ADD +</button>
-                </div>
-              </div>
+              <div class="thumb2" style="background:#FFE0B0">🥣</div>
+              <div class="info"><div class="nm">Biscoff Banana Yogurt Bowl</div><div class="ds">Greek yogurt, banana, biscoff crumble, granola</div>
+                <div class="priceline"><span class="price-now">₹165</span><span class="price-was">₹300</span><span class="perkchip">UV −45%</span><button class="add" onclick="go('s-checkout')">ADD +</button></div></div>
             </div>
-
             <div class="sec-h"><span class="dot" style="background:var(--cat-smoothies)"></span>Smoothies</div>
             <div class="item">
-              <div class="thumb" style="background:#FFC9CD">🥤</div>
-              <div class="info">
-                <div class="nm">Peanut Butter Protein Smoothie</div>
-                <div class="ds">Banana, peanut butter, whey, oat milk · 30g protein</div>
-                <div class="priceline">
-                  <span class="price-now">₹198</span><span class="price-was">₹360</span><span class="perkchip">UV −45%</span>
-                  <button class="add" onclick="go('s-checkout')">ADD +</button>
-                </div>
-              </div>
+              <div class="thumb2" style="background:#FFC9CD">🥤</div>
+              <div class="info"><div class="nm">Peanut Butter Protein Smoothie</div><div class="ds">Banana, peanut butter, whey, oat milk · 30g protein</div>
+                <div class="priceline"><span class="price-now">₹198</span><span class="price-was">₹360</span><span class="perkchip">UV −45%</span><button class="add" onclick="go('s-checkout')">ADD +</button></div></div>
             </div>
-
             <div class="sec-h"><span class="dot" style="background:var(--cat-barista)"></span>Barista</div>
             <div class="item">
-              <div class="thumb" style="background:#FFDFC9">☕</div>
-              <div class="info">
-                <div class="nm">Oat Milk Cold Brew</div>
-                <div class="ds">Single-origin cold brew, house oat milk</div>
-                <div class="priceline">
-                  <span class="price-now">₹110</span><span class="price-was">₹200</span><span class="perkchip">UV −45%</span>
-                  <button class="add" onclick="go('s-checkout')">ADD +</button>
-                </div>
-              </div>
+              <div class="thumb2" style="background:#FFDFC9">☕</div>
+              <div class="info"><div class="nm">Oat Milk Cold Brew</div><div class="ds">Single-origin cold brew, house oat milk</div>
+                <div class="priceline"><span class="price-now">₹110</span><span class="price-was">₹200</span><span class="perkchip">UV −45%</span><button class="add" onclick="go('s-checkout')">ADD +</button></div></div>
             </div>
           </div>
-          <div class="cartbar" onclick="go('s-checkout')">
-            <span class="ct">1</span><span class="cm">1 item · ₹176</span><span class="cta">CHECKOUT →</span>
-          </div>
+          <div class="cartbar" onclick="go('s-checkout')"><span class="ct">1</span><span class="cm">1 item · ₹9</span><span class="cta">CHECKOUT →</span></div>
         </section>
 
-        <!-- ============ 4 · CHECKOUT ============ -->
+        <!-- ============ 6 · CHECKOUT ============ -->
         <section class="screen" id="s-checkout">
           <div class="ios dark"><span>9:41</span><span>◵ ▮▮▮</span></div>
-          <div class="ck-head"><div class="back" onclick="go('s-menu')">‹</div><h2>Your order</h2></div>
+          <div class="topbar"><span class="back" onclick="go('s-menu')">‹</span><span class="ttl">Your order</span></div>
           <div class="card">
-            <div class="ln">
-              <div class="tb" style="background:#FFF3B0">🥣</div>
-              <div><div class="nm">Chocolate Peanut Crunch</div><div class="qy">Qty 1 · Regular</div></div>
-              <div class="pr">₹176</div>
-            </div>
+            <div class="ln"><div class="tb" style="background:#FFF3B0">🥣</div><div><div class="nm">Chocolate Peanut Crunch</div><div class="qy">Qty 1 · first-order deal</div></div><div class="pr">₹9<small>₹320</small></div></div>
           </div>
-          <div class="card">
-            <div class="breakdown">
-              <div class="br"><span>Subtotal</span><span>₹320</span></div>
-              <div class="br g"><span>Urban Vault perk · −45%</span><span>−₹144</span></div>
-              <div class="br"><span>Tax (5%)</span><span>₹8.80</span></div>
-              <div class="br"><span>Delivery to UV House</span><span style="color:var(--green);font-weight:700">FREE</span></div>
-              <div class="br total"><span>Total</span><span>₹185</span></div>
-            </div>
+          <div class="card"><div class="breakdown">
+            <div class="br"><span>Subtotal</span><span>₹320</span></div>
+            <div class="br g"><span>First order · flat ₹9</span><span>−₹311</span></div>
+            <div class="br"><span>Tax (5%)</span><span>₹0.45</span></div>
+            <div class="br"><span>Delivery to UV House</span><span style="color:var(--green);font-weight:700">FREE</span></div>
+            <div class="br total"><span>Total</span><span>₹9.45</span></div>
+          </div></div>
+          <div class="saved">🎉 You saved ₹311 on your first MOO.</div>
+          <div class="splitnote">ℹ️ <span>The ₹9 first order is on MOO. From tomorrow you pay the UV perk price; MOO and UV settle the rest monthly — nothing for you to manage.</span></div>
+          <div style="height:120px"></div>
+          <div class="payhint">Enter your phone to unlock payment</div>
+          <div class="paybar">
+            <span class="cc">🇮🇳 +91</span>
+            <input id="phoneInput" inputmode="numeric" maxlength="10" placeholder="10-digit mobile" oninput="checkPhone()">
+            <button id="payBtn" onclick="tryPay()">PAY ₹9.45</button>
           </div>
-          <div class="saved">🎉 You saved ₹144 — Urban Vault's got your back.</div>
-          <div class="splitnote">ℹ️ <span>You pay the perk price. MOO and UV settle the rest on a monthly invoice — nothing for you to manage.</span></div>
-          <div class="phonein">
-            <div class="glabel">Phone (for order updates)</div>
-            <div class="fi">🇮🇳 +91 · 98••• ••210</div>
-          </div>
-          <div style="height:90px"></div>
-          <div class="footer-cta"><button class="btn btn-yellow" onclick="go('s-track')">FEED ME ALREADY · ₹185</button></div>
         </section>
 
-        <!-- ============ 5 · LIVE TRACKER ============ -->
+        <!-- ============ 7 · LIVE TRACKER ============ -->
         <section class="screen" id="s-track">
           <div class="ios light"><span>9:41</span><span>◵ ▮▮▮</span></div>
+          <div style="height:12px"></div>
           <div class="tbody">
             <div class="celebrate"><div class="em">🐰</div><h1>FOOD'S ON.</h1></div>
-            <div class="track-chip">
-              <span class="pulse"></span>
-              <div><div class="lc-t">Preparing · arrives</div><div class="lc-m">UV House · 12:30 PM</div></div>
-            </div>
+            <div class="track-chip"><span class="pdot"></span><div><div class="lc-t">Preparing · arrives</div><div class="lc-m">UV House · 9:30 AM</div></div></div>
             <div class="steps">
-              <div class="step done"><div class="rail"><div class="node">✓</div><div class="line"></div></div><div class="lab"><div class="t">Order received</div><div class="s">Paid · ₹185</div></div></div>
+              <div class="step done"><div class="rail"><div class="node">✓</div><div class="line"></div></div><div class="lab"><div class="t">Order received</div><div class="s">Paid · ₹9.45</div></div></div>
               <div class="step now"><div class="rail"><div class="node">●</div><div class="line"></div></div><div class="lab"><div class="t">Preparing in the kitchen</div><div class="s">HSR cloud kitchen · your nearest</div></div></div>
               <div class="step pending"><div class="rail"><div class="node"></div><div class="line"></div></div><div class="lab"><div class="t">Packed &amp; on the way</div><div class="s">Out for delivery to UV House</div></div></div>
               <div class="step pending"><div class="rail"><div class="node"></div></div><div class="lab"><div class="t">Delivered to reception</div><div class="s">We'll ping you when it lands</div></div></div>
             </div>
-            <div class="track-drop">
-              <div style="font-size:20px">🏢</div>
-              <div><div class="l">Dropping at</div><div class="m">UV House · Reception desk</div></div>
-            </div>
-            <div class="track-saved">You saved ₹144 on this order 🎉</div>
+            <div class="track-drop"><div style="font-size:20px">🏢</div><div><div class="l">Dropping at</div><div class="m">UV House · Reception desk</div></div></div>
+            <div class="track-saved">You saved ₹311 on this order 🎉</div>
             <button class="btn btn-yellow" onclick="alert('Mock: opens WhatsApp to the kitchen')">🔔 Poke the kitchen</button>
             <div style="height:10px"></div>
-            <button class="btn btn-ghost" onclick="go('s-home')" style="background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.2)">Back to home</button>
+            <button class="btn" onclick="go('s-home')" style="background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2)">Back to my plan</button>
           </div>
         </section>
 
-        <!-- ===== SLOT PICKER SHEET ===== -->
+        <!-- slot picker -->
         <div class="scrim" id="scrim">
           <div class="sheet">
             <div class="grab"></div>
             <h3>Pick a delivery time</h3>
-            <div class="sh-sub">UV House · desk delivery · 60 min lead time</div>
+            <div class="sh-sub">UV House · desk delivery · kitchen 9AM–5PM · 60-min lead</div>
             <div class="days">
-              <div class="day on"><div class="dn">Today</div><div class="dd">20</div></div>
-              <div class="day"><div class="dn">Wed</div><div class="dd">21</div></div>
-              <div class="day"><div class="dn">Thu</div><div class="dd">22</div></div>
-              <div class="day"><div class="dn">Fri</div><div class="dd">23</div></div>
-              <div class="day"><div class="dn">Sat</div><div class="dd">24</div></div>
+              <div class="day2 on"><div class="dn">Today</div><div class="dd">20</div></div>
+              <div class="day2"><div class="dn">Tue</div><div class="dd">21</div></div>
+              <div class="day2"><div class="dn">Wed</div><div class="dd">22</div></div>
+              <div class="day2"><div class="dn">Thu</div><div class="dd">23</div></div>
+              <div class="day2"><div class="dn">Fri</div><div class="dd">24</div></div>
             </div>
             <div class="slotgrid">
-              <div class="slot dis">11:00</div>
-              <div class="slot dis">11:30</div>
-              <div class="slot on">12:00<span class="fast">FASTEST ⚡</span></div>
-              <div class="slot">12:30</div>
-              <div class="slot">13:00</div>
-              <div class="slot">13:30</div>
-              <div class="slot">14:00</div>
-              <div class="slot">16:30</div>
-              <div class="slot">17:00</div>
+              <div class="slot dis">9:00</div><div class="slot dis">10:00</div><div class="slot dis">11:00</div>
+              <div class="slot on">12:00<span class="fast">FASTEST ⚡</span></div><div class="slot">1:00</div><div class="slot">2:00</div>
+              <div class="slot">3:00</div><div class="slot">4:00</div><div class="slot">5:00</div>
             </div>
-            <div class="leadnote">Kitchen hours 11:00–17:00 · slots every 30 min</div>
+            <div class="leadnote">Hourly slots · 9AM–5PM · every day of the week</div>
             <div style="height:14px"></div>
-            <button class="btn btn-primary" onclick="confirmSlot()">Confirm · Today 12:00 PM</button>
+            <button class="btn btn-primary btn-bebas" onclick="confirmSlot()">Confirm · Today 12:00 PM</button>
           </div>
         </div>
 
@@ -462,37 +488,45 @@
     </div>
   </div>
 
-  <!-- prototype flow nav -->
   <div class="flownav">
     <b>Flow ›</b>
     <button class="fbtn on" data-s="s-splash" onclick="go('s-splash')">1 · Splash + gate</button>
-    <button class="fbtn" data-s="s-home" onclick="go('s-home')">2 · Home</button>
-    <button class="fbtn" data-s="s-menu" onclick="openSlot('s-menu')">3 · Menu</button>
-    <button class="fbtn" data-s="s-checkout" onclick="go('s-checkout')">4 · Checkout</button>
-    <button class="fbtn" data-s="s-track" onclick="go('s-track')">5 · Live order</button>
+    <button class="fbtn" data-s="s-setup" onclick="go('s-setup')">2 · Set up plan</button>
+    <button class="fbtn" data-s="s-plan" onclick="go('s-plan')">3 · Your week</button>
+    <button class="fbtn" data-s="s-home" onclick="go('s-home')">4 · Calendar</button>
+    <button class="fbtn" data-s="s-menu" onclick="openSlot('s-menu')">5 · Menu (₹9)</button>
+    <button class="fbtn" data-s="s-checkout" onclick="go('s-checkout')">6 · Checkout</button>
+    <button class="fbtn" data-s="s-track" onclick="go('s-track')">7 · Live order</button>
   </div>
 
   <script>
-    var pendingAfterSlot = null;
+    var pendingAfterSlot=null;
     function go(id){
       document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
-      var el = document.getElementById(id); if(el){el.classList.add('active'); el.scrollTop=0;}
-      document.querySelectorAll('.fbtn').forEach(function(b){b.classList.toggle('on', b.dataset.s===id);});
-      closeSlot(true);
+      var el=document.getElementById(id); if(el){el.classList.add('active'); el.scrollTop=0;}
+      document.querySelectorAll('.fbtn').forEach(function(b){b.classList.toggle('on',b.dataset.s===id);});
+      closeSlot();
     }
-    // open slot sheet; if target passed, we'll land on that screen after confirm
     function openSlot(target){
-      if(target){ // make sure the underlying screen is menu so the sheet feels contextual
+      if(target){
         document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
         document.getElementById('s-menu').classList.add('active');
-        document.querySelectorAll('.fbtn').forEach(function(b){b.classList.toggle('on', b.dataset.s==='s-menu');});
+        document.querySelectorAll('.fbtn').forEach(function(b){b.classList.toggle('on',b.dataset.s==='s-menu');});
       }
-      pendingAfterSlot = target;
+      pendingAfterSlot=target;
       document.getElementById('scrim').classList.add('open');
     }
-    function confirmSlot(){ closeSlot(); if(pendingAfterSlot){go(pendingAfterSlot); pendingAfterSlot=null;} }
-    function closeSlot(silent){ document.getElementById('scrim').classList.remove('open'); }
+    function confirmSlot(){ closeSlot(); if(pendingAfterSlot){go(pendingAfterSlot);pendingAfterSlot=null;} }
+    function closeSlot(){ document.getElementById('scrim').classList.remove('open'); }
     document.getElementById('scrim').addEventListener('click',function(e){ if(e.target===this) closeSlot(); });
+    // clubbed phone + pay: button enables only on a valid 10-digit [6-9] mobile
+    function checkPhone(){
+      var v=document.getElementById('phoneInput').value.replace(/\D/g,'');
+      document.getElementById('phoneInput').value=v;
+      var ok=/^[6-9]\d{9}$/.test(v);
+      document.getElementById('payBtn').classList.toggle('on',ok);
+    }
+    function tryPay(){ if(document.getElementById('payBtn').classList.contains('on')) go('s-track'); }
   </script>
 </body>
 </html>
