@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>MOO × Urban Vault — Partnership</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --yellow:#FFD500; --red:#FF3D47; --blue:#4361EE; --oat:#F0DFC8; --ink:#1A1A1A;
+    --paper:#FFFDF7;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    color:var(--ink); background:var(--ink); overflow:hidden;
+  }
+  .deck{
+    display:flex; height:100vh; width:100vw;
+    overflow-x:auto; overflow-y:hidden;
+    scroll-snap-type:x mandatory; scroll-behavior:smooth;
+    -webkit-overflow-scrolling:touch;
+  }
+  .deck::-webkit-scrollbar{display:none}
+  .slide{
+    flex:0 0 100vw; height:100vh; scroll-snap-align:center;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:6vh clamp(24px,7vw,110px); position:relative; overflow:hidden;
+  }
+  .eyebrow{
+    font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.18em;
+    margin-bottom:22px; display:inline-flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:"";width:28px;height:3px;background:currentColor;display:inline-block}
+  h1{font-family:'Bebas Neue',sans-serif; line-height:.94; letter-spacing:.01em}
+  h2{font-family:'Bebas Neue',sans-serif; line-height:.95; letter-spacing:.01em}
+  .lede{font-size:clamp(16px,1.9vw,22px); font-weight:500; line-height:1.5; max-width:760px}
+  .kicker{font-size:clamp(15px,1.7vw,19px); font-weight:600; line-height:1.5; max-width:720px}
+  .fine{font-size:14px; opacity:.7; font-weight:500}
+  .pageno{position:absolute; top:5vh; right:clamp(24px,7vw,110px); font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:.05em; opacity:.55}
+
+  /* palette per slide */
+  .s1{background:var(--yellow); color:var(--ink)}
+  .s2{background:var(--paper); color:var(--ink)}
+  .s3{background:var(--blue); color:#fff}
+  .s4{background:var(--oat); color:var(--ink)}
+  .s5{background:var(--ink); color:#fff}
+  .s6{background:var(--red); color:#fff}
+
+  /* Slide 1 */
+  .cover-title{font-size:clamp(64px,13vw,190px)}
+  .cover-title .x{color:var(--red)}
+  .cover-tag{font-size:clamp(22px,3.4vw,44px); font-family:'Bebas Neue',sans-serif; margin-top:18px; letter-spacing:.02em}
+  .cover-sub{margin-top:24px; font-size:clamp(16px,1.9vw,22px); font-weight:600; max-width:640px}
+  .cover-foot{position:absolute; bottom:6vh; left:clamp(24px,7vw,110px); font-weight:600; font-size:15px; opacity:.75}
+
+  /* stat row */
+  .stats{display:flex; flex-wrap:wrap; gap:clamp(20px,4vw,64px); margin:34px 0 30px}
+  .stat .n{font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,7vw,96px); line-height:.9; color:var(--red)}
+  .stat .l{font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:.08em; opacity:.7; margin-top:8px}
+
+  /* chip / feature grids */
+  .headline-xl{font-size:clamp(44px,7.5vw,110px)}
+  .headline-lg{font-size:clamp(38px,6vw,88px)}
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-top:30px; max-width:900px}
+  .card{background:rgba(0,0,0,.06); border-radius:16px; padding:20px 22px}
+  .s3 .card,.s5 .card,.s6 .card{background:rgba(255,255,255,.12)}
+  .card .h{font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:.02em; margin-bottom:4px}
+  .card .p{font-size:14px; font-weight:500; line-height:1.45; opacity:.85}
+
+  .chips{display:flex; flex-wrap:wrap; gap:12px; margin-top:26px}
+  .chip{background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28); border-radius:999px; padding:11px 20px; font-weight:700; font-size:15px}
+  .s4 .chip{background:rgba(0,0,0,.06); border-color:rgba(0,0,0,.14)}
+  .chip b{color:var(--yellow)}
+  .s4 .chip b{color:var(--red)}
+
+  .flip{background:var(--yellow); color:var(--ink); border-radius:18px; padding:22px 26px; font-family:'Bebas Neue',sans-serif; font-size:clamp(24px,3.2vw,40px); line-height:1.05; letter-spacing:.01em; max-width:820px; margin-top:24px}
+
+  /* zoning strip */
+  .zone{display:flex; gap:10px; margin-top:26px; max-width:820px}
+  .zone div{flex:1; border-radius:12px; padding:16px; text-align:center; font-weight:700; font-size:13px; line-height:1.3}
+  .zone .z1{background:var(--yellow); color:var(--ink)}
+  .zone .z2{background:var(--red)}
+  .zone .z3{background:var(--blue)}
+  .zone small{display:block; font-weight:500; opacity:.8; font-size:11px; margin-top:4px}
+
+  /* embed flow */
+  .flow{display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-top:30px}
+  .flow .node{background:rgba(255,255,255,.14); border-radius:14px; padding:16px 20px; font-weight:700; text-align:center; min-width:120px}
+  .flow .arrow{font-family:'Bebas Neue',sans-serif; font-size:34px; opacity:.7}
+  .flow .moo{background:var(--yellow); color:var(--ink)}
+
+  .asks{margin-top:24px; max-width:840px}
+  .ask{display:flex; gap:16px; align-items:flex-start; padding:14px 0; border-top:1px solid rgba(255,255,255,.25)}
+  .ask .num{font-family:'Bebas Neue',sans-serif; font-size:34px; line-height:.9; min-width:40px}
+  .ask .t{font-size:clamp(15px,1.7vw,19px); font-weight:600; line-height:1.4}
+  .ask .t span{opacity:.82; font-weight:500}
+  .close{font-family:'Bebas Neue',sans-serif; font-size:clamp(30px,4vw,56px); margin-top:26px; letter-spacing:.02em}
+
+  .two-col{display:grid; grid-template-columns:1.15fr 1fr; gap:40px; align-items:center}
+  @media(max-width:820px){ .two-col{grid-template-columns:1fr} }
+
+  /* nav */
+  .nav{position:fixed; bottom:22px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:16px; z-index:20}
+  .dots{display:flex; gap:9px}
+  .dot{width:9px; height:9px; border-radius:50%; background:rgba(0,0,0,.25); border:none; cursor:pointer; padding:0; transition:all .2s}
+  .dot.on{background:var(--ink); width:26px; border-radius:5px}
+  .arrbtn{width:42px; height:42px; border-radius:50%; border:none; background:var(--ink); color:#fff; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 14px rgba(0,0,0,.25)}
+  .arrbtn:hover{background:var(--red)}
+  .hint{position:fixed; bottom:26px; right:26px; font-size:12px; font-weight:600; color:rgba(0,0,0,.4); z-index:20}
+  @media(max-width:640px){ .hint{display:none} }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 · Cover -->
+  <section class="slide s1">
+    <span class="pageno">01</span>
+    <div class="eyebrow">Partnership proposal · July 2026</div>
+    <h1 class="cover-title">MOO <span class="x">×</span><br>Urban Vault</h1>
+    <div class="cover-tag">We already started cooking together.</div>
+    <p class="cover-sub">Three ways to go bigger — together.</p>
+    <div class="cover-foot">Nov 2025: the smart-fridge pilot. &nbsp;Today: the real thing.</div>
+  </section>
+
+  <!-- 2 · Where we are -->
+  <section class="slide s2">
+    <span class="pageno">02</span>
+    <div class="eyebrow" style="color:var(--red)">Where MOO is now</div>
+    <h2 class="headline-lg">It's working.</h2>
+    <div class="stats">
+      <div class="stat"><div class="n">₹3Cr</div><div class="l">gross run-rate</div></div>
+      <div class="stat"><div class="n">60%</div><div class="l">repeat customers</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">profitable stores</div></div>
+      <div class="stat"><div class="n">₹0</div><div class="l">raised — bootstrapped</div></div>
+    </div>
+    <p class="lede">You've seen the deck, so here's the short version: MOO is profitable, growing, and raising <b>₹6Cr</b> to scale. We'd love you in this with us — as a believer, a connector, or a partner.</p>
+  </section>
+
+  <!-- 3 · The idea -->
+  <section class="slide s3">
+    <span class="pageno">03</span>
+    <div class="eyebrow">The idea</div>
+    <h2 class="headline-lg">We don't buy real&nbsp;estate.<br>We embed.</h2>
+    <p class="lede" style="margin-top:20px">MOO shows up where communities already are — offices, gyms, coworking floors. <b>Brand has no delivery radius.</b></p>
+    <div class="flow">
+      <div class="node">Offices</div>
+      <div class="node">Gyms</div>
+      <div class="node">Coworking</div>
+      <div class="arrow">→</div>
+      <div class="node moo">MOO shows up</div>
+    </div>
+    <p class="kicker" style="margin-top:28px">Urban Vault is the perfect partner: thousands of members, and every building a ready-made community.</p>
+  </section>
+
+  <!-- 4 · UV House portal -->
+  <section class="slide s4">
+    <span class="pageno">04</span>
+    <div class="eyebrow" style="color:var(--red)">Start today · the easy one</div>
+    <h2 class="headline-lg">MOO at UV&nbsp;House</h2>
+    <p class="kicker" style="margin-top:14px">A branded ordering portal for your team — subsidised, MOO-run, live in weeks.</p>
+    <div class="grid">
+      <div class="card"><div class="h">₹9 first meal</div><div class="p">On us — every UV employee's first order.</div></div>
+      <div class="card"><div class="h">Subsidised daily</div><div class="p">A standing team perk, not a one-off.</div></div>
+      <div class="card"><div class="h">You earn 5%</div><div class="p">On every order, across the program.</div></div>
+      <div class="card"><div class="h">Zero cost to UV</div><div class="p">We build and run it. UV-only via @urbanvault.in.</div></div>
+    </div>
+    <p class="kicker" style="margin-top:24px"><b>See the working prototype →</b> pages.recurr.co/moo-uv-house</p>
+  </section>
+
+  <!-- 5 · Flagship -->
+  <section class="slide s5">
+    <span class="pageno">05</span>
+    <div class="eyebrow" style="color:var(--yellow)">Go big · the flagship</div>
+    <h2 class="headline-lg">Our first real outlet —<br>in a UV building.</h2>
+    <div class="flip">Give us a ground floor. Back the fit-out.<br>Instead of rent — take a cut.</div>
+    <div class="chips">
+      <div class="chip"><b>10%</b> in-store sales</div>
+      <div class="chip"><b>5%</b> cloud-kitchen sales</div>
+      <div class="chip"><b>₹0</b> fixed rent</div>
+      <div class="chip">UV funds the fit-out</div>
+    </div>
+    <div class="zone">
+      <div class="z1">RETAIL<small>walk-in · brand stage</small></div>
+      <div class="z2">KITCHEN<small>our production hub</small></div>
+      <div class="z3">WAREHOUSE<small>cold chain · dispatch</small></div>
+    </div>
+  </section>
+
+  <!-- 6 · Why + asks -->
+  <section class="slide s6">
+    <span class="pageno">06</span>
+    <div class="two-col">
+      <div>
+        <div class="eyebrow" style="color:var(--yellow)">Why it's a no-brainer for UV</div>
+        <h2 class="headline-lg" style="font-size:clamp(34px,5vw,64px)">UV's product is occupancy.<br>We make your buildings better.</h2>
+        <div class="grid" style="grid-template-columns:1fr 1fr; margin-top:24px">
+          <div class="card"><div class="h">Stickier buildings</div><div class="p">A premium food amenity — a leasing + retention lever.</div></div>
+          <div class="card"><div class="h">Passive revenue</div><div class="p">5% digital across every building + retail commissions.</div></div>
+          <div class="card"><div class="h">Zero burden</div><div class="p">MOO runs everything, end to end.</div></div>
+          <div class="card"><div class="h">Shared upside</div><div class="p">Uncapped — you win as MOO wins.</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow" style="color:var(--yellow)">What we're asking today</div>
+        <div class="asks">
+          <div class="ask"><div class="num">1</div><div class="t">Green-light the UV × MOO digital program (5%) — <span>starts now, independent of retail.</span></div></div>
+          <div class="ask"><div class="num">2</div><div class="t">Agreement in principle on the flagship — <span>and point us to a building.</span></div></div>
+          <div class="ask"><div class="num">3</div><div class="t">Your backing on the raise — <span>believer, connector, or partner.</span></div></div>
+        </div>
+        <div class="close">Let's build. 🐰</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button class="arrbtn" id="prev" aria-label="Previous">‹</button>
+  <div class="dots" id="dots"></div>
+  <button class="arrbtn" id="next" aria-label="Next">›</button>
+</div>
+<div class="hint">← → to navigate</div>
+
+<script>
+  const deck=document.getElementById('deck');
+  const slides=[...document.querySelectorAll('.slide')];
+  const dotsWrap=document.getElementById('dots');
+  let cur=0;
+  slides.forEach((_,i)=>{
+    const b=document.createElement('button');
+    b.className='dot'+(i===0?' on':''); b.setAttribute('aria-label','Slide '+(i+1));
+    b.onclick=()=>go(i); dotsWrap.appendChild(b);
+  });
+  const dots=[...dotsWrap.children];
+  function go(i){ cur=Math.max(0,Math.min(slides.length-1,i)); deck.scrollTo({left:cur*window.innerWidth,behavior:'smooth'}); sync(); }
+  function sync(){ dots.forEach((d,i)=>d.classList.toggle('on',i===cur)); }
+  document.getElementById('next').onclick=()=>go(cur+1);
+  document.getElementById('prev').onclick=()=>go(cur-1);
+  window.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(cur+1);}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(cur-1);}
+  });
+  let t; deck.addEventListener('scroll',()=>{ clearTimeout(t); t=setTimeout(()=>{ cur=Math.round(deck.scrollLeft/window.innerWidth); sync(); },90); });
+  window.addEventListener('resize',()=>deck.scrollTo({left:cur*window.innerWidth}));
+</script>
+</body>
+</html>
