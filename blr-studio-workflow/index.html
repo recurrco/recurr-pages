@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>BLR Studio — Content Production Workflow</title>
+<title>BLR Studio — The AI-Native Content & Growth Engine</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
   :root{
     --ground:#f4f2ee; --surface:#ffffff; --ink:#161513; --muted:#6b665e; --faint:#a49d92;
     --line:#e2ddd4; --line-strong:#d0c9bd;
     --accent:#e8452b; --accent-ink:#c23417; --accent-wash:#fbe9e4;
-    --ok:#1f7a4d;
+    --ok:#1f7a4d; --ai:#c23417;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
     --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
   }
@@ -24,97 +24,107 @@
   h1,h2,h3{letter-spacing:-.02em;text-wrap:balance}
   a{color:var(--accent-ink)}
 
-  /* header */
   header.top{border-bottom:2px solid var(--ink);margin-bottom:44px}
   .top-in{max-width:1120px;margin:0 auto;padding:26px 28px 22px;display:flex;align-items:flex-end;
     justify-content:space-between;gap:24px;flex-wrap:wrap}
   .brandline{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
   .brandline b{color:var(--accent-ink)}
   h1{font-size:clamp(30px,5vw,46px);font-weight:800;line-height:1.02;margin:10px 0 0}
-  .top .sub{color:var(--muted);font-size:16px;margin-top:12px;max-width:52ch}
+  .top .sub{color:var(--muted);font-size:16px;margin-top:12px;max-width:54ch}
   .tag-r{font-family:var(--mono);font-size:11px;color:var(--faint);text-align:right;line-height:1.7}
+  .tag-r .rev{color:var(--accent-ink);background:var(--accent-wash);padding:2px 7px;border-radius:5px}
 
   section{margin-top:52px}
   .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
   .sec-head .n{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:700}
   .sec-head h2{font-size:22px;font-weight:750}
-  .sec-head .d{color:var(--muted);font-size:14px;margin-left:auto;text-align:right;max-width:38ch}
+  .sec-head .d{color:var(--muted);font-size:14px;margin-left:auto;text-align:right;max-width:40ch}
 
-  /* pipeline */
-  .pipe{display:flex;gap:0;align-items:stretch;overflow-x:auto;padding-bottom:8px}
-  .stage{flex:1 0 148px;background:var(--surface);border:1px solid var(--line);border-right:none;
-    padding:16px 15px 17px;position:relative;display:flex;flex-direction:column;gap:8px}
-  .stage:first-child{border-radius:12px 0 0 12px}
-  .stage:last-child{border-right:1px solid var(--line);border-radius:0 12px 12px 0}
-  .stage .num{width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-family:var(--mono);
-    font-size:12px;font-weight:700;display:grid;place-items:center}
-  .stage.pub .num{background:var(--accent)}
-  .stage h3{font-size:14px;font-weight:750;letter-spacing:-.01em}
-  .stage .owner{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;
-    color:var(--accent-ink);background:var(--accent-wash);border-radius:5px;padding:3px 7px;align-self:flex-start}
-  .stage p{font-size:12.5px;color:var(--muted);line-height:1.4}
-  .stage::after{content:"›";position:absolute;right:-7px;top:22px;z-index:2;color:var(--line-strong);
-    font-size:20px;background:var(--ground);width:14px;text-align:center}
-  .stage:last-child::after{content:"↻";color:var(--accent);right:-9px;font-size:15px;top:24px}
-  .loopnote{font-family:var(--mono);font-size:11px;color:var(--faint);text-align:right;margin-top:8px}
-  .loopnote b{color:var(--accent-ink)}
+  /* principle pillars */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .pillar{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 18px 20px;border-top:3px solid var(--accent)}
+  .pillar .k{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+  .pillar h3{font-size:17px;font-weight:800;margin:5px 0 8px;line-height:1.15}
+  .pillar p{font-size:13.5px;color:var(--muted);line-height:1.5}
+  .pillar p b{color:var(--ink);font-weight:600}
 
-  /* rhythm */
-  .rhythm{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-  .beat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:15px 15px 16px;
-    border-top:3px solid var(--ink)}
-  .beat.daily{border-top-color:var(--accent)}
-  .beat .cad{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
-  .beat .nm{font-size:15px;font-weight:750;margin:4px 0 7px}
-  .beat p{font-size:12.5px;color:var(--muted);line-height:1.45}
+  /* sanity spine */
+  .spine{background:var(--ink);color:#f4f2ee;border-radius:14px;padding:24px 26px}
+  .spine .eyebrow{color:#e8908166}
+  .spine h3{color:#fff;font-size:19px;font-weight:750;margin:6px 0 4px}
+  .spine .lead{color:#c9c3b8;font-size:14px;max-width:60ch;margin-bottom:20px}
+  .flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;margin-bottom:8px}
+  .flow .up{color:#8f8a80;border:1px dashed #4a453f;border-radius:6px;padding:6px 10px}
+  .flow .box{background:#242220;border:1px solid #34302c;border-radius:6px;padding:6px 10px;color:#e6e1d6}
+  .flow .master{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
+  .flow .arr{color:#6a655d}
+  .flow .cut{color:#9a948a;font-size:11px}
+  .spine-foot{margin-top:6px;font-family:var(--mono);font-size:11px;color:#8f8a80}
+
+  /* generic table */
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:13px}
+  th,td{text-align:left;padding:11px 15px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);background:var(--ground);font-weight:600}
+  tbody tr:last-child td{border-bottom:none}
+  td.stg{font-weight:750;white-space:nowrap}
+  td.hum{color:var(--ink)}
+  td.aic{color:var(--muted)}
+  .tool-cell{font-family:var(--mono);font-size:11.5px;color:var(--accent-ink)}
+  .owns-row td{background:var(--accent-wash)}
+
+  /* 3-col owns/holds/stays */
+  .triad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+  .tri{border-radius:10px;padding:14px 15px;border:1px solid var(--line);background:var(--surface)}
+  .tri.owns{border-top:3px solid var(--accent)}
+  .tri.holds{border-top:3px solid var(--muted)}
+  .tri.out{border-top:3px solid var(--line-strong);opacity:.85}
+  .tri .k{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+  .tri p{font-size:12.5px;color:var(--ink);line-height:1.45}
+
+  /* stack tiers */
+  .tier-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:16px 0 8px}
+  .stack-total{display:flex;justify-content:space-between;align-items:center;background:var(--ink);color:#fff;
+    border-radius:10px;padding:14px 18px;margin-top:14px;font-family:var(--mono)}
+  .stack-total .l{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:#c9c3b8}
+  .stack-total .v{font-size:19px;font-weight:700}
+  td.rep{color:var(--faint);font-size:11.5px}
+  td.cost{font-family:var(--mono);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 
   /* roles */
   .roles{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
   .role{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  .role .rh{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:11px}
-  .role .rh .dot{width:11px;height:11px;border-radius:3px;background:var(--accent);flex:none}
+  .role .rh{padding:14px 17px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:10px}
+  .role .rh .seat{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent);flex:none}
   .role .rh h3{font-size:16px;font-weight:800}
-  .role .rh .k{font-family:var(--mono);font-size:10px;color:var(--faint);margin-left:auto;letter-spacing:.05em;text-transform:uppercase}
-  .role .rb{padding:14px 17px 17px;display:flex;flex-direction:column;gap:12px}
-  .role .blk .lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
-  .role .blk p{font-size:13px;color:var(--ink)}
-  .role .blk.owns p{font-weight:600}
+  .role .rb{padding:13px 17px 16px;display:flex;flex-direction:column;gap:11px}
+  .role .lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:3px}
+  .role .owns p{font-size:13px;font-weight:600}
   .stackrow{display:flex;flex-wrap:wrap;gap:6px}
-  .tool{font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:6px;background:var(--ground);
-    border:1px solid var(--line);color:var(--ink)}
+  .tool{font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:6px;background:var(--ground);border:1px solid var(--line);color:var(--ink)}
   .tool.ai{background:var(--accent-wash);border-color:#f3cec5;color:var(--accent-ink)}
+  .role.glue{grid-column:1 / -1;background:var(--accent-wash);border-color:#f3cec5}
+  .role.glue .rh{border-color:#f3cec5}
 
-  /* ai strip */
-  .ai-strip{background:var(--ink);color:#f4f2ee;border-radius:14px;padding:24px 26px}
-  .ai-strip .eyebrow{color:#e8908160}
-  .ai-strip h2{font-size:20px;font-weight:750;margin:8px 0 4px;color:#fff}
-  .ai-strip .lead{color:#c9c3b8;font-size:14px;max-width:56ch}
-  .ai-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:18px}
-  .ai-card{background:#242220;border:1px solid #34302c;border-radius:9px;padding:12px}
-  .ai-card .t{font-family:var(--mono);font-size:10px;color:#e8907f;letter-spacing:.05em;text-transform:uppercase}
-  .ai-card p{font-size:12px;color:#d8d2c7;margin-top:5px;line-height:1.4}
-
-  /* touchpoints + discipline */
+  /* econ + tradeoffs */
   .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   .box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 19px}
   .box h3{font-size:15px;font-weight:750;margin-bottom:12px;display:flex;align-items:center;gap:9px}
   .box h3 .b{width:8px;height:8px;border-radius:50%;background:var(--accent)}
-  .tp{display:flex;gap:11px;padding:9px 0;border-top:1px solid var(--line);font-size:13.5px}
-  .tp:first-of-type{border-top:none}
-  .tp .when{font-family:var(--mono);font-size:10px;color:var(--accent-ink);text-transform:uppercase;letter-spacing:.05em;flex:none;width:74px;padding-top:2px}
-  .tp .what{color:var(--muted)}.tp .what b{color:var(--ink);font-weight:600}
-  .box.disc p{font-size:13.5px;color:var(--muted);line-height:1.55;margin-bottom:10px}
-  .box.disc p:last-child{margin-bottom:0}
-  .box.disc b{color:var(--ink)}
+  .econ-big{font-family:var(--mono);font-size:26px;font-weight:800;letter-spacing:-.02em}
+  .econ p{font-size:13.5px;color:var(--muted);line-height:1.5;margin-top:8px}
+  .econ p b{color:var(--ink)}
+  .to{padding:11px 0;border-top:1px solid var(--line);font-size:13px}
+  .to:first-of-type{border-top:none}
+  .to .q{font-weight:650}
+  .to .rec{color:var(--muted);margin-top:3px}
+  .to .rec b{color:var(--accent-ink)}
 
   footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
     font-family:var(--mono);font-size:11px;color:var(--faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 
   @media (max-width:820px){
-    .rhythm{grid-template-columns:1fr 1fr}
-    .roles{grid-template-columns:1fr}
-    .ai-grid{grid-template-columns:1fr 1fr}
-    .two{grid-template-columns:1fr}
+    .pillars,.roles,.triad,.two{grid-template-columns:1fr}
     .sec-head .d{display:none}
   }
 </style>
@@ -124,193 +134,186 @@
 <header class="top">
   <div class="top-in">
     <div>
-      <div class="brandline"><b>BLR STUDIO</b> &nbsp;·&nbsp; Content Production</div>
-      <h1>How a client account<br>runs, end to end.</h1>
-      <p class="sub">One production line, one rhythm, four roles. This is how work moves from a client's goals to published, engaged, and reported — every week.</p>
+      <div class="brandline"><b>BLR STUDIO</b> &nbsp;·&nbsp; Content &amp; Growth Engine</div>
+      <h1>AI does the volume.<br>Humans own the craft.</h1>
+      <p class="sub">The AI-native engine behind BLR Studio's content + growth on IG and YT — built to let ~4 people output like ~15, without dropping the craft bar.</p>
     </div>
-    <div class="tag-r">INTERNAL<br>v1 · 2026<br>client + owned media</div>
+    <div class="tag-r"><span class="rev">PROPOSED · for review</span><br>internal · v1 · 2026<br>roles, not names</div>
   </div>
 </header>
 
 <div class="wrap">
 
-  <!-- PIPELINE -->
+  <!-- PRINCIPLE -->
   <section>
-    <div class="sec-head">
-      <span class="n">01</span>
-      <h2>The production line</h2>
-      <span class="d">Every piece of content travels this path. The role that owns each stage is named on it.</span>
-    </div>
-    <div class="pipe">
-      <div class="stage">
-        <div class="num">1</div>
-        <span class="owner">Client Relationships</span>
-        <h3>Intake</h3>
-        <p>Launches, offers, goals &amp; feedback come in through one channel.</p>
+    <div class="sec-head"><span class="n">01</span><h2>The principle: AI-native, not AI-slop</h2>
+      <span class="d">AI is the leverage — it never replaces the product.</span></div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="k">The split</div>
+        <h3>AI does 70–90% of production</h3>
+        <p><b>Humans own taste, story, and the craft bar</b> — the things 2026 AI still can't do (narrative pacing, emotional beats, brand nuance).</p>
       </div>
-      <div class="stage">
-        <div class="num">2</div>
-        <span class="owner">Client Rel. + Campaign Mgr</span>
-        <h3>Plan</h3>
-        <p>Month themes become the week's shoot list + publish calendar.</p>
+      <div class="pillar">
+        <div class="k">The multiplier</div>
+        <h3>1 source → many assets</h3>
+        <p>One researched, well-made <b>source</b> is atomised into 10–30 shorts, carousels, quote cards, posts. Research once, milk everywhere.</p>
       </div>
-      <div class="stage">
-        <div class="num">3</div>
-        <span class="owner">Video Producer</span>
-        <h3>Produce</h3>
-        <p>Concepts, shot lists, a batched shoot — raw footage captured.</p>
-      </div>
-      <div class="stage">
-        <div class="num">4</div>
-        <span class="owner">Video Editor</span>
-        <h3>Edit</h3>
-        <p>Cuts, reels &amp; YT, on-video captions, revisions.</p>
-      </div>
-      <div class="stage">
-        <div class="num">5</div>
-        <span class="owner">Campaign Manager</span>
-        <h3>Package</h3>
-        <p>Captions, hashtags, thumbnails — scheduled to the calendar.</p>
-      </div>
-      <div class="stage pub">
-        <div class="num">6</div>
-        <span class="owner">Campaign Manager</span>
-        <h3>Publish &amp; engage</h3>
-        <p>Goes live; comments, DMs, stories, community management.</p>
-      </div>
-      <div class="stage">
-        <div class="num">7</div>
-        <span class="owner">Campaign Mgr → Client Rel.</span>
-        <h3>Report</h3>
-        <p>Performance + narrative back to the client.</p>
+      <div class="pillar">
+        <div class="k">The 5th member</div>
+        <h3>An invisible agent layer</h3>
+        <p>An <b>n8n + agent</b> layer — built &amp; run by Button Builders — does the repetitive orchestration. Humans never touch it.</p>
       </div>
     </div>
-    <div class="loopnote">The report feeds the next month's plan &nbsp;<b>↻ the line loops</b></div>
   </section>
 
-  <!-- RHYTHM -->
+  <!-- SANITY SPINE -->
   <section>
-    <div class="sec-head">
-      <span class="n">02</span>
-      <h2>The rhythm</h2>
-      <span class="d">Nested loops — a big plan, a weekly sprint, a daily heartbeat.</span>
+    <div class="sec-head"><span class="n">02</span><h2>Sanity is the spine</h2>
+      <span class="d">Not a CMS — the workflow nervous system every project lives on.</span></div>
+    <div class="spine">
+      <div class="eyebrow">Page-first</div>
+      <h3>The page is the master asset. YT &amp; IG are cuts of it.</h3>
+      <p class="lead">One research-and-write effort produces the designed page; everything else is butchered out of it. Every piece is a document that moves through states — nothing stalls, nothing is left un-milked.</p>
+      <div class="flow">
+        <span class="up">Plan · upstream</span>
+        <span class="arr">→</span>
+        <span class="box">Queue</span><span class="arr">→</span>
+        <span class="box">Research</span><span class="arr">→</span>
+        <span class="box">Write</span><span class="arr">→</span>
+        <span class="box">Design / Publish</span><span class="arr">→</span>
+        <span class="box master">PAGE — master</span>
+      </div>
+      <div class="flow"><span class="cut">&nbsp;&nbsp;&nbsp;└─ cut into →&nbsp;</span><span class="box">YouTube</span><span class="box">Instagram · reels · carousels · stories</span></div>
+      <div class="spine-foot">Sanity configures (Workflow Manager plugin) — it doesn't get built from scratch.</div>
     </div>
-    <div class="rhythm">
-      <div class="beat">
-        <div class="cad">Monthly</div>
-        <div class="nm">Strategy</div>
-        <p>Themes, launches, offers &amp; the campaign calendar — set with the client.</p>
-      </div>
-      <div class="beat">
-        <div class="cad">Weekly · Mon</div>
-        <div class="nm">Sprint plan</div>
-        <p>Month → this week's shoot list + publish calendar. Brief producer &amp; editor.</p>
-      </div>
-      <div class="beat">
-        <div class="cad">1–2× / week</div>
-        <div class="nm">Shoot days</div>
-        <p>Batch a week+ of content in a single production session.</p>
-      </div>
-      <div class="beat daily">
-        <div class="cad">Daily</div>
-        <div class="nm">Publish + engage</div>
-        <p>Post to calendar, run comments/DMs/stories, clear the edit queue.</p>
-      </div>
-      <div class="beat">
-        <div class="cad">Weekly · Fri</div>
-        <div class="nm">Readout</div>
-        <p>Performance + what we learned, back to the client.</p>
-      </div>
+    <div class="triad">
+      <div class="tri owns"><div class="k">Sanity owns</div><p>The queue/kanban · structured content (atoms pull downstream) · workflow state · publish trigger · cross-channel programming checklist.</p></div>
+      <div class="tri holds"><div class="k">Sanity holds</div><p>The research dossier &amp; visual assets — they just <em>dock</em> to the card.</p></div>
+      <div class="tri out"><div class="k">Sanity stays out of</div><p>Doing the research · the visual design (lives in the page template) · the editing/production (real tools).</p></div>
     </div>
+  </section>
+
+  <!-- SUPPLY CHAIN / WHO USES WHAT -->
+  <section>
+    <div class="sec-head"><span class="n">03</span><h2>The production line — who does what, with what</h2>
+      <span class="d">The short-form video cycle. AI runs the volume; the human owns the call at each stage.</span></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Stage</th><th>AI does</th><th>Human owns</th><th>Tool</th></tr></thead>
+        <tbody>
+          <tr><td class="stg">Ideate</td><td class="aic">Trend/SEO scan, hook-mining, angles</td><td class="hum">Picks the winning angle + brand fit</td><td class="tool-cell">Claude · ReFound brain · DataForSEO</td></tr>
+          <tr><td class="stg">Script</td><td class="aic">Drafts hooks, beats, variants</td><td class="hum">Crafts the hook, sets the voice</td><td class="tool-cell">Claude</td></tr>
+          <tr><td class="stg">Produce</td><td class="aic">B-roll / scenes where physical isn't needed</td><td class="hum">Directs the <em>real</em> shoots</td><td class="tool-cell">LTX Studio</td></tr>
+          <tr><td class="stg">Post</td><td class="aic">Auto-cut, captions, reframe → 10–30 clips</td><td class="hum">Craft-finish + taste pass</td><td class="tool-cell">Reap → CapCut</td></tr>
+          <tr><td class="stg">Design</td><td class="aic">Thumbnails, covers, cards</td><td class="hum">Art-directs, holds brand</td><td class="tool-cell">Multi-model image</td></tr>
+          <tr><td class="stg">Distribute</td><td class="aic">Schedule, best-time, A/B, cross-post</td><td class="hum">Approves, community</td><td class="tool-cell">Metricool (+ n8n)</td></tr>
+          <tr><td class="stg">Learn</td><td class="aic">Pattern + predictive analytics</td><td class="hum">Strategy calls</td><td class="tool-cell">Metricool + n8n</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section>
+    <div class="sec-head"><span class="n">04</span><h2>The consolidated stack</h2>
+      <span class="d">~11 tools collapsed to 3 daily + 3 occasional + invisible glue. Fewest moving parts wins.</span></div>
+    <div class="tier-lbl">Daily core · whole team</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Tool</th><th>Role</th><th>Replaces</th><th>~₹/mo</th></tr></thead>
+        <tbody>
+          <tr><td class="stg">Sanity</td><td>the spine</td><td class="rep">Notion / Trello / Asana + calendar + content mgmt</td><td class="cost">0 → 3,900</td></tr>
+          <tr><td class="stg">Claude</td><td>the brain</td><td class="rep">—</td><td class="cost">6,450</td></tr>
+          <tr><td class="stg">LTX Studio</td><td>visual production</td><td class="rep">Kling + Veo + basic edit + FLUX</td><td class="cost">3,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tier-lbl">Spokes · one role, occasional</div>
+    <div class="tbl-wrap">
+      <table>
+        <tbody>
+          <tr><td class="stg">Multi-model image</td><td>all image gen</td><td class="rep">Midjourney + Ideogram + Flux</td><td class="cost">2,000</td></tr>
+          <tr><td class="stg">ElevenLabs</td><td>all audio</td><td class="rep">VO + Suno + SFX</td><td class="cost">2,500</td></tr>
+          <tr><td class="stg">CapCut Pro</td><td>craft-finish edit</td><td class="rep">—</td><td class="cost">1,720</td></tr>
+          <tr><td class="stg">Metricool</td><td>schedule + analytics</td><td class="rep">scheduler + analytics tool</td><td class="cost">1,720</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tier-lbl">Invisible glue · Button-Builders-run</div>
+    <div class="tbl-wrap">
+      <table>
+        <tbody>
+          <tr><td class="stg">Reap</td><td>auto-clip via API</td><td class="rep">manual repurposing</td><td class="cost">850</td></tr>
+          <tr><td class="stg">n8n</td><td>orchestration (self-host)</td><td class="rep">manual coordination</td><td class="cost">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="stack-total"><span class="l">Total tool spend</span><span class="v">~₹18,000–22,000 / mo</span></div>
   </section>
 
   <!-- ROLES -->
   <section>
-    <div class="sec-head">
-      <span class="n">03</span>
-      <h2>The four roles</h2>
-      <span class="d">Who owns what, what their day looks like, and the tools they work in.</span>
-    </div>
+    <div class="sec-head"><span class="n">05</span><h2>The lean team — 4 seats, reframed AI-native</h2>
+      <span class="d">Hiring shifts from production capacity to taste + supervision.</span></div>
     <div class="roles">
-
       <div class="role">
-        <div class="rh"><span class="dot"></span><h3>Client Relationships</h3><span class="k">rhythm · relationship</span></div>
+        <div class="rh"><span class="seat">Seat A</span><h3>Creative Director / Taste Brain</h3></div>
         <div class="rb">
-          <div class="blk owns"><div class="lbl">Owns</div><p>The client relationship, the plan, approvals, reporting.</p></div>
-          <div class="blk"><div class="lbl">Day to day</div><p>Client check-ins; translate business goals into content beats; route approvals; package the readout.</p></div>
-          <div class="blk"><div class="lbl">Stack</div><div class="stackrow"><span class="tool">Scheduler reports</span><span class="tool ai">Claude · planning</span><span class="tool">Canva / Slides</span><span class="tool">WhatsApp · Slack</span></div></div>
+          <div class="owns"><div class="lbl">Owns</div><p>Ideation, the craft bar, narrative &amp; brand. The human moat.</p></div>
+          <div><div class="lbl">Stack</div><div class="stackrow"><span class="tool ai">Claude</span><span class="tool ai">ReFound brain</span><span class="tool">DataForSEO</span><span class="tool">Sanity</span></div></div>
         </div>
       </div>
-
       <div class="role">
-        <div class="rh"><span class="dot"></span><h3>Campaign Manager</h3><span class="k">the last mile</span></div>
+        <div class="rh"><span class="seat">Seat B</span><h3>Shoot Director</h3></div>
         <div class="rb">
-          <div class="blk owns"><div class="lbl">Owns</div><p>Publish calendar, captions, thumbnails, in-platform engagement, DMs. Co-plans campaigns.</p></div>
-          <div class="blk"><div class="lbl">Day to day</div><p>Publish per calendar; write captions + hooks; make thumbnails; run community + DMs; pull the numbers.</p></div>
-          <div class="blk"><div class="lbl">Stack</div><div class="stackrow"><span class="tool">Metricool / Later</span><span class="tool ai">Claude · captions</span><span class="tool">Canva / Figma</span></div></div>
+          <div class="owns"><div class="lbl">Owns</div><p>Real capture — only when a physical shoot is needed; light / project otherwise.</p></div>
+          <div><div class="lbl">Stack</div><div class="stackrow"><span class="tool">Camera + lighting</span><span class="tool ai">LTX Studio</span></div></div>
         </div>
       </div>
-
       <div class="role">
-        <div class="rh"><span class="dot"></span><h3>Video Producer</h3><span class="k">works in bursts</span></div>
+        <div class="rh"><span class="seat">Seat C</span><h3>AI Post-Editor</h3></div>
         <div class="rb">
-          <div class="blk owns"><div class="lbl">Owns</div><p>Shoots — concepts, shot lists, capture, raw assets.</p></div>
-          <div class="blk"><div class="lbl">Day to day</div><p>Pre-production (shot lists, concepts); shoot days; hand off footage with clip → deliverable briefs.</p></div>
-          <div class="blk"><div class="lbl">Stack</div><div class="stackrow"><span class="tool ai">Claude · concepts</span><span class="tool">Camera + lighting</span><span class="tool">Drive / Frame.io</span></div></div>
+          <div class="owns"><div class="lbl">Owns</div><p>Drives the AI post stack — 1 person + AI = the old edit team.</p></div>
+          <div><div class="lbl">Stack</div><div class="stackrow"><span class="tool ai">Reap</span><span class="tool">CapCut</span><span class="tool ai">ElevenLabs</span><span class="tool ai">Multi-model image</span></div></div>
         </div>
       </div>
-
       <div class="role">
-        <div class="rh"><span class="dot"></span><h3>Video Editor</h3><span class="k">a rolling queue</span></div>
+        <div class="rh"><span class="seat">Seat D</span><h3>AI Operator</h3></div>
         <div class="rb">
-          <div class="blk owns"><div class="lbl">Owns</div><p>Post — cuts, reels &amp; YT, on-video captions, revisions.</p></div>
-          <div class="blk"><div class="lbl">Day to day</div><p>Clear the edit queue to format briefs; subtitles + motion + brand styling; revisions; deliver finals.</p></div>
-          <div class="blk"><div class="lbl">Stack</div><div class="stackrow"><span class="tool">CapCut</span><span class="tool">DaVinci / Premiere</span><span class="tool ai">Descript</span><span class="tool">Frame.io</span></div></div>
+          <div class="owns"><div class="lbl">Owns</div><p>Runs the Sanity spine, publishing, analytics <em>and</em> the n8n automations.</p></div>
+          <div><div class="lbl">Stack</div><div class="stackrow"><span class="tool">Sanity</span><span class="tool">Metricool</span><span class="tool ai">n8n</span></div></div>
         </div>
       </div>
-
-    </div>
-  </section>
-
-  <!-- AI -->
-  <section>
-    <div class="ai-strip">
-      <div class="eyebrow">The multiplier</div>
-      <h2>AI does the grunt. The team does taste, relationship, judgment.</h2>
-      <p class="lead">Four people punch above their weight because the repetitive work is automated — leaving human effort for the parts that actually need it.</p>
-      <div class="ai-grid">
-        <div class="ai-card"><div class="t">Repurpose</div><p>One shoot → many cuts, AI-assisted.</p></div>
-        <div class="ai-card"><div class="t">Write</div><p>Captions, scripts &amp; hooks drafted, then edited for voice.</p></div>
-        <div class="ai-card"><div class="t">Caption</div><p>Auto subtitles on every video.</p></div>
-        <div class="ai-card"><div class="t">Design</div><p>Thumbnails generated + finished in Canva.</p></div>
-        <div class="ai-card"><div class="t">Report</div><p>Analytics summarised into the client readout.</p></div>
+      <div class="role glue">
+        <div class="rh"><span class="seat">+ layer</span><h3>Orchestration — the unstaffed 5th member</h3></div>
+        <div class="rb">
+          <div class="owns"><div class="lbl">Built &amp; run by Button Builders</div><p>n8n + agents do the repetitive orchestration across every stage. Nobody is staffed on it.</p></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- TOUCHPOINTS + DISCIPLINE -->
+  <!-- ECONOMICS + TRADEOFFS -->
   <section>
-    <div class="sec-head">
-      <span class="n">04</span>
-      <h2>Client &amp; discipline</h2>
-    </div>
+    <div class="sec-head"><span class="n">06</span><h2>Economics &amp; the two open calls</h2></div>
     <div class="two">
-      <div class="box">
-        <h3><span class="b"></span>Client touchpoints</h3>
-        <div class="tp"><span class="when">Monthly</span><span class="what">Sign off the <b>strategy + calendar</b>.</span></div>
-        <div class="tp"><span class="when">Weekly</span><span class="what">Quick check-in, <b>approvals</b>, performance readout.</span></div>
-        <div class="tp"><span class="when">Ad-hoc</span><span class="what">Launches &amp; offers fed through <b>Client Relationships only</b> — one throat.</span></div>
+      <div class="box econ">
+        <h3><span class="b"></span>The headline</h3>
+        <div class="econ-big">&lt; one junior hire</div>
+        <p>The whole production + growth stack costs <b>~₹18–22K/mo — only ~7–9% on top of</b> the ₹2.55L salary budget. You spend the price of one salary on software that replaces ~8 of them.</p>
+        <p>Fully-loaded ≈ <b>₹2.85–3L/mo</b> (salaries + tools + rent) — the real "cover its own costs" number for the Dec-2026 hard stop.</p>
       </div>
-      <div class="box disc">
-        <h3><span class="b"></span>Two non-negotiables</h3>
-        <p><b>One calendar.</b> Plan &amp; brief in one place; schedule &amp; publish in the scheduler. Never three calendars.</p>
-        <p><b>One channel to the client.</b> All inputs and approvals route through Client Relationships, so the bench stays heads-down on production.</p>
+      <div class="box">
+        <h3><span class="b"></span>Two trade-offs — your call</h3>
+        <div class="to"><div class="q">Editing: keep CapCut, or let LTX do it?</div><div class="rec">One fewer tool via LTX, but editors already know CapCut. <b>Rec: keep CapCut</b> (familiar &gt; minimal here).</div></div>
+        <div class="to"><div class="q">Images: one multi-model platform, or Midjourney?</div><div class="rec">Multi-model = simplest, one login; Midjourney = higher aesthetic ceiling. <b>Rec: start multi-model; add Midjourney only if the craft bar demands it.</b></div></div>
       </div>
     </div>
   </section>
 
   <footer>
-    <span>BLR STUDIO · content production workflow · v1</span>
+    <span>BLR STUDIO · AI-native content &amp; growth engine · v1 (proposed)</span>
     <span>internal · roles not names</span>
   </footer>
 
