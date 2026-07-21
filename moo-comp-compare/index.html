@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>MOO vs Comps — Forward Revenue Multiple</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1A1A; --yellow:#FFD500; --red:#FF3D47; --blue:#4361EE;
+    --oat:#F0DFC8; --cream:#FAF4E9; --line:#E2D3B8; --muted:#8C7E66;
+    --green:#1FA463;
+    --display:"Bebas Neue", Impact, sans-serif;
+    --body:"Inter", system-ui, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--body);background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5;padding:32px 18px 60px;}
+  .sheet{max-width:1080px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 24px 70px rgba(26,26,26,.10);}
+
+  /* header */
+  header{background:var(--blue);color:#fff;padding:30px 40px 26px;}
+  .kick{font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--yellow);}
+  header h1{font-family:var(--display);font-weight:400;font-size:52px;letter-spacing:.01em;line-height:.95;margin:6px 0 8px;}
+  header p{font-size:14.5px;max-width:760px;color:#e7ecff;}
+  header .basis{margin-top:12px;font-size:11.5px;color:#c3ccf7;letter-spacing:.02em;}
+
+  .body{padding:30px 40px 34px;}
+
+  /* takeaway */
+  .takeaway{background:var(--oat);border-left:5px solid var(--red);border-radius:8px;padding:16px 20px;margin-bottom:28px;}
+  .takeaway b{color:var(--red);}
+  .takeaway .big{font-family:var(--display);font-size:26px;letter-spacing:.01em;line-height:1;display:block;margin-bottom:6px;}
+
+  h2.sec{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 16px;}
+
+  /* chart */
+  .chart{position:relative;margin-bottom:10px;}
+  .row{display:grid;grid-template-columns:180px 1fr 52px;align-items:center;gap:12px;height:30px;margin-bottom:6px;position:relative;z-index:2;}
+  .row .lab{font-size:12.5px;font-weight:600;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);}
+  .row .lab .rnd{font-weight:400;color:var(--muted);font-size:11px;}
+  .track{position:relative;height:20px;}
+  .bar{position:absolute;left:0;top:0;height:20px;border-radius:0 4px 4px 0;transition:filter .15s;}
+  .bar.comp{background:var(--blue);}
+  .bar.moo{background:var(--red);}
+  .bar.moo.stretch{background:repeating-linear-gradient(135deg,var(--red),var(--red) 6px,#ff6b73 6px,#ff6b73 12px);}
+  .row:hover .bar{filter:brightness(1.08);}
+  .val{font-size:13px;font-weight:800;font-variant-numeric:tabular-nums;}
+  .val.moo{color:var(--red);} .val.comp{color:var(--ink);}
+  .moo .lab, .row.mrow .lab{color:var(--red);font-weight:800;}
+  .tag{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--red);color:#fff;border-radius:3px;padding:1px 5px;margin-left:5px;vertical-align:middle;}
+
+  /* median line overlay */
+  .medline{position:absolute;top:0;bottom:22px;width:0;border-left:2px dashed var(--ink);z-index:3;pointer-events:none;}
+  .medline .cap{position:absolute;top:-20px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:var(--yellow);padding:2px 7px;border-radius:4px;}
+  .axis{display:grid;grid-template-columns:180px 1fr 52px;gap:12px;margin-top:2px;}
+  .ticks{position:relative;height:16px;font-size:10px;color:var(--muted);}
+  .ticks span{position:absolute;transform:translateX(-50%);}
+  .legend{display:flex;gap:20px;flex-wrap:wrap;margin:14px 0 30px;font-size:11.5px;color:var(--muted);}
+  .legend i{display:inline-block;width:16px;height:11px;border-radius:0 2px 2px 0;margin-right:6px;vertical-align:middle;}
+  .lg-comp{background:var(--blue);} .lg-moo{background:var(--red);}
+  .lg-str{background:repeating-linear-gradient(135deg,var(--red),var(--red) 4px,#ff6b73 4px,#ff6b73 8px);}
+
+  /* table */
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:8px;}
+  th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap;}
+  th:first-child,td:first-child{text-align:left;}
+  thead th{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--ink);}
+  tbody tr.moo{background:#fff5f5;}
+  tbody tr.moo td{font-weight:700;color:var(--red);}
+  tbody tr.summary td{border-top:2px solid var(--ink);border-bottom:none;font-weight:800;background:var(--oat);}
+  td.num{font-variant-numeric:tabular-nums;}
+  .story{color:var(--muted);font-size:11px;}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:28px;}
+  .box{border:1px solid var(--line);border-radius:8px;padding:16px 18px;}
+  .box h3{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+  .box ul{list-style:none;font-size:12.5px;}
+  .box li{padding:5px 0 5px 16px;position:relative;}
+  .box li:before{content:"";position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:var(--red);}
+  .box.imp li:before{background:var(--blue);}
+
+  footer{padding:18px 40px 26px;border-top:1px solid var(--line);color:var(--muted);font-size:10.5px;background:var(--cream);}
+  footer b{color:var(--ink);}
+  @media(max-width:720px){
+    header h1{font-size:38px;} .body{padding:22px 18px;} header{padding:24px 20px;}
+    .row,.axis{grid-template-columns:118px 1fr 44px;gap:8px;} .row .lab{font-size:11px;}
+    .cols{grid-template-columns:1fr;} table{font-size:11px;} th,td{padding:6px 5px;}
+    .hide-sm{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header>
+    <div class="kick">Ministry of Oats · Seed · Pricing Basis</div>
+    <h1>MOO vs Comps — Forward Revenue Multiple</h1>
+    <p>Early-stage consumer-QSR rounds price on <b>forward</b> revenue, not trailing. Because these brands grow 3–6× a year, a round that looks like 8–15× trailing is really ~2–6× the next-12-month number. Here's what the real precedents priced at — and where MOO's ask sits.</p>
+    <div class="basis">Multiple = post-money ÷ next-12-month (forward) gross revenue · apples-to-apples: all revenues are gross customer sales (aggregator commission booked as cost)</div>
+  </header>
+
+  <div class="body">
+    <div class="takeaway">
+      <span class="big">Median ≈ 3.0× forward · MOO at ₹24–30 Cr = 2.3–2.9×</span>
+      The comps clear a <b>median ~3.0×</b> / average ~3.5× forward revenue. MOO's ask is <b>at or below the median — while being profitable</b>, which almost none of them are. Pricing MOO <b>at</b> the comp average (~3.3×) implies <b>₹34–36 Cr post</b>.
+    </div>
+
+    <h2 class="sec">Forward revenue multiple — by round (sorted)</h2>
+    <div class="chart">
+      <!-- median 3.0x on 0–7.5 scale = 40% of the track; track = from 192px to (100% - 64px), width = 100% - 256px -->
+      <div class="medline" style="left:calc(192px + (100% - 256px)*0.40);"><span class="cap">Median 3.0×</span></div>
+
+      <!-- rows: width % = value / 7.5 * 100 -->
+      <div class="row"><div class="lab">Boba Bhai <span class="rnd">Seed '24</span></div><div class="track"><div class="bar comp" style="width:18.7%"></div></div><div class="val comp">1.4×</div></div>
+      <div class="row"><div class="lab">Boba Bhai <span class="rnd">Series A '25</span></div><div class="track"><div class="bar comp" style="width:20%"></div></div><div class="val comp">1.5×</div></div>
+      <div class="row"><div class="lab">Salad Days <span class="rnd">Series A '25</span></div><div class="track"><div class="bar comp" style="width:24%"></div></div><div class="val comp">1.8×</div></div>
+      <div class="row"><div class="lab">Kenko Life <span class="rnd">Seed '25</span></div><div class="track"><div class="bar comp" style="width:29.3%"></div></div><div class="val comp">2.2×</div></div>
+      <div class="row mrow"><div class="lab">MOO @ ₹24 Cr<span class="tag">Ask</span></div><div class="track"><div class="bar moo" style="width:30.7%"></div></div><div class="val moo">2.3×</div></div>
+      <div class="row mrow"><div class="lab">MOO @ ₹30 Cr<span class="tag">Ask</span></div><div class="track"><div class="bar moo" style="width:38.7%"></div></div><div class="val moo">2.9×</div></div>
+      <div class="row"><div class="lab">GOAT Life <span class="rnd">oats · '26</span></div><div class="track"><div class="bar comp" style="width:40%"></div></div><div class="val comp">3.0×</div></div>
+      <div class="row"><div class="lab">Acai Theory <span class="rnd">Pre-Seed '26</span></div><div class="track"><div class="bar comp" style="width:40%"></div></div><div class="val comp">3.0×</div></div>
+      <div class="row mrow"><div class="lab">MOO @ ₹40 Cr<span class="tag">Stretch</span></div><div class="track"><div class="bar moo stretch" style="width:52%"></div></div><div class="val moo">3.9×</div></div>
+      <div class="row"><div class="lab">Samosa Party <span class="rnd">Series B '24</span></div><div class="track"><div class="bar comp" style="width:73.3%"></div></div><div class="val comp">5.5×</div></div>
+      <div class="row"><div class="lab">Boba Bhai <span class="rnd">CCD '26</span></div><div class="track"><div class="bar comp" style="width:84%"></div></div><div class="val comp">6.3×</div></div>
+      <div class="row"><div class="lab">Alienkind <span class="rnd">Pre-A '26</span></div><div class="track"><div class="bar comp" style="width:93.3%"></div></div><div class="val comp">7.0×</div></div>
+
+      <div class="axis"><div></div><div class="ticks">
+        <span style="left:0%">0×</span><span style="left:26.7%">2×</span><span style="left:53.3%">4×</span><span style="left:80%">6×</span><span style="left:100%">7.5×</span>
+      </div><div></div></div>
+    </div>
+    <div class="legend">
+      <span><i class="lg-comp"></i>Comparable round</span>
+      <span><i class="lg-moo"></i>MOO ask (₹24–30 Cr)</span>
+      <span><i class="lg-str"></i>MOO stretch (₹40 Cr)</span>
+      <span>— — Median of comps (3.0×)</span>
+    </div>
+
+    <h2 class="sec">The evidence</h2>
+    <table>
+      <thead><tr><th>Company / round</th><th>Post-money</th><th>Fwd 12-mo rev</th><th>Fwd mult.</th><th>Trailing</th><th class="hide-sm">Note</th></tr></thead>
+      <tbody>
+        <tr><td>Boba Bhai — Seed (Apr '24)</td><td class="num">₹41 Cr</td><td class="num">₹28–30 Cr</td><td class="num">1.4×</td><td class="num">7.9×</td><td class="story hide-sm">actual fwd realised</td></tr>
+        <tr><td>Boba Bhai — Series A (Jan '25)</td><td class="num">₹102 Cr</td><td class="num">₹70 Cr</td><td class="num">1.5×</td><td class="num">3.6×</td><td class="story hide-sm">actual fwd realised</td></tr>
+        <tr><td>Salad Days — Series A (Jan '25)</td><td class="num">~₹120–150 Cr</td><td class="num">~₹80 Cr</td><td class="num">1.8×</td><td class="num">~2×</td><td class="story hide-sm">profitable, 25 kitchens</td></tr>
+        <tr><td>Kenko Life — Seed (Aug '25)</td><td class="num">₹20.8 Cr</td><td class="num">~₹9–10 Cr</td><td class="num">2.2×</td><td class="num">7.6×</td><td class="story hide-sm">burning; follow-on flat</td></tr>
+        <tr class="moo"><td>MOO @ ₹24 Cr</td><td class="num">₹24 Cr</td><td class="num">₹10.4 Cr</td><td class="num">2.3×</td><td class="num">7.3×</td><td class="story hide-sm">profitable</td></tr>
+        <tr class="moo"><td>MOO @ ₹30 Cr</td><td class="num">₹30 Cr</td><td class="num">₹10.4 Cr</td><td class="num">2.9×</td><td class="num">9.1×</td><td class="story hide-sm">profitable</td></tr>
+        <tr><td>GOAT Life — Shark Tank (Jan '26)</td><td class="num">₹25 Cr</td><td class="num">~₹6–10 Cr</td><td class="num">3.0×</td><td class="num">12.5×</td><td class="story hide-sm">direct oats twin</td></tr>
+        <tr><td>Acai Theory — Pre-Seed (Apr '26)</td><td class="num">₹20 Cr</td><td class="num">~₹5–8 Cr</td><td class="num">3.0×</td><td class="num">n/m</td><td class="story hide-sm">₹0 rev; nearest twin</td></tr>
+        <tr class="moo"><td>MOO @ ₹40 Cr (stretch)</td><td class="num">₹40 Cr</td><td class="num">₹10.4 Cr</td><td class="num">3.9×</td><td class="num">12.1×</td><td class="story hide-sm">needs category story</td></tr>
+        <tr><td>Samosa Party — Series B (Nov '24)</td><td class="num">₹274 Cr</td><td class="num">~₹49–50 Cr</td><td class="num">5.5×</td><td class="num">7.7×</td><td class="story hide-sm">110 outlets</td></tr>
+        <tr><td>Boba Bhai — CCD (Feb '26)</td><td class="num">₹441 Cr</td><td class="num">₹70 Cr</td><td class="num">6.3×</td><td class="num">15.4×</td><td class="story hide-sm">hypergrowth</td></tr>
+        <tr><td>Alienkind — Pre-A (Feb '26)</td><td class="num">₹140 Cr</td><td class="num">~₹15–25 Cr</td><td class="num">7.0×</td><td class="num">560×</td><td class="story hide-sm">story / momentum round</td></tr>
+        <tr class="summary"><td>Comps: median / average</td><td class="num">—</td><td class="num">—</td><td class="num">3.0× / 3.5×</td><td class="num">—</td><td class="hide-sm"></td></tr>
+      </tbody>
+    </table>
+
+    <div class="cols">
+      <div class="box">
+        <h3>Why MOO deserves the low multiple</h3>
+        <ul>
+          <li><b>Profitable today</b> — company EBITDA +3% (clean months); the comps in this band are burning.</li>
+          <li><b>60% repeat</b> — abnormal for QSR; the traction proof point.</li>
+          <li>Priced at <b>2.3–2.9× forward</b> vs a 3.0× median — a clean, evidence-backed discount.</li>
+          <li>Comp-average (~3.3×) would justify <b>₹34–36 Cr post</b> — headroom above the ask.</li>
+        </ul>
+      </div>
+      <div class="box imp">
+        <h3>What an investor will press</h3>
+        <ul>
+          <li>The ₹10.4 Cr forward rests on the <b>rollout</b> (new kitchens + fridge/QSR + Delhi).</li>
+          <li>Haircut to the proven cloud-kitchen path (~₹6–7 Cr) → MOO rises to <b>~3.5–4.5×</b>, into the comp average — still defensible.</li>
+          <li>Forward numbers are believed, not banked — same for every comp (Boba's ₹70 Cr was "eyeing ₹100 Cr").</li>
+          <li>Growth is unit-multiplication, not same-store — <b>flat volume, rising basket.</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <b>Sources:</b> MCA-reconstructed cap tables (Boba Bhai, Alienkind, Acai Theory, Kenko) · company revenue trajectories from Inc42 / Entrackr / Tracxn / Outlook Business / Shark Tank India (FY25–FY26) · MOO forward = Rohith V3 model Base case (₹10.4 Cr gross, M1–M12); MOO trailing = OKPL entity P&L (~₹3.3 Cr gross run-rate). Forward multiples for pre-revenue comps (Acai, Alienkind) use disclosed rollout projections. All revenues gross customer sales — apples-to-apples. &nbsp;·&nbsp; MOO seed · internal — do not distribute.
+  </footer>
+</div>
+</body>
+</html>
