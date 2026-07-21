@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>MOO · Partner Room CRM (mock)</title>
+<style>
+:root{
+  --bg:#ffffff;--fg:#111111;--muted:#666;--line:#eaeaea;--soft:#fafafa;--soft2:#f4f4f5;
+  --red:#e5484d;--amber:#f5a623;--green:#30a46c;--blue:#0060df;--accent:#111;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--radius:8px;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0a0a0a;--fg:#ededed;--muted:#9a9a9a;--line:#242424;--soft:#141414;--soft2:#1c1c1c;--accent:#ededed;--blue:#3b82f6;}
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5;font-size:15px;-webkit-font-smoothing:antialiased}
+.mono{font-family:var(--mono)}
+a{color:inherit}
+button{font-family:inherit}
+
+.banner{background:#fff8e6;color:#7a5b00;font-size:12.5px;text-align:center;padding:7px 12px;border-bottom:1px solid var(--line)}
+@media (prefers-color-scheme:dark){.banner{background:#241f0d;color:#e2c65a}}
+.ask{background:var(--soft);border-bottom:1px solid var(--line);padding:10px 16px;font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;justify-content:center}
+.ask b{color:var(--fg);font-weight:600}
+.ask .q{white-space:nowrap}
+
+.app{display:flex;min-height:100vh}
+.sidebar{width:224px;flex-shrink:0;border-right:1px solid var(--line);padding:20px 12px;position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto}
+.brand{font-weight:700;font-size:15px;letter-spacing:-.01em;padding:0 10px 4px}
+.brand small{display:block;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin-top:3px}
+.nav{list-style:none;margin:16px 0 0;padding:0}
+.nav li{margin:2px 0}
+.nav button{width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;color:var(--muted);padding:9px 10px;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;text-align:left}
+.nav button:hover{background:var(--soft2);color:var(--fg)}
+.nav button.active{background:var(--soft2);color:var(--fg);font-weight:600}
+.nav .ic{font-size:15px;width:18px;text-align:center}
+.side-kick{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:22px 10px 8px}
+.filters{padding:0 6px}
+.chip{display:inline-block;font-size:12px;border:1px solid var(--line);border-radius:999px;padding:6px 11px;color:var(--muted);cursor:pointer;margin:0 5px 6px 0;background:var(--bg)}
+.chip:hover{border-color:var(--muted)}
+.chip.sel{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.legend{margin:20px 6px 0;padding:12px 10px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted);line-height:1.85}
+.legend .row{display:flex;align-items:center;gap:7px;margin:3px 0}
+.legend b{color:var(--fg)}
+
+.main{flex:1;min-width:0;padding:22px 26px 90px}
+.pagehead{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.pagehead h1{font-size:22px;margin:0;letter-spacing:-.02em}
+.pagehead .meta{font-size:13px;color:var(--muted);margin-top:3px}
+.search{border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:var(--radius);padding:9px 12px;font-size:13px;width:210px}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:22px}
+.stat{border:1px solid var(--line);border-radius:10px;padding:13px 15px;background:var(--bg)}
+.stat .k{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.stat .v{font-size:24px;font-weight:700;letter-spacing:-.02em;margin-top:5px}
+.stat .v small{font-size:13px;font-weight:500;color:var(--muted)}
+
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;display:inline-block}
+.g-bg{background:var(--green)}.a-bg{background:var(--amber)}.r-bg{background:var(--red)}.m-bg{background:var(--muted)}
+.hbadge{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+.hbadge.Active{color:var(--green)}.hbadge.AtRisk{color:var(--amber)}.hbadge.Dormant{color:var(--muted)}
+.tag{font-size:10.5px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 6px;white-space:nowrap;display:inline-block}
+.tag.fit{color:var(--blue);border-color:color-mix(in srgb,var(--blue) 40%,var(--line))}
+.tag.b2b{color:#8b5cf6;border-color:#c4b5fd}
+.score{font-family:var(--mono);font-size:12px;font-weight:700}
+
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start}
+.col{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:11px;min-height:200px}
+.col-head{display:flex;align-items:center;justify-content:space-between;padding:2px 4px 11px}
+.col-head .t{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.col-head .n{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:1px 9px}
+.col-sub{font-size:11px;color:var(--muted);padding:0 4px 10px;margin-top:-6px}
+.card{background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:11px 12px;margin-bottom:9px;cursor:pointer;transition:border-color .12s}
+.card:hover{border-color:var(--muted)}
+.card .cn{font-weight:600;font-size:13.5px;display:flex;align-items:center;gap:7px;justify-content:space-between}
+.card .cn .id{font-family:var(--mono);font-size:10.5px;color:var(--muted);font-weight:500}
+.card .poc{font-size:12px;color:var(--muted);margin-top:4px}
+.card .crow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:9px}
+.card .rev{font-family:var(--mono);font-size:12px;font-weight:700}
+.card .days{font-size:11px;color:var(--muted)}
+.card .model{margin-top:8px}
+
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:840px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--soft);position:sticky;top:0}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--soft)}
+td.name{font-weight:600}
+td.r{text-align:right;font-family:var(--mono)}
+.hide{display:none}
+
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.38);opacity:0;pointer-events:none;transition:opacity .18s;z-index:40}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100vh;width:460px;max-width:94vw;background:var(--bg);border-left:1px solid var(--line);transform:translateX(100%);transition:transform .22s cubic-bezier(.4,0,.2,1);z-index:50;overflow-y:auto}
+.drawer.on{transform:translateX(0)}
+.dhead{padding:20px 22px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:2}
+.dhead .x{position:absolute;top:16px;right:18px;font-size:22px;color:var(--muted);background:none;border:0;cursor:pointer;line-height:1}
+.dhead h2{margin:0 30px 0 0;font-size:19px;letter-spacing:-.01em}
+.dhead .did{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:2px}
+.dhead .drow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.dbody{padding:18px 22px 60px}
+.sec{margin:0 0 22px}
+.sec h4{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 10px}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:5px 12px;font-size:13px}
+.kv .k{color:var(--muted)}
+.kv .v{font-weight:500}
+.rollups{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.rollup{border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.rollup .k{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.rollup .v{font-size:19px;font-weight:700;letter-spacing:-.01em;margin-top:3px}
+.rollup .v.mono{font-family:var(--mono)}
+.log{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.logrow{display:grid;grid-template-columns:78px 1fr auto;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line);font-size:12.5px;align-items:baseline}
+.logrow:last-child{border-bottom:0}
+.logrow .d{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.logrow .ty{font-weight:600}
+.logrow .nt{color:var(--muted);font-size:11.5px;margin-top:2px}
+.logrow .rv{font-family:var(--mono);font-weight:700;text-align:right}
+.cm{display:flex;gap:7px;flex-wrap:wrap}
+.cm .on{color:var(--green);border-color:color-mix(in srgb,var(--green) 40%,var(--line))}
+.formula{font-family:var(--mono);font-size:11.5px;color:var(--muted);background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:9px 11px;line-height:1.7}
+.na{font-size:13px;background:var(--soft);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:6px;padding:9px 12px}
+.depth{font-size:12.5px}
+.depth b{font-weight:700}
+
+@media(max-width:860px){
+  .sidebar{display:none}
+  .board{grid-template-columns:1fr}
+  .main{padding:18px 16px 80px}
+}
+</style>
+</head>
+<body>
+<div class="banner"><b>MOCK · not live</b> — Partner Room CRM, built on Rushil's real pipeline data (as of 21 Jul 2026). Layout &amp; fields only; nothing here writes anywhere.</div>
+<div class="ask">
+  <span>👀 <b>Rushil — react to:</b></span>
+  <span class="q">1. Is <b>Contacted → Discovery → Engaged</b> the right pipeline?</span>
+  <span class="q">2. Do the <b>fields on a card / partner page</b> match how you track?</span>
+  <span class="q">3. Is the <b>Lead Score</b> + <b>health</b> logic right?</span>
+</div>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">Partner Room <small>MOO Lobby · CRM</small></div>
+    <ul class="nav">
+      <li><button class="active" data-view="board"><span class="ic">▚</span> Pipeline board</button></li>
+      <li><button data-view="table"><span class="ic">▤</span> All partners</button></li>
+    </ul>
+    <div class="side-kick">Pillar</div>
+    <div class="filters" id="pillarFilters">
+      <span class="chip sel" data-pillar="all">All</span>
+      <span class="chip" data-pillar="Fitness">Fitness</span>
+      <span class="chip" data-pillar="B2B">B2B</span>
+    </div>
+    <div class="side-kick">Health</div>
+    <div class="legend">
+      <div class="row"><span class="dot g-bg"></span> <b>Active</b> — ≤30 days since last</div>
+      <div class="row"><span class="dot a-bg"></span> <b>At&nbsp;Risk</b> — 31–60 days</div>
+      <div class="row"><span class="dot m-bg"></span> <b>Dormant</b> — 60+ days</div>
+      <div style="margin-top:9px">Health &amp; Lead Score only exist once a partner is <b>Engaged</b>.</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="pagehead">
+      <div>
+        <h1 id="ph">Partner Pipeline</h1>
+        <div class="meta" id="phmeta"></div>
+      </div>
+      <input class="search" id="search" placeholder="Search partner / POC…">
+    </div>
+
+    <div class="stats" id="stats"></div>
+    <div id="board" class="board"></div>
+    <div id="table" class="tblwrap hide"></div>
+  </main>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer"></aside>
+
+<script>
+const P = [
+  {id:"FIT-021",name:"PaddleX",pillar:"Fitness",stage:"Contacted",days:7,poc:"Priyanka Srikanth",contact:"90083 19023",model:"MOO Cafe",source:"Outreach",area:"Bhoganahalli",discussed:"MOO Cafe · open-access",eng:[]},
+  {id:"FIT-022",name:"The Fit Ground",pillar:"Fitness",stage:"Contacted",days:7,poc:"Punith",contact:"96063 91675",model:"Sampling",source:"Outreach",area:"Koramangala",discussed:"Slot-wise",eng:[]},
+  {id:"FIT-024",name:"Belong.better",pillar:"Fitness",stage:"Contacted",days:1,poc:"Auro",contact:"733 840 7973",model:"Brand Activation",source:"Outreach",area:"Bangalore",discussed:"Event catering",eng:[]},
+  {id:"FIT-025",name:"SweatSocial",pillar:"Fitness",stage:"Contacted",days:1,poc:"Akshata",contact:"63605 98924",model:"MOO Fridge",source:"Outreach",area:"Bangalore",discussed:"App feature · slot-wise",eng:[]},
+  {id:"FIT-012",name:"Academy of Strength (AOS)",pillar:"Fitness",stage:"Discovery",days:1,poc:"Debasmita",contact:"95912 53535",model:"MOO Fridge",source:"Outreach",area:"Whitefield",discussed:"MOO Fridge + Sampling (fresh restart)",rev:1200,note:"Re-engaging on Fridge model with new POC. Historical Feb-2026 DotPe partnership (₹1,200) discontinued — this is a fresh start, score reset to 0.",eng:[{d:"01-Feb-26",t:"MOO Fridge",r:1200,p:7,n:"Order-count model, 7 bundled orders. Discontinued (DotPe issues)."}]},
+  {id:"FIT-016",name:"Average Run Club (AVG)",pillar:"Fitness",stage:"Discovery",days:39,poc:"Vaibhav Kothari",contact:"98945 65526",model:"Co-brand Product Launch",source:"Outreach",area:"Cubbon Park / HSR",discussed:"Co-branded overnight-oats launch on Zomato/Swiggy",note:"Ongoing — may not materialise. Rev-share from Month 2 if it proceeds.",eng:[]},
+  {id:"FIT-019",name:"Cali OG Gym",pillar:"Fitness",stage:"Discovery",days:8,poc:"Asslam",contact:"98442 82821",model:"Event Catering",source:"Outreach",area:"Koramangala",discussed:"Event catering · 40–50 pax",eng:[]},
+  {id:"FIT-020",name:"Atha_Beyond",pillar:"Fitness",stage:"Discovery",days:8,poc:"Mandira Sabitha",contact:"861 851 2761",model:"Event Catering",source:"Outreach",area:"Yeshwanthpur",discussed:"Event catering",eng:[]},
+  {id:"FIT-001",name:"Bhavya Mandana Yoga Studio",pillar:"Fitness",stage:"Engaged",health:"AtRisk",score:30,rev:5125,poc:"Bhavya Mandana",contact:"97410 17712",model:"Event Catering",source:"Inbound",area:"Ashok Nagar",cm:{ugc:1},eng:[{d:"08-Mar-26",t:"Event Catering",r:2500,p:10,n:"Women's Day Yoga Session · DIY Bar"},{d:"01-Jun-26",t:"Event Catering",r:2625,p:10,n:"Yoga Day · DIY Breakfast Bar"}]},
+  {id:"FIT-002",name:"ICC (Indian Calisthenics Chamber)",pillar:"Fitness",stage:"Engaged",health:"Dormant",score:20,rev:12600,poc:"Arsh",contact:"99028 28888",model:"Event Catering",source:"Inbound",area:"Bannerghatta Rd",cm:{ugc:1},eng:[{d:"22-Mar-26",t:"Event Catering",r:12600,p:190,n:"ICCWE Championship 2026 · 5 SKUs · influencer collab ₹7,000"}]},
+  {id:"FIT-003",name:"SweatSocial / Ember & Ice",pillar:"Fitness",stage:"Engaged",health:"Dormant",score:15,rev:3750,poc:"Pranav Gupta",contact:"70069 73903",model:"Bulk Order Delivery",source:"SweatSocial community",area:"Banashankari",eng:[{d:"12-Apr-26",t:"Bulk Order Delivery",r:3750,p:25,n:"Oatmeal + smoothie combo"}]},
+  {id:"FIT-004",name:"SweatSocial / Stretch Pilates",pillar:"Fitness",stage:"Engaged",health:"Dormant",score:25,rev:3900,poc:"Pranav Gupta",contact:"70069 73903",model:"Bulk Order Delivery",source:"SweatSocial community",area:"Benson Town",eng:[{d:"19-Apr-26",t:"Bulk Order Delivery",r:3000,p:20,n:"Yogurt bowls + juice"},{d:"23-Apr-26",t:"Bulk Order Delivery",r:900,p:5,n:"Yogurt bowls + cold brew"}]},
+  {id:"FIT-005",name:"Stride Run Club",pillar:"Fitness",stage:"Engaged",health:"Dormant",score:15,rev:6840,poc:"Sidharth",contact:"95606 02019",model:"Event Catering",source:"Outreach",area:"HSR Layout",eng:[{d:"02-May-26",t:"Event Catering",r:6840,p:60,n:"Saturday Morning Community Run · individual payments chaotic"}]},
+  {id:"FIT-006",name:"House of Pilates",pillar:"Fitness",stage:"Engaged",health:"Dormant",score:25,rev:6720,poc:"Shilpa Chelluri",contact:"77998 73316",model:"MOO Fridge",source:"Outreach",area:"JP Nagar",cm:{ig:1},eng:[{d:"02-May-26",t:"MOO Fridge",r:6720,p:40,n:"World Pilates Day · slot-wise pilot · Porter delays evening slot"}]},
+  {id:"FIT-007",name:"SweatSocial / Yoh Fitness",pillar:"Fitness",stage:"Engaged",health:"Dormant",score:15,rev:2363,poc:"Pranav Gupta",contact:"70069 73903",model:"Bulk Order Delivery",source:"SweatSocial community",area:"Richards Town",eng:[{d:"17-May-26",t:"Bulk Order Delivery",r:2363,p:15,n:"Yogurt bowls + juice"}]},
+  {id:"FIT-008",name:"SweatSocial / Re:Balance Event",pillar:"Fitness",stage:"Engaged",health:"Dormant",score:10,rev:4798,poc:"Pranav Gupta",contact:"70069 73903",model:"Brand Activation",source:"SweatSocial community",area:"Bellandur",eng:[{d:"01-Oct-25",t:"Brand Activation",r:4798,p:25,n:"2-day stall ₹20K · 70% stock sampled out"}]},
+  {id:"FIT-009",name:"Manah Pilates",pillar:"Fitness",stage:"Engaged",health:"AtRisk",score:20,rev:1890,poc:"—",contact:"81055 44702",model:"Event Catering",source:"Inbound",area:"Jayanagar",cm:{ig:1},eng:[{d:"24-May-26",t:"Event Catering",r:1890,p:12,n:"Sunday Community Day"}]},
+  {id:"FIT-010",name:"FindYourFit / Depot18",pillar:"Fitness",stage:"Engaged",health:"AtRisk",score:15,rev:2622,poc:"Shreya",contact:"90888 16631",model:"Brand Activation",source:"Inbound",area:"Jayamahal",cm:{ugc:1},eng:[{d:"24-May-26",t:"Brand Activation",r:2622,p:10,n:"Bangalore Padel Championship · DIY bowls + chia"}]},
+  {id:"FIT-011",name:"Tenzee Multisports",pillar:"Fitness",stage:"Engaged",health:"Active",score:25,rev:0,poc:"Gaurav Chinnivar",contact:"93530 67017",model:"MOO Fridge",source:"Outreach",area:"Bannerghatta Rd",cm:{ugc:1},eng:[{d:"01-Jul-26",t:"MOO Fridge",r:0,p:80,n:"Mini-fridge + slot-wise delivery pilot · sampling phase"}]},
+  {id:"FIT-013",name:"Dizzy Duck Yoga Studio",pillar:"Fitness",stage:"Engaged",health:"Dormant",score:25,rev:0,poc:"Gowri",contact:"—",model:"Sampling",source:"SweatSocial community",area:"Koramangala",cm:{ig:1},eng:[{d:"22-Feb-26",t:"Sampling",r:0,p:20,n:"SweatTour · first DIY Breakfast Bar pilot"},{d:"15-Apr-26",t:"Sampling",r:0,p:10,n:"Community event · IG content collab"}]},
+  {id:"FIT-014",name:"Physique57",pillar:"Fitness",stage:"Engaged",health:"Dormant",score:10,rev:0,poc:"Shifa Ali",contact:"98860 29223",model:"Sampling",source:"Inbound",area:"Vittal Mallya Rd",eng:[{d:"29-Nov-25",t:"Sampling",r:0,p:35,n:"Community Day · 6 SKUs · UGC + influencer connections"}]},
+  {id:"FIT-015",name:"FIFO Gym",pillar:"Fitness",stage:"Engaged",health:"Dormant",score:20,rev:0,poc:"Shabana",contact:"95350 61362",model:"MOO Fridge",source:"Outreach",area:"Whitefield",eng:[{d:"01-Feb-26",t:"MOO Fridge",r:0,p:6,n:"DotPe delivery · discontinued after 1 month, 0 revenue"}]},
+  {id:"FIT-017",name:"Alae Club",pillar:"Fitness",stage:"Engaged",health:"Active",score:20,rev:2756,poc:"Shivani",contact:"63614 25235",model:"Event Catering",source:"Outreach",area:"Bangalore",cm:{ugc:1},eng:[{d:"12-Jul-26",t:"Event Catering",r:2756,p:35,n:"Yoga + Hyrox Workshop · hosted at Tenzee (Alae is payer)"}]},
+  {id:"FIT-018",name:"Flourish with Aish",pillar:"Fitness",stage:"Engaged",health:"Active",score:10,rev:0,poc:"Aishwarya",contact:"91104 47280",model:"Sampling",source:"Outreach",area:"North/Central BLR",note:"Nutritionist · daily catering for her clients · strict macros · delivery model TBD with Manju.",eng:[{d:"18-Jul-26",t:"Sampling",r:0,p:30,n:"Yoga + strength workshop · oatmeal bowls"}]},
+  {id:"FIT-023",name:"BEL Bullets Run Club",pillar:"Fitness",stage:"Engaged",health:"Active",score:10,rev:0,poc:"Nikhil",contact:"96119 46963",model:"Sampling",source:"Outreach",area:"Bangalore",note:"Interested in recurring events.",eng:[{d:"18-Jul-26",t:"Sampling",r:0,p:35,n:"Community Run + Frisbee · ended with smoothies"}]},
+  {id:"BIZ-001",name:"Kalaari Capital",pillar:"B2B",stage:"Engaged",health:"AtRisk",score:15,rev:4725,poc:"Adithya",contact:"99024 83478",model:"Office Event Catering",source:"Outreach",area:"—",size:"40–50",terms:"RazorPay",cadence:"One-off",note:"Asked to connect with Admin team for recurring.",eng:[{d:"09-Jun-26",t:"Office Catering",r:4725,p:30,n:"Yoga Day bulk order · OON + yogurt bowls"}]},
+  {id:"BIZ-002",name:"SquarePoint",pillar:"B2B",stage:"Engaged",health:"Active",score:15,rev:null,poc:"Yashi (HungerBox)",contact:"878 725 8926",model:"Recurring Catering",source:"Outreach",area:"—",size:"—",terms:"HungerBox",cadence:"Recurring",eng:[]},
+];
+
+const STAGES=["Contacted","Discovery","Engaged"];
+const STAGE_SUB={Contacted:"Reached out · no discovery call yet",Discovery:"In conversation · scoping the deal",Engaged:"Transacted 1+ time · has health & score"};
+const HLABEL={Active:"Active",AtRisk:"At Risk",Dormant:"Dormant"};
+const RUBRIC={"Sampling":10,"Event Catering":15,"Bulk Order Delivery":15,"Brand Activation":10,"Co-brand Product Launch":15,"MOO Fridge":20,"Office Event Catering":15,"Office Catering":15,"Recurring Catering":15};
+
+let view="board", pillar="all", q="";
+const $=s=>document.querySelector(s);
+const money=n=>n==null?"—":"₹"+n.toLocaleString("en-IN");
+const byId=id=>P.find(p=>p.id===id);
+
+function filtered(){
+  return P.filter(p=>(pillar==="all"||p.pillar===pillar) &&
+    (!q || (p.name+" "+p.poc+" "+p.id).toLowerCase().includes(q.toLowerCase())));
+}
+function depthTier(p){
+  const t=(p.eng||[]).map(e=>e.t).join(" ")+" "+p.model;
+  if(p.stage!=="Engaged") return {l:"L1",label:"In touch — no transaction yet"};
+  if(/Fridge/.test(t)) return {l:"L4",label:"Fridge as pickup point"};
+  if(/Recurring|Custom/.test(t)) return {l:"L3",label:"Custom recurring menu"};
+  return {l:"L2",label:"Activated — 1+ transaction"};
+}
+
+function renderStats(){
+  const f=filtered();
+  const eng=f.filter(p=>p.stage==="Engaged");
+  const rev=eng.reduce((s,p)=>s+(p.rev||0),0);
+  const active=eng.filter(p=>p.health==="Active").length;
+  const risk=eng.filter(p=>p.health==="AtRisk").length;
+  const scored=eng.filter(p=>typeof p.score==="number");
+  const avg=scored.length?Math.round(scored.reduce((s,p)=>s+p.score,0)/scored.length):0;
+  const cards=[
+    ["Partners tracked",f.length,""],
+    ["Engaged",eng.length,`of ${f.length}`],
+    ["Revenue to date","₹"+rev.toLocaleString("en-IN"),""],
+    ["Avg lead score",avg,"engaged only"],
+    ["Active / At-Risk",`${active} / ${risk}`,""],
+  ];
+  $("#stats").innerHTML=cards.map(c=>`<div class="stat"><div class="k">${c[0]}</div><div class="v">${c[1]} <small>${c[2]}</small></div></div>`).join("");
+  $("#phmeta").textContent=`${f.length} partners · Fitness outbound pipeline + B2B · mock data 21 Jul 2026`;
+}
+
+function healthBadge(p){
+  if(p.stage!=="Engaged") return "";
+  const cls={Active:"g-bg",AtRisk:"a-bg",Dormant:"m-bg"}[p.health];
+  return `<span class="hbadge ${p.health}"><span class="dot ${cls}"></span>${HLABEL[p.health]}</span>`;
+}
+function pillarTag(p){return `<span class="tag ${p.pillar==='B2B'?'b2b':'fit'}">${p.pillar}</span>`;}
+
+function card(p){
+  const eng=p.stage==="Engaged";
+  return `<div class="card" onclick="openDrawer('${p.id}')">
+    <div class="cn"><span>${p.name}</span><span class="id">${p.id}</span></div>
+    <div class="poc">${p.poc} · ${p.model}</div>
+    <div class="crow">
+      ${eng?healthBadge(p):`<span class="days">${p.days} days in stage</span>`}
+      ${eng?`<span class="score mono">★ ${p.score}</span>`:""}
+      ${eng&&p.rev!=null?`<span class="rev">${money(p.rev)}</span>`:""}
+    </div>
+    <div class="model">${pillarTag(p)}</div>
+  </div>`;
+}
+
+function renderBoard(){
+  const f=filtered();
+  $("#board").innerHTML=STAGES.map(st=>{
+    const items=f.filter(p=>p.stage===st);
+    return `<div class="col">
+      <div class="col-head"><span class="t">${st}</span><span class="n">${items.length}</span></div>
+      <div class="col-sub">${STAGE_SUB[st]}</div>
+      ${items.map(card).join("")||'<div style="font-size:12px;color:var(--muted);padding:6px 4px">—</div>'}
+    </div>`;
+  }).join("");
+}
+
+function renderTable(){
+  const f=filtered();
+  const rows=f.map(p=>`<tr onclick="openDrawer('${p.id}')">
+    <td class="mono" style="font-size:11px;color:var(--muted)">${p.id}</td>
+    <td class="name">${p.name}</td>
+    <td>${pillarTag(p)}</td>
+    <td>${p.stage}</td>
+    <td>${p.stage==="Engaged"?healthBadge(p):`<span style="color:var(--muted);font-size:12px">${p.days}d in stage</span>`}</td>
+    <td class="mono">${p.stage==="Engaged"?"★ "+p.score:"—"}</td>
+    <td class="r">${money(p.rev)}</td>
+    <td>${p.model}</td>
+    <td style="color:var(--muted)">${p.poc}</td>
+  </tr>`).join("");
+  $("#table").innerHTML=`<table><thead><tr>
+    <th>ID</th><th>Partner</th><th>Pillar</th><th>Stage</th><th>Health</th><th>Score</th><th style="text-align:right">Revenue</th><th>Model</th><th>POC</th>
+  </tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function render(){
+  renderStats();
+  $("#ph").textContent = view==="board"?"Partner Pipeline":"All Partners";
+  $("#board").classList.toggle("hide",view!=="board");
+  $("#table").classList.toggle("hide",view!=="table");
+  view==="board"?renderBoard():renderTable();
+}
+
+function openDrawer(id){
+  const p=byId(id); if(!p) return;
+  const eng=p.stage==="Engaged";
+  const acts=(p.eng||[]).length;
+  const dt=depthTier(p);
+  const cm=p.cm||{};
+  const cmTags=[["ig","IG Collab"],["linkedin","LinkedIn"],["ugc","UGC / Reel"],["badge","GPTW Badge"]]
+    .map(([k,l])=>`<span class="tag ${cm[k]?'on':''}">${cm[k]?'✓ ':''}${l}</span>`).join("");
+  const scoreParts=(p.eng||[]).map(e=>RUBRIC[e.t]||0);
+  const base=scoreParts.reduce((a,b)=>a+b,0);
+  const repeat=acts>1?(acts-1)*10:0;
+  const cmpts=Object.values(cm).filter(Boolean).length*5;
+
+  $("#drawer").innerHTML=`
+   <div class="dhead">
+     <button class="x" onclick="closeDrawer()">×</button>
+     <h2>${p.name}</h2>
+     <div class="did">${p.id} · ${p.area||"—"}</div>
+     <div class="drow">${pillarTag(p)}<span class="tag">${p.stage}</span>${eng?healthBadge(p):`<span class="tag">${p.days} days in stage</span>`}${eng?`<span class="tag">★ Score ${p.score}</span>`:""}</div>
+   </div>
+   <div class="dbody">
+     ${eng?`<div class="sec"><h4>Rollups <span style="text-transform:none;font-weight:400">· auto-calculated from the log</span></h4>
+       <div class="rollups">
+         <div class="rollup"><div class="k">Revenue to date</div><div class="v mono">${money(p.rev)}</div></div>
+         <div class="rollup"><div class="k">Activations</div><div class="v mono">${acts}</div></div>
+         <div class="rollup"><div class="k">Lead score</div><div class="v mono">★ ${p.score}</div></div>
+         <div class="rollup"><div class="k">Depth tier</div><div class="v">${dt.l}</div></div>
+       </div></div>`:``}
+
+     <div class="sec"><h4>Partner</h4>
+       <div class="kv">
+         <div class="k">POC</div><div class="v">${p.poc}</div>
+         <div class="k">Contact</div><div class="v mono">${p.contact}</div>
+         <div class="k">Model type</div><div class="v">${p.model}</div>
+         <div class="k">Source</div><div class="v">${p.source}</div>
+         <div class="k">Area</div><div class="v">${p.area||"—"}</div>
+         ${p.discussed?`<div class="k">Discussing</div><div class="v">${p.discussed}</div>`:""}
+         ${p.size?`<div class="k">Company size</div><div class="v">${p.size} employees</div>`:""}
+         ${p.terms?`<div class="k">Payment</div><div class="v">${p.terms}${p.cadence?` · ${p.cadence}`:""}</div>`:""}
+       </div>
+     </div>
+
+     <div class="sec depth"><h4>Depth tier — <span style="text-transform:none;font-weight:400">chain-thesis L-ladder</span></h4>
+       <b>${dt.l}</b> — ${dt.label}<br>
+       <span style="font-size:11.5px;color:var(--muted)">Depth is the relationship-maturity axis (L1 in-touch → L5 retail-at-venue), derived from the deepest engagement type. Separate from the sales pipeline above.</span>
+     </div>
+
+     ${eng?`<div class="sec"><h4>Engagement log — ${acts} ${acts===1?"row":"rows"}</h4>
+       <div class="log">${(p.eng||[]).map(e=>`<div class="logrow"><div class="d">${e.d}</div><div><div class="ty">${e.t}</div><div class="nt">${e.n}${e.p?` · ${e.p} served`:""}</div></div><div class="rv">${money(e.r)}</div></div>`).join("")}</div>
+     </div>
+     <div class="sec"><h4>Lead score breakdown</h4>
+       <div class="formula">engagements ${scoreParts.join(" + ")||0} = ${base}${repeat?`  ·  repeat ×${acts-1} +${repeat}`:""}${cmpts?`  ·  co-marketing +${cmpts}`:""}<br><b style="color:var(--fg)">total ★ ${p.score}</b> <span style="color:var(--muted)">(shown; rubric is tunable)</span></div>
+     </div>
+     <div class="sec"><h4>Co-marketing</h4><div class="cm">${cmTags}</div></div>`:
+     `<div class="sec"><h4>Pipeline</h4><div class="formula">Stage <b style="color:var(--fg)">${p.stage}</b> · ${p.days} days in stage<br>No health or lead score yet — those begin at <b style="color:var(--fg)">Engaged</b> (first logged engagement).${p.rev?`<br>Note: ₹${p.rev.toLocaleString("en-IN")} historical revenue from a prior, discontinued engagement.`:""}</div></div>`}
+
+     ${p.note?`<div class="sec"><h4>Next action / notes</h4><div class="na">${p.note}</div></div>`:""}
+   </div>`;
+  $("#drawer").classList.add("on");$("#scrim").classList.add("on");
+}
+function closeDrawer(){$("#drawer").classList.remove("on");$("#scrim").classList.remove("on");}
+
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");view=b.dataset.view;render();});
+document.querySelectorAll("#pillarFilters .chip").forEach(c=>c.onclick=()=>{
+  document.querySelectorAll("#pillarFilters .chip").forEach(x=>x.classList.remove("sel"));
+  c.classList.add("sel");pillar=c.dataset.pillar;render();});
+$("#search").oninput=e=>{q=e.target.value;render();};
+$("#scrim").onclick=closeDrawer;
+document.onkeydown=e=>{if(e.key==="Escape")closeDrawer();};
+render();
+</script>
+</body>
+</html>
