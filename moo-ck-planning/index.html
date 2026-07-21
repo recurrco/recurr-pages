@@ -3,56 +3,51 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MOO · Central Kitchen Planning — Team Read</title>
-<meta name="description" content="How MOO plans production, dispatch to stores, and vendor procurement — the standard playbook, fed by Rista.">
+<title>MOO · Materials Control — Team Read</title>
+<meta name="description" content="How MOO buys, receives, pays, makes, stocks and dispatches materials — one tool, fed by Rista, decided by standard inventory rules.">
 <style>
   :root{
-    --bg:#ffffff; --fg:#111111; --muted:#666; --line:#eaeaea; --soft:#fafafa;
+    --bg:#fff; --fg:#111; --muted:#666; --line:#eaeaea; --soft:#fafafa;
     --red:#e5484d; --amber:#f5a623; --green:#30a46c; --accent:#0060df;
     --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
   }
-  @media (prefers-color-scheme: dark){
-    :root{ --bg:#0a0a0a; --fg:#ededed; --muted:#9a9a9a; --line:#242424; --soft:#141414; --accent:#3b82f6;}
-  }
+  @media (prefers-color-scheme:dark){:root{--bg:#0a0a0a;--fg:#ededed;--muted:#9a9a9a;--line:#242424;--soft:#141414;--accent:#3b82f6;}}
   *{box-sizing:border-box}
-  html,body{margin:0;padding:0}
-  body{background:var(--bg);color:var(--fg);
+  body{margin:0;background:var(--bg);color:var(--fg);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}
   .wrap{max-width:820px;margin:0 auto;padding:56px 24px 96px}
-  header.top{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:36px}
   .kicker{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
   h1{font-size:32px;line-height:1.2;margin:10px 0 8px;letter-spacing:-.02em}
-  .sub{color:var(--muted);font-size:16px;margin:0}
-  h2{font-size:21px;margin:44px 0 12px;letter-spacing:-.01em;padding-top:8px}
-  h3{font-size:16px;margin:26px 0 6px;letter-spacing:-.005em}
+  .sub{color:var(--muted);margin:0}
+  h2{font-size:21px;margin:44px 0 12px;letter-spacing:-.01em}
+  h3{font-size:16px;margin:24px 0 6px}
   p{margin:12px 0}
-  a{color:var(--accent);text-decoration:none}
-  a:hover{text-decoration:underline}
+  a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
   code,.mono{font-family:var(--mono);font-size:.9em}
+  header.top{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:32px}
   .callout{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin:20px 0}
   .callout.rule{border-left:3px solid var(--accent)}
   .pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);vertical-align:middle}
   .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
   .r{background:var(--red)}.a{background:var(--amber)}.g{background:var(--green)}
-  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
-  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;display:block;overflow-x:auto}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;white-space:nowrap}
+  td:last-child,th:last-child{white-space:normal}
   th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
-  td.num,th.num{font-family:var(--mono)}
-  .flow{font-family:var(--mono);font-size:13px;background:var(--soft);border:1px solid var(--line);
-    border-radius:8px;padding:16px 18px;white-space:pre-wrap;overflow-x:auto;line-height:1.7}
-  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
-  .card{border:1px solid var(--line);border-radius:8px;padding:18px}
-  .card h3{margin-top:0}
-  .btn{display:inline-block;background:var(--fg);color:var(--bg);padding:11px 18px;border-radius:8px;
-    font-weight:600;font-size:14px;margin:8px 0}
+  .flow{font-family:var(--mono);font-size:12.5px;background:var(--soft);border:1px solid var(--line);
+    border-radius:8px;padding:16px 18px;white-space:pre;overflow-x:auto;line-height:1.7}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:18px 0}
+  .c{border:1px solid var(--line);border-radius:8px;padding:14px}
+  .c .n{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+  .c .big{font-size:22px;font-weight:600;margin:6px 0 2px;letter-spacing:-.01em}
+  .c .d{font-size:13px;color:var(--muted)}
+  .btn{display:inline-block;background:var(--fg);color:var(--bg);padding:11px 18px;border-radius:8px;font-weight:600;font-size:14px;margin:8px 0}
   .btn:hover{opacity:.85;text-decoration:none}
   .muted{color:var(--muted)}
-  ul,ol{padding-left:20px}
-  li{margin:5px 0}
-  hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+  ul,ol{padding-left:20px}li{margin:5px 0}
   .foot{color:var(--muted);font-size:13px;margin-top:56px;border-top:1px solid var(--line);padding-top:20px}
-  @media(max-width:640px){.two{grid-template-columns:1fr}h1{font-size:26px}}
+  @media(max-width:640px){.wrap{padding:36px 18px 72px}h1{font-size:26px}}
 </style>
 </head>
 <body>
@@ -60,108 +55,84 @@
 
 <header class="top">
   <div class="kicker">MOO · Data Room / Team Lobby</div>
-  <h1>Central Kitchen — Production, Dispatch &amp; Procurement Planning</h1>
-  <p class="sub">The team playbook: what to make, what to ship each store, and what to reorder — fed by Rista, decided by standard inventory rules. <span class="pill">v1 · 21 Jul 2026</span></p>
+  <h1>Materials Control</h1>
+  <p class="sub">One tool for everything materials — <strong>buy · receive · pay · make · stock · dispatch</strong> — fed by Rista, decided by standard inventory rules. <span class="pill">v2 · 21 Jul 2026</span></p>
 </header>
 
 <div class="callout rule">
-  <strong>The one rule.</strong> This tool <strong>never writes to Rista.</strong> Rista stays the single source of truth. The tool <em>reads</em> Rista + the warehouse, <em>thinks</em>, and <em>suggests</em> — then a human keys the transfer/PO into Rista and we read it back to confirm. <span class="muted">read → think → suggest → remind → verify.</span>
+  <strong>The one rule.</strong> This tool <strong>never writes to Rista</strong> — and it can't: our Rista key is read-only. It <em>reads</em> Rista + the warehouse, <em>works out</em> what should happen, and <em>suggests</em> it. A human keys the PO / transfer into Rista; the tool reads it back to confirm. <span class="muted">read → suggest → remind → verify.</span>
 </div>
 
-<p>This is not a new problem. It's textbook <strong>inventory replenishment</strong> — par-based (min/max) stock control, plus <strong>MRP</strong> (turning sales into ingredient demand through the recipe). We use the standard names, not invented ones. There are two domains, and dispatch has two parts.</p>
+<p>This isn't a new problem — it's textbook <strong>par-level (min/max) stock control + MRP + procure-to-pay</strong>. We use the standard names, not invented ones. Everything is built around one idea: <strong>the software works out the number; the person confirms with one tap.</strong></p>
 
 <a class="btn" href="/moo-ck-planning-mock/">▶ Open the clickable mock →</a>
 
-<h2>The shape</h2>
-<div class="flow">Vendors ──▶  CENTRAL KITCHEN (CEN)  +  CENTRAL STORE (CS)  ──▶  5 stores
-                          │                                    (HSR · IDR · JP · WFL · DOD)
-   ┌──────────────────────┴───────────────────────┐
-   │  DOMAIN 1              DOMAIN 2                │
-   │  Procurement          Dispatch                │
-   │  Vendor → Central     Central → Stores        │
-   │                         ├─ A. Prepared (make) │
-   │                         └─ B. Direct (ship)   │
-   └────────────────────────────────────────────────┘</div>
+<h2>The lifecycle</h2>
+<div class="flow">SOURCE ─▶ BUY ─▶ RECEIVE ─▶ PAY ─▶ TRANSFORM ─▶ STOCK ─▶ DISPATCH ─▶ VERIFY
+vendors   PO     GRN +      bills +   repack +     par &     indent →     read
+& terms  (sug-   invoice    bank      production   runway    transfer →   Rista
+         gested) capture    recon     (we log it)  board     receive      back</div>
+<p class="muted">Vendors → Central Kitchen (CEN) + Central Store (CS) → 5 stores (HSR · IDR · JP · WFL · DOD).</p>
 
-<h2>Domain 1 — Procurement (Vendor → Central)</h2>
-<p>Reorder raw ingredients from vendors into CEN/CS. Demand = what the kitchen will <em>produce</em> + what the <em>direct-ship</em> goods need restocked, both exploded through the recipe/BOM.</p>
-<div class="flow">Min (Reorder Point) = daily use × lead time + safety stock
-Par (Order-up-to)   = daily use × (lead time + review gap) + safety stock
-Inventory position  = on-hand (CEN+CS) + on-order (open POs)
-Order qty           = max(0, Par − inventory position)</div>
-<p class="muted">Grouped by vendor → one reminder = one PO. Uses <strong>on-order</strong> so we never re-order the same gap twice.</p>
-
-<h2>Domain 2 — Dispatch (Central → Stores)</h2>
-<p>Every morning, decide what each store needs. One formula, two item types:</p>
-<div class="flow">dispatch = max(0, Par − closing store stock)      ← bring up to par
-         + ceil(velocity_7d × buffer_days)        ← forward cover
-         + indent (store request)
-   capped by what CEN/CS can supply today</div>
-
-<div class="two">
-  <div class="card">
-    <h3>A · Prepared in kitchen</h3>
-    <p class="muted" style="margin-top:4px">Produce → dispatch</p>
-    <p>Intermediates the CK <strong>makes</strong> from raw ingredients — juices (24h), soaked-oat base, granola. Shelf-life bound, so there's a <strong>production plan</strong> first, then dispatch. A shortfall means <em>"make more today"</em>, not "hold stock." This plan is what drives ingredient buying in Domain 1.</p>
-  </div>
-  <div class="card">
-    <h3>B · Direct from warehouse</h3>
-    <p class="muted" style="margin-top:4px">Ship as-is</p>
-    <p>Finished/packaged goods bought from vendors and held at Central Store — bottled milk, whole fruit, nut/seed packs, honey. <strong>No production.</strong> Pure par replenishment. If CS can't cover, it flags <em>"🛒 short — buy"</em> → a demand signal into Procurement.</p>
-  </div>
+<h2>The tool = 5 areas</h2>
+<div class="cards">
+  <div class="c"><div class="n">Stock</div><div class="big">What's low</div><div class="d">RAG board + "days left" per item &amp; location</div></div>
+  <div class="c"><div class="n">Buy</div><div class="big">What to order</div><div class="d">pre-filled cart, grouped by vendor, one-tap PO reminder</div></div>
+  <div class="c"><div class="n">Make</div><div class="big">What to produce</div><div class="d">repack (25kg→2kg) + recipes (juices, oat base)</div></div>
+  <div class="c"><div class="n">Send</div><div class="big">What to dispatch</div><div class="d">store indents → accept → dispatch → receive</div></div>
+  <div class="c"><div class="n">Pay</div><div class="big">What's owed</div><div class="d">vendor credit limit, used, pending, available</div></div>
 </div>
 
-<h2>The words, translated</h2>
-<p>Old spec used invented terms. Here's the standard vocabulary the team should use:</p>
-<table>
-  <tr><th>Old term</th><th>Standard term</th><th>Meaning</th></tr>
-  <tr><td>MSL</td><td>Reorder Point / <strong>Min</strong></td><td>level that triggers a reorder</td></tr>
-  <tr><td>ISL / "reorder level"</td><td>Order-up-to / <strong>Par</strong> (Max)</td><td>target you top back up to</td></tr>
-  <tr><td>Reorder quantity</td><td>Replenishment qty</td><td><span class="mono">Par − inventory position</span></td></tr>
-  <tr><td>"+20%" / "×4"</td><td>Safety stock</td><td>buffer for demand + lead-time variability</td></tr>
-  <tr><td>Frequency tiers</td><td>ABC / XYZ class</td><td>treat fast/slow, steady/volatile items differently</td></tr>
-</table>
-<p><span class="dot r"></span><strong>Red</strong> ≤ Min &nbsp;·&nbsp; <span class="dot a"></span><strong>Amber</strong> between Min &amp; Par &nbsp;·&nbsp; <span class="dot g"></span><strong>Green</strong> above Par.</p>
+<h2>The three jobs underneath</h2>
+<h3>Buy — Procure-to-Pay (Vendor → Central)</h3>
+<p>Show only materials below their <strong>Min</strong>, order quantity already worked out, vendor already attached. A material can have several vendors — we show each one's price, MOQ, pack size and <strong>credit headroom</strong> so the person picks. Receiving = snap the invoice, tick the pre-filled checklist, edit only the shortfall. Bills carry an app-owned <strong>due date + paid/unpaid</strong>, reconciled from the bank feed. Over time the GRN cost history tells us the true price of everything.</p>
+<div class="flow">Order qty = max(0, Par − (on-hand + on-order))          ← never re-orders the same gap
+Credit headroom = credit limit − (billed − paid)</div>
 
-<h2>Where the numbers come from</h2>
-<p>Almost everything is already synced from Rista into the warehouse, and it's <strong>fresh</strong> (stock snapshots dated today). The tool reads:</p>
-<table>
-  <tr><th>Need</th><th>Source</th><th>State</th></tr>
-  <tr><td>Sales velocity / SKU / store</td><td class="mono">rista_fact.fact_order_items</td><td>✅ live</td></tr>
-  <tr><td>Stock on hand (stores, CEN, CS)</td><td class="mono">rista_fact.fact_stock_snapshot</td><td>✅ live (today)</td></tr>
-  <tr><td>Transfers (verify dispatch)</td><td class="mono">rista_fact.fact_transfer_*</td><td>✅ live</td></tr>
-  <tr><td>POs / GRN (on-order, verify)</td><td class="mono">rista_fact.fact_po_* / fact_grn_*</td><td>⚠️ thin</td></tr>
-  <tr><td>Vendors</td><td class="mono">rista_dim.dim_supplier</td><td>✅</td></tr>
-  <tr><td>Recipe / BOM quantities</td><td class="mono">recipe.* + bom_lines</td><td>⚠️ manual, gaps</td></tr>
-  <tr><td>Par &amp; buffer (humans set this)</td><td class="mono">par_levels (app-owned)</td><td>⚠️ to populate</td></tr>
-</table>
+<h3>Make — Transformation (inside Central)</h3>
+<p>Two kinds, both things Rista can't record — so we log them: <strong>repack / bulk-break</strong> (1× 25kg oats → 12× 2kg packs, with a yield %) and <strong>recipe production</strong> (raw → juices / soaked-oat base / granola, shelf-life bound). What we make feeds Send; what it consumes feeds Buy.</p>
 
-<h2>Where we tell people</h2>
-<table>
-  <tr><th>Moment</th><th>Channel</th></tr>
-  <tr><td>The plan &amp; suggestions</td><td>Team Lobby screen</td></tr>
-  <tr><td>"Do this now"</td><td>Slack / WhatsApp to the owner</td></tr>
-  <tr><td>The data entry</td><td><strong>Human types it into Rista</strong></td></tr>
-  <tr><td>"Did it land?"</td><td>Tool reads Rista back &amp; closes the loop</td></tr>
-</table>
+<h3>Send — Dispatch (Central → Stores)</h3>
+<p>A two-sided handshake: the store asks (indent) → the kitchen <strong>accepts</strong> then <strong>dispatches</strong> → the store <strong>receives</strong>. The plan splits into <strong>Prepared</strong> (from Make) and <strong>Direct</strong> (shipped as-is from the store).</p>
+<div class="flow">dispatch = max(0, Par − store stock) + ceil(velocity_7d × buffer_days) + indent
+           capped by what the kitchen / store can supply</div>
 
-<h2>Known gaps (be honest about these)</h2>
+<h2>What the numbers come from — checked against the Rista API</h2>
+<p>Almost everything is a live Rista read; a few things Rista simply doesn't hold, so the tool owns them:</p>
+<table>
+  <tr><th>Thing</th><th>Where</th><th>Verdict</th></tr>
+  <tr><td>Suppliers, prices, MOQ, pack conversion</td><td class="mono">supplier / supplieritem / contract</td><td>✅ Rista read</td></tr>
+  <tr><td>Purchase orders, GRNs (+ invoice #), transfers</td><td class="mono">po / grn / transfer</td><td>✅ Rista read</td></tr>
+  <tr><td>Stock on hand (qty, avg cost, perishable, shelf-life)</td><td class="mono">store/items</td><td>✅ Rista read</td></tr>
+  <tr><td>Wastage (with cause), audit variance, adjustments</td><td class="mono">shrinkage / audit / adjustment</td><td>✅ Rista read</td></tr>
+  <tr><td>Vendor <strong>lead time</strong></td><td>—</td><td>🔨 we own it</td></tr>
+  <tr><td>Vendor <strong>credit limit &amp; terms</strong></td><td>free-text only</td><td>🔨 we own it</td></tr>
+  <tr><td><strong>Bills / due dates / payment status</strong></td><td>only invoice # on GRN</td><td>🔨 we own it</td></tr>
+  <tr><td><strong>Repack / production event</strong></td><td>no such endpoint</td><td>🔨 we own it</td></tr>
+</table>
+<p class="muted">Legend &nbsp; <span class="dot r"></span>below Min (act) &nbsp; <span class="dot a"></span>Min–Par (watch) &nbsp; <span class="dot g"></span>above Par (fine). &nbsp; Credit reconciliation reads the bank feed (<code>bank.transactions</code>).</p>
+
+<h2>How we built it (decisions)</h2>
+<ul>
+  <li><strong>One responsive web tool</strong> to start — works on phone / tablet / desktop. (A dedicated floor phone app can split out later.)</li>
+  <li><strong>English</strong> first (Hindi/Kannada + WhatsApp alerts are the stand-out next step — no competitor does it).</li>
+  <li><strong>Credit = visibility only</strong> — show the limits and what's pending; no auto-picking of vendors yet.</li>
+  <li><strong>Read-only Rista + we own our own writes</strong> — enforced by the key, safe by design.</li>
+</ul>
+
+<h2>Known gaps (be honest)</h2>
 <ol>
-  <li><strong>BOM is manual &amp; incomplete</strong> — Rista's BOM API is closed to us; recipe quantities live in MOO's own recipe book, with some SKUs unmapped. Both domains depend on it → this is the #1 dependency.</li>
-  <li><strong>Vendor lead time isn't stored anywhere</strong> — seed it manually now, derive from PO→GRN history later.</li>
-  <li><strong>Rista indents are unused</strong> — store requests come via WhatsApp; the tool keeps its own indent queue.</li>
-  <li><strong>Confirm closing store stock</strong> reliably reaches Rista daily — the dispatch formula leans on it.</li>
+  <li><strong>Recipe/BOM quantities</strong> were manual — but <code>GET /inventory/items</code> may now expose them; one probe could remove the spreadsheet.</li>
+  <li><strong>Vendor lead time</strong> isn't stored anywhere — seed manually, derive from order→receipt history later.</li>
+  <li><strong>Bank reconciliation</strong> works, but vendor payments need tagging before credit headroom is exact.</li>
+  <li><strong>Repack &amp; production</strong> aren't Rista events — we log them and post a stock adjustment by hand.</li>
 </ol>
-
-<div class="callout">
-  <strong>Prior art.</strong> Most of this was designed once as the Outpost "Central Kitchen dispatch engine" and parked. The <code>par_levels</code> and <code>dispatch_plans</code> tables already exist (empty) in the warehouse. We resurrect and extend — we don't start over.
-</div>
 
 <a class="btn" href="/moo-ck-planning-mock/">▶ Walk the mock →</a>
 
 <p class="foot">
-  MOO · Data Room / Team Lobby &nbsp;·&nbsp; Internal ops read &nbsp;·&nbsp; v1, 21 Jul 2026<br>
-  Full requirements doc lives in the vault: <code>moo/platform/data-room/ops/wiki/ck-production-dispatch-planning-brd.md</code>
+  MOO · Data Room / Team Lobby &nbsp;·&nbsp; internal ops read &nbsp;·&nbsp; v2, 21 Jul 2026<br>
+  Full requirements: <code>moo/platform/data-room/ops/wiki/ck-production-dispatch-planning-brd.md</code>
 </p>
 
 </div>

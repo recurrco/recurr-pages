@@ -3,572 +3,419 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MOO CK Planning · Mock</title>
+<meta name="robots" content="noindex, nofollow">
+<title>MOO · Materials Control (mock)</title>
 <style>
-  :root{
-    --fg:#111;--muted:#666;--faint:#888;--line:#eaeaea;--line2:#f2f2f2;
-    --bg:#fff;--soft:#fafafa;--soft2:#f6f6f6;
-    --red:#e5484d;--amber:#f5a623;--green:#30a46c;--blue:#0068d6;
-    --radius:8px;
-    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0}
-  body{font-family:var(--sans);color:var(--fg);background:var(--soft2);line-height:1.5;-webkit-font-smoothing:antialiased;font-size:14px}
-  .wrap{max-width:1280px;margin:0 auto;padding:0 24px}
-  a{color:var(--blue);text-decoration:none}
-  .mono{font-family:var(--mono)}
-  .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+:root{
+  --bg:#ffffff;--fg:#111111;--muted:#666;--line:#eaeaea;--soft:#fafafa;--soft2:#f4f4f5;
+  --red:#e5484d;--amber:#f5a623;--green:#30a46c;--accent:#111;--blue:#0060df;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --radius:8px;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0a0a0a;--fg:#ededed;--muted:#9a9a9a;--line:#242424;--soft:#141414;--soft2:#1c1c1c;--accent:#ededed;--blue:#3b82f6;}
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5;font-size:15px;-webkit-font-smoothing:antialiased}
+.mono{font-family:var(--mono)}
+a{color:inherit}
+button{font-family:inherit}
 
-  /* mock banner */
-  .mockbar{background:#111;color:#fff;font-size:12px;text-align:center;padding:6px 12px;letter-spacing:.02em}
-  .mockbar b{color:#ffd66b}
+.banner{background:#fff8e6;color:#7a5b00;font-size:12.5px;text-align:center;padding:6px 12px;border-bottom:1px solid var(--line)}
+@media (prefers-color-scheme:dark){.banner{background:#241f0d;color:#e2c65a}}
+.loop{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;justify-content:center;font-size:11px;color:var(--muted);padding:7px 12px;border-bottom:1px solid var(--line);background:var(--soft)}
+.loop b{color:var(--fg);font-weight:600}
+.loop .never{color:var(--red);font-weight:600}
 
-  /* top nav */
-  header.topnav{background:var(--bg);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
-  .topnav .row{display:flex;align-items:center;gap:20px;height:56px}
-  .brand{font-weight:600;font-size:14px;letter-spacing:-.01em;display:flex;align-items:center;gap:8px;cursor:pointer}
-  .brand .glyph{width:22px;height:22px;border-radius:5px;background:#111;color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
-  nav.tabs{display:flex;gap:2px;margin-left:8px}
-  nav.tabs button{font-family:var(--sans);font-size:13px;color:var(--muted);background:none;border:0;padding:8px 12px;border-radius:6px;cursor:pointer}
-  nav.tabs button:hover{background:var(--soft);color:var(--fg)}
-  nav.tabs button.active{background:#111;color:#fff}
-  .spacer{flex:1}
-  .whoami{font-size:12px;color:var(--faint)}
+.app{display:flex;min-height:100vh}
+.sidebar{width:210px;flex-shrink:0;border-right:1px solid var(--line);padding:20px 12px;position:sticky;top:0;align-self:flex-start;height:100vh}
+.brand{font-weight:700;font-size:15px;letter-spacing:-.01em;padding:0 10px 4px}
+.brand small{display:block;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin-top:3px}
+.nav{list-style:none;margin:18px 0 0;padding:0}
+.nav li{margin:2px 0}
+.nav button{width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;color:var(--muted);padding:10px 10px;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;text-align:left;min-height:44px}
+.nav button:hover{background:var(--soft2);color:var(--fg)}
+.nav button.active{background:var(--soft2);color:var(--fg);font-weight:600}
+.nav .ic{font-size:16px;width:20px;text-align:center}
+.nav .badge{margin-left:auto;font-family:var(--mono);font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:var(--line);color:var(--fg)}
+.nav .badge.r{background:var(--red);color:#fff}
+.nav .badge.a{background:var(--amber);color:#3a2c00}
+.legend{margin-top:22px;padding:10px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted);line-height:1.9}
 
-  /* pipeline strip */
-  .pipe{background:var(--bg);border-bottom:1px solid var(--line)}
-  .pipe .row{display:flex;align-items:center;gap:8px;height:38px;font-size:12px;color:var(--muted);overflow-x:auto}
-  .pipe .step{display:flex;align-items:center;gap:6px;white-space:nowrap}
-  .pipe .step b{color:var(--fg);font-weight:600}
-  .pipe .arw{color:#ccc}
-  .pipe .never{margin-left:auto;color:var(--red);font-weight:600;white-space:nowrap;border:1px solid #f3caca;background:#fdf1f1;padding:2px 8px;border-radius:20px}
+.main{flex:1;min-width:0;padding:26px 30px 90px;max-width:1120px}
+.pagehead{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.pagehead h1{font-size:22px;margin:0;letter-spacing:-.02em}
+.pagehead .meta{font-size:13px;color:var(--muted)}
+.state{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
 
-  section.page{display:none;padding:28px 0 64px}
-  section.page.active{display:block}
+.kick{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:26px 0 10px}
+.note{font-size:12.5px;color:var(--muted);background:var(--soft);border:1px solid var(--line);border-radius:var(--radius);padding:10px 12px;margin:12px 0}
+.formula{font-family:var(--mono);font-size:12px;color:var(--muted);background:var(--soft);border:1px solid var(--line);border-radius:var(--radius);padding:10px 12px;margin:12px 0;overflow-x:auto}
+.rag{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font-size:13px}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;display:inline-block}
+.r-bg{background:var(--red)}.a-bg{background:var(--amber)}.g-bg{background:var(--green)}
+.r-tx{color:var(--red)}.a-tx{color:var(--amber)}.g-tx{color:var(--green)}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;border:1px solid var(--line)}
+.pill.paid{color:var(--green)}
+.pill.unpaid{color:var(--muted)}
+.badgesm{font-size:10.5px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 6px;white-space:nowrap}
 
-  h1{font-size:22px;font-weight:600;letter-spacing:-.02em;margin:0 0 4px}
-  h2.sec{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:600;margin:28px 0 10px}
-  .lede{color:var(--muted);margin:0 0 22px;max-width:720px}
+.btn{background:var(--accent);color:var(--bg);border:0;padding:12px 18px;border-radius:var(--radius);font-weight:600;font-size:14px;cursor:pointer;min-height:44px}
+.btn:hover{opacity:.85}
+.btn-ghost{background:none;color:var(--fg);border:1px solid var(--line);padding:10px 14px;border-radius:var(--radius);font-weight:600;font-size:13px;cursor:pointer;min-height:44px}
+.btn-ghost:hover{background:var(--soft2)}
+.btn-sm{padding:8px 12px;font-size:13px;min-height:38px}
+.qty{font-family:var(--mono);width:66px;text-align:center;padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);font-size:14px;font-weight:600}
 
-  /* cards on home */
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:8px 0 28px}
-  .card{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:22px;cursor:pointer;transition:border-color .15s, transform .05s}
-  .card:hover{border-color:#cfcfcf}
-  .card:active{transform:translateY(1px)}
-  .card .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:600}
-  .card h3{font-size:18px;margin:8px 0 6px;font-weight:600;letter-spacing:-.01em}
-  .card p{margin:0;color:var(--muted);font-size:13px}
-  .card .arrow{margin-top:16px;font-size:13px;color:var(--blue);font-weight:500}
+.homegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.hcard{border:1px solid var(--line);border-radius:12px;padding:18px;cursor:pointer;position:relative;overflow:hidden;background:var(--bg);min-height:132px;display:flex;flex-direction:column;justify-content:space-between}
+.hcard:hover{border-color:var(--muted)}
+.hcard .accent{position:absolute;left:0;top:0;bottom:0;width:4px}
+.hcard h3{margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
+.hcard .big{font-size:30px;font-weight:700;letter-spacing:-.02em;margin:8px 0 2px}
+.hcard .sub{font-size:13px;color:var(--muted)}
+.branches{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:6px 11px;color:var(--muted);white-space:nowrap}
+.chip b{color:var(--fg)}
+.chip.sel{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.chip.clk{cursor:pointer}
+.chip.clk:hover{border-color:var(--muted)}
 
-  /* branch chips */
-  .branches{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 4px}
-  .bchip{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:6px;padding:5px 9px;background:var(--bg)}
-  .bchip b{color:#111}.bchip span{color:var(--faint)}
-  .bchip.cen{border-color:#c7d9f2;background:#f2f7fd}
-  .bchip.cs{border-color:#d8ceee;background:#f7f4fd}
+.row{display:grid;align-items:center;gap:10px;padding:12px 12px;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:8px;background:var(--bg)}
+.row .name{font-weight:600;display:flex;align-items:center;gap:9px}
+.row .name .em{font-size:18px}
+.sub-muted{color:var(--muted);font-size:12px}
+.stockrow{grid-template-columns:2fr 90px 1.2fr 1fr 1.2fr}
+.tblwrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:520px}
+th,td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+td.num,th.num{font-family:var(--mono);text-align:right}
+.vgroup{font-weight:700;font-size:13px;margin:20px 0 8px;display:flex;align-items:center;gap:8px}
+.vgroup .badgesm{font-weight:500}
+.expand{cursor:pointer}
+.expand:hover{background:var(--soft)}
+.venrow td{background:var(--soft);font-size:12.5px}
+.hidden{display:none}
+.reveal{border:1px dashed var(--line);border-radius:var(--radius);padding:14px;margin:12px 0;background:var(--soft)}
+.trend-up{color:var(--red)}.trend-dn{color:var(--green)}
 
-  /* generic panel */
-  .panel{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-  .panel + .panel{margin-top:16px}
+.subtabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;border-bottom:1px solid var(--line)}
+.subtabs button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 12px;font-size:13.5px;font-weight:600;color:var(--muted);cursor:pointer;min-height:44px}
+.subtabs button.active{color:var(--fg);border-bottom-color:var(--fg)}
 
-  /* page head bar */
-  .headbar{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:4px}
-  .meta{font-size:12px;color:var(--faint);font-family:var(--mono)}
-  .statepill{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#8a5b00;background:#fff6e5;border:1px solid #f5e0b0;padding:3px 10px;border-radius:20px}
+.makegrid,.istack{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.mkcard,.icard{border:1px solid var(--line);border-radius:var(--radius);padding:15px}
+.mkcard h4,.icard h4{margin:0 0 6px;font-size:14.5px}
+.mkcard .line{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;color:var(--muted)}
+.mkcard .line b{color:var(--fg);font-family:var(--mono)}
+.shelf{font-size:11px;font-weight:600;border-radius:4px;padding:2px 7px;background:var(--soft2);color:var(--muted)}
+.icard ul{margin:6px 0 12px;padding-left:18px;font-size:13px;color:var(--muted)}
+.ladder{display:flex;gap:5px;font-size:10.5px;color:var(--muted);margin-bottom:10px;flex-wrap:wrap}
+.ladder span{padding:2px 7px;border-radius:999px;background:var(--soft2)}
+.ladder span.on{background:var(--green);color:#fff}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.verify{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;margin-top:10px}
+.verify span{display:inline-flex;align-items:center;gap:5px}
 
-  /* store filter chips */
-  .filters{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 4px}
-  .fchip{font-family:var(--mono);font-size:12px;border:1px solid var(--line);background:var(--bg);color:var(--muted);border-radius:20px;padding:5px 12px;cursor:pointer}
-  .fchip:hover{border-color:#cfcfcf;color:var(--fg)}
-  .fchip.active{background:#111;color:#fff;border-color:#111}
-
-  /* tables */
-  table{width:100%;border-collapse:collapse}
-  .tblwrap{overflow-x:auto}
-  thead th{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);font-weight:600;text-align:right;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--soft)}
-  thead th.l{text-align:left}
-  tbody td{padding:9px 12px;border-bottom:1px solid var(--line2);text-align:right;white-space:nowrap;font-family:var(--mono);font-variant-numeric:tabular-nums}
-  tbody td.l{text-align:left;font-family:var(--sans)}
-  tbody tr:last-child td{border-bottom:0}
-  tbody tr:hover{background:var(--soft)}
-  .item{font-weight:500}
-  .sub{color:var(--faint);font-size:12px;font-family:var(--sans)}
-  .grouprow td{background:var(--soft2);font-family:var(--sans);text-align:left;font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.02em;text-transform:uppercase}
-  .totcol{background:#fbfbfb;font-weight:600}
-  .qty-edit{display:inline-block;min-width:30px;padding:2px 6px;border:1px solid transparent;border-radius:5px;cursor:text}
-  tr:hover .qty-edit{border-color:var(--line)}
-  .qty-edit:focus{outline:none;border-color:var(--blue);background:#f2f8ff}
-
-  /* dots / pills */
-  .dot{display:inline-block;width:8px;height:8px;border-radius:50%;vertical-align:middle}
-  .dot.r{background:var(--red)}.dot.a{background:var(--amber)}.dot.g{background:var(--green)}
-  .flag{font-size:12px;font-family:var(--sans)}
-  .flag.short{color:var(--red);font-weight:600}
-  .flag.ok{color:var(--green)}
-  .buy{font-size:12px;font-family:var(--sans);color:var(--amber);font-weight:600;cursor:pointer}
-  .badge{font-size:10px;font-family:var(--sans);color:var(--faint);border:1px solid var(--line);border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:middle}
-  .badge.lc{color:#9a6b00;border-color:#f0dca6;background:#fdf8ec}
-  .shelf{font-size:12px;color:var(--muted);font-family:var(--sans)}
-
-  /* footnotes / formula */
-  .foot{padding:12px 16px;border-top:1px solid var(--line);background:var(--soft);font-size:12px;color:var(--muted)}
-  .foot code{font-family:var(--mono);background:#eef0f2;padding:1px 5px;border-radius:4px;color:#333;font-size:11.5px}
-  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:14px 2px 0}
-  .legend span b{color:var(--fg);font-weight:600}
-
-  /* action bar */
-  .actionbar{display:flex;gap:10px;align-items:center;margin:18px 0 0;flex-wrap:wrap}
-  .btn{font-family:var(--sans);font-size:13px;font-weight:500;border-radius:7px;padding:9px 16px;cursor:pointer;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
-  .btn:hover{border-color:#cfcfcf}
-  .btn.primary{background:#111;color:#fff;border-color:#111}
-  .btn.primary:hover{background:#000}
-  .hint{font-size:12px;color:var(--faint)}
-
-  /* reveal panel */
-  .reveal{display:none;margin-top:16px}
-  .reveal.show{display:block;animation:fade .2s ease}
-  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-  .sheetgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;padding:16px}
-  .sheet{border:1px solid var(--line);border-radius:var(--radius);padding:14px;background:var(--soft)}
-  .sheet h4{margin:0 0 8px;font-size:13px;display:flex;justify-content:space-between;align-items:center}
-  .sheet h4 .code{font-family:var(--mono);font-size:11px;color:var(--faint)}
-  .sheet ul{margin:0;padding:0;list-style:none;font-size:12.5px;font-family:var(--mono)}
-  .sheet li{display:flex;justify-content:space-between;padding:2px 0;color:#333}
-  .sheet .copy{margin-top:10px;font-size:11px;color:var(--blue);cursor:pointer}
-  .notify{display:flex;gap:10px;align-items:center;padding:14px 16px;border-top:1px solid var(--line);flex-wrap:wrap}
-  .verify{padding:14px 16px;border-top:1px solid var(--line);background:var(--soft)}
-  .verify .vhead{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:8px}
-  .vitems{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:12.5px}
-  .vitems .v{display:flex;align-items:center;gap:6px}
-  .vok{color:var(--green)}.vpend{color:var(--faint)}
-  .vbar{height:6px;background:var(--line);border-radius:20px;margin-top:10px;overflow:hidden;max-width:320px}
-  .vbar i{display:block;height:100%;width:40%;background:var(--green)}
-
-  .cfgnote{font-size:12.5px;color:var(--muted);background:var(--soft);border:1px solid var(--line);border-radius:var(--radius);padding:12px 16px;margin-top:14px}
-  .cfgnote b{color:var(--fg)}
-  .pillrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-  .kbd{font-family:var(--mono);font-size:11px;background:#eef0f2;border-radius:4px;padding:2px 6px;color:#333}
-  @media(max-width:760px){.cards{grid-template-columns:1fr}}
+.mobilenav{display:none}
+@media (max-width:860px){
+  .app{display:block}
+  .sidebar{display:none}
+  .main{padding:20px 16px 88px;max-width:none}
+  .mobilenav{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--bg);border-top:1px solid var(--line);z-index:50}
+  .mobilenav button{flex:1;background:none;border:0;color:var(--muted);font-size:10px;padding:8px 2px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:56px;position:relative}
+  .mobilenav button.active{color:var(--fg)}
+  .mobilenav .ic{font-size:19px}
+  .mobilenav .badge{position:absolute;top:4px;left:50%;margin-left:6px;font-size:9px;background:var(--red);color:#fff;border-radius:999px;padding:0 5px;font-family:var(--mono)}
+  .stockrow{grid-template-columns:1.6fr 1fr}
+  .stockrow .hide-m{display:none}
+  .homegrid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:520px){.homegrid{grid-template-columns:1fr}.pagehead h1{font-size:19px}}
 </style>
 </head>
 <body>
 
-<div class="mockbar">🧪 <b>Illustrative mock</b> — sample data, not live. For walkthrough only.</div>
-
-<header class="topnav">
-  <div class="wrap row">
-    <div class="brand" onclick="go('home')"><span class="glyph">M</span> Central Kitchen · Planning</div>
-    <nav class="tabs">
-      <button id="t-home" class="active" onclick="go('home')">Home</button>
-      <button id="t-dispatch" onclick="go('dispatch')">Dispatch → Stores</button>
-      <button id="t-procure" onclick="go('procure')">Procurement → Central</button>
-      <button id="t-config" onclick="go('config')">Par &amp; Config</button>
-    </nav>
-    <div class="spacer"></div>
-    <div class="whoami">Reena · Dispatch &amp; Stock</div>
-  </div>
-</header>
-
-<div class="pipe">
-  <div class="wrap row">
-    <span class="step"><b>READ</b> Rista + warehouse</span><span class="arw">→</span>
-    <span class="step"><b>THINK</b> par · ROP · velocity · BOM</span><span class="arw">→</span>
-    <span class="step"><b>SUGGEST</b></span><span class="arw">→</span>
-    <span class="step"><b>NOTIFY</b> Slack / WhatsApp</span><span class="arw">→</span>
-    <span class="step">human enters in Rista</span><span class="arw">→</span>
-    <span class="step"><b>VERIFY</b> read Rista back</span>
-    <span class="never">✕ never writes to Rista</span>
-  </div>
+<div class="banner">Illustrative mock — sample data, not live. For walkthrough only.</div>
+<div class="loop">
+  <b>READ</b> Rista + warehouse <span>→</span> <b>THINK</b> par · velocity · BOM · credit <span>→</span>
+  <b>SUGGEST</b> <span>→</span> <b>NOTIFY</b> WhatsApp/Slack <span>→</span> human enters in Rista <span>→</span>
+  <b>VERIFY</b> read back <span>·</span> <span class="never">✕ never writes to Rista (read-only key)</span>
 </div>
 
-<!-- ============ HOME ============ -->
-<section id="home" class="page active">
-  <div class="wrap">
-    <h1>Production &amp; Dispatch Planning</h1>
-    <p class="lede">One screen replaces the daily WhatsApp indent ritual. The tool reads live stock, sales velocity and recipes, computes what to buy and what to ship, and hands the operator a ready-to-enter suggestion — then verifies it landed in Rista.</p>
-
-    <div class="cards">
-      <div class="card" onclick="go('procure')">
-        <div class="k">Upstream</div>
-        <h3>Procurement — Vendor → Central</h3>
-        <p>What raw ingredients to reorder from vendors, so the central kitchen &amp; store never run dry. Min / Par per ingredient, netted against open POs.</p>
-        <div class="arrow">Open procurement →</div>
-      </div>
-      <div class="card" onclick="go('dispatch')">
-        <div class="k">Downstream</div>
-        <h3>Dispatch — Central → Stores</h3>
-        <p>What to <b>produce in the kitchen</b> and what to <b>ship as-is from the warehouse</b> to each of the 5 stores today. Par-based top-up + sales velocity.</p>
-        <div class="arrow">Open dispatch →</div>
-      </div>
-    </div>
-
-    <h2 class="sec">The 7 branches in Rista</h2>
-    <div class="branches">
-      <span class="bchip cen"><b>CEN</b> · Central Kitchen <span>(produces)</span></span>
-      <span class="bchip cs"><b>CS</b> · Central Store <span>(warehouse)</span></span>
-      <span class="bchip"><b>HSR</b> · HSR Layout</span>
-      <span class="bchip"><b>IDR</b> · Indiranagar</span>
-      <span class="bchip"><b>JP</b> · JP Nagar</span>
-      <span class="bchip"><b>WFL</b> · Whitefield</span>
-      <span class="bchip"><b>DOD</b> · Doddakannahalli</span>
-    </div>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">MOO<small>Materials Control</small></div>
+    <ul class="nav">
+      <li><button data-area="home" class="active" onclick="go('home')"><span class="ic">🏠</span> Home</button></li>
+      <li><button data-area="stock" onclick="go('stock')"><span class="ic">📦</span> Stock <span class="badge r">5</span></button></li>
+      <li><button data-area="buy" onclick="go('buy')"><span class="ic">🛒</span> Buy <span class="badge a">2</span></button></li>
+      <li><button data-area="make" onclick="go('make')"><span class="ic">🍳</span> Make <span class="badge">3</span></button></li>
+      <li><button data-area="send" onclick="go('send')"><span class="ic">🚚</span> Send <span class="badge">3</span></button></li>
+      <li><button data-area="pay" onclick="go('pay')"><span class="ic">💳</span> Pay <span class="badge a">1</span></button></li>
+    </ul>
     <div class="legend">
-      <span><span class="dot r"></span> <b>Red</b> — below Min (act now)</span>
-      <span><span class="dot a"></span> <b>Amber</b> — between Min and Par</span>
-      <span><span class="dot g"></span> <b>Green</b> — at / above Par</span>
+      <div><span class="rag"><span class="dot r-bg"></span> below Min · act now</span></div>
+      <div><span class="rag"><span class="dot a-bg"></span> Min–Par · watch</span></div>
+      <div><span class="rag"><span class="dot g-bg"></span> above Par · fine</span></div>
     </div>
-  </div>
-</section>
+  </aside>
 
-<!-- ============ DISPATCH ============ -->
-<section id="dispatch" class="page">
-  <div class="wrap">
-    <div class="headbar">
-      <div>
-        <h1>Dispatch — Central → Stores</h1>
-        <div class="meta">Tue 21 Jul 2026 · generated 06:30 · review by 11:00</div>
-      </div>
-      <span class="statepill">Suggested</span>
+  <main class="main">
+
+  <!-- HOME -->
+  <section class="area" id="home">
+    <div class="pagehead"><h1>Materials Control</h1><div class="meta">Tue 21 Jul 2026 · 07:00</div></div>
+    <div class="homegrid">
+      <div class="hcard" onclick="go('stock')"><div class="accent r-bg"></div><h3>📦 Stock</h3><div><div class="big">5</div><div class="sub">items low — 2 critical</div></div></div>
+      <div class="hcard" onclick="go('buy')"><div class="accent a-bg"></div><h3>🛒 Buy</h3><div><div class="big">2</div><div class="sub">purchase orders to approve</div></div></div>
+      <div class="hcard" onclick="go('make')"><div class="accent g-bg"></div><h3>🍳 Make</h3><div><div class="big">3</div><div class="sub">batches to produce today</div></div></div>
+      <div class="hcard" onclick="go('send')"><div class="accent g-bg"></div><h3>🚚 Send</h3><div><div class="big">3</div><div class="sub">store indents waiting</div></div></div>
+      <div class="hcard" onclick="go('pay')"><div class="accent a-bg"></div><h3>💳 Pay</h3><div><div class="big">₹2.4L</div><div class="sub">due · 1 vendor near credit limit</div></div></div>
     </div>
-
-    <div class="filters">
-      <span class="fchip active" onclick="fchip(this)">All stores</span>
-      <span class="fchip" onclick="fchip(this)">HSR</span>
-      <span class="fchip" onclick="fchip(this)">IDR</span>
-      <span class="fchip" onclick="fchip(this)">JP</span>
-      <span class="fchip" onclick="fchip(this)">WFL</span>
-      <span class="fchip" onclick="fchip(this)">DOD</span>
+    <div class="kick">Branches</div>
+    <div class="branches">
+      <span class="chip"><b>CEN</b> Central Kitchen</span><span class="chip"><b>CS</b> Central Store</span>
+      <span class="chip"><b>HSR</b> HSR Layout</span><span class="chip"><b>IDR</b> Indiranagar</span>
+      <span class="chip"><b>JP</b> JP Nagar</span><span class="chip"><b>WFL</b> Whitefield</span><span class="chip"><b>DOD</b> Doddakannahalli</span>
     </div>
+    <div class="note">One screen for all things materials: what's low, what to buy, what to make, what to send, what to pay. The number on each card <b>is</b> the to-do. Everything is computed from Rista + the warehouse; a human confirms and enters it into Rista.</div>
+  </section>
 
-    <!-- SECTION A: prepared -->
-    <h2 class="sec">A · Prepared in kitchen — produce, then dispatch</h2>
-    <div class="panel">
-      <div class="tblwrap">
-      <table>
-        <thead>
-          <tr>
-            <th class="l">Item</th><th class="l">Shelf life</th>
-            <th>HSR</th><th>IDR</th><th>JP</th><th>WFL</th><th>DOD</th>
-            <th class="totcol">CK to make</th><th class="l">Kitchen capacity</th><th>RAG</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="l"><span class="item">Watermelon Juice</span></td><td class="l shelf">24h</td>
-            <td><span class="qty-edit" contenteditable>12</span></td><td><span class="qty-edit" contenteditable>8</span></td>
-            <td><span class="qty-edit" contenteditable>10</span></td><td><span class="qty-edit" contenteditable>6</span></td>
-            <td><span class="qty-edit" contenteditable>4</span></td>
-            <td class="totcol">40</td><td class="l"><span class="flag ok">45 available ✓</span></td><td><span class="dot g"></span></td>
-          </tr>
-          <tr>
-            <td class="l"><span class="item">ABC Juice</span><div class="sub">apple · beet · carrot</div></td><td class="l shelf">24h</td>
-            <td><span class="qty-edit" contenteditable>8</span></td><td><span class="qty-edit" contenteditable>12</span></td>
-            <td><span class="qty-edit" contenteditable>6</span></td><td><span class="qty-edit" contenteditable>4</span></td>
-            <td>—</td>
-            <td class="totcol">30</td><td class="l"><span class="flag short">28 max · ⚠ short 2 — make more</span></td><td><span class="dot a"></span></td>
-          </tr>
-          <tr>
-            <td class="l"><span class="item">Pineapple-Cucumber Juice</span></td><td class="l shelf">24h</td>
-            <td><span class="qty-edit" contenteditable>6</span></td><td><span class="qty-edit" contenteditable>6</span></td>
-            <td><span class="qty-edit" contenteditable>4</span></td><td>—</td><td>—</td>
-            <td class="totcol">16</td><td class="l"><span class="flag ok">20 available ✓</span></td><td><span class="dot g"></span></td>
-          </tr>
-          <tr>
-            <td class="l"><span class="item">Soaked Oats Base</span><div class="sub">intermediate · finished in-store</div></td><td class="l shelf">48h</td>
-            <td><span class="qty-edit" contenteditable>18</span></td><td><span class="qty-edit" contenteditable>15</span></td>
-            <td><span class="qty-edit" contenteditable>14</span></td><td><span class="qty-edit" contenteditable>10</span></td>
-            <td><span class="qty-edit" contenteditable>8</span></td>
-            <td class="totcol">65</td><td class="l"><span class="flag ok">70 available ✓</span></td><td><span class="dot g"></span></td>
-          </tr>
-          <tr>
-            <td class="l"><span class="item">House Granola</span><div class="sub">batch prep</div></td><td class="l shelf">7d</td>
-            <td><span class="qty-edit" contenteditable>3</span></td><td><span class="qty-edit" contenteditable>2</span></td>
-            <td><span class="qty-edit" contenteditable>2</span></td><td><span class="qty-edit" contenteditable>2</span></td>
-            <td><span class="qty-edit" contenteditable>1</span></td>
-            <td class="totcol">10</td><td class="l"><span class="flag ok">stock 22 ✓</span></td><td><span class="dot g"></span></td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="foot">
-        Per-store cell = <code>max(0, par − closing store stock) + ceil(velocity_7d × buffer_days) + indent override</code>, capped by what the kitchen can make today. Shortfalls flag <b>make more</b>.
-      </div>
+  <!-- STOCK -->
+  <section class="area hidden" id="stock">
+    <div class="pagehead"><h1>Stock</h1><div class="meta">Sorted by urgency · lowest runway first</div></div>
+    <div class="branches" style="margin-bottom:14px">
+      <span class="chip clk sel" onclick="pickChip(this)">All</span><span class="chip clk" onclick="pickChip(this)">CEN</span>
+      <span class="chip clk" onclick="pickChip(this)">CS</span><span class="chip clk" onclick="pickChip(this)">HSR</span>
+      <span class="chip clk" onclick="pickChip(this)">IDR</span><span class="chip clk" onclick="pickChip(this)">JP</span>
+      <span class="chip clk" onclick="pickChip(this)">WFL</span><span class="chip clk" onclick="pickChip(this)">DOD</span>
+      <span style="flex:1"></span><span class="chip clk" onclick="this.classList.toggle('sel')">Only low</span>
+    </div>
+    <div class="row stockrow" style="background:var(--soft);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600">
+      <div>Item</div><div class="hide-m">On hand</div><div>Runway</div><div class="hide-m">Min / Par</div><div>Status</div>
+    </div>
+    <div class="row stockrow"><div class="name"><span class="em">🥛</span> Fresh Milk <span class="sub-muted">CS · L</span></div><div class="mono hide-m">18 L</div><div class="r-tx mono">0.5 days</div><div class="mono hide-m">40 / 90</div><div><span class="rag"><span class="dot r-bg"></span> Reorder</span></div></div>
+    <div class="row stockrow"><div class="name"><span class="em">🌾</span> Rolled Oats <span class="sub-muted">CS · kg</span></div><div class="mono hide-m">22 kg</div><div class="r-tx mono">1 day</div><div class="mono hide-m">30 / 120</div><div><span class="rag"><span class="dot r-bg"></span> Reorder</span></div></div>
+    <div class="row stockrow"><div class="name"><span class="em">🍉</span> Watermelon <span class="sub-muted">CEN · kg</span></div><div class="mono hide-m">14 kg</div><div class="a-tx mono">2 days</div><div class="mono hide-m">12 / 40</div><div><span class="rag"><span class="dot a-bg"></span> Low</span></div></div>
+    <div class="row stockrow"><div class="name"><span class="em">🥜</span> Almonds <span class="sub-muted">CS · kg</span></div><div class="mono hide-m">9 kg</div><div class="a-tx mono">3 days</div><div class="mono hide-m">6 / 20</div><div><span class="rag"><span class="dot a-bg"></span> Low</span></div></div>
+    <div class="row stockrow"><div class="name"><span class="em">📦</span> 2kg Oat Packs <span class="sub-muted">CS · pack</span></div><div class="mono hide-m">28 pk</div><div class="a-tx mono">3 days</div><div class="mono hide-m">25 / 80</div><div><span class="rag"><span class="dot a-bg"></span> Low</span></div></div>
+    <div class="row stockrow"><div class="name"><span class="em">🍯</span> Honey <span class="sub-muted">CS · kg</span></div><div class="mono hide-m">31 kg</div><div class="g-tx mono">9 days</div><div class="mono hide-m">10 / 30</div><div><span class="rag"><span class="dot g-bg"></span> Fine</span></div></div>
+    <div class="row stockrow"><div class="name"><span class="em">🍌</span> Banana <span class="sub-muted">CS · kg</span></div><div class="mono hide-m">44 kg</div><div class="g-tx mono">4 days</div><div class="mono hide-m">20 / 60</div><div><span class="rag"><span class="dot g-bg"></span> Fine</span></div></div>
+    <div class="row stockrow"><div class="name"><span class="em">🧃</span> Watermelon Juice <span class="sub-muted">CEN · btl · 24h</span></div><div class="mono hide-m">40 btl</div><div class="g-tx mono">today</div><div class="mono hide-m">— / 45</div><div><span class="rag"><span class="dot g-bg"></span> Fresh</span></div></div>
+    <div class="note">Stock is shown as <b>runway (days left)</b>, not just quantity — "1 day left" tells the team to act; "22 kg" doesn't. On hand + Min/Par read live from Rista <span class="mono">fact_stock_snapshot</span>; runway = on-hand ÷ 7-day usage.</div>
+  </section>
+
+  <!-- BUY -->
+  <section class="area hidden" id="buy">
+    <div class="pagehead"><h1>Buy</h1><div class="meta">Generated 07:00 · review by 10:00 &nbsp;<span class="state">Suggested</span></div></div>
+    <div class="subtabs">
+      <button class="active" data-sub="buy-order" onclick="sub('buy','buy-order')">To order</button>
+      <button data-sub="buy-recv" onclick="sub('buy','buy-recv')">Receiving</button>
+      <button data-sub="buy-ap" onclick="sub('buy','buy-ap')">Bills / AP</button>
     </div>
 
-    <!-- SECTION B: direct -->
-    <h2 class="sec">B · Direct from warehouse — ship as-is (no production)</h2>
-    <div class="panel">
-      <div class="tblwrap">
-      <table>
-        <thead>
-          <tr>
-            <th class="l">Item</th>
-            <th>HSR</th><th>IDR</th><th>JP</th><th>WFL</th><th>DOD</th>
-            <th class="totcol">Ship total</th><th>CS on-hand</th><th>RAG</th><th class="l">Supply</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="l"><span class="item">Banana</span> <span class="sub">1kg</span></td>
-            <td><span class="qty-edit" contenteditable>3</span></td><td><span class="qty-edit" contenteditable>2</span></td>
-            <td><span class="qty-edit" contenteditable>2</span></td><td><span class="qty-edit" contenteditable>2</span></td>
-            <td><span class="qty-edit" contenteditable>1</span></td>
-            <td class="totcol">10</td><td>6</td><td><span class="dot r"></span></td>
-            <td class="l"><span class="buy" onclick="go('procure')">🛒 short 4 — buy</span></td>
-          </tr>
-          <tr>
-            <td class="l"><span class="item">Whole Milk</span> <span class="sub">1L</span></td>
-            <td><span class="qty-edit" contenteditable>4</span></td><td><span class="qty-edit" contenteditable>3</span></td>
-            <td><span class="qty-edit" contenteditable>3</span></td><td><span class="qty-edit" contenteditable>2</span></td>
-            <td><span class="qty-edit" contenteditable>1</span></td>
-            <td class="totcol">13</td><td>15</td><td><span class="dot g"></span></td>
-            <td class="l"><span class="flag ok">covered ✓</span></td>
-          </tr>
-          <tr>
-            <td class="l"><span class="item">Almonds</span> <span class="sub">200g pack</span></td>
-            <td><span class="qty-edit" contenteditable>2</span></td><td><span class="qty-edit" contenteditable>2</span></td>
-            <td><span class="qty-edit" contenteditable>1</span></td><td><span class="qty-edit" contenteditable>1</span></td>
-            <td><span class="qty-edit" contenteditable>1</span></td>
-            <td class="totcol">7</td><td>9</td><td><span class="dot a"></span></td>
-            <td class="l"><span class="flag ok">covered ✓</span></td>
-          </tr>
-          <tr>
-            <td class="l"><span class="item">Honey</span> <span class="sub">500g</span></td>
-            <td><span class="qty-edit" contenteditable>1</span></td><td><span class="qty-edit" contenteditable>1</span></td>
-            <td>—</td><td><span class="qty-edit" contenteditable>1</span></td><td>—</td>
-            <td class="totcol">3</td><td>8</td><td><span class="dot g"></span></td>
-            <td class="l"><span class="flag ok">covered ✓</span></td>
-          </tr>
-          <tr>
-            <td class="l"><span class="item">Chia Seeds</span> <span class="sub">pack</span></td>
-            <td><span class="qty-edit" contenteditable>1</span></td><td>—</td><td><span class="qty-edit" contenteditable>1</span></td>
-            <td>—</td><td>—</td>
-            <td class="totcol">2</td><td>2</td><td><span class="dot a"></span></td>
-            <td class="l"><span class="flag ok">covered ✓</span></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="sub-buy" id="buy-order">
+      <div class="note">Exception-first: only materials at or below <b>Min</b>. Quantity is pre-filled (<span class="mono">Par − (on-hand + on-order)</span>) and the usual vendor is attached. Tap a material to see its vendors + credit before you confirm.</div>
+      <div class="vgroup">🏬 Devraj Vegetables <span class="badgesm">lead ~1 day</span></div>
+      <div class="tblwrap"><table>
+        <tr><th>Material</th><th class="num">On hand</th><th class="num">On order</th><th class="num">Min</th><th class="num">Par</th><th class="num">Order</th><th>Cost</th></tr>
+        <tr class="expand" onclick="tog('v-melon')"><td>🍉 Watermelon <span class="sub-muted">▸ 2 vendors</span></td><td class="num">14</td><td class="num">0</td><td class="num">12</td><td class="num">40</td><td class="num"><input class="qty" value="26"></td><td class="trend-up">▲ 4%</td></tr>
+        <tr class="venrow hidden" id="v-melon"><td colspan="7">
+          <table style="min-width:auto">
+            <tr><th>Vendor</th><th class="num">Price</th><th>MOQ / pack</th><th>Lead</th><th>Credit headroom</th></tr>
+            <tr><td>Devraj Vegetables ✓ usual</td><td class="num">₹28/kg</td><td>5 kg · 1 crate = 10 kg</td><td><span class="badgesm">1d · derived · low conf</span></td><td><span class="rag"><span class="dot g-bg"></span> ₹38k free</span> <span class="sub-muted">(₹1L limit · ₹62k used)</span></td></tr>
+            <tr><td>FreshFarm Co</td><td class="num">₹26/kg</td><td>10 kg · 1 crate = 10 kg</td><td><span class="badgesm">2d · derived · low conf</span></td><td><span class="rag"><span class="dot a-bg"></span> ₹8k free</span> <span class="sub-muted">(₹50k limit · ₹42k used)</span></td></tr>
+          </table>
+        </td></tr>
+        <tr class="expand" onclick="tog('v-banana')"><td>🍌 Banana <span class="sub-muted">▸ 1 vendor</span></td><td class="num">44</td><td class="num">20</td><td class="num">20</td><td class="num">60</td><td class="num"><input class="qty" value="0"></td><td class="trend-dn">▼ 2%</td></tr>
+        <tr class="venrow hidden" id="v-banana"><td colspan="7"><span class="sub-muted">Already covered — 20 kg on order arriving tomorrow. No reorder needed (that's why suggested qty = 0).</span></td></tr>
+      </table></div>
+      <button class="btn-ghost btn-sm" onclick="rev('po-devraj')">Create PO reminder →</button>
+      <div class="reveal hidden" id="po-devraj"><b>PO draft · Devraj Vegetables</b>
+        <div class="tblwrap"><table style="min-width:auto"><tr><th>Item</th><th class="num">Qty</th><th class="num">Est. ₹</th></tr><tr><td>Watermelon</td><td class="num">26 kg</td><td class="num">728</td></tr></table></div>
+        <div class="actions"><button class="btn btn-sm">📲 Notify Manjunath (WhatsApp)</button></div>
+        <div class="note" style="margin-bottom:0">You enter this PO in Rista. We verify it via GRN read-back and tick it off automatically.</div>
       </div>
-      <div class="foot">
-        Direct items aren't produced — they pass through the warehouse (CS). Where <b>CS on-hand</b> can't cover the ship total, the row flags <b>buy</b> and rolls into <a onclick="go('procure')">Procurement</a>.
+
+      <div class="vgroup">🥛 Milkbasket Dairy <span class="badgesm">lead ~0.5 day</span></div>
+      <div class="tblwrap"><table>
+        <tr><th>Material</th><th class="num">On hand</th><th class="num">On order</th><th class="num">Min</th><th class="num">Par</th><th class="num">Order</th><th>Cost</th></tr>
+        <tr class="expand" onclick="tog('v-milk')"><td>🥛 Fresh Milk <span class="sub-muted">▸ 2 vendors</span></td><td class="num">18</td><td class="num">0</td><td class="num">40</td><td class="num">90</td><td class="num"><input class="qty" value="72"></td><td class="trend-up">▲ 1%</td></tr>
+        <tr class="venrow hidden" id="v-milk"><td colspan="7">
+          <table style="min-width:auto">
+            <tr><th>Vendor</th><th class="num">Price</th><th>MOQ / pack</th><th>Lead</th><th>Credit headroom</th></tr>
+            <tr><td>Milkbasket Dairy ✓ usual</td><td class="num">₹58/L</td><td>10 L · 1 can = 20 L</td><td><span class="badgesm">0.5d · derived · low conf</span></td><td><span class="rag"><span class="dot r-bg"></span> ₹3k free</span> <span class="sub-muted">(₹80k limit · ₹77k used)</span></td></tr>
+            <tr><td>Heritage Fresh</td><td class="num">₹60/L</td><td>20 L · 1 can = 20 L</td><td><span class="badgesm">1d · derived · low conf</span></td><td><span class="rag"><span class="dot g-bg"></span> ₹45k free</span> <span class="sub-muted">(₹60k limit · ₹15k used)</span></td></tr>
+          </table>
+        </td></tr>
+      </table></div>
+      <div class="note">⚠ Milkbasket is <b>near its credit limit (₹3k free)</b> — the team can see this and choose Heritage Fresh instead. We show it; we don't auto-decide.</div>
+      <button class="btn-ghost btn-sm" onclick="rev('po-milk')">Create PO reminder →</button>
+      <div class="reveal hidden" id="po-milk"><b>PO draft · Milkbasket Dairy</b>
+        <div class="tblwrap"><table style="min-width:auto"><tr><th>Item</th><th class="num">Qty</th><th class="num">Est. ₹</th></tr><tr><td>Fresh Milk</td><td class="num">72 L</td><td class="num">4,176</td></tr></table></div>
+        <div class="actions"><button class="btn btn-sm">📲 Notify Manjunath (WhatsApp)</button></div>
       </div>
     </div>
 
-    <div class="actionbar">
-      <button class="btn primary" onclick="reveal('d-reveal')">Mark ready to enter in Rista</button>
-      <button class="btn" onclick="alert('Mock: opens inline cell editing for Manju/Pratik (Adjust mode).')">Adjust plan</button>
-      <span class="hint">Adjust mode gated to Manjunath &amp; Pratik · everyone else escalates</span>
+    <div class="sub-buy hidden" id="buy-recv">
+      <div class="note">A delivery arrived against <b>PO-2041 · Dry Goods Co</b>. Every line is pre-filled with the ordered qty — just tick to receive in full, and only change the ones that came up short.</div>
+      <div class="actions" style="margin-bottom:14px">
+        <button class="btn-ghost btn-sm" onclick="document.getElementById('blur').classList.remove('hidden')">📷 Snap invoice</button>
+        <span id="blur" class="rag hidden"><span class="dot g-bg"></span> blur check ✓ — clear</span>
+      </div>
+      <div class="tblwrap"><table>
+        <tr><th>Item</th><th class="num">Ordered</th><th class="num">Received</th><th>Batch / expiry</th><th></th></tr>
+        <tr><td>🌾 Rolled Oats (25kg bulk)</td><td class="num">4 bags</td><td class="num"><input class="qty" value="4" oninput="recvChk()"></td><td><span class="sub-muted">B-771 · 12 Jan 27</span></td><td>✓</td></tr>
+        <tr><td>🥜 Almonds</td><td class="num">20 kg</td><td class="num"><input class="qty" value="20" oninput="recvChk()"></td><td><span class="sub-muted">B-118 · 30 Sep 26</span></td><td>✓</td></tr>
+        <tr><td>🍯 Honey</td><td class="num">15 kg</td><td class="num"><input class="qty" value="15" oninput="recvChk()"></td><td><span class="sub-muted">B-540 · perishable</span></td><td>✓</td></tr>
+      </table></div>
+      <button class="btn" id="recvbtn">Confirm receipt</button>
+      <div class="note">This becomes a <b>GRN in Rista</b> (entered by the team). We read it back to close the loop and capture the supplier invoice number + cost — which builds your true landed-cost history over time.</div>
     </div>
 
-    <div id="d-reveal" class="reveal">
-      <div class="panel">
-        <div class="foot" style="border-top:0;border-bottom:1px solid var(--line);background:#fff;color:var(--fg);font-size:13px"><b>Ready to enter.</b> One transfer sheet per store — copy into Rista's transfer screen. We do not write it for you.</div>
-        <div class="sheetgrid">
-          <div class="sheet"><h4>HSR Layout <span class="code">CEN→HSR</span></h4>
-            <ul><li><span>Watermelon Juice</span><span>12</span></li><li><span>ABC Juice</span><span>8</span></li><li><span>Soaked Oats Base</span><span>18</span></li><li><span>Banana 1kg</span><span>3</span></li><li><span>Whole Milk 1L</span><span>4</span></li></ul>
-            <div class="copy" onclick="this.textContent='Copied ✓'">Copy transfer sheet</div>
-          </div>
-          <div class="sheet"><h4>IDR Indiranagar <span class="code">CEN→IDR</span></h4>
-            <ul><li><span>Watermelon Juice</span><span>8</span></li><li><span>ABC Juice</span><span>12</span></li><li><span>Soaked Oats Base</span><span>15</span></li><li><span>Banana 1kg</span><span>2</span></li></ul>
-            <div class="copy" onclick="this.textContent='Copied ✓'">Copy transfer sheet</div>
-          </div>
-          <div class="sheet"><h4>JP Nagar <span class="code">CEN→JP</span></h4>
-            <ul><li><span>Watermelon Juice</span><span>10</span></li><li><span>Soaked Oats Base</span><span>14</span></li><li><span>Chia Seeds</span><span>1</span></li></ul>
-            <div class="copy" onclick="this.textContent='Copied ✓'">Copy transfer sheet</div>
-          </div>
-          <div class="sheet"><h4>Whitefield <span class="code">CEN→WFL</span></h4>
-            <ul><li><span>Watermelon Juice</span><span>6</span></li><li><span>Soaked Oats Base</span><span>10</span></li><li><span>Whole Milk 1L</span><span>2</span></li></ul>
-            <div class="copy" onclick="this.textContent='Copied ✓'">Copy transfer sheet</div>
-          </div>
-          <div class="sheet"><h4>Doddakannahalli <span class="code">CEN→DOD</span></h4>
-            <ul><li><span>Watermelon Juice</span><span>4</span></li><li><span>Soaked Oats Base</span><span>8</span></li></ul>
-            <div class="copy" onclick="this.textContent='Copied ✓'">Copy transfer sheet</div>
-          </div>
-        </div>
-        <div class="notify">
-          <button class="btn" onclick="this.textContent='Sent to Reena ✓';this.classList.add('primary')">Notify Reena on WhatsApp / Slack</button>
-          <span class="hint">Persistent nag until all 5 transfers are entered in Rista.</span>
-        </div>
+    <div class="sub-buy hidden" id="buy-ap">
+      <div class="note">Vendor bills, captured from each GRN's invoice number + amount, with an <b>app-owned due date + payment status</b> (Rista doesn't track this). Payments are matched from the bank feed.</div>
+      <div class="tblwrap"><table>
+        <tr><th>Vendor</th><th>Invoice</th><th class="num">Amount</th><th>Due</th><th>Status</th></tr>
+        <tr><td>Devraj Vegetables</td><td class="mono">INV-8841</td><td class="num">₹12,400</td><td class="a-tx">in 2 days</td><td><span class="pill unpaid">○ Unpaid</span></td></tr>
+        <tr><td>Milkbasket Dairy</td><td class="mono">MB-2231</td><td class="num">₹18,900</td><td class="r-tx">overdue 1d</td><td><span class="pill unpaid">○ Unpaid</span></td></tr>
+        <tr><td>Dry Goods Co</td><td class="mono">DG-0455</td><td class="num">₹31,200</td><td class="sub-muted">paid</td><td><span class="pill paid">✓ Paid · 19 Jul</span></td></tr>
+      </table></div>
+      <div class="note" style="margin-bottom:0">"Paid" is reconciled from <span class="mono">bank.transactions</span> — matched by vendor + amount. Outstanding across vendors rolls up into <b>Pay</b>.</div>
+    </div>
+  </section>
+
+  <!-- MAKE -->
+  <section class="area hidden" id="make">
+    <div class="pagehead"><h1>Make</h1><div class="meta">What the kitchen turns raw material into · today</div></div>
+    <div class="note">Rista has no "production" button — so these transformation events live in our app. Each one <b>consumes</b> an input (a demand signal into Buy) and <b>produces</b> an output (supply for Send). The team records it here and posts the stock adjustment in Rista.</div>
+    <div class="kick">Repack / bulk-break</div>
+    <div class="makegrid">
+      <div class="mkcard"><h4>🌾 Oats — 25kg bulk → 2kg packs</h4>
+        <div class="line">Bulk on hand <b>4 bags (100 kg)</b></div><div class="line">Suggested repack <b>26 packs</b></div><div class="line">Yield <b>98%</b></div>
+        <div class="sub-muted" style="font-size:12px;margin:6px 0 10px">Driven by Send demand for 2kg packs. Consumes ~1.3 bags → produces ~26 packs.</div>
+        <button class="btn btn-sm">Record repack</button></div>
+    </div>
+    <div class="kick">Production (recipes)</div>
+    <div class="makegrid">
+      <div class="mkcard"><h4>🧃 Watermelon Juice</h4><span class="shelf">24h shelf</span>
+        <div class="line" style="margin-top:8px">Batch to make <b>45 btl</b></div><div class="line">= Σ store demand 40 + CK buffer 5</div>
+        <div class="actions" style="margin-top:8px"><button class="btn btn-sm">Start batch</button></div></div>
+      <div class="mkcard"><h4>🧃 ABC Juice</h4><span class="shelf">24h shelf</span>
+        <div class="line" style="margin-top:8px">Batch to make <b>30 btl</b></div><div class="line r-tx">⚠ short 2 — melon low</div>
+        <div class="actions" style="margin-top:8px"><button class="btn btn-sm">Start batch</button></div></div>
+      <div class="mkcard"><h4>🥣 Soaked Oats Base</h4><span class="shelf">48h shelf</span>
+        <div class="line" style="margin-top:8px">Batch to make <b>18 kg</b></div><div class="line">across 5 stores</div>
+        <div class="actions" style="margin-top:8px"><button class="btn btn-sm">Start batch</button></div></div>
+      <div class="mkcard"><h4>🥜 House Granola</h4><span class="shelf">7d shelf</span>
+        <div class="line" style="margin-top:8px">Batch to make <b>6 kg</b></div><div class="line g-tx">stock covers 3 days</div>
+        <div class="actions" style="margin-top:8px"><button class="btn-ghost btn-sm">Mark done</button></div></div>
+    </div>
+  </section>
+
+  <!-- SEND -->
+  <section class="area hidden" id="send">
+    <div class="pagehead"><h1>Send</h1><div class="meta">Generated 06:30 · review by 11:00 &nbsp;<span class="state">Suggested</span></div></div>
+    <div class="subtabs">
+      <button class="active" data-sub="send-ind" onclick="sub('send','send-ind')">Indents waiting</button>
+      <button data-sub="send-plan" onclick="sub('send','send-plan')">Dispatch plan</button>
+    </div>
+    <div class="sub-send" id="send-ind">
+      <div class="note">Stores request stock; the kitchen just taps <b>Accept</b> then <b>Dispatch</b>. No typing. The store confirms receipt at the other end.</div>
+      <div class="istack">
+        <div class="icard"><h4>🏪 HSR Layout</h4><ul><li>Watermelon Juice × 12</li><li>2kg Oat Packs × 6</li><li>Banana 3 kg</li></ul>
+          <div class="ladder" id="lad-hsr"><span class="on">pending</span><span>accepted</span><span>in transit</span><span>received</span></div>
+          <div class="actions"><button class="btn btn-sm" onclick="accept('hsr',this)">Accept</button></div></div>
+        <div class="icard"><h4>🏪 Indiranagar</h4><ul><li>ABC Juice × 8</li><li>Soaked Oats Base 4 kg</li></ul>
+          <div class="ladder" id="lad-idr"><span class="on">pending</span><span>accepted</span><span>in transit</span><span>received</span></div>
+          <div class="actions"><button class="btn btn-sm" onclick="accept('idr',this)">Accept</button></div></div>
+        <div class="icard"><h4>🏪 JP Nagar</h4><ul><li>Fresh Milk 4 L</li><li>House Granola 1 kg</li></ul>
+          <div class="ladder" id="lad-jp"><span class="on">pending</span><span>accepted</span><span>in transit</span><span>received</span></div>
+          <div class="actions"><button class="btn btn-sm" onclick="accept('jp',this)">Accept</button></div></div>
+      </div>
+    </div>
+    <div class="sub-send hidden" id="send-plan">
+      <div class="kick">A · Prepared in kitchen (from Make)</div>
+      <div class="tblwrap"><table>
+        <tr><th>Item</th><th class="num">HSR</th><th class="num">IDR</th><th class="num">JP</th><th class="num">WFL</th><th class="num">DOD</th><th>CK can supply</th></tr>
+        <tr><td>🧃 Watermelon Juice <span class="badgesm">24h</span></td><td class="num">12</td><td class="num">8</td><td class="num">10</td><td class="num">6</td><td class="num">4</td><td><span class="rag"><span class="dot g-bg"></span> 45/45 ✓</span></td></tr>
+        <tr><td>🧃 ABC Juice <span class="badgesm">24h</span></td><td class="num">8</td><td class="num">12</td><td class="num">6</td><td class="num">4</td><td class="num">—</td><td><span class="rag"><span class="dot a-bg"></span> ⚠ short 2 — make more</span></td></tr>
+        <tr><td>🥣 Soaked Oats Base <span class="badgesm">48h</span></td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td><span class="rag"><span class="dot g-bg"></span> ok</span></td></tr>
+      </table></div>
+      <div class="kick">B · Direct from warehouse (from CS stock)</div>
+      <div class="tblwrap"><table>
+        <tr><th>Item</th><th class="num">HSR</th><th class="num">IDR</th><th class="num">JP</th><th class="num">WFL</th><th class="num">DOD</th><th>CS can supply</th></tr>
+        <tr><td>🍌 Banana</td><td class="num">3</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td><span class="rag"><span class="dot g-bg"></span> ok</span></td></tr>
+        <tr><td>🥛 Fresh Milk</td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td class="num">2</td><td class="num">1</td><td><span class="rag"><span class="dot r-bg"></span> 🛒 short — buy</span></td></tr>
+        <tr><td>📦 2kg Oat Packs</td><td class="num">6</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td><span class="rag"><span class="dot a-bg"></span> repack needed</span></td></tr>
+        <tr><td>🥜 Almonds</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">—</td><td><span class="rag"><span class="dot g-bg"></span> ok</span></td></tr>
+      </table></div>
+      <div class="formula">dispatch = max(0, Par − closing store stock) + ceil(velocity_7d × buffer_days) + indent &nbsp;·&nbsp; capped by what CEN/CS can supply</div>
+      <button class="btn" onclick="rev('disp-ready')">Mark ready to enter in Rista →</button>
+      <div class="reveal hidden" id="disp-ready"><b>Transfer sheets ready</b> — one per store, copy-friendly for Rista entry.
         <div class="verify">
-          <div class="vhead">Verify — re-reading Rista transfers every 5 min</div>
-          <div class="vitems">
-            <span class="v vok">HSR ✅ landed</span>
-            <span class="v vok">IDR ✅ landed</span>
-            <span class="v vpend">JP ⏳ pending</span>
-            <span class="v vpend">WFL ⏳ pending</span>
-            <span class="v vpend">DOD ⏳ pending</span>
-          </div>
-          <div class="vbar"><i></i></div>
-          <div class="hint" style="margin-top:8px">2 / 5 verified · plan closes when all 5 land in Rista</div>
+          <span><span class="dot g-bg"></span> HSR ✓ landed</span><span><span class="dot g-bg"></span> IDR ✓ landed</span>
+          <span>⏳ JP pending</span><span>⏳ WFL pending</span><span>⏳ DOD pending</span>
+          <span class="sub-muted">(2/5 verified via Rista transfer read-back)</span>
         </div>
+        <div class="actions" style="margin-top:10px"><button class="btn btn-sm">📲 Notify Reena</button></div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============ PROCUREMENT ============ -->
-<section id="procure" class="page">
-  <div class="wrap">
-    <div class="headbar">
-      <div>
-        <h1>Procurement — Vendor → Central</h1>
-        <div class="meta">Tue 21 Jul 2026 · generated 07:00 · review by 10:00</div>
-      </div>
-      <span class="statepill">Suggested</span>
-    </div>
-    <p class="lede">Raw ingredients at or below their reorder point across CEN + CS, grouped by the vendor who supplies them. Reorder up to Par, netting out what's already on the way.</p>
+  <!-- PAY -->
+  <section class="area hidden" id="pay">
+    <div class="pagehead"><h1>Pay</h1><div class="meta">Vendor credit &amp; outstanding · visibility only</div></div>
+    <div class="tblwrap"><table>
+      <tr><th>Vendor</th><th class="num">Credit limit</th><th class="num">Used</th><th class="num">Pending bills</th><th class="num">Available</th><th>Next due</th><th>Last payment</th></tr>
+      <tr><td>Milkbasket Dairy</td><td class="num">₹80,000</td><td class="num">₹77,000</td><td class="num">₹18,900</td><td class="num r-tx">₹3,000</td><td class="r-tx">overdue 1d</td><td class="sub-muted">14 Jul · bank</td></tr>
+      <tr><td>FreshFarm Co</td><td class="num">₹50,000</td><td class="num">₹42,000</td><td class="num">₹6,400</td><td class="num a-tx">₹8,000</td><td class="a-tx">in 2 days</td><td class="sub-muted">17 Jul · bank</td></tr>
+      <tr><td>Devraj Vegetables</td><td class="num">₹1,00,000</td><td class="num">₹62,000</td><td class="num">₹12,400</td><td class="num g-tx">₹38,000</td><td>in 2 days</td><td class="sub-muted">18 Jul · bank</td></tr>
+      <tr><td>Dry Goods Co</td><td class="num">₹75,000</td><td class="num">₹19,000</td><td class="num">₹0</td><td class="num g-tx">₹56,000</td><td class="sub-muted">—</td><td class="sub-muted">19 Jul · bank</td></tr>
+    </table></div>
+    <div class="formula">available headroom = credit limit − (GRN-invoiced − reconciled payments)</div>
+    <div class="note" style="margin-bottom:0">Payments are matched from the <span class="mono">bank.transactions</span> feed (by vendor + amount). This screen only <b>shows</b> credit — it doesn't choose vendors for you. Buy surfaces the same headroom next to each vendor so the team decides with eyes open.</div>
+  </section>
 
-    <div class="panel">
-      <div class="tblwrap">
-      <table>
-        <thead>
-          <tr>
-            <th class="l">Ingredient</th><th class="l">Unit</th>
-            <th>On-hand<div class="sub" style="font-weight:400">CEN+CS</div></th>
-            <th>Min<div class="sub" style="font-weight:400">reorder pt</div></th>
-            <th>Par<div class="sub" style="font-weight:400">order up to</div></th>
-            <th>On-order</th><th class="totcol">Suggested order</th>
-            <th class="l">Lead time</th><th>RAG</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="grouprow"><td colspan="9">Devraj Vegetables &amp; Fruits</td></tr>
-          <tr>
-            <td class="l"><span class="item">Banana</span></td><td class="l sub">kg</td>
-            <td>14</td><td>20</td><td>60</td><td>0</td><td class="totcol">46</td>
-            <td class="l">2d <span class="badge lc">derived · low conf</span></td><td><span class="dot r"></span></td>
-          </tr>
-          <tr>
-            <td class="l"><span class="item">Watermelon</span></td><td class="l sub">kg</td>
-            <td>22</td><td>30</td><td>80</td><td>15</td><td class="totcol">43</td>
-            <td class="l">1d <span class="badge lc">derived · low conf</span></td><td><span class="dot a"></span></td>
-          </tr>
-          <tr class="grouprow"><td colspan="9">Milkbasket Dairy</td></tr>
-          <tr>
-            <td class="l"><span class="item">Fresh Milk</span></td><td class="l sub">L</td>
-            <td>18</td><td>25</td><td>70</td><td>0</td><td class="totcol">52</td>
-            <td class="l">1d <span class="badge lc">derived · low conf</span></td><td><span class="dot r"></span></td>
-          </tr>
-          <tr class="grouprow"><td colspan="9">Dry Goods Co</td></tr>
-          <tr>
-            <td class="l"><span class="item">Rolled Oats</span></td><td class="l sub">kg</td>
-            <td>34</td><td>40</td><td>160</td><td>0</td><td class="totcol">126</td>
-            <td class="l">10d <span class="badge lc">derived · low conf</span></td><td><span class="dot r"></span></td>
-          </tr>
-          <tr>
-            <td class="l"><span class="item">Almonds</span></td><td class="l sub">kg</td>
-            <td>9</td><td>8</td><td>28</td><td>6</td><td class="totcol">13</td>
-            <td class="l">7d <span class="badge lc">derived · low conf</span></td><td><span class="dot a"></span></td>
-          </tr>
-          <tr>
-            <td class="l"><span class="item">Honey</span></td><td class="l sub">kg</td>
-            <td>6</td><td>5</td><td>20</td><td>0</td><td class="totcol">14</td>
-            <td class="l">5d <span class="badge lc">derived · low conf</span></td><td><span class="dot a"></span></td>
-          </tr>
-          <tr>
-            <td class="l"><span class="item">Chia Seeds</span></td><td class="l sub">kg</td>
-            <td>3</td><td>4</td><td>12</td><td>0</td><td class="totcol">9</td>
-            <td class="l">7d <span class="badge lc">derived · low conf</span></td><td><span class="dot r"></span></td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="foot">
-        <code>Reorder point (Min) = avg daily use × lead time + safety stock</code> &nbsp;·&nbsp;
-        <code>Order qty = max(0, Par − (on-hand + on-order))</code>. Lead times are <b>derived from historical PO→GRN dates</b> and low-confidence until PO discipline improves.
-      </div>
-    </div>
+  </main>
+</div>
 
-    <div class="actionbar">
-      <button class="btn primary" onclick="reveal('p-reveal')">Create PO reminders</button>
-      <button class="btn" onclick="alert('Mock: edit Min / Par / safety-stock inputs (Par &amp; Config).')">Adjust levels</button>
-    </div>
-
-    <div id="p-reveal" class="reveal">
-      <div class="panel">
-        <div class="foot" style="border-top:0;border-bottom:1px solid var(--line);background:#fff;color:var(--fg);font-size:13px"><b>PO reminders drafted per vendor.</b> You enter the PO in Rista; we verify it via GRN read-back.</div>
-        <div class="sheetgrid">
-          <div class="sheet"><h4>Devraj Vegetables <span class="code">2 items</span></h4>
-            <ul><li><span>Banana</span><span>46 kg</span></li><li><span>Watermelon</span><span>43 kg</span></li></ul>
-            <div class="copy" onclick="this.textContent='Copied ✓'">Copy PO draft</div>
-          </div>
-          <div class="sheet"><h4>Milkbasket Dairy <span class="code">1 item</span></h4>
-            <ul><li><span>Fresh Milk</span><span>52 L</span></li></ul>
-            <div class="copy" onclick="this.textContent='Copied ✓'">Copy PO draft</div>
-          </div>
-          <div class="sheet"><h4>Dry Goods Co <span class="code">4 items</span></h4>
-            <ul><li><span>Rolled Oats</span><span>126 kg</span></li><li><span>Almonds</span><span>13 kg</span></li><li><span>Honey</span><span>14 kg</span></li><li><span>Chia Seeds</span><span>9 kg</span></li></ul>
-            <div class="copy" onclick="this.textContent='Copied ✓'">Copy PO draft</div>
-          </div>
-        </div>
-        <div class="notify">
-          <button class="btn" onclick="this.textContent='Sent to Manjunath ✓';this.classList.add('primary')">Notify Manjunath</button>
-          <span class="hint">Nag stays until each PO appears in Rista.</span>
-        </div>
-        <div class="verify">
-          <div class="vhead">Verify — reading Rista PO + GRN back</div>
-          <div class="vitems">
-            <span class="v vpend">Devraj PO ⏳ awaiting entry</span>
-            <span class="v vpend">Milkbasket PO ⏳ awaiting entry</span>
-            <span class="v vpend">Dry Goods PO ⏳ awaiting entry</span>
-          </div>
-          <div class="hint" style="margin-top:8px">0 / 3 entered · then GRN read-back confirms delivery closes the loop</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CONFIG ============ -->
-<section id="config" class="page">
-  <div class="wrap">
-    <h1>Par levels &amp; config</h1>
-    <p class="lede">The <b>only</b> numbers a human sets. Everything else — stock, sales velocity, lead times, recipes — is read from Rista + the warehouse and computed. Par levels live in the app's own <span class="kbd">par_levels</span> table; Rista has no concept of par levels.</p>
-
-    <div class="panel">
-      <div class="tblwrap">
-      <table>
-        <thead>
-          <tr><th class="l">SKU / Ingredient</th><th class="l">Branch</th><th>Par qty</th><th>Buffer days</th><th class="l">Updated by</th></tr>
-        </thead>
-        <tbody>
-          <tr><td class="l"><span class="item">Watermelon Juice</span></td><td class="l">HSR</td><td>12</td><td>1</td><td class="l">Manjunath</td></tr>
-          <tr><td class="l"><span class="item">Soaked Oats Base</span></td><td class="l">HSR</td><td>18</td><td>2</td><td class="l">Manjunath</td></tr>
-          <tr><td class="l"><span class="item">Banana 1kg</span></td><td class="l">HSR</td><td>6</td><td>1</td><td class="l">Reena</td></tr>
-          <tr><td class="l"><span class="item">Rolled Oats</span></td><td class="l">CEN</td><td>160</td><td>3</td><td class="l">Manjunath</td></tr>
-          <tr><td class="l"><span class="item">Fresh Milk</span></td><td class="l">CS</td><td>70</td><td>1</td><td class="l">Manjunath</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="foot">Par = target stock to top up to. Buffer days = extra days of cover baked into the reorder point (a simple safety stock). Change these and every suggestion recomputes.</div>
-    </div>
-
-    <div class="cfgnote">
-      <b>Data provenance.</b> Stock ← <span class="kbd">rista_fact.fact_stock_snapshot</span> · Sales velocity ← <span class="kbd">rista_fact.fact_order_items</span> · Recipes/BOM ← <span class="kbd">recipe.*</span> (team-authored) · Transfers/PO/GRN ← <span class="kbd">rista_fact.fact_transfer / po / grn</span> · Vendors ← <span class="kbd">rista_dim.dim_supplier</span>. The tool writes only to its own tables (<span class="kbd">par_levels</span>, <span class="kbd">dispatch_plans</span>) — <b>never to Rista</b>.
-    </div>
-  </div>
-</section>
+<nav class="mobilenav">
+  <button data-area="home" class="active" onclick="go('home')"><span class="ic">🏠</span>Home</button>
+  <button data-area="stock" onclick="go('stock')"><span class="ic">📦</span>Stock<span class="badge">5</span></button>
+  <button data-area="buy" onclick="go('buy')"><span class="ic">🛒</span>Buy<span class="badge">2</span></button>
+  <button data-area="make" onclick="go('make')"><span class="ic">🍳</span>Make<span class="badge">3</span></button>
+  <button data-area="send" onclick="go('send')"><span class="ic">🚚</span>Send<span class="badge">3</span></button>
+  <button data-area="pay" onclick="go('pay')"><span class="ic">💳</span>Pay</button>
+</nav>
 
 <script>
-  function go(id){
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
-    var map={home:'t-home',dispatch:'t-dispatch',procure:'t-procure',config:'t-config'};
-    var b=document.getElementById(map[id]); if(b)b.classList.add('active');
-    window.scrollTo(0,0);
-  }
-  function fchip(el){
-    el.parentNode.querySelectorAll('.fchip').forEach(c=>c.classList.remove('active'));
-    el.classList.add('active');
-  }
-  function reveal(id){
-    var el=document.getElementById(id);
-    el.classList.toggle('show');
-    if(el.classList.contains('show')) el.scrollIntoView({behavior:'smooth',block:'nearest'});
-  }
+function go(area){
+  document.querySelectorAll('.area').forEach(function(a){a.classList.toggle('hidden',a.id!==area)});
+  document.querySelectorAll('.nav button, .mobilenav button').forEach(function(b){b.classList.toggle('active',b.dataset.area===area)});
+  window.scrollTo(0,0);
+}
+function sub(group,id){
+  document.querySelectorAll('.sub-'+group).forEach(function(s){s.classList.toggle('hidden',s.id!==id)});
+  document.querySelectorAll('#'+group+' .subtabs button').forEach(function(b){b.classList.toggle('active',b.dataset.sub===id)});
+}
+function tog(id){document.getElementById(id).classList.toggle('hidden');}
+function rev(id){document.getElementById(id).classList.toggle('hidden');}
+function pickChip(el){el.parentNode.querySelectorAll('.chip.clk').forEach(function(c){if(c.textContent!=='Only low')c.classList.remove('sel')});el.classList.add('sel');}
+function recvChk(){
+  var ordered=[4,20,15],short=false;
+  document.querySelectorAll('#buy-recv .qty').forEach(function(q,i){if(parseFloat(q.value)<ordered[i])short=true;});
+  document.getElementById('recvbtn').textContent=short?'Split receipt':'Confirm receipt';
+}
+var ladders={hsr:'lad-hsr',idr:'lad-idr',jp:'lad-jp'};
+function accept(store,btn){
+  var steps=document.getElementById(ladders[store]).querySelectorAll('span');
+  if(btn.textContent==='Accept'){steps[1].classList.add('on');btn.textContent='Dispatch';}
+  else if(btn.textContent==='Dispatch'){steps[2].classList.add('on');btn.textContent='In transit ✓';btn.disabled=true;btn.style.opacity=.5;}
+}
 </script>
 </body>
 </html>
