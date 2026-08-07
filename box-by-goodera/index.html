@@ -1,0 +1,1486 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>BOX by Goodera — the catalogue</title>
+<meta name="description" content="A kit arrives. Your team builds it. Someone who needs it receives it. The BOX by Goodera catalogue.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600&family=Petrona:ital,wght@0,400;0,500;1,400&family=Julius+Sans+One&display=swap" rel="stylesheet">
+<script>document.documentElement.className += " js";</script>
+<style>
+/* ============================================================
+   BOX by Goodera — concept catalogue
+   Chassis: photo -> chip -> title -> one impact line -> spec -> CTA
+   Colour is bounded to the photo, the swatch and the filter.
+   ============================================================ */
+
+:root{
+  color-scheme: light;
+
+  /* ---- ground + ink (warm-biased neutrals, chosen not inherited) ---- */
+  --paper:#FAFAFA;
+  --paper-2:#FFFFFF;
+  --cream:#F4EFDD;
+  --ink:#101828;
+  --ink-2:#44496B;
+  --muted:#667085;
+  --rule:#E4E0D8;          /* warm hairline, biased toward the cream */
+  --rule-strong:#CFC9BC;
+  --dark:#001919;
+  --dark-2:#0B2626;
+  --dark-rule:#1E3A3A;
+  --dark-muted:#93AFAF;
+
+  /* ---- brand accent ---- */
+  --orange:#FF7A49;
+  --orange-deep:#FF5B1F;
+  --orange-word:#F37A54;
+  /* Same hue family as --orange-deep, dark enough to pass AA as text on
+     white. Brand orange itself is only 2.6:1 and cannot carry small text. */
+  --orange-text:#C23B00;
+  --glow:0 1rem 3.125rem #ff7a4959;
+
+  /* ---- seven registers: pure hue (swatch/tick) + ink (AA text) ---- */
+  --c-stem:#E39A28;      --c-stem-ink:#8A5A05;
+  --c-light:#3D4B8C;     --c-light-ink:#333F79;
+  --c-crisis:#5F707C;    --c-crisis-ink:#4A5862;
+  --c-dignity:#7E9B78;   --c-dignity-ink:#46603F;
+  --c-hunger:#C2653F;    --c-hunger-ink:#8F421F;
+  --c-comfort:#D98C86;   --c-comfort-ink:#8C453F;
+  --c-school:#2E8C8C;    --c-school-ink:#1D6363;
+
+  /* ---- type scale ---- */
+  --t-micro:0.6875rem;   /* 11 */
+  --t-label:0.75rem;     /* 12 */
+  --t-cap:0.8125rem;     /* 13 */
+  --t-sm:0.9375rem;      /* 15 */
+  --t-base:1.0625rem;    /* 17 */
+  --t-lg:1.3125rem;      /* 21 */
+  --t-xl:1.75rem;        /* 28 */
+  --t-2xl:2.375rem;      /* 38 */
+
+  --display: "Sora", system-ui, sans-serif;
+  --body: "Noto Sans", system-ui, sans-serif;
+  --label: "Julius Sans One", system-ui, sans-serif;
+  --quote: "Petrona", Georgia, serif;
+
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --maxw: 78rem;
+  --section-y: clamp(4.5rem, 9vw, 8rem);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:var(--t-base);
+  line-height:1.5;                 /* Goodera runs 1.5 throughout */
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img{ max-width:100%; display:block; }
+h1,h2,h3,h4{ font-family:var(--display); font-weight:700; line-height:1.15; margin:0; text-wrap:balance; }
+p{ margin:0; }
+ul,ol{ margin:0; padding:0; list-style:none; }
+a{ color:inherit; }
+
+/* ---- focus: visible everywhere, inverted on dark grounds ---- */
+:focus-visible{ outline:2px solid var(--orange-deep); outline-offset:3px; border-radius:2px; }
+.on-dark :focus-visible{ outline-color:#FFB08F; }
+
+.skip{
+  position:absolute; left:-9999px; top:0; z-index:100;
+  background:var(--ink); color:#fff; padding:.75rem 1.25rem;
+  font-family:var(--label); font-size:var(--t-label); letter-spacing:.12em;
+}
+.skip:focus{ left:.5rem; top:.5rem; }
+
+.wrap{ max-width:var(--maxw); margin-inline:auto; padding-inline:var(--gutter); }
+
+/* Anchor targets must clear the sticky header, which is two rows on mobile. */
+#catalogue,#how,#partners,#soon,#talk,#top{ scroll-margin-top:9rem; }
+@media (min-width:64rem){ #catalogue,#how,#partners,#soon,#talk,#top{ scroll-margin-top:5.5rem; } }
+
+/* ---------- shared type helpers ---------- */
+.eyebrow{
+  font-family:var(--label); font-size:var(--t-label);
+  letter-spacing:.22em; text-transform:uppercase;
+  color:var(--muted); margin:0;
+}
+.on-dark .eyebrow{ color:var(--dark-muted); }
+.lede{ font-size:var(--t-lg); line-height:1.5; color:var(--ink-2); max-width:46ch; }
+.num{ font-variant-numeric:tabular-nums; }
+
+/* ============================ NAV ============================ */
+.nav{
+  position:sticky; top:0; z-index:50;
+  /* Near-opaque: at lower alpha this goes muddy grey over the dark sections. */
+  background:rgba(250,250,250,.96);
+  backdrop-filter:saturate(160%) blur(12px);
+  border-bottom:1px solid var(--rule);
+}
+.nav__in{
+  max-width:var(--maxw); margin-inline:auto; padding:.9rem var(--gutter);
+  display:flex; align-items:center; flex-wrap:wrap; gap:.75rem 1.5rem;
+}
+.lockup{
+  display:inline-flex; align-items:baseline; gap:.45rem;
+  font-family:var(--display); text-decoration:none; white-space:nowrap;
+}
+.lockup b{ font-weight:800; font-size:1.2rem; letter-spacing:-.02em; }
+.lockup span{ font-weight:400; font-size:.8125rem; color:var(--muted); }
+.lockup i{ font-style:normal; color:var(--orange-word); font-weight:600; }
+
+/* Mobile: links drop to a second, horizontally scrollable row rather
+   than disappearing. Desktop: they sit inline. */
+.nav__links{
+  order:3; width:100%; display:flex; align-items:center; gap:1.4rem;
+  overflow-x:auto; scrollbar-width:none;
+  padding-top:.7rem; margin-top:.15rem;
+  border-top:1px solid var(--rule);
+}
+.nav__links::-webkit-scrollbar{ display:none; }
+.nav__links a{ white-space:nowrap; }
+.nav__links a{
+  font-family:var(--label); font-size:var(--t-label); letter-spacing:.14em;
+  text-transform:uppercase; text-decoration:none; color:var(--ink-2);
+  padding-block:.35rem; border-bottom:1px solid transparent;
+  transition:color .18s ease, border-color .18s ease;
+}
+.nav__links a:hover{ color:var(--ink); border-bottom-color:var(--orange); }
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  font-family:var(--display); font-weight:600; font-size:var(--t-cap);
+  padding:.7rem 1.15rem; border-radius:2px; text-decoration:none;
+  border:1px solid transparent; cursor:pointer;
+  transition:background .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
+}
+/* Ink on brand orange, not white: keeps #FF7A49 exactly as specified while
+   reaching 6.9:1. White on this orange is 2.6:1 and fails AA at button size. */
+.btn--primary{ background:var(--orange); color:var(--ink); }
+.btn--primary:hover{ background:var(--orange-deep); color:var(--ink); }
+.btn--ghost{ border-color:var(--rule-strong); color:var(--ink); background:transparent; }
+.btn--ghost:hover{ border-color:var(--ink); }
+.on-dark .btn--ghost{ border-color:var(--dark-rule); color:#fff; }
+.on-dark .btn--ghost:hover{ border-color:#fff; }
+.nav .btn{ margin-left:auto; }
+
+@media (min-width:64rem){
+  .nav__in{ flex-wrap:nowrap; }
+  .nav__links{
+    order:0; width:auto; margin-left:auto; margin-top:0;
+    padding-top:0; border-top:0; gap:1.75rem; overflow:visible;
+  }
+  .nav .btn{ margin-left:0; }
+}
+
+/* ============================ HERO ============================ */
+.hero{ padding-block:clamp(3.5rem,7vw,5.5rem) 0; }
+.hero__grid{ display:grid; gap:clamp(2.5rem,5vw,4rem); align-items:end; }
+
+/* The dictionary entry — the page's thesis. */
+.entry{ max-width:34rem; }
+.entry__head{
+  font-size:clamp(2.75rem,10vw,4.5rem); font-weight:800;
+  letter-spacing:-.035em; line-height:1.02;
+}
+.entry__meta{
+  display:flex; flex-wrap:wrap; align-items:baseline; gap:.65rem;
+  margin-top:.85rem; padding-bottom:1.15rem;
+  border-bottom:1px solid var(--rule-strong);
+}
+.entry__pron{ font-family:var(--quote); font-size:var(--t-base); color:var(--muted); }
+/* Body text, so it takes the AA-safe orange. The lockup keeps the exact
+   brand --orange-word: WCAG 1.4.3 exempts logotypes and brand names. */
+.entry__pos{ font-family:var(--quote); font-style:italic; font-size:var(--t-base); color:var(--orange-text); }
+.entry__defs{ margin-top:1.4rem; display:flex; flex-direction:column; gap:1rem; }
+.entry__def{ display:flex; gap:.85rem; align-items:baseline; }
+.entry__def em{
+  font-family:var(--label); font-style:normal; font-size:var(--t-label);
+  color:var(--muted); flex:none; padding-top:.15rem;
+  min-width:1.1rem; font-variant-numeric:tabular-nums;
+}
+.entry__def p{ font-size:var(--t-base); color:var(--ink-2); max-width:38ch; }
+.entry__cite{
+  margin-top:1.6rem; padding-left:1rem; border-left:2px solid var(--orange);
+  font-family:var(--quote); font-style:italic; font-size:var(--t-lg);
+  color:var(--ink); max-width:32ch;
+}
+.hero__cta{ display:flex; flex-wrap:wrap; gap:.75rem; margin-top:2rem; }
+
+.hero__figure{ position:relative; }
+.hero__figure img{
+  width:100%; height:auto; border-radius:3px;
+  border:1px solid var(--rule);
+}
+.hero__cap{
+  margin-top:.8rem; font-family:var(--label); font-size:var(--t-micro);
+  letter-spacing:.18em; text-transform:uppercase; color:var(--muted);
+}
+
+@media (min-width:60rem){
+  .hero__grid{ grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); }
+}
+
+/* ---- scale strip ---- */
+.scale{ margin-top:var(--section-y); border-block:1px solid var(--rule); }
+.scale__in{
+  display:grid; grid-template-columns:repeat(2,1fr);
+  max-width:var(--maxw); margin-inline:auto;
+}
+.scale__item{
+  padding:1.35rem var(--gutter); border-bottom:1px solid var(--rule);
+}
+.scale__item:nth-child(odd){ border-right:1px solid var(--rule); }
+.scale__item:nth-last-child(-n+2){ border-bottom:0; }
+.scale__n{
+  font-family:var(--display); font-weight:700; font-size:var(--t-xl);
+  letter-spacing:-.02em; display:block;
+}
+.scale__l{
+  font-family:var(--label); font-size:var(--t-micro); letter-spacing:.16em;
+  text-transform:uppercase; color:var(--muted); margin-top:.3rem; display:block;
+}
+@media (min-width:48rem){
+  .scale__in{ grid-template-columns:repeat(4,1fr); }
+  .scale__item{ border-bottom:0; border-right:1px solid var(--rule); }
+  .scale__item:last-child{ border-right:0; }
+  .scale__item:nth-child(odd){ border-right:1px solid var(--rule); }
+}
+
+/* ======================= SECTION FURNITURE ======================= */
+.section{ padding-block:var(--section-y); }
+/* Muted text needs to be darker on cream than on the off-white ground
+   to hold 4.5:1 — redefined at token level so every child follows. */
+.section--cream{ background:var(--cream); --muted:#5D6779; }
+.section--dark{ background:var(--dark); color:#fff; }
+.section--tight{ padding-block:clamp(3rem,6vw,5rem); }
+
+.shead{
+  display:grid; gap:1rem; padding-bottom:2rem; margin-bottom:2.75rem;
+  border-bottom:1px solid var(--rule);
+}
+.section--dark .shead{ border-bottom-color:var(--dark-rule); }
+.section--cream .shead{ border-bottom-color:var(--rule-strong); }
+.shead h2{ font-size:clamp(1.75rem,4.2vw,var(--t-2xl)); letter-spacing:-.025em; max-width:20ch; }
+.shead p{ color:var(--muted); max-width:52ch; }
+.section--dark .shead p{ color:var(--dark-muted); }
+@media (min-width:60rem){
+  .shead{ grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); align-items:end; gap:3rem; }
+}
+
+/* ======================= WHAT A BOX IS ======================= */
+/* A genuine sequence, so it genuinely gets numbers. */
+.steps{ display:grid; gap:0; counter-reset:step; }
+.step{
+  counter-increment:step;
+  display:grid; gap:.6rem; padding-block:1.75rem;
+  border-top:1px solid var(--rule);
+}
+.step:last-child{ border-bottom:1px solid var(--rule); }
+.step__n{
+  font-family:var(--label); font-size:var(--t-label); letter-spacing:.2em;
+  color:var(--orange-word);
+}
+/* Numbers only on the genuine sequence (the <ol>), never on the
+   Partners strip, which reuses the chassis with word labels. */
+ol.steps .step__n::before{ content:counter(step,decimal-leading-zero); }
+.step h3{ font-size:var(--t-lg); letter-spacing:-.01em; }
+.step p{ color:var(--muted); max-width:42ch; font-size:var(--t-sm); }
+@media (min-width:52rem){
+  .steps{ grid-template-columns:repeat(3,1fr); }
+  .step{ border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); padding:1.75rem 1.75rem 1.75rem 0; }
+  .step + .step{ border-left:1px solid var(--rule); padding-left:1.75rem; }
+}
+
+/* ========================= CATALOGUE ========================= */
+.filters{
+  display:flex; flex-wrap:wrap; gap:.5rem;
+  padding-bottom:1.5rem; margin-bottom:2rem;
+  border-bottom:1px solid var(--rule);
+}
+.filter{
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-family:var(--label); font-size:var(--t-label); letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-2);
+  background:transparent; border:1px solid var(--rule-strong);
+  border-radius:2px; padding:.55rem .8rem; cursor:pointer;
+  transition:background .18s ease, color .18s ease, border-color .18s ease;
+}
+.filter:hover{ border-color:var(--ink); color:var(--ink); }
+.filter[aria-pressed="true"]{ background:var(--ink); border-color:var(--ink); color:#fff; }
+.sw{ width:10px; height:10px; border-radius:1px; flex:none; background:var(--sw,var(--ink)); }
+.filter[aria-pressed="true"] .sw{ box-shadow:0 0 0 1px rgba(255,255,255,.35); }
+.filter__ct{ font-family:var(--body); font-size:var(--t-micro); opacity:.6; letter-spacing:0; }
+
+.count{
+  font-family:var(--label); font-size:var(--t-label); letter-spacing:.16em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:1.5rem;
+}
+
+/* Uniform grid. Never masonry. Every card the same chassis. */
+.cards{
+  display:grid; gap:1.5rem;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,20.5rem),1fr));
+}
+.card{
+  display:flex; flex-direction:column;
+  background:var(--paper-2);
+  border:1px solid var(--rule);
+  border-radius:3px; overflow:hidden;
+  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--glow);
+  border-color:transparent;
+}
+.card__tick{ height:3px; background:var(--cat); flex:none; }
+.card__media{ position:relative; background:var(--rule); }
+.card__media img{ width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; }
+.card__body{ display:flex; flex-direction:column; flex:1; padding:1.25rem 1.25rem 1.4rem; gap:.75rem; }
+
+.chip{
+  display:inline-flex; align-items:center; gap:.5rem; align-self:flex-start;
+  font-family:var(--label); font-size:var(--t-micro); letter-spacing:.14em;
+  text-transform:uppercase; color:var(--cat-ink);
+}
+.card h3{ font-size:var(--t-base); letter-spacing:-.012em; line-height:1.3; }
+.card__line{
+  font-size:var(--t-sm); color:var(--ink-2); line-height:1.5;
+}
+
+.spec{ display:flex; flex-direction:column; gap:.4rem; margin-top:.35rem; }
+.spec__row{ display:flex; align-items:baseline; gap:.5rem; font-size:var(--t-label); }
+.spec__row dt{
+  flex:none; font-family:var(--label); letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted);
+}
+.spec__lead{
+  flex:1; height:0; border-bottom:1px dotted var(--rule-strong);
+  transform:translateY(-.25em); min-width:.75rem;
+}
+.spec__row dd{ flex:none; margin:0; text-align:right; color:var(--ink); max-width:60%; }
+.spec__row--wide{ flex-direction:column; align-items:flex-start; gap:.2rem; }
+.spec__row--wide dd{ text-align:left; max-width:100%; color:var(--ink-2); }
+.spec__row--wide .spec__lead{ display:none; }
+
+.verified{
+  margin-top:.35rem; padding:.6rem .7rem;
+  background:var(--cream); border-radius:2px;
+  font-size:var(--t-label); color:var(--ink-2); line-height:1.45;
+}
+.verified b{ font-weight:600; color:var(--ink); }
+.verified .tagv{
+  display:block; font-family:var(--label); font-size:var(--t-micro);
+  letter-spacing:.14em; text-transform:uppercase; color:var(--muted);
+  margin-bottom:.2rem;
+}
+
+/* One CTA verb across the whole catalogue, pinned to the bottom edge
+   so every card ends at the same line regardless of copy length. */
+.card__cta{
+  margin-top:auto; padding-top:1.1rem;
+  border-top:1px solid var(--rule);
+  display:flex; align-items:center; gap:.4rem;
+  font-family:var(--display); font-weight:600; font-size:var(--t-cap);
+  color:var(--orange-text); text-decoration:none;
+}
+.card__cta span{ border-bottom:1px solid transparent; transition:border-color .18s ease; }
+.card:hover .card__cta span,
+.card__cta:hover span{ border-bottom-color:var(--orange-text); }
+.card__cta::after{ content:"\2192"; transition:transform .18s ease; }
+.card:hover .card__cta::after{ transform:translateX(3px); }
+
+.is-hidden{ display:none !important; }
+
+/* ====================== ANATOMY (dark) ====================== */
+.anat{ display:grid; gap:2.5rem; }
+.anat__fig img{ width:100%; height:auto; border-radius:3px; border:1px solid var(--dark-rule); }
+.anat__fig figcaption{
+  margin-top:.8rem; font-family:var(--label); font-size:var(--t-micro);
+  letter-spacing:.18em; text-transform:uppercase; color:var(--dark-muted);
+}
+.layers{ display:flex; flex-direction:column; }
+.layer{
+  display:grid; gap:.45rem; padding-block:1.4rem;
+  border-top:1px solid var(--dark-rule);
+}
+.layer:last-child{ border-bottom:1px solid var(--dark-rule); }
+.layer__k{
+  font-family:var(--label); font-size:var(--t-micro); letter-spacing:.2em;
+  text-transform:uppercase; color:var(--orange);
+}
+.layer h3{ font-size:var(--t-lg); letter-spacing:-.015em; color:#fff; }
+.layer p{ color:var(--dark-muted); font-size:var(--t-sm); max-width:44ch; }
+@media (min-width:60rem){
+  .anat{ grid-template-columns:minmax(0,1fr) minmax(0,1.1fr); gap:4rem; align-items:start; }
+  /* The contents stay in view while the four layers scroll past them. */
+  .anat__fig{ position:sticky; top:7rem; }
+}
+
+/* ====================== OCCASIONS ====================== */
+.occ{ display:grid; gap:1px; background:var(--rule-strong); border:1px solid var(--rule-strong); }
+.occ__i{ background:var(--cream); padding:1.35rem 1.25rem; display:grid; gap:.35rem; }
+.occ__i h3{ font-size:var(--t-base); letter-spacing:-.01em; }
+.occ__i p{ font-size:var(--t-cap); color:var(--muted); }
+@media (min-width:40rem){ .occ{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:64rem){ .occ{ grid-template-columns:repeat(4,1fr); } }
+
+/* ====================== PROOF ====================== */
+.tablewrap{ overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--paper-2); }
+table{ width:100%; border-collapse:collapse; min-width:44rem; }
+caption{
+  text-align:left; padding:1rem 1.15rem; border-bottom:1px solid var(--rule);
+  font-family:var(--label); font-size:var(--t-label); letter-spacing:.16em;
+  text-transform:uppercase; color:var(--muted);
+}
+th,td{ text-align:left; padding:.85rem 1.15rem; border-bottom:1px solid var(--rule); font-size:var(--t-sm); vertical-align:top; }
+thead th{
+  font-family:var(--label); font-weight:400; font-size:var(--t-micro);
+  letter-spacing:.16em; text-transform:uppercase; color:var(--muted);
+}
+tbody th{ font-family:var(--display); font-weight:600; font-size:var(--t-sm); white-space:nowrap; }
+tbody tr:last-child th, tbody tr:last-child td{ border-bottom:0; }
+td.n{ font-variant-numeric:tabular-nums; }
+
+.quotes{ display:grid; gap:1.5rem; margin-top:3rem; }
+.quote{
+  display:flex; flex-direction:column; gap:1rem;
+  padding:1.6rem 1.5rem; background:var(--paper-2);
+  border:1px solid var(--rule); border-radius:3px;
+}
+.quote blockquote{
+  margin:0; font-family:var(--quote); font-size:var(--t-lg);
+  line-height:1.45; color:var(--ink);
+}
+.quote figcaption{ margin-top:auto; font-size:var(--t-cap); color:var(--muted); }
+.quote figcaption b{ display:block; font-family:var(--display); font-weight:600; color:var(--ink); font-size:var(--t-cap); }
+@media (min-width:52rem){ .quotes{ grid-template-columns:repeat(2,1fr); } }
+
+.logos{
+  display:flex; flex-wrap:wrap; gap:.5rem 0; margin-top:3rem;
+  padding-top:2rem; border-top:1px solid var(--rule);
+}
+.logos li{
+  font-family:var(--display); font-weight:600; font-size:var(--t-sm);
+  color:var(--ink-2); padding-right:1rem; margin-right:1rem;
+  border-right:1px solid var(--rule-strong); line-height:1.2;
+}
+.logos li:last-child{ border-right:0; }
+
+/* ====================== PARTNERS ====================== */
+.partners{ display:flex; flex-wrap:wrap; gap:.55rem; }
+.partners li{
+  font-size:var(--t-cap); color:var(--ink-2);
+  border:1px solid var(--rule-strong); border-radius:2px;
+  padding:.45rem .7rem; background:var(--paper-2);
+}
+
+/* ====================== COMING SOON ====================== */
+.soon{ display:grid; gap:2.5rem; }
+.soon__g h3{
+  font-size:var(--t-base); letter-spacing:.02em;
+  padding-bottom:.9rem; margin-bottom:1.1rem;
+  border-bottom:1px solid var(--dark-rule); color:#fff;
+}
+.soon__g li{
+  display:flex; gap:.7rem; align-items:baseline;
+  padding-block:.5rem; color:var(--dark-muted); font-size:var(--t-sm);
+}
+.soon__g li::before{
+  content:""; flex:none; width:6px; height:6px; border-radius:1px;
+  background:var(--orange); opacity:.75; transform:translateY(-1px);
+}
+@media (min-width:52rem){ .soon{ grid-template-columns:repeat(3,1fr); gap:3rem; } }
+
+/* ====================== CLOSING CTA + FOOTER ====================== */
+.close{ display:grid; gap:1.5rem; justify-items:start; }
+.close h2{ font-size:clamp(1.85rem,5vw,3rem); letter-spacing:-.03em; max-width:18ch; }
+.close p{ color:var(--muted); max-width:46ch; }
+.close .hero__cta{ margin-top:.5rem; }
+
+.foot{ background:var(--dark); color:#fff; padding-block:3.5rem 2.5rem; }
+.foot__top{
+  display:grid; gap:2rem; padding-bottom:2rem;
+  border-bottom:1px solid var(--dark-rule);
+}
+.foot .lockup b{ color:#fff; }
+.foot .lockup span{ color:var(--dark-muted); }
+.foot__note{ color:var(--dark-muted); font-size:var(--t-sm); max-width:44ch; }
+.disclaimer{
+  margin-top:2rem; padding:1.15rem 1.25rem;
+  border:1px solid var(--dark-rule); border-radius:3px;
+  background:var(--dark-2);
+}
+.disclaimer strong{
+  display:block; font-family:var(--label); font-weight:400;
+  font-size:var(--t-micro); letter-spacing:.18em; text-transform:uppercase;
+  color:var(--orange); margin-bottom:.5rem;
+}
+.disclaimer p{ font-size:var(--t-cap); color:var(--dark-muted); line-height:1.6; max-width:70ch; }
+.disclaimer p + p{ margin-top:.6rem; }
+@media (min-width:52rem){ .foot__top{ grid-template-columns:1fr 1fr; align-items:start; } }
+
+/* ====================== MOTION ======================
+   Hiding is gated on .js (set by an inline script in the head), so if the
+   script never runs the content is simply visible rather than invisible. */
+.js .reveal{ opacity:0; transform:translateY(10px); }
+.js .reveal.in{ opacity:1; transform:none; transition:opacity .55s ease, transform .55s ease; }
+@media (prefers-reduced-motion: reduce){
+  .js .reveal, .js .reveal.in{ opacity:1; transform:none; transition:none; }
+  .card, .card:hover, .btn, .card__cta::after{ transition:none; transform:none; }
+  .card:hover{ box-shadow:none; border-color:var(--rule-strong); }
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#catalogue">Skip to the catalogue</a>
+
+<!-- ============================ NAV ============================ -->
+<header class="nav">
+  <div class="nav__in">
+    <a class="lockup" href="#top" aria-label="BOX by Goodera, home">
+      <b>BOX</b><span>by <i>Goodera</i></span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#catalogue">Boxes</a>
+      <a href="#how">How it works</a>
+      <a href="#partners">Partners</a>
+      <a href="#soon">Coming soon</a>
+    </nav>
+    <a class="btn btn--primary" href="#talk">Talk to us</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============================ HERO ============================ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero__grid">
+
+      <div class="entry">
+        <h1 class="entry__head">Goodera box</h1>
+        <p class="entry__meta">
+          <span class="entry__pron">&#47;&#712;&#609;u&#720;d&#601;r&#601; b&#594;ks&#47;</span>
+          <span class="entry__pos">noun</span>
+        </p>
+
+        <div class="entry__defs">
+          <div class="entry__def">
+            <em>1.</em>
+            <p>A kit that arrives at your office, gets built by your team, and leaves for someone who needs it.</p>
+          </div>
+          <div class="entry__def">
+            <em>2.</em>
+            <p>The unit companies use to turn a day of goodwill into something countable.</p>
+          </div>
+        </div>
+
+        <p class="entry__cite">&ldquo;Why don&rsquo;t you send them a Goodera box?&rdquo;</p>
+
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#catalogue">Browse the catalogue</a>
+          <a class="btn btn--ghost" href="#how">See how it works</a>
+        </div>
+      </div>
+
+      <figure class="hero__figure">
+        <img src="img/hero-boxes.jpg" width="1600" height="893"
+             alt="Seven kraft boxes of different sizes arranged on a warm cream surface, each wrapped with a coloured paper band in amber, indigo, slate blue, sage, terracotta, rose and tan."
+             fetchpriority="high" decoding="async">
+        <figcaption class="hero__cap">Seven registers. One box system.</figcaption>
+      </figure>
+
+    </div>
+  </div>
+
+  <div class="scale">
+    <div class="scale__in">
+      <div class="scale__item"><span class="scale__n num">2M+</span><span class="scale__l">Employee volunteers</span></div>
+      <div class="scale__item"><span class="scale__n num">50K+</span><span class="scale__l">Nonprofit partners</span></div>
+      <div class="scale__item"><span class="scale__n num">100+</span><span class="scale__l">Countries</span></div>
+      <div class="scale__item"><span class="scale__n num">10M+</span><span class="scale__l">Lives impacted</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== WHAT A BOX IS ====================== -->
+<section class="section section--tight" id="how">
+  <div class="wrap">
+    <div class="shead reveal">
+      <h2>What a box is</h2>
+      <p>Three movements, and Goodera does the heavy lifting on all three. You pick the box and the date. Everything else &mdash; sourcing, shipping, the nonprofit on the other end, the numbers afterwards &mdash; is already handled.</p>
+    </div>
+
+    <ol class="steps reveal">
+      <li class="step">
+        <span class="step__n"></span>
+        <h3>It arrives</h3>
+        <p>Flat-packed, counted and labelled, at every office you name. One box per pair of hands, or a thousand across eight countries in the same week.</p>
+      </li>
+      <li class="step">
+        <span class="step__n"></span>
+        <h3>Your team builds it</h3>
+        <p>Thirty to a hundred and twenty minutes, in the office, outdoors, at a kiosk in the lobby or fully virtual. No prior skill assumed, instructions in the lid.</p>
+      </li>
+      <li class="step">
+        <span class="step__n"></span>
+        <h3>Someone receives it</h3>
+        <p>A vetted nonprofit collects, distributes and confirms. You get an impact report with the count, the region and the partner named.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ========================= CATALOGUE ========================= -->
+<section class="section section--cream" id="catalogue">
+  <div class="wrap">
+
+    <div class="shead reveal">
+      <h2>The catalogue</h2>
+      <p>Seventeen boxes across seven causes. Every one is a real Goodera activity, already run for real teams. Filter by cause, or read the whole list &mdash; the format never changes, only what is inside.</p>
+    </div>
+
+    <div class="filters reveal" role="group" aria-label="Filter boxes by cause">
+      <button class="filter" type="button" data-filter="all" aria-pressed="true">
+        <span class="sw" style="--sw:var(--ink)" aria-hidden="true"></span>All boxes <span class="filter__ct">17</span>
+      </button>
+      <button class="filter" type="button" data-filter="stem" aria-pressed="false">
+        <span class="sw" style="--sw:var(--c-stem)" aria-hidden="true"></span>STEM &amp; Curiosity <span class="filter__ct">3</span>
+      </button>
+      <button class="filter" type="button" data-filter="light" aria-pressed="false">
+        <span class="sw" style="--sw:var(--c-light)" aria-hidden="true"></span>Light &amp; Energy <span class="filter__ct">2</span>
+      </button>
+      <button class="filter" type="button" data-filter="crisis" aria-pressed="false">
+        <span class="sw" style="--sw:var(--c-crisis)" aria-hidden="true"></span>Crisis &amp; Relief <span class="filter__ct">3</span>
+      </button>
+      <button class="filter" type="button" data-filter="dignity" aria-pressed="false">
+        <span class="sw" style="--sw:var(--c-dignity)" aria-hidden="true"></span>Dignity &amp; Care <span class="filter__ct">3</span>
+      </button>
+      <button class="filter" type="button" data-filter="hunger" aria-pressed="false">
+        <span class="sw" style="--sw:var(--c-hunger)" aria-hidden="true"></span>Hunger <span class="filter__ct">1</span>
+      </button>
+      <button class="filter" type="button" data-filter="comfort" aria-pressed="false">
+        <span class="sw" style="--sw:var(--c-comfort)" aria-hidden="true"></span>Comfort &amp; Play <span class="filter__ct">2</span>
+      </button>
+      <button class="filter" type="button" data-filter="school" aria-pressed="false">
+        <span class="sw" style="--sw:var(--c-school)" aria-hidden="true"></span>School &amp; Futures <span class="filter__ct">3</span>
+      </button>
+    </div>
+
+    <p class="count" id="count" role="status" aria-live="polite">Showing all 17 boxes</p>
+
+    <div class="cards" id="cards">
+
+      <!-- ---------------- STEM & CURIOSITY ---------------- -->
+      <article class="card" data-cat="stem" style="--cat:var(--c-stem); --cat-ink:var(--c-stem-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-stem.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on an amber background: an aluminium chassis plate, two rubber wheels, a green control board, a motor, two infrared sensors, coiled red, blue and yellow jumper leads, an orange screwdriver and a blank instruction card beside a kraft box.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-stem)" aria-hidden="true"></span>STEM &amp; Curiosity</p>
+          <h3>Path Following Robots</h3>
+          <p class="card__line">Snap it together. Watch a kid build their first robot.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>90 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Arduino-compatible board, twin motors, infrared line sensors, chassis plate, jumper leads.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Students in under-resourced STEM classrooms.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Boys &amp; Girls Clubs of America</dd></div>
+          </dl>
+          <p class="verified">
+            <span class="tagv">Programme to date &middot; internal</span>
+            <b>989 robots</b> built by <b>4,945 students</b> across <b>70 cities</b> with 66 nonprofit partners.
+          </p>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <article class="card" data-cat="stem" style="--cat:var(--c-stem); --cat-ink:var(--c-stem-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-greenhouse.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on an amber background: a micro:bit style controller board, a soil moisture probe, a light sensor, a miniature water pump, coiled clear tubing, a seedling tray and blank cards beside a kraft box.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-stem)" aria-hidden="true"></span>STEM &amp; Curiosity</p>
+          <h3>Smart Greenhouse Kit</h3>
+          <p class="card__line">Wire the sensor. A classroom learns what a machine can notice.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60&ndash;90 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office + virtual</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Intermediate</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>micro:bit controller, moisture and light sensors, pump, tubing, machine-learning model cards.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Middle-school science programmes.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Room to Read</dd></div>
+          </dl>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <article class="card" data-cat="stem" style="--cat:var(--c-stem); --cat-ink:var(--c-stem-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-robotdog.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on an amber background: flat-packed aluminium leg segments and a body frame for a four-legged robot, four servo motors, a controller board, a battery pack, a hex key and blank worksheets.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-stem)" aria-hidden="true"></span>STEM &amp; Curiosity</p>
+          <h3>Robot Dog Kit</h3>
+          <p class="card__line">Write ten lines of Python. Something walks across the table.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>120 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Advanced</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Servo-driven quadruped frame, controller, GPT-4o prompt cards, Python worksheets.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Senior secondary coding clubs.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Junior Achievement of Southern Nevada</dd></div>
+          </dl>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <!-- ---------------- LIGHT & ENERGY ---------------- -->
+      <article class="card" data-cat="light" style="--cat:var(--c-light); --cat-ink:var(--c-light-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-solar.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on a deep indigo background: a small solar panel with red and black leads, a round LED lamp head, a battery cell, a white housing, a black mounting base and a coil of twin-core wire beside a kraft carton.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-light)" aria-hidden="true"></span>Light &amp; Energy</p>
+          <h3>Solar Lights for Individuals Affected by Disasters</h3>
+          <p class="card__line">One box. Light in a home that has had none.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office + virtual</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Solar panel, LED lamp head, rechargeable cell, weatherproof housing, wiring loom.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Households in regions without reliable grid power after a disaster.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Global Empowerment Mission</dd></div>
+          </dl>
+          <p class="verified">
+            <span class="tagv">Programme to date &middot; internal</span>
+            <b>A Thousand Suns</b> &mdash; 1,000 solar lamps assembled from one activity, run as five events.
+          </p>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <article class="card" data-cat="light" style="--cat:var(--c-light); --cat-ink:var(--c-light-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-solar-juniors.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on a deep indigo background: oversized child-safe solar lamp parts including a large solar panel, a rounded bright plastic lamp housing, a big push switch, a chunky battery pack and thick wiring with easy connectors.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-light)" aria-hidden="true"></span>Light &amp; Energy</p>
+          <h3>Solar Lamp Assembly (Juniors)</h3>
+          <p class="card__line">Child-safe parts, no tools. A lamp that outlasts the afternoon.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>45 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office, family-friendly</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Juniors</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Pre-wired panel, snap-fit housing, rechargeable cell, illustrated build card.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Young people living without stable housing.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>At The Crossroads</dd></div>
+          </dl>
+          <p class="verified">
+            <span class="tagv">Delivered</span>
+            <b>30 children</b> built lamps for unhoused youth through At The Crossroads.
+          </p>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <!-- ---------------- CRISIS & RELIEF ----------------
+           Sober register. No play, no exclamation, no celebration.
+           Recipient is the protagonist, never the volunteering team. -->
+      <article class="card" data-cat="crisis" style="--cat:var(--c-crisis); --cat-ink:var(--c-crisis-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-relief.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on a slate grey-blue cloth: a folded foil emergency blanket, a blister strip of tablets, two olive canvas pouches, a bar of soap, a black torch and a folded green tarpaulin beside a plain kraft box.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-crisis)" aria-hidden="true"></span>Crisis &amp; Relief</p>
+          <h3>No-Sew Blankets for People Without Housing</h3>
+          <p class="card__line">Tie it off. It keeps someone warm tonight.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Two fleece panels, cutting guide, tie template, wash-care label.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>People sleeping rough, and shelter intake desks.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Covenant House California</dd></div>
+          </dl>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <article class="card" data-cat="crisis" style="--cat:var(--c-crisis); --cat-ink:var(--c-crisis-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-mealbags.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on a slate grey-blue background: folded plain canvas tote meal bags, a set of fabric marker pens, sealed snack pouches, a water bottle and blank cards.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-crisis)" aria-hidden="true"></span>Crisis &amp; Relief</p>
+          <h3>Meal Bags for Homeless Veteran Families</h3>
+          <p class="card__line">No frills. Just what an intake desk needs by morning.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>45 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office + virtual</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Kraft meal sacks, food-safe markers, stencil set, contents checklist.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Veteran families in transitional housing.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Soldier&rsquo;s Angels</dd></div>
+          </dl>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <article class="card" data-cat="crisis" style="--cat:var(--c-crisis); --cat-ink:var(--c-crisis-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-ornaments.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on a slate grey-blue background: plain wooden ornament blanks in simple shapes, spools of ribbon, small paint pots, a fine brush and blank folded note cards.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-crisis)" aria-hidden="true"></span>Crisis &amp; Relief</p>
+          <h3>Holiday Ornaments for Deployed Members</h3>
+          <p class="card__line">Pack it today. It reaches a base before the post closes.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>45 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>Virtual</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Ornament blanks, cord, archival pens, dispatch labels.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Service members posted away from their families.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Packages from Home</dd></div>
+          </dl>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <!-- ---------------- DIGNITY & CARE ---------------- -->
+      <article class="card" data-cat="dignity" style="--cat:var(--c-dignity); --cat-ink:var(--c-dignity-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-dignity.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on a sage green background: a bar of soap, a bamboo toothbrush, a white tube, a wooden comb, a folded linen cloth and a cotton drawstring pouch, beside an open kraft box lid.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-dignity)" aria-hidden="true"></span>Dignity &amp; Care</p>
+          <h3>Comfort Kits for Children Undergoing Treatment</h3>
+          <p class="card__line">Everything a long day needs. Nothing it doesn&rsquo;t.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Soft blanket, activity book, pencil set, drawstring bag, blank name card.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Children on long-stay hospital wards, and the families staying with them.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Ronald McDonald House Charities Bay Area</dd></div>
+          </dl>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <article class="card" data-cat="dignity" style="--cat:var(--c-dignity); --cat-ink:var(--c-dignity-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-baby.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on a soft sage background: a feeding bottle, a folded cotton bib, a small folded onesie, a pack of wipes, a folded muslin blanket and a brush and comb set.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-dignity)" aria-hidden="true"></span>Dignity &amp; Care</p>
+          <h3>Baby Care Essentials for Infants</h3>
+          <p class="card__line">Fold it flat. A first month gets easier.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>30 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>Kiosk</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Cotton wraps, mild soap, comb, bibs, muslin squares, drawstring pouch.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Infants in shelter and low-income households.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Matched from the 50K+ partner network</dd></div>
+          </dl>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <article class="card" data-cat="dignity" style="--cat:var(--c-dignity); --cat-ink:var(--c-dignity-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-coping.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on a soft sage background: a hardback journal, a soft stress ball, a deck of blank prompt cards, sachets of herbal tea, a pen and a small candle.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-dignity)" aria-hidden="true"></span>Dignity &amp; Care</p>
+          <h3>Mental Health Coping Kits for Teens</h3>
+          <p class="card__line">Plain packaging. A teenager can open it without being seen.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office + virtual</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Grounding cards, stress object, journal, pencil, helpline insert.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Teenagers in school counselling programmes.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>The Trevor Project</dd></div>
+          </dl>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <!-- ---------------- HUNGER ---------------- -->
+      <article class="card" data-cat="hunger" style="--cat:var(--c-hunger); --cat-ink:var(--c-hunger-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-meals.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on a terracotta background: five clear resealable pouches of rice and lentils, a steel measuring scoop, a funnel, three portions of dry grains and a blank card, beside an open kraft carton.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-hunger)" aria-hidden="true"></span>Hunger</p>
+          <h3>Sort and Pack Food for Under-resourced Communities</h3>
+          <p class="card__line">Pack a meal. Someone eats tonight because your team did.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>90&ndash;120 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>Outdoor + on-site</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Rice, lentils, measured scoop, funnel, sealable pouches, contents card.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Food bank distribution networks.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Second Harvest Food Bank</dd></div>
+          </dl>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <!-- ---------------- COMFORT & PLAY ---------------- -->
+      <article class="card" data-cat="comfort" style="--cat:var(--c-comfort); --cat-ink:var(--c-comfort-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-plush.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on a soft rose background: unstuffed calico toy pieces including a head, body, arms and legs, a ball of white stuffing, a small canvas backpack, a spool of thread and a card of needles, above a kraft box.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-comfort)" aria-hidden="true"></span>Comfort &amp; Play</p>
+          <h3>Tug Toys for Rescued Dogs</h3>
+          <p class="card__line">Braid it tight. A kennel gets quieter.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>30 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>Kiosk</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Fleece strips, braiding guide, finishing rings, shelter tags.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Municipal shelters and rescue foster networks.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Matched from the 50K+ partner network</dd></div>
+          </dl>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <article class="card" data-cat="comfort" style="--cat:var(--c-comfort); --cat-ink:var(--c-comfort-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-xylophone.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on a soft rose background: the disassembled parts of a small wooden xylophone including a frame, a row of coloured metal bars, two mallets and screws, with small pots of paint and a brush.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-comfort)" aria-hidden="true"></span>Comfort &amp; Play</p>
+          <h3>Xylophones for Children with Autism</h3>
+          <p class="card__line">Tune the bars. A room finds a sound it can hold.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Hardwood frame, tuned bars, mallets, non-toxic paint, fixings.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Sensory classrooms and therapy rooms.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Anthill Creations</dd></div>
+          </dl>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <!-- ---------------- SCHOOL & FUTURES ---------------- -->
+      <article class="card" data-cat="school" style="--cat:var(--c-school); --cat-ink:var(--c-school-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-school.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on a bright teal background: two kraft notebooks, six pencils in a row, a wooden ruler, an eraser, a sharpener, a geometry set and a canvas backpack, beside an open kraft box.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-school)" aria-hidden="true"></span>School &amp; Futures</p>
+          <h3>Career Readiness Kits for Underserved Youth</h3>
+          <p class="card__line">One notebook, one pen, one shot at showing up prepared.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office + virtual</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Notebook, pen set, interview preparation cards, document folder, tote.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Young people entering their first employment.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Junior Achievement of Southern Nevada</dd></div>
+          </dl>
+          <p class="verified">
+            <span class="tagv">Delivered &middot; Kyndryl</span>
+            <b>243 Career Readiness Kits</b> in a five-week programme across 13 countries.
+          </p>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <article class="card" data-cat="school" style="--cat:var(--c-school); --cat-ink:var(--c-school-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-successbag.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on a bright teal background: a folded canvas tote bag, a notebook, a pen, a slim document folder, a small pouch and blank cards.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-school)" aria-hidden="true"></span>School &amp; Futures</p>
+          <h3>Success Bags for Women Restarting Their Career</h3>
+          <p class="card__line">Pack the bag. Someone walks into the room prepared.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Notebooks, pen, inspirational cards, document folder, canvas bag.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Women returning to work after a career break.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Dress for Success</dd></div>
+          </dl>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+      <article class="card" data-cat="school" style="--cat:var(--c-school); --cat-ink:var(--c-school-ink)">
+        <div class="card__tick" aria-hidden="true"></div>
+        <div class="card__media">
+          <img src="img/box-braille.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+               alt="Top-down flat-lay on a bright teal background: a stack of thick tactile learning cards with raised embossed patterns, a metal braille slate, a stylus, textured fabric swatches and thick plain paper.">
+        </div>
+        <div class="card__body">
+          <p class="chip"><span class="sw" style="--sw:var(--c-school)" aria-hidden="true"></span>School &amp; Futures</p>
+          <h3>Tactile Learning Cards and Braille Cards</h3>
+          <p class="card__line">Emboss it clean. A lesson becomes readable by touch.</p>
+          <dl class="spec">
+            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
+            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office</dd></div>
+            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Intermediate</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Card stock, braille slate and stylus, tactile shapes, reference alphabet.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Learners who are blind or have low vision.</dd></div>
+            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Matched from the 50K+ partner network</dd></div>
+          </dl>
+          <p class="verified">
+            <span class="tagv">Delivered &middot; Kyndryl</span>
+            <b>540 Tactile Learning Cards</b> and <b>14 Braille Cards</b> in a five-week programme.
+          </p>
+          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====================== ANATOMY OF A BOX ====================== -->
+<section class="section section--dark on-dark">
+  <div class="wrap">
+    <div class="shead reveal">
+      <h2>Anatomy of a box</h2>
+      <p>Anyone can ship a kit. What arrives in a Goodera box is four things bonded together &mdash; and the last one is the reason a CSR team can put it in a report.</p>
+    </div>
+
+    <div class="anat">
+      <figure class="anat__fig reveal">
+        <img src="img/box-stem.jpg" width="1600" height="1194" loading="lazy" decoding="async"
+             alt="Top-down view of a Path Following Robots kit on an amber background, every component laid out separately: chassis plate, wheels, control board, motor, sensors, jumper leads, screwdriver and instruction card.">
+        <figcaption>Path Following Robots &mdash; contents, as shipped</figcaption>
+      </figure>
+
+      <div class="layers reveal">
+        <div class="layer">
+          <span class="layer__k">Layer one</span>
+          <h3>The kit</h3>
+          <p>Every component counted, sourced and flat-packed. Nothing to buy, nothing to prepare, nothing left over.</p>
+        </div>
+        <div class="layer">
+          <span class="layer__k">Layer two</span>
+          <h3>The volunteering activity</h3>
+          <p>A facilitated session with a run sheet, a host and a duration. Booked for one office or forty-four countries on the same day.</p>
+        </div>
+        <div class="layer">
+          <span class="layer__k">Layer three</span>
+          <h3>The nonprofit partner</h3>
+          <p>Vetted, named and matched before the box ships &mdash; drawn from 50,000+ partners across 100+ countries. The box has a destination before it has a build date.</p>
+        </div>
+        <div class="layer">
+          <span class="layer__k">Layer four</span>
+          <h3>The impact report</h3>
+          <p>What was built, how many, which region, which partner received it. Quantified, not described. This is the layer a kit bought off a shelf can never carry.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== OCCASIONS ====================== -->
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="shead reveal">
+      <h2>Same boxes. Different moments.</h2>
+      <p>The catalogue does not change by occasion. What changes is the volume, the date and who is in the room.</p>
+    </div>
+
+    <div class="occ reveal">
+      <div class="occ__i"><h3>Month of Service</h3><p>One catalogue, many sites, a single reporting line at the end.</p></div>
+      <div class="occ__i"><h3>Onboarding</h3><p>A box on every new joiner&rsquo;s desk in week one.</p></div>
+      <div class="occ__i"><h3>Offsites</h3><p>The session that replaces the trust fall.</p></div>
+      <div class="occ__i"><h3>ERG heritage months</h3><p>Boxes matched to the community the group is marking.</p></div>
+      <div class="occ__i"><h3>Back to school</h3><p>School and futures boxes, timed to the local term.</p></div>
+      <div class="occ__i"><h3>Crisis response</h3><p>Relief boxes activated when a region needs them, not when the calendar allows.</p></div>
+      <div class="occ__i"><h3>Client gifting</h3><p>A box built in your client&rsquo;s name, sent onward in theirs.</p></div>
+      <div class="occ__i"><h3>All-hands</h3><p>Two thousand people, ninety minutes, one countable outcome.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== PROOF ====================== -->
+<section class="section section--cream">
+  <div class="wrap">
+    <div class="shead reveal">
+      <h2>Proof, not adjectives</h2>
+      <p>Every campaign below has already run. The numbers are the ones the client reported &mdash; volunteers in the room, and people served at the other end.</p>
+    </div>
+
+    <div class="tablewrap reveal">
+      <table>
+        <caption>Campaigns run through the Goodera platform</caption>
+        <thead>
+          <tr>
+            <th scope="col">Company</th>
+            <th scope="col">Campaign</th>
+            <th scope="col">Reach</th>
+            <th scope="col">Outcome</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">PayPal</th>
+            <td>Global Impact Day</td>
+            <td class="n">5,545 volunteers &middot; 14 sites &middot; 8 countries</td>
+            <td class="n">48,000 people served. 19,800 school supplies and toys, 18,250 electronics and pantry items, 5,800 eldercare and hygiene, 3,050 beauty and wearables.</td>
+          </tr>
+          <tr>
+            <th scope="row">Kyndryl</th>
+            <td>First anniversary, five weeks</td>
+            <td class="n">1,072 volunteers &middot; 13 countries &middot; 34 nonprofits</td>
+            <td class="n">730+ beneficiaries. 243 Career Readiness Kits, 540 Tactile Learning Cards, 14 Braille Cards.</td>
+          </tr>
+          <tr>
+            <th scope="row">Citrix</th>
+            <td>Month of Service</td>
+            <td class="n">27 unique activities &middot; 44 countries</td>
+            <td class="n">300+ beneficiaries.</td>
+          </tr>
+          <tr>
+            <th scope="row">Warner Bros</th>
+            <td>Global Day of Service</td>
+            <td class="n">4,300+ volunteers &middot; 50+ countries</td>
+            <td>Single-day global activation.</td>
+          </tr>
+          <tr>
+            <th scope="row">Alteryx</th>
+            <td>Boot Camp</td>
+            <td class="n">573 volunteers</td>
+            <td class="n">2,800+ beneficiaries.</td>
+          </tr>
+          <tr>
+            <th scope="row">AWS Strategic Industries</th>
+            <td>Joy of Giving</td>
+            <td class="n">150 volunteers</td>
+            <td class="n">1,180+ beneficiaries.</td>
+          </tr>
+          <tr>
+            <th scope="row">Cloudera</th>
+            <td>Week of Service</td>
+            <td class="n">150+ volunteers</td>
+            <td class="n">16 virtual events.</td>
+          </tr>
+          <tr>
+            <th scope="row">EY</th>
+            <td>Card-making with Anthill Creations</td>
+            <td class="n">290+ volunteers</td>
+            <td>Delivered with a named nonprofit partner.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="quotes reveal">
+      <figure class="quote">
+        <blockquote>&ldquo;Going forward, we&rsquo;re going to have Goodera curate volunteering events for our ERGs during heritage months and in-person events for our tier 1 locations.&rdquo;</blockquote>
+        <figcaption><b>Jo Moskowitz</b>Director, Corporate Citizenship &middot; Citrix</figcaption>
+      </figure>
+      <figure class="quote">
+        <blockquote>&ldquo;Goodera delivered meaningful projects that met our needs and made hosting simple.&rdquo;</blockquote>
+        <figcaption><b>Atlanta Mcilwraith</b>Director, Social Impact &middot; Timberland</figcaption>
+      </figure>
+      <figure class="quote">
+        <blockquote>&ldquo;Every member of the team was dedicated to getting these kits packed&hellip; incredible to see everyone joining together.&rdquo;</blockquote>
+        <figcaption><b>Emmie</b>PayPal volunteer &middot; Philadelphia</figcaption>
+      </figure>
+      <figure class="quote">
+        <blockquote>&ldquo;It was &lsquo;bayanihan&rsquo; in action&hellip; deeply moved by everyone that came together.&rdquo;</blockquote>
+        <figcaption><b>Marc</b>PayPal volunteer &middot; Manila</figcaption>
+      </figure>
+    </div>
+
+    <ul class="logos reveal" aria-label="Companies running volunteering through Goodera">
+      <li>Amazon</li><li>Deloitte</li><li>EY</li><li>FedEx</li><li>IBM</li><li>McDonald&rsquo;s</li>
+      <li>Target</li><li>PayPal</li><li>Kyndryl</li><li>AWS</li><li>Autodesk</li><li>Intuit</li>
+      <li>Abbott</li><li>Zoom</li><li>ServiceNow</li><li>Warner Bros</li><li>Citrix</li>
+      <li>Cloudera</li><li>Alteryx</li><li>Hilton</li><li>3M</li>
+    </ul>
+
+    <div class="scale reveal" style="margin-top:3rem">
+      <div class="scale__in">
+        <div class="scale__item"><span class="scale__n num">4.9/5</span><span class="scale__l">Across 4K+ responses</span></div>
+        <div class="scale__item"><span class="scale__n num">60</span><span class="scale__l">Of the Fortune 500</span></div>
+        <div class="scale__item"><span class="scale__n num">40K+</span><span class="scale__l">Events hosted</span></div>
+        <div class="scale__item"><span class="scale__n num">1,000+</span><span class="scale__l">Activities &middot; 50+ cause areas</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== PARTNERS ====================== -->
+<section class="section" id="partners">
+  <div class="wrap">
+    <div class="shead reveal">
+      <h2>Every box has somewhere to go</h2>
+      <p>A box without a recipient is a craft activity. Goodera attaches the nonprofit before the box ships &mdash; matched on cause, region and what the partner can actually receive and distribute this month.</p>
+    </div>
+
+    <div class="steps reveal" style="margin-bottom:2.5rem">
+      <div class="step">
+        <span class="step__n" style="color:var(--muted)">Match</span>
+        <h3>Cause and region</h3>
+        <p>You pick a cause area. Goodera proposes vetted partners in the regions where your offices sit.</p>
+      </div>
+      <div class="step">
+        <span class="step__n" style="color:var(--muted)">Confirm</span>
+        <h3>Capacity, not just intent</h3>
+        <p>Partners confirm they can receive and distribute the volume before a single box is packed.</p>
+      </div>
+      <div class="step">
+        <span class="step__n" style="color:var(--muted)">Report</span>
+        <h3>Named in the numbers</h3>
+        <p>The partner is named in your impact report, alongside the count and the region served.</p>
+      </div>
+    </div>
+
+    <p class="eyebrow reveal" style="margin-bottom:1rem">A sample of the 50,000+ partner network</p>
+    <ul class="partners reveal">
+      <li>At The Crossroads</li><li>Second Harvest Food Bank</li><li>Boys &amp; Girls Clubs of America</li>
+      <li>Covenant House California</li><li>Global Empowerment Mission</li>
+      <li>Junior Achievement of Southern Nevada</li><li>Uridu</li>
+      <li>Ronald McDonald House Charities Bay Area</li><li>Anthill Creations</li>
+      <li>Dress for Success</li><li>Girls on the Run</li><li>Skate Like a Girl</li>
+      <li>The Trevor Project</li><li>Room to Read</li><li>Soldier&rsquo;s Angels</li>
+      <li>Packages from Home</li><li>BelEve UK</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ====================== COMING SOON ====================== -->
+<section class="section section--dark on-dark" id="soon">
+  <div class="wrap">
+    <div class="shead reveal">
+      <h2>What ships next</h2>
+      <p>Not yet in the catalogue. These are the boxes, moments and capabilities the roadmap is built around &mdash; each one an extension of a box that already works.</p>
+    </div>
+
+    <div class="soon">
+      <div class="soon__g reveal">
+        <h3>New boxes</h3>
+        <ul>
+          <li>Water-testing box</li>
+          <li>Air-quality sensor box</li>
+          <li>Seed and rewilding box</li>
+          <li>Menstrual dignity box</li>
+          <li>Newborn and maternity box</li>
+          <li>Elder-companion box</li>
+          <li>Braille and accessibility box</li>
+          <li>Animal-shelter enrichment box</li>
+          <li>Refugee welcome box</li>
+          <li>Winter warmth box</li>
+          <li>Prosthetic hand box</li>
+          <li>Instrument box</li>
+          <li>Digital literacy box</li>
+        </ul>
+      </div>
+      <div class="soon__g reveal">
+        <h3>New occasions</h3>
+        <ul>
+          <li>Standing crisis reserve &mdash; pre-stocked, ships on activation</li>
+          <li>Quarterly box subscription</li>
+          <li>Client gifting that donates</li>
+          <li>An onboarding box for every new joiner</li>
+          <li>Conference and booth activations</li>
+          <li>Family volunteering at home</li>
+          <li>School twinning programmes</li>
+        </ul>
+      </div>
+      <div class="soon__g reveal">
+        <h3>New capabilities</h3>
+        <ul>
+          <li>Build-your-own-box configurator</li>
+          <li>Box tracking &mdash; see where yours went</li>
+          <li>Impact receipt with QR traceability</li>
+          <li>Refill programmes</li>
+          <li>Regional stock in four hubs</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== CLOSING CTA ====================== -->
+<section class="section section--tight" id="talk">
+  <div class="wrap">
+    <div class="close reveal">
+      <p class="eyebrow">Talk to us</p>
+      <h2>Send them a Goodera box.</h2>
+      <p>Tell us the cause, the headcount and the date. We come back with the boxes that fit, the partners already matched, and what the impact report will say when it is done.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#catalogue">Browse the catalogue</a>
+        <a class="btn btn--ghost" href="#how">See how it works</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ====================== FOOTER ====================== -->
+<footer class="foot on-dark">
+  <div class="wrap">
+    <div class="foot__top">
+      <a class="lockup" href="#top" aria-label="BOX by Goodera, back to top">
+        <b>BOX</b><span>by <i>Goodera</i></span>
+      </a>
+      <p class="foot__note">A kit arrives. Your team builds it. Someone who needs it receives it &mdash; and you get the number.</p>
+    </div>
+
+    <div class="disclaimer">
+      <strong>Concept page &mdash; not a live Goodera product</strong>
+      <p>This is an unpublished concept for a BOX by Goodera product line. It is not an official Goodera page, not a live storefront, and nothing on it can be ordered. No box, price, catalogue listing or availability shown here is commercially offered.</p>
+      <p>Activity names, campaign results, partner organisations and platform figures are drawn from publicly available Goodera material and are used here for illustration. Figures marked <em>internal</em> come from unpublished Goodera programme data. Kit contents, durations and the pairing of individual boxes to specific nonprofit partners are illustrative of how the catalogue could be composed, not statements of existing arrangements.</p>
+      <p>Photography shows representative kit contents, not Goodera-supplied products. Company names are the trade marks of their respective owners and appear as customer references only.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- category filter ---------- */
+  var cards   = Array.prototype.slice.call(document.querySelectorAll('#cards .card'));
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.filter'));
+  var count   = document.getElementById('count');
+
+  var LABELS = {
+    all:'', stem:'STEM & Curiosity', light:'Light & Energy', crisis:'Crisis & Relief',
+    dignity:'Dignity & Care', hunger:'Hunger', comfort:'Comfort & Play', school:'School & Futures'
+  };
+
+  function apply(key){
+    var shown = 0;
+    cards.forEach(function(card){
+      var match = (key === 'all') || (card.getAttribute('data-cat') === key);
+      card.classList.toggle('is-hidden', !match);
+      if (match) shown++;
+    });
+
+    buttons.forEach(function(btn){
+      btn.setAttribute('aria-pressed', String(btn.getAttribute('data-filter') === key));
+    });
+
+    var noun = shown === 1 ? 'box' : 'boxes';
+    count.textContent = (key === 'all')
+      ? 'Showing all ' + shown + ' ' + noun
+      : 'Showing ' + shown + ' ' + noun + ' in ' + LABELS[key];
+  }
+
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      apply(btn.getAttribute('data-filter'));
+    });
+  });
+
+  /* ---------- scroll reveal ----------
+     A sweep rather than an IntersectionObserver: the nav is entirely
+     anchor links, and an observer never fires for elements the jump
+     skips over, leaving whole sections stuck at opacity 0. Testing
+     "is it above the viewport bottom" also catches everything already
+     scrolled past, so a hash jump can never strand a section. */
+  var reduce  = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var pending = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+
+  function revealAll(){
+    pending.forEach(function(el){ el.classList.add('in'); });
+    pending = [];
+  }
+
+  if (reduce.matches) {
+    revealAll();
+  } else {
+    var ticking = false;
+
+    var sweep = function(){
+      ticking = false;
+      var limit = window.innerHeight * 0.92;
+      pending = pending.filter(function(el){
+        if (el.getBoundingClientRect().top < limit){ el.classList.add('in'); return false; }
+        return true;
+      });
+      if (!pending.length){
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', onScroll);
+        window.removeEventListener('hashchange', onScroll);
+      }
+    };
+
+    var onScroll = function(){
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(sweep);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive:true });
+    window.addEventListener('resize', onScroll);
+    window.addEventListener('hashchange', onScroll);
+    sweep();
+
+    /* If the user turns motion down mid-session, stop hiding things. */
+    if (reduce.addEventListener) {
+      reduce.addEventListener('change', function(e){ if (e.matches) revealAll(); });
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
