@@ -543,6 +543,52 @@ td.n{ font-variant-numeric:tabular-nums; }
   .card, .card:hover, .btn, .card__cta::after{ transition:none; transform:none; }
   .card:hover{ box-shadow:none; border-color:var(--rule-strong); }
 }
+
+/* ---------------- home: hero (consumer-first) ---------------- */
+.hero__copy{ max-width:34rem; }
+.hero__h1{
+  font-size:clamp(2.5rem,7.5vw,4.25rem); font-weight:800;
+  letter-spacing:-.035em; line-height:1.02; margin-top:1rem;
+}
+.hero__sub{ font-size:var(--t-lg); color:var(--ink-2); margin-top:1.1rem; max-width:34ch; }
+.hero__meta{
+  margin-top:1.4rem; font-family:var(--label); font-size:var(--t-micro);
+  letter-spacing:.14em; text-transform:uppercase; color:var(--muted);
+}
+
+/* ---------------- home: occasion icons ---------------- */
+.occ__ic{ width:22px; height:22px; color:var(--orange-text); margin-bottom:.55rem; }
+
+/* ---------------- home: category rows ---------------- */
+.cats{ display:grid; gap:1px; background:var(--rule-strong); border:1px solid var(--rule-strong); }
+.cat{
+  background:var(--paper); text-decoration:none; color:inherit;
+  display:grid; grid-template-columns:1fr; gap:0; align-items:center;
+  transition:background .18s ease;
+}
+.cat:hover{ background:var(--paper-2); }
+.cat > img{ width:100%; height:190px; object-fit:cover; }
+.cat__body{ padding:1.25rem 1.35rem; display:grid; gap:.4rem; }
+.cat__k{
+  display:flex; align-items:center; gap:.5rem; flex-wrap:wrap;
+  font-family:var(--label); font-size:var(--t-micro); letter-spacing:.16em;
+  text-transform:uppercase; color:var(--cat-ink);
+}
+.cat__k em{ font-style:normal; color:var(--muted); }
+.cat h3{ font-size:var(--t-lg); letter-spacing:-.015em; }
+.cat__list{ font-size:var(--t-cap); color:var(--muted); line-height:1.6; }
+.cat__go{ display:none; }
+@media (min-width:52rem){
+  .cat{ grid-template-columns:15rem minmax(0,1fr) 3.5rem; }
+  .cat > img{ height:100%; min-height:9.5rem; }
+  .cat__body{ padding:1.6rem 1.75rem; }
+  .cat__go{
+    display:block; text-align:center; font-size:1.15rem; color:var(--muted);
+    transition:transform .18s ease, color .18s ease;
+  }
+  .cat:hover .cat__go{ transform:translateX(4px); color:var(--orange-text); }
+}
+
 </style>
 </head>
 <body>
@@ -571,42 +617,26 @@ td.n{ font-variant-numeric:tabular-nums; }
 <section class="hero">
   <div class="wrap">
     <div class="hero__grid">
-
-      <div class="entry">
-        <h1 class="entry__head">Goodera box</h1>
-        <p class="entry__meta">
-          <span class="entry__pron">&#47;&#712;&#609;u&#720;d&#601;r&#601; b&#594;ks&#47;</span>
-          <span class="entry__pos">noun</span>
-        </p>
-
-        <div class="entry__defs">
-          <div class="entry__def">
-            <em>1.</em>
-            <p>A kit that arrives at your office, gets built by your team, and leaves for someone who needs it.</p>
-          </div>
-          <div class="entry__def">
-            <em>2.</em>
-            <p>The unit companies use to turn a day of goodwill into something countable.</p>
-          </div>
-        </div>
-
-        <p class="entry__cite">&ldquo;Why don&rsquo;t you send them a Goodera box?&rdquo;</p>
-
+      <div class="hero__copy">
+        <p class="eyebrow">BOX by Goodera</p>
+        <h1 class="hero__h1">Team volunteering,<br>in a box.</h1>
+        <p class="hero__sub">Pick a box. It ships to your office. Your team builds it in an hour.
+           A nonprofit partner gets what&rsquo;s inside.</p>
         <div class="hero__cta">
-          <a class="btn btn--primary" href="#catalogue">Browse the catalogue</a>
-          <a class="btn btn--ghost" href="#how">See how it works</a>
+          <a class="btn btn--primary" href="#catalogue">Browse boxes</a>
+          <a class="btn btn--ghost" href="#how">How it works</a>
         </div>
+        <p class="hero__meta">30&ndash;120 minutes &middot; 5 to 5,000 people &middot; 100+ countries</p>
       </div>
 
       <figure class="hero__figure">
         <img src="img/hero-boxes.jpg" width="1600" height="893"
-             alt="Seven kraft boxes of different sizes arranged on a warm cream surface, each wrapped with a coloured paper band in amber, indigo, slate blue, sage, terracotta, rose and tan."
+             alt="Seven kraft boxes of different sizes on a warm cream surface, each wrapped with a coloured paper band."
              fetchpriority="high" decoding="async">
-        <figcaption class="hero__cap">Seven registers. One box system.</figcaption>
       </figure>
-
     </div>
   </div>
+
 
   <div class="scale">
     <div class="scale__in">
@@ -618,29 +648,50 @@ td.n{ font-variant-numeric:tabular-nums; }
   </div>
 </section>
 
+<!-- ====================== OCCASIONS ====================== -->
+<section class="section section--tight" id="uses">
+  <div class="wrap">
+    <div class="shead">
+      <h2>One catalogue, every occasion</h2>
+      <p>What changes is the volume, the date and who is in the room.</p>
+    </div>
+
+    <div class="occ">
+      <div class="occ__i"><svg class="occ__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg><h3>Month of Service</h3><p>Many sites, one reporting line.</p></div>
+      <div class="occ__i"><svg class="occ__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 19h16"/></svg><h3>Onboarding</h3><p>A box on every new joiner&rsquo;s desk.</p></div>
+      <div class="occ__i"><svg class="occ__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M8 12h8M12 8v8"/></svg><h3>Offsites</h3><p>The session that replaces the trust fall.</p></div>
+      <div class="occ__i"><svg class="occ__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="9" r="3"/><circle cx="16" cy="14" r="3"/><path d="M3 20c0-3 3-5 6-5"/></svg><h3>ERG heritage months</h3><p>Boxes matched to the community.</p></div>
+      <div class="occ__i"><svg class="occ__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8l9-4 9 4-9 4-9-4z"/><path d="M7 11v5c0 1 2 2 5 2s5-1 5-2v-5"/></svg><h3>Back to school</h3><p>Timed to the local term.</p></div>
+      <div class="occ__i"><svg class="occ__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 16H3l9-16z"/><path d="M12 10v4M12 17h.01"/></svg><h3>Crisis response</h3><p>Activated when a region needs it.</p></div>
+      <div class="occ__i"><svg class="occ__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="11" rx="1"/><path d="M3 13h18M12 9v11"/><path d="M12 9C9 9 8 4 12 4s3 5 0 5z"/></svg><h3>Client gifting</h3><p>Built in your client&rsquo;s name.</p></div>
+      <div class="occ__i"><svg class="occ__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="10" r="2.5"/><circle cx="17" cy="10" r="2.5"/><path d="M2 19c0-3 2.5-4.5 5-4.5S12 16 12 19"/><path d="M12 19c0-3 2.5-4.5 5-4.5S22 16 22 19"/></svg><h3>All-hands</h3><p>2,000 people, 90 minutes.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- ====================== WHAT A BOX IS ====================== -->
 <section class="section section--tight" id="how">
   <div class="wrap">
-    <div class="shead reveal">
-      <h2>What a box is</h2>
-      <p>Three movements, and Goodera does the heavy lifting on all three. You pick the box and the date. Everything else &mdash; sourcing, shipping, the nonprofit on the other end, the numbers afterwards &mdash; is already handled.</p>
+    <div class="shead">
+      <h2>How it works</h2>
+      <p>You pick the box and the date. Goodera handles the rest.</p>
     </div>
 
-    <ol class="steps reveal">
+    <ol class="steps">
       <li class="step">
         <span class="step__n"></span>
         <h3>It arrives</h3>
-        <p>Flat-packed, counted and labelled, at every office you name. One box per pair of hands, or a thousand across eight countries in the same week.</p>
+        <p>Counted and labelled, at every office you name.</p>
       </li>
       <li class="step">
         <span class="step__n"></span>
         <h3>Your team builds it</h3>
-        <p>Thirty to a hundred and twenty minutes, in the office, outdoors, at a kiosk in the lobby or fully virtual. No prior skill assumed, instructions in the lid.</p>
+        <p>30 to 120 minutes. No prior skill. Instructions in the lid.</p>
       </li>
       <li class="step">
         <span class="step__n"></span>
         <h3>Someone receives it</h3>
-        <p>A vetted nonprofit collects, distributes and confirms. You get an impact report with the count, the region and the partner named.</p>
+        <p>A vetted nonprofit distributes it. You get the report.</p>
       </li>
     </ol>
   </div>
@@ -649,446 +700,75 @@ td.n{ font-variant-numeric:tabular-nums; }
 <!-- ========================= CATALOGUE ========================= -->
 <section class="section section--cream" id="catalogue">
   <div class="wrap">
-
-    <div class="shead reveal">
-      <h2>The catalogue</h2>
-      <p>Seventeen boxes across seven causes. Every one is a real Goodera activity, already run for real teams. Filter by cause, or read the whole list &mdash; the format never changes, only what is inside.</p>
+    <div class="shead">
+      <h2>Seven kinds of box</h2>
+      <p>Seventeen in the catalogue. Same build, same reporting, different cause.</p>
     </div>
 
-    <div class="filters reveal" role="group" aria-label="Filter boxes by cause">
-      <button class="filter" type="button" data-filter="all" aria-pressed="true">
-        <span class="sw" style="--sw:var(--ink)" aria-hidden="true"></span>All boxes <span class="filter__ct">17</span>
-      </button>
-      <button class="filter" type="button" data-filter="stem" aria-pressed="false">
-        <span class="sw" style="--sw:var(--c-stem)" aria-hidden="true"></span>STEM &amp; Curiosity <span class="filter__ct">3</span>
-      </button>
-      <button class="filter" type="button" data-filter="light" aria-pressed="false">
-        <span class="sw" style="--sw:var(--c-light)" aria-hidden="true"></span>Light &amp; Energy <span class="filter__ct">2</span>
-      </button>
-      <button class="filter" type="button" data-filter="crisis" aria-pressed="false">
-        <span class="sw" style="--sw:var(--c-crisis)" aria-hidden="true"></span>Crisis &amp; Relief <span class="filter__ct">3</span>
-      </button>
-      <button class="filter" type="button" data-filter="dignity" aria-pressed="false">
-        <span class="sw" style="--sw:var(--c-dignity)" aria-hidden="true"></span>Dignity &amp; Care <span class="filter__ct">3</span>
-      </button>
-      <button class="filter" type="button" data-filter="hunger" aria-pressed="false">
-        <span class="sw" style="--sw:var(--c-hunger)" aria-hidden="true"></span>Hunger <span class="filter__ct">1</span>
-      </button>
-      <button class="filter" type="button" data-filter="comfort" aria-pressed="false">
-        <span class="sw" style="--sw:var(--c-comfort)" aria-hidden="true"></span>Comfort &amp; Play <span class="filter__ct">2</span>
-      </button>
-      <button class="filter" type="button" data-filter="school" aria-pressed="false">
-        <span class="sw" style="--sw:var(--c-school)" aria-hidden="true"></span>School &amp; Futures <span class="filter__ct">3</span>
-      </button>
-    </div>
-
-    <p class="count" id="count" role="status" aria-live="polite">Showing all 17 boxes</p>
-
-    <div class="cards" id="cards">
-
-      <!-- ---------------- STEM & CURIOSITY ---------------- -->
-      <article class="card" data-cat="stem" style="--cat:var(--c-stem); --cat-ink:var(--c-stem-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-stem.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on an amber background: an aluminium chassis plate, two rubber wheels, a green control board, a motor, two infrared sensors, coiled red, blue and yellow jumper leads, an orange screwdriver and a blank instruction card beside a kraft box.">
+    <div class="cats">
+      <a class="cat" href="path-following-robots/" style="--cat:var(--c-stem); --cat-ink:var(--c-stem-ink)">
+        <img src="img/box-stem.jpg" width="1600" height="1200" loading="lazy" decoding="async" alt="Flat-lay on amber of a robot kit: chassis plate, wheels, control board, motor, sensors and jumper leads.">
+        <div class="cat__body">
+          <p class="cat__k"><span class="sw" style="--sw:var(--c-stem)" aria-hidden="true"></span>STEM &amp; Curiosity <em>3 boxes</em></p>
+          <h3>Robots, sensors and code.</h3>
+          <p class="cat__list">Path Following Robots &middot; Smart Greenhouse Kit &middot; Robot Dog Kit</p>
         </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-stem)" aria-hidden="true"></span>STEM &amp; Curiosity</p>
-          <h3>Path Following Robots</h3>
-          <p class="card__line">Snap it together. Watch a kid build their first robot.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>90 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Arduino-compatible board, twin motors, infrared line sensors, chassis plate, jumper leads.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Students in under-resourced STEM classrooms.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Boys &amp; Girls Clubs of America</dd></div>
-          </dl>
-          <p class="verified">
-            <span class="tagv">Programme to date &middot; internal</span>
-            <b>989 robots</b> built by <b>4,945 students</b> across <b>70 cities</b> with 66 nonprofit partners.
-          </p>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        <span class="cat__go" aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="cat" href="#catalogue" style="--cat:var(--c-light); --cat-ink:var(--c-light-ink)">
+        <img src="img/box-solar.jpg" width="1600" height="1200" loading="lazy" decoding="async" alt="Flat-lay on deep indigo of a solar lamp kit: panel, LED head, battery cell, housing and wiring.">
+        <div class="cat__body">
+          <p class="cat__k"><span class="sw" style="--sw:var(--c-light)" aria-hidden="true"></span>Light &amp; Energy <em>2 boxes</em></p>
+          <h3>Solar lamps for homes off the grid.</h3>
+          <p class="cat__list">Solar Lights for Disaster-Affected Homes &middot; Solar Lamp Assembly (Juniors)</p>
         </div>
-      </article>
-
-      <article class="card" data-cat="stem" style="--cat:var(--c-stem); --cat-ink:var(--c-stem-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-greenhouse.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on an amber background: a micro:bit style controller board, a soil moisture probe, a light sensor, a miniature water pump, coiled clear tubing, a seedling tray and blank cards beside a kraft box.">
+        <span class="cat__go" aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="cat" href="#catalogue" style="--cat:var(--c-crisis); --cat-ink:var(--c-crisis-ink)">
+        <img src="img/box-relief.jpg" width="1600" height="1200" loading="lazy" decoding="async" alt="Flat-lay on slate grey-blue of relief supplies: thermal blanket, purification tablets, pouch, soap, torch and tarpaulin.">
+        <div class="cat__body">
+          <p class="cat__k"><span class="sw" style="--sw:var(--c-crisis)" aria-hidden="true"></span>Crisis &amp; Relief <em>3 boxes</em></p>
+          <h3>What a shelter needs by morning.</h3>
+          <p class="cat__list">No-Sew Blankets &middot; Meal Bags for Veteran Families &middot; Holiday Ornaments</p>
         </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-stem)" aria-hidden="true"></span>STEM &amp; Curiosity</p>
-          <h3>Smart Greenhouse Kit</h3>
-          <p class="card__line">Wire the sensor. A classroom learns what a machine can notice.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60&ndash;90 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office + virtual</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Intermediate</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>micro:bit controller, moisture and light sensors, pump, tubing, machine-learning model cards.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Middle-school science programmes.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Room to Read</dd></div>
-          </dl>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        <span class="cat__go" aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="cat" href="#catalogue" style="--cat:var(--c-dignity); --cat-ink:var(--c-dignity-ink)">
+        <img src="img/box-dignity.jpg" width="1600" height="1200" loading="lazy" decoding="async" alt="Flat-lay on soft sage of hygiene items: soap, toothbrush, toothpaste, comb, folded towel and pouch.">
+        <div class="cat__body">
+          <p class="cat__k"><span class="sw" style="--sw:var(--c-dignity)" aria-hidden="true"></span>Dignity &amp; Care <em>3 boxes</em></p>
+          <h3>Everything a body needs. Nothing it doesn&rsquo;t.</h3>
+          <p class="cat__list">Comfort Kits &middot; Baby Care Essentials &middot; Mental Health Coping Kits</p>
         </div>
-      </article>
-
-      <article class="card" data-cat="stem" style="--cat:var(--c-stem); --cat-ink:var(--c-stem-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-robotdog.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on an amber background: flat-packed aluminium leg segments and a body frame for a four-legged robot, four servo motors, a controller board, a battery pack, a hex key and blank worksheets.">
+        <span class="cat__go" aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="cat" href="#catalogue" style="--cat:var(--c-hunger); --cat-ink:var(--c-hunger-ink)">
+        <img src="img/box-meals.jpg" width="1600" height="1200" loading="lazy" decoding="async" alt="Flat-lay on warm terracotta of meal-packing supplies: sealed pouches, scoop, funnel, rice and lentils.">
+        <div class="cat__body">
+          <p class="cat__k"><span class="sw" style="--sw:var(--c-hunger)" aria-hidden="true"></span>Hunger <em>1 box</em></p>
+          <h3>Someone eats tonight.</h3>
+          <p class="cat__list">Sort and Pack Food for Under-resourced Communities</p>
         </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-stem)" aria-hidden="true"></span>STEM &amp; Curiosity</p>
-          <h3>Robot Dog Kit</h3>
-          <p class="card__line">Write ten lines of Python. Something walks across the table.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>120 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Advanced</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Servo-driven quadruped frame, controller, GPT-4o prompt cards, Python worksheets.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Senior secondary coding clubs.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Junior Achievement of Southern Nevada</dd></div>
-          </dl>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
+        <span class="cat__go" aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="cat" href="#catalogue" style="--cat:var(--c-comfort); --cat-ink:var(--c-comfort-ink)">
+        <img src="img/box-plush.jpg" width="1600" height="1200" loading="lazy" decoding="async" alt="Flat-lay on soft rose of plush toy parts: unstuffed bear pieces, stuffing, fabric backpack and a circuit board.">
+        <div class="cat__body">
+          <p class="cat__k"><span class="sw" style="--sw:var(--c-comfort)" aria-hidden="true"></span>Comfort &amp; Play <em>2 boxes</em></p>
+          <h3>Something to hold, something to play.</h3>
+          <p class="cat__list">Tug Toys for Rescued Dogs &middot; Xylophones for Children with Autism</p>
         </div>
-      </article>
-
-      <!-- ---------------- LIGHT & ENERGY ---------------- -->
-      <article class="card" data-cat="light" style="--cat:var(--c-light); --cat-ink:var(--c-light-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-solar.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on a deep indigo background: a small solar panel with red and black leads, a round LED lamp head, a battery cell, a white housing, a black mounting base and a coil of twin-core wire beside a kraft carton.">
+        <span class="cat__go" aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="cat" href="#catalogue" style="--cat:var(--c-school); --cat-ink:var(--c-school-ink)">
+        <img src="img/box-school.jpg" width="1600" height="1200" loading="lazy" decoding="async" alt="Flat-lay on bright teal of school supplies: notebooks, pencils, ruler, eraser, sharpener and a backpack.">
+        <div class="cat__body">
+          <p class="cat__k"><span class="sw" style="--sw:var(--c-school)" aria-hidden="true"></span>School &amp; Futures <em>3 boxes</em></p>
+          <h3>One notebook, one shot at showing up.</h3>
+          <p class="cat__list">Career Readiness Kits &middot; Success Bags &middot; Tactile Learning and Braille Cards</p>
         </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-light)" aria-hidden="true"></span>Light &amp; Energy</p>
-          <h3>Solar Lights for Individuals Affected by Disasters</h3>
-          <p class="card__line">One box. Light in a home that has had none.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office + virtual</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Solar panel, LED lamp head, rechargeable cell, weatherproof housing, wiring loom.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Households in regions without reliable grid power after a disaster.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Global Empowerment Mission</dd></div>
-          </dl>
-          <p class="verified">
-            <span class="tagv">Programme to date &middot; internal</span>
-            <b>A Thousand Suns</b> &mdash; 1,000 solar lamps assembled from one activity, run as five events.
-          </p>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
-        </div>
-      </article>
-
-      <article class="card" data-cat="light" style="--cat:var(--c-light); --cat-ink:var(--c-light-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-solar-juniors.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on a deep indigo background: oversized child-safe solar lamp parts including a large solar panel, a rounded bright plastic lamp housing, a big push switch, a chunky battery pack and thick wiring with easy connectors.">
-        </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-light)" aria-hidden="true"></span>Light &amp; Energy</p>
-          <h3>Solar Lamp Assembly (Juniors)</h3>
-          <p class="card__line">Child-safe parts, no tools. A lamp that outlasts the afternoon.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>45 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office, family-friendly</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Juniors</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Pre-wired panel, snap-fit housing, rechargeable cell, illustrated build card.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Young people living without stable housing.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>At The Crossroads</dd></div>
-          </dl>
-          <p class="verified">
-            <span class="tagv">Delivered</span>
-            <b>30 children</b> built lamps for unhoused youth through At The Crossroads.
-          </p>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
-        </div>
-      </article>
-
-      <!-- ---------------- CRISIS & RELIEF ----------------
-           Sober register. No play, no exclamation, no celebration.
-           Recipient is the protagonist, never the volunteering team. -->
-      <article class="card" data-cat="crisis" style="--cat:var(--c-crisis); --cat-ink:var(--c-crisis-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-relief.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on a slate grey-blue cloth: a folded foil emergency blanket, a blister strip of tablets, two olive canvas pouches, a bar of soap, a black torch and a folded green tarpaulin beside a plain kraft box.">
-        </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-crisis)" aria-hidden="true"></span>Crisis &amp; Relief</p>
-          <h3>No-Sew Blankets for People Without Housing</h3>
-          <p class="card__line">Tie it off. It keeps someone warm tonight.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Two fleece panels, cutting guide, tie template, wash-care label.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>People sleeping rough, and shelter intake desks.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Covenant House California</dd></div>
-          </dl>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
-        </div>
-      </article>
-
-      <article class="card" data-cat="crisis" style="--cat:var(--c-crisis); --cat-ink:var(--c-crisis-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-mealbags.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on a slate grey-blue background: folded plain canvas tote meal bags, a set of fabric marker pens, sealed snack pouches, a water bottle and blank cards.">
-        </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-crisis)" aria-hidden="true"></span>Crisis &amp; Relief</p>
-          <h3>Meal Bags for Homeless Veteran Families</h3>
-          <p class="card__line">No frills. Just what an intake desk needs by morning.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>45 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office + virtual</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Kraft meal sacks, food-safe markers, stencil set, contents checklist.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Veteran families in transitional housing.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Soldier&rsquo;s Angels</dd></div>
-          </dl>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
-        </div>
-      </article>
-
-      <article class="card" data-cat="crisis" style="--cat:var(--c-crisis); --cat-ink:var(--c-crisis-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-ornaments.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on a slate grey-blue background: plain wooden ornament blanks in simple shapes, spools of ribbon, small paint pots, a fine brush and blank folded note cards.">
-        </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-crisis)" aria-hidden="true"></span>Crisis &amp; Relief</p>
-          <h3>Holiday Ornaments for Deployed Members</h3>
-          <p class="card__line">Pack it today. It reaches a base before the post closes.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>45 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>Virtual</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Ornament blanks, cord, archival pens, dispatch labels.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Service members posted away from their families.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Packages from Home</dd></div>
-          </dl>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
-        </div>
-      </article>
-
-      <!-- ---------------- DIGNITY & CARE ---------------- -->
-      <article class="card" data-cat="dignity" style="--cat:var(--c-dignity); --cat-ink:var(--c-dignity-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-dignity.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on a sage green background: a bar of soap, a bamboo toothbrush, a white tube, a wooden comb, a folded linen cloth and a cotton drawstring pouch, beside an open kraft box lid.">
-        </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-dignity)" aria-hidden="true"></span>Dignity &amp; Care</p>
-          <h3>Comfort Kits for Children Undergoing Treatment</h3>
-          <p class="card__line">Everything a long day needs. Nothing it doesn&rsquo;t.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Soft blanket, activity book, pencil set, drawstring bag, blank name card.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Children on long-stay hospital wards, and the families staying with them.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Ronald McDonald House Charities Bay Area</dd></div>
-          </dl>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
-        </div>
-      </article>
-
-      <article class="card" data-cat="dignity" style="--cat:var(--c-dignity); --cat-ink:var(--c-dignity-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-baby.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on a soft sage background: a feeding bottle, a folded cotton bib, a small folded onesie, a pack of wipes, a folded muslin blanket and a brush and comb set.">
-        </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-dignity)" aria-hidden="true"></span>Dignity &amp; Care</p>
-          <h3>Baby Care Essentials for Infants</h3>
-          <p class="card__line">Fold it flat. A first month gets easier.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>30 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>Kiosk</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Cotton wraps, mild soap, comb, bibs, muslin squares, drawstring pouch.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Infants in shelter and low-income households.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Matched from the 50K+ partner network</dd></div>
-          </dl>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
-        </div>
-      </article>
-
-      <article class="card" data-cat="dignity" style="--cat:var(--c-dignity); --cat-ink:var(--c-dignity-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-coping.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on a soft sage background: a hardback journal, a soft stress ball, a deck of blank prompt cards, sachets of herbal tea, a pen and a small candle.">
-        </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-dignity)" aria-hidden="true"></span>Dignity &amp; Care</p>
-          <h3>Mental Health Coping Kits for Teens</h3>
-          <p class="card__line">Plain packaging. A teenager can open it without being seen.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office + virtual</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Grounding cards, stress object, journal, pencil, helpline insert.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Teenagers in school counselling programmes.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>The Trevor Project</dd></div>
-          </dl>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
-        </div>
-      </article>
-
-      <!-- ---------------- HUNGER ---------------- -->
-      <article class="card" data-cat="hunger" style="--cat:var(--c-hunger); --cat-ink:var(--c-hunger-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-meals.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on a terracotta background: five clear resealable pouches of rice and lentils, a steel measuring scoop, a funnel, three portions of dry grains and a blank card, beside an open kraft carton.">
-        </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-hunger)" aria-hidden="true"></span>Hunger</p>
-          <h3>Sort and Pack Food for Under-resourced Communities</h3>
-          <p class="card__line">Pack a meal. Someone eats tonight because your team did.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>90&ndash;120 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>Outdoor + on-site</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Rice, lentils, measured scoop, funnel, sealable pouches, contents card.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Food bank distribution networks.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Second Harvest Food Bank</dd></div>
-          </dl>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
-        </div>
-      </article>
-
-      <!-- ---------------- COMFORT & PLAY ---------------- -->
-      <article class="card" data-cat="comfort" style="--cat:var(--c-comfort); --cat-ink:var(--c-comfort-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-plush.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on a soft rose background: unstuffed calico toy pieces including a head, body, arms and legs, a ball of white stuffing, a small canvas backpack, a spool of thread and a card of needles, above a kraft box.">
-        </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-comfort)" aria-hidden="true"></span>Comfort &amp; Play</p>
-          <h3>Tug Toys for Rescued Dogs</h3>
-          <p class="card__line">Braid it tight. A kennel gets quieter.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>30 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>Kiosk</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Fleece strips, braiding guide, finishing rings, shelter tags.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Municipal shelters and rescue foster networks.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Matched from the 50K+ partner network</dd></div>
-          </dl>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
-        </div>
-      </article>
-
-      <article class="card" data-cat="comfort" style="--cat:var(--c-comfort); --cat-ink:var(--c-comfort-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-xylophone.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on a soft rose background: the disassembled parts of a small wooden xylophone including a frame, a row of coloured metal bars, two mallets and screws, with small pots of paint and a brush.">
-        </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-comfort)" aria-hidden="true"></span>Comfort &amp; Play</p>
-          <h3>Xylophones for Children with Autism</h3>
-          <p class="card__line">Tune the bars. A room finds a sound it can hold.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Hardwood frame, tuned bars, mallets, non-toxic paint, fixings.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Sensory classrooms and therapy rooms.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Anthill Creations</dd></div>
-          </dl>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
-        </div>
-      </article>
-
-      <!-- ---------------- SCHOOL & FUTURES ---------------- -->
-      <article class="card" data-cat="school" style="--cat:var(--c-school); --cat-ink:var(--c-school-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-school.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on a bright teal background: two kraft notebooks, six pencils in a row, a wooden ruler, an eraser, a sharpener, a geometry set and a canvas backpack, beside an open kraft box.">
-        </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-school)" aria-hidden="true"></span>School &amp; Futures</p>
-          <h3>Career Readiness Kits for Underserved Youth</h3>
-          <p class="card__line">One notebook, one pen, one shot at showing up prepared.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office + virtual</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Notebook, pen set, interview preparation cards, document folder, tote.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Young people entering their first employment.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Junior Achievement of Southern Nevada</dd></div>
-          </dl>
-          <p class="verified">
-            <span class="tagv">Delivered &middot; Kyndryl</span>
-            <b>243 Career Readiness Kits</b> in a five-week programme across 13 countries.
-          </p>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
-        </div>
-      </article>
-
-      <article class="card" data-cat="school" style="--cat:var(--c-school); --cat-ink:var(--c-school-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-successbag.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on a bright teal background: a folded canvas tote bag, a notebook, a pen, a slim document folder, a small pouch and blank cards.">
-        </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-school)" aria-hidden="true"></span>School &amp; Futures</p>
-          <h3>Success Bags for Women Restarting Their Career</h3>
-          <p class="card__line">Pack the bag. Someone walks into the room prepared.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Beginner</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Notebooks, pen, inspirational cards, document folder, canvas bag.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Women returning to work after a career break.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Dress for Success</dd></div>
-          </dl>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
-        </div>
-      </article>
-
-      <article class="card" data-cat="school" style="--cat:var(--c-school); --cat-ink:var(--c-school-ink)">
-        <div class="card__tick" aria-hidden="true"></div>
-        <div class="card__media">
-          <img src="img/box-braille.jpg" width="1600" height="1194" loading="lazy" decoding="async"
-               alt="Top-down flat-lay on a bright teal background: a stack of thick tactile learning cards with raised embossed patterns, a metal braille slate, a stylus, textured fabric swatches and thick plain paper.">
-        </div>
-        <div class="card__body">
-          <p class="chip"><span class="sw" style="--sw:var(--c-school)" aria-hidden="true"></span>School &amp; Futures</p>
-          <h3>Tactile Learning Cards and Braille Cards</h3>
-          <p class="card__line">Emboss it clean. A lesson becomes readable by touch.</p>
-          <dl class="spec">
-            <div class="spec__row"><dt>Time</dt><span class="spec__lead" aria-hidden="true"></span><dd>60 min</dd></div>
-            <div class="spec__row"><dt>Format</dt><span class="spec__lead" aria-hidden="true"></span><dd>In-office</dd></div>
-            <div class="spec__row"><dt>Level</dt><span class="spec__lead" aria-hidden="true"></span><dd>Intermediate</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Inside</dt><dd>Card stock, braille slate and stylus, tactile shapes, reference alphabet.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Receives</dt><dd>Learners who are blind or have low vision.</dd></div>
-            <div class="spec__row spec__row--wide"><dt>Partner</dt><dd>Matched from the 50K+ partner network</dd></div>
-          </dl>
-          <p class="verified">
-            <span class="tagv">Delivered &middot; Kyndryl</span>
-            <b>540 Tactile Learning Cards</b> and <b>14 Braille Cards</b> in a five-week programme.
-          </p>
-          <a class="card__cta" href="#talk"><span>Assemble this box</span></a>
-        </div>
-      </article>
-
+        <span class="cat__go" aria-hidden="true">&rarr;</span>
+      </a>
     </div>
   </div>
 </section>
@@ -1130,27 +810,6 @@ td.n{ font-variant-numeric:tabular-nums; }
           <p>What was built, how many, which region, which partner received it. Quantified, not described. This is the layer a kit bought off a shelf can never carry.</p>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ====================== OCCASIONS ====================== -->
-<section class="section section--tight">
-  <div class="wrap">
-    <div class="shead reveal">
-      <h2>Same boxes. Different moments.</h2>
-      <p>The catalogue does not change by occasion. What changes is the volume, the date and who is in the room.</p>
-    </div>
-
-    <div class="occ reveal">
-      <div class="occ__i"><h3>Month of Service</h3><p>One catalogue, many sites, a single reporting line at the end.</p></div>
-      <div class="occ__i"><h3>Onboarding</h3><p>A box on every new joiner&rsquo;s desk in week one.</p></div>
-      <div class="occ__i"><h3>Offsites</h3><p>The session that replaces the trust fall.</p></div>
-      <div class="occ__i"><h3>ERG heritage months</h3><p>Boxes matched to the community the group is marking.</p></div>
-      <div class="occ__i"><h3>Back to school</h3><p>School and futures boxes, timed to the local term.</p></div>
-      <div class="occ__i"><h3>Crisis response</h3><p>Relief boxes activated when a region needs them, not when the calendar allows.</p></div>
-      <div class="occ__i"><h3>Client gifting</h3><p>A box built in your client&rsquo;s name, sent onward in theirs.</p></div>
-      <div class="occ__i"><h3>All-hands</h3><p>Two thousand people, ninety minutes, one countable outcome.</p></div>
     </div>
   </div>
 </section>
