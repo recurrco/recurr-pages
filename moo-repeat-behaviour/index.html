@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>MOO — Repeat Behaviour (Zomato, FY27 to date)</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --beige:#F0DFC8; --white:#FFFFFF; --black:#1A1A1A;
+  --blue:#4361EE; --blue-mute:#A9B4E9; --blue-deep:#26399E;
+  --red:#FF3D47; --yellow:#FFD500;
+  --ink:#1A1A1A; --ink-2:#57544D; --ink-3:#8A8478;
+  --hair:#E0CDB4; --hair-w:#EDE6DB;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--beige);
+  background-image:
+    linear-gradient(rgba(26,26,26,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(26,26,26,.06) 1px,transparent 1px);
+  background-size:44px 44px;
+  color:var(--ink);
+  font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding:0 20px 72px;
+}
+.page{max-width:1140px;margin:0 auto}
+
+/* ---------- type ---------- */
+.bebas{font-family:"Bebas Neue",Impact,"Haettenschweiler",sans-serif;text-transform:uppercase;font-weight:400}
+h1{font-family:"Bebas Neue",Impact,sans-serif;text-transform:uppercase;font-weight:400;
+   font-size:clamp(2.9rem,7.5vw,5.4rem);line-height:.9;letter-spacing:.005em}
+h2{font-family:"Bebas Neue",Impact,sans-serif;text-transform:uppercase;font-weight:400;
+   font-size:clamp(1.7rem,3.4vw,2.5rem);line-height:.98;letter-spacing:.01em}
+.eyebrow{font-family:"Inter",sans-serif;font-size:.66rem;font-weight:600;letter-spacing:.18em;
+   text-transform:uppercase;color:var(--ink-3)}
+.eyebrow.b{color:var(--blue)}
+.say{font-size:1rem;line-height:1.5;color:var(--ink-2);max-width:62ch}
+.say b{color:var(--ink);font-weight:600}
+.big{font-family:"Bebas Neue",Impact,sans-serif;line-height:.82;letter-spacing:0;
+   font-variant-numeric:tabular-nums}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* ---------- masthead ---------- */
+header{padding:52px 0 34px;display:flex;flex-direction:column;gap:22px}
+.brandrow{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between}
+.mark{font-family:"Bebas Neue",Impact,sans-serif;text-transform:uppercase;font-size:1.35rem;letter-spacing:.06em}
+.mark span{color:var(--blue)}
+.stamp{font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.facts{display:flex;flex-wrap:wrap;gap:0;border-top:2px solid var(--black);border-bottom:1px solid var(--hair)}
+.fact{padding:14px 26px 13px 0;margin-right:26px;border-right:1px solid var(--hair);
+      display:flex;flex-direction:column;gap:1px}
+.fact:last-child{border-right:0;margin-right:0}
+.fact .fv{font-family:"Bebas Neue",Impact,sans-serif;font-size:1.55rem;line-height:1;font-variant-numeric:tabular-nums}
+.fact .fk{font-size:.63rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ---------- cards ---------- */
+.card{background:var(--white);border:2px solid var(--black);border-radius:2px;
+      padding:30px 32px;margin-top:22px;box-shadow:5px 5px 0 rgba(26,26,26,.1)}
+.card.dark{background:var(--black);border-color:var(--black);color:#FBF8F2}
+.card.dark .say{color:#D6D0C4} .card.dark .say b{color:#fff}
+.card.dark .eyebrow{color:#9E9789}
+.card.dark .lb{color:#B9B2A4}
+.chead{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:baseline;justify-content:space-between;margin-bottom:20px}
+.chead .h{display:flex;flex-direction:column;gap:8px}
+.tag{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+     padding:5px 9px;border-radius:2px;white-space:nowrap}
+.tag.champ{background:var(--yellow);color:var(--black)}
+.tag.hon{background:var(--red);color:#fff}
+
+/* ---------- two-number honesty block ---------- */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--hair-w)}
+.duo>div{padding:22px 26px 20px 0;display:flex;flex-direction:column;gap:4px}
+.duo>div+div{border-left:1px solid var(--hair-w);padding-left:26px}
+.duo .big{font-size:clamp(3.4rem,9vw,5.6rem)}
+.duo .n1{color:var(--blue)} .duo .n2{color:var(--black)}
+.duo .lb{font-size:.78rem;font-weight:600;letter-spacing:.04em;color:var(--ink-2);line-height:1.4}
+.duo .sub{font-size:.72rem;color:var(--ink-3);line-height:1.45}
+
+/* ---------- ladder ---------- */
+.ladder{display:flex;align-items:flex-end;gap:clamp(3px,.9vw,11px);height:250px;
+        border-bottom:2px solid var(--black);padding-top:34px}
+.lcol{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;position:relative;min-width:0}
+.lbar{width:100%;background:var(--blue);border-radius:2px 2px 0 0;height:calc(var(--v)*1%);
+      position:relative;transition:height .7s cubic-bezier(.2,.75,.3,1)}
+.lcol.first .lbar{background:var(--blue-mute)}
+.lcol .pct{font-family:"Bebas Neue",Impact,sans-serif;font-size:clamp(.72rem,1.6vw,1.15rem);
+      line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap;margin-bottom:6px;flex:none}
+.lcol.first .pct{color:var(--ink-3)}
+.lax{display:flex;gap:clamp(3px,.9vw,11px);margin-top:9px}
+.lax>div{flex:1;text-align:center;font-size:.6rem;font-weight:600;color:var(--ink-3);
+         font-variant-numeric:tabular-nums;letter-spacing:.02em;min-width:0}
+.lax>div b{display:block;font-weight:600;color:var(--ink-2);font-size:.63rem}
+.lnote{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:20px;padding-top:16px;border-top:1px solid var(--hair-w)}
+.lnote div{font-size:.8rem;color:var(--ink-2)}
+.lnote b{font-family:"Bebas Neue",Impact,sans-serif;font-size:1.1rem;color:var(--blue);margin-right:5px}
+
+/* ---------- stat grid ---------- */
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--hair-w);
+       border:1px solid var(--hair-w);border-radius:2px;margin-top:4px}
+.grid3>div{background:var(--white);padding:17px 18px;display:flex;flex-direction:column;gap:3px}
+.card.dark .grid3{background:#333029;border-color:#333029}
+.card.dark .grid3>div{background:#242219}
+.grid3 .gv{font-family:"Bebas Neue",Impact,sans-serif;font-size:2.05rem;line-height:.95;font-variant-numeric:tabular-nums}
+.grid3 .gk{font-size:.63rem;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);line-height:1.45}
+.card.dark .grid3 .gk{color:#9E9789}
+.card.dark .lax>div{color:#9E9789} .card.dark .lax>div b{color:#E4DED1}
+.card.dark .lnote{border-top-color:#3A362E} .card.dark .lnote div{color:#C9C2B4}
+.card.dark .ladder{border-bottom-color:#5A554A}
+.gv.blue{color:var(--blue)} .gv.yellow{color:var(--yellow)} .gv.red{color:var(--red)}
+.grid3.six{grid-template-columns:repeat(3,1fr)}
+@media (max-width:720px){.grid3.six{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- discovery rows ---------- */
+.disc{display:flex;flex-direction:column;gap:2px;margin-top:6px}
+.drow{display:grid;grid-template-columns:minmax(96px,.8fr) 1fr;gap:18px;align-items:center;
+      padding:13px 0;border-bottom:1px solid var(--hair-w)}
+.drow:last-child{border-bottom:0}
+.dlab{font-size:.78rem;font-weight:600;color:var(--ink-2);letter-spacing:.02em}
+.dlab small{display:block;font-weight:400;font-size:.68rem;color:var(--ink-3);letter-spacing:0}
+.dbars{display:flex;flex-direction:column;gap:4px}
+.dbar{display:flex;align-items:center;gap:9px}
+.dbar .f{height:13px;background:var(--blue);border-radius:0 3px 3px 0;
+         width:calc(var(--v)/var(--max)*100%);min-width:3px}
+.dbar.pale .f{background:var(--blue-mute)}
+.dbar .t{font-size:.74rem;font-weight:600;color:var(--ink-2);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* ---------- monthly series ---------- */
+.series{display:flex;align-items:flex-end;gap:clamp(2px,.8vw,9px);height:132px;
+        border-bottom:2px solid var(--black);position:relative;margin-top:26px}
+.series::before{content:"";position:absolute;left:0;right:0;bottom:79.2%;
+        border-top:1px dashed #8A8478;z-index:2}
+.series::after{content:"60%";position:absolute;right:0;bottom:79.2%;transform:translateY(-115%);
+        font-size:.58rem;font-weight:700;letter-spacing:.1em;color:var(--ink-3);z-index:2}
+.scol{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;min-width:0}
+.sbar{width:100%;background:var(--blue-mute);border-radius:2px 2px 0 0;height:calc(var(--v)*1.30%)}
+.scol.hi .sbar{background:var(--blue)}
+.scol.pk .sbar{background:#B8B1A2}
+.sax{display:flex;gap:clamp(2px,.8vw,9px);margin-top:8px}
+.sax>div{flex:1;text-align:center;font-size:.55rem;font-weight:600;color:var(--ink-3);min-width:0;
+         letter-spacing:.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sax>div.on{color:var(--ink)}
+.band{font-size:.66rem;font-weight:600;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;margin-top:14px}
+
+/* ---------- caveats ---------- */
+.caveat{margin-top:26px;border-top:2px solid var(--black);padding-top:20px;
+        display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px 30px}
+.caveat .cv{display:flex;gap:9px;font-size:.78rem;line-height:1.5;color:var(--ink-2)}
+.caveat .cv::before{content:"";width:3px;flex:none;background:var(--red);border-radius:2px}
+.caveat b{color:var(--ink);font-weight:600}
+footer{margin-top:26px;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;
+       font-weight:600;color:var(--ink-3)}
+
+@media (max-width:760px){
+  .card{padding:24px 20px}
+  .duo{grid-template-columns:1fr}
+  .duo>div+div{border-left:0;border-top:1px solid var(--hair-w);padding-left:0;padding-top:20px}
+  .ladder{height:190px}
+  .lax>div{font-size:.5rem} .lax>div b{font-size:.53rem}
+  .fact{padding-right:16px;margin-right:16px}
+  .drow{grid-template-columns:1fr;gap:8px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{body{background:#fff;background-image:none}.card{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div class="brandrow">
+    <div class="mark">Ministry of <span>Oats</span></div>
+    <div class="stamp">Repeat behaviour · Zomato only · FY27 to date</div>
+  </div>
+  <h1>They don't just come back.<br>They come back harder.</h1>
+  <div class="facts">
+    <div class="fact"><span class="fv">1 Apr – 22 Aug 26</span><span class="fk">Window · 143 days</span></div>
+    <div class="fact"><span class="fv">19,112</span><span class="fk">Orders</span></div>
+    <div class="fact"><span class="fv">9,118</span><span class="fk">Identified customers</span></div>
+    <div class="fact"><span class="fv">₹57.6 L</span><span class="fk">Bill revenue</span></div>
+    <div class="fact"><span class="fv">₹301</span><span class="fk">AOV</span></div>
+  </div>
+</header>
+
+<!-- ============ 1. THE HONEST FRAME ============ -->
+<section class="card">
+  <div class="chead">
+    <div class="h">
+      <span class="eyebrow">01 · Read this first</span>
+      <h2>Two true numbers. Say both.</h2>
+    </div>
+    <span class="tag hon">Not self-serving</span>
+  </div>
+  <div class="duo">
+    <div>
+      <span class="big n1">62.7%</span>
+      <span class="lb">of orders are a repeat purchase</span>
+      <span class="sub">Order-weighted. This is the ~60% already on the deck. It is correct.</span>
+    </div>
+    <div>
+      <span class="big n2">30.6%</span>
+      <span class="lb">of customers order more than once</span>
+      <span class="sub">Customer-weighted. Also correct. An investor will compute this one.</span>
+    </div>
+  </div>
+  <p class="say" style="margin-top:20px">Same data, two denominators. <b>A minority of customers generates a
+    majority of orders</b> — which is the finding, not a caveat. Lead with both and the rest of the page lands.</p>
+</section>
+
+<!-- ============ 2. THE LADDER — CHAMPION ============ -->
+<section class="card dark">
+  <div class="chead">
+    <div class="h">
+      <span class="eyebrow">02 · The champion chart</span>
+      <h2>Every order makes the next one likelier</h2>
+    </div>
+    <span class="tag champ">Champion</span>
+  </div>
+
+  <div class="ladder">
+    <div class="lcol first" style="--v:30.6"><span class="pct">30.6%</span><div class="lbar"></div></div>
+    <div class="lcol" style="--v:54.9"><span class="pct">54.9%</span><div class="lbar"></div></div>
+    <div class="lcol" style="--v:67.4"><span class="pct">67.4%</span><div class="lbar"></div></div>
+    <div class="lcol" style="--v:71.9"><span class="pct">71.9%</span><div class="lbar"></div></div>
+    <div class="lcol" style="--v:76.7"><span class="pct">76.7%</span><div class="lbar"></div></div>
+    <div class="lcol" style="--v:77.1"><span class="pct">77.1%</span><div class="lbar"></div></div>
+    <div class="lcol" style="--v:79.2"><span class="pct">79.2%</span><div class="lbar"></div></div>
+    <div class="lcol" style="--v:82.4"><span class="pct">82.4%</span><div class="lbar"></div></div>
+    <div class="lcol" style="--v:85.3"><span class="pct">85.3%</span><div class="lbar"></div></div>
+    <div class="lcol" style="--v:83.6"><span class="pct">83.6%</span><div class="lbar"></div></div>
+    <div class="lcol" style="--v:85.3"><span class="pct">85.3%</span><div class="lbar"></div></div>
+    <div class="lcol" style="--v:88.5"><span class="pct">88.5%</span><div class="lbar"></div></div>
+  </div>
+  <div class="lax">
+    <div>1<b>9,118</b></div><div>2<b>2,786</b></div><div>3<b>1,529</b></div><div>4<b>1,031</b></div>
+    <div>5<b>741</b></div><div>6<b>568</b></div><div>7<b>438</b></div><div>8<b>347</b></div>
+    <div>9<b>286</b></div><div>10<b>244</b></div><div>11<b>204</b></div><div>12<b>174</b></div>
+  </div>
+  <p class="say" style="margin-top:16px">Chance of placing another order, given you have already placed
+    <i>n</i>. Bar 1 is the hard one. <b>After the fifth order it never drops below 3 in 4.</b></p>
+  <div class="lnote">
+    <div><b>30.6%</b>clear order 1 → 2</div>
+    <div><b>54.9%</b>clear 2 → 3</div>
+    <div><b>76.7%</b>clear 5 → 6</div>
+    <div><b>88.5%</b>clear 12 → 13</div>
+  </div>
+</section>
+
+<!-- ============ 3. THE CHAMPION CART ============ -->
+<section class="card">
+  <div class="chead">
+    <div class="h">
+      <span class="eyebrow b">03 · What a regular is worth</span>
+      <h2>65 people. ₹6.7 lakh. Five months.</h2>
+    </div>
+  </div>
+  <div class="grid3 six">
+    <div><span class="gv blue">₹10,267</span><span class="gk">Revenue per 20+ order customer</span></div>
+    <div><span class="gv">₹299</span><span class="gk">Revenue per one-time customer</span></div>
+    <div><span class="gv blue">34×</span><span class="gk">The multiple</span></div>
+    <div><span class="gv">109</span><span class="gk">Orders · single best customer</span></div>
+    <div><span class="gv">₹56,119</span><span class="gk">Spent by that one customer</span></div>
+    <div><span class="gv">11.2%</span><span class="gk">Of all orders, from the top 0.7%</span></div>
+  </div>
+
+  <p class="say" style="margin:24px 0 14px"><b>And the cart gets simpler, not bigger.</b> A regular's order is
+    one bowl, on a weekday, before 11am — and on <i>less</i> discount than a first-timer's.</p>
+  <div class="disc" style="--max:90">
+    <div class="drow">
+      <span class="dlab">One item only<small>share of that segment's orders</small></span>
+      <div class="dbars">
+        <div class="dbar pale"><span class="f" style="--v:79.5"></span><span class="t">79.5% · one-timer</span></div>
+        <div class="dbar"><span class="f" style="--v:87.3"></span><span class="t">87.3% · 10+ orders</span></div>
+      </div>
+    </div>
+    <div class="drow">
+      <span class="dlab">Ordered 08:00–11:00<small>IST</small></span>
+      <div class="dbars">
+        <div class="dbar pale"><span class="f" style="--v:25.6"></span><span class="t">25.6% · one-timer</span></div>
+        <div class="dbar"><span class="f" style="--v:37.7"></span><span class="t">37.7% · 10+ orders</span></div>
+      </div>
+    </div>
+    <div class="drow">
+      <span class="dlab">Ordered on a weekday</span>
+      <div class="dbars">
+        <div class="dbar pale"><span class="f" style="--v:67.9"></span><span class="t">67.9% · one-timer</span></div>
+        <div class="dbar"><span class="f" style="--v:79.4"></span><span class="t">79.4% · 10+ orders</span></div>
+      </div>
+    </div>
+    <div class="drow">
+      <span class="dlab">Discount as % of gross<small>own scale · lower is better</small></span>
+      <div class="dbars" style="--max:14">
+        <div class="dbar pale"><span class="f" style="--v:10.1"></span><span class="t">10.1% · one-timer</span></div>
+        <div class="dbar"><span class="f" style="--v:9.3"></span><span class="t">9.3% · 10+ orders</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. DISCOVERY ============ -->
+<section class="card">
+  <div class="chead">
+    <div class="h">
+      <span class="eyebrow b">04 · They widen as they stay</span>
+      <h2>68.6% of second orders contain something new</h2>
+    </div>
+  </div>
+  <div class="grid3">
+    <div><span class="gv blue">68.6%</span><span class="gk">Of 2nd orders include an item never bought before</span></div>
+    <div><span class="gv blue">1.25 → 5.27</span><span class="gk">Distinct items tried · 1 order → 10-19 orders</span></div>
+    <div><span class="gv blue">14% → 71%</span><span class="gk">Buying across 2+ menu categories</span></div>
+  </div>
+  <p class="say" style="margin:24px 0 12px">Cumulative menu explored, by order number. The repertoire never
+    stops widening — <b>a customer's 12th order sits on 4.3 items across 2.5 categories.</b></p>
+  <div class="disc" style="--max:5.5">
+    <div class="drow">
+      <span class="dlab">Order 1<small>9,118 customers</small></span>
+      <div class="dbars"><div class="dbar pale"><span class="f" style="--v:1.24"></span><span class="t">1.24 items · 1.15 categories</span></div></div>
+    </div>
+    <div class="drow">
+      <span class="dlab">Order 2<small>2,786</small></span>
+      <div class="dbars"><div class="dbar"><span class="f" style="--v:2.03"></span><span class="t">2.03 items · 1.55 categories</span></div></div>
+    </div>
+    <div class="drow">
+      <span class="dlab">Order 4<small>1,031</small></span>
+      <div class="dbars"><div class="dbar"><span class="f" style="--v:2.94"></span><span class="t">2.94 items · 1.92 categories</span></div></div>
+    </div>
+    <div class="drow">
+      <span class="dlab">Order 6<small>568</small></span>
+      <div class="dbars"><div class="dbar"><span class="f" style="--v:3.57"></span><span class="t">3.57 items · 2.19 categories</span></div></div>
+    </div>
+    <div class="drow">
+      <span class="dlab">Order 9<small>286</small></span>
+      <div class="dbars"><div class="dbar"><span class="f" style="--v:4.24"></span><span class="t">4.24 items · 2.49 categories</span></div></div>
+    </div>
+    <div class="drow">
+      <span class="dlab">Order 12<small>174</small></span>
+      <div class="dbars"><div class="dbar"><span class="f" style="--v:4.32"></span><span class="t">4.32 items · 2.54 categories</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. DURABILITY ============ -->
+<section class="card">
+  <div class="chead">
+    <div class="h">
+      <span class="eyebrow b">05 · The part that is hard to fake</span>
+      <h2>Repeat share held while we grew orders 42%</h2>
+    </div>
+  </div>
+  <div class="grid3">
+    <div><span class="gv">+42%</span><span class="gk">Jul–Aug orders, 26 vs 25</span></div>
+    <div><span class="gv blue">59.8% → 64.2%</span><span class="gk">Repeat-order share, same months</span></div>
+    <div><span class="gv blue">65.9%</span><span class="gk">Aug 26 · highest month on record</span></div>
+  </div>
+  <div class="series">
+    <div class="scol" style="--v:60.9"><div class="sbar"></div></div><div class="scol" style="--v:58.7"><div class="sbar"></div></div>
+    <div class="scol" style="--v:61.6"><div class="sbar"></div></div>
+    <div class="scol" style="--v:64.0"><div class="sbar"></div></div>
+    <div class="scol pk" style="--v:76.2"><div class="sbar"></div></div>
+    <div class="scol" style="--v:64.1"><div class="sbar"></div></div>
+    <div class="scol" style="--v:60.0"><div class="sbar"></div></div>
+    <div class="scol" style="--v:62.0"><div class="sbar"></div></div>
+    <div class="scol" style="--v:61.0"><div class="sbar"></div></div>
+    <div class="scol hi" style="--v:60.3"><div class="sbar"></div></div>
+    <div class="scol hi" style="--v:62.5"><div class="sbar"></div></div>
+    <div class="scol hi" style="--v:61.9"><div class="sbar"></div></div>
+    <div class="scol hi" style="--v:62.6"><div class="sbar"></div></div>
+    <div class="scol hi" style="--v:65.9"><div class="sbar"></div></div>
+  </div>
+  <div class="sax">
+    <div>Jul<br>25</div><div>Aug</div><div>Sep</div><div>Oct</div><div>Nov</div><div>Dec</div>
+    <div class="on">Jan<br>26</div><div>Feb</div><div>Mar</div><div class="on">Apr</div><div>May</div>
+    <div>Jun</div><div>Jul</div><div class="on">Aug</div>
+  </div>
+  <p class="band">Monthly repeat-order share · 14 months · dashed line = 60%</p>
+  <p class="say" style="margin-top:14px">Scaling acquisition normally dilutes repeat share — new customers
+    flood the denominator. <b>Ours went up.</b> Nov 25 (greyed) is a genuine peak but sits on the lowest
+    volume month of the year, so we exclude it rather than lead with it.</p>
+</section>
+
+<!-- ============ CAVEATS ============ -->
+<div class="caveat">
+  <div class="cv"><div><b>Zomato only.</b> All 55,452 Swiggy orders carry no customer
+    identifier at all — nor do Magicpin, Ownly or DotPe. This is roughly half of aggregator demand, and we
+    cannot yet prove the other half behaves the same way.</div></div>
+  <div class="cv"><div><b>Identity is Zomato's hash,</b> not a verified person. One account
+    shared by a household reads as one customer; one person on two accounts reads as two.</div></div>
+  <div class="cv"><div><b>The ladder's tail is understated.</b> Steps past order 8 are
+    right-censored — customers still inside their window haven't had time to place the next order. The true
+    numbers are higher, not lower.</div></div>
+  <div class="cv"><div><b>AOV is bill amount</b> (₹301), not the deck's gross AOV (₹362.70).
+    Different bases — do not cross-quote them on the same slide.</div></div>
+</div>
+
+<footer>MOO · Ministry of Oats · Outpost Kitchen Pvt Ltd · Source: Rista sales warehouse, channel = Zomato · Built 23 Aug 2026 · Internal</footer>
+
+</div>
+</body>
+</html>
