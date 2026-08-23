@@ -169,7 +169,28 @@ footer{margin-top:26px;font-size:.68rem;letter-spacing:.06em;text-transform:uppe
   .drow{grid-template-columns:1fr;gap:8px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
-@media print{body{background:#fff;background-image:none}.card{box-shadow:none;break-inside:avoid}}
+@media print{
+  html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{padding:0 12mm 12mm}
+  header{padding-top:12mm}
+  .card,.caveat,.duo,.ladder,.series,.grid3{break-inside:avoid}
+  .card{box-shadow:none}
+  /* Chrome lays print out in a ~745px viewport, which would trigger the
+     narrow-screen rules. Pin the wide layout so print matches the page. */
+  h1{font-size:5rem} h2{font-size:2.4rem}
+  .card{padding:30px 32px}
+  .duo{grid-template-columns:1fr 1fr}
+  .duo>div+div{border-left:1px solid var(--hair-w);border-top:0;
+               padding-left:26px;padding-top:22px}
+  .duo .big{font-size:5.2rem}
+  .ladder{height:250px}
+  .lcol .pct{font-size:1.1rem}
+  .lax>div{font-size:.6rem} .lax>div b{font-size:.63rem}
+  .fact{padding:14px 26px 13px 0;margin-right:26px}
+  .drow{grid-template-columns:minmax(96px,.8fr) 1fr;gap:18px}
+  .grid3.six{grid-template-columns:repeat(3,1fr)}
+  .sax>div{font-size:.55rem}
+}
 </style>
 </head>
 <body>
