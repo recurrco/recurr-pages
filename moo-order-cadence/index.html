@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>MOO — Order Cadence (Zomato, Apr 2025 → Aug 2026)</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --beige:#F0DFC8; --white:#FFFFFF; --black:#1A1A1A;
+  --blue:#4361EE; --blue-mute:#A9B4E9; --blue-deep:#26399E; --blue-pale:#DDE3FB;
+  --red:#FF3D47; --red-pale:#FFDDDF; --yellow:#FFD500;
+  --ink:#1A1A1A; --ink-2:#57544D; --ink-3:#8A8478;
+  --hair:#E0CDB4; --hair-w:#EDE6DB;
+  /* sequential blue ramp, light -> dark, monotone lightness */
+  --s1:#EEF1FD; --s2:#D2DAF9; --s3:#A9B7F2; --s4:#7189EE; --s5:#4361EE; --s6:#26399E;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--beige);
+  background-image:
+    linear-gradient(rgba(26,26,26,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(26,26,26,.06) 1px,transparent 1px);
+  background-size:44px 44px;
+  color:var(--ink);
+  font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  padding:0 20px 80px;
+}
+.page{max-width:1140px;margin:0 auto}
+
+/* ---------- type ---------- */
+h1{font-family:"Bebas Neue",Impact,sans-serif;text-transform:uppercase;font-weight:400;
+   font-size:clamp(2.9rem,7.5vw,5.4rem);line-height:.9;letter-spacing:.005em}
+h2{font-family:"Bebas Neue",Impact,sans-serif;text-transform:uppercase;font-weight:400;
+   font-size:clamp(1.7rem,3.4vw,2.5rem);line-height:.98;letter-spacing:.01em}
+.eyebrow{font-size:.66rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.eyebrow.b{color:var(--blue)}
+.say{font-size:1rem;line-height:1.5;color:var(--ink-2);max-width:64ch}
+.say+.say{margin-top:11px}
+.say b{color:var(--ink);font-weight:600}
+.stand{font-size:1.06rem;line-height:1.5;color:var(--ink-2);max-width:72ch}
+.big{font-family:"Bebas Neue",Impact,sans-serif;line-height:.82;font-variant-numeric:tabular-nums}
+.tnum{font-variant-numeric:tabular-nums}
+a{color:var(--blue)}
+
+/* ---------- masthead ---------- */
+header{padding:52px 0 34px;display:flex;flex-direction:column;gap:22px}
+.brandrow{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between}
+.mark{font-family:"Bebas Neue",Impact,sans-serif;text-transform:uppercase;font-size:1.35rem;letter-spacing:.06em}
+.mark span{color:var(--blue)}
+.stamp{font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.facts{display:flex;flex-wrap:wrap;border-top:2px solid var(--black);border-bottom:1px solid var(--hair)}
+.fact{padding:14px 26px 13px 0;margin-right:26px;border-right:1px solid var(--hair);display:flex;flex-direction:column;gap:1px}
+.fact:last-child{border-right:0;margin-right:0}
+.fact .fv{font-family:"Bebas Neue",Impact,sans-serif;font-size:1.55rem;line-height:1;font-variant-numeric:tabular-nums}
+.fact .fk{font-size:.63rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ---------- cards ---------- */
+.card{background:var(--white);border:2px solid var(--black);border-radius:2px;
+      padding:30px 32px;margin-top:22px;box-shadow:5px 5px 0 rgba(26,26,26,.1)}
+.card.dark{background:var(--black);color:#FBF8F2}
+.card.dark .say{color:#D6D0C4} .card.dark .say b{color:#fff}
+.card.dark .eyebrow{color:#9E9789}
+.chead{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:baseline;justify-content:space-between;margin-bottom:8px}
+.chead .h{display:flex;flex-direction:column;gap:8px}
+.num{font-family:"Bebas Neue",Impact,sans-serif;font-size:1.15rem;color:var(--blue);letter-spacing:.06em}
+.card.dark .num{color:var(--yellow)}
+.tag{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px 9px;border-radius:2px;white-space:nowrap}
+.tag.champ{background:var(--yellow);color:var(--black)}
+.tag.hon{background:var(--red);color:#fff}
+.tag.q{background:var(--blue-pale);color:var(--blue-deep)}
+.figwrap{margin-top:24px}
+.figtitle{font-size:.82rem;font-weight:600;color:var(--ink);margin-bottom:2px}
+.figsub{font-size:.72rem;color:var(--ink-3);margin-bottom:16px}
+
+/* ---------- legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:14px}
+.legend span{display:flex;align-items:center;gap:7px;font-size:.74rem;font-weight:600;color:var(--ink-2)}
+.legend i{width:11px;height:11px;border-radius:2px;display:block;flex:none}
+.legend i.line{height:3px;width:16px;border-radius:2px}
+
+/* ---------- column chart ---------- */
+.cols{display:flex;align-items:flex-end;gap:clamp(3px,.9vw,10px);height:230px;
+      border-bottom:2px solid var(--black);padding-top:30px;position:relative}
+.col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;min-width:0;cursor:default}
+.col .bar{width:100%;background:var(--blue);border-radius:4px 4px 0 0;height:calc(var(--v)*1%);
+          transition:height .7s cubic-bezier(.2,.75,.3,1)}
+.col.mute .bar{background:var(--blue-mute)}
+.col.hot .bar{background:var(--red)}
+.col .vlab{font-family:"Bebas Neue",Impact,sans-serif;font-size:clamp(.68rem,1.5vw,1.05rem);line-height:1;
+      font-variant-numeric:tabular-nums;white-space:nowrap;margin-bottom:6px;flex:none;color:var(--ink)}
+.col.mute .vlab{color:var(--ink-3)}
+.xax{display:flex;gap:clamp(3px,.9vw,10px);margin-top:9px}
+.xax>div{flex:1;text-align:center;font-size:.6rem;font-weight:600;color:var(--ink-3);
+         font-variant-numeric:tabular-nums;line-height:1.3;min-width:0}
+.xax>div b{display:block;font-weight:600;color:var(--ink-2);font-size:.66rem}
+.ruler{margin-top:30px;padding-top:26px;border-top:1px solid var(--hair-w)}
+.rtrackwrap{padding-top:52px}
+.rtrack{position:relative;height:14px;background:#F1EDE6;border-radius:3px}
+.rfill{position:absolute;left:0;top:0;bottom:0;background:var(--red);border-radius:3px;opacity:.17}
+.rtick{position:absolute;top:-5px;bottom:-5px;width:2px;background:var(--red);opacity:.45;border-radius:1px}
+.rtick.key{opacity:1;width:2.5px}
+.rlab{position:absolute;transform:translateX(-50%);white-space:nowrap;font-size:.78rem;font-weight:700;
+      color:var(--red);top:-42px;text-align:center;line-height:1.25}
+.rlab small{display:block;color:var(--ink-3);font-weight:500;font-size:.64rem;order:-1}
+.rlab .cap{display:block;color:var(--ink-3);font-weight:500;font-size:.64rem;margin-bottom:2px}
+.rax{display:flex;justify-content:space-between;margin-top:9px;font-size:.62rem;font-weight:600;color:var(--ink-3)}
+
+/* ---------- horizontal bars ---------- */
+.hrows{display:flex;flex-direction:column;gap:2px}
+.hrow{display:grid;grid-template-columns:minmax(120px,186px) 1fr;gap:20px;align-items:center;
+      padding:12px 0;border-bottom:1px solid var(--hair-w)}
+.hrow:last-child{border-bottom:0}
+.hlab{font-size:.79rem;font-weight:600;color:var(--ink-2)}
+.hlab small{display:block;font-weight:400;font-size:.68rem;color:var(--ink-3)}
+.hbars{display:flex;flex-direction:column;gap:5px}
+.hbar{display:flex;align-items:center;gap:9px}
+.hbar .f{height:13px;border-radius:0 3px 3px 0;width:calc(var(--v)/var(--max)*100%);min-width:3px;background:var(--blue)}
+.hbar.b2 .f{background:var(--red)}
+.hbar .t{font-size:.74rem;font-weight:600;color:var(--ink-2);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* ---------- heat grid ---------- */
+.heat{width:100%;border-collapse:separate;border-spacing:2px;margin-left:-2px}
+.heat th{font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);
+         padding:0 0 6px;text-align:center;white-space:nowrap}
+.heat th.rh{text-align:left;padding-right:14px;width:1%;text-transform:none;letter-spacing:0;
+            font-size:.75rem;color:var(--ink-2)}
+.heat td.rh{text-align:left;padding-right:14px;font-size:.75rem;font-weight:600;color:var(--ink-2);white-space:nowrap}
+.heat td.rh small{display:block;font-weight:400;font-size:.66rem;color:var(--ink-3)}
+.heat td.c{text-align:center;font-size:.8rem;font-weight:600;font-variant-numeric:tabular-nums;
+           padding:11px 4px;border-radius:3px;cursor:default}
+
+/* ---------- decay curve ---------- */
+.curve{width:100%;height:250px;display:block;overflow:visible}
+.curve .gl{stroke:#EDE6DB;stroke-width:1}
+.curve .ax{stroke:var(--black);stroke-width:2}
+.curve .ln{fill:none;stroke:var(--blue);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.curve .dot{fill:var(--blue);stroke:var(--white);stroke-width:2}
+.curve .tk{font-size:10px;font-weight:600;fill:var(--ink-3);font-family:"Inter",sans-serif}
+.curve .dl{font-size:11px;font-weight:600;fill:var(--ink);font-family:"Inter",sans-serif;font-variant-numeric:tabular-nums}
+
+/* ---------- stat grid ---------- */
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;background:var(--hair-w);
+       border:1px solid var(--hair-w);border-radius:2px}
+.grid3>div{background:var(--white);padding:17px 18px;display:flex;flex-direction:column;gap:3px}
+.grid3 .gv{font-family:"Bebas Neue",Impact,sans-serif;font-size:2.05rem;line-height:.95;font-variant-numeric:tabular-nums}
+.grid3 .gk{font-size:.63rem;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);line-height:1.45}
+.gv.blue{color:var(--blue)} .gv.red{color:var(--red)}
+.card.dark .grid3{background:#333029;border-color:#333029}
+.card.dark .grid3>div{background:#242219}
+.card.dark .grid3 .gk{color:#9E9789}
+.card.dark .gv.blue{color:#93A5F5}
+
+/* ---------- duo ---------- */
+.duo{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--hair-w);margin-top:20px}
+.duo>div{padding:22px 26px 20px 0;display:flex;flex-direction:column;gap:5px}
+.duo>div+div{border-left:1px solid var(--hair-w);padding-left:26px}
+.duo .big{font-size:clamp(2.8rem,7vw,4.4rem)}
+.duo .n1{color:var(--blue)} .duo .n2{color:var(--red)}
+.duo .lb{font-size:.78rem;font-weight:600;color:var(--ink-2);line-height:1.4}
+.duo .sub{font-size:.72rem;color:var(--ink-3);line-height:1.45}
+@media(max-width:640px){.duo{grid-template-columns:1fr}.duo>div+div{border-left:0;padding-left:0;border-top:1px solid var(--hair-w)}}
+
+/* ---------- callout ---------- */
+.callout{margin-top:20px;padding:16px 18px;border-left:3px solid var(--blue);background:#F7F8FE;
+         font-size:.86rem;line-height:1.5;color:var(--ink-2);border-radius:0 2px 2px 0}
+.callout.warn{border-left-color:var(--red);background:#FFF6F6}
+.callout b{color:var(--ink)}
+.card.dark .callout{background:#242219;color:#D6D0C4} .card.dark .callout b{color:#fff}
+
+/* ---------- actions ---------- */
+.acts{display:flex;flex-direction:column;gap:1px;background:#333029;border:1px solid #333029;margin-top:20px}
+.act{background:#242219;padding:18px 20px;display:grid;grid-template-columns:34px 1fr;gap:16px;align-items:start}
+.act .n{font-family:"Bebas Neue",Impact,sans-serif;font-size:1.5rem;color:var(--yellow);line-height:1}
+.act .t{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:3px}
+.act .d{font-size:.82rem;color:#C9C2B4;line-height:1.5}
+
+/* ---------- table view ---------- */
+details{margin-top:16px;border-top:1px solid var(--hair-w);padding-top:12px}
+summary{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);cursor:pointer;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸ ";color:var(--blue)}
+details[open] summary::before{content:"▾ "}
+.tw{overflow-x:auto;margin-top:12px}
+table.dt{border-collapse:collapse;font-size:.76rem;width:100%;min-width:420px}
+table.dt th,table.dt td{padding:7px 12px 7px 0;text-align:right;font-variant-numeric:tabular-nums;
+        border-bottom:1px solid var(--hair-w);white-space:nowrap}
+table.dt th:first-child,table.dt td:first-child{text-align:left}
+table.dt th{font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+table.dt td{color:var(--ink-2)} table.dt td:first-child{color:var(--ink);font-weight:600}
+
+/* ---------- tooltip ---------- */
+#tip{position:fixed;z-index:99;pointer-events:none;opacity:0;transition:opacity .12s;
+     background:var(--black);color:#fff;font-size:.74rem;line-height:1.45;padding:8px 11px;border-radius:3px;
+     box-shadow:0 4px 14px rgba(26,26,26,.22);max-width:230px}
+#tip b{color:var(--yellow);font-weight:600}
+
+footer{margin-top:34px;padding-top:22px;border-top:2px solid var(--black);
+       display:flex;flex-wrap:wrap;gap:14px 30px;justify-content:space-between;align-items:flex-start}
+footer .fn{font-size:.74rem;color:var(--ink-3);max-width:66ch;line-height:1.55}
+footer .fn b{color:var(--ink-2)}
+@media(max-width:720px){
+  .card{padding:24px 20px}
+  .cols{height:190px}
+  .hrow{grid-template-columns:1fr;gap:8px}
+  .fact{padding-right:18px;margin-right:18px}
+}
+@media print{
+  body{background:#fff;padding:0}
+  .card{box-shadow:none;break-inside:avoid}
+  details{display:none}
+}
+</style>
+</head>
+<body data-palette="#4361EE,#FF3D47">
+<div class="page">
+
+<header>
+  <div class="brandrow">
+    <div class="mark">Ministry of <span>Oats</span></div>
+    <div class="stamp">Internal · verified 25 Aug 2026 · Zomato only</div>
+  </div>
+  <div>
+    <div class="eyebrow b" style="margin-bottom:12px">Repeat behaviour · part two</div>
+    <h1>Order cadence</h1>
+    <p class="stand" style="margin-top:16px">We already knew <b style="color:var(--ink)">how many</b> customers come back.
+    This is <b style="color:var(--ink)">when</b> — the gap between orders, how it changes with tenure, when to call
+    someone lapsed, and the one lever that decides a customer's lifetime value.</p>
+  </div>
+  <div class="facts">
+    <div class="fact"><div class="fv">48,454</div><div class="fk">Closed orders</div></div>
+    <div class="fact"><div class="fv">19,371</div><div class="fk">Customers</div></div>
+    <div class="fact"><div class="fv">29,081</div><div class="fk">Order-to-order gaps</div></div>
+    <div class="fact"><div class="fv">17 mo</div><div class="fk">Apr 2025 → Aug 2026</div></div>
+    <div class="fact"><div class="fv">~47%</div><div class="fk">of aggregator orders</div></div>
+  </div>
+</header>
+
+<!-- ============ VERDICT ============ -->
+<section class="card dark">
+  <div class="eyebrow" style="margin-bottom:14px">The finding</div>
+  <h2 style="max-width:20ch">Repeat is a fast event, not a slow one</h2>
+  <div class="grid3" style="margin-top:24px">
+    <div><div class="gv blue">20%</div><div class="gk">of repeat orders land the next day</div></div>
+    <div><div class="gv blue">54%</div><div class="gk">land within four days</div></div>
+    <div><div class="gv blue">78%</div><div class="gk">land within a month</div></div>
+    <div><div class="gv" style="color:var(--yellow)">44%</div><div class="gk">of a new customer's 90-day repeat happens in week one</div></div>
+  </div>
+  <p class="say" style="margin-top:22px">The window in which a MOO customer decides to come back is measured in
+  <b>days</b>. Everything a retention programme does after ~30 days of silence is a <b>win-back</b>, not retention.</p>
+</section>
+
+<!-- ============ 1 · GAP DISTRIBUTION ============ -->
+<section class="card">
+  <div class="chead">
+    <div class="h"><div class="num">01</div><h2>How long between two orders</h2></div>
+    <div class="tag q">n = 29,081 gaps</div>
+  </div>
+  <p class="say">Every gap between consecutive orders by the same customer, all 17 months.</p>
+  <div class="figwrap">
+    <div class="figtitle">Distribution of gaps between consecutive orders</div>
+    <div class="figsub">Share of all 29,081 gaps falling in each bucket. Cumulative reach is charted separately below.</div>
+    <div class="legend">
+      <span><i style="background:var(--blue)"></i>Share of gaps</span>
+    </div>
+    <div id="c1"></div>
+  </div>
+  <div class="callout"><b>Half of everything happens by day four.</b> One in five repeat orders is placed the very next
+  morning. The distribution has a long tail — 3.3% of gaps are over six months — but the mass sits in the first week.</div>
+  <details><summary>Show the numbers</summary><div class="tw" id="t1"></div></details>
+</section>
+
+<!-- ============ 2 · THE CLOCK SPEEDS UP ============ -->
+<section class="card">
+  <div class="chead">
+    <div class="h"><div class="num">02</div><h2>The clock speeds up as they climb</h2></div>
+    <div class="tag champ">Loyalty = frequency</div>
+  </div>
+  <p class="say">We already knew the <i>probability</i> of a next order rises with each order placed — 30.6% → 88.5%.
+  Here is its twin: the <b>interval collapses on the same ladder</b>.</p>
+  <div class="figwrap">
+    <div class="figtitle">Median days to the next order, by orders already placed</div>
+    <div class="figsub">Lower is better. Interquartile range shown in the table below.</div>
+    <div id="c2"></div>
+  </div>
+  <div class="duo">
+    <div><div class="big n1">15 d</div><div class="lb">Median wait after a customer's first order</div>
+      <div class="sub">p75 is 62 days — most first-timers are slow or never</div></div>
+    <div><div class="big n2">3 d</div><div class="lb">Median wait once they are past order 10</div>
+      <div class="sub">p25 is 1 day — the top tier reorders tomorrow</div></div>
+  </div>
+  <div class="callout warn"><b>Read this honestly.</b> Each row is conditional on having reached that order, so it mixes
+  genuine habit formation with selection — customers who were always going to be frequent arrive at high order counts
+  sooner. Both readings point the same way; it is not proof of causation.</div>
+  <details><summary>Show the numbers</summary><div class="tw" id="t2"></div></details>
+</section>
+
+<!-- ============ 3 · HAZARD ============ -->
+<section class="card">
+  <div class="chead">
+    <div class="h"><div class="num">03</div><h2>Probability of the next order, by window</h2></div>
+    <div class="tag q">Uncensored — ≥90 days observed</div>
+  </div>
+  <p class="say">Read a row: given a customer has just placed that order, what share place another one within each window.
+  Only orders with at least 90 further days of calendar behind them are counted, so nothing here is right-censored.</p>
+  <div class="figwrap">
+    <div class="figtitle">P(next order within X days)</div>
+    <div class="figsub">Darker = higher probability. Hover any cell for the base.</div>
+    <div class="tw"><table class="heat" id="c3"></table></div>
+  </div>
+  <div class="callout"><b>Week one carries 44% of the whole 90-day outcome for a first-time customer</b> — 13.1 of the
+  30.0 points. For an 11+ order customer, 29% reorder <i>tomorrow</i> and 68% inside a week.</div>
+</section>
+
+<!-- ============ 4 · LAPSE ============ -->
+<section class="card">
+  <div class="chead">
+    <div class="h"><div class="num">04</div><h2>When to call someone lapsed</h2></div>
+    <div class="tag hon">No cliff exists</div>
+  </div>
+  <p class="say">Given a customer has been silent for X days, the chance they order again in the next 90.</p>
+  <div class="figwrap">
+    <div class="figtitle">P(returns within 90 days | silent for X days)</div>
+    <div class="figsub">Decays smoothly — roughly halving every 45 days of silence.</div>
+    <svg class="curve" id="c4" viewBox="0 0 760 250" preserveAspectRatio="none" role="img"
+         aria-label="Return probability decays from 37.3% at 7 days silent to 5.8% at 180 days"></svg>
+  </div>
+  <div class="callout"><b>There is no natural breakpoint</b>, so "lapsed" is a business choice rather than a data fact.
+  <b>30 days is the defensible line</b> — it is where the return chance drops below one in four, and 78% of all repeat
+  orders have already happened by then.</div>
+  <details><summary>Show the numbers</summary><div class="tw" id="t4"></div></details>
+</section>
+
+<!-- ============ 5 · TRIBES ============ -->
+<section class="card">
+  <div class="chead">
+    <div class="h"><div class="num">05</div><h2>Six cadence tribes</h2></div>
+    <div class="tag q">3,915 customers · 30,249 orders</div>
+  </div>
+  <p class="say">Customers with three or more orders, segmented on their own median gap. They are
+  <b>20% of all customers and 62% of all orders</b>.</p>
+  <div class="figwrap">
+    <div class="figtitle">Share of this group's customers vs share of its orders</div>
+    <div class="figsub">Where the two bars diverge, that tribe is over- or under-weight in revenue.</div>
+    <div class="legend">
+      <span><i style="background:var(--blue)"></i>% of customers</span>
+      <span><i style="background:var(--red)"></i>% of their orders</span>
+    </div>
+    <div class="hrows" id="c5"></div>
+  </div>
+  <div class="callout"><b>Weekly is the modal tribe and the biggest revenue block</b> — 795 customers, a quarter of the
+  orders. But look at the near-daily tribe: an 88-day average lifespan across 2.7 active months. <b>Highest frequency
+  is not longest life.</b> They burn bright and short, and nobody has ever asked why.</div>
+  <details><summary>Show the numbers</summary><div class="tw" id="t5"></div></details>
+</section>
+
+<!-- ============ 6 · BURSTS ============ -->
+<section class="card dark">
+  <div class="chead">
+    <div class="h"><div class="num">06</div><h2 style="max-width:22ch">Your best customers are already subscribers</h2></div>
+    <div class="tag champ">The product finding</div>
+  </div>
+  <p class="say">Consumption is <b>bursty</b>, not spread. Here is the share of a customer's lifetime orders that fall
+  inside their single busiest 30-day window — and how many of them order on back-to-back days.</p>
+  <div class="grid3" style="margin-top:24px">
+    <div><div class="gv blue">68.6%</div><div class="gk">of a 3–4 order customer's orders fall in one 30-day window</div></div>
+    <div><div class="gv blue">93.2%</div><div class="gk">of 20+ order customers have ordered two days in a row</div></div>
+    <div><div class="gv" style="color:var(--yellow)">63.9%</div><div class="gk">of 20+ order customers have a 3-day streak</div></div>
+    <div><div class="gv" style="color:var(--yellow)">25</div><div class="gk">consecutive days — the longest run on record</div></div>
+  </div>
+  <p class="say" style="margin-top:22px">The product is being consumed as a <b>daily routine and re-bought by hand every
+  morning</b>. 435 customers run a median gap of two days or less. That is a subscription waiting to be named — and today
+  every one of those re-orders pays a full aggregator commission.</p>
+  <details style="border-top-color:#3A362E"><summary style="color:#9E9789">Show the numbers</summary><div class="tw" id="t6"></div></details>
+</section>
+
+<!-- ============ 7 · DAY vs HOUR ============ -->
+<section class="card">
+  <div class="chead">
+    <div class="h"><div class="num">07</div><h2>The habit is anchored to an hour, not a day</h2></div>
+    <div class="tag champ">Actionable</div>
+  </div>
+  <p class="say">Two tests of the same question — does a repeat customer have a <i>pattern</i>? We measured how
+  concentrated each 5+ order customer is in their single most-used weekday, and in their most-used daypart, then
+  compared both against a shuffled baseline of the same customers.</p>
+  <div class="duo">
+    <div>
+      <div class="big n2">36.5<span style="font-size:.5em">%</span></div>
+      <div class="lb">Share of a heavy customer's orders on their top weekday</div>
+      <div class="sub">Random baseline: <b class="tnum">33.9%</b>. That is chance. <b>Nobody has a “MOO day”.</b></div>
+    </div>
+    <div>
+      <div class="big n1">69.0<span style="font-size:.5em">%</span></div>
+      <div class="lb">Share of their orders in their top daypart</div>
+      <div class="sub">Random baseline: <b class="tnum">49.5%</b>. A real, strong anchor.</div>
+    </div>
+  </div>
+  <div class="figwrap">
+    <div class="figtitle">Orders by day of week</div>
+    <div class="figsub">Flat to within 1.6 points — unusual for QSR, and evidence oats is a 7-day habit.</div>
+    <div id="c7a"></div>
+  </div>
+  <div class="figwrap">
+    <div class="figtitle">Orders by daypart (IST)</div>
+    <div class="figsub">Peak is 09:00–11:00. Timestamps converted from UTC; reading them raw shifts every order back 5h30m.</div>
+    <div id="c7b"></div>
+  </div>
+  <div class="callout"><b>Do not schedule by weekday. Schedule by the customer's own hour.</b> A Tuesday-morning blast
+  is worth less than “the 9:40am person, nudged at 9:20am”.</div>
+</section>
+
+<!-- ============ 8 · THE LEVER ============ -->
+<section class="card">
+  <div class="chead">
+    <div class="h"><div class="num">08</div><h2>Speed to the second order predicts everything</h2></div>
+    <div class="tag champ">The lever</div>
+  </div>
+  <p class="say">Customers whose first order is at least 180 days old (n = 11,149), bucketed by how long they took to
+  place order number two — and what they went on to be worth.</p>
+  <div class="figwrap">
+    <div class="figtitle">Lifetime revenue by time to second order</div>
+    <div class="figsub">Bill amount (~₹300 AOV), not the deck's ₹362.70 gross AOV — different bases.</div>
+    <div id="c8"></div>
+  </div>
+  <div class="duo">
+    <div><div class="big n1">₹2,600</div><div class="lb">Lifetime value when order #2 lands inside a week</div>
+      <div class="sub">≈8 lifetime orders · ~48% reach five orders</div></div>
+    <div><div class="big n2">₹1,109</div><div class="lb">Lifetime value when order #2 takes 90+ days</div>
+      <div class="sub">3.6 lifetime orders · 16.6% reach five orders</div></div>
+  </div>
+  <div class="callout"><b>2.4× on the same acquired customer</b>, decided in week one. The entire retention question
+  compresses into one lever: <b>get order #2 inside seven days.</b> 6,641 of these 11,149 customers — 59.6% — never
+  placed a second order at all.</div>
+  <details><summary>Show the numbers</summary><div class="tw" id="t8"></div></details>
+</section>
+
+<!-- ============ 9 · TREND ============ -->
+<section class="card">
+  <div class="chead">
+    <div class="h"><div class="num">09</div><h2>Is cadence improving? No — it is stable</h2></div>
+    <div class="tag hon">And untested</div>
+  </div>
+  <p class="say">By acquisition cohort, only cohorts with ≥90 days observed.</p>
+  <div class="figwrap">
+    <div class="figtitle">Share of each cohort placing a second order within 7 days</div>
+    <div class="figsub">Dashed line = the 12.1% average across the 12 cohorts since Jun 2025.</div>
+    <div id="c9"></div>
+  </div>
+  <div class="callout"><b>The April 2025 launch cohort was exceptional</b> — 18.2% reordered within a week, against
+  10–15% ever since. Early adopters. Since mid-2025 the 7-day reorder rate has held a flat band and the median 1→2 gap
+  has sat at 9–13 days. Flat, not decaying. The honest read: <b>cadence is a stable property of the product, and nothing
+  MOO has done in 14 months has moved it — which also means nothing has ever been tried on it.</b></div>
+  <details><summary>Show the numbers</summary><div class="tw" id="t9"></div></details>
+</section>
+
+<!-- ============ ACTIONS ============ -->
+<section class="card dark">
+  <div class="eyebrow" style="margin-bottom:14px">What this changes</div>
+  <h2>Five things follow</h2>
+  <div class="acts">
+    <div class="act"><div class="n">1</div><div>
+      <div class="t">The retention window is 7 days, not 30</div>
+      <div class="d">Week one carries 44% of a new customer's 90-day repeat probability, and a second order inside a week is worth 2.4× one after 90 days. Every retention rupee should be spent in the first seven days.</div></div></div>
+    <div class="act"><div class="n">2</div><div>
+      <div class="t">A subscription is the obvious product</div>
+      <div class="d">64% of 20+ order customers already order on three or more consecutive days; 435 customers run a ≤2-day median cadence. They are hand-rebuying a daily habit through an aggregator, at full commission.</div></div></div>
+    <div class="act"><div class="n">3</div><div>
+      <div class="t">Nudge by hour, never by weekday</div>
+      <div class="d">69% daypart concentration against a 49.5% baseline is a real anchor. 36.5% weekday concentration against 33.9% is noise. Personalise on the customer's own clock.</div></div></div>
+    <div class="act"><div class="n">4</div><div>
+      <div class="t">Investigate why the near-daily tribe dies at 88 days</div>
+      <div class="d">The highest-frequency segment has the shortest lifespan of any tribe — 2.7 active months. Burnout, price, or variety fatigue; we do not know which, and it is the single most valuable unknown here.</div></div></div>
+    <div class="act"><div class="n">5</div><div>
+      <div class="t">Nothing can act on any of this yet</div>
+      <div class="d"><b>rista_dim.dim_customer holds zero rows and fact_orders.customer_key is NULL on all 108,322 orders.</b> The identity exists only inside raw JSON. Populating it is the single build task between here and a standing cadence dashboard.</div></div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="fn">
+    <b>Method.</b> Every figure computed in SQL against <span class="tnum">rista_raw.sales_transactions</span> on
+    25 Aug 2026 (warehouse <span class="tnum">bptkkontvzqtdbdntwnx</span>), filtered to
+    <span class="tnum">channel='Zomato'</span> and <span class="tnum">status='Closed'</span>. Timestamps converted to IST.
+    Random baselines in §7 were generated by shuffling observed values within the same customer set, not assumed.
+    Nothing here is carried over from an earlier document.<br><br>
+    <b>Two caveats that travel with every number.</b> This is <b>Zomato only</b> — Swiggy, Magicpin, Ownly, DotPe and
+    Takeaway send no customer identifier at all, so this covers roughly 47% of aggregator orders and must never be
+    presented as “MOO's cadence” unqualified. And money on this page is bill amount (~₹300), <b>not</b> the deck's gross
+    AOV of ₹362.70 — different bases.
+  </div>
+  <div class="fn" style="max-width:24ch">
+    <b>Part one:</b> <a href="/moo-repeat-behaviour">Repeat behaviour</a><br>
+    <span style="color:var(--ink-3)">Vault: moo/platform/ops/wiki/zomato-order-cadence</span>
+  </div>
+</footer>
+
+</div>
+<div id="tip"></div>
+
+<script>
+const D = {
+  gaps:[["Same day",1.8,1.8,536],["Next day",18.5,20.4,5382],["2–3 d",15.8,36.2,4603],["4–7 d",17.8,54.0,5169],
+        ["8–14 d",12.2,66.2,3560],["15–30 d",12.1,78.3,3512],["31–60 d",8.6,86.9,2515],["61–90 d",4.4,91.3,1273],
+        ["91–180 d",5.4,96.7,1568],["181+ d",3.3,100.0,963]],
+  ladder:[["1",15,6662,4,62,154],["2",11,3915,3,40,112],["3",9,2703,3,32,81],["4",7,2012,2,23,66],["5",7,1593,2,22,69],
+          ["6",6,1281,2,20,60],["7",6,1058,2,18,47],["8",5,889,2,15,45],["9",5,762,2,15,36],["10+",3,8206,1,8,25]],
+  hazCols:["≤1 d","≤3 d","≤7 d","≤14 d","≤30 d","≤60 d","≤90 d"],
+  haz:[["After 1st order","14,985",[4.5,8.3,13.1,17.4,22.6,27.0,30.0]],
+       ["After 2nd","5,120",[8.8,15.9,25.8,33.2,42.4,50.4,54.6]],
+       ["After 3rd","2,946",[12.1,20.9,33.1,43.0,53.4,62.1,67.3]],
+       ["After 4–5th","3,540",[13.5,25.7,41.3,52.5,64.1,71.2,75.4]],
+       ["After 6–10th","4,096",[16.2,32.6,50.6,62.8,73.0,80.4,83.9]],
+       ["After 11th+","5,759",[29.1,49.0,68.0,78.6,86.7,91.5,93.4]]],
+  lapse:[[7,37.3],[14,30.2],[21,25.7],[30,21.7],[45,17.8],[60,14.8],[90,11.2],[120,8.8],[180,5.8]],
+  tribes:[["Near-daily","≤2 day gap",435,11.1,21.0,14.6,88,2.7],
+          ["2–3× a week","3–4 day gap",429,11.0,15.8,11.1,110,3.1],
+          ["Weekly","5–9 day gap",795,20.3,25.5,9.7,146,3.8],
+          ["Fortnightly","10–20 day gap",769,19.6,16.9,6.7,148,3.7],
+          ["Monthly","21–45 day gap",686,17.5,11.1,4.9,173,3.7],
+          ["Sporadic",">45 day gap",801,20.5,9.7,3.7,251,3.2]],
+  burst:[["3–4 orders",1903,78,68.6,18.9,2.2,4],["5–9",1250,136,60.5,43.0,10.8,7],
+         ["10–19",491,196,51.9,76.2,32.0,12],["20+",271,305,37.4,93.2,63.9,25]],
+  dow:[["Mon",14.7,7146],["Tue",14.6,7075],["Wed",14.5,7033],["Thu",14.7,7139],["Fri",13.6,6611],["Sat",13.1,6366],["Sun",14.6,7082]],
+  part:[["Breakfast","<11:00",43.4,21033],["Midday","11–15",25.8,12506],["Evening","15–19",13.5,6562],["Night","19+",17.2,8351]],
+  speed:[["≤1 day",479,8.9,2895,49.7],["2–3 days",421,8.3,2555,46.1],["4–7 days",557,7.8,2417,47.6],
+         ["8–14 days",481,5.9,1772,38.3],["15–30 days",600,6.2,1991,34.5],["31–90 days",852,4.8,1463,29.7],
+         ["90+ days",1118,3.6,1109,16.6],["Never",6641,1.0,297,0]],
+  cohort:[["2025-04",1403,18.2,34.0,12],["2025-05",1127,14.8,26.8,11],["2025-06",1573,12.0,21.7,10],["2025-07",1128,14.0,22.3,9],
+          ["2025-08",1182,11.8,20.3,9],["2025-09",1095,10.9,18.5,10],["2025-10",745,10.5,16.5,12],["2025-11",375,9.9,18.9,17],
+          ["2025-12",688,10.8,18.2,13],["2026-01",1006,11.8,20.8,10],["2026-02",877,14.5,23.1,9],["2026-03",1005,13.3,22.4,10],
+          ["2026-04",1558,13.8,23.6,10],["2026-05",1223,12.3,20.4,9]]
+};
+
+/* ---- tooltip ---- */
+const tip=document.getElementById('tip');
+function bind(el,html){
+  el.addEventListener('mouseenter',()=>{tip.innerHTML=html;tip.style.opacity=1});
+  el.addEventListener('mousemove',e=>{
+    const w=tip.offsetWidth,h=tip.offsetHeight;
+    let x=e.clientX+14,y=e.clientY-h-12;
+    if(x+w>innerWidth-8)x=e.clientX-w-14; if(y<8)y=e.clientY+16;
+    tip.style.left=x+'px';tip.style.top=y+'px';
+  });
+  el.addEventListener('mouseleave',()=>{tip.style.opacity=0});
+}
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const nf=n=>n.toLocaleString('en-IN');
+
+/* ---- generic column chart ---- */
+function cols(host,rows,{max,fmt,sub,cls}={}){
+  max=max||Math.max(...rows.map(r=>r.v));
+  const wrap=document.createElement('div');
+  const bars=document.createElement('div'); bars.className='cols';
+  const ax=document.createElement('div'); ax.className='xax';
+  rows.forEach(r=>{
+    const c=document.createElement('div');
+    c.className='col'+(r.cls?' '+r.cls:'')+(cls?' '+cls:'');
+    c.style.setProperty('--v',(r.v/max*100).toFixed(2));
+    c.innerHTML='<div class="vlab">'+(fmt?fmt(r.v):r.v)+'</div><div class="bar"></div>';
+    if(r.tip) bind(c,r.tip);
+    bars.appendChild(c);
+    const a=document.createElement('div');
+    a.innerHTML='<b>'+esc(r.k)+'</b>'+(r.sub?esc(r.sub):'');
+    ax.appendChild(a);
+  });
+  wrap.appendChild(bars); wrap.appendChild(ax);
+  host.appendChild(wrap);
+  return bars;
+}
+
+/* ---- 1 · gap distribution + cumulative ---- */
+(function(){
+  const host=document.getElementById('c1');
+  const rows=D.gaps.map((g,i)=>({k:g[0],v:g[1],cls:i<4?'':'mute',
+    tip:'<b>'+esc(g[0])+'</b><br>'+g[1]+'% of gaps · '+nf(g[3])+' orders<br>Cumulative '+g[2]+'%'}));
+  cols(host,rows,{max:20,fmt:v=>v+'%'});
+  // cumulative reach — its own chart, its own 0-100% scale (never a second axis on the bars)
+  const key={1:'by the next day',3:'within 4 days',5:'within a month',7:'within 90 days'};
+  let r='<div class="figtitle" style="margin-bottom:2px">Cumulative share of repeat orders reached</div>'+
+        '<div class="figsub" style="margin-bottom:34px">Own scale, 0–100%. Read it as “by this point, we have seen X% of all repeat orders”.</div>'+
+        '<div class="rtrackwrap"><div class="rtrack"><div class="rfill" style="width:78.3%"></div>';
+  D.gaps.forEach((g,i)=>{
+    const k=key[i]!==undefined;
+    r+='<div class="rtick'+(k?' key':'')+'" style="left:'+g[2]+'%"></div>';
+    if(k) r+='<div class="rlab" style="left:'+g[2]+'%"><span class="cap">'+key[i]+'</span>'+g[2]+'%</div>';
+  });
+  r+='</div><div class="rax"><span>0%</span><span>50%</span><span>100%</span></div></div>';
+  const rd=document.createElement('div'); rd.className='ruler'; rd.innerHTML=r; host.appendChild(rd);
+  document.getElementById('t1').innerHTML='<table class="dt"><thead><tr><th>Gap</th><th>Gaps</th><th>% of gaps</th><th>Cumulative</th></tr></thead><tbody>'+
+    D.gaps.map(g=>'<tr><td>'+esc(g[0])+'</td><td>'+nf(g[3])+'</td><td>'+g[1]+'%</td><td>'+g[2]+'%</td></tr>').join('')+'</tbody></table>';
+})();
+
+/* ---- 2 · median gap ladder ---- */
+(function(){
+  const rows=D.ladder.map(l=>({k:l[0],v:l[1],sub:'',cls:l[0]==='10+'?'hot':'',
+    tip:'<b>After order '+esc(l[0])+'</b><br>Median '+l[1]+' days<br>p25 '+l[3]+' · p75 '+l[4]+' · p90 '+l[5]+'<br>'+nf(l[2])+' gaps'}));
+  cols(document.getElementById('c2'),rows,{fmt:v=>v+'d'});
+  document.getElementById('t2').innerHTML='<table class="dt"><thead><tr><th>After order #</th><th>Gaps</th><th>p25</th><th>Median</th><th>p75</th><th>p90</th></tr></thead><tbody>'+
+    D.ladder.map(l=>'<tr><td>'+esc(l[0])+'</td><td>'+nf(l[2])+'</td><td>'+l[3]+'</td><td>'+l[1]+'</td><td>'+l[4]+'</td><td>'+l[5]+'</td></tr>').join('')+'</tbody></table>';
+})();
+
+/* ---- 3 · hazard heat grid ---- */
+(function(){
+  const steps=['#EEF1FD','#D2DAF9','#A9B7F2','#7189EE','#4361EE','#26399E'];
+  const step=v=> v<10?0 : v<25?1 : v<45?2 : v<65?3 : v<85?4 : 5;
+  const t=document.getElementById('c3');
+  t.innerHTML='<thead><tr><th class="rh">Stage</th>'+D.hazCols.map(c=>'<th>'+esc(c)+'</th>').join('')+'</tr></thead><tbody>'+
+    D.haz.map(r=>'<tr><td class="rh">'+esc(r[0])+'<small>n = '+esc(r[1])+'</small></td>'+
+      r[2].map((v,i)=>{const s=step(v);
+        return '<td class="c" data-t="'+esc(r[0])+' · '+esc(D.hazCols[i])+'|'+v+'|'+esc(r[1])+'" style="background:'+steps[s]+
+        ';color:'+(s>=3?'#fff':'#1A1A1A')+'">'+v.toFixed(1)+'%</td>'}).join('')+'</tr>').join('')+'</tbody>';
+  t.querySelectorAll('td.c').forEach(td=>{
+    const [h,v,n]=td.dataset.t.split('|');
+    bind(td,'<b>'+h+'</b><br>'+v+'% place another order<br>base: '+n+' orders');
+  });
+})();
+
+/* ---- 4 · lapse decay curve ---- */
+(function(){
+  const W=760,H=250,PL=46,PR=18,PT=18,PB=34;
+  const xs=d=>PL+(d/180)*(W-PL-PR), ys=p=>H-PB-(p/40)*(H-PT-PB);
+  let s='';
+  [0,10,20,30,40].forEach(g=>{s+='<line class="gl" x1="'+PL+'" y1="'+ys(g)+'" x2="'+(W-PR)+'" y2="'+ys(g)+'"/>'+
+    '<text class="tk" x="'+(PL-8)+'" y="'+(ys(g)+3.5)+'" text-anchor="end">'+g+'%</text>';});
+  s+='<line class="ax" x1="'+PL+'" y1="'+ys(0)+'" x2="'+(W-PR)+'" y2="'+ys(0)+'"/>';
+  const pts=D.lapse.map(l=>[xs(l[0]),ys(l[1])]);
+  s+='<polyline class="ln" points="'+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')+'"/>';
+  D.lapse.forEach((l,i)=>{
+    s+='<circle class="dot" cx="'+pts[i][0].toFixed(1)+'" cy="'+pts[i][1].toFixed(1)+'" r="4.5" data-t="'+l[0]+'|'+l[1]+'"/>';
+    s+='<text class="tk" x="'+pts[i][0].toFixed(1)+'" y="'+(H-PB+16)+'" text-anchor="middle">'+l[0]+'</text>';
+    if([0,3,6,8].includes(i))
+      s+='<text class="dl" x="'+pts[i][0].toFixed(1)+'" y="'+(pts[i][1]-13).toFixed(1)+'" text-anchor="middle">'+l[1]+'%</text>';
+  });
+  s+='<text class="tk" x="'+((PL+W-PR)/2)+'" y="'+(H-2)+'" text-anchor="middle">Days silent since last order</text>';
+  // 30-day marker
+  s+='<line x1="'+xs(30)+'" y1="'+PT+'" x2="'+xs(30)+'" y2="'+ys(0)+'" stroke="#FF3D47" stroke-width="1.5" stroke-dasharray="4 3"/>';
+  s+='<text class="dl" x="'+(xs(30)+7)+'" y="'+(PT+11)+'" fill="#FF3D47">30 d = the lapse line</text>';
+  const el=document.getElementById('c4'); el.innerHTML=s;
+  el.querySelectorAll('.dot').forEach(c=>{const [d,p]=c.dataset.t.split('|');
+    bind(c,'<b>Silent '+d+' days</b><br>'+p+'% order again within 90 days');});
+  document.getElementById('t4').innerHTML='<table class="dt"><thead><tr><th>Days silent</th><th>Returns within 90 days</th></tr></thead><tbody>'+
+    D.lapse.map(l=>'<tr><td>'+l[0]+' days</td><td>'+l[1]+'%</td></tr>').join('')+'</tbody></table>';
+})();
+
+/* ---- 5 · tribes ---- */
+(function(){
+  const host=document.getElementById('c5'), max=26;
+  D.tribes.forEach(t=>{
+    const r=document.createElement('div'); r.className='hrow';
+    r.innerHTML='<div class="hlab">'+esc(t[0])+'<small>'+esc(t[1])+'</small></div>'+
+      '<div class="hbars">'+
+      '<div class="hbar" style="--max:'+max+'"><div class="f" style="--v:'+t[3]+'"></div><div class="t">'+t[3].toFixed(1)+'% of customers · '+nf(t[2])+'</div></div>'+
+      '<div class="hbar b2" style="--max:'+max+'"><div class="f" style="--v:'+t[4]+'"></div><div class="t">'+t[4].toFixed(1)+'% of orders</div></div>'+
+      '</div>';
+    bind(r,'<b>'+esc(t[0])+'</b> ('+esc(t[1])+')<br>'+nf(t[2])+' customers · '+t[5]+' orders each<br>Avg lifespan '+t[6]+' days · '+t[7]+' active months');
+    host.appendChild(r);
+  });
+  document.getElementById('t5').innerHTML='<table class="dt"><thead><tr><th>Cadence</th><th>Customers</th><th>% cust</th><th>% orders</th><th>Avg orders</th><th>Avg span</th><th>Active mo</th></tr></thead><tbody>'+
+    D.tribes.map(t=>'<tr><td>'+esc(t[0])+'</td><td>'+nf(t[2])+'</td><td>'+t[3]+'%</td><td>'+t[4]+'%</td><td>'+t[5]+'</td><td>'+t[6]+' d</td><td>'+t[7]+'</td></tr>').join('')+'</tbody></table>';
+})();
+
+/* ---- 6 · burst table ---- */
+document.getElementById('t6').innerHTML='<table class="dt" style="color:#C9C2B4"><thead><tr><th>Lifetime orders</th><th>Customers</th><th>Median span</th><th>% in busiest 30 d</th><th>2 days in a row</th><th>3-day streak</th><th>Longest</th></tr></thead><tbody>'+
+  D.burst.map(b=>'<tr><td style="color:#fff">'+esc(b[0])+'</td><td>'+nf(b[1])+'</td><td>'+b[2]+' d</td><td>'+b[3]+'%</td><td>'+b[4]+'%</td><td>'+b[5]+'%</td><td>'+b[6]+'</td></tr>').join('')+'</tbody></table>';
+
+/* ---- 7 · dow + daypart ---- */
+cols(document.getElementById('c7a'),D.dow.map(d=>({k:d[0],v:d[1],cls:'mute',
+  tip:'<b>'+esc(d[0])+'</b><br>'+d[1]+'% of orders · '+nf(d[2])})),{max:16,fmt:v=>v.toFixed(1)+'%'});
+cols(document.getElementById('c7b'),D.part.map(p=>({k:p[0],sub:p[1],v:p[2],
+  tip:'<b>'+esc(p[0])+'</b> ('+esc(p[1])+')<br>'+p[2]+'% of orders · '+nf(p[3])})),{max:46,fmt:v=>v.toFixed(1)+'%'});
+
+/* ---- 8 · speed to 2nd -> LTV ---- */
+(function(){
+  const rows=D.speed.map(s=>({k:s[0].replace(' days','d').replace(' day','d'),v:s[3],
+    cls:s[0]==='Never'?'mute':(['≤1 day','2–3 days','4–7 days'].includes(s[0])?'':'mute'),
+    tip:'<b>2nd order in '+esc(s[0])+'</b><br>₹'+nf(s[3])+' lifetime revenue<br>'+s[2]+' lifetime orders · '+nf(s[1])+' customers<br>'+s[4]+'% reach 5 orders'}));
+  cols(document.getElementById('c8'),rows,{fmt:v=>'₹'+nf(v)});
+  document.getElementById('t8').innerHTML='<table class="dt"><thead><tr><th>Time to 2nd order</th><th>Customers</th><th>Avg lifetime orders</th><th>Avg lifetime revenue</th><th>% reaching 5 orders</th></tr></thead><tbody>'+
+    D.speed.map(s=>'<tr><td>'+esc(s[0])+'</td><td>'+nf(s[1])+'</td><td>'+s[2]+'</td><td>₹'+nf(s[3])+'</td><td>'+s[4]+'%</td></tr>').join('')+'</tbody></table>';
+})();
+
+/* ---- 9 · cohort trend ---- */
+(function(){
+  const rows=D.cohort.map((c,i)=>({k:c[0].slice(5),sub:c[0].slice(2,4),v:c[2],cls:i===0?'hot':'',
+    tip:'<b>'+esc(c[0])+' cohort</b><br>'+nf(c[1])+' new customers<br>'+c[2]+'% reorder ≤7 d · '+c[3]+'% ≤30 d<br>Median 1→2 gap '+c[4]+' days'}));
+  const bars=cols(document.getElementById('c9'),rows,{max:20,fmt:v=>v.toFixed(1)});
+  const avg=12.1, ov=document.createElement('div');
+  ov.style.cssText='position:absolute;left:0;right:0;bottom:'+(avg/20*100)+'%;border-top:1px dashed #8A8478;pointer-events:none';
+  bars.appendChild(ov);
+  document.getElementById('t9').innerHTML='<table class="dt"><thead><tr><th>Cohort</th><th>New customers</th><th>Reorder ≤7 d</th><th>Reorder ≤30 d</th><th>Median 1→2 gap</th></tr></thead><tbody>'+
+    D.cohort.map(c=>'<tr><td>'+esc(c[0])+'</td><td>'+nf(c[1])+'</td><td>'+c[2]+'%</td><td>'+c[3]+'%</td><td>'+c[4]+' d</td></tr>').join('')+'</tbody></table>';
+})();
+</script>
+</body>
+</html>
